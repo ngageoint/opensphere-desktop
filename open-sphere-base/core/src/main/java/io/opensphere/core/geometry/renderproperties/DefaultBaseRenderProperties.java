@@ -1,6 +1,6 @@
 package io.opensphere.core.geometry.renderproperties;
 
-import io.opensphere.core.util.lang.EqualsHelper;
+import java.util.Objects;
 
 /** Standard implementation of {@link BaseRenderProperties}. */
 public class DefaultBaseRenderProperties extends DefaultZOrderRenderProperties implements BaseRenderProperties
@@ -58,7 +58,7 @@ public class DefaultBaseRenderProperties extends DefaultZOrderRenderProperties i
         }
         DefaultBaseRenderProperties other = (DefaultBaseRenderProperties)obj;
         return myHidden == other.myHidden && myDrawable == other.myDrawable && myPickable == other.myPickable
-                && EqualsHelper.equals(myLighting, other.myLighting);
+                && Objects.equals(myLighting, other.myLighting);
     }
 
     @Override

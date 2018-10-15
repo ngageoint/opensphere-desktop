@@ -31,9 +31,9 @@ public class ConsolidatedDataElementSelectionChangeEvent extends AbstractConsoli
             List<Long> deselects, Object source)
     {
         super(regIds, dataTypeKeys, source);
-        mySelects = Collections.unmodifiableList(selects instanceof LinkedList<?> ? new ArrayList<Long>(selects) : selects);
+        mySelects = Collections.unmodifiableList(selects instanceof LinkedList<?> ? new ArrayList<>(selects) : selects);
         myDeselects = Collections
-                .unmodifiableList(deselects instanceof LinkedList<?> ? new ArrayList<Long>(deselects) : deselects);
+                .unmodifiableList(deselects instanceof LinkedList<?> ? new ArrayList<>(deselects) : deselects);
     }
 
     /**
@@ -50,9 +50,9 @@ public class ConsolidatedDataElementSelectionChangeEvent extends AbstractConsoli
             Object source)
     {
         super(regIds, dataTypeKey, source);
-        mySelects = Collections.unmodifiableList(selects instanceof LinkedList<?> ? new ArrayList<Long>(selects) : selects);
+        mySelects = Collections.unmodifiableList(selects instanceof LinkedList<?> ? new ArrayList<>(selects) : selects);
         myDeselects = Collections
-                .unmodifiableList(deselects instanceof LinkedList<?> ? new ArrayList<Long>(deselects) : deselects);
+                .unmodifiableList(deselects instanceof LinkedList<?> ? new ArrayList<>(deselects) : deselects);
     }
 
     /**
@@ -69,9 +69,9 @@ public class ConsolidatedDataElementSelectionChangeEvent extends AbstractConsoli
             List<Long> deselects, Object source)
     {
         super(regIds, dataTypeKeys, source);
-        mySelects = Collections.unmodifiableList(selects instanceof LinkedList<?> ? new ArrayList<Long>(selects) : selects);
+        mySelects = Collections.unmodifiableList(selects instanceof LinkedList<?> ? new ArrayList<>(selects) : selects);
         myDeselects = Collections
-                .unmodifiableList(deselects instanceof LinkedList<?> ? new ArrayList<Long>(deselects) : deselects);
+                .unmodifiableList(deselects instanceof LinkedList<?> ? new ArrayList<>(deselects) : deselects);
     }
 
     /**

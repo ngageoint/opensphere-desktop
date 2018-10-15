@@ -46,10 +46,8 @@ import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.concurrent.ProcrastinatingExecutor;
 import io.opensphere.core.util.lang.Pair;
 import io.opensphere.core.util.lang.StringUtilities;
-import io.opensphere.core.viewer.ViewChangeSupport;
 import io.opensphere.core.viewer.ViewChangeSupport.ViewChangeListener;
 import io.opensphere.core.viewer.ViewChangeSupport.ViewChangeType;
-import io.opensphere.core.viewer.Viewer;
 import io.opensphere.mantle.mp.MutableMapAnnotationPoint;
 
 /** This is the transformer class for displaying map points. */
@@ -92,17 +90,7 @@ public class MapPointTransformer extends DefaultTransformer
     private TileGeometry myDragTile;
 
     /** Listen to events from the main viewer to redraw our cross-hair. */
-    private final ViewChangeListener myMainViewListener = new ViewChangeListener()
-    {
-        @Override
-        public void viewChanged(Viewer viewer, ViewChangeSupport.ViewChangeType type)
-        {
-            if (type == ViewChangeType.WINDOW_RESIZE && myShouldDisplayCrossHair)
-            {
-                myViewChangeExecutor.execute(MapPointTransformer.this::drawCrossHairs);
-            }
-        }
-    };
+    private final ViewChangeListener myMainViewListener;
 
     /** The bounding box at the time the mouse drag began. */
     private GeoScreenBoundingBox myMouseDownBox;
@@ -256,6 +244,13 @@ public class MapPointTransformer extends DefaultTransformer
         myToolbox = toolbox;
         myViewChangeExecutor = new ProcrastinatingExecutor(executor);
         myCalloutDragChangeSupport = new WeakChangeSupport<>();
+        myMainViewListener = (viewer, type) ->
+        {
+            if (type == ViewChangeType.WINDOW_RESIZE && myShouldDisplayCrossHair)
+            {
+                myViewChangeExecutor.execute(MapPointTransformer.this::drawCrossHairs);
+            }
+        };
 
         // Register as a listener for view change events
         toolbox.getMapManager().getViewChangeSupport().addViewChangeListener(myMainViewListener);
@@ -389,7 +384,7 @@ public class MapPointTransformer extends DefaultTransformer
             previousGeom.add(myAnnotationDots.get(mapPoint.getId()));
         }
 
-        PointGeometry.Builder<GeographicPosition> pointBuilder = new PointGeometry.Builder<GeographicPosition>();
+        PointGeometry.Builder<GeographicPosition> pointBuilder = new PointGeometry.Builder<>();
         pointBuilder.setDataModelId(mapPoint.getId());
         PointRenderProperties props = new DefaultPointRenderProperties(ZOrderRenderProperties.TOP_Z, true, true, true);
         props.setColor(mapPoint.getColor());
@@ -589,7 +584,7 @@ public class MapPointTransformer extends DefaultTransformer
         eastPoints.add(eastCenter);
         eastPoints.add(east);
 
-        PolylineGeometry.Builder<ScreenPosition> eastLineBuilder = new PolylineGeometry.Builder<ScreenPosition>();
+        PolylineGeometry.Builder<ScreenPosition> eastLineBuilder = new PolylineGeometry.Builder<>();
         PolylineRenderProperties props = new DefaultPolylineRenderProperties(ZOrderRenderProperties.TOP_Z, true, false);
         props.setColor(Color.CYAN);
         props.setWidth(1);
@@ -615,7 +610,7 @@ public class MapPointTransformer extends DefaultTransformer
         northPoints.add(northCenter);
         northPoints.add(north);
 
-        PolylineGeometry.Builder<ScreenPosition> northLineBuilder = new PolylineGeometry.Builder<ScreenPosition>();
+        PolylineGeometry.Builder<ScreenPosition> northLineBuilder = new PolylineGeometry.Builder<>();
         PolylineRenderProperties props = new DefaultPolylineRenderProperties(ZOrderRenderProperties.TOP_Z, true, false);
         props.setColor(Color.CYAN);
         props.setWidth(1);
@@ -641,7 +636,7 @@ public class MapPointTransformer extends DefaultTransformer
         southPoints.add(south);
         southPoints.add(southCenter);
 
-        PolylineGeometry.Builder<ScreenPosition> southLineBuilder = new PolylineGeometry.Builder<ScreenPosition>();
+        PolylineGeometry.Builder<ScreenPosition> southLineBuilder = new PolylineGeometry.Builder<>();
         PolylineRenderProperties props = new DefaultPolylineRenderProperties(ZOrderRenderProperties.TOP_Z, true, false);
         props.setColor(Color.CYAN);
         props.setWidth(1);
@@ -667,7 +662,7 @@ public class MapPointTransformer extends DefaultTransformer
         westPoints.add(west);
         westPoints.add(westCenter);
 
-        PolylineGeometry.Builder<ScreenPosition> westLineBuilder = new PolylineGeometry.Builder<ScreenPosition>();
+        PolylineGeometry.Builder<ScreenPosition> westLineBuilder = new PolylineGeometry.Builder<>();
         PolylineRenderProperties props = new DefaultPolylineRenderProperties(ZOrderRenderProperties.TOP_Z, true, false);
         props.setColor(Color.CYAN);
         props.setWidth(1);

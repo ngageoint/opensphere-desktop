@@ -1,6 +1,7 @@
 package io.opensphere.mantle.data.geom.style.config.v1;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -10,7 +11,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 
 /**
  * The Class StyleManagerConfig.
@@ -48,10 +48,7 @@ public class StyleManagerConfig
         myDataTypeStyles = New.list();
         if (other.myDataTypeStyles != null)
         {
-            for (DataTypeStyleConfig dts : other.myDataTypeStyles)
-            {
-                myDataTypeStyles.add(new DataTypeStyleConfig(dts));
-            }
+            other.myDataTypeStyles.stream().map(DataTypeStyleConfig::new).forEach(myDataTypeStyles::add);
         }
     }
 
@@ -85,16 +82,8 @@ public class StyleManagerConfig
     public DataTypeStyleConfig getDataTypeStyle(String typeKey)
     {
         Utilities.checkNull(typeKey, "typeKey");
-        DataTypeStyleConfig result = null;
-        for (DataTypeStyleConfig cfg : myDataTypeStyles)
-        {
-            if (cfg != null && EqualsHelper.equals(typeKey, cfg.getDataTypeKey()))
-            {
-                result = cfg;
-                break;
-            }
-        }
-        return result;
+        return myDataTypeStyles.stream().filter(c -> c != null && Objects.equals(typeKey, c.getDataTypeKey())).findFirst()
+                .orElse(null);
     }
 
     /**
@@ -108,16 +97,7 @@ public class StyleManagerConfig
     public DataTypeStyleConfig getDataTypeStyleByTypeKey(String typeKey)
     {
         Utilities.checkNull(typeKey, "typeKey");
-        DataTypeStyleConfig result = null;
-        for (DataTypeStyleConfig cfg : myDataTypeStyles)
-        {
-            if (cfg != null && cfg.getDataTypeKey().contains(typeKey))
-            {
-                result = cfg;
-                break;
-            }
-        }
-        return result;
+        return myDataTypeStyles.stream().filter(c -> c != null && c.getDataTypeKey().contains(typeKey)).findFirst().orElse(null);
     }
 
     /**
@@ -199,7 +179,7 @@ public class StyleManagerConfig
         int index = 0;
         for (DataTypeStyleConfig cfg : myDataTypeStyles)
         {
-            if (cfg != null && EqualsHelper.equals(typeKey, cfg.getDataTypeKey()))
+            if (cfg != null && Objects.equals(typeKey, cfg.getDataTypeKey()))
             {
                 break;
             }

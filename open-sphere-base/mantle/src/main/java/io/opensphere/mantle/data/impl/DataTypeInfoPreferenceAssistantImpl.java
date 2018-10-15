@@ -2,10 +2,12 @@ package io.opensphere.mantle.data.impl;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
@@ -102,14 +104,7 @@ public class DataTypeInfoPreferenceAssistantImpl implements DataTypeInfoPreferen
         }
         else
         {
-            StringBuilder sb = new StringBuilder();
-            for (PreferenceType type : types)
-            {
-                sb.append(type.toString());
-                sb.append(',');
-            }
-            sb.deleteCharAt(sb.length() - 1);
-            return sb.toString();
+            return Arrays.stream(types).map(t -> t.toString()).collect(Collectors.joining(","));
         }
     }
 
@@ -239,19 +234,15 @@ public class DataTypeInfoPreferenceAssistantImpl implements DataTypeInfoPreferen
      */
     private EventListener<AbstractDataTypeInfoChangeEvent> createDataTypeChangeListener()
     {
-        return new EventListener<AbstractDataTypeInfoChangeEvent>()
+        return event ->
         {
-            @Override
-            public void notify(AbstractDataTypeInfoChangeEvent event)
+            if (event instanceof DataTypeVisibilityChangeEvent)
             {
-                if (event instanceof DataTypeVisibilityChangeEvent)
-                {
-                    ourEventExecutorService.execute(new DataTypeInfoVisibilityChangeWorker((DataTypeVisibilityChangeEvent)event));
-                }
-                else if (event instanceof DataTypeInfoColorChangeEvent)
-                {
-                    ourEventExecutorService.execute(new DataTypeInfoColorChangeWorker((DataTypeInfoColorChangeEvent)event));
-                }
+                ourEventExecutorService.execute(new DataTypeInfoVisibilityChangeWorker((DataTypeVisibilityChangeEvent)event));
+            }
+            else if (event instanceof DataTypeInfoColorChangeEvent)
+            {
+                ourEventExecutorService.execute(new DataTypeInfoColorChangeWorker((DataTypeInfoColorChangeEvent)event));
             }
         };
     }

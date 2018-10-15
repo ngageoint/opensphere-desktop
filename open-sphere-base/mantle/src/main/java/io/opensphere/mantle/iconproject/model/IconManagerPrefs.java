@@ -30,8 +30,8 @@ public class IconManagerPrefs
     private final IntegerProperty myInitTileWidth = new SimpleIntegerProperty();
 
     /** The tree which will be selected on start up. */
-    private final ObjectProperty<TreeItem<String>> myInitTreeSelection = new SimpleObjectProperty<TreeItem<String>>(
-            new TreeItem<String>("temp"));
+    private final ObjectProperty<TreeItem<String>> myInitTreeSelection = new SimpleObjectProperty<>(
+            new TreeItem<>("temp"));
 
     /**
      * Gets the tilewidth for display icons in the Icon Manager.

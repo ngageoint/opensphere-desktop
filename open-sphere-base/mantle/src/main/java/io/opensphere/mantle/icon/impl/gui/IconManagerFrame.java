@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
@@ -29,7 +30,6 @@ import gnu.trove.list.array.TIntArrayList;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.filesystem.MnemonicFileChooser;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRecordTreeNodeUserObject;
@@ -458,12 +458,12 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
                 if (obj.getNameType() == NameType.COLLECTION)
                 {
                     iconIdList = myIconRegistry
-                            .getIconIds(value -> EqualsHelper.equals(value.getCollectionName(), obj.getLabel()));
+                            .getIconIds(value -> Objects.equals(value.getCollectionName(), obj.getLabel()));
                 }
                 else
                 {
                     // Subcategory.
-                    iconIdList = myIconRegistry.getIconIds(value -> EqualsHelper.equals(value.getSubCategory(), obj.getLabel()));
+                    iconIdList = myIconRegistry.getIconIds(value -> Objects.equals(value.getSubCategory(), obj.getLabel()));
                 }
                 if (!iconIdList.isEmpty())
                 {

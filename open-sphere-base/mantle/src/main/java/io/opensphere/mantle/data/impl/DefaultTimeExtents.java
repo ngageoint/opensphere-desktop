@@ -54,16 +54,7 @@ public class DefaultTimeExtents implements TimeExtents
         ExtentAccumulator extentAccumumator = new ExtentAccumulator();
         synchronized (this)
         {
-            if (!myTimeSpans.isEmpty())
-            {
-                for (TimeSpan span : myTimeSpans)
-                {
-                    if (!span.isTimeless())
-                    {
-                        extentAccumumator.add(span);
-                    }
-                }
-            }
+            myTimeSpans.stream().filter(s -> !s.isTimeless()).forEach(extentAccumumator::add);
         }
         return extentAccumumator.getExtent();
     }

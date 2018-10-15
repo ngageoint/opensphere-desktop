@@ -1,5 +1,6 @@
 package io.opensphere.core.geometry.renderproperties;
 
+import java.util.Objects;
 import java.util.function.Function;
 
 import io.opensphere.core.units.length.Kilometers;
@@ -112,6 +113,6 @@ public class PointScaleRenderProperty extends AbstractRenderProperties implement
         }
         PointScaleRenderProperty other = (PointScaleRenderProperty)obj;
         return EqualsHelper.floatEquals(myHighlightSize, other.myHighlightSize, myScale, other.myScale)
-                && EqualsHelper.equals(myScaleFunction, other.myScaleFunction);
+                && Objects.equals(myScaleFunction, other.myScaleFunction);
     }
 }

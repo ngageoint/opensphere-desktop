@@ -233,14 +233,7 @@ public class DataTypeNodeUserObject
     {
         if (myNodeListener != null)
         {
-            EventQueueUtilities.runOnEDTAndWait(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    myNodeListener.nodeCheckStateChanged(DataTypeNodeUserObject.this, checked);
-                }
-            });
+            EventQueueUtilities.runOnEDTAndWait(() -> myNodeListener.nodeCheckStateChanged(DataTypeNodeUserObject.this, checked));
         }
     }
 
@@ -253,14 +246,7 @@ public class DataTypeNodeUserObject
     {
         if (myNodeListener != null)
         {
-            EventQueueUtilities.runOnEDTAndWait(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    myNodeListener.nodeSelectStateChanged(DataTypeNodeUserObject.this, selected);
-                }
-            });
+            EventQueueUtilities.runOnEDTAndWait(() -> myNodeListener.nodeSelectStateChanged(DataTypeNodeUserObject.this, selected));
         }
     }
 

@@ -123,10 +123,7 @@ public class StyleParameterEditorGroupPanel extends GridBagPanel
                 multiPanel.anchorWest();
                 multiPanel.add(pnl);
                 multiPanel.fillHorizontal();
-                for (AbstractStyleParameterEditorPanel sibling : pnl.getSiblingComponents())
-                {
-                    multiPanel.add(sibling);
-                }
+                pnl.getSiblingComponents().forEach(multiPanel::add);
                 panel = multiPanel;
             }
 
@@ -150,10 +147,7 @@ public class StyleParameterEditorGroupPanel extends GridBagPanel
      */
     public void update()
     {
-        for (AbstractStyleParameterEditorPanel pnl : myEditorPanels)
-        {
-            pnl.updateAll();
-        }
+        myEditorPanels.forEach(AbstractStyleParameterEditorPanel::updateAll);
     }
 
     /**

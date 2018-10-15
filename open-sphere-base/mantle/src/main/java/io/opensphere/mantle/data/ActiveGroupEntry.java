@@ -8,14 +8,7 @@ import java.util.Comparator;
 public interface ActiveGroupEntry
 {
     /** The Comparator by name. */
-    Comparator<ActiveGroupEntry> ComparatorByName = new Comparator<ActiveGroupEntry>()
-    {
-        @Override
-        public int compare(ActiveGroupEntry o1, ActiveGroupEntry o2)
-        {
-            return o1.getName().compareTo(o2.getName());
-        }
-    };
+    Comparator<ActiveGroupEntry> ComparatorByName = (o1, o2) -> o1.getName().compareTo(o2.getName());
 
     /**
      * Gets the id.

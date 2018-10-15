@@ -63,11 +63,8 @@ public class DynamicEnumerationDataTypeManagerImpl implements DynamicEnumeration
         {
             return data.addValue(value);
         }
-        else
-        {
-            throw new IllegalArgumentException("The meta data key \"" + metaDataKeyName + "\" for data type \"" + myDataTypeKey
-                    + "\" currently is not managed.  First create the type.");
-        }
+        throw new IllegalArgumentException("The meta data key \"" + metaDataKeyName + "\" for data type \"" + myDataTypeKey
+                + "\" currently is not managed.  First create the type.");
     }
 
     @Override
@@ -120,10 +117,7 @@ public class DynamicEnumerationDataTypeManagerImpl implements DynamicEnumeration
         {
             return getEnumerationDataForMDIKeyId(myMdiKeyToMdiKeyIdMap.get(keyName));
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 
     @Override

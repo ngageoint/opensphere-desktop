@@ -4,12 +4,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-
-import net.jcip.annotations.GuardedBy;
 
 import org.apache.log4j.Logger;
 
@@ -21,7 +20,6 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.VisualizationSupport;
 import io.opensphere.mantle.data.geom.style.FeatureVisualizationStyle;
@@ -33,6 +31,7 @@ import io.opensphere.mantle.data.geom.style.VisualizationStyleParameterChangeLis
 import io.opensphere.mantle.data.geom.style.VisualizationStyleRegistry;
 import io.opensphere.mantle.data.geom.style.VisualizationStyleUtilities;
 import io.opensphere.mantle.util.MantleToolboxUtils;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * The Class StyleTransformerStyleManager.
@@ -389,7 +388,7 @@ public class StyleTransformerStyleManager
     @Override
     public void visualizationStyleDatatypeChanged(VisualizationStyleDatatypeChangeEvent evt)
     {
-        if ((evt.getDTIKey() == null || EqualsHelper.equals(myDataTypeInfo.getTypeKey(), evt.getDTIKey()))
+        if ((evt.getDTIKey() == null || Objects.equals(myDataTypeInfo.getTypeKey(), evt.getDTIKey()))
                 && evt.getNewStyle() instanceof FeatureVisualizationStyle)
         {
             myStyleLock.lock();

@@ -1,9 +1,9 @@
 package io.opensphere.mantle.icon.impl;
 
 import java.net.URL;
+import java.util.Objects;
 
 import io.opensphere.core.util.Utilities;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
 
@@ -57,9 +57,9 @@ public class DefaultIconRecord implements IconRecord
         DefaultIconRecord other = (DefaultIconRecord)obj;
         String imageURLStr = myImageURLValue == null ? null : myImageURLValue.toString();
         String otherImageURLStr = other.myImageURLValue == null ? null : other.myImageURLValue.toString();
-        return EqualsHelper.equals(myCollectionNameString, other.myCollectionNameString)
-                && EqualsHelper.equals(imageURLStr, otherImageURLStr) && EqualsHelper.equals(mySourceKey, other.mySourceKey)
-                && EqualsHelper.equals(mySubCategoryValue, other.mySubCategoryValue);
+        return Objects.equals(myCollectionNameString, other.myCollectionNameString)
+                && Objects.equals(imageURLStr, otherImageURLStr) && Objects.equals(mySourceKey, other.mySourceKey)
+                && Objects.equals(mySubCategoryValue, other.mySubCategoryValue);
     }
 
     @Override

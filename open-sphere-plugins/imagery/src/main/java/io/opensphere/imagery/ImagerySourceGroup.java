@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.ZipEntry;
 
@@ -34,7 +35,6 @@ import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.XMLUtilities;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.HashCodeHelper;
 import io.opensphere.core.util.lang.ThreadUtilities;
 import io.opensphere.core.util.ref.WeakReference;
@@ -222,8 +222,8 @@ public class ImagerySourceGroup extends AbstractDataSource
         }
         final ImagerySourceGroup other = (ImagerySourceGroup)obj;
         return myEnabled == other.myEnabled && myShowBoundaryOnLoad == other.myShowBoundaryOnLoad
-                && myHadLoadError == other.myHadLoadError && EqualsHelper.equals(myId, other.myId)
-                && EqualsHelper.equals(myImageSources, other.myImageSources) && EqualsHelper.equals(myName, other.myName);
+                && myHadLoadError == other.myHadLoadError && Objects.equals(myId, other.myId)
+                && Objects.equals(myImageSources, other.myImageSources) && Objects.equals(myName, other.myName);
     }
 
     @Override

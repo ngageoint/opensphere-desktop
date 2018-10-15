@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
-
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.FrustumGeometry;
 import io.opensphere.core.geometry.Geometry;
@@ -457,13 +456,8 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
     public void initialize(Set<VisualizationStyleParameter> paramSet)
     {
         super.initialize(paramSet);
-        for (VisualizationStyleParameter p : paramSet)
-        {
-            if (p.getKey() != null && p.getKey().startsWith(ourPropertyKeyPrefix))
-            {
-                setParameter(p);
-            }
-        }
+        paramSet.stream().filter(p -> p.getKey() != null && p.getKey().startsWith(ourPropertyKeyPrefix))
+                .forEach(this::setParameter);
     }
 
     /**
@@ -668,7 +662,7 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
                     ? bd.getMGS().followTerrain() ? Altitude.ReferenceLevel.TERRAIN : mlgs.getLocation().getAltitudeReference()
                     : altRef.getReference();
 
-            FrustumGeometry.Builder<GeographicPosition> builder = new FrustumGeometry.Builder<GeographicPosition>();
+            FrustumGeometry.Builder<GeographicPosition> builder = new FrustumGeometry.Builder<>();
             builder.setPosition(new GeographicPosition(LatLonAlt.createFromDegreesMeters(mlgs.getLocation().getLatD(),
                     mlgs.getLocation().getLonD(), alt, refLevel)));
             builder.setDataModelId(bd.getGeomId());
@@ -694,10 +688,7 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
         {
             return getBaseRadius() * getTopScale() * getWidthScale();
         }
-        else
-        {
-            return getBaseRadius() * getWidthScale();
-        }
+        return getBaseRadius() * getWidthScale();
     }
 
     /**
@@ -732,10 +723,7 @@ public abstract class AbstractFrustumGeometryFeatureVisualizationStyle extends A
         {
             return getBaseRadius() * getWidthScale();
         }
-        else
-        {
-            return getBaseRadius() * getTopScale() * getWidthScale();
-        }
+        return getBaseRadius() * getTopScale() * getWidthScale();
     }
 
 //    @Override

@@ -5,11 +5,10 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.Set;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.renderproperties.BlendingConfigGL;
 import io.opensphere.core.geometry.renderproperties.FragmentShaderProperties;
@@ -262,13 +261,8 @@ public abstract class AbstractTileVisualizationStyle extends AbstractVisualizati
     @Override
     public void initialize(Set<VisualizationStyleParameter> paramSet)
     {
-        for (VisualizationStyleParameter param : paramSet)
-        {
-            if (param.getKey() != null && param.getKey().startsWith(ourPropertyKeyPrefix))
-            {
-                setParameter(param);
-            }
-        }
+        paramSet.stream().filter(p -> p.getKey() != null && p.getKey().startsWith(ourPropertyKeyPrefix))
+                .forEach(this::setParameter);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package io.opensphere.mantle.data.cache;
 
+import java.util.Arrays;
+
 import io.opensphere.core.model.time.TimeSpan;
 
 /**
@@ -104,15 +106,8 @@ public abstract class CacheQuery
         boolean passes = true;
         if (myTimesOfInterest != null)
         {
-            passes = false;
-            for (TimeSpan toi : myTimesOfInterest)
-            {
-                if (toi != null && entry.getTime() != null && toi.overlaps(entry.getTime()))
-                {
-                    passes = true;
-                    break;
-                }
-            }
+            passes = Arrays.stream(myTimesOfInterest)
+                    .filter(t -> t != null && entry.getTime() != null && t.overlaps(entry.getTime())).findAny().isPresent();
         }
         return passes;
     }

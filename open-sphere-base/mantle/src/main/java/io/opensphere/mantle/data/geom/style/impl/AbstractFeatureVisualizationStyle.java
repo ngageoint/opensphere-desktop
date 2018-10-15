@@ -9,10 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
-
 import org.apache.log4j.Logger;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.AbstractRenderableGeometry;
 import io.opensphere.core.geometry.Geometry;
@@ -740,13 +739,8 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
     @Override
     public void initialize(Set<VisualizationStyleParameter> paramSet)
     {
-        for (VisualizationStyleParameter p : paramSet)
-        {
-            if (p.getKey() != null && p.getKey().startsWith(PROPERTY_KEY_PREFIX))
-            {
-                setParameter(p);
-            }
-        }
+        paramSet.stream().filter(p -> p.getKey() != null && p.getKey().startsWith(PROPERTY_KEY_PREFIX))
+                .forEach(this::setParameter);
     }
 
     /**
@@ -872,13 +866,8 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
         if (lblCol instanceof List)
         {
             StringBuilder buf = new StringBuilder();
-            for (Object obj : (List<?>)lblCol)
-            {
-                if (obj instanceof String)
-                {
-                    StyleUtils.appendLine(buf, StyleUtils.labelString((String)obj, metaDataInfo, mdp, timeSpan));
-                }
-            }
+            ((List<?>)lblCol).stream().filter(o -> o instanceof String)
+                    .forEach(s -> StyleUtils.appendLine(buf, StyleUtils.labelString((String)s, metaDataInfo, mdp, timeSpan)));
             return buf.toString();
         }
 

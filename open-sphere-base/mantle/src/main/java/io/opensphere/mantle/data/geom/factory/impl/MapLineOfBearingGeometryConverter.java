@@ -124,11 +124,8 @@ public final class MapLineOfBearingGeometryConverter extends AbstractGeometryCon
             MapLineOfBearingGeometrySupport localSupport = (MapLineOfBearingGeometrySupport)geomSupport;
             return MapLineOfBearingGeometryConverter.convert(getToolbox(), localSupport, id, dti, visState, renderPropertyPool);
         }
-        else
-        {
-            throw new IllegalArgumentException("MapGeometrySupport \"" + geomSupport.getClass().getName()
-                    + "\" is not an instance of \"" + getConvertedClassType().getName() + "\"");
-        }
+        throw new IllegalArgumentException("MapGeometrySupport \"" + geomSupport.getClass().getName()
+                + "\" is not an instance of \"" + getConvertedClassType().getName() + "\"");
     }
 
     @Override

@@ -267,15 +267,11 @@ public class LengthSliderStyleParameterEditorPanel extends AbstractStyleParamete
     @SuppressWarnings("PMD.SimplifiedTernary")
     private void updateValueLabel(final int value)
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
-            {
-                myLengthSpinner.setValue(Integer.valueOf(value));
-                myLengthValueLabel.setText(myTextEntry ? Length.getShortLabel(myDisplayUnits, true)
-                        : Length.create(myDisplayUnits, value).toShortLabelString());
-            }
+            myLengthSpinner.setValue(Integer.valueOf(value));
+            myLengthValueLabel.setText(myTextEntry ? Length.getShortLabel(myDisplayUnits, true)
+                    : Length.create(myDisplayUnits, value).toShortLabelString());
         });
     }
 }

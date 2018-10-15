@@ -174,7 +174,7 @@ public final class MapPointTransformerHelper
         GeoScreenBoundingBox gsbb = new GeoScreenBoundingBox(upperLeft, lowerRight,
                 new GeographicBoxAnchor(anchor, callOut.getAnchorOffset(), 0f, 0f));
 
-        TileGeometry.Builder<ScreenPosition> tileBuilder = new TileGeometry.Builder<ScreenPosition>();
+        TileGeometry.Builder<ScreenPosition> tileBuilder = new TileGeometry.Builder<>();
         tileBuilder.setBounds(gsbb);
         tileBuilder.setDataModelId(callOut.getId());
         SingletonImageProvider imageProvider = new SingletonImageProvider(image, Image.CompressionType.D3DFMT_A8R8G8B8);
@@ -218,7 +218,7 @@ public final class MapPointTransformerHelper
         GeoScreenBoundingBox newBoundingBox = new GeoScreenBoundingBox(upperLeft, lowerRight,
                 ((GeoScreenBoundingBox)previousTile.getBounds()).getAnchor());
 
-        TileGeometry.Builder<ScreenPosition> tileBuilder = new TileGeometry.Builder<ScreenPosition>();
+        TileGeometry.Builder<ScreenPosition> tileBuilder = new TileGeometry.Builder<>();
         tileBuilder.setBounds(newBoundingBox);
         tileBuilder.setDataModelId(callOut.getId());
         SingletonImageProvider imageProvider = new SingletonImageProvider(image, Image.CompressionType.D3DFMT_A8R8G8B8);

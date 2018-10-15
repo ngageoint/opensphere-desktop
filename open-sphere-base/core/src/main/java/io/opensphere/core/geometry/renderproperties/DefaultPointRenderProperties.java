@@ -3,9 +3,9 @@ package io.opensphere.core.geometry.renderproperties;
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Objects;
 
 import io.opensphere.core.util.Utilities;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.ExpectedCloneableException;
 
 /** Standard implementation of {@link PointRenderProperties}. */
@@ -157,9 +157,9 @@ public class DefaultPointRenderProperties implements PointRenderProperties
             return false;
         }
         DefaultPointRenderProperties other = (DefaultPointRenderProperties)obj;
-        return EqualsHelper.equals(myBaseRenderProperties, other.myBaseRenderProperties)
-                && EqualsHelper.equals(mySizeProperty, other.mySizeProperty)
-                && EqualsHelper.equals(myRoundnessProperty, other.myRoundnessProperty);
+        return Objects.equals(myBaseRenderProperties, other.myBaseRenderProperties)
+                && Objects.equals(mySizeProperty, other.mySizeProperty)
+                && Objects.equals(myRoundnessProperty, other.myRoundnessProperty);
     }
 
     @Override

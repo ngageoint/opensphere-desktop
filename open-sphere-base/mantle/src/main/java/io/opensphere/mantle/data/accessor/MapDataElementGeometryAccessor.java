@@ -2,6 +2,7 @@ package io.opensphere.mantle.data.accessor;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
@@ -10,7 +11,6 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 
 import io.opensphere.core.cache.accessor.GeometryAccessor;
-import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.mantle.data.element.MapDataElement;
 import io.opensphere.mantle.data.geom.MapGeometrySupport;
 import io.opensphere.mantle.data.geom.MapLocationGeometrySupport;
@@ -43,27 +43,26 @@ public class MapDataElementGeometryAccessor extends GeometryAccessor<MapDataElem
         Geometry result = null;
 
         // Create the geometry factory if it was not provided.
-        GeometryFactory geomFactory = factory;
-        if (geomFactory == null)
+        final GeometryFactory geomFactory;
+        if (factory == null)
         {
             geomFactory = new GeometryFactory();
+        }
+        else
+        {
+            geomFactory = factory;
         }
 
         if (mapGeomSupport.hasChildren())
         {
             List<Geometry> geomList = new LinkedList<>();
             geomList.add(createGeometryFromTopLevelGeometrySupport(mapGeomSupport, geomFactory));
-            for (MapGeometrySupport child : mapGeomSupport.getChildren())
-            {
-                geomList.add(createGeometry(child, geomFactory));
-            }
+            mapGeomSupport.getChildren().stream().map(c -> createGeometry(c, geomFactory)).forEach(geomList::add);
+
             result = geomFactory.createGeometryCollection(geomList.toArray(new Geometry[geomList.size()]));
             return result;
         }
-        else
-        {
-            result = createGeometryFromTopLevelGeometrySupport(mapGeomSupport, geomFactory);
-        }
+        result = createGeometryFromTopLevelGeometrySupport(mapGeomSupport, geomFactory);
 
         return result;
     }
@@ -91,11 +90,9 @@ public class MapDataElementGeometryAccessor extends GeometryAccessor<MapDataElem
         else if (mapGeomSupport instanceof MapPathGeometrySupport)
         {
             MapPathGeometrySupport path = (MapPathGeometrySupport)mapGeomSupport;
-            List<Coordinate> cdList = new LinkedList<>();
-            for (LatLonAlt lla : path.getLocations())
-            {
-                cdList.add(new Coordinate(lla.getLonD(), lla.getLatD(), lla.getAltM()));
-            }
+            List<Coordinate> cdList = new LinkedList<>(path.getLocations().stream()
+                    .map(lla -> new Coordinate(lla.getLonD(), lla.getLatD(), lla.getAltM())).collect(Collectors.toList()));
+
             if (!cdList.isEmpty())
             {
                 if (mapGeomSupport instanceof MapPolygonGeometrySupport)

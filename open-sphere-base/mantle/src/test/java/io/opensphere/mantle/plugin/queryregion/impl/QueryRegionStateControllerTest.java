@@ -123,7 +123,7 @@ public class QueryRegionStateControllerTest
     @Test
     public void testSaveState() throws ParserConfigurationException, XPathExpressionException
     {
-        PolygonGeometry.Builder<GeographicPosition> builder = new PolygonGeometry.Builder<GeographicPosition>();
+        PolygonGeometry.Builder<GeographicPosition> builder = new PolygonGeometry.Builder<>();
 
         double[] vertices1 = getTestVertices1();
         double[] vertices2 = getTestVertices2();
@@ -311,17 +311,11 @@ public class QueryRegionStateControllerTest
                         {
                             return ((PolygonGeometry)obj).getVertices().equals(positions);
                         }
-                        else
-                        {
-                            return false;
-                        }
+                        return false;
                     }
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
+                return false;
             }
         });
         return null;

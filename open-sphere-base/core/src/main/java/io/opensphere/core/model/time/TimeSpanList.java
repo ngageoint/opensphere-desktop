@@ -6,9 +6,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 
 /**
  * A list of non-overlapping {@link TimeSpan}s. Concrete implementations should
@@ -353,7 +353,7 @@ public abstract class TimeSpanList extends AbstractList<TimeSpan> implements Ser
         @Override
         public boolean contains(Object obj)
         {
-            return EqualsHelper.equals(obj, myTimeSpan);
+            return Objects.equals(obj, myTimeSpan);
         }
 
         @Override

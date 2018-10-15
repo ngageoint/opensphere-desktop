@@ -1,7 +1,6 @@
 package io.opensphere.mantle.data.geom.factory.impl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Collectors;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.AbstractRenderableGeometry;
@@ -44,19 +43,15 @@ public final class MapPolylineGeometryConverter extends AbstractGeometryConverte
         BasicVisualizationInfo basicVisInfo = dti.getBasicVisualizationInfo();
         boolean pickable = basicVisInfo != null && basicVisInfo.getLoadsTo().isPickable();
         int zOrder = visState.isSelected() ? ZOrderRenderProperties.TOP_Z : mapVisInfo == null ? 1000 : mapVisInfo.getZOrder();
-        PolylineGeometry.Builder<GeographicPosition> polylineBuilder = new PolylineGeometry.Builder<GeographicPosition>();
+        PolylineGeometry.Builder<GeographicPosition> polylineBuilder = new PolylineGeometry.Builder<>();
         PolylineRenderProperties props = createPolylineRenderProperties(geomSupport, visState, renderPropertyPool, pickable,
                 zOrder);
         polylineBuilder.setDataModelId(id);
         polylineBuilder.setLineType(geomSupport.getLineType() == null ? LineType.STRAIGHT_LINE : geomSupport.getLineType());
 
         // Convert list of LatLonAlt to list of GeographicPositions
-        List<GeographicPosition> geoPos = new ArrayList<>();
-        for (LatLonAlt lla : geomSupport.getLocations())
-        {
-            geoPos.add(createGeographicPosition(lla, mapVisInfo, visState, geomSupport));
-        }
-        polylineBuilder.setVertices(geoPos);
+        polylineBuilder.setVertices(geomSupport.getLocations().stream()
+                .map(lla -> createGeographicPosition(lla, mapVisInfo, visState, geomSupport)).collect(Collectors.toList()));
 
         // Add a time constraint if in time line mode.
         Constraints constraints = null;
@@ -129,11 +124,8 @@ public final class MapPolylineGeometryConverter extends AbstractGeometryConverte
             MapPolylineGeometrySupport megs = (MapPolylineGeometrySupport)geomSupport;
             return MapPolylineGeometryConverter.convert(getToolbox(), megs, id, dti, visState, renderPropertyPool);
         }
-        else
-        {
-            throw new IllegalArgumentException("MapGeometrySupport \"" + geomSupport.getClass().getName()
-                    + "\" is not an instance of \"" + getConvertedClassType().getName() + "\"");
-        }
+        throw new IllegalArgumentException("MapGeometrySupport \"" + geomSupport.getClass().getName()
+                + "\" is not an instance of \"" + getConvertedClassType().getName() + "\"");
     }
 
     @Override

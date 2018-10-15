@@ -1,6 +1,7 @@
 package io.opensphere.core.modulestate.config.v1;
 
 import java.util.Collection;
+import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -14,7 +15,6 @@ import com.bitsys.fade.mist.state.v4.StateType;
 
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.StringUtilities;
 
 /**
@@ -110,9 +110,8 @@ public class ModuleStateData
             return false;
         }
         ModuleStateData other = (ModuleStateData)obj;
-        return myActive == other.myActive && EqualsHelper.equals(myElement, other.myElement)
-                && EqualsHelper.equals(myId, other.myId) && EqualsHelper.equals(myModules, other.myModules)
-                && EqualsHelper.equals(myState, other.myState);
+        return myActive == other.myActive && Objects.equals(myElement, other.myElement) && Objects.equals(myId, other.myId)
+                && Objects.equals(myModules, other.myModules) && Objects.equals(myState, other.myState);
     }
 
     /**

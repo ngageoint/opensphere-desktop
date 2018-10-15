@@ -1,5 +1,6 @@
 package io.opensphere.mantle.data.geom.factory.impl;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,10 +39,7 @@ public class DefaultRenderPropertyPool implements RenderPropertyPool
         DefaultRenderPropertyPool pool = new DefaultRenderPropertyPool(dti);
         if (geomCol != null && geomCol.length > 0)
         {
-            for (Collection<Geometry> col : geomCol)
-            {
-                pool.addAllFromGeometry(col);
-            }
+            Arrays.stream(geomCol).forEach(pool::addAllFromGeometry);
         }
         return pool;
     }

@@ -254,7 +254,7 @@ public class CSVParseParameters extends Observable implements Cloneable
      */
     public void setCommentIndicator(String commentIndicator)
     {
-        if (!EqualsHelper.equals(myCommentIndicator, commentIndicator))
+        if (!Objects.equals(myCommentIndicator, commentIndicator))
         {
             myCommentIndicator = commentIndicator;
             if (myFireUpdates)
@@ -272,7 +272,7 @@ public class CSVParseParameters extends Observable implements Cloneable
      */
     public void setDataStartLine(Integer dataStartLine)
     {
-        if (!EqualsHelper.equals(myDataStartLine, dataStartLine))
+        if (!Objects.equals(myDataStartLine, dataStartLine))
         {
             myDataStartLine = dataStartLine;
             if (myFireUpdates)
@@ -290,7 +290,7 @@ public class CSVParseParameters extends Observable implements Cloneable
      */
     public void setHeaderLine(Integer headerLine)
     {
-        if (!EqualsHelper.equals(myHeaderLine, headerLine))
+        if (!Objects.equals(myHeaderLine, headerLine))
         {
             myHeaderLine = headerLine;
             if (myFireUpdates)

@@ -27,7 +27,7 @@ public class DataGroupActivationProperty extends CancellableThreePhaseProperty<A
      * Internal activation listener that ensures the state transitions are
      * legal.
      */
-    private final ThreePhaseChangeListener<ActivationState> myListener = new ThreePhaseChangeListener<ActivationState>()
+    private final ThreePhaseChangeListener<ActivationState> myListener = new ThreePhaseChangeListener<>()
     {
         @Override
         public void commit(ActivationState state, Phaser phaser)
@@ -207,17 +207,11 @@ public class DataGroupActivationProperty extends CancellableThreePhaseProperty<A
                 {
                     return true;
                 }
-                else
-                {
-                    setValue(ActivationState.ERROR, 0L, false);
-                    return false;
-                }
+                setValue(ActivationState.ERROR, 0L, false);
+                return false;
             }
-            else
-            {
-                return isInactiveOrDeactivation() || setValue(ActivationState.DEACTIVATING, timeoutMillis, true)
-                        && setValue(ActivationState.INACTIVE, timeoutMillis, true);
-            }
+            return isInactiveOrDeactivation() || setValue(ActivationState.DEACTIVATING, timeoutMillis, true)
+                    && setValue(ActivationState.INACTIVE, timeoutMillis, true);
         }
         catch (InterruptedException e)
         {

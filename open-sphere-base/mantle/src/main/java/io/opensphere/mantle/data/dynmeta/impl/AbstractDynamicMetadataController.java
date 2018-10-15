@@ -92,7 +92,7 @@ public abstract class AbstractDynamicMetadataController<T> implements DynamicMet
         }
         if (!idsRemoved.isEmpty())
         {
-            fireChangeEvent(new ArrayList<Long>(idsRemoved), source);
+            fireChangeEvent(new ArrayList<>(idsRemoved), source);
         }
     }
 
@@ -173,10 +173,7 @@ public abstract class AbstractDynamicMetadataController<T> implements DynamicMet
             }
             else
             {
-                for (Long id : cacheIds)
-                {
-                    myIdToValueMap.put(id.longValue(), tempVal);
-                }
+                cacheIds.forEach(id -> myIdToValueMap.put(id.longValue(), tempVal));
                 fireChangeEvent(cacheIds, source);
             }
         }
@@ -202,10 +199,7 @@ public abstract class AbstractDynamicMetadataController<T> implements DynamicMet
             throw new IllegalArgumentException("The class " + value.getClass()
                     + " is not a valid type for this dynamic column, only " + getColumnClass().getName() + " is acceptable.");
         }
-        else
-        {
-            return (T)value;
-        }
+        return (T)value;
     }
 
     /**

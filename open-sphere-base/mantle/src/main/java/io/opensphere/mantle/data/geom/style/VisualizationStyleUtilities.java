@@ -2,13 +2,13 @@ package io.opensphere.mantle.data.geom.style;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.data.VisualizationSupport;
 
 /**
@@ -42,8 +42,7 @@ public final class VisualizationStyleUtilities
         {
             for (VisualizationStyleParameter set1P : style1PSet)
             {
-                if (EqualsHelper.equals(set2P.getKey(), set1P.getKey())
-                        && !EqualsHelper.equals(set2P.getValue(), set1P.getValue()))
+                if (Objects.equals(set2P.getKey(), set1P.getKey()) && !Objects.equals(set2P.getValue(), set1P.getValue()))
                 {
                     result.add(set2P);
                 }
@@ -98,8 +97,7 @@ public final class VisualizationStyleUtilities
         {
             for (VisualizationStyleParameter set1P : style1PSet)
             {
-                if (EqualsHelper.equals(set2P.getKey(), set1P.getKey())
-                        && !EqualsHelper.equals(set2P.getValue(), set1P.getValue()))
+                if (Objects.equals(set2P.getKey(), set1P.getKey()) && !Objects.equals(set2P.getValue(), set1P.getValue()))
                 {
                     different = true;
                     break;

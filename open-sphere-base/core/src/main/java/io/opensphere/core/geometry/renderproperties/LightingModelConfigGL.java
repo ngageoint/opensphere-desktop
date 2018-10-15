@@ -2,9 +2,9 @@ package io.opensphere.core.geometry.renderproperties;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.HashCodeHelper;
 
 /** A set of lighting model settings to use when rendering a geometry. */
@@ -110,14 +110,13 @@ public class LightingModelConfigGL implements Serializable
             return false;
         }
         LightingModelConfigGL other = (LightingModelConfigGL)obj;
-        return myLightNumber == other.myLightNumber && EqualsHelper.equals(myColorMaterialMode, other.myColorMaterialMode)
-                && EqualsHelper.equals(myFace, other.myFace)
-                && EqualsHelper.equals(myLightModelParameters, other.myLightModelParameters)
-                && EqualsHelper.equals(myLightModelVectorParameters, other.myLightModelVectorParameters)
-                && EqualsHelper.equals(myLightParameters, other.myLightParameters)
-                && EqualsHelper.equals(myLightVectorParameters, other.myLightVectorParameters)
-                && EqualsHelper.equals(myMaterialParameters, other.myMaterialParameters)
-                && EqualsHelper.equals(myMaterialVectorParameters, other.myMaterialVectorParameters);
+        return myLightNumber == other.myLightNumber && Objects.equals(myColorMaterialMode, other.myColorMaterialMode)
+                && Objects.equals(myFace, other.myFace) && Objects.equals(myLightModelParameters, other.myLightModelParameters)
+                && Objects.equals(myLightModelVectorParameters, other.myLightModelVectorParameters)
+                && Objects.equals(myLightParameters, other.myLightParameters)
+                && Objects.equals(myLightVectorParameters, other.myLightVectorParameters)
+                && Objects.equals(myMaterialParameters, other.myMaterialParameters)
+                && Objects.equals(myMaterialVectorParameters, other.myMaterialVectorParameters);
     }
 
     /**

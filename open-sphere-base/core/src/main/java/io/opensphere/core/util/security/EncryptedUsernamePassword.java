@@ -1,6 +1,7 @@
 package io.opensphere.core.util.security;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -8,7 +9,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import io.opensphere.core.util.Utilities;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.ExpectedCloneableException;
 
 /**
@@ -55,7 +55,7 @@ public class EncryptedUsernamePassword implements Cloneable
             return false;
         }
         EncryptedUsernamePassword other = (EncryptedUsernamePassword)obj;
-        return EqualsHelper.equals(myEncryptedPassword, other.myEncryptedPassword) && myPurpose.equals(other.myPurpose)
+        return Objects.equals(myEncryptedPassword, other.myEncryptedPassword) && myPurpose.equals(other.myPurpose)
                 && myUsername.equals(other.myUsername);
     }
 

@@ -1,13 +1,13 @@
 package io.opensphere.mantle.util.dynenum.impl;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import gnu.trove.map.TShortObjectMap;
 import gnu.trove.map.hash.TShortObjectHashMap;
 import gnu.trove.procedure.TShortObjectProcedure;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.util.dynenum.DynamicEnumerationConstants;
 import io.opensphere.mantle.util.dynenum.DynamicEnumerationKey;
 import io.opensphere.mantle.util.dynenum.DynamicEnumerationMDIColumnData;
@@ -157,10 +157,7 @@ public class DynamicEnumerationMDIColumnDataImpl implements DynamicEnumerationMD
         {
             return null;
         }
-        else
-        {
-            return DynamicEnumerationKeyFactory.createKey(myTypeId, myMetaDataKeyId, valueId);
-        }
+        return DynamicEnumerationKeyFactory.createKey(myTypeId, myMetaDataKeyId, valueId);
     }
 
     @Override
@@ -273,7 +270,7 @@ public class DynamicEnumerationMDIColumnDataImpl implements DynamicEnumerationMD
         @Override
         public boolean execute(short id, T value)
         {
-            if (EqualsHelper.equals(mySearchValue, value))
+            if (Objects.equals(mySearchValue, value))
             {
                 myFound = true;
                 myValueId = id;

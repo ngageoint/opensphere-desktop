@@ -2,16 +2,15 @@ package io.opensphere.mantle.data.geom.style.impl;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import io.opensphere.core.Toolbox;
-import io.opensphere.core.util.ChangeSupport;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.ExpectedCloneableException;
 import io.opensphere.core.util.lang.NamedThreadFactory;
 import io.opensphere.mantle.data.DataTypeInfo;
@@ -197,7 +196,7 @@ public abstract class AbstractVisualizationStyle implements MutableVisualization
         synchronized (myParameterKeyToParameterMap)
         {
             oldParameter = myParameterKeyToParameterMap.get(paramKey);
-            if (oldParameter != null && !EqualsHelper.equals(oldParameter.getValue(), newValue))
+            if (oldParameter != null && !Objects.equals(oldParameter.getValue(), newValue))
             {
                 changed = true;
                 newParam = oldParameter.deriveWithNewValue(newValue);
@@ -220,7 +219,7 @@ public abstract class AbstractVisualizationStyle implements MutableVisualization
             for (VisualizationStyleParameter param : parameters)
             {
                 VisualizationStyleParameter oldParameter = myParameterKeyToParameterMap.get(param.getKey());
-                if (oldParameter != null && !EqualsHelper.equals(oldParameter.getValue(), param.getValue()))
+                if (oldParameter != null && !Objects.equals(oldParameter.getValue(), param.getValue()))
                 {
                     VisualizationStyleParameter newParam = oldParameter.deriveWithNewValue(param.getValue());
                     myParameterKeyToParameterMap.put(newParam.getKey(), newParam);
@@ -263,14 +262,7 @@ public abstract class AbstractVisualizationStyle implements MutableVisualization
                 changedSet, source);
         if (!Utilities.sameInstance(NO_EVENT_SOURCE, source))
         {
-            myParameterChangeSupport.notifyListeners(new ChangeSupport.Callback<VisualizationStyleParameterChangeListener>()
-            {
-                @Override
-                public void notify(VisualizationStyleParameterChangeListener listener)
-                {
-                    listener.styleParametersChanged(event);
-                }
-            }, ourExecutor);
+            myParameterChangeSupport.notifyListeners(listener -> listener.styleParametersChanged(event), ourExecutor);
         }
     }
 

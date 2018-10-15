@@ -1,12 +1,13 @@
 package io.opensphere.mantle.data.element.factory;
 
 import java.awt.Color;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.avro.generic.GenericRecord;
 
-import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Point;
@@ -36,6 +37,7 @@ public final class DataElementFactory
 {
     /**
      * Create the MapGeometrySupport for an Avro record.
+     *
      * @param rec record
      * @param help the layer, wrapped with a time span helper
      * @return MapGeometrySupport
@@ -68,6 +70,7 @@ public final class DataElementFactory
 
     /**
      * Determine the color for an Avro record.
+     *
      * @param rec record
      * @param t layer
      * @return Color
@@ -84,6 +87,7 @@ public final class DataElementFactory
 
     /**
      * Convert an Object to String, with nulls remaining as such.
+     *
      * @param obj an Object or null
      * @return a String or null
      */
@@ -98,6 +102,7 @@ public final class DataElementFactory
 
     /**
      * Get a field from an Avro record as a String (or null).
+     *
      * @param rec record
      * @param key field name
      * @return associated field value, if any, as a String
@@ -108,8 +113,9 @@ public final class DataElementFactory
     }
 
     /**
-     * Create the MapGeometrySupport for a feature in the form of a polygon or
-     * a polyline.  Vertices of the Geometry are included as children.
+     * Create the MapGeometrySupport for a feature in the form of a polygon or a
+     * polyline. Vertices of the Geometry are included as children.
+     *
      * @param geom the basic Geometry
      * @param span the associated TimeSpan
      * @param c the Color of the feature
@@ -117,13 +123,9 @@ public final class DataElementFactory
      */
     private static MapGeometrySupport pathGeom(Geometry geom, TimeSpan span, Color c)
     {
-        List<LatLonAlt> llaList = new LinkedList<>();
-        Coordinate[] coords = geom.getCoordinates();
-        for (int i = 0; i < coords.length; i++)
-        {
-            llaList.add(LatLonAlt.createFromDegrees(
-                    coords[i].y, coords[i].x, Altitude.ReferenceLevel.ELLIPSOID));
-        }
+        List<LatLonAlt> llaList = new LinkedList<>(Arrays.stream(geom.getCoordinates())
+                .map(loc -> LatLonAlt.createFromDegrees(loc.y, loc.x, Altitude.ReferenceLevel.ELLIPSOID))
+                .collect(Collectors.toList()));
 
         AbstractMapGeometrySupport pgs = null;
         if (geom instanceof LineString)
@@ -137,10 +139,7 @@ public final class DataElementFactory
 
         if (!span.isTimeless())
         {
-            for (LatLonAlt lla :  llaList)
-            {
-                pgs.addChild(defPointGeom(lla, span, c));
-            }
+            llaList.stream().map(lla -> defPointGeom(lla, span, c)).forEach(pgs::addChild);
         }
 
         pgs.setColor(c, null);
@@ -151,6 +150,7 @@ public final class DataElementFactory
     /**
      * Create the MapGeometrySupport for a geographical ellipse defined by the
      * provided parameters.
+     *
      * @param lat center latitude (degrees)
      * @param lon center longitude (degrees)
      * @param semiMaj semi-major axis length in km
@@ -171,8 +171,9 @@ public final class DataElementFactory
     }
 
     /**
-     * Create a MapGeometrySupport for the specified point parameters.  The
+     * Create a MapGeometrySupport for the specified point parameters. The
      * return value is an instance of SimpleMapPointGeometrySupport.
+     *
      * @param lat latitude (degrees)
      * @param lon longitude (degrees)
      * @param t TimeSpan
@@ -181,18 +182,19 @@ public final class DataElementFactory
      */
     public static MapGeometrySupport pointGeom(double lat, double lon, TimeSpan t, Color c)
     {
-        MapGeometrySupport mgs = new SimpleMapPointGeometrySupport(LatLonAlt.createFromDegrees(
-                lat, lon, Altitude.ReferenceLevel.TERRAIN));
+        MapGeometrySupport mgs = new SimpleMapPointGeometrySupport(
+                LatLonAlt.createFromDegrees(lat, lon, Altitude.ReferenceLevel.TERRAIN));
         mgs.setColor(c, null);
         mgs.setTimeSpan(t);
         return mgs;
     }
 
     /**
-     * Create a "default" MapGeometrySupport for the specified parameters.  The
+     * Create a "default" MapGeometrySupport for the specified parameters. The
      * return value is an instance of DefaultMapPointGeometrySupport (cf.
-     * pointGeom(double, double, TimeSpan, Color)).  This author is at a loss
-     * to explain why we need two kinds of these and why both are used here.
+     * pointGeom(double, double, TimeSpan, Color)). This author is at a loss to
+     * explain why we need two kinds of these and why both are used here.
+     *
      * @param lla LatLonAlt position of the point
      * @param span TimeSpan
      * @param c Color
@@ -208,6 +210,7 @@ public final class DataElementFactory
 
     /**
      * Extract a Color from the arcane API of DataTypeInfo, if possible.
+     *
      * @param t DataTypeInfo
      * @return the layer's Color, if any, or null
      */

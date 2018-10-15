@@ -26,7 +26,7 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
     private final NameType myNameType;
 
     /** The TreeItem. */
-    private final ObjectProperty<TreeItem<String>> myItem = new SimpleObjectProperty<TreeItem<String>>();
+    private final ObjectProperty<TreeItem<String>> myItem = new SimpleObjectProperty<>();
 
     /** The Type. */
     private final Type myType;
@@ -36,7 +36,7 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
 
     /** The Observable Selected Tree Node. */
     @SuppressWarnings("rawtypes")
-    private ObjectProperty<TreeView> mySelectedTreeNode = new SimpleObjectProperty<TreeView>();
+    private ObjectProperty<TreeView> mySelectedTreeNode = new SimpleObjectProperty<>();
 
     /**
      * Creates the folder node.

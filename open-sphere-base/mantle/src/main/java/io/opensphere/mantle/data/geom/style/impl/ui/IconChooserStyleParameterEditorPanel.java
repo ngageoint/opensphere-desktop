@@ -122,22 +122,18 @@ public class IconChooserStyleParameterEditorPanel extends AbstractStyleParameter
         final String val = getParameterValue();
         if (val != null)
         {
-            EventQueueUtilities.runOnEDT(new Runnable()
+            EventQueueUtilities.runOnEDT(() ->
             {
-                @Override
-                public void run()
+                Image image;
+                try
                 {
-                    Image image;
-                    try
-                    {
-                        image = loadIcon(56, new URL(val));
-                    }
-                    catch (MalformedURLException e)
-                    {
-                        image = ImageUtil.BROKEN_IMAGE;
-                    }
-                    myButton.setIcon(new ImageIcon(image));
+                    image = loadIcon(56, new URL(val));
                 }
+                catch (MalformedURLException e)
+                {
+                    image = ImageUtil.BROKEN_IMAGE;
+                }
+                myButton.setIcon(new ImageIcon(image));
             });
         }
     }

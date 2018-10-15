@@ -87,10 +87,7 @@ public class DynamicMetaDataListViewProxy implements List<Object>
         {
             return myDynColumnCoordinator.getValue(myElementCacheId, index);
         }
-        else
-        {
-            return myUnderlyingList == null ? null : myUnderlyingList.get(index);
-        }
+        return myUnderlyingList == null ? null : myUnderlyingList.get(index);
     }
 
     @Override
@@ -108,7 +105,7 @@ public class DynamicMetaDataListViewProxy implements List<Object>
     @Override
     public Iterator<Object> iterator()
     {
-        return new Iterator<Object>()
+        return new Iterator<>()
         {
             private int myCurIndex = -1;
 
@@ -146,13 +143,13 @@ public class DynamicMetaDataListViewProxy implements List<Object>
     @Override
     public ListIterator<Object> listIterator()
     {
-        return Collections.unmodifiableList(new ArrayList<Object>(this)).listIterator();
+        return Collections.unmodifiableList(new ArrayList<>(this)).listIterator();
     }
 
     @Override
     public ListIterator<Object> listIterator(int arg0)
     {
-        return Collections.unmodifiableList(new ArrayList<Object>(this)).listIterator(arg0);
+        return Collections.unmodifiableList(new ArrayList<>(this)).listIterator(arg0);
     }
 
     @Override

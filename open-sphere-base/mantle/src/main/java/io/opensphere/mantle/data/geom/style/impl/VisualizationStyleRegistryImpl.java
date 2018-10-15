@@ -7,12 +7,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.RenderingCapabilities;
-import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.collections.CollectionUtilities;
@@ -222,19 +222,10 @@ public class VisualizationStyleRegistryImpl implements VisualizationStyleRegistr
     public Set<Class<? extends VisualizationStyle>> getStylesForStyleType(Class<? extends VisualizationStyle> styleClass)
     {
         Utilities.checkNull(styleClass, "styleClass");
-        Set<Class<? extends VisualizationStyle>> result = New.set();
         synchronized (myStyleClassesSet)
         {
-            for (Class<? extends VisualizationStyle> cl : myStyleClassesSet)
-            {
-                if (styleClass.isAssignableFrom(cl))
-                {
-                    result.add(cl);
-                }
-            }
+            return myStyleClassesSet.stream().filter(styleClass::isAssignableFrom).collect(Collectors.toUnmodifiableSet());
         }
-        return result.isEmpty() ? Collections.<Class<? extends VisualizationStyle>>emptySet()
-                : Collections.unmodifiableSet(result);
     }
 
     @Override
@@ -398,14 +389,7 @@ public class VisualizationStyleRegistryImpl implements VisualizationStyleRegistr
     private void fireDefaultStyleChanged(final Class<? extends VisualizationSupport> mgsClass,
             final Class<? extends VisualizationStyle> styleClass, final Object source)
     {
-        myChangeSupport.notifyListeners(new Callback<VisualizationStyleRegistry.VisualizationStyleRegistryChangeListener>()
-        {
-            @Override
-            public void notify(VisualizationStyleRegistryChangeListener listener)
-            {
-                listener.defaultStyleChanged(mgsClass, styleClass, source);
-            }
-        }, ourExecutor);
+        myChangeSupport.notifyListeners(listener -> listener.defaultStyleChanged(mgsClass, styleClass, source), ourExecutor);
     }
 
     /**
@@ -415,14 +399,7 @@ public class VisualizationStyleRegistryImpl implements VisualizationStyleRegistr
      */
     private void fireStyleDataTypeChangeEventListener(final VisualizationStyleDatatypeChangeEvent event)
     {
-        myChangeSupport.notifyListeners(new Callback<VisualizationStyleRegistry.VisualizationStyleRegistryChangeListener>()
-        {
-            @Override
-            public void notify(VisualizationStyleRegistryChangeListener listener)
-            {
-                listener.visualizationStyleDatatypeChanged(event);
-            }
-        }, ourExecutor);
+        myChangeSupport.notifyListeners(listener -> listener.visualizationStyleDatatypeChanged(event), ourExecutor);
     }
 
     /**
@@ -433,13 +410,6 @@ public class VisualizationStyleRegistryImpl implements VisualizationStyleRegistr
      */
     private void fireVisualizationStyleInstalled(final Class<? extends VisualizationStyle> styleClass, final Object source)
     {
-        myChangeSupport.notifyListeners(new Callback<VisualizationStyleRegistry.VisualizationStyleRegistryChangeListener>()
-        {
-            @Override
-            public void notify(VisualizationStyleRegistryChangeListener listener)
-            {
-                listener.visualizationStyleInstalled(styleClass, source);
-            }
-        }, ourExecutor);
+        myChangeSupport.notifyListeners(listener -> listener.visualizationStyleInstalled(styleClass, source), ourExecutor);
     }
 }

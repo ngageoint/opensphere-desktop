@@ -317,13 +317,9 @@ public class DynamicEllipseFeatureVisualization extends AbstractEllipseFeatureVi
     public void initialize(Set<VisualizationStyleParameter> paramSet)
     {
         super.initialize(paramSet);
-        for (VisualizationStyleParameter p : paramSet)
-        {
-            if (p.getKey() != null && p.getKey().startsWith(PROPERTY_KEY_PREFIX))
-            {
-                setParameter(p);
-            }
-        }
+
+        paramSet.stream().filter(p -> p.getKey() != null && p.getKey().startsWith(PROPERTY_KEY_PREFIX))
+                .forEach(this::setParameter);
     }
 
     @Override

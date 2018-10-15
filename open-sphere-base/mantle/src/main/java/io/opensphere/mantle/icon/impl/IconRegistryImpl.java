@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
@@ -29,7 +30,6 @@ import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.concurrent.ProcrastinatingExecutor;
 import io.opensphere.core.util.concurrent.SuppressableRejectedExecutionHandler;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.NamedThreadFactory;
 import io.opensphere.core.util.lang.Pair;
 import io.opensphere.mantle.icon.IconCache;
@@ -320,7 +320,7 @@ public class IconRegistryImpl implements IconRegistry
         {
             myIconIdToIconRecordMap.forEachEntry((iconId, record) ->
             {
-                if (EqualsHelper.equals(urlStr, record.getImageURL().toString()))
+                if (Objects.equals(urlStr, record.getImageURL().toString()))
                 {
                     recList.add(record);
                     return false;
@@ -427,7 +427,7 @@ public class IconRegistryImpl implements IconRegistry
         {
             myIconIdToIconRecordMap.forEachEntry((iconId, record) ->
             {
-                if (record.getSubCategory() != null && EqualsHelper.equals(collection, record.getCollectionName()))
+                if (record.getSubCategory() != null && Objects.equals(collection, record.getCollectionName()))
                 {
                     subCatSet.add(record.getSubCategory());
                 }
@@ -850,6 +850,7 @@ public class IconRegistryImpl implements IconRegistry
      * @param iconToDelete the icon selected for deletion.
      * @param thePanelModel the model to use for registry.
      */
+    @Override
     public void deleteIcon(IconRecord iconToDelete, PanelModel thePanelModel)
     {
         String filename = iconToDelete.getImageURL().toString();

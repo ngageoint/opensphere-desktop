@@ -60,7 +60,7 @@ public final class MapIconGeometryConverter extends AbstractGeometryConverter
         MapVisualizationInfo mapVisInfo = dti.getMapVisualizationInfo();
         BasicVisualizationInfo basicVisInfo = dti.getBasicVisualizationInfo();
 
-        PointSpriteGeometry.Builder<GeographicPosition> iconBuilder = new PointSpriteGeometry.Builder<GeographicPosition>();
+        PointSpriteGeometry.Builder<GeographicPosition> iconBuilder = new PointSpriteGeometry.Builder<>();
 
         PointRenderProperties props = getIconSizeRenderPropertiesIfAvailable(visState, mapVisInfo, basicVisInfo,
                 renderPropertyPool, geomSupport, visState.isSelected() ? MantleConstants.SELECT_COLOR : geomSupport.getColor());
@@ -205,11 +205,8 @@ public final class MapIconGeometryConverter extends AbstractGeometryConverter
             MapIconGeometrySupport localSupport = (MapIconGeometrySupport)geomSupport;
             return MapIconGeometryConverter.convert(getToolbox(), iconReg, localSupport, id, dti, visState, renderPropertyPool);
         }
-        else
-        {
-            throw new IllegalArgumentException("MapGeometrySupport \"" + geomSupport.getClass().getName()
-                    + "\" is not an instance of \"" + getConvertedClassType().getName() + "\"");
-        }
+        throw new IllegalArgumentException("MapGeometrySupport \"" + geomSupport.getClass().getName()
+                + "\" is not an instance of \"" + getConvertedClassType().getName() + "\"");
     }
 
     @Override

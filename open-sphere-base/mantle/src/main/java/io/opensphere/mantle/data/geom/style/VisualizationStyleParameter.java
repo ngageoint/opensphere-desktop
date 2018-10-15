@@ -1,9 +1,9 @@
 package io.opensphere.mantle.data.geom.style;
 
 import java.util.List;
+import java.util.Objects;
 
 import io.opensphere.core.util.Utilities;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.HashCodeHelper;
 
 /**
@@ -104,9 +104,9 @@ public class VisualizationStyleParameter
             return false;
         }
         VisualizationStyleParameter other = (VisualizationStyleParameter)obj;
-        return myParameterFlags.equals(other.myParameterFlags) && EqualsHelper.equals(myHint, other.myHint)
-                && EqualsHelper.equals(myName, other.myName) && EqualsHelper.equals(myKey, other.myKey)
-                && EqualsHelper.equals(myValue, other.myValue) && EqualsHelper.equals(myValueType, other.myValueType);
+        return myParameterFlags.equals(other.myParameterFlags) && Objects.equals(myHint, other.myHint)
+                && Objects.equals(myName, other.myName) && Objects.equals(myKey, other.myKey)
+                && Objects.equals(myValue, other.myValue) && Objects.equals(myValueType, other.myValueType);
     }
 
     /**

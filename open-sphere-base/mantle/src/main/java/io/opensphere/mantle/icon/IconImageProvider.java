@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
 import javax.imageio.ImageIO;
@@ -22,7 +23,6 @@ import io.opensphere.core.image.processor.ImageProcessor;
 import io.opensphere.core.server.HttpServer;
 import io.opensphere.core.server.ResponseValues;
 import io.opensphere.core.server.ServerProvider;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.HashCodeHelper;
 import io.opensphere.core.util.net.UrlUtilities;
 
@@ -136,11 +136,11 @@ public class IconImageProvider implements ImmediateImageProvider<Void>
         IconImageProvider other = (IconImageProvider)obj;
         String urlStr1 = myURL == null ? null : myURL.toString();
         String urlStr2 = other.myURL == null ? null : other.myURL.toString();
-        if (!EqualsHelper.equals(urlStr1, urlStr2))
+        if (!Objects.equals(urlStr1, urlStr2))
         {
             return false;
         }
-        return EqualsHelper.equals(myImageProcessor, other.myImageProcessor);
+        return Objects.equals(myImageProcessor, other.myImageProcessor);
     }
 
     @Override

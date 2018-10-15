@@ -78,7 +78,7 @@ public class MapGeometrySupportGeometryFactory
             throw new IllegalArgumentException(mgs.getClass().getName() + " is not currently supported");
         }
 
-        Set<Geometry> resultSet = addToSet == null ? new HashSet<Geometry>() : addToSet;
+        Set<Geometry> resultSet = addToSet == null ? new HashSet<>() : addToSet;
 
         if (addToSet != null)
         {
@@ -88,10 +88,7 @@ public class MapGeometrySupportGeometryFactory
             // recursive build.
             if (mgs.hasChildren())
             {
-                for (MapGeometrySupport child : mgs.getChildren())
-                {
-                    createGeometries(resultSet, child, id, dti, visState, renderPropertyPool);
-                }
+                mgs.getChildren().forEach(c -> createGeometries(resultSet, c, id, dti, visState, renderPropertyPool));
             }
         }
 

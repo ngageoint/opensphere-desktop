@@ -1,5 +1,6 @@
 package io.opensphere.mantle.data.geom.factory.impl;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,15 +50,8 @@ public class MapGeometrySupportConverterRegistryImpl implements MapGeometrySuppo
      */
     private static Class<?> getSuperMGSClass(Class<?> aClass)
     {
-        Class<?>[] interfaces = aClass.getInterfaces();
-        for (Class<?> intF : interfaces)
-        {
-            if (MapGeometrySupport.class.isAssignableFrom(intF))
-            {
-                return intF;
-            }
-        }
-        return null;
+        return Arrays.stream(aClass.getInterfaces()).filter(c -> MapGeometrySupport.class.isAssignableFrom(c)).findFirst()
+                .orElse(null);
     }
 
     /**

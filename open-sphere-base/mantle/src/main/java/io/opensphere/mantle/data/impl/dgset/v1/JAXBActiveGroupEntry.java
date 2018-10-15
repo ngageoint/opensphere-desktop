@@ -1,11 +1,12 @@
 package io.opensphere.mantle.data.impl.dgset.v1;
 
+import java.util.Objects;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.data.ActiveGroupEntry;
 
 /**
@@ -65,7 +66,7 @@ public class JAXBActiveGroupEntry implements ActiveGroupEntry
             return false;
         }
         JAXBActiveGroupEntry other = (JAXBActiveGroupEntry)obj;
-        return EqualsHelper.equals(myGroupId, other.myGroupId);
+        return Objects.equals(myGroupId, other.myGroupId);
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -31,7 +32,6 @@ import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.data.BasicVisualizationInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MapVisualizationInfo;
@@ -617,13 +617,8 @@ public class IconFeatureVisualizationStyle extends AbstractLocationFeatureVisual
     public void initialize(Set<VisualizationStyleParameter> paramSet)
     {
         super.initialize(paramSet);
-        for (VisualizationStyleParameter p : paramSet)
-        {
-            if (p.getKey() != null && p.getKey().startsWith(ourPropertyKeyPrefix))
-            {
-                setParameter(p);
-            }
-        }
+        paramSet.stream().filter(p -> p.getKey() != null && p.getKey().startsWith(ourPropertyKeyPrefix))
+                .forEach(this::setParameter);
     }
 
     /**
@@ -845,7 +840,7 @@ public class IconFeatureVisualizationStyle extends AbstractLocationFeatureVisual
      */
     private void loadDefaultIconRecord()
     {
-        if (myTempIconRecord == null || !EqualsHelper.equals(getIconURL(), myTempIconRecord.getImageURL().toString()))
+        if (myTempIconRecord == null || !Objects.equals(getIconURL(), myTempIconRecord.getImageURL().toString()))
         {
             IconRegistry reg = MantleToolboxUtils.getMantleToolbox(getToolbox()).getIconRegistry();
             URL iconURL = null;

@@ -1,6 +1,7 @@
 package io.opensphere.mantle.data.impl;
 
-import io.opensphere.core.util.lang.EqualsHelper;
+import java.util.Objects;
+
 import io.opensphere.mantle.data.ActiveGroupEntry;
 
 /**
@@ -49,7 +50,7 @@ public class DefaultActiveGroupEntry implements ActiveGroupEntry
             return false;
         }
         DefaultActiveGroupEntry other = (DefaultActiveGroupEntry)obj;
-        return EqualsHelper.equals(myActiveGroupId, other.myActiveGroupId);
+        return Objects.equals(myActiveGroupId, other.myActiveGroupId);
     }
 
     @Override

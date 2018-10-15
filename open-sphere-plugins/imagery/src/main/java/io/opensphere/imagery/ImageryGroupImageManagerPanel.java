@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
@@ -49,7 +50,6 @@ import io.opensphere.controlpanels.layers.layerdetail.LayerDetailPanel;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.PhasedTaskCanceller;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.imagery.gdal.GDALInfo;
@@ -588,7 +588,7 @@ public class ImageryGroupImageManagerPanel extends JPanel
             {
                 ImagerySourceGroup srcGrp = entry.getValue();
 
-                if (!EqualsHelper.equals(srcGrp, myOriginalSource) && srcGrp.getImageSources() != null
+                if (!Objects.equals(srcGrp, myOriginalSource) && srcGrp.getImageSources() != null
                         && srcGrp.getImageSources().size() > 0)
                 {
                     for (ImageryFileSource src : srcGrp.getImageSources())

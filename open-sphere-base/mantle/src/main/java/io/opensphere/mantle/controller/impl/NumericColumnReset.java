@@ -4,10 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -54,19 +51,15 @@ public final class NumericColumnReset
                 final DataTypeInfo dti = panel.getChosenDataType();
                 final String key = panel.getChosenKey();
 
-                Thread t = new Thread(new Runnable()
+                Thread t = new Thread(() ->
                 {
-                    @Override
-                    public void run()
+                    if (key == null)
                     {
-                        if (key == null)
-                        {
-                            dti.getMetaDataInfo().resetNumericMapForAllKeys(tb);
-                        }
-                        else
-                        {
-                            dti.getMetaDataInfo().resetKeyNumeric(tb, key);
-                        }
+                        dti.getMetaDataInfo().resetNumericMapForAllKeys(tb);
+                    }
+                    else
+                    {
+                        dti.getMetaDataInfo().resetKeyNumeric(tb, key);
                     }
                 });
                 t.start();
@@ -149,14 +142,7 @@ public final class NumericColumnReset
 
             myDataTypesComboBox = new JComboBox<>(new ListComboBoxModel<>(proxyList));
             myDataTypesComboBox.setFont(new Font(Font.MONOSPACED, Font.PLAIN, myDataTypesComboBox.getFont().getSize()));
-            myDataTypesComboBox.addActionListener(new ActionListener()
-            {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    rebuildColumnList();
-                }
-            });
+            myDataTypesComboBox.addActionListener(e -> rebuildColumnList());
 
             myColumnComboBox = new JComboBox<>();
             myColumnComboBox.setFont(new Font(Font.MONOSPACED, Font.PLAIN, myColumnComboBox.getFont().getSize()));
@@ -258,14 +244,7 @@ public final class NumericColumnReset
                     }
                 }
 
-                Collections.sort(keyInfoList, new Comparator<KeyInfo>()
-                {
-                    @Override
-                    public int compare(KeyInfo o1, KeyInfo o2)
-                    {
-                        return o1.toString().compareTo(o2.toString());
-                    }
-                });
+                Collections.sort(keyInfoList, (o1, o2) -> o1.toString().compareTo(o2.toString()));
                 cbList.addAll(keyInfoList);
             }
             myColumnComboBox.setModel(new ListComboBoxModel<>(cbList));

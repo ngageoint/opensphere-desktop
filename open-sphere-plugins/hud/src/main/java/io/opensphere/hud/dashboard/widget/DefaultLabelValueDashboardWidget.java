@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.Objects;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -12,7 +13,6 @@ import javax.swing.JPanel;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.metrics.MetricsProvider;
 import io.opensphere.core.metrics.NumberMetricsProvider;
-import io.opensphere.core.util.lang.EqualsHelper;
 
 /**
  * The Class DefaultLabelValueDashboardWidget.
@@ -95,7 +95,7 @@ public class DefaultLabelValueDashboardWidget extends DashboardWidget
         {
             myValue.setText(value);
         }
-        if (!EqualsHelper.equals(myValue.getForeground(), provider.getColor()))
+        if (!Objects.equals(myValue.getForeground(), provider.getColor()))
         {
             myValue.setForeground(provider.getColor() == null ? myOriginalLabelColor : provider.getColor());
         }

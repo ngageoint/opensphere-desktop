@@ -3,7 +3,6 @@ package io.opensphere.mantle.iconproject.panels;
 import java.awt.Window;
 import java.util.List;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -75,24 +74,20 @@ public class GridBuilder extends TilePane
             iconView.setFitWidth(myTileWidth - 40);
         }
         iconButton.setGraphic(iconView);
-        iconButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>()
+        iconButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->
         {
-            @Override
-            public void handle(MouseEvent e)
+            if (e.getButton() == MouseButton.SECONDARY)
             {
-                if (e.getButton() == MouseButton.SECONDARY)
-                {
-                    iconButton.setContextMenu(new IconPopupMenu(myPanelModel));
-                }
-                if (myPanelModel.getViewModel().getMultiSelectEnabled())
-                {
-                    iconButton.setStyle("-fx-effect: dropshadow(three-pass-box, purple, 20, 0, 0, 0);");
-                    myPanelModel.getSelectedIcons().put(record, iconButton);
-                }
-                myPanelModel.getSelectedRecord().set(record);
-                myPanelModel.getSelectedIconMap().clear();
-                myPanelModel.getSelectedIconMap().put(record, iconButton);
+                iconButton.setContextMenu(new IconPopupMenu(myPanelModel));
             }
+            if (myPanelModel.getViewModel().getMultiSelectEnabled())
+            {
+                iconButton.setStyle("-fx-effect: dropshadow(three-pass-box, purple, 20, 0, 0, 0);");
+                myPanelModel.getSelectedIcons().put(record, iconButton);
+            }
+            myPanelModel.getSelectedRecord().set(record);
+            myPanelModel.getSelectedIconMap().clear();
+            myPanelModel.getSelectedIconMap().put(record, iconButton);
         });
         return iconButton;
     }

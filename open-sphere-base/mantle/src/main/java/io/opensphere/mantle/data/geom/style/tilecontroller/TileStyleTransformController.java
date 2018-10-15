@@ -40,30 +40,6 @@ public class TileStyleTransformController implements VisualizationStyleRegistryC
     /** The DGI change listener. */
     private final EventListener<AbstractDataGroupInfoChangeEvent> myDGIChangeListener;
 
-//
-//    /**
-//     * Checks if is applicable data group.
-//     *
-//     * @param dgi the dgi
-//     * @return true, if is applicable data group
-//     */
-//    private static boolean isApplicableDataGroup(DataGroupInfo dgi)
-//    {
-//        boolean applicable = false;
-//        if (dgi != null && dgi.hasMembers(false))
-//        {
-//            for (DataTypeInfo member : dgi.getMembers(false))
-//            {
-//                if (isApplicableDataType(member))
-//                {
-//                    applicable = true;
-//                    break;
-//                }
-//            }
-//        }
-//        return applicable;
-//    }
-
     /** The ExecutorService. */
     private final ExecutorService myExecutor;
 
@@ -151,14 +127,7 @@ public class TileStyleTransformController implements VisualizationStyleRegistryC
      */
     private EventListener<AbstractDataGroupInfoChangeEvent> createDGIChangeListener()
     {
-        EventListener<AbstractDataGroupInfoChangeEvent> listener = new EventListener<AbstractDataGroupInfoChangeEvent>()
-        {
-            @Override
-            public void notify(AbstractDataGroupInfoChangeEvent event)
-            {
-                handleDGIChangeEvent(event);
-            }
-        };
+        EventListener<AbstractDataGroupInfoChangeEvent> listener = event -> handleDGIChangeEvent(event);
         return listener;
     }
 
@@ -177,13 +146,9 @@ public class TileStyleTransformController implements VisualizationStyleRegistryC
                 DataGroupInfoChildAddedEvent childAddedEvent = (DataGroupInfoChildAddedEvent)evt.getOriginEvent();
                 if (childAddedEvent.getGroup().hasMembers(false))
                 {
-                    for (DataTypeInfo dti : childAddedEvent.getGroup().getMembers(false))
-                    {
-                        if (isApplicableDataType(dti))
-                        {
-                            myExecutor.execute(new UpdateDataTypeTileStyle(myToolbox, myTileStyleMonitor, dti));
-                        }
-                    }
+                    childAddedEvent.getGroup().getMembers(false).stream()
+                            .filter(TileStyleTransformController::isApplicableDataType)
+                            .map(d -> new UpdateDataTypeTileStyle(myToolbox, myTileStyleMonitor, d)).forEach(myExecutor::execute);
                 }
             }
             else if (evt.getOriginEvent() instanceof DataGroupInfoMemberAddedEvent)
@@ -198,13 +163,8 @@ public class TileStyleTransformController implements VisualizationStyleRegistryC
         }
         else if (event instanceof RootDataGroupAddedEvent && event.getGroup().hasMembers(true))
         {
-            for (DataTypeInfo dti : event.getGroup().getMembers(true))
-            {
-                if (isApplicableDataType(dti))
-                {
-                    myExecutor.execute(new UpdateDataTypeTileStyle(myToolbox, myTileStyleMonitor, dti));
-                }
-            }
+            event.getGroup().getMembers(true).stream().filter(TileStyleTransformController::isApplicableDataType)
+                    .map(d -> new UpdateDataTypeTileStyle(myToolbox, myTileStyleMonitor, d)).forEach(myExecutor::execute);
         }
     }
 
@@ -312,16 +272,12 @@ public class TileStyleTransformController implements VisualizationStyleRegistryC
                     final DataTypeInfo dti = getDataTypeInfo(MantleToolboxUtils.getMantleToolbox(myToolbox), dtiKey);
                     if (dti != null)
                     {
-                        myExecutor.execute(new Runnable()
+                        myExecutor.execute(() ->
                         {
-                            @Override
-                            public void run()
+                            if (dti.getMapVisualizationInfo() != null
+                                    && dti.getMapVisualizationInfo().getTileRenderProperties() != null)
                             {
-                                if (dti.getMapVisualizationInfo() != null
-                                        && dti.getMapVisualizationInfo().getTileRenderProperties() != null)
-                                {
-                                    tileStyle.updateTileRenderProperties(dti.getMapVisualizationInfo().getTileRenderProperties());
-                                }
+                                tileStyle.updateTileRenderProperties(dti.getMapVisualizationInfo().getTileRenderProperties());
                             }
                         });
                     }

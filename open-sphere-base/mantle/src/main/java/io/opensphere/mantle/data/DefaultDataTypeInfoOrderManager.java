@@ -3,12 +3,10 @@ package io.opensphere.mantle.data;
 import java.util.Collections;
 import java.util.Map;
 
-import gnu.trove.procedure.TObjectIntProcedure;
 import io.opensphere.core.order.OrderChangeListener;
 import io.opensphere.core.order.OrderManager;
 import io.opensphere.core.order.OrderManagerRegistry;
 import io.opensphere.core.order.OrderParticipantKey;
-import io.opensphere.core.order.ParticipantOrderChangeEvent;
 import io.opensphere.core.order.ParticipantOrderChangeEvent.ParticipantChangeType;
 import io.opensphere.core.order.impl.DefaultOrderCategory;
 import io.opensphere.core.order.impl.DefaultOrderParticipantKey;
@@ -20,34 +18,26 @@ import io.opensphere.core.util.collections.New;
  */
 public class DefaultDataTypeInfoOrderManager implements DataTypeInfoOrderManager
 {
-    /** Listener for changes to the order. */
-    private final OrderChangeListener myOrderChangeListener = new OrderChangeListener()
-    {
-        @Override
-        public void orderChanged(ParticipantOrderChangeEvent event)
-        {
-            if (event.getChangeType() == ParticipantChangeType.ORDER_CHANGED)
-            {
-                event.getChangedParticipants().forEachEntry(new TObjectIntProcedure<OrderParticipantKey>()
-                {
-                    @Override
-                    public boolean execute(OrderParticipantKey participant, int order)
-                    {
-                        DataTypeInfo dti = myOrderKeyMap.get(participant);
-                        if (dti != null)
-                        {
-                            dti.getMapVisualizationInfo().setZOrder(order, DefaultDataTypeInfoOrderManager.this);
-                        }
-                        return true;
-                    }
-                });
-            }
-        }
-    };
-
     /** A map of the order key to the data type info being ordered. */
     private final Map<OrderParticipantKey, DataTypeInfo> myOrderKeyMap = Collections
             .synchronizedMap(New.<OrderParticipantKey, DataTypeInfo>weakMap());
+
+    /** Listener for changes to the order. */
+    private final OrderChangeListener myOrderChangeListener = event ->
+    {
+        if (event.getChangeType() == ParticipantChangeType.ORDER_CHANGED)
+        {
+            event.getChangedParticipants().forEachEntry((participant, order) ->
+            {
+                DataTypeInfo dti = myOrderKeyMap.get(participant);
+                if (dti != null)
+                {
+                    dti.getMapVisualizationInfo().setZOrder(order, DefaultDataTypeInfoOrderManager.this);
+                }
+                return true;
+            });
+        }
+    };
 
     /** Manager which determines the z-order of the CPTC results. */
     private final OrderManager myOrderManager;

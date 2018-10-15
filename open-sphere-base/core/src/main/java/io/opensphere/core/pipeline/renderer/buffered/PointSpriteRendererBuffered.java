@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2ES1;
@@ -30,7 +31,6 @@ import io.opensphere.core.util.TimeBudget;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.HashCodeHelper;
 import io.opensphere.core.util.lang.Pair;
 
@@ -485,7 +485,7 @@ public class PointSpriteRendererBuffered<T extends PointSpriteGeometry> extends 
             }
             PointSpriteRenderKey other = (PointSpriteRenderKey)obj;
             return mySize == other.mySize && myObscurant == other.myObscurant
-                    && EqualsHelper.equals(myTextureGroup, other.myTextureGroup);
+                    && Objects.equals(myTextureGroup, other.myTextureGroup);
         }
     }
 }

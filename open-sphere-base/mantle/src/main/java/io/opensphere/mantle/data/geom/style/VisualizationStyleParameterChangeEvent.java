@@ -3,6 +3,7 @@ package io.opensphere.mantle.data.geom.style;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import io.opensphere.core.event.AbstractSingleStateEvent;
 import io.opensphere.core.event.SourceableEvent;
@@ -74,12 +75,7 @@ public class VisualizationStyleParameterChangeEvent extends AbstractSingleStateE
      */
     public Map<String, VisualizationStyleParameter> getChangedParameterKeyToParameterMap()
     {
-        Map<String, VisualizationStyleParameter> map = New.map();
-        for (VisualizationStyleParameter vs : myChangedParameterSet)
-        {
-            map.put(vs.getKey(), vs);
-        }
-        return Collections.unmodifiableMap(map);
+        return myChangedParameterSet.stream().collect(Collectors.toUnmodifiableMap(v -> v.getKey(), v -> v));
     }
 
     /**

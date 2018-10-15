@@ -2,10 +2,10 @@ package io.opensphere.mantle.mp.impl;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 import io.opensphere.core.model.time.TimeSpan;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.mp.MapAnnotationPoint;
 import io.opensphere.mantle.mp.MapAnnotationPointChangeEvent;
 import io.opensphere.mantle.mp.MutableMapAnnotationPoint;
@@ -330,7 +330,7 @@ public class DefaultMapAnnotationPoint implements MutableMapAnnotationPoint
     public void setAssociatedViewName(String pName, Object source)
     {
         String name = pName == null ? "" : pName;
-        if (!EqualsHelper.equals(myAssociatedViewName, name))
+        if (!Objects.equals(myAssociatedViewName, name))
         {
             myAssociatedViewName = name;
             fireChangeEvent(new MapAnnotationPointChangeEvent(this, myAssociatedViewName, source));
@@ -340,7 +340,7 @@ public class DefaultMapAnnotationPoint implements MutableMapAnnotationPoint
     @Override
     public void setBackgroundColor(Color color, Object source)
     {
-        if (!EqualsHelper.equals(myBackgroundColor, color))
+        if (!Objects.equals(myBackgroundColor, color))
         {
             myBackgroundColor = color;
             fireChangeEvent(new MapAnnotationPointChangeEvent(this, myBackgroundColor, source));
@@ -350,7 +350,7 @@ public class DefaultMapAnnotationPoint implements MutableMapAnnotationPoint
     @Override
     public void setColor(Color shapeColor, Object source)
     {
-        if (!EqualsHelper.equals(myColor, shapeColor))
+        if (!Objects.equals(myColor, shapeColor))
         {
             myColor = shapeColor;
             fireChangeEvent(new MapAnnotationPointChangeEvent(this, shapeColor, source));
@@ -360,7 +360,7 @@ public class DefaultMapAnnotationPoint implements MutableMapAnnotationPoint
     @Override
     public void setDescription(String desc, Object source)
     {
-        if (!EqualsHelper.equals(myDescription, desc))
+        if (!Objects.equals(myDescription, desc))
         {
             myDescription = desc;
             fireChangeEvent(new MapAnnotationPointChangeEvent(this, myDescription, source));
@@ -407,7 +407,7 @@ public class DefaultMapAnnotationPoint implements MutableMapAnnotationPoint
     @Override
     public void setFont(Font font, Object source)
     {
-        if (!EqualsHelper.equals(myFont, font))
+        if (!Objects.equals(myFont, font))
         {
             myFont = font;
             fireChangeEvent(new MapAnnotationPointChangeEvent(this, font, source));
@@ -417,7 +417,7 @@ public class DefaultMapAnnotationPoint implements MutableMapAnnotationPoint
     @Override
     public void setFontColor(Color color, Object source)
     {
-        if (!EqualsHelper.equals(myFontColor, color))
+        if (!Objects.equals(myFontColor, color))
         {
             myFontColor = color;
             fireChangeEvent(new MapAnnotationPointChangeEvent(this, myFontColor, source));
@@ -427,7 +427,7 @@ public class DefaultMapAnnotationPoint implements MutableMapAnnotationPoint
     @Override
     public void setFontSize(String fontSize, Object source)
     {
-        if (!EqualsHelper.equals(myFontSize, fontSize))
+        if (!Objects.equals(myFontSize, fontSize))
         {
             myFontSize = fontSize;
             fireChangeEvent(new MapAnnotationPointChangeEvent(this, fontSize, source));
@@ -469,7 +469,7 @@ public class DefaultMapAnnotationPoint implements MutableMapAnnotationPoint
     @Override
     public void setMGRS(String mgrs, Object source)
     {
-        if (!EqualsHelper.equals(myMGRS, mgrs))
+        if (!Objects.equals(myMGRS, mgrs))
         {
             myMGRS = mgrs;
             fireChangeEvent(new MapAnnotationPointChangeEvent(this, myMGRS, source));
@@ -506,7 +506,7 @@ public class DefaultMapAnnotationPoint implements MutableMapAnnotationPoint
     public void setTitle(String pTitle, Object source)
     {
         String title = pTitle == null ? "" : pTitle;
-        if (!EqualsHelper.equals(myTitle, title))
+        if (!Objects.equals(myTitle, title))
         {
             myTitle = title;
             fireChangeEvent(new MapAnnotationPointChangeEvent(this, myTitle, source));

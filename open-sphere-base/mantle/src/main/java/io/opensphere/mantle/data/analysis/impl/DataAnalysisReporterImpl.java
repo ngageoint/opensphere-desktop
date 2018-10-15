@@ -368,14 +368,7 @@ public class DataAnalysisReporterImpl implements DataAnalysisReporter
      */
     private EventListener<DataElementsAddedEvent> createElementsAddedEventListener()
     {
-        EventListener<DataElementsAddedEvent> listener = new EventListener<DataElementsAddedEvent>()
-        {
-            @Override
-            public void notify(DataElementsAddedEvent event)
-            {
-                handleDataElementsAddedEvent(event);
-            }
-        };
+        EventListener<DataElementsAddedEvent> listener = event -> handleDataElementsAddedEvent(event);
         return listener;
     }
 

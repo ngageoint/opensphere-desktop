@@ -1,7 +1,7 @@
 package io.opensphere.mantle.data.cache.query;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import gnu.trove.map.hash.TLongObjectHashMap;
 import io.opensphere.mantle.data.cache.CacheIdQuery;
@@ -66,11 +66,6 @@ public abstract class SimpleListResultCacheIdQuery<R> extends CacheIdQuery
      */
     public List<R> getResults()
     {
-        List<R> resultList = new ArrayList<>(getFilterIds().size());
-        for (Long id : getFilterIds())
-        {
-            resultList.add(myIdToResultMap.get(id.longValue()));
-        }
-        return resultList;
+        return getFilterIds().stream().map(id -> myIdToResultMap.get(id.longValue())).collect(Collectors.toList());
     }
 }

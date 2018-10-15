@@ -80,10 +80,7 @@ public abstract class AbstractActivationListener implements ActivationListener
                 throw new PropertyChangeException(e);
             }
         }
-        else
-        {
-            return true;
-        }
+        return true;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package io.opensphere.mantle.data.merge.gui;
 
-import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.concurrent.EventQueueExecutor;
 
@@ -45,14 +44,7 @@ public class DataTypeKeyMoveDNDCoordinator
         final TypeKeyPanel origPanel = myCurrentSourcePanel;
         myCurrentMoveEntry = null;
         myCurrentSourcePanel = null;
-        myChangeSupport.notifyListeners(new Callback<KeyMoveListener>()
-        {
-            @Override
-            public void notify(KeyMoveListener listener)
-            {
-                listener.keyMoveCompleted(entry, origPanel);
-            }
-        }, new EventQueueExecutor());
+        myChangeSupport.notifyListeners(listener -> listener.keyMoveCompleted(entry, origPanel), new EventQueueExecutor());
     }
 
     /**
@@ -66,14 +58,7 @@ public class DataTypeKeyMoveDNDCoordinator
     {
         myCurrentMoveEntry = entry;
         myCurrentSourcePanel = sourcePanel;
-        myChangeSupport.notifyListeners(new Callback<KeyMoveListener>()
-        {
-            @Override
-            public void notify(KeyMoveListener listener)
-            {
-                listener.keyMoveInitiated(entry, sourcePanel, source);
-            }
-        }, new EventQueueExecutor());
+        myChangeSupport.notifyListeners(listener -> listener.keyMoveInitiated(entry, sourcePanel, source), new EventQueueExecutor());
     }
 
     /**

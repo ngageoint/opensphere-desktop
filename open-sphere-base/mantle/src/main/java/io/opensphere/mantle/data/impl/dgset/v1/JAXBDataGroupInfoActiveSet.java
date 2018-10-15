@@ -2,7 +2,7 @@ package io.opensphere.mantle.data.impl.dgset.v1;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -49,12 +49,7 @@ public class JAXBDataGroupInfoActiveSet implements DataGroupInfoActiveSet
         myGroupEntries = New.list();
         if (other.getGroupEntries() != null)
         {
-            Set<JAXBActiveGroupEntry> entrySet = New.set();
-            for (ActiveGroupEntry entry : other.getGroupEntries())
-            {
-                entrySet.add(new JAXBActiveGroupEntry(entry));
-            }
-            myGroupEntries.addAll(entrySet);
+            myGroupEntries.addAll(other.getGroupEntries().stream().map(JAXBActiveGroupEntry::new).collect(Collectors.toSet()));
         }
     }
 
@@ -78,13 +73,7 @@ public class JAXBDataGroupInfoActiveSet implements DataGroupInfoActiveSet
     public JAXBDataGroupInfoActiveSet(String name, Collection<? extends ActiveGroupEntry> groups)
     {
         myName = name;
-        myGroupEntries = New.list();
-        Set<JAXBActiveGroupEntry> entrySet = New.set();
-        for (ActiveGroupEntry entry : groups)
-        {
-            entrySet.add(new JAXBActiveGroupEntry(entry));
-        }
-        myGroupEntries.addAll(entrySet);
+        myGroupEntries = New.list(groups.stream().map(JAXBActiveGroupEntry::new).collect(Collectors.toSet()));
     }
 
     /**
@@ -121,12 +110,7 @@ public class JAXBDataGroupInfoActiveSet implements DataGroupInfoActiveSet
     @Override
     public List<String> getGroupIds()
     {
-        List<String> groupIds = New.list();
-        for (JAXBActiveGroupEntry entry : myGroupEntries)
-        {
-            groupIds.add(entry.getId());
-        }
-        return groupIds;
+        return myGroupEntries.stream().map(JAXBActiveGroupEntry::getId).collect(Collectors.toList());
     }
 
     @Override

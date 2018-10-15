@@ -7,6 +7,19 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+
+import io.opensphere.core.datafilter.columns.ColumnMapping;
+import io.opensphere.core.datafilter.columns.ColumnMappingController;
+import io.opensphere.core.datafilter.columns.MutableColumnMappingController;
+import io.opensphere.core.util.DefaultValidatorSupport;
+import io.opensphere.core.util.ValidationStatus;
+import io.opensphere.core.util.ValidatorSupport;
+import io.opensphere.core.util.collections.CollectionUtilities;
+import io.opensphere.core.util.fx.Editor;
+import io.opensphere.core.util.fx.FXUtilities;
+import io.opensphere.core.util.image.IconUtil.IconType;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -24,20 +37,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-
-import io.opensphere.core.datafilter.columns.ColumnMapping;
-import io.opensphere.core.datafilter.columns.ColumnMappingController;
-import io.opensphere.core.util.DefaultValidatorSupport;
-import io.opensphere.core.util.ValidationStatus;
-import io.opensphere.core.util.ValidatorSupport;
-import io.opensphere.core.util.collections.CollectionUtilities;
-import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.fx.Editor;
-import io.opensphere.core.util.fx.FXUtilities;
-import io.opensphere.core.util.image.IconUtil.IconType;
 
 /** JavaFX column mapping editor pane. */
 public class ColumnMappingEditorPane extends BorderPane implements Editor
@@ -80,8 +79,7 @@ public class ColumnMappingEditorPane extends BorderPane implements Editor
         myDefinedColumn = definedColumn;
 
         layers.addAll(resources.getLayers());
-        Collections.sort(layers, (left, right) -> left.getType().getDisplayName().compareTo(
-                right.getType().getDisplayName()));
+        Collections.sort(layers, (left, right) -> left.getType().getDisplayName().compareTo(right.getType().getDisplayName()));
 
         setTop(createTopPane());
         setCenter(createMainPane());
@@ -106,25 +104,21 @@ public class ColumnMappingEditorPane extends BorderPane implements Editor
     {
         final String definedColumn = myName.getText();
 
+        MutableColumnMappingController controller = myResources.getController();
         if (myDefinedColumn != null && !myDefinedColumn.equals(definedColumn))
         {
-            myResources.getController().rename(myDefinedColumn, definedColumn);
+            controller.rename(myDefinedColumn, definedColumn);
         }
 
-        myResources.getController().clearMappings(definedColumn);
-        for (ColumnMapping mapping : myMappingList)
-        {
-            myResources.getController().addMapping(definedColumn, mapping.getLayerKey(), mapping.getLayerColumn(), true);
-        }
+        controller.clearMappings(definedColumn);
+        myMappingList.forEach(m -> controller.addMapping(definedColumn, m.getLayerKey(), m.getLayerColumn(), true));
 
-        myResources.getController().setDescription(definedColumn, myDescription.getText(), true);
+        controller.setDescription(definedColumn, myDescription.getText(), true);
 
-        Set<String> types = New.set();
-        for (ColumnMapping mapping : myMappingList)
-        {
-            types.add(myResources.getType(mapping.getLayerKey(), mapping.getLayerColumn()));
-        }
-        myResources.getController().setType(definedColumn, types.size() == 1 ? types.iterator().next() : null, true);
+        Set<String> types = myMappingList.stream().map(m -> myResources.getType(m.getLayerKey(), m.getLayerColumn()))
+                .collect(Collectors.toSet());
+
+        controller.setType(definedColumn, types.size() == 1 ? types.iterator().next() : null, true);
         if (types.size() != 1)
         {
             String message = types.isEmpty() ? "No types" : "Multiple types: " + types;
@@ -203,7 +197,7 @@ public class ColumnMappingEditorPane extends BorderPane implements Editor
         // Warnings
 
         if (error == null && myMappingList.stream().anyMatch(m -> !ColumnMappingController.ALL_LAYERS.equals(m.getLayerKey())
-            && myResources.getLayerColumns(m.getLayerKey()).isEmpty()))
+                && myResources.getLayerColumns(m.getLayerKey()).isEmpty()))
         {
             error = "Columns are not available for inactive layer(s).";
             status = ValidationStatus.WARNING;
@@ -278,6 +272,7 @@ public class ColumnMappingEditorPane extends BorderPane implements Editor
 
     /**
      * Much simpler than "CollectionUtilities.getItemOrNull".
+     *
      * @param stuff a List
      * @param i an index
      * @return the item in <i>stuff</i> at index <i>i</i>, if any

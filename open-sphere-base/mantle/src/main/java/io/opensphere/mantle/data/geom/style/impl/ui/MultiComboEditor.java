@@ -322,7 +322,7 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
     private List<OptionProxy<String>> sortOptions(Collection<String> opts, boolean numeric)
     {
         List<OptionProxy<String>> ret = new LinkedList<>();
-        opts.stream().forEach(t -> ret.add(new OptionProxy<String>(t)));
+        opts.stream().forEach(t -> ret.add(new OptionProxy<>(t)));
         if (numeric)
         {
             Collections.sort(ret, (left, right) -> left.numCompare(right));
@@ -590,10 +590,7 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
             {
                 return "NONE";
             }
-            else
-            {
-                return val.toString();
-            }
+            return val.toString();
         }
 
         /**

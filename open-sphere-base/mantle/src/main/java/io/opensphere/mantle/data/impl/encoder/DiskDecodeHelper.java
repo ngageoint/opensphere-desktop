@@ -231,10 +231,7 @@ public final class DiskDecodeHelper
                 throw new IOException("End of Stream reached while trying after reading string value " + totalRead + " of "
                         + value.length + " bytes.");
             }
-            else
-            {
-                totalRead += read;
-            }
+            totalRead += read;
         }
         return new String(value, StringUtilities.DEFAULT_CHARSET);
     }
@@ -308,10 +305,7 @@ public final class DiskDecodeHelper
                 throw new IOException("End of Stream reached while trying after reading ByteString value " + totalRead + " of "
                         + value.length + " bytes.");
             }
-            else
-            {
-                totalRead += read;
-            }
+            totalRead += read;
         }
         return new ByteString(value);
     }

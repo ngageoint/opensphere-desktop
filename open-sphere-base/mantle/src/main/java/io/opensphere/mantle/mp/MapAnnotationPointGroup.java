@@ -13,14 +13,7 @@ public interface MapAnnotationPointGroup
      * Comparator that orders {@link MutableMapAnnotationPointGroup}s by their
      * display names.
      */
-    Comparator<MapAnnotationPointGroup> NAME_COMPARATOR = new Comparator<MapAnnotationPointGroup>()
-    {
-        @Override
-        public int compare(MapAnnotationPointGroup o1, MapAnnotationPointGroup o2)
-        {
-            return o1.getName().compareTo(o2.getName());
-        }
-    };
+    Comparator<MapAnnotationPointGroup> NAME_COMPARATOR = (o1, o2) -> o1.getName().compareTo(o2.getName());
 
     /**
      * Gets the {@link Set} of {@link MapAnnotationPointGroup} that represent

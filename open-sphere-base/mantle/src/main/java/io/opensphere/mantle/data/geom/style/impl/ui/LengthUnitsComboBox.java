@@ -1,11 +1,8 @@
 package io.opensphere.mantle.data.geom.style.impl.ui;
 
-import java.awt.Component;
 import java.util.Collection;
 
 import javax.swing.JComboBox;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 
 import io.opensphere.core.units.length.Length;
@@ -27,15 +24,10 @@ public class LengthUnitsComboBox extends JComboBox<Class<? extends Length>>
         super(new ListComboBoxModel<>(unitOptions));
 
         BasicComboBoxRenderer renderer = new BasicComboBoxRenderer();
-        setRenderer(new ListCellRenderer<Class<? extends Length>>()
+        setRenderer((list, value, index, isSelected, cellHasFocus) ->
         {
-            @Override
-            public Component getListCellRendererComponent(JList<? extends Class<? extends Length>> list,
-                    Class<? extends Length> value, int index, boolean isSelected, boolean cellHasFocus)
-            {
-                String displayValue = Length.create(value, 0.).getShortLabel(false);
-                return renderer.getListCellRendererComponent(list, displayValue, index, isSelected, cellHasFocus);
-            }
+            String displayValue = Length.create(value, 0.).getShortLabel(false);
+            return renderer.getListCellRendererComponent(list, displayValue, index, isSelected, cellHasFocus);
         });
 
         StringBuilder tooltip = new StringBuilder(32);

@@ -85,11 +85,8 @@ public final class MapCircleGeometryConverter extends AbstractGeometryConverter
             MapCircleGeometrySupport megs = (MapCircleGeometrySupport)geomSupport;
             return convert(megs, id, dti, visState, renderPropertyPool);
         }
-        else
-        {
-            throw new IllegalArgumentException("MapGeometrySupport \"" + geomSupport.getClass().getName()
-                    + "\" is not an instance of \"" + getConvertedClassType().getName() + "\"");
-        }
+        throw new IllegalArgumentException("MapGeometrySupport \"" + geomSupport.getClass().getName()
+                + "\" is not an instance of \"" + getConvertedClassType().getName() + "\"");
     }
 
     @Override

@@ -3,13 +3,13 @@ package io.opensphere.mantle.controller.impl;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.ui.MenuBarRegistry;
-import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.core.util.swing.SwingUtilities;
 import io.opensphere.mantle.data.DataTypeInfo;
@@ -60,11 +60,8 @@ public class DataTypeMenuCreator
         List<DataTypeInfo> dtiList = myDataTypesSupplier.get();
         if (!dtiList.isEmpty())
         {
-            List<DataTypeInfoDisplayNameProxy> proxyList = New.list();
-            for (DataTypeInfo style : dtiList)
-            {
-                proxyList.add(new DataTypeInfoDisplayNameProxy(style));
-            }
+            List<DataTypeInfoDisplayNameProxy> proxyList = dtiList.stream().map(s -> new DataTypeInfoDisplayNameProxy(s))
+                    .collect(Collectors.toList());
             Collections.sort(proxyList, (o1, o2) -> o1.toString().compareTo(o2.toString()));
 
             Object selected = JOptionPane.showInputDialog(null, CHOOSE_DATA_TYPE, CHOOSE_DATA_TYPE, JOptionPane.QUESTION_MESSAGE,

@@ -16,6 +16,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.function.LongFunction;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
@@ -567,14 +568,9 @@ public class RegistryCacheAssistant implements CacheAssistant
         {
             if (myRefsToRemove != null && !myRefsToRemove.isEmpty())
             {
-                List<RegistryCacheReference> rcrList = new LinkedList<>();
-                for (CacheReference cr : myRefsToRemove)
-                {
-                    if (cr instanceof RegistryCacheReference)
-                    {
-                        rcrList.add((RegistryCacheReference)cr);
-                    }
-                }
+                List<RegistryCacheReference> rcrList = new LinkedList<>(
+                        myRefsToRemove.stream().filter(cr -> cr instanceof RegistryCacheReference)
+                                .map(cr -> (RegistryCacheReference)cr).collect(Collectors.toList()));
 
                 long[] idsToRemove = new long[rcrList.size()];
                 int index = 0;

@@ -401,34 +401,30 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
      */
     public final void refreshFromRegistry(String collectionToShow)
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
+            if (myTree != null)
             {
-                if (myTree != null)
+                myLastSelectedTreeNodeUserObject = null;
+                myRootTreeNode = new IconTreeBuilder(myIconRegistry).getIconRecordTree(null);
+                if (myTreeModel == null)
                 {
-                    myLastSelectedTreeNodeUserObject = null;
-                    myRootTreeNode = new IconTreeBuilder(myIconRegistry).getIconRecordTree(null);
-                    if (myTreeModel == null)
-                    {
-                        myTreeModel = new DefaultTreeModel(myRootTreeNode);
-                    }
-                    else
-                    {
-                        myTreeModel.setRoot(myRootTreeNode);
-                    }
-                    myTree.setModel(myTreeModel);
-                    myTree.revalidate();
-                    JTreeUtilities.expandOrCollapseAll(myTree, true);
+                    myTreeModel = new DefaultTreeModel(myRootTreeNode);
+                }
+                else
+                {
+                    myTreeModel.setRoot(myRootTreeNode);
+                }
+                myTree.setModel(myTreeModel);
+                myTree.revalidate();
+                JTreeUtilities.expandOrCollapseAll(myTree, true);
 
-                    TreeNode nodeToSelect = getNodeToSelect(collectionToShow);
-                    if (nodeToSelect != null)
-                    {
-                        TreeNode[] nodeArray = myTreeModel.getPathToRoot(nodeToSelect);
-                        TreePath path = new TreePath(nodeArray);
-                        myTree.getSelectionModel().setSelectionPath(path);
-                    }
+                TreeNode nodeToSelect = getNodeToSelect(collectionToShow);
+                if (nodeToSelect != null)
+                {
+                    TreeNode[] nodeArray = myTreeModel.getPathToRoot(nodeToSelect);
+                    TreePath path = new TreePath(nodeArray);
+                    myTree.getSelectionModel().setSelectionPath(path);
                 }
             }
         });

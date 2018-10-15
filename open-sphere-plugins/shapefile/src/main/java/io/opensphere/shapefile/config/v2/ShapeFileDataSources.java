@@ -2,6 +2,7 @@ package io.opensphere.shapefile.config.v2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -11,7 +12,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.collections.StreamUtilities;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.ExpectedCloneableException;
 import io.opensphere.core.util.lang.HashCodeHelper;
 import io.opensphere.mantle.datasources.IDataSource;
@@ -91,7 +91,7 @@ public class ShapeFileDataSources implements IDataSourceConfig, Cloneable
             return false;
         }
         ShapeFileDataSources other = (ShapeFileDataSources)obj;
-        return EqualsHelper.equals(myDataSources, other.myDataSources);
+        return Objects.equals(myDataSources, other.myDataSources);
     }
 
     @Override

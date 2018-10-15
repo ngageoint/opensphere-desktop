@@ -207,18 +207,23 @@ public class DefaultTileLevelController implements TileLevelController
     @Override
     public void setDivisionHoldGeneration(int pGen)
     {
-        int gen = pGen;
-        if (gen < 0)
+        int gen;
+        if (pGen < 0)
         {
             throw new IllegalArgumentException("Division hold generation can not be less than zero.");
         }
-        else if (myMaxGeneration != -1 && gen > myMaxGeneration)
+        else if (myMaxGeneration != -1 && pGen > myMaxGeneration)
         {
             gen = myMaxGeneration;
+        }
+        else
+        {
+            gen = pGen;
         }
         myDividerLock.lock();
         try
         {
+            myDividers.forEach(d -> d.setDivisionHoldGeneration(gen));
             for (AbstractDivider<GeographicPosition> divider : myDividers)
             {
                 divider.setDivisionHoldGeneration(gen);
@@ -239,25 +244,13 @@ public class DefaultTileLevelController implements TileLevelController
             if (enabled)
             {
                 int curGen = getCurrentGeneration();
-                for (AbstractDivider<GeographicPosition> divider : myDividers)
-                {
-                    divider.setDivisionHoldGeneration(curGen);
-                }
-                for (AbstractDivider<GeographicPosition> divider : myDividers)
-                {
-                    divider.setDivisionOverrideEnabled(enabled);
-                }
+                myDividers.forEach(d -> d.setDivisionHoldGeneration(curGen));
+                myDividers.forEach(d -> d.setDivisionOverrideEnabled(enabled));
             }
             else
             {
-                for (AbstractDivider<GeographicPosition> divider : myDividers)
-                {
-                    divider.setDivisionOverrideEnabled(enabled);
-                }
-                for (AbstractDivider<GeographicPosition> divider : myDividers)
-                {
-                    divider.setDivisionHoldGeneration(0);
-                }
+                myDividers.forEach(d -> d.setDivisionOverrideEnabled(enabled));
+                myDividers.forEach(d -> d.setDivisionHoldGeneration(0));
             }
         }
         finally

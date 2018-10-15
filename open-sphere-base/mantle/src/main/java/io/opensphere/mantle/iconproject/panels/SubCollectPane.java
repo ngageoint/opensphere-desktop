@@ -4,6 +4,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import io.opensphere.core.util.collections.New;
+import io.opensphere.mantle.icon.IconRegistry;
+import io.opensphere.mantle.iconproject.model.ImportProp;
+import io.opensphere.mantle.iconproject.model.PanelModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -16,11 +20,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
-
-import io.opensphere.core.util.collections.New;
-import io.opensphere.mantle.icon.IconRegistry;
-import io.opensphere.mantle.iconproject.model.ImportProp;
-import io.opensphere.mantle.iconproject.model.PanelModel;
 
 /**
  * A panel in which a user may select a subcategory, create a new subcategory,
@@ -187,10 +186,7 @@ public class SubCollectPane extends VBox
         {
             return myComboBox.getSelectionModel().getSelectedItem().toString();
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 
     /**
@@ -205,7 +201,7 @@ public class SubCollectPane extends VBox
 
     /**
      * Updates the value of the sub collection name in the model.
-     */    
+     */
     public void updateSubCollectName()
     {
         myPanelModel.getImportProps().getSubCollectionName().set(myComboBox.getValue());

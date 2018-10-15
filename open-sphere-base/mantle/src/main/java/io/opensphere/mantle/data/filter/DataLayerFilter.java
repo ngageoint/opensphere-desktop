@@ -13,19 +13,15 @@ import io.opensphere.mantle.data.DataTypeInfo;
 public class DataLayerFilter implements Predicate<DataGroupInfo>
 {
     /** Predicate that determines if a data type is filterable. */
-    public static final Predicate<DataTypeInfo> DATA_TYPE_FILTERABLE = new Predicate<DataTypeInfo>()
+    public static final Predicate<DataTypeInfo> DATA_TYPE_FILTERABLE = dataType ->
     {
-        @Override
-        public boolean test(DataTypeInfo dataType)
-        {
-            boolean isTimelineOrStaticMapElement = dataType.getBasicVisualizationInfo() != null
-                    && dataType.getBasicVisualizationInfo().getLoadsTo().isAnalysisEnabled()
-                    && dataType.getMapVisualizationInfo() != null
-                    && dataType.getMapVisualizationInfo().getVisualizationType().isMapDataElementType();
-            boolean usesDataElements = dataType.getBasicVisualizationInfo() != null
-                    && dataType.getBasicVisualizationInfo().usesDataElements();
-            return dataType.isFilterable() && (isTimelineOrStaticMapElement || usesDataElements);
-        }
+        boolean isTimelineOrStaticMapElement = dataType.getBasicVisualizationInfo() != null
+                && dataType.getBasicVisualizationInfo().getLoadsTo().isAnalysisEnabled()
+                && dataType.getMapVisualizationInfo() != null
+                && dataType.getMapVisualizationInfo().getVisualizationType().isMapDataElementType();
+        boolean usesDataElements = dataType.getBasicVisualizationInfo() != null
+                && dataType.getBasicVisualizationInfo().usesDataElements();
+        return dataType.isFilterable() && (isTimelineOrStaticMapElement || usesDataElements);
     };
 
     /**

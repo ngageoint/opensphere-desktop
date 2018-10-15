@@ -239,10 +239,7 @@ public class ComboBoxStyleParameterEditorPanel extends AbstractStyleParameterEdi
             {
                 return "NONE";
             }
-            else
-            {
-                return myObject.toString();
-            }
+            return myObject.toString();
         }
     }
 }

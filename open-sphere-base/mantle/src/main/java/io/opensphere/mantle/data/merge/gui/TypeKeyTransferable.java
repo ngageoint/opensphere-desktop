@@ -40,10 +40,7 @@ public class TypeKeyTransferable implements Transferable
         {
             return myTypeKeyEntry;
         }
-        else
-        {
-            throw new UnsupportedFlavorException(flavor);
-        }
+        throw new UnsupportedFlavorException(flavor);
     }
 
     @Override

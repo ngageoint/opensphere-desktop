@@ -100,13 +100,7 @@ public class StyleParameterSetConfig
         myStyleClassName = styleClass;
         if (paramCollection != null && !paramCollection.isEmpty())
         {
-            for (VisualizationStyleParameter vsp : paramCollection)
-            {
-                if (vsp.isSaved())
-                {
-                    myParameterSet.add(new StyleParameterConfig(vsp));
-                }
-            }
+            paramCollection.stream().filter(v -> v.isSaved()).map(StyleParameterConfig::new).forEach(myParameterSet::add);
         }
     }
 
@@ -122,10 +116,7 @@ public class StyleParameterSetConfig
         myParameterSet = New.set();
         if (other.myParameterSet != null)
         {
-            for (StyleParameterConfig cfg : other.myParameterSet)
-            {
-                myParameterSet.add(new StyleParameterConfig(cfg));
-            }
+            other.myParameterSet.stream().map(StyleParameterConfig::new).forEach(myParameterSet::add);
         }
     }
 

@@ -14,7 +14,6 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import net.jcip.annotations.GuardedBy;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 
@@ -51,6 +50,7 @@ import io.opensphere.mantle.data.event.DataGroupInfoMembersClearedEvent;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.event.EventHandler;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * Default implementation of the {@link DataGroupInfo}.
@@ -174,9 +174,11 @@ public class DefaultDataGroupInfo implements DataGroupInfo
     }
 
     /**
-     * CTOR for group info with id for the group. Note: Display name will be set to id initially.
+     * CTOR for group info with id for the group. Note: Display name will be set
+     * to id initially.
      *
-     * @param rootNode - true if this is a root level node ( root nodes cannot have parents set )
+     * @param rootNode - true if this is a root level node ( root nodes cannot
+     *            have parents set )
      * @param aToolbox the toolbox
      * @param providerType the provider type
      * @param id - the id for the group
@@ -189,7 +191,8 @@ public class DefaultDataGroupInfo implements DataGroupInfo
     /**
      * Instantiates a new default data group info.
      *
-     * @param rootNode - true if this is a root level node ( root nodes cannot have parents set )
+     * @param rootNode - true if this is a root level node ( root nodes cannot
+     *            have parents set )
      * @param aToolbox the toolbox
      * @param providerType the provider type
      * @param id the id for the group.
@@ -396,10 +399,7 @@ public class DefaultDataGroupInfo implements DataGroupInfo
 
             if (recursive)
             {
-                for (DataGroupInfo dgi : myChildren)
-                {
-                    dgi.clearMembers(recursive, this);
-                }
+                myChildren.forEach(d -> d.clearMembers(recursive, this));
                 myChildren.clear();
             }
         }
@@ -428,10 +428,7 @@ public class DefaultDataGroupInfo implements DataGroupInfo
 
             if (!myChildren.isEmpty())
             {
-                for (DataGroupInfo dgi : myChildren)
-                {
-                    groupSet.addAll(dgi.createGroupSet(nodeFilter));
-                }
+                myChildren.stream().map(dgi -> dgi.createGroupSet(nodeFilter)).forEach(groupSet::addAll);
             }
         }
         finally
@@ -457,7 +454,7 @@ public class DefaultDataGroupInfo implements DataGroupInfo
         try
         {
             DefaultGroupInfoTreeNodeData nodeData = new DefaultGroupInfoTreeNodeData(myId, myDisplayName,
-                    new HashSet<DataTypeInfo>(myMemberSet), this);
+                    new HashSet<>(myMemberSet), this);
             node = new DefaultMutableTreeNode(nodeData, false);
 
             if (!myChildren.isEmpty())
@@ -571,10 +568,7 @@ public class DefaultDataGroupInfo implements DataGroupInfo
     {
         Collection<DataGroupInfo> children = getChildren();
         descendants.addAll(children);
-        for (DataGroupInfo child : children)
-        {
-            child.getDescendants(descendants);
-        }
+        children.forEach(c -> c.getDescendants(descendants));
     }
 
     @Override
@@ -691,17 +685,13 @@ public class DefaultDataGroupInfo implements DataGroupInfo
     public Set<MapVisualizationType> getMemberMapVisualizationTypes(boolean recursive)
     {
         final Set<MapVisualizationType> resultSet = New.set();
-        findMembers(new Predicate<DataTypeInfo>()
+        findMembers(value ->
         {
-            @Override
-            public boolean test(DataTypeInfo value)
+            if (value.getMapVisualizationInfo() != null)
             {
-                if (value.getMapVisualizationInfo() != null)
-                {
-                    resultSet.add(value.getMapVisualizationInfo().getVisualizationType());
-                }
-                return false;
+                resultSet.add(value.getMapVisualizationInfo().getVisualizationType());
             }
+            return false;
         }, recursive, false);
         return resultSet;
     }
@@ -717,10 +707,7 @@ public class DefaultDataGroupInfo implements DataGroupInfo
 
             if (recurseChildren)
             {
-                for (DataGroupInfo dgi : myChildren)
-                {
-                    returnSet.addAll(dgi.getMembers(recurseChildren));
-                }
+                myChildren.stream().map(dgi -> dgi.getMembers(recurseChildren)).forEach(returnSet::addAll);
             }
         }
         finally
@@ -1079,13 +1066,8 @@ public class DefaultDataGroupInfo implements DataGroupInfo
     @Override
     public void setGroupVisible(Predicate<? super DataTypeInfo> dtiFilter, boolean visible, boolean recursive, Object source)
     {
-        for (DataTypeInfo dti : getMembers(recursive))
-        {
-            if (dtiFilter == null || dtiFilter.test(dti))
-            {
-                dti.setVisible(visible, source);
-            }
-        }
+        getMembers(recursive).stream().filter(d -> dtiFilter == null || dtiFilter.test(d))
+                .forEach(d -> d.setVisible(visible, source));
     }
 
     @Override
@@ -1143,10 +1125,7 @@ public class DefaultDataGroupInfo implements DataGroupInfo
         {
             throw new UnsupportedOperationException("A parent cannot be set for a Root node.");
         }
-        else
-        {
-            myParent = parent;
-        }
+        myParent = parent;
     }
 
     /**
@@ -1205,7 +1184,8 @@ public class DefaultDataGroupInfo implements DataGroupInfo
      *
      * @param dgi The child to remove.
      * @param source The source making the change.
-     * @param keepActive True if the state of the child should not change, otherwise the child will be set to inactive.
+     * @param keepActive True if the state of the child should not change,
+     *            otherwise the child will be set to inactive.
      * @return True if the remove was successful.
      */
     private boolean removeChild(DataGroupInfo dgi, Object source, boolean keepActive)

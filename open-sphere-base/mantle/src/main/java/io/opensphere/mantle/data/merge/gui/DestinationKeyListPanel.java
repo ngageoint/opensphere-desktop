@@ -24,7 +24,6 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.TransferHandler;
-import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.apache.log4j.Logger;
@@ -77,28 +76,20 @@ public class DestinationKeyListPanel extends JPanel implements KeyMoveListener
     @Override
     public void keyMoveCompleted(final TypeKeyEntry entry, final TypeKeyPanel origPanel)
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
-            {
-                myDestKeyListCellRenderer.setDNDTypeKeyEntry(null);
-                myDestKeyList.repaint();
-            }
+            myDestKeyListCellRenderer.setDNDTypeKeyEntry(null);
+            myDestKeyList.repaint();
         });
     }
 
     @Override
     public void keyMoveInitiated(final TypeKeyEntry entry, final TypeKeyPanel sourcePanel, final Object source)
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
-            {
-                myDestKeyListCellRenderer.setDNDTypeKeyEntry(entry);
-                myDestKeyList.repaint();
-            }
+            myDestKeyListCellRenderer.setDNDTypeKeyEntry(entry);
+            myDestKeyList.repaint();
         });
     }
 
@@ -119,19 +110,15 @@ public class DestinationKeyListPanel extends JPanel implements KeyMoveListener
      */
     private ListSelectionListener createListSelectionListener()
     {
-        return new ListSelectionListener()
+        return e ->
         {
-            @Override
-            public void valueChanged(ListSelectionEvent e)
+            if (!e.getValueIsAdjusting())
             {
-                if (!e.getValueIsAdjusting())
+                int index = myDestKeyList.getSelectedIndex();
+                if (index != -1)
                 {
-                    int index = myDestKeyList.getSelectedIndex();
-                    if (index != -1)
-                    {
-                        MappedTypeKeyPanelProxy pp = myDestKeyList.getModel().getElementAt(index);
-                        ((JComponent)pp.getPanel().getParent()).scrollRectToVisible(pp.getPanel().getBounds());
-                    }
+                    MappedTypeKeyPanelProxy pp = myDestKeyList.getModel().getElementAt(index);
+                    ((JComponent)pp.getPanel().getParent()).scrollRectToVisible(pp.getPanel().getBounds());
                 }
             }
         };
@@ -283,17 +270,8 @@ public class DestinationKeyListPanel extends JPanel implements KeyMoveListener
                     pp.getPanel().addTypeKeyEntry(data);
                     return true;
                 }
-                else
-                {
-                    EventQueueUtilities.invokeLater(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            JOptionPane.showMessageDialog(myDestKeyList, "Could not accept key because:\n" + errors.get(0));
-                        }
-                    });
-                }
+                EventQueueUtilities.invokeLater(
+                        () -> JOptionPane.showMessageDialog(myDestKeyList, "Could not accept key because:\n" + errors.get(0)));
             }
 
             return false;

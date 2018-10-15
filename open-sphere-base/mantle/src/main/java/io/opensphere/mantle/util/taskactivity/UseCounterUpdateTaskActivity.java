@@ -74,23 +74,19 @@ public class UseCounterUpdateTaskActivity extends TaskActivity
      */
     private void update()
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
+            boolean hasUpdates = false;
+            myCounterLock.lock();
+            try
             {
-                boolean hasUpdates = false;
-                myCounterLock.lock();
-                try
-                {
-                    hasUpdates = myUseCounter.get() != 0;
-                }
-                finally
-                {
-                    myCounterLock.unlock();
-                }
-                setActive(hasUpdates);
+                hasUpdates = myUseCounter.get() != 0;
             }
+            finally
+            {
+                myCounterLock.unlock();
+            }
+            setActive(hasUpdates);
         });
     }
 }

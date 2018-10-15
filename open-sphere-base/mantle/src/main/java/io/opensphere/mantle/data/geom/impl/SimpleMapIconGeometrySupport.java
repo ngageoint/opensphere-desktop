@@ -1,11 +1,11 @@
 package io.opensphere.mantle.data.geom.impl;
 
+import java.util.Objects;
 import java.util.function.Function;
 
 import io.opensphere.core.image.processor.ImageProcessor;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.units.length.Kilometers;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.data.MapVisualizationType;
 import io.opensphere.mantle.data.geom.MapIconGeometrySupport;
 
@@ -95,7 +95,7 @@ public class SimpleMapIconGeometrySupport extends AbstractSimpleLocationGeometry
             return false;
         }
         SimpleMapIconGeometrySupport other = (SimpleMapIconGeometrySupport)obj;
-        return EqualsHelper.equals(myIcURL, other.myIcURL);
+        return Objects.equals(myIcURL, other.myIcURL);
     }
 
     @Override

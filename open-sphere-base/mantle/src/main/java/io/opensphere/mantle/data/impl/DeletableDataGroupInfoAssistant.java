@@ -68,10 +68,7 @@ public class DeletableDataGroupInfoAssistant extends DefaultDataGroupInfoAssista
     @Override
     public void deleteGroup(DataGroupInfo dgi, Object source)
     {
-        for (DataGroupInfo group : dgi.getChildren())
-        {
-            deleteGroup(group, source);
-        }
+        dgi.getChildren().forEach(g -> deleteGroup(g, source));
         for (DataTypeInfo type : dgi.getMembers(false))
         {
             if (myDataTypeOrderManager != null)

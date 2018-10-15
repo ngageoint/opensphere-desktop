@@ -34,13 +34,7 @@ public final class DataGroupInfoUtilities
                         List<TimeSpan> dtiExtents = dti.getTimeExtents().getTimespans();
                         if (dtiExtents != null && !dtiExtents.isEmpty())
                         {
-                            for (TimeSpan ts : dtiExtents)
-                            {
-                                if (!ts.isTimeless())
-                                {
-                                    extentAccumulator.add(ts);
-                                }
-                            }
+                            dtiExtents.stream().filter(ts -> !ts.isTimeless()).forEach(extentAccumulator::add);
                         }
                     }
                 }

@@ -165,7 +165,7 @@ public class FilterSharpenTileVisualizationStyle extends AbstractTileVisualizati
     public void setShaderParameters(ShaderPropertiesSet sps)
     {
         Collection<Pair<String, float[]>> fUnis = New.collection();
-        fUnis.add(new Pair<String, float[]>("uScaleFactor", new float[] { getScaleFactor() }));
+        fUnis.add(new Pair<>("uScaleFactor", new float[] { getScaleFactor() }));
         sps.setFloatUniforms(fUnis);
     }
 }

@@ -269,48 +269,42 @@ public final class DynamicMetaDataClassRegistry implements ClassProvider
                         }
                         return true;
                     }
-                    else
+                    if (LOGGER.isTraceEnabled())
                     {
+                        LOGGER.trace("Previous dynamic class version is still valid for type " + dti.getTypeKey()
+                                + " setting to latest.");
+                    }
+                    typeClassList.add(cl);
+                    return true;
+                }
+                final DynamicMetaDataListCodeGenerator gen = new DynamicMetaDataListCodeGenerator(className, nextVersion, dti,
+                        dtiHashCode);
+                final String source = gen.generateSource();
+                final String fullyQualifiedClasssName = gen.getFullyQualifiedClassName();
+                if (LOGGER.isTraceEnabled())
+                {
+                    LOGGER.trace(source);
+                }
+
+                try
+                {
+                    final Class<?> cl = myCompiler.compileToClass(fullyQualifiedClasssName, source);
+                    if (cl != null)
+                    {
+                        final DynamicMetaDataList tdc = (DynamicMetaDataList)cl.getDeclaredConstructor().newInstance();
+                        typeClassList.add((Class<DynamicMetaDataList>)cl);
+                        myDTIHashToClassMap.put(Integer.valueOf(dtiHashCode), (Class<DynamicMetaDataList>)cl);
+                        myClasses.put(fullyQualifiedClasssName, cl);
                         if (LOGGER.isTraceEnabled())
                         {
-                            LOGGER.trace("Previous dynamic class version is still valid for type " + dti.getTypeKey()
-                                    + " setting to latest.");
+                            LOGGER.trace("Created dynamic meta data type " + tdc.getClass().getName());
                         }
-                        typeClassList.add(cl);
                         return true;
                     }
                 }
-                else
+                catch (ReflectiveOperationException | ClassCastException e)
                 {
-                    final DynamicMetaDataListCodeGenerator gen = new DynamicMetaDataListCodeGenerator(className, nextVersion, dti,
-                            dtiHashCode);
-                    final String source = gen.generateSource();
-                    final String fullyQualifiedClasssName = gen.getFullyQualifiedClassName();
-                    if (LOGGER.isTraceEnabled())
-                    {
-                        LOGGER.trace(source);
-                    }
-
-                    try
-                    {
-                        final Class<?> cl = myCompiler.compileToClass(fullyQualifiedClasssName, source);
-                        if (cl != null)
-                        {
-                            final DynamicMetaDataList tdc = (DynamicMetaDataList)cl.getDeclaredConstructor().newInstance();
-                            typeClassList.add((Class<DynamicMetaDataList>)cl);
-                            myDTIHashToClassMap.put(Integer.valueOf(dtiHashCode), (Class<DynamicMetaDataList>)cl);
-                            myClasses.put(fullyQualifiedClasssName, cl);
-                            if (LOGGER.isTraceEnabled())
-                            {
-                                LOGGER.trace("Created dynamic meta data type " + tdc.getClass().getName());
-                            }
-                            return true;
-                        }
-                    }
-                    catch (ReflectiveOperationException | ClassCastException e)
-                    {
-                        LOGGER.error(e);
-                    }
+                    LOGGER.error(e);
                 }
             }
             finally

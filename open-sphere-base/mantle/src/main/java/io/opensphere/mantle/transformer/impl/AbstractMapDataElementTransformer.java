@@ -242,24 +242,20 @@ public abstract class AbstractMapDataElementTransformer implements MapDataElemen
                     {
                         final long geomId = myLastPickEvent.getPickedGeometry().getDataModelId();
                         final long cacheId = getDataModelIdFromGeometryId(geomId);
-                        myExecutor.execute(new Runnable()
+                        myExecutor.execute(() ->
                         {
-                            @Override
-                            public void run()
+                            MantleToolboxUtils.getMantleToolbox(myToolbox).getDataTypeController()
+                                    .setCurrentDataType(myDataTypeInfo, AbstractMapDataElementTransformer.this);
+
+                            VisualizationState vs = MantleToolboxUtils.getDataElementLookupUtils(myToolbox)
+                                    .getVisualizationState(cacheId);
+                            MantleToolboxUtils.getDataElementUpdateUtils(myToolbox).setDataElementSelected(!vs.isSelected(),
+                                    cacheId, vs, myDataTypeInfo.getTypeKey(), AbstractMapDataElementTransformer.this);
+
+                            if (mouseEvent.getClickCount() == 2)
                             {
-                                MantleToolboxUtils.getMantleToolbox(myToolbox).getDataTypeController()
-                                        .setCurrentDataType(myDataTypeInfo, AbstractMapDataElementTransformer.this);
-
-                                VisualizationState vs = MantleToolboxUtils.getDataElementLookupUtils(myToolbox)
-                                        .getVisualizationState(cacheId);
-                                MantleToolboxUtils.getDataElementUpdateUtils(myToolbox).setDataElementSelected(!vs.isSelected(),
-                                        cacheId, vs, myDataTypeInfo.getTypeKey(), AbstractMapDataElementTransformer.this);
-
-                                if (mouseEvent.getClickCount() == 2)
-                                {
-                                    myToolbox.getEventManager().publishEvent(new DataElementDoubleClickedEvent(cacheId,
-                                            myDataTypeInfo.getTypeKey(), AbstractMapDataElementTransformer.this));
-                                }
+                                myToolbox.getEventManager().publishEvent(new DataElementDoubleClickedEvent(cacheId,
+                                        myDataTypeInfo.getTypeKey(), AbstractMapDataElementTransformer.this));
                             }
                         });
                     }
@@ -277,54 +273,46 @@ public abstract class AbstractMapDataElementTransformer implements MapDataElemen
      */
     private PickListener createPickListener()
     {
-        return new PickListener()
+        return evt ->
         {
-            @Override
-            public void handlePickEvent(final PickEvent evt)
+            final Geometry picked = evt.getPickedGeometry();
+            final long geomId = picked == null ? 0L : picked.getDataModelId();
+            myExecutor.execute(() ->
             {
-                final Geometry picked = evt.getPickedGeometry();
-                final long geomId = picked == null ? 0L : picked.getDataModelId();
-                myExecutor.execute(new Runnable()
+                long cacheId = getDataModelIdFromGeometryId(geomId);
+                if (picked != null && hasGeometryForDataModelId(cacheId))
                 {
-                    @Override
-                    public void run()
+                    myLastPickEvent = evt;
+                    if (myLastHighlightedDataElement != -1 && myLastHighlightedDataElement != cacheId)
                     {
-                        long cacheId = getDataModelIdFromGeometryId(geomId);
-                        if (picked != null && hasGeometryForDataModelId(cacheId))
-                        {
-                            myLastPickEvent = evt;
-                            if (myLastHighlightedDataElement != -1 && myLastHighlightedDataElement != cacheId)
-                            {
-                                myToolbox.getEventManager()
-                                        .publishEvent(new DataElementHighlightChangeEvent(myLastHighlightedDataElement,
-                                                myDataTypeInfo.getTypeKey(), false, AbstractMapDataElementTransformer.this));
-                            }
-
-                            if (myToolbox.getPreferencesRegistry().getPreferences(MapDataElementTransformer.class)
-                                    .getBoolean(SwitchCurrentDataTypeOnMouseOverPreference, false))
-                            {
-                                MantleToolboxUtils.getMantleToolbox(myToolbox).getDataTypeController()
-                                        .setCurrentDataType(myDataTypeInfo, AbstractMapDataElementTransformer.this);
-                            }
-                            myLastHighlightedDataElement = cacheId;
-                            myToolbox.getEventManager()
-                                    .publishEvent(new DataElementHighlightChangeEvent(myLastHighlightedDataElement,
-                                            myDataTypeInfo.getTypeKey(), true, AbstractMapDataElementTransformer.this));
-                        }
-                        else
-                        {
-                            myLastPickEvent = null;
-                            if (myLastHighlightedDataElement != -1)
-                            {
-                                myToolbox.getEventManager()
-                                        .publishEvent(new DataElementHighlightChangeEvent(myLastHighlightedDataElement,
-                                                myDataTypeInfo.getTypeKey(), false, AbstractMapDataElementTransformer.this));
-                            }
-                            myLastHighlightedDataElement = -1;
-                        }
+                        myToolbox.getEventManager()
+                                .publishEvent(new DataElementHighlightChangeEvent(myLastHighlightedDataElement,
+                                        myDataTypeInfo.getTypeKey(), false, AbstractMapDataElementTransformer.this));
                     }
-                });
-            }
+
+                    if (myToolbox.getPreferencesRegistry().getPreferences(MapDataElementTransformer.class)
+                            .getBoolean(SwitchCurrentDataTypeOnMouseOverPreference, false))
+                    {
+                        MantleToolboxUtils.getMantleToolbox(myToolbox).getDataTypeController()
+                                .setCurrentDataType(myDataTypeInfo, AbstractMapDataElementTransformer.this);
+                    }
+                    myLastHighlightedDataElement = cacheId;
+                    myToolbox.getEventManager()
+                            .publishEvent(new DataElementHighlightChangeEvent(myLastHighlightedDataElement,
+                                    myDataTypeInfo.getTypeKey(), true, AbstractMapDataElementTransformer.this));
+                }
+                else
+                {
+                    myLastPickEvent = null;
+                    if (myLastHighlightedDataElement != -1)
+                    {
+                        myToolbox.getEventManager()
+                                .publishEvent(new DataElementHighlightChangeEvent(myLastHighlightedDataElement,
+                                        myDataTypeInfo.getTypeKey(), false, AbstractMapDataElementTransformer.this));
+                    }
+                    myLastHighlightedDataElement = -1;
+                }
+            });
         };
     }
 }

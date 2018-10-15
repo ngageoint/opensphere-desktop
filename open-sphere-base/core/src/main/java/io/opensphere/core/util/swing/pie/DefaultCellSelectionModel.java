@@ -3,6 +3,7 @@ package io.opensphere.core.util.swing.pie;
 import java.awt.Point;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import gnu.trove.iterator.TIntIterator;
@@ -13,7 +14,6 @@ import gnu.trove.set.hash.TIntHashSet;
 import io.opensphere.core.util.ChangeSupport;
 import io.opensphere.core.util.StrongChangeSupport;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 
 /**
  * The default CellSelectionModel.
@@ -293,7 +293,7 @@ public class DefaultCellSelectionModel implements CellSelectionModel
     @Override
     public void setMouseOverCell(Point cell, Object source)
     {
-        if (!EqualsHelper.equals(myMouseOverCell, cell))
+        if (!Objects.equals(myMouseOverCell, cell))
         {
             myMouseOverCell = cell;
             fireStateChanged(ChangeType.MOUSE_OVER, source);

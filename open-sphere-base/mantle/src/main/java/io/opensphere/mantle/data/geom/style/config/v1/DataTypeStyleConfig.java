@@ -1,6 +1,7 @@
 package io.opensphere.mantle.data.geom.style.config.v1;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -10,7 +11,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 
 /**
  * The Class DataTypeStyleConfig.
@@ -47,10 +47,8 @@ public class DataTypeStyleConfig
         myFeatureTypeStyleConfigList = New.list();
         if (other.getDataTypeKey() != null)
         {
-            for (FeatureTypeStyleConfig fts : other.myFeatureTypeStyleConfigList)
-            {
-                myFeatureTypeStyleConfigList.add(new FeatureTypeStyleConfig(fts));
-            }
+            other.myFeatureTypeStyleConfigList.stream().map(fts -> new FeatureTypeStyleConfig(fts))
+                    .forEach(myFeatureTypeStyleConfigList::add);
         }
     }
 
@@ -129,14 +127,8 @@ public class DataTypeStyleConfig
         FeatureTypeStyleConfig cfg = null;
         if (myFeatureTypeStyleConfigList != null && !myFeatureTypeStyleConfigList.isEmpty())
         {
-            for (FeatureTypeStyleConfig ftsc : myFeatureTypeStyleConfigList)
-            {
-                if (EqualsHelper.equals(mgsBaseClassName, ftsc.getBaseMGSClassName()))
-                {
-                    cfg = ftsc;
-                    break;
-                }
-            }
+            cfg = myFeatureTypeStyleConfigList.stream()
+                    .filter(ftsc -> Objects.equals(mgsBaseClassName, ftsc.getBaseMGSClassName())).findFirst().orElse(null);
         }
         return cfg;
     }

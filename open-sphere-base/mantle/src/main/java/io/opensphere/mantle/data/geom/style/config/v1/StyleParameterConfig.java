@@ -2,7 +2,9 @@ package io.opensphere.mantle.data.geom.style.config.v1;
 
 import java.awt.Color;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -16,7 +18,6 @@ import org.apache.log4j.Logger;
 import io.opensphere.core.units.InvalidUnitsException;
 import io.opensphere.core.units.length.Length;
 import io.opensphere.core.util.Utilities;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.data.geom.style.VisualizationStyleParameter;
 import io.opensphere.mantle.data.geom.util.ListSupport;
 
@@ -180,15 +181,7 @@ public class StyleParameterConfig
      */
     private static Object parseEnum(String s, Class<?> c)
     {
-        Object[] vals = c.getEnumConstants();
-        for (Object v : vals)
-        {
-            if (((Enum<?>)v).name().equals(s))
-            {
-                return v;
-            }
-        }
-        return null;
+        return Arrays.stream(c.getEnumConstants()).filter(v -> ((Enum<?>)v).name().equals(s)).findFirst().orElse(null);
     }
 
     /**
@@ -246,9 +239,9 @@ public class StyleParameterConfig
         if (obj instanceof StyleParameterConfig)
         {
             StyleParameterConfig other = (StyleParameterConfig)obj;
-            isEqual = EqualsHelper.equals(other.myParameterKey, myParameterKey)
-                    && EqualsHelper.equals(other.myParameterValue, myParameterValue)
-                    && EqualsHelper.equals(other.myParameterValueClass, myParameterValueClass);
+            isEqual = Objects.equals(other.myParameterKey, myParameterKey)
+                    && Objects.equals(other.myParameterValue, myParameterValue)
+                    && Objects.equals(other.myParameterValueClass, myParameterValueClass);
         }
 
         return isEqual;

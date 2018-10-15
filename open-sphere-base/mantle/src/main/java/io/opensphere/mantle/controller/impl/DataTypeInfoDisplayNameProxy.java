@@ -4,9 +4,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import io.opensphere.core.util.Utilities;
-import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.ToStringProxy;
 import io.opensphere.mantle.data.DataTypeInfo;
 
@@ -31,18 +31,12 @@ public class DataTypeInfoDisplayNameProxy extends ToStringProxy<DataTypeInfo>
         Utilities.checkNull(itemList, "itemList");
         if (!itemList.isEmpty())
         {
-            List<DataTypeInfoDisplayNameProxy> resultList = New.list(itemList.size());
-            for (DataTypeInfo item : itemList)
-            {
-                resultList.add(new DataTypeInfoDisplayNameProxy(item, true));
-            }
+            List<DataTypeInfoDisplayNameProxy> resultList = itemList.stream().map(i -> new DataTypeInfoDisplayNameProxy(i, true))
+                    .collect(Collectors.toList());
             Collections.sort(resultList, comp == null ? (x, y) -> x.toString().compareTo(y.toString()) : comp);
             return resultList;
         }
-        else
-        {
-            return Collections.<DataTypeInfoDisplayNameProxy>emptyList();
-        }
+        return Collections.<DataTypeInfoDisplayNameProxy>emptyList();
     }
 
     /**

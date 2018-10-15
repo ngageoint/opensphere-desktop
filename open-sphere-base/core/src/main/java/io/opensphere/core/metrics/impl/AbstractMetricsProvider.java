@@ -2,6 +2,7 @@ package io.opensphere.core.metrics.impl;
 
 import java.awt.Color;
 import java.util.Date;
+import java.util.Objects;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -10,7 +11,6 @@ import io.opensphere.core.metrics.MetricsProvider;
 import io.opensphere.core.metrics.MetricsRegistry;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.WeakChangeSupport;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.NamedThreadFactory;
 
 /**
@@ -159,7 +159,7 @@ public abstract class AbstractMetricsProvider implements MetricsProvider
      */
     public void setColor(Color c)
     {
-        if (!EqualsHelper.equals(myColor, c))
+        if (!Objects.equals(myColor, c))
         {
             myColor = c;
             fireUpdated();

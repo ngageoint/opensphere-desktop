@@ -7,11 +7,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.swing.JFrame;
-
-import io.opensphere.core.util.lang.EqualsHelper;
 
 /**
  * The Class SlavedDateTimePicker. This class will prevent a begin date from
@@ -62,14 +61,14 @@ public class SlavedDateTimePicker implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (EqualsHelper.equals(e.getSource(), myBeginDateTimePicker))
+        if (Objects.equals(e.getSource(), myBeginDateTimePicker))
         {
             if (myBeginDateTimePicker.getCurrentPickerDate().after(myEndDateTimePicker.getCurrentPickerDate()))
             {
                 myEndDateTimePicker.setCurrentPickerDate(new Date(myBeginDateTimePicker.getCurrentPickerDate().getTime()));
             }
         }
-        else if (EqualsHelper.equals(e.getSource(), myEndDateTimePicker)
+        else if (Objects.equals(e.getSource(), myEndDateTimePicker)
                 && myEndDateTimePicker.getCurrentPickerDate().before(myBeginDateTimePicker.getCurrentPickerDate()))
         {
             myBeginDateTimePicker.setCurrentPickerDate(new Date(myEndDateTimePicker.getCurrentPickerDate().getTime()));

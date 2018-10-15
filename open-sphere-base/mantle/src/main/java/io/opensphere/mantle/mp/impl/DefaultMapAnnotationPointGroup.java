@@ -376,14 +376,7 @@ public class DefaultMapAnnotationPointGroup implements MutableMapAnnotationPoint
     public MutableTreeNode createTreeNodeWithChildrenInPrefferedOrder(
             Predicate<? super MutableMapAnnotationPointGroup> nodeFilter)
     {
-        return createTreeNode(new Comparator<MutableMapAnnotationPointGroup>()
-        {
-            @Override
-            public int compare(MutableMapAnnotationPointGroup o1, MutableMapAnnotationPointGroup o2)
-            {
-                return Integer.compare(o1.getPreferredOrder(), o2.getPreferredOrder());
-            }
-        }, nodeFilter);
+        return createTreeNode((o1, o2) -> Integer.compare(o1.getPreferredOrder(), o2.getPreferredOrder()), nodeFilter);
     }
 
     @Override
@@ -469,7 +462,7 @@ public class DefaultMapAnnotationPointGroup implements MutableMapAnnotationPoint
         myModificationLock.readLock().lock();
         try
         {
-            returnSet = new ArrayList<MapAnnotationPoint>(myMemberSet);
+            returnSet = new ArrayList<>(myMemberSet);
 
             if (recurseChildren)
             {
@@ -499,10 +492,7 @@ public class DefaultMapAnnotationPointGroup implements MutableMapAnnotationPoint
         {
             return this;
         }
-        else
-        {
-            return myParent.getTopParent();
-        }
+        return myParent.getTopParent();
     }
 
     @Override

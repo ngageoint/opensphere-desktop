@@ -1,5 +1,6 @@
 package io.opensphere.mantle.util.columnanalyzer;
 
+import java.util.Objects;
 import java.util.Set;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -180,7 +181,7 @@ public class ColumnAnalyzerData
                 && myDoubleCount == other.myDoubleCount && myFloatCount == other.myFloatCount && myIntCount == other.myIntCount
                 && myLongCount == other.myLongCount && myNumValuesConsidered == other.myNumValuesConsidered
                 && myTotalValuesProcessed == other.myTotalValuesProcessed && myUniqueValueCount == other.myUniqueValueCount
-                && EqualsHelper.equals(myUniqueValuesSet, other.myUniqueValuesSet);
+                && Objects.equals(myUniqueValuesSet, other.myUniqueValuesSet);
     }
 
     /**

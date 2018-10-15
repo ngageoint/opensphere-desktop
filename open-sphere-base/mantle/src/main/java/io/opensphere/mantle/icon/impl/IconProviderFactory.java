@@ -19,20 +19,16 @@ import io.opensphere.mantle.icon.IconProvider;
 public final class IconProviderFactory
 {
     /** The Constant iconFileTypeFilter. */
-    private static final Predicate<File> ourIconFileTypeFilter = new Predicate<File>()
+    private static final Predicate<File> ourIconFileTypeFilter = value ->
     {
-        @Override
-        public boolean test(File value)
+        boolean accept = false;
+        if (value != null && value.isFile() && value.canRead())
         {
-            boolean accept = false;
-            if (value != null && value.isFile() && value.canRead())
-            {
-                String fileName = value.getName().toLowerCase();
-                accept = fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png")
-                        || fileName.endsWith(".gif");
-            }
-            return accept;
+            String fileName = value.getName().toLowerCase();
+            accept = fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png")
+                    || fileName.endsWith(".gif");
         }
+        return accept;
     };
 
     /**

@@ -52,14 +52,8 @@ public class StyleManagerController implements VisualizationStyleController
     /**
      * Features by name.
      */
-    private static Map<String, Class<? extends VisualizationStyle>> featuresByName = new TreeMap<>();
-    static
-    {
-        for (Class<? extends VisualizationStyle> c : StyleUtils.FEATURE_STYLES)
-        {
-            featuresByName.put(c.getName(), c);
-        }
-    }
+    private static Map<String, Class<? extends VisualizationStyle>> featuresByName = new TreeMap<>(
+            StyleUtils.FEATURE_STYLES.stream().collect(Collectors.toMap(c -> c.getName(), c -> c)));
 
     /** The Config. */
     private final StyleManagerConfig myConfig;
@@ -415,10 +409,7 @@ public class StyleManagerController implements VisualizationStyleController
         }
         if (!typesToReset.isEmpty())
         {
-            for (String type : typesToReset)
-            {
-                setUseCustomStyleForDataType(type, false, source);
-            }
+            typesToReset.forEach(t -> setUseCustomStyleForDataType(t, false, source));
             doCfgLock(() -> myConfig.clear());
             saveConfigState();
         }
@@ -621,10 +612,7 @@ public class StyleManagerController implements VisualizationStyleController
                 Set<Class<? extends VisualizationSupport>> featureTypes = myStyleRegistry.getFeatureTypes(dtiKey);
                 if (featureTypes != null)
                 {
-                    for (Class<? extends VisualizationSupport> ft : featureTypes)
-                    {
-                        myStyleRegistry.resetStyle(ft, dtiKey, source);
-                    }
+                    featureTypes.forEach(ft -> myStyleRegistry.resetStyle(ft, dtiKey, source));
                 }
             }
             else
@@ -739,14 +727,8 @@ public class StyleManagerController implements VisualizationStyleController
         }
 
         // collect the common configuration parameters
-        Map<String, VisualizationStyleParameter> vspMap = new TreeMap<>();
-        for (VisualizationStyleParameter p : changedParams)
-        {
-            if (COMMON_KEYS.contains(p.getKey()))
-            {
-                vspMap.put(p.getKey(), p);
-            }
-        }
+        Map<String, VisualizationStyleParameter> vspMap = new TreeMap<>(changedParams.stream()
+                .filter(p -> COMMON_KEYS.contains(p.getKey())).collect(Collectors.toMap(p -> p.getKey(), p -> p)));
 
         StyleParameterSetConfig spsc = new StyleParameterSetConfig(aStyle.getClass().getName(), changedParams);
         myConfigLock.lock();
@@ -760,15 +742,9 @@ public class StyleManagerController implements VisualizationStyleController
             // create unconfigured geometry types
             String typeKey = aStyle.getDTIKey();
             Set<String> needed = new TreeSet<>(featuresByName.keySet());
-            for (StyleParameterSetConfig c : ftsc.getStyleParameterSetConfigList())
-            {
-                needed.remove(c.getStyleClassName());
-            }
-            for (String n : needed)
-            {
-                ftsc.getStyleParameterSetConfigList()
-                        .add(new StyleParameterSetConfig(getVisStyle(featuresByName.get(n), typeKey, source)));
-            }
+            ftsc.getStyleParameterSetConfigList().stream().map(c -> c.getStyleClassName()).forEach(needed::remove);
+            needed.stream().map(n -> new StyleParameterSetConfig(getVisStyle(featuresByName.get(n), typeKey, source)))
+                    .forEach(ftsc.getStyleParameterSetConfigList()::add);
 
             // now perform replication
             for (StyleParameterSetConfig c : ftsc.getStyleParameterSetConfigList())
@@ -1019,13 +995,8 @@ public class StyleManagerController implements VisualizationStyleController
      */
     private void initializeCustomTypes()
     {
-        for (String dtnKey : myConfig.getUseCustomTypeKeysSet())
-        {
-            if (dtnKey != null && !dtnKey.isEmpty())
-            {
-                doCfgLock(() -> activateCustomTypesForDataType(dtnKey, false, this));
-            }
-        }
+        myConfig.getUseCustomTypeKeysSet().stream().filter(k -> k != null && !k.isEmpty())
+                .forEach(k -> doCfgLock(() -> activateCustomTypesForDataType(k, false, this)));
     }
 
     /**

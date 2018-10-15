@@ -10,8 +10,6 @@ import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
-import net.jcip.annotations.GuardedBy;
-
 import org.apache.log4j.Logger;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -57,6 +55,7 @@ import io.opensphere.mantle.transformer.MapDataElementTransformer;
 import io.opensphere.mantle.transformer.TransformerGeomRegistryUpdateTaskActivity;
 import io.opensphere.mantle.transformer.impl.DefaultMapDataElementTransformer;
 import io.opensphere.mantle.transformer.impl.StyleMapDataElementTransformer;
+import net.jcip.annotations.GuardedBy;
 
 /** The Class DataTypeController. */
 @SuppressWarnings("PMD.GodClass")
@@ -409,10 +408,7 @@ public class DataTypeControllerImpl implements DataTypeController
             List<Long> ids = addDataElements(provider, boundingRegion, overallTimespan, originator);
             return CollectionUtilities.toLongArray(ids);
         }
-        else
-        {
-            return addMapDataElementsInternal(dti, dataElements);
-        }
+        return addMapDataElementsInternal(dti, dataElements);
     }
 
     @Override
@@ -437,14 +433,8 @@ public class DataTypeControllerImpl implements DataTypeController
 
         synchronized (myDTIKeyToDTIMap)
         {
-            for (String dtiKey : dtiKeyList)
-            {
-                MapDataElementTransformer xFormer = myDTIKeyToTransformerMap.get(dtiKey);
-                if (xFormer != null)
-                {
-                    xFormer.removeMapDataElements(ids);
-                }
-            }
+            dtiKeyList.stream().map(key -> myDTIKeyToTransformerMap.get(key)).filter(t -> t != null)
+                    .forEach(t -> t.removeMapDataElements(ids));
         }
 
         myDECache.remove(CollectionUtilities.listView(ids), false);

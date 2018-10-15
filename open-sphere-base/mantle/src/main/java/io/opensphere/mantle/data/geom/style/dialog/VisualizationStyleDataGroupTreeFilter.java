@@ -46,13 +46,7 @@ public class VisualizationStyleDataGroupTreeFilter implements Predicate<DataGrou
 
         if (!isAcceptable && theDGI.hasChildren())
         {
-            for (DataGroupInfo childGroup : theDGI.getChildren())
-            {
-                if (test(childGroup))
-                {
-                    isAcceptable = true;
-                }
-            }
+            isAcceptable = theDGI.getChildren().stream().filter(this::test).findFirst().isPresent();
         }
         return isAcceptable;
     }

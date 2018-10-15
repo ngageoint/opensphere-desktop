@@ -3,13 +3,13 @@ package io.opensphere.mantle.data.merge;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.data.impl.encoder.DiskDecodeHelper;
 import io.opensphere.mantle.data.impl.encoder.DiskEncodeHelper;
 import io.opensphere.mantle.data.impl.encoder.EncodeType;
@@ -104,8 +104,7 @@ public class MetaDataMergeKeyMapEntry
             return false;
         }
         MetaDataMergeKeyMapEntry other = (MetaDataMergeKeyMapEntry)obj;
-        return EqualsHelper.equals(mySourceKeyName, other.mySourceKeyName)
-                && EqualsHelper.equals(myMergeKeyName, other.myMergeKeyName);
+        return Objects.equals(mySourceKeyName, other.mySourceKeyName) && Objects.equals(myMergeKeyName, other.myMergeKeyName);
     }
 
     /**

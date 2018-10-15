@@ -108,59 +108,55 @@ public class StyleEditPanel extends JPanel implements StyleEditPanelControllerLi
 
         add(centerSP, BorderLayout.CENTER);
         myEditPanelController.addListener(this);
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
+            switch (myGroupType)
             {
-                switch (myGroupType)
-                {
-                    case FEATURES:
-                        if (!myEditPanelController.getPrimaryFeatureClasses().isEmpty())
+                case FEATURES:
+                    if (!myEditPanelController.getPrimaryFeatureClasses().isEmpty())
+                    {
+                        Class<? extends VisualizationSupport> cl1 = myEditPanelController.getPrimaryFeatureClasses().iterator()
+                                .next();
+                        StyleNodeUserObject uo1 = myEditPanelController.getSelectedNodeForFeatureType(cl1);
+                        if (uo1 != null)
                         {
-                            Class<? extends VisualizationSupport> cl = myEditPanelController.getPrimaryFeatureClasses().iterator()
-                                    .next();
-                            StyleNodeUserObject uo = myEditPanelController.getSelectedNodeForFeatureType(cl);
-                            if (uo != null)
-                            {
-                                myEditPanelController.setEditSelectedStyle(uo, true);
-                                myStyleSelectTreePanel.ensureLabelSelected(uo);
-                            }
+                            myEditPanelController.setEditSelectedStyle(uo1, true);
+                            myStyleSelectTreePanel.ensureLabelSelected(uo1);
                         }
-                        break;
-                    case TILES:
-                        if (!myEditPanelController.getPrimaryTileClasses().isEmpty())
+                    }
+                    break;
+                case TILES:
+                    if (!myEditPanelController.getPrimaryTileClasses().isEmpty())
+                    {
+                        Class<? extends VisualizationSupport> cl2 = myEditPanelController.getPrimaryTileClasses().iterator()
+                                .next();
+                        StyleNodeUserObject uo2 = myEditPanelController.getSelectedNodeForTileType(cl2);
+                        if (uo2 != null)
                         {
-                            Class<? extends VisualizationSupport> cl = myEditPanelController.getPrimaryTileClasses().iterator()
-                                    .next();
-                            StyleNodeUserObject uo = myEditPanelController.getSelectedNodeForTileType(cl);
-                            if (uo != null)
-                            {
-                                myEditPanelController.setEditSelectedStyle(uo, true);
-                                myStyleSelectTreePanel.ensureLabelSelected(uo);
-                            }
+                            myEditPanelController.setEditSelectedStyle(uo2, true);
+                            myStyleSelectTreePanel.ensureLabelSelected(uo2);
                         }
-                        break;
-                    case HEATMAPS:
-                        if (!myEditPanelController.getPrimaryHeatmapClasses().isEmpty())
+                    }
+                    break;
+                case HEATMAPS:
+                    if (!myEditPanelController.getPrimaryHeatmapClasses().isEmpty())
+                    {
+                        Class<? extends VisualizationSupport> supportClass = myEditPanelController.getPrimaryHeatmapClasses()
+                                .iterator().next();
+                        StyleNodeUserObject styleNodeUserObject = myEditPanelController
+                                .getSelectedNodeForHeatmapType(supportClass);
+                        if (styleNodeUserObject != null)
                         {
-                            Class<? extends VisualizationSupport> supportClass = myEditPanelController.getPrimaryHeatmapClasses()
-                                    .iterator().next();
-                            StyleNodeUserObject styleNodeUserObject = myEditPanelController
-                                    .getSelectedNodeForHeatmapType(supportClass);
-                            if (styleNodeUserObject != null)
-                            {
-                                myEditPanelController.setEditSelectedStyle(styleNodeUserObject, true);
-                                myStyleSelectTreePanel.ensureLabelSelected(styleNodeUserObject);
-                            }
+                            myEditPanelController.setEditSelectedStyle(styleNodeUserObject, true);
+                            myStyleSelectTreePanel.ensureLabelSelected(styleNodeUserObject);
+                        }
 
-                        }
-                        break;
-                    default:
-                        // fail fast:
-                        throw new UnsupportedOperationException("Unable to configure editor for style group type " + myGroupType);
+                    }
+                    break;
+                default:
+                    // fail fast:
+                    throw new UnsupportedOperationException("Unable to configure editor for style group type " + myGroupType);
 
-                }
             }
         });
     }

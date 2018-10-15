@@ -94,13 +94,8 @@ public class CacheLoadFilterManager extends DataFilterRegistryAdapter
     {
         if (removedFilters != null && !removedFilters.isEmpty())
         {
-            for (DataFilter df : removedFilters)
-            {
-                if (df.getTypeKey() != null)
-                {
-                    myDTIKeyToLoadFilterMap.remove(df.getTypeKey());
-                }
-            }
+            removedFilters.stream().filter(df -> df.getTypeKey() != null).map(df -> df.getTypeKey())
+                    .forEach(myDTIKeyToLoadFilterMap::remove);
         }
     }
 }

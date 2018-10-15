@@ -5,10 +5,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
-
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.renderproperties.BaseRenderProperties;
 import io.opensphere.core.geometry.renderproperties.DefaultPolygonRenderProperties;
@@ -24,7 +24,6 @@ import io.opensphere.core.units.length.Length;
 import io.opensphere.core.util.MathUtil;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.Pair;
 import io.opensphere.core.util.lang.UnexpectedEnumException;
 import io.opensphere.mantle.data.DataTypeInfo;
@@ -240,8 +239,9 @@ public abstract class AbstractEllipseFeatureVisualizationStyle extends AbstractL
         List<AbstractStyleParameterEditorPanel> paramList = New.list();
         MutableVisualizationStyle style = panel.getChangedStyle();
 
-        paramList.add(new CheckBoxStyleParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder("Show Ellipse Only When Selected"), style,
-                ourEllipseShowOnSelectPropertyKey, true));
+        paramList.add(
+                new CheckBoxStyleParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder("Show Ellipse Only When Selected"),
+                        style, ourEllipseShowOnSelectPropertyKey, true));
         paramList.add(new CheckBoxStyleParameterEditorPanel(StyleUtils.createBasicMiniPanelBuilder("Ellipsoid"), style,
                 ourEllipsoidPropertyKey, false));
 
@@ -292,8 +292,8 @@ public abstract class AbstractEllipseFeatureVisualizationStyle extends AbstractL
                 ourEllipseShowOnSelectPropertyKey, true));
 
         param = style.getStyleParameter(ourEllipsoidPropertyKey);
-        paramList.add(new CheckBoxStyleParameterEditorPanel(PanelBuilder.get(param.getName()), style,
-                ourEllipsoidPropertyKey, true));
+        paramList.add(
+                new CheckBoxStyleParameterEditorPanel(PanelBuilder.get(param.getName()), style, ourEllipsoidPropertyKey, true));
 
         PanelBuilder pb = PanelBuilder.get("Edge Line");
         pb.setOtherParameter(CheckBoxFloatSliderStyleParameterEditorPanel.POST_CHECKBOX_LABEL, "Width");
@@ -357,13 +357,8 @@ public abstract class AbstractEllipseFeatureVisualizationStyle extends AbstractL
     public void initialize(Set<VisualizationStyleParameter> paramSet)
     {
         super.initialize(paramSet);
-        for (VisualizationStyleParameter p : paramSet)
-        {
-            if (p.getKey() != null && p.getKey().startsWith(ourPropertyKeyPrefix))
-            {
-                setParameter(p);
-            }
-        }
+        paramSet.stream().filter(p -> p.getKey() != null && p.getKey().startsWith(ourPropertyKeyPrefix))
+                .forEach(this::setParameter);
     }
 
     @Override
@@ -425,7 +420,7 @@ public abstract class AbstractEllipseFeatureVisualizationStyle extends AbstractL
     public void setAxisUnit(Class<? extends Length> unit, Object source)
     {
         Class<? extends Length> oldUnit = getAxisUnit();
-        if (!EqualsHelper.equals(oldUnit, unit))
+        if (!Objects.equals(oldUnit, unit))
         {
             setParameter(ourAxisUnitKey, Length.getSelectionLabel(unit), source);
         }

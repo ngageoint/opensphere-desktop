@@ -1,8 +1,8 @@
 package io.opensphere.core.util.swing;
 
 import java.awt.Font;
+import java.util.Objects;
 
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.HashCodeHelper;
 
 /**
@@ -35,7 +35,7 @@ public class FontWrapper
             return false;
         }
         FontWrapper other = (FontWrapper)obj;
-        return EqualsHelper.equals(myFont.getName(), other.getFont().getName());
+        return Objects.equals(myFont.getName(), other.getFont().getName());
     }
 
     /**

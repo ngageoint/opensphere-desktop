@@ -5,12 +5,12 @@ import java.awt.event.ActionEvent;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.swing.Box;
 import javax.swing.JComboBox;
 
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.core.util.swing.ListComboBoxModel;
 import io.opensphere.mantle.data.geom.style.MutableVisualizationStyle;
@@ -87,7 +87,7 @@ public class MultiComboBoxStyleTwoParameterEditorPanel extends ComboBoxStylePara
         {
             @SuppressWarnings("unchecked")
             Object opt = ((OptionProxy<Object>)mySecondComboBox.getSelectedItem()).getOption();
-            if (!EqualsHelper.equals(opt, getSecondParameterValue()))
+            if (!Objects.equals(opt, getSecondParameterValue()))
             {
                 myStyle.setParameter(mySecondParameterKey, opt, this);
             }

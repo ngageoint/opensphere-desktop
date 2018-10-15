@@ -42,12 +42,9 @@ public class LayerListView extends FilterableCheckBoxListView<DataTypeInfo>
         {
             return getListView().getSelections();
         }
-        else
-        {
-            final AtomicReference<Collection<DataTypeInfo>> selections = new AtomicReference<>();
-            FXUtilities.runAndWait(() -> selections.set(getListView().getSelections()));
-            return selections.get();
-        }
+        final AtomicReference<Collection<DataTypeInfo>> selections = new AtomicReference<>();
+        FXUtilities.runAndWait(() -> selections.set(getListView().getSelections()));
+        return selections.get();
     }
 
     /**

@@ -2,6 +2,7 @@ package io.opensphere.mantle.mp.impl.persist.v1;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -148,7 +149,7 @@ public class JAXBMapAnnotationPoint implements MapAnnotationPoint
             return false;
         }
         MapAnnotationPoint other = (MapAnnotationPoint)obj;
-        if (!EqualsHelper.equals(myTitleVal, other.getTitle()) || !EqualsHelper.equals(myViewName, other.getAssociatedViewName()))
+        if (!Objects.equals(myTitleVal, other.getTitle()) || !Objects.equals(myViewName, other.getAssociatedViewName()))
         {
             return false;
         }

@@ -1,7 +1,5 @@
 package io.opensphere.mantle.controller.impl;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,8 +12,8 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
-import net.jcip.annotations.GuardedBy;
 import javax.swing.JMenuItem;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
@@ -43,6 +41,7 @@ import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.event.DataGroupInfoChildRemovedEvent;
 import io.opensphere.mantle.data.impl.DefaultDataGroupInfo;
 import io.opensphere.mantle.util.TextViewDialog;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * The Class DataGroupControllerImpl.
@@ -144,11 +143,7 @@ public class DataGroupControllerImpl implements DataGroupController, EventListen
             List<DataGroupInfo> dgiList = new ArrayList<>(myDataGroups);
 
             // Add the children that ain't filtered.
-            for (DataGroupInfo dgi : dgiList)
-            {
-                Set<DataGroupInfo> set = dgi.createGroupSet(nodeFilter);
-                dataGroups.addAll(set);
-            }
+            dgiList.stream().forEach(dgi -> dataGroups.addAll(dgi.createGroupSet(nodeFilter)));
 
             // Sort the list of children into order.
             Collections.sort(dgiList, comparator == null ? DataGroupInfo.DISPLAY_NAME_COMPARATOR : comparator);
@@ -339,17 +334,13 @@ public class DataGroupControllerImpl implements DataGroupController, EventListen
     public Collection<? extends String> getQueryableDataTypeKeys()
     {
         Collection<String> typeKeys = New.collection();
+
         for (DataGroupInfo group : getActiveGroups())
         {
             if (group.hasMembers(false))
             {
-                for (DataTypeInfo info : group.getMembers(false))
-                {
-                    if (info.isVisible() && info.isQueryable())
-                    {
-                        typeKeys.add(info.getTypeKey());
-                    }
-                }
+                group.getMembers(false).stream().filter(i -> i.isVisible() && i.isQueryable()).map(i -> i.getTypeKey())
+                        .forEach(typeKeys::add);
             }
         }
 
@@ -568,20 +559,14 @@ public class DataGroupControllerImpl implements DataGroupController, EventListen
         List<DataGroupInfo> activeDGIList = CollectionUtilities.sort(getActiveGroups(),
                 DataGroupInfo.LONG_DISPLAY_NAME_COMPARATOR);
         sb.append(activeDGIList.size()).append('\n');
-        for (DataGroupInfo dgi : activeDGIList)
-        {
-            sb.append("     ").append(dgi.getLongDisplayName()).append('\n');
-        }
+        sb.append(activeDGIList.stream().map(d -> d.getLongDisplayName()).collect(Collectors.joining("\n", "     ", "")));
 
         myDataGroupsLock.readLock().lock();
         try
         {
             sb.append("\nRoot Data Group Tree\n\n");
             List<DataGroupInfo> dgiList = CollectionUtilities.sort(myDataGroups, DataGroupInfo.LONG_DISPLAY_NAME_COMPARATOR);
-            for (DataGroupInfo dgi : dgiList)
-            {
-                sb.append(dgi.toString()).append('\n');
-            }
+            sb.append(dgiList.stream().map(d -> d.toString()).collect(Collectors.joining("\n")));
         }
         finally
         {
@@ -597,17 +582,13 @@ public class DataGroupControllerImpl implements DataGroupController, EventListen
     private void createAndInstallControllerPrintMenuItem()
     {
         JMenuItem deCacheSummaryMI = new JMenuItem("DataGroupController - Print Summary");
-        deCacheSummaryMI.addActionListener(new ActionListener()
+        deCacheSummaryMI.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                TextViewDialog dvd = new TextViewDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
-                        "DataGroupController Summary", DataGroupControllerImpl.this.toString(), false,
-                        myToolbox.getPreferencesRegistry());
-                dvd.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
-                dvd.setVisible(true);
-            }
+            TextViewDialog dvd = new TextViewDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
+                    "DataGroupController Summary", DataGroupControllerImpl.this.toString(), false,
+                    myToolbox.getPreferencesRegistry());
+            dvd.setLocationRelativeTo(myToolbox.getUIRegistry().getMainFrameProvider().get());
+            dvd.setVisible(true);
         });
         myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.DEBUG_MENU)
                 .add(deCacheSummaryMI);

@@ -1,6 +1,7 @@
 package io.opensphere.mantle.data.geom.util.jts;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
@@ -59,11 +60,8 @@ public final class GeometrySupportToJTSGeometryFactory
             List<Geometry> children = null;
             if (geomSupport.hasChildren())
             {
-                children = New.list();
-                for (MapGeometrySupport child : geomSupport.getChildren())
-                {
-                    children.add(convertToJTSGeometry(child, geomFactory));
-                }
+                children = geomSupport.getChildren().stream().map(c -> convertToJTSGeometry(c, geomFactory))
+                        .collect(Collectors.toList());
             }
 
             if (geomSupport instanceof MapLocationGeometrySupport)

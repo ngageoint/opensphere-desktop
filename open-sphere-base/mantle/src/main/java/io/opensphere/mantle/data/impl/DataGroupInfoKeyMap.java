@@ -3,8 +3,8 @@ package io.opensphere.mantle.data.impl;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.stream.Collectors;
 
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
@@ -39,19 +39,8 @@ public final class DataGroupInfoKeyMap implements DataGroupInfoLookup
         myDGIKeyToDGIMapLock.lock();
         try
         {
-            Set<String> keysToRemove = New.set();
-            for (Map.Entry<String, WeakReference<DataGroupInfo>> entry : myDGIKeyToDGIMap.entrySet())
-            {
-                WeakReference<DataGroupInfo> value = entry.getValue();
-                if (value == null || value.get() == null)
-                {
-                    keysToRemove.add(entry.getKey());
-                }
-            }
-            for (String key : keysToRemove)
-            {
-                myDGIKeyToDGIMap.remove(key);
-            }
+            myDGIKeyToDGIMap.entrySet().stream().filter(e -> e.getValue() == null || e.getValue().get() == null)
+                    .map(e -> e.getKey()).collect(Collectors.toSet()).forEach(myDGIKeyToDGIMap::remove);
         }
         finally
         {
@@ -171,7 +160,7 @@ public final class DataGroupInfoKeyMap implements DataGroupInfoLookup
         myDGIKeyToDGIMapLock.lock();
         try
         {
-            myDGIKeyToDGIMap.put(key, new WeakReference<DataGroupInfo>(dgi));
+            myDGIKeyToDGIMap.put(key, new WeakReference<>(dgi));
         }
         finally
         {

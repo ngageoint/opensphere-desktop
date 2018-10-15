@@ -33,9 +33,9 @@ public class ActiveDataGroupsChangedEvent extends AbstractSingleStateEvent imple
     {
         mySource = source;
         myActivatedGroups = activatedGroups == null ? Collections.<DataGroupInfo>emptySet()
-                : Collections.unmodifiableSet(new HashSet<DataGroupInfo>(activatedGroups));
+                : Collections.unmodifiableSet(new HashSet<>(activatedGroups));
         myDeactivatedGroups = deactivatedGroups == null ? Collections.<DataGroupInfo>emptySet()
-                : Collections.unmodifiableSet(new HashSet<DataGroupInfo>(deactivatedGroups));
+                : Collections.unmodifiableSet(new HashSet<>(deactivatedGroups));
     }
 
     /**

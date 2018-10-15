@@ -3,7 +3,6 @@ package io.opensphere.mantle.data.impl.dgset.v1;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -18,7 +17,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataGroupInfoActiveHistoryRecord;
 
@@ -56,10 +54,7 @@ public class JAXBDataGroupInfoActiveHistoryList
         myHistoryListLock.lock();
         try
         {
-            for (JAXBDataGroupInfoActiveHistoryRecord rec : other.myHistoryList)
-            {
-                myHistoryList.add(new JAXBDataGroupInfoActiveHistoryRecord(rec));
-            }
+            other.myHistoryList.stream().map(JAXBDataGroupInfoActiveHistoryRecord::new).forEach(myHistoryList::add);
         }
         finally
         {
@@ -109,7 +104,7 @@ public class JAXBDataGroupInfoActiveHistoryList
         myHistoryListLock.lock();
         try
         {
-            result = new ArrayList<DataGroupInfoActiveHistoryRecord>(myHistoryList);
+            result = new ArrayList<>(myHistoryList);
         }
         finally
         {
@@ -184,7 +179,7 @@ public class JAXBDataGroupInfoActiveHistoryList
             while (!found && recItr.hasNext())
             {
                 JAXBDataGroupInfoActiveHistoryRecord rec = recItr.next();
-                if (EqualsHelper.equals(rec.getId(), id))
+                if (Objects.equals(rec.getId(), id))
                 {
                     found = true;
                     recItr.remove();
@@ -206,14 +201,7 @@ public class JAXBDataGroupInfoActiveHistoryList
         myHistoryListLock.lock();
         try
         {
-            Collections.sort(myHistoryList, new Comparator<JAXBDataGroupInfoActiveHistoryRecord>()
-            {
-                @Override
-                public int compare(JAXBDataGroupInfoActiveHistoryRecord o1, JAXBDataGroupInfoActiveHistoryRecord o2)
-                {
-                    return o1.getDate().compareTo(o2.getDate());
-                }
-            });
+            Collections.sort(myHistoryList, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
             Set<String> idSet = New.set();
             Iterator<JAXBDataGroupInfoActiveHistoryRecord> recItr = myHistoryList.iterator();
             while (recItr.hasNext())

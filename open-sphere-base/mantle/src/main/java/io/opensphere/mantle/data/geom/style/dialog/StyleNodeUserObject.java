@@ -1,6 +1,7 @@
 package io.opensphere.mantle.data.geom.style.dialog;
 
-import io.opensphere.core.util.lang.EqualsHelper;
+import java.util.Objects;
+
 import io.opensphere.mantle.data.VisualizationSupport;
 import io.opensphere.mantle.data.geom.style.VisualizationStyle;
 
@@ -67,7 +68,7 @@ public class StyleNodeUserObject
         {
             return false;
         }
-        return EqualsHelper.equals(myDefaultStyleInstance, other.myDefaultStyleInstance);
+        return Objects.equals(myDefaultStyleInstance, other.myDefaultStyleInstance);
     }
 
     /**

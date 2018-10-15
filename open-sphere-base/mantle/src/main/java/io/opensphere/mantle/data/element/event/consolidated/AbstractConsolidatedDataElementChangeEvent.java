@@ -36,7 +36,7 @@ public abstract class AbstractConsolidatedDataElementChangeEvent extends Abstrac
     public AbstractConsolidatedDataElementChangeEvent(List<Long> regIds, Set<String> dataTypeKeys, Object source)
     {
         mySource = source;
-        myIdSet = Collections.unmodifiableList(regIds instanceof LinkedList<?> ? new ArrayList<Long>(regIds) : regIds);
+        myIdSet = Collections.unmodifiableList(regIds instanceof LinkedList<?> ? new ArrayList<>(regIds) : regIds);
         myDataTypeKeySet = Collections.unmodifiableSet(dataTypeKeys == null ? new HashSet<String>() : dataTypeKeys);
     }
 

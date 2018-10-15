@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.Geometry;
@@ -126,7 +127,7 @@ public class PolygonFeatureVisualizationStyle extends AbstractPathVisualizationS
             MapPolygonGeometrySupport mpgs = (MapPolygonGeometrySupport)bd.getMGS();
             MapVisualizationInfo mapVisInfo = bd.getDataType() == null ? null : bd.getDataType().getMapVisualizationInfo();
             BasicVisualizationInfo basicVisInfo = bd.getDataType() == null ? null : bd.getDataType().getBasicVisualizationInfo();
-            PolygonGeometry.Builder<GeographicPosition> polygonBuilder = new PolygonGeometry.Builder<GeographicPosition>();
+            PolygonGeometry.Builder<GeographicPosition> polygonBuilder = new PolygonGeometry.Builder<>();
             PolygonRenderProperties props = getRenderProperties(mapVisInfo, basicVisInfo, bd.getVS(), renderPropertyPool);
             polygonBuilder.setDataModelId(bd.getGeomId());
             polygonBuilder.setLineType(mpgs.getLineType() == null ? LineType.STRAIGHT_LINE : mpgs.getLineType());
@@ -136,11 +137,8 @@ public class PolygonFeatureVisualizationStyle extends AbstractPathVisualizationS
                     StyleUtils.getDataGroupInfoFromDti(getToolbox(), bd.getDataType()));
 
             // Convert list of LatLonAlt to list of GeographicPositions
-            List<GeographicPosition> geoPos = New.list(mpgs.getLocations().size());
-            for (LatLonAlt lla : mpgs.getLocations())
-            {
-                geoPos.add(createGeographicPosition(lla, mapVisInfo, bd.getVS(), mpgs));
-            }
+            List<GeographicPosition> geoPos = mpgs.getLocations().stream()
+                    .map(lla -> createGeographicPosition(lla, mapVisInfo, bd.getVS(), mpgs)).collect(Collectors.toList());
 
             if (isShowNodes())
             {
@@ -150,12 +148,8 @@ public class PolygonFeatureVisualizationStyle extends AbstractPathVisualizationS
 
             for (List<? extends LatLonAlt> hole : mpgs.getHoles())
             {
-                List<GeographicPosition> geoHole = New.list();
-                for (LatLonAlt lla : hole)
-                {
-                    geoHole.add(createGeographicPosition(lla, mapVisInfo, bd.getVS(), mpgs));
-                }
-                polygonBuilder.addHole(geoHole);
+                polygonBuilder.addHole(hole.stream().map(lla -> createGeographicPosition(lla, mapVisInfo, bd.getVS(), mpgs))
+                        .collect(Collectors.toList()));
             }
 
             polygonGeom = new PolygonGeometry(polygonBuilder, props, constraints);
@@ -280,13 +274,8 @@ public class PolygonFeatureVisualizationStyle extends AbstractPathVisualizationS
     public void initialize(Set<VisualizationStyleParameter> paramSet)
     {
         super.initialize(paramSet);
-        for (VisualizationStyleParameter p : paramSet)
-        {
-            if (p.getKey() != null && p.getKey().startsWith(ourPropertyKeyPrefix))
-            {
-                setParameter(p);
-            }
-        }
+        paramSet.stream().filter(p -> p.getKey() != null && p.getKey().startsWith(ourPropertyKeyPrefix))
+                .forEach(this::setParameter);
     }
 
     /**
@@ -391,11 +380,7 @@ public class PolygonFeatureVisualizationStyle extends AbstractPathVisualizationS
     private GeographicPosition generateLabelLocation(List<GeographicPosition> polygon, GeographicPosition polyCenter)
     {
         Vector2d center = polyCenter.getLatLonAlt().asVec2d();
-        List<Vector2d> convertedPolygon = New.list(polygon.size());
-        for (GeographicPosition pos : polygon)
-        {
-            convertedPolygon.add(pos.getLatLonAlt().asVec2d());
-        }
+        List<Vector2d> convertedPolygon = polygon.stream().map(p -> p.getLatLonAlt().asVec2d()).collect(Collectors.toList());
 
         // The first object of this pair will be line segments on the interior
         // of the polygon which are co-linear with the polyCenter. The second
@@ -432,7 +417,7 @@ public class PolygonFeatureVisualizationStyle extends AbstractPathVisualizationS
                         LineSegment2d crossSegment = getCrossingSegment(segment, convertedPolygon);
                         if (crossSegment != null)
                         {
-                            lineSegments.add(new Pair<LineSegment2d, LineSegment2d>(segment, crossSegment));
+                            lineSegments.add(new Pair<>(segment, crossSegment));
                         }
                     }
                 }
@@ -490,16 +475,13 @@ public class PolygonFeatureVisualizationStyle extends AbstractPathVisualizationS
             {
                 return new LineSegment2d(intersections.get(0), intersections.get(1));
             }
-            else
+            Collections.sort(intersections, new Line2d.DistanceComparator(cross));
+            for (int j = 0; j < intersections.size(); j += 2)
             {
-                Collections.sort(intersections, new Line2d.DistanceComparator(cross));
-                for (int j = 0; j < intersections.size(); j += 2)
+                LineSegment2d crossSegment = new LineSegment2d(intersections.get(j), intersections.get(j + 1));
+                if (segment.intersects(crossSegment))
                 {
-                    LineSegment2d crossSegment = new LineSegment2d(intersections.get(j), intersections.get(j + 1));
-                    if (segment.intersects(crossSegment))
-                    {
-                        return crossSegment;
-                    }
+                    return crossSegment;
                 }
             }
         }

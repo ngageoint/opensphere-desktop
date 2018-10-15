@@ -11,7 +11,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.EqualsHelper;
 
 /**
  * The Class FeatureTypeStyleConfig.
@@ -53,10 +52,8 @@ public class FeatureTypeStyleConfig
         myStyleParameterSetConfigList = New.list();
         if (other.myStyleParameterSetConfigList != null)
         {
-            for (StyleParameterSetConfig cfg : other.myStyleParameterSetConfigList)
-            {
-                myStyleParameterSetConfigList.add(new StyleParameterSetConfig(cfg));
-            }
+            myStyleParameterSetConfigList.stream().map(cfg -> new StyleParameterSetConfig(cfg))
+                    .forEach(myStyleParameterSetConfigList::add);
         }
     }
 
@@ -68,9 +65,9 @@ public class FeatureTypeStyleConfig
         if (obj instanceof FeatureTypeStyleConfig)
         {
             FeatureTypeStyleConfig other = (FeatureTypeStyleConfig)obj;
-            isEqual = EqualsHelper.equals(other.myBaseMGSClassName, myBaseMGSClassName)
-                    && EqualsHelper.equals(other.mySelectedStyleClassName, mySelectedStyleClassName)
-                    && EqualsHelper.equals(other.myStyleParameterSetConfigList, myStyleParameterSetConfigList);
+            isEqual = Objects.equals(other.myBaseMGSClassName, myBaseMGSClassName)
+                    && Objects.equals(other.mySelectedStyleClassName, mySelectedStyleClassName)
+                    && Objects.equals(other.myStyleParameterSetConfigList, myStyleParameterSetConfigList);
         }
 
         return isEqual;
@@ -108,15 +105,9 @@ public class FeatureTypeStyleConfig
         {
             return null;
         }
-        for (StyleParameterSetConfig cfg : myStyleParameterSetConfigList)
-        {
-            if (Objects.equals(styleClass, cfg.getStyleClassName()))
-            {
-                return cfg;
-            }
-        }
 
-        return null;
+        return myStyleParameterSetConfigList.stream().filter(cfg -> Objects.equals(styleClass, cfg.getStyleClassName()))
+                .findFirst().orElse(null);
     }
 
     /**

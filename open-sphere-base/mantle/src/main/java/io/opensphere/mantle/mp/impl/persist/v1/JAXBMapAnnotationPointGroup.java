@@ -111,7 +111,7 @@ public class JAXBMapAnnotationPointGroup implements MapAnnotationPointGroup
     @Override
     public List<MapAnnotationPointGroup> getChildren()
     {
-        return new ArrayList<MapAnnotationPointGroup>(myChildren);
+        return new ArrayList<>(myChildren);
     }
 
     @Override
@@ -123,7 +123,7 @@ public class JAXBMapAnnotationPointGroup implements MapAnnotationPointGroup
     @Override
     public List<MapAnnotationPoint> getPoints(boolean recurseChildren)
     {
-        List<MapAnnotationPoint> returnSet = new ArrayList<MapAnnotationPoint>(myMemberSet);
+        List<MapAnnotationPoint> returnSet = new ArrayList<>(myMemberSet);
         if (recurseChildren)
         {
             for (JAXBMapAnnotationPointGroup group : myChildren)

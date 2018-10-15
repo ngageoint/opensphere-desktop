@@ -61,10 +61,7 @@ public class LoadedElementData implements LoadedElementDataView, Serializable
         {
             return Boolean.TRUE;
         }
-        else
-        {
-            return Boolean.FALSE;
-        }
+        return Boolean.FALSE;
     }
 
     /**
@@ -79,16 +76,13 @@ public class LoadedElementData implements LoadedElementDataView, Serializable
         {
             return Byte.valueOf(((Number)oldValue).byteValue());
         }
-        else
+        try
         {
-            try
-            {
-                return Byte.valueOf(Byte.parseByte(oldValue.toString()));
-            }
-            catch (NumberFormatException e)
-            {
-                return oldValue;
-            }
+            return Byte.valueOf(Byte.parseByte(oldValue.toString()));
+        }
+        catch (NumberFormatException e)
+        {
+            return oldValue;
         }
     }
 
@@ -104,16 +98,13 @@ public class LoadedElementData implements LoadedElementDataView, Serializable
         {
             return Double.valueOf(((Number)oldValue).doubleValue());
         }
-        else
+        try
         {
-            try
-            {
-                return Double.valueOf(Double.parseDouble(oldValue.toString()));
-            }
-            catch (NumberFormatException e)
-            {
-                return oldValue;
-            }
+            return Double.valueOf(Double.parseDouble(oldValue.toString()));
+        }
+        catch (NumberFormatException e)
+        {
+            return oldValue;
         }
     }
 
@@ -129,16 +120,13 @@ public class LoadedElementData implements LoadedElementDataView, Serializable
         {
             return Float.valueOf(((Number)oldValue).floatValue());
         }
-        else
+        try
         {
-            try
-            {
-                return Float.valueOf(Float.parseFloat(oldValue.toString()));
-            }
-            catch (NumberFormatException e)
-            {
-                return oldValue;
-            }
+            return Float.valueOf(Float.parseFloat(oldValue.toString()));
+        }
+        catch (NumberFormatException e)
+        {
+            return oldValue;
         }
     }
 
@@ -154,16 +142,13 @@ public class LoadedElementData implements LoadedElementDataView, Serializable
         {
             return Integer.valueOf(((Number)oldValue).intValue());
         }
-        else
+        try
         {
-            try
-            {
-                return Integer.valueOf(Integer.parseInt(oldValue.toString()));
-            }
-            catch (NumberFormatException e)
-            {
-                return oldValue;
-            }
+            return Integer.valueOf(Integer.parseInt(oldValue.toString()));
+        }
+        catch (NumberFormatException e)
+        {
+            return oldValue;
         }
     }
 
@@ -179,16 +164,13 @@ public class LoadedElementData implements LoadedElementDataView, Serializable
         {
             return Long.valueOf(((Number)oldValue).longValue());
         }
-        else
+        try
         {
-            try
-            {
-                return Long.valueOf(Long.parseLong(oldValue.toString()));
-            }
-            catch (NumberFormatException e)
-            {
-                return oldValue;
-            }
+            return Long.valueOf(Long.parseLong(oldValue.toString()));
+        }
+        catch (NumberFormatException e)
+        {
+            return oldValue;
         }
     }
 
@@ -204,16 +186,13 @@ public class LoadedElementData implements LoadedElementDataView, Serializable
         {
             return Short.valueOf(((Number)oldValue).shortValue());
         }
-        else
+        try
         {
-            try
-            {
-                return Short.valueOf(Short.parseShort(oldValue.toString()));
-            }
-            catch (NumberFormatException e)
-            {
-                return oldValue;
-            }
+            return Short.valueOf(Short.parseShort(oldValue.toString()));
+        }
+        catch (NumberFormatException e)
+        {
+            return oldValue;
         }
     }
 
@@ -275,7 +254,7 @@ public class LoadedElementData implements LoadedElementDataView, Serializable
                     // the compiled class instance so we continue to operate
                     // even if not as efficiently as we could.
                     myMetaData = el.getMetaData().getValues() == null ? null
-                            : new ArrayList<Object>(convertValuesIfNecessary(deReg, el, el.getMetaData().getValues()));
+                            : new ArrayList<>(convertValuesIfNecessary(deReg, el, el.getMetaData().getValues()));
                 }
             }
             catch (ReflectiveOperationException e)
@@ -287,7 +266,7 @@ public class LoadedElementData implements LoadedElementDataView, Serializable
         else
         {
             myMetaData = el.getMetaData().getValues() == null ? null
-                    : new ArrayList<Object>(convertValuesIfNecessary(deReg, el, el.getMetaData().getValues()));
+                    : new ArrayList<>(convertValuesIfNecessary(deReg, el, el.getMetaData().getValues()));
         }
 
         myOriginId = el.getId();

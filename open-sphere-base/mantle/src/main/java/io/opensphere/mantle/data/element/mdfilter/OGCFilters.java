@@ -1,6 +1,7 @@
 package io.opensphere.mantle.data.element.mdfilter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -54,18 +55,8 @@ public class OGCFilters
      */
     public CustomFilter getFilterByName(String filterName)
     {
-        for (Object filter : myFilters)
-        {
-            if (filter instanceof CustomFilter)
-            {
-                CustomFilter aFilter = (CustomFilter)filter;
-                if (aFilter.getTitle().equals(filterName))
-                {
-                    return aFilter;
-                }
-            }
-        }
-        return null;
+        return myFilters.stream().filter(f -> f instanceof CustomFilter).map(f -> (CustomFilter)f)
+                .filter(cf -> cf.getTitle().equals(filterName)).findFirst().orElse(null);
     }
 
     /**
@@ -79,17 +70,7 @@ public class OGCFilters
         {
             myFilters = New.list();
         }
-
-        List<CustomFilter> filters = New.list();
-        for (Object filter : myFilters)
-        {
-            if (filter instanceof CustomFilter)
-            {
-                filters.add((CustomFilter)filter);
-            }
-        }
-
-        return filters;
+        return myFilters.stream().filter(f -> f instanceof CustomFilter).map(f -> (CustomFilter)f).collect(Collectors.toList());
     }
 
     /**

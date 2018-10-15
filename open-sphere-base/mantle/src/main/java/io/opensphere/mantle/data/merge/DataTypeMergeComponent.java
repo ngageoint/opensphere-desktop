@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -13,7 +14,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import io.opensphere.core.util.Utilities;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.impl.encoder.DiskDecodeHelper;
 import io.opensphere.mantle.data.impl.encoder.DiskEncodeHelper;
@@ -257,10 +257,9 @@ public class DataTypeMergeComponent
                 return false;
             }
             DataTypeMergeComponent other = (DataTypeMergeComponent)obj;
-            if (!EqualsHelper.equals(myDataTypeDisplayName, other.myDataTypeDisplayName)
-                    || !EqualsHelper.equals(myDTKey, other.myDTKey)
-                    || !EqualsHelper.equals(myMetaDataMergeKeyMapEntryList, other.myMetaDataMergeKeyMapEntryList)
-                    || !EqualsHelper.equals(mySourceKeyList, other.mySourceKeyList))
+            if (!Objects.equals(myDataTypeDisplayName, other.myDataTypeDisplayName) || !Objects.equals(myDTKey, other.myDTKey)
+                    || !Objects.equals(myMetaDataMergeKeyMapEntryList, other.myMetaDataMergeKeyMapEntryList)
+                    || !Objects.equals(mySourceKeyList, other.mySourceKeyList))
             {
                 return false;
             }
@@ -347,7 +346,7 @@ public class DataTypeMergeComponent
      */
     public void setMetaDataMergeKeyMapEntryList(List<MetaDataMergeKeyMapEntry> entryList)
     {
-        myMetaDataMergeKeyMapEntryList = entryList == null ? new ArrayList<MetaDataMergeKeyMapEntry>() : entryList;
+        myMetaDataMergeKeyMapEntryList = entryList == null ? new ArrayList<>() : entryList;
     }
 
     /**

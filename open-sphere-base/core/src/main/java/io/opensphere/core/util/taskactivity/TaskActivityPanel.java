@@ -7,6 +7,7 @@ import java.awt.Window;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -21,7 +22,6 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import io.opensphere.core.util.concurrent.CatchingRunnable;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.NamedThreadFactory;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import javafx.application.Platform;
@@ -267,7 +267,7 @@ public class TaskActivityPanel extends JPanel
 
         final String label = sb.toString();
 
-        if (!EqualsHelper.equals(label, myLastLabelValue))
+        if (!Objects.equals(label, myLastLabelValue))
         {
             myLastLabelValue = label;
             EventQueueUtilities.invokeLater(() ->

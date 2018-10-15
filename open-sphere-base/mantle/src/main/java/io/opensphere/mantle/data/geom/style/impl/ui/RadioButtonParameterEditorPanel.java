@@ -53,11 +53,7 @@ public class RadioButtonParameterEditorPanel extends AbstractStyleParameterEdito
         myControlPanel.add(panel, BorderLayout.CENTER);
 
         update();
-
-        for (JRadioButton button : myRadioButtons)
-        {
-            button.addActionListener(this);
-        }
+        myRadioButtons.forEach(b -> b.addActionListener(this));
     }
 
     @Override

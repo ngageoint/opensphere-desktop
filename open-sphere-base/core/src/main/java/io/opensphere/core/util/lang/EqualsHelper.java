@@ -12,7 +12,6 @@ public final class EqualsHelper
      * @return <code>true</code> if all the pairs are equal.
      * @throws ArrayIndexOutOfBoundsException if an odd number of objects is
      *             passed in.
-     * @see #equals(Object, Object)
      */
     @SuppressWarnings("PMD.SuspiciousEqualsMethodName")
     public static boolean booleanEquals(boolean... values)
@@ -46,7 +45,6 @@ public final class EqualsHelper
      * @return <code>true</code> if all the pairs are equal.
      * @throws ArrayIndexOutOfBoundsException if an odd number of objects is
      *             passed in.
-     * @see #equals(Object, Object)
      */
     @SuppressWarnings("PMD.SuspiciousEqualsMethodName")
     public static boolean equals(Object... objs)
@@ -69,7 +67,9 @@ public final class EqualsHelper
      * @return <code>true</code> if both references point to the same object or
      *         both references are null or the objects are equal according to
      *         the first object's {@link #equals(Object)} method.
+     * @deprecated use {@link Objects#equals(Object, Object)} instead.
      */
+    @Deprecated
     @SuppressWarnings("PMD.SuspiciousEqualsMethodName")
     public static boolean equals(Object obj1, Object obj2)
     {
@@ -83,7 +83,6 @@ public final class EqualsHelper
      * @return <code>true</code> if all the pairs are equal.
      * @throws ArrayIndexOutOfBoundsException if an odd number of objects is
      *             passed in.
-     * @see #equals(Object, Object)
      */
     @SuppressWarnings("PMD.SuspiciousEqualsMethodName")
     public static boolean floatEquals(float... values)
@@ -105,7 +104,6 @@ public final class EqualsHelper
      * @return <code>true</code> if all the pairs are equal.
      * @throws ArrayIndexOutOfBoundsException if an odd number of objects is
      *             passed in.
-     * @see #equals(Object, Object)
      */
     @SuppressWarnings("PMD.SuspiciousEqualsMethodName")
     public static boolean intEquals(int... values)

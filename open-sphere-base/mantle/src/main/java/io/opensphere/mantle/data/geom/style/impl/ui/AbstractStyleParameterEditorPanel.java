@@ -3,8 +3,6 @@ package io.opensphere.mantle.data.geom.style.impl.ui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -156,15 +154,8 @@ public abstract class AbstractStyleParameterEditorPanel extends JPanel
         myAlertButton.setMargin(new Insets(0, 0, 0, 0));
         myAlertButton.setBorder(BorderFactory.createEmptyBorder(0, 3, 0, 0));
         myAlertButton.setVisible(false);
-        myAlertButton.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                JOptionPane.showMessageDialog(AbstractStyleParameterEditorPanel.this, myAlertButton.getToolTipText(), "Warning",
-                        JOptionPane.WARNING_MESSAGE, null);
-            }
-        });
+        myAlertButton.addActionListener(e -> JOptionPane.showMessageDialog(AbstractStyleParameterEditorPanel.this, myAlertButton.getToolTipText(), "Warning",
+                JOptionPane.WARNING_MESSAGE, null));
 
         myLabelPanel = new JPanel();
         myLabelPanel.setLayout(new BoxLayout(myLabelPanel, BoxLayout.X_AXIS));
@@ -305,10 +296,7 @@ public abstract class AbstractStyleParameterEditorPanel extends JPanel
     public void updateAll()
     {
         update();
-        for (AbstractStyleParameterEditorPanel sibling : mySiblingComponents)
-        {
-            sibling.update();
-        }
+        mySiblingComponents.forEach(AbstractStyleParameterEditorPanel::update);
     }
 
     /**

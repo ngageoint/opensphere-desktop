@@ -1,5 +1,7 @@
 package io.opensphere.core.viewer.impl;
 
+import java.util.Objects;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -20,7 +22,6 @@ import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.projection.AbstractGeographicProjection;
 import io.opensphere.core.projection.Projection;
 import io.opensphere.core.util.MathUtil;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.ExpectedCloneableException;
 import io.opensphere.core.viewer.ViewChangeSupport;
 import io.opensphere.core.viewer.impl.Viewer3D.ViewerPosition3D;
@@ -639,7 +640,7 @@ public class Viewer2D extends AbstractDynamicViewer
                 return false;
             }
             ViewerPosition2D other = (ViewerPosition2D)obj;
-            return EqualsHelper.equals(myLocation, other.getLocation()) && MathUtil.isZero(myScale - other.getScale());
+            return Objects.equals(myLocation, other.getLocation()) && MathUtil.isZero(myScale - other.getScale());
         }
 
         @Override

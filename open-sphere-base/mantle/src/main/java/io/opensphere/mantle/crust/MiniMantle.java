@@ -107,13 +107,8 @@ public class MiniMantle extends EventListenerService
         Collection<Geometry> geoms = myTypeToGeoms.get(event.getDataTypeKey());
         if (CollectionUtilities.hasContent(geoms))
         {
-            for (Geometry geom : geoms)
-            {
-                if (geom.getRenderProperties() instanceof BaseRenderProperties)
-                {
-                    ((BaseRenderProperties)geom.getRenderProperties()).setHidden(!event.isVisible());
-                }
-            }
+            geoms.stream().filter(g -> g.getRenderProperties() instanceof BaseRenderProperties)
+                    .map(g -> (BaseRenderProperties)g.getRenderProperties()).forEach(g -> g.setHidden(!event.isVisible()));
         }
     }
 

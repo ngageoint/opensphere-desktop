@@ -112,7 +112,7 @@ public abstract class AbstractDynamicMetaDataList implements DynamicMetaDataList
     @Override
     public Iterator<Object> iterator()
     {
-        return new Iterator<Object>()
+        return new Iterator<>()
         {
             private int myIndex = -1;
 
@@ -156,13 +156,13 @@ public abstract class AbstractDynamicMetaDataList implements DynamicMetaDataList
     @Override
     public ListIterator<Object> listIterator()
     {
-        return Collections.unmodifiableList(new ArrayList<Object>(size())).listIterator();
+        return Collections.unmodifiableList(new ArrayList<>(size())).listIterator();
     }
 
     @Override
     public ListIterator<Object> listIterator(int arg0)
     {
-        return Collections.unmodifiableList(new ArrayList<Object>(size())).listIterator(arg0);
+        return Collections.unmodifiableList(new ArrayList<>(size())).listIterator(arg0);
     }
 
     @Override

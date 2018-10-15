@@ -28,17 +28,14 @@ public final class DataTypeMergeUtils
         {
             return Collections.<TypeKeyEntry>emptyList();
         }
-        else
+        List<TypeKeyEntry> resultList = new ArrayList<>(mdi.getKeyCount());
+        for (String key : mdi.getKeyNames())
         {
-            List<TypeKeyEntry> resultList = new ArrayList<>(mdi.getKeyCount());
-            for (String key : mdi.getKeyNames())
-            {
-                Class<?> keyClass = mdi.getKeyClassTypeMap().get(key);
-                SpecialKey sk = mdi.getSpecialTypeForKey(key);
-                resultList.add(new TypeKeyEntry(dtiNakeKeyPair, key, keyClass, sk));
-            }
-            return resultList;
+            Class<?> keyClass = mdi.getKeyClassTypeMap().get(key);
+            SpecialKey sk = mdi.getSpecialTypeForKey(key);
+            resultList.add(new TypeKeyEntry(dtiNakeKeyPair, key, keyClass, sk));
         }
+        return resultList;
     }
 
     /**

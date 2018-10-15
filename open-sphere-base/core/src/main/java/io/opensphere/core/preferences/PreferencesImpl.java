@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.BlockingQueue;
@@ -37,7 +38,6 @@ import io.opensphere.core.util.collections.LazyMap;
 import io.opensphere.core.util.collections.LazyMap.Factory;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.concurrent.ProcrastinatingExecutor;
-import io.opensphere.core.util.lang.EqualsHelper;
 import io.opensphere.core.util.lang.ToStringHelper;
 import io.opensphere.core.util.security.CipherFactory;
 import io.opensphere.core.util.xml.ByteArrayList;
@@ -724,7 +724,7 @@ public class PreferencesImpl implements InternalPreferencesIF
                     oldKeys.remove(entry.getKey());
 
                     Preference<?> oldValue = myPreferencesMap.put(entry.getKey(), entry);
-                    if (!EqualsHelper.equals(oldValue, entry))
+                    if (!Objects.equals(oldValue, entry))
                     {
                         events.add(new PreferenceChangeEvent(myTopic, entry, source));
                     }
