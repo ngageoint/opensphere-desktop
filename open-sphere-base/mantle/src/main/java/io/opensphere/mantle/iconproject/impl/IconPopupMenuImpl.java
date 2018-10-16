@@ -10,7 +10,6 @@ import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.view.IconCustomizerDialog;
-import javafx.scene.control.Button;
 
 /**
  * The Class IconPopupMenuImpl.
@@ -39,7 +38,7 @@ public class IconPopupMenuImpl
      */
     public void addToFav()
     {
-        Set<IconRecord> recordSet = myPanelModel.getSelectedIcons().keySet();
+        Set<IconRecord> recordSet = myPanelModel.getAllSelectedIcons().keySet();
         if (recordSet.isEmpty() && mySelectedIcon == null)
         {
             JOptionPane.showMessageDialog(myPanelModel.getOwner(),
@@ -83,7 +82,7 @@ public class IconPopupMenuImpl
      */
     public void delete(boolean doDelete)
     {
-        Set<IconRecord> recordSet = myPanelModel.getSelectedIcons().keySet();
+        Set<IconRecord> recordSet = myPanelModel.getAllSelectedIcons().keySet();
 
         if (recordSet.isEmpty() && myPanelModel.getSelectedRecord().get() == null)
         {
@@ -93,12 +92,12 @@ public class IconPopupMenuImpl
         }
         else if (recordSet.size() > 1)
         {
-            for (IconRecord rec : recordSet)
+            for (IconRecord record : recordSet)
             {
-                myPanelModel.getIconRegistry().removeIcon(rec, this);
+                myPanelModel.getIconRegistry().removeIcon(record, this);
                 if (doDelete)
                 {
-                    myPanelModel.getIconRegistry().deleteIcon(rec, myPanelModel);
+                    myPanelModel.getIconRegistry().deleteIcon(record, myPanelModel);
                 }
             }
         }
@@ -113,25 +112,23 @@ public class IconPopupMenuImpl
         myPanelModel.getViewModel().getMainPanel().refresh();
     }
 
-    /** Un-Selects the Icons visually and in the registry. */
-    public void unSelectIcons()
+    /** Un-Selects all selected Icons visually and in the registry. */
+    public void unSelectAllIcons()
     {
-        for (Button recordindex : myPanelModel.getSelectedIcons().values())
-        {
-            int idx = myPanelModel.getViewModel().getMainPanel().getIconGrid().getChildren().indexOf(recordindex);
-            myPanelModel.getViewModel().getMainPanel().getIconGrid().getChildren().get(idx).setStyle("");
-        }
-        myPanelModel.getSelectedIcons().clear();
+        myPanelModel.getAllSelectedIcons().values().stream().filter(b -> myPanelModel.getViewModel().getMainPanel().getIconGrid()
+                .getChildren().contains(b)).forEach(b -> b.setStyle(""));
+        myPanelModel.getAllSelectedIcons().clear();
+        myPanelModel.getSingleSelectedIcon().clear();
     }
 
-    /** Un-Selects the Icons visually and in the registry. */
-    public void unSelectIcon()
+    /** Un-Selects the single, primary Icon visually and in the registry. */
+    public void unSelectSingleIcon()
     {
-        for (Button recordindex : myPanelModel.getSelectedIconMap().values())
+        myPanelModel.getSingleSelectedIcon().forEach((i, b) ->
         {
-            int idx = myPanelModel.getViewModel().getMainPanel().getIconGrid().getChildren().indexOf(recordindex);
-            myPanelModel.getViewModel().getMainPanel().getIconGrid().getChildren().get(idx).setStyle("");
-        }
-        myPanelModel.getSelectedIconMap().clear();
+            myPanelModel.getAllSelectedIcons().remove(i);            
+            b.setStyle("");
+        });
+        myPanelModel.getSingleSelectedIcon().clear();
     }
 }

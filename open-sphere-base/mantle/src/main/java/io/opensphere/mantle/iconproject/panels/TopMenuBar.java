@@ -32,10 +32,10 @@ public class TopMenuBar extends HBox
     private final ButtonBuilder myEnlargeButton = new ButtonBuilder("+", false);
 
     /** The bar containing the sizing options. */
-    private ButtonBar mySizeMenu = new ButtonBar();
+    private final ButtonBar mySizeMenu;
 
     /** The bar containing the icon display toggles. */
-    private ButtonBar myViewToggle = new ButtonBar();
+    private final ButtonBar myViewToggle;
 
     /** The label for the icon display view. */
     private final Text myViewLabel = new LabelMaker("View Style");
@@ -50,7 +50,7 @@ public class TopMenuBar extends HBox
     private final ToggleGroup myToggleGroup = new ToggleGroup();
 
     /** The bar containing the filter functionality. */
-    private ButtonBar mySearchBar = new ButtonBar();
+    private final ButtonBar mySearchBar;
 
     /** The label for the filter text input. */
     private final Text mySearchLabel = new LabelMaker("Filter");
@@ -64,14 +64,14 @@ public class TopMenuBar extends HBox
     /**
      * Creates the top menu bar of the icon manager UI.
      *
-     * @param thePanelModel the current UI model.
+     * @param panelModel the current UI model.
      */
-    public TopMenuBar(PanelModel thePanelModel)
+    public TopMenuBar(PanelModel panelModel)
     {
         mySearchBar = createFilterBar();
         myViewToggle = createViewToggle();
         mySizeMenu = createSizeMenu();
-        myPanelModel = thePanelModel;
+        myPanelModel = panelModel;
 
         Region region1 = new Region();
         HBox.setHgrow(region1, Priority.ALWAYS);
@@ -84,7 +84,7 @@ public class TopMenuBar extends HBox
     }
 
     /**
-     * Creates the search bar containing the label and ext entry field for
+     * Creates the search bar containing the label and text entry field for
      * filtering icons.
      *
      * @return a JavaFX ButtonBar containing filter control elements.
@@ -139,19 +139,10 @@ public class TopMenuBar extends HBox
     public ButtonBar createSizeMenu()
     {
         ButtonBar sizeMenu = new ButtonBar();
-        myEnlargeButton.setOnAction(event ->
-        {
-            int origTile = myPanelModel.getCurrentTileWidth().get();
-            myPanelModel.getCurrentTileWidth().set(origTile + 10);
-            myPanelModel.getViewModel().getMainPanel().getScrollPane().setContent(new GridBuilder(myPanelModel));
-        });
+        myEnlargeButton.setOnAction(event -> myPanelModel.getCurrentTileWidth().set(myPanelModel.getCurrentTileWidth().get() + 10));
         myEnlargeButton.setTooltip(new Tooltip("Increase Icon Size"));
 
-        myShrinkButton.setOnAction(event ->
-        {
-            int origTile = myPanelModel.getCurrentTileWidth().get();
-            myPanelModel.getCurrentTileWidth().set(origTile - 10);
-        });
+        myShrinkButton.setOnAction(event -> myPanelModel.getCurrentTileWidth().set(myPanelModel.getCurrentTileWidth().get() - 10));
         myShrinkButton.setTooltip(new Tooltip("Decrease Icon Size"));
         sizeMenu.getButtons().addAll(mySizeLabel, myShrinkButton, myEnlargeButton);
         return sizeMenu;
@@ -164,7 +155,7 @@ public class TopMenuBar extends HBox
      */
     public ButtonBar createViewToggle()
     {
-        ButtonBar theViewToggle = new ButtonBar();
+        ButtonBar viewToggle = new ButtonBar();
         myListView.setText("List");
         myListView.setToggleGroup(myToggleGroup);
         myGridView.setText("Grid");
@@ -173,17 +164,21 @@ public class TopMenuBar extends HBox
         myListView.setOnAction(event ->
         {
             myPanelModel.getViewStyle().set(ViewStyle.LIST);
+            myShrinkButton.setDisable(true);
+            myEnlargeButton.setDisable(true);
             myPanelModel.getViewModel().getMainPanel().refresh();
         });
         myGridView.setOnAction(event ->
         {
             myPanelModel.getViewStyle().set(ViewStyle.GRID);
+            myShrinkButton.setDisable(false);
+            myEnlargeButton.setDisable(false);
             myPanelModel.getViewModel().getMainPanel().refresh();
         });
 
-        theViewToggle.getButtons().addAll(myViewLabel, myGridView, myListView);
+        viewToggle.getButtons().addAll(myViewLabel, myGridView, myListView);
 
-        return theViewToggle;
+        return viewToggle;
     }
 
     /**

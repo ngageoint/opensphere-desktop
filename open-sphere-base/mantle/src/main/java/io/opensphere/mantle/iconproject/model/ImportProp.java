@@ -47,9 +47,9 @@ public class ImportProp
      *
      * @param the List containing the sub collection names
      */
-    public void setSubCollectionList(Set<String> theSubCollectionList)
+    public void setSubCollectionList(Set<String> subCollectionList)
     {
-        mySubCollectionList = theSubCollectionList;
+        mySubCollectionList = subCollectionList;
     }
 
     /**

@@ -54,18 +54,19 @@ public class GridBuilder extends TilePane
      * @param record the IconRecord
      * @return the button of the icon
      */
-    private Button buttonBuilder(IconRecord record)
+    private Button buttonBuilderGridStyle(IconRecord record)
     {
         Button iconButton = new Button();
         iconButton.setMinSize(myTileWidth, myTileWidth);
         iconButton.setMaxSize(myTileWidth, myTileWidth);
         String text = record.getName();
         iconButton.setPadding(new Insets(5, 5, 5, 5));
-        iconButton.setTooltip(new Tooltip(record.getId() + record.getImageURL().toString()));
+        iconButton.setTooltip(new Tooltip("Icon #" + record.getId() + ": " + record.getImageURL().toString()));
 
         iconButton.setText(text);
         iconButton.setContentDisplay(ContentDisplay.TOP);
         iconButton.setAlignment(Pos.BOTTOM_CENTER);
+        iconButton.setMnemonicParsing(false);
 
         ImageView iconView = new ImageView(record.getImageURL().toString());
         if (iconView.getImage().getWidth() + 20 > myTileWidth)
@@ -74,6 +75,7 @@ public class GridBuilder extends TilePane
             iconView.setFitWidth(myTileWidth - 40);
         }
         iconButton.setGraphic(iconView);
+        iconButton.setContextMenu(new IconPopupMenu(myPanelModel));
         iconButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->
         {
             if (e.getButton() == MouseButton.SECONDARY)
@@ -83,11 +85,11 @@ public class GridBuilder extends TilePane
             if (myPanelModel.getViewModel().getMultiSelectEnabled())
             {
                 iconButton.setStyle("-fx-effect: dropshadow(three-pass-box, purple, 20, 0, 0, 0);");
-                myPanelModel.getSelectedIcons().put(record, iconButton);
+                myPanelModel.getAllSelectedIcons().put(record, iconButton);
             }
             myPanelModel.getSelectedRecord().set(record);
-            myPanelModel.getSelectedIconMap().clear();
-            myPanelModel.getSelectedIconMap().put(record, iconButton);
+            myPanelModel.getSingleSelectedIcon().clear();
+            myPanelModel.getSingleSelectedIcon().put(record, iconButton);
         });
         return iconButton;
     }
@@ -106,25 +108,23 @@ public class GridBuilder extends TilePane
         iconButton.setPadding(new Insets(5, 5, 5, 5));
         iconButton.setText(record.getName());
         iconButton.setAlignment(Pos.CENTER);
-        iconButton.setTooltip(new Tooltip(record.getId() + record.getImageURL().toString()));
-        iconButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>()
+        iconButton.setMnemonicParsing(false);
+        iconButton.setTooltip(new Tooltip("Icon #" + record.getId() + ": " + record.getImageURL().toString()));
+        iconButton.setContextMenu(new IconPopupMenu(myPanelModel));
+        iconButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->
         {
-            @Override
-            public void handle(MouseEvent e)
+            if (e.getButton() == MouseButton.SECONDARY)
             {
-                if (e.getButton() == MouseButton.SECONDARY)
-                {
-                    iconButton.setContextMenu(new IconPopupMenu(myPanelModel));
-                }
-                if (myPanelModel.getViewModel().getMultiSelectEnabled())
-                {
-                    iconButton.setStyle("-fx-effect: dropshadow(three-pass-box, purple, 20, 0, 0, 0);");
-                    myPanelModel.getSelectedIcons().put(record, iconButton);
-                }
-                myPanelModel.getSelectedRecord().set(record);
-                myPanelModel.getSelectedIconMap().clear();
-                myPanelModel.getSelectedIconMap().put(record, iconButton);
+                iconButton.setContextMenu(new IconPopupMenu(myPanelModel));
             }
+            if (myPanelModel.getViewModel().getMultiSelectEnabled())
+            {
+                iconButton.setStyle("-fx-effect: dropshadow(three-pass-box, purple, 20, 0, 0, 0);");
+                myPanelModel.getAllSelectedIcons().put(record, iconButton);
+            }
+            myPanelModel.getSelectedRecord().set(record);
+            myPanelModel.getSingleSelectedIcon().clear();
+            myPanelModel.getSingleSelectedIcon().put(record, iconButton);
         });
         return iconButton;
     }
@@ -136,7 +136,7 @@ public class GridBuilder extends TilePane
      */
     public void showIconCustomizer(Window owner)
     {
-        if (myPanelModel.getSelectedRecord().get() != null)
+        if (!myPanelModel.getSingleSelectedIcon().isEmpty())
         {
             IconCustomizerDialog builderPane = new IconCustomizerDialog(owner, myPanelModel);
             builderPane.setVisible(true);
@@ -155,7 +155,7 @@ public class GridBuilder extends TilePane
             Button iconButton;
             if (myPanelModel.getViewStyle().get() == ViewStyle.GRID)
             {
-                iconButton = buttonBuilder(recordindex);
+                iconButton = buttonBuilderGridStyle(recordindex);
             }
             else
             {

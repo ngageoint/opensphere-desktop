@@ -62,18 +62,18 @@ public interface IconRegistry
     /**
      * Clear icon for element.
      *
-     * @param deId the de id
+     * @param elementId the element id
      * @param source the source initiating the change
      */
-    void clearIconForElement(long deId, Object source);
+    void clearIconForElement(long elementId, Object source);
 
     /**
-     * Clear icons for all the elements int he list.
+     * Clear icons for all the elements in the list.
      *
-     * @param deIds the de ids to clear icons.
+     * @param elementIds the element ids to clear icons.
      * @param source the source initiating the change
      */
-    void clearIconsForElements(Collection<Long> deIds, Object source);
+    void clearIconsForElements(Collection<Long> elementIds, Object source);
 
     /**
      * Gets the all assigned element ids.
@@ -115,10 +115,10 @@ public interface IconRegistry
     /**
      * Gets the icon id for element id.
      *
-     * @param deId the de id
+     * @param elementId the element id
      * @return the icon id for element or -1 if not found.
      */
-    int getIconIdForElement(long deId);
+    int getIconIdForElement(long elementId);
 
     /**
      * Gets the icon ids for all the icons in the registry.
@@ -157,10 +157,10 @@ public interface IconRegistry
     /**
      * Gets the icon record for element.
      *
-     * @param deId the de id
+     * @param elementId the element id
      * @return the {@link IconRecord} for element
      */
-    IconRecord getIconRecordForElement(long deId);
+    IconRecord getIconRecordForElement(long elementId);
 
     /**
      * Gets the {@link IconRecord}s for the specified ids.
@@ -201,11 +201,11 @@ public interface IconRegistry
     /**
      * Removes the icon.
      *
-     * @param rec the {@link IconRecord}
+     * @param record the {@link IconRecord}
      * @param source the source of the remove
      * @return true, if removed
      */
-    boolean removeIcon(IconRecord rec, Object source);
+    boolean removeIcon(IconRecord record, Object source);
 
     /**
      * Removes the icon.
@@ -229,9 +229,9 @@ public interface IconRegistry
      * Deletes the icon file from the machine.
      *
      * @param iconToDelete the IconRecord to delete.
-     * @param thePanelModel used for registry.
+     * @param panelModel used for registry.
      */
-    void deleteIcon(IconRecord iconToDelete, PanelModel thePanelModel);
+    void deleteIcon(IconRecord iconToDelete, PanelModel panelModel);
 
     /**
      * Removes the listener.
@@ -248,43 +248,43 @@ public interface IconRegistry
      * Note: Does not check to see if the {@link IconRecord} is part of the
      * registry.
      *
-     * @param deId the de id
-     * @param rec the {@link IconRecord} to link with the data element id, or de
-     *            assign if null.
+     * @param elementId the element id
+     * @param record the {@link IconRecord} to link with the data element id, or
+     *            data element assign if null.
      * @param source the source initiating the change
      */
-    void setIconForElement(long deId, IconRecord rec, Object source);
+    void setIconForElement(long elementId, IconRecord record, Object source);
 
     /**
      * Sets the icon for element.
      *
      * Note: Does not check to see if the iconId is valid for the registry.
      *
-     * @param deId the de id
+     * @param elementId the element id
      * @param iconId the icon id
      * @param source the source initiating the change
      */
-    void setIconForElement(long deId, int iconId, Object source);
+    void setIconForElement(long elementId, int iconId, Object source);
 
     /**
      * Sets the icon for elements by id.
      *
-     * @param deIds the de ids
-     * @param rec the {@link IconRecord}
+     * @param elementIds the element ids
+     * @param record the {@link IconRecord}
      * @param source the source
      */
-    void setIconForElements(List<Long> deIds, IconRecord rec, Object source);
+    void setIconForElements(List<Long> elementIds, IconRecord record, Object source);
 
     /**
      * Sets the icon for elements.
      *
      * Note: Does not check to see if the iconId is valid for the registry.
      *
-     * @param deIds the de ids
+     * @param elementIds the element ids
      * @param iconId the icon id
      * @param source the source initiating the change
      */
-    void setIconForElements(List<Long> deIds, int iconId, Object source);
+    void setIconForElements(List<Long> elementIds, int iconId, Object source);
 
     /**
      * Sets up the preferences to be used when using the program. Are reset on

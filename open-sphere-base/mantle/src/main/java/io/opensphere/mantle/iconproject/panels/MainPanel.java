@@ -41,13 +41,13 @@ public class MainPanel extends SplitPane
     private GridBuilder myIconGrid;
 
     /** The Customize Icon button. */
-    private final ButtonBuilder myCustIconButton = new ButtonBuilder("Customize Icon", false);
+    private final ButtonBuilder myCustomizeIconButton = new ButtonBuilder("Customize Icon", false);
 
     /** The button to add the icon. */
     private final MenuButton myAddIconButton = new MenuButton("Add Icon From");
 
     /** The button to generate a new icon. */
-    private final ButtonBuilder myGenIconButton = new ButtonBuilder("Generate New Icon", false);
+    private final ButtonBuilder myGenerateIconButton = new ButtonBuilder("Generate New Icon", false);
 
     /** The tree view. */
     private TreeView<String> myTreeView;
@@ -78,7 +78,7 @@ public class MainPanel extends SplitPane
         myOwner = myPanelModel.getOwner();
 
         myPanelModel.getCurrentTileWidth().addListener((o, v, m) -> refresh());
-        createTreeView(myPanelModel.getIconRegistry().getManagerPrefs().getInitTreeSelection().get());
+        createTreeView(myPanelModel.getIconRegistry().getManagerPrefs().getTreeSelection());
         myRecordMap = new HashMap<>(myTreeBuilder.getRecordMap());
         myPanelModel.setRecordList(myRecordMap.get("Default"));
         myIconGrid = new GridBuilder(myPanelModel);
@@ -96,13 +96,13 @@ public class MainPanel extends SplitPane
 
         folderOption.setOnAction(event -> EventQueue.invokeLater(() -> addIconsFromFolder()));
 
-        AnchorPane.setBottomAnchor(myCustIconButton, 26.0);
-        myCustIconButton.lockButton(myCustIconButton);
-        myCustIconButton.setOnAction(event -> EventQueue.invokeLater(() -> myIconGrid.showIconCustomizer(myOwner)));
+        AnchorPane.setBottomAnchor(myCustomizeIconButton, 26.0);
+        myCustomizeIconButton.lockButton(myCustomizeIconButton);
+        myCustomizeIconButton.setOnAction(event -> EventQueue.invokeLater(() -> myIconGrid.showIconCustomizer(myOwner)));
 
-        AnchorPane.setBottomAnchor(myGenIconButton, 0.0);
-        myGenIconButton.lockButton(myGenIconButton);
-        myGenIconButton.setOnAction(event -> EventQueue.invokeLater(() ->
+        AnchorPane.setBottomAnchor(myGenerateIconButton, 0.0);
+        myGenerateIconButton.lockButton(myGenerateIconButton);
+        myGenerateIconButton.setOnAction(event -> EventQueue.invokeLater(() ->
             {
                 IconProjGenDialog dialog = new IconProjGenDialog(myOwner, myPanelModel.getIconRegistry(), this);
                 dialog.setVisible(true);
@@ -117,7 +117,7 @@ public class MainPanel extends SplitPane
         myScrollPane.setFitToHeight(true);
         myScrollPane.setFitToWidth(true);
 
-        myLeftView.getChildren().addAll(myAddIconButton, myCustIconButton, myGenIconButton, myTreeView);
+        myLeftView.getChildren().addAll(myAddIconButton, myCustomizeIconButton, myGenerateIconButton, myTreeView);
         setResizableWithParent(myLeftView, false);
         getItems().addAll(myLeftView, myScrollPane);
     }
@@ -184,7 +184,8 @@ public class MainPanel extends SplitPane
                     myTreeView.getSelectionModel().getSelectedItem().getValue();
             myPanelModel.setRecordList(myRecordMap.get(item));
             myScrollPane.setContent(myIconGrid = new GridBuilder(myPanelModel));
-            myPanelModel.getSelectedIcons().clear();
+            myPanelModel.getAllSelectedIcons().clear();
+            myPanelModel.getSingleSelectedIcon().clear();
         });
     }
 
@@ -203,22 +204,22 @@ public class MainPanel extends SplitPane
      */
     private void treeHandle(TreeItem<String> newValue)
     {
-        String colName = newValue.getValue();
-        if (!myPanelModel.getRecordList().equals(myRecordMap.get(colName)))
+        String collectionName = newValue.getValue();
+        if (!myPanelModel.getRecordList().equals(myRecordMap.get(collectionName)))
         {
-            myPanelModel.getSelectedIcons().clear();
+            myPanelModel.getAllSelectedIcons().clear();
         }
-        myPanelModel.setRecordList(myRecordMap.get(colName));
+        myPanelModel.setRecordList(myRecordMap.get(collectionName));
         myPanelModel.setUseFilteredList(false);
         myScrollPane.setContent(myIconGrid = new GridBuilder(myPanelModel));
-        if (myPanelModel.getIconRegistry().getCollectionNames().contains(colName))
+        if (myPanelModel.getIconRegistry().getCollectionNames().contains(collectionName))
         {
-            myPanelModel.getImportProps().getCollectionName().set(colName);
+            myPanelModel.getImportProps().getCollectionName().set(collectionName);
         }
         else
         {
-            myPanelModel.getImportProps().getCollectionName().set(myRecordMap.get(colName).get(0).getCollectionName());
-            myPanelModel.getImportProps().getSubCollectionName().set(colName);
+            myPanelModel.getImportProps().getCollectionName().set(myRecordMap.get(collectionName).get(0).getCollectionName());
+            myPanelModel.getImportProps().getSubCollectionName().set(collectionName);
         }
     }
 
@@ -226,9 +227,9 @@ public class MainPanel extends SplitPane
      * Loads a single icon from a file.
      *
      * @param collectionName the collection name
-     * @param subCatName the sub cat name
+     * @param subCategoryName the sub category name
      */
-    public void loadFromFile(String collectionName, String subCatName)
+    public void loadFromFile(String collectionName, String subCategoryName)
     {
         File result = ImageUtil.showImageFileChooser("Choose Icon File", myOwner,
                 myPanelModel.getToolbox().getPreferencesRegistry());
@@ -236,7 +237,7 @@ public class MainPanel extends SplitPane
         {
             try
             {
-                IconProvider provider = new DefaultIconProvider(result.toURI().toURL(), collectionName, subCatName, "User");
+                IconProvider provider = new DefaultIconProvider(result.toURI().toURL(), collectionName, subCategoryName, "User");
                 myPanelModel.getIconRegistry().addIcon(provider, this);
             }
             catch (MalformedURLException e)
