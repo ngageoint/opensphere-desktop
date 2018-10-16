@@ -52,7 +52,7 @@ public class PanelModel
     private ViewModel myViewModel;
 
     /** The icons currently selected. */
-    private HashMap<IconRecord, Button> mySelectedIcons = new HashMap<>();
+    private HashMap<IconRecord, Button> myAllSelectedIcons = new HashMap<>();
 
     /** The Tree model. */
     private DefaultIconRecordTreeItemObject myTreeObject;
@@ -229,24 +229,24 @@ public class PanelModel
     }
 
     /**
-     * Gets the value of the {@link #mySelectedIcons} field.
+     * Gets the value of the {@link #myAllSelectedIcons} field.
      *
-     * @return the value stored in the {@link #mySelectedIcons} field.
+     * @return the value stored in the {@link #myAllSelectedIcons} field.
      */
-    public HashMap<IconRecord, Button> getSelectedIcons()
+    public HashMap<IconRecord, Button> getAllSelectedIcons()
     {
-        return mySelectedIcons;
+        return myAllSelectedIcons;
     }
 
     /**
-     * Sets the value of the {@link #mySelectedIcons} field.
+     * Sets the value of the {@link #myAllSelectedIcons} field.
      *
      * @param selectedIcons the value to store in the
-     *            {@link #mySelectedIcons} field.
+     *            {@link #myAllSelectedIcons} field.
      */
     public void setSelectedIcons(HashMap<IconRecord, Button> selectedIcons)
     {
-        mySelectedIcons = selectedIcons;
+        myAllSelectedIcons = selectedIcons;
     }
 
     /**
@@ -280,12 +280,11 @@ public class PanelModel
     }
 
     /**
-     * Gets the selected icon map.
+     * Gets the single, primary selected button.
      *
-     * @return a map containing an icon record and it's corresponding
-     *         button in the display.
+     * @return the selected button
      */
-    public HashMap<IconRecord, Button> getSelectedIconMap()
+    public HashMap<IconRecord, Button> getSingleSelectedIcon()
     {
         return mySingleSelectedIcon;
     }

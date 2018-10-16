@@ -51,27 +51,10 @@ public class IconTreeBuilder
         for (IconRecord record : records)
         {
             String collectionName = record.getCollectionName() == null ? IconRecord.DEFAULT_COLLECTION : record.getCollectionName();
-            if (collectionName == null)
-            {
-                collectionName = IconRecord.DEFAULT_COLLECTION;
-            }
-
             collectionSet.add(collectionName);
             String subCategory = record.getSubCategory() == null ? defaultSubCategory : record.getSubCategory();
-
-            Map<String, List<IconRecord>> iconRecordMap = iconRecordMapCollection.get(collectionName);
-            if (iconRecordMap == null)
-            {
-                iconRecordMap = New.map();
-                iconRecordMapCollection.put(collectionName, iconRecordMap);
-            }
-
-            List<IconRecord> recordList = iconRecordMap.get(subCategory);
-            if (recordList == null)
-            {
-                recordList = New.linkedList();
-                iconRecordMap.put(subCategory, recordList);
-            }
+            Map<String, List<IconRecord>> iconRecordMap = iconRecordMapCollection.computeIfAbsent(collectionName, k -> New.map());
+            List<IconRecord> recordList = iconRecordMap.computeIfAbsent(subCategory, k -> New.linkedList());
             recordList.add(record);
         }
 

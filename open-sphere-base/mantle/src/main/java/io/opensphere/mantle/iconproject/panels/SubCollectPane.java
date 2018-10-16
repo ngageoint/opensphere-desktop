@@ -128,8 +128,6 @@ public class SubCollectPane extends VBox
         });
 
         myComboBox = new ComboBox<>(myComboBoxItems);
-        HBox existingPanel = new HBox();
-        existingPanel.getChildren().addAll(myExistingButton, myComboBox);
 
         myNewCategoryButton = new RadioButton("New");
         myNewCategoryButton.setOnAction(event ->

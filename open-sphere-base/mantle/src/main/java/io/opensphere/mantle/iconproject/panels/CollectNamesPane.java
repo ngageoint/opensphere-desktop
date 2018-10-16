@@ -31,7 +31,7 @@ public class CollectNamesPane extends VBox
      * The Radio Button to indicate only existing collection names will appear
      * in the combobox.
      */
-    private RadioButton myExistingRadioButton;
+    private final RadioButton myExistingRadioButton;
 
     /**
      * The ComboBox to show the current collections names and take in user input

@@ -15,9 +15,7 @@
 package io.opensphere.mantle.iconproject.model;
 
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.TreeItem;
 
 /**
@@ -26,29 +24,29 @@ import javafx.scene.control.TreeItem;
  */
 public class IconManagerPrefs
 {
-    /** The value used for the tilewidth. */
-    private final IntegerProperty myInitialTileWidth = new SimpleIntegerProperty();
+    /** The value used for the icon width. */
+    private final IntegerProperty myIconWidth = new SimpleIntegerProperty();
 
     /** The tree which will be selected on start up. */
-    private final ObjectProperty<TreeItem<String>> myInitialTreeSelection = new SimpleObjectProperty<>(
-            new TreeItem<>("temp"));
+    private TreeItem<String> myTreeSelection = new TreeItem<>("temp");
 
     /**
-     * Gets the tilewidth for display icons in the Icon Manager.
+     * Gets the icon width for display icons in the Icon Manager.
      *
-     * @return the set value.
+     * @return the icon width.
      */
     public IntegerProperty getIconWidth()
     {
-        return myInitialTileWidth;
+        return myIconWidth;
     }
-    /**
-     * Gets the value of the {@link #myInitialTreeSelection} field.
-     *
-     * @return the value stored in the {@link #myInitialTreeSelection} field.
-     */
-    public ObjectProperty<TreeItem<String>> getTreeSelection()
+
+    public TreeItem<String> getTreeSelection()
     {
-        return myInitialTreeSelection;
+        return myTreeSelection;
+    }
+
+    public void setTreeSelection(TreeItem<String> selection)
+    {
+        myTreeSelection = selection;
     }
 }

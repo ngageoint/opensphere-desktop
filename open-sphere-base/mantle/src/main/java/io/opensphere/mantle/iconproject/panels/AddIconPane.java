@@ -10,10 +10,10 @@ import javafx.scene.layout.BorderPane;
 public class AddIconPane extends BorderPane
 {
     /** The pane containing controls for the collection name choice. */
-    private CollectNamesPane myCollectionNamePane;
+    private final CollectNamesPane myCollectionNamePane;
 
     /** The pane containing controls for the sub collection name choice. */
-    private SubCollectPane mySubCollectPane;
+    private final SubCollectPane mySubCollectPane;
 
     /**
      * Instantiates the panel for getting the category and sub category from the

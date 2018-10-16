@@ -36,10 +36,10 @@ public class IconPopupMenu extends ContextMenu
         removeAction.setOnAction(event -> selector.delete(false));
 
         MenuItem unSelectAction = new MenuItem("Deselect All Icons");
-        unSelectAction.setOnAction(event -> selector.unSelectIcons());
+        unSelectAction.setOnAction(event -> selector.unSelectAllIcons());
 
         MenuItem deSelectAction = new MenuItem("Deselect Icon");
-        deSelectAction.setOnAction(event -> EventQueue.invokeLater(() -> selector.unSelectIcon()));
+        deSelectAction.setOnAction(event -> EventQueue.invokeLater(() -> selector.unSelectSingleIcon()));
 
         getItems().addAll(favoriteAction, rotateAction, deSelectAction, unSelectAction, removeAction, deleteAction);
     }

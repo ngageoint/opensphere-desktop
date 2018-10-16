@@ -78,7 +78,7 @@ public class MainPanel extends SplitPane
         myOwner = myPanelModel.getOwner();
 
         myPanelModel.getCurrentTileWidth().addListener((o, v, m) -> refresh());
-        createTreeView(myPanelModel.getIconRegistry().getManagerPrefs().getTreeSelection().get());
+        createTreeView(myPanelModel.getIconRegistry().getManagerPrefs().getTreeSelection());
         myRecordMap = new HashMap<>(myTreeBuilder.getRecordMap());
         myPanelModel.setRecordList(myRecordMap.get("Default"));
         myIconGrid = new GridBuilder(myPanelModel);
@@ -184,7 +184,7 @@ public class MainPanel extends SplitPane
                     myTreeView.getSelectionModel().getSelectedItem().getValue();
             myPanelModel.setRecordList(myRecordMap.get(item));
             myScrollPane.setContent(myIconGrid = new GridBuilder(myPanelModel));
-            myPanelModel.getSelectedIcons().clear();
+            myPanelModel.getAllSelectedIcons().clear();
         });
     }
 
@@ -206,7 +206,7 @@ public class MainPanel extends SplitPane
         String collectionName = newValue.getValue();
         if (!myPanelModel.getRecordList().equals(myRecordMap.get(collectionName)))
         {
-            myPanelModel.getSelectedIcons().clear();
+            myPanelModel.getAllSelectedIcons().clear();
         }
         myPanelModel.setRecordList(myRecordMap.get(collectionName));
         myPanelModel.setUseFilteredList(false);

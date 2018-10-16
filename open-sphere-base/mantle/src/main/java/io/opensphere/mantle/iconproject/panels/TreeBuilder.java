@@ -59,27 +59,10 @@ public class TreeBuilder extends TreeItem<String>
         for (IconRecord record : records)
         {
             String collection = record.getCollectionName() == null ? IconRecord.DEFAULT_COLLECTION : record.getCollectionName();
-            if (collection == null)
-            {
-                collection = IconRecord.DEFAULT_COLLECTION;
-            }
-
             collectionSet.add(collection);
             String subCategory = record.getSubCategory() == null ? defaultSubCategory : record.getSubCategory();
-
-            Map<String, List<IconRecord>> iconRecordMap = iconRecordMapCollection.get(collection);
-            if (iconRecordMap == null)
-            {
-                iconRecordMap = New.map();
-                iconRecordMapCollection.put(collection, iconRecordMap);
-            }
-
-            List<IconRecord> recordList = iconRecordMap.get(subCategory);
-            if (recordList == null)
-            {
-                recordList = New.linkedList();
-                iconRecordMap.put(subCategory, recordList);
-            }
+            Map<String, List<IconRecord>> iconRecordMap = iconRecordMapCollection.computeIfAbsent(collection, k -> New.map());
+            List<IconRecord> recordList = iconRecordMap.computeIfAbsent(subCategory, k -> New.linkedList());
             recordList.add(record);
         }
 

@@ -85,11 +85,11 @@ public class GridBuilder extends TilePane
             if (myPanelModel.getViewModel().getMultiSelectEnabled())
             {
                 iconButton.setStyle("-fx-effect: dropshadow(three-pass-box, purple, 20, 0, 0, 0);");
-                myPanelModel.getSelectedIcons().put(record, iconButton);
+                myPanelModel.getAllSelectedIcons().put(record, iconButton);
             }
             myPanelModel.getSelectedRecord().set(record);
-            myPanelModel.getSelectedIconMap().clear();
-            myPanelModel.getSelectedIconMap().put(record, iconButton);
+            myPanelModel.getSingleSelectedIcon().clear();
+            myPanelModel.getSingleSelectedIcon().put(record, iconButton);
         });
         return iconButton;
     }
@@ -120,11 +120,11 @@ public class GridBuilder extends TilePane
             if (myPanelModel.getViewModel().getMultiSelectEnabled())
             {
                 iconButton.setStyle("-fx-effect: dropshadow(three-pass-box, purple, 20, 0, 0, 0);");
-                myPanelModel.getSelectedIcons().put(record, iconButton);
+                myPanelModel.getAllSelectedIcons().put(record, iconButton);
             }
             myPanelModel.getSelectedRecord().set(record);
-            myPanelModel.getSelectedIconMap().clear();
-            myPanelModel.getSelectedIconMap().put(record, iconButton);
+            myPanelModel.getSingleSelectedIcon().clear();
+            myPanelModel.getSingleSelectedIcon().put(record, iconButton);
         });
         return iconButton;
     }
