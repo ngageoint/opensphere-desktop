@@ -124,7 +124,8 @@ public class IconPopupMenuImpl
     /** Un-Selects the single, primary Icon visually and in the registry. */
     public void unSelectSingleIcon()
     {
-        myPanelModel.getSingleSelectedIcon().forEach((i, b) -> {
+        myPanelModel.getSingleSelectedIcon().forEach((i, b) ->
+        {
             myPanelModel.getAllSelectedIcons().remove(i);            
             b.setStyle("");
         });
