@@ -118,6 +118,7 @@ public class IconPopupMenuImpl
         myPanelModel.getAllSelectedIcons().values().stream().filter(b -> myPanelModel.getViewModel().getMainPanel().getIconGrid()
                 .getChildren().contains(b)).forEach(b -> b.setStyle(""));
         myPanelModel.getAllSelectedIcons().clear();
+        myPanelModel.getSingleSelectedIcon().clear();
     }
 
     /** Un-Selects the single, primary Icon visually and in the registry. */

@@ -185,6 +185,7 @@ public class MainPanel extends SplitPane
             myPanelModel.setRecordList(myRecordMap.get(item));
             myScrollPane.setContent(myIconGrid = new GridBuilder(myPanelModel));
             myPanelModel.getAllSelectedIcons().clear();
+            myPanelModel.getSingleSelectedIcon().clear();
         });
     }
 

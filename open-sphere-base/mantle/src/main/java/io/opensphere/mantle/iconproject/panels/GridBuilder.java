@@ -136,7 +136,7 @@ public class GridBuilder extends TilePane
      */
     public void showIconCustomizer(Window owner)
     {
-        if (myPanelModel.getSelectedRecord().get() != null)
+        if (!myPanelModel.getSingleSelectedIcon().isEmpty())
         {
             IconCustomizerDialog builderPane = new IconCustomizerDialog(owner, myPanelModel);
             builderPane.setVisible(true);
