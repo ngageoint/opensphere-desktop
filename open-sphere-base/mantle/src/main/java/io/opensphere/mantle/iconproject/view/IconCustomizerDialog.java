@@ -38,7 +38,7 @@ public class IconCustomizerDialog extends JFXDialog
     private final IconRegistry myIconRegistry;
 
     /** the current UI model. */
-    private PanelModel myPanelModel;
+    private final PanelModel myPanelModel;
 
     /**
      * Wraps the IconCustomizerPane into a java swing window.

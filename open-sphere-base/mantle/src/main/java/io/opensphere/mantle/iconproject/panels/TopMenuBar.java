@@ -32,10 +32,10 @@ public class TopMenuBar extends HBox
     private final ButtonBuilder myEnlargeButton = new ButtonBuilder("+", false);
 
     /** The bar containing the sizing options. */
-    private ButtonBar mySizeMenu = new ButtonBar();
+    private final ButtonBar mySizeMenu;
 
     /** The bar containing the icon display toggles. */
-    private ButtonBar myViewToggle = new ButtonBar();
+    private final ButtonBar myViewToggle;
 
     /** The label for the icon display view. */
     private final Text myViewLabel = new LabelMaker("View Style");
@@ -50,7 +50,7 @@ public class TopMenuBar extends HBox
     private final ToggleGroup myToggleGroup = new ToggleGroup();
 
     /** The bar containing the filter functionality. */
-    private ButtonBar mySearchBar = new ButtonBar();
+    private final ButtonBar mySearchBar;
 
     /** The label for the filter text input. */
     private final Text mySearchLabel = new LabelMaker("Filter");

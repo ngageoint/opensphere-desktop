@@ -22,13 +22,13 @@ public class PanelModel
     private final ObjectProperty<ViewStyle> myViewStyle = new SimpleObjectProperty<>(this, "viewtype", ViewStyle.GRID);
 
     /** The selected icon to be used for customization dialogs. */
-    private ObjectProperty<IconRecord> mySelectedRecord = new SimpleObjectProperty<>();
+    private final ObjectProperty<IconRecord> mySelectedRecord = new SimpleObjectProperty<>();
 
     /** The registry of icons. */
     private IconRegistry myIconRegistry;
 
     /** The toolbox. */
-    private Toolbox myToolbox;
+    private final Toolbox myToolbox;
 
     /** The owner of this window. */
     private Window myOwner;
@@ -46,13 +46,13 @@ public class PanelModel
     private List<IconRecord> myIconRecordList;
 
     /** The filtered icon record list. */
-    private List<IconRecord> myFilteredIconRecordList;
+    private final List<IconRecord> myFilteredIconRecordList;
 
     /** The model for the panels contained in the UI. */
     private ViewModel myViewModel;
 
     /** The icons currently selected. */
-    private HashMap<IconRecord, Button> myAllSelectedIcons = new HashMap<>();
+    private final HashMap<IconRecord, Button> myAllSelectedIcons = new HashMap<>();
 
     /** The Tree model. */
     private DefaultIconRecordTreeItemObject myTreeObject;
@@ -61,7 +61,7 @@ public class PanelModel
      * Used to keep track of which icon and button are selected on the grid for
      * single selection purposes.
      */
-    private HashMap<IconRecord, Button> mySingleSelectedIcon = new HashMap<>();
+    private final HashMap<IconRecord, Button> mySingleSelectedIcon = new HashMap<>();
 
     /** Whether to use the filtered icon record list or the regular one. */ 
     private boolean myUseFilteredList;
@@ -199,16 +199,6 @@ public class PanelModel
     }
 
     /**
-     * Sets the filtered icon record list.
-     *
-     * @param list the filtered icon record list
-     */
-    public void setFilteredRecordList(List<IconRecord> list)
-    {
-        myFilteredIconRecordList = list;
-    }
-
-    /**
      * Gets the value of the {@link #myViewModel} field.
      *
      * @return the value stored in the {@link #myViewModel} field.
@@ -236,17 +226,6 @@ public class PanelModel
     public HashMap<IconRecord, Button> getAllSelectedIcons()
     {
         return myAllSelectedIcons;
-    }
-
-    /**
-     * Sets the value of the {@link #myAllSelectedIcons} field.
-     *
-     * @param selectedIcons the value to store in the
-     *            {@link #myAllSelectedIcons} field.
-     */
-    public void setSelectedIcons(HashMap<IconRecord, Button> selectedIcons)
-    {
-        myAllSelectedIcons = selectedIcons;
     }
 
     /**

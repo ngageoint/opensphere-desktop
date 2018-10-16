@@ -22,13 +22,13 @@ public class AddIconDialog extends JFXDialog
     private static final long serialVersionUID = -4136694415228468073L;
 
     /** The model for UI elements. */
-    private PanelModel myPanelModel;
+    private final PanelModel myPanelModel;
 
     /** The panel calling this window. */
-    private Window myOwner;
+    private final Window myOwner;
 
     /** The pane displaying UI elements. */
-    private AddIconPane myAddIconPane;
+    private final AddIconPane myAddIconPane;
 
     /**
      * Creates a new window containing the collection name and sub collection

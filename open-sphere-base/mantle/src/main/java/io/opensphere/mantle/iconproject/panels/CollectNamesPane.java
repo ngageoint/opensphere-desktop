@@ -37,22 +37,22 @@ public class CollectNamesPane extends VBox
      * The ComboBox to show the current collections names and take in user input
      * for new collection names.
      */
-    private ComboBox<String> myExistingComboBox;
+    private final ComboBox<String> myExistingComboBox;
 
     /** The existing collection name choices. */
-    private ObservableList<String> myOptions;
+    private final ObservableList<String> myOptions;
 
     /** The Radio Button to enable the user to enter a new collection name. */
-    private RadioButton myNewCollectionButton;
+    private final RadioButton myNewCollectionButton;
 
     /** The text for the new Radio Button. */
-    private TextField myNewCollectionTextField;
+    private final TextField myNewCollectionTextField;
 
     /** The model for the UI. */
-    private PanelModel myPanelModel;
+    private final PanelModel myPanelModel;
 
     /** The toggle group for the New and Existing radio buttons. */
-    private ToggleGroup myToggleGroup = new ToggleGroup();
+    private final ToggleGroup myToggleGroup = new ToggleGroup();
 
     /**
      * Creates the Collection Name selection controls and packages into a VBox.
