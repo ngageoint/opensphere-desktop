@@ -41,9 +41,7 @@ public class IconChooserDisplayerImpl implements IconChooserDisplayer
         {
             IconProjDialog fileDialog = new IconProjDialog(myParent.get(), toolbox, false, false);
             fileDialog.getPanelModel().getSelectedRecord().addListener((o, v, n) ->
-            {
-                selectedIcon.set(fileDialog.getPanelModel().getSelectedRecord().get());
-            });
+                    selectedIcon.set(fileDialog.getPanelModel().getSelectedRecord().get()));
             fileDialog.setVisible(true);
         });
     }
