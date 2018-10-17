@@ -26,12 +26,12 @@ import mil.nga.geopackage.BoundingBox;
 import mil.nga.geopackage.GeoPackage;
 import mil.nga.geopackage.extension.ExtensionScopeType;
 import mil.nga.geopackage.extension.Extensions;
-import mil.nga.geopackage.projection.ProjectionConstants;
 import mil.nga.geopackage.tiles.matrix.TileMatrix;
 import mil.nga.geopackage.tiles.matrix.TileMatrixDao;
 import mil.nga.geopackage.tiles.matrixset.TileMatrixSet;
 import mil.nga.geopackage.tiles.user.TileDao;
 import mil.nga.geopackage.tiles.user.TileRow;
+import mil.nga.sf.proj.ProjectionConstants;
 
 /** Writes to a geopackage database. */
 public class DBWriter
@@ -295,7 +295,7 @@ public class DBWriter
         Set<GeographicPosition> positions = myTopLevelGeometries.stream().flatMap(g -> g.getBounds().getVertices().stream())
                 .map(v -> (GeographicPosition)v).collect(Collectors.toSet());
         GeographicBoundingBox tileBbox = GeographicBoundingBox.getMinimumBoundingBox(positions);
-        BoundingBox bbox = new BoundingBox(tileBbox.getMinLonD(), tileBbox.getMaxLonD(), tileBbox.getMinLatD(),
+        BoundingBox bbox = new BoundingBox(tileBbox.getMinLonD(), tileBbox.getMinLatD(), tileBbox.getMaxLonD(),
                 tileBbox.getMaxLatD());
         return bbox;
     }

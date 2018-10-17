@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.ServiceLoader;
 import java.util.concurrent.Executor;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.cache.matcher.PropertyMatcher;

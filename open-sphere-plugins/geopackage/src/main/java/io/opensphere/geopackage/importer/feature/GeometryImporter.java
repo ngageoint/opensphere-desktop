@@ -16,17 +16,17 @@ import io.opensphere.core.util.MathUtil;
 import io.opensphere.geopackage.model.GeoPackageColumns;
 import mil.nga.geopackage.features.user.FeatureRow;
 import mil.nga.geopackage.geom.GeoPackageGeometryData;
-import mil.nga.geopackage.projection.ProjectionTransform;
-import mil.nga.wkb.geom.CompoundCurve;
-import mil.nga.wkb.geom.Geometry;
-import mil.nga.wkb.geom.GeometryCollection;
-import mil.nga.wkb.geom.LineString;
-import mil.nga.wkb.geom.MultiLineString;
-import mil.nga.wkb.geom.MultiPoint;
-import mil.nga.wkb.geom.MultiPolygon;
-import mil.nga.wkb.geom.Point;
-import mil.nga.wkb.geom.Polygon;
-import mil.nga.wkb.geom.PolyhedralSurface;
+import mil.nga.sf.CompoundCurve;
+import mil.nga.sf.Geometry;
+import mil.nga.sf.GeometryCollection;
+import mil.nga.sf.LineString;
+import mil.nga.sf.MultiLineString;
+import mil.nga.sf.MultiPoint;
+import mil.nga.sf.MultiPolygon;
+import mil.nga.sf.Point;
+import mil.nga.sf.Polygon;
+import mil.nga.sf.PolyhedralSurface;
+import mil.nga.sf.proj.ProjectionTransform;
 
 /**
  * Imports the geometry from the GeoPackage row and converts it to a

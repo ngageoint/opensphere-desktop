@@ -33,11 +33,11 @@ public class GeometryExporter
      * @param element The element containing the geometry to convert.
      * @return The geometry to export, or null if we could not convert it.
      */
-    public mil.nga.wkb.geom.Geometry convertGeometry(MapDataElement element)
+    public mil.nga.sf.Geometry convertGeometry(MapDataElement element)
     {
         MapGeometrySupport support = element.getMapGeometrySupport();
 
-        mil.nga.wkb.geom.Geometry wkbGeometry = null;
+        mil.nga.sf.Geometry wkbGeometry = null;
 
         if (support != null)
         {
@@ -57,9 +57,9 @@ public class GeometryExporter
      *            couldn't be created.
      * @return The geometry to export, or null if we could not convert it.
      */
-    private mil.nga.wkb.geom.Geometry convertGeometry(Geometry jtsGeometry, String mapGeometrySupportClass)
+    private mil.nga.sf.Geometry convertGeometry(Geometry jtsGeometry, String mapGeometrySupportClass)
     {
-        mil.nga.wkb.geom.Geometry wkbGeometry = null;
+        mil.nga.sf.Geometry wkbGeometry = null;
 
         if (jtsGeometry instanceof MultiLineString)
         {
@@ -103,22 +103,22 @@ public class GeometryExporter
 
     /**
      * Converts the {@link GeometryCollection} to a
-     * {@link mil.nga.wkb.geom.GeometryCollection}.
+     * {@link mil.nga.sf.GeometryCollection}.
      *
      * @param geometryCollection The geometry to convert.
      * @param mapSupportClass Used to log warning message if geometry couldn't
      *            be created.
      * @return The converted geometry.
      */
-    private mil.nga.wkb.geom.GeometryCollection<mil.nga.wkb.geom.Geometry> convertGeometryCollection(
+    private mil.nga.sf.GeometryCollection<mil.nga.sf.Geometry> convertGeometryCollection(
             GeometryCollection geometryCollection, String mapSupportClass)
     {
-        mil.nga.wkb.geom.GeometryCollection<mil.nga.wkb.geom.Geometry> collection = new mil.nga.wkb.geom.GeometryCollection<>(
+        mil.nga.sf.GeometryCollection<mil.nga.sf.Geometry> collection = new mil.nga.sf.GeometryCollection<>(
                 true, false);
 
         for (int i = 0; i < geometryCollection.getNumGeometries(); i++)
         {
-            mil.nga.wkb.geom.Geometry geometry = convertGeometry(geometryCollection.getGeometryN(i), mapSupportClass);
+            mil.nga.sf.Geometry geometry = convertGeometry(geometryCollection.getGeometryN(i), mapSupportClass);
 
             if (geometry != null)
             {
@@ -130,17 +130,17 @@ public class GeometryExporter
     }
 
     /**
-     * Converts the {@link LineString} to a {@link mil.nga.wkb.geom.LineString}.
+     * Converts the {@link LineString} to a {@link mil.nga.sf.LineString}.
      *
      * @param lineString The geometry to convert.
      * @return The converted geometry.
      */
-    private mil.nga.wkb.geom.LineString convertLineString(LineString lineString)
+    private mil.nga.sf.LineString convertLineString(LineString lineString)
     {
-        mil.nga.wkb.geom.LineString wkbLineString = new mil.nga.wkb.geom.LineString(true, false);
+        mil.nga.sf.LineString wkbLineString = new mil.nga.sf.LineString(true, false);
         for (int i = 0; i < lineString.getNumPoints(); i++)
         {
-            mil.nga.wkb.geom.Point point = convertPoint(lineString.getPointN(i));
+            mil.nga.sf.Point point = convertPoint(lineString.getPointN(i));
             wkbLineString.addPoint(point);
         }
 
@@ -149,18 +149,18 @@ public class GeometryExporter
 
     /**
      * Converts the {@link MultiLineString} to a
-     * {@link mil.nga.wkb.geom.MultiLineString}.
+     * {@link mil.nga.sf.MultiLineString}.
      *
      * @param multiLineString The geometry to convert.
      * @return The converted geometry.
      */
-    private mil.nga.wkb.geom.MultiLineString convertMultiLineString(MultiLineString multiLineString)
+    private mil.nga.sf.MultiLineString convertMultiLineString(MultiLineString multiLineString)
     {
-        mil.nga.wkb.geom.MultiLineString wkbMultiLineString = new mil.nga.wkb.geom.MultiLineString(true, false);
+        mil.nga.sf.MultiLineString wkbMultiLineString = new mil.nga.sf.MultiLineString(true, false);
 
         for (int i = 0; i < multiLineString.getNumGeometries(); i++)
         {
-            mil.nga.wkb.geom.LineString wkbLineString = convertLineString((LineString)multiLineString.getGeometryN(i));
+            mil.nga.sf.LineString wkbLineString = convertLineString((LineString)multiLineString.getGeometryN(i));
             wkbMultiLineString.addGeometry(wkbLineString);
         }
 
@@ -168,18 +168,18 @@ public class GeometryExporter
     }
 
     /**
-     * Converts the {@link MultiPoint} to a {@link mil.nga.wkb.geom.MultiPoint}.
+     * Converts the {@link MultiPoint} to a {@link mil.nga.sf.MultiPoint}.
      *
      * @param multiPoint The geometry to convert.
      * @return The converted geometry.
      */
-    private mil.nga.wkb.geom.MultiPoint convertMultiPoint(MultiPoint multiPoint)
+    private mil.nga.sf.MultiPoint convertMultiPoint(MultiPoint multiPoint)
     {
-        mil.nga.wkb.geom.MultiPoint wkbMultiPoint = new mil.nga.wkb.geom.MultiPoint(true, false);
+        mil.nga.sf.MultiPoint wkbMultiPoint = new mil.nga.sf.MultiPoint(true, false);
 
         for (int i = 0; i < multiPoint.getNumGeometries(); i++)
         {
-            mil.nga.wkb.geom.Point wkbPoint = convertPoint((Point)multiPoint.getGeometryN(i));
+            mil.nga.sf.Point wkbPoint = convertPoint((Point)multiPoint.getGeometryN(i));
             wkbMultiPoint.addGeometry(wkbPoint);
         }
 
@@ -188,18 +188,18 @@ public class GeometryExporter
 
     /**
      * Converts the {@link MultiPolygon} to a
-     * {@link mil.nga.wkb.geom.MultiPolygon}.
+     * {@link mil.nga.sf.MultiPolygon}.
      *
      * @param multiPolygon The geometry to convert.
      * @return The converted geometry.
      */
-    private mil.nga.wkb.geom.MultiPolygon convertMultiPolygon(MultiPolygon multiPolygon)
+    private mil.nga.sf.MultiPolygon convertMultiPolygon(MultiPolygon multiPolygon)
     {
-        mil.nga.wkb.geom.MultiPolygon wkbMultiPolygon = new mil.nga.wkb.geom.MultiPolygon(true, false);
+        mil.nga.sf.MultiPolygon wkbMultiPolygon = new mil.nga.sf.MultiPolygon(true, false);
 
         for (int i = 0; i < multiPolygon.getNumGeometries(); i++)
         {
-            mil.nga.wkb.geom.Polygon wkbPolygon = convertPolygon((Polygon)multiPolygon.getGeometryN(i));
+            mil.nga.sf.Polygon wkbPolygon = convertPolygon((Polygon)multiPolygon.getGeometryN(i));
             wkbMultiPolygon.addGeometry(wkbPolygon);
         }
 
@@ -207,30 +207,30 @@ public class GeometryExporter
     }
 
     /**
-     * Converts the {@link Point} to a {@link mil.nga.wkb.geom.Point}.
+     * Converts the {@link Point} to a {@link mil.nga.sf.Point}.
      *
      * @param point The geometry to convert.
      * @return The converted geometry.
      */
-    private mil.nga.wkb.geom.Point convertPoint(Point point)
+    private mil.nga.sf.Point convertPoint(Point point)
     {
-        mil.nga.wkb.geom.Point wkbPoint = new mil.nga.wkb.geom.Point(true, false, point.getX(), point.getY());
+        mil.nga.sf.Point wkbPoint = new mil.nga.sf.Point(true, false, point.getX(), point.getY());
         wkbPoint.setZ(Double.valueOf(point.getCoordinate().z));
 
         return wkbPoint;
     }
 
     /**
-     * Converts the {@link Polygon} to a {@link mil.nga.wkb.geom.Polygon}.
+     * Converts the {@link Polygon} to a {@link mil.nga.sf.Polygon}.
      *
      * @param polygon The geometry to convert.
      * @return The converted geometry.
      */
-    private mil.nga.wkb.geom.Polygon convertPolygon(Polygon polygon)
+    private mil.nga.sf.Polygon convertPolygon(Polygon polygon)
     {
-        mil.nga.wkb.geom.Polygon wkbPolygon = new mil.nga.wkb.geom.Polygon(true, false);
+        mil.nga.sf.Polygon wkbPolygon = new mil.nga.sf.Polygon(true, false);
 
-        mil.nga.wkb.geom.LineString ring = convertLineString(polygon.getExteriorRing());
+        mil.nga.sf.LineString ring = convertLineString(polygon.getExteriorRing());
         wkbPolygon.addRing(ring);
 
         for (int i = 0; i < polygon.getNumInteriorRing(); i++)

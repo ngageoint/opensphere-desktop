@@ -6,8 +6,8 @@ import io.opensphere.core.util.collections.New;
 import io.opensphere.geopackage.model.GeoPackageColumns;
 import mil.nga.geopackage.db.GeoPackageDataType;
 import mil.nga.geopackage.geom.GeoPackageGeometryData;
-import mil.nga.wkb.geom.Geometry;
-import mil.nga.wkb.geom.GeometryType;
+import mil.nga.sf.Geometry;
+import mil.nga.sf.GeometryType;
 
 /**
  * Mocks a {@link FeatureRow} and is used for testing.

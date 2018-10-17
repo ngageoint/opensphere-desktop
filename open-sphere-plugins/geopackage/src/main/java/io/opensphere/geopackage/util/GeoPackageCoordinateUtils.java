@@ -1,16 +1,17 @@
 package io.opensphere.geopackage.util;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.util.MathUtil;
 import mil.nga.geopackage.BoundingBox;
-import mil.nga.geopackage.projection.Projection;
-import mil.nga.geopackage.projection.ProjectionConstants;
-import mil.nga.geopackage.projection.ProjectionFactory;
-import mil.nga.geopackage.projection.ProjectionTransform;
+import mil.nga.sf.GeometryEnvelope;
+import mil.nga.sf.proj.Projection;
+import mil.nga.sf.proj.ProjectionConstants;
+import mil.nga.sf.proj.ProjectionFactory;
+import mil.nga.sf.proj.ProjectionTransform;
 
 /**
  * Contains some coordinate conversion functions specific to geopackage classes.
@@ -61,7 +62,9 @@ public final class GeoPackageCoordinateUtils
         if (!StringUtils.equals(String.valueOf(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM), projection.getCode()))
         {
             ProjectionTransform layerToGeo = projection.getTransformation(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
-            box = layerToGeo.transform(boundingBox);
+            GeometryEnvelope envelope = layerToGeo.transform(new GeometryEnvelope(box.getMinLongitude(), box.getMinLatitude(),
+                    box.getMaxLongitude(), box.getMaxLatitude()));
+            box = new BoundingBox(envelope);
             box = roundToNearest(box);
         }
 
@@ -81,9 +84,12 @@ public final class GeoPackageCoordinateUtils
      */
     public BoundingBox convertToWebMercator(GeographicBoundingBox boundingBox)
     {
-        BoundingBox box = new BoundingBox(boundingBox.getMinLonD(), boundingBox.getMaxLonD(), boundingBox.getMinLatD(),
+        BoundingBox box = new BoundingBox(boundingBox.getMinLonD(), boundingBox.getMinLatD(), boundingBox.getMaxLonD(),
                 boundingBox.getMaxLatD());
-        return myGeoToMercator.transform(box);
+        GeometryEnvelope envelope = myGeoToMercator.transform(
+                new GeometryEnvelope(box.getMinLongitude(), box.getMinLatitude(), box.getMaxLongitude(), box.getMaxLatitude()));
+        box = new BoundingBox(envelope);
+        return box;
     }
 
     /**
@@ -95,7 +101,7 @@ public final class GeoPackageCoordinateUtils
      */
     public BoundingBox getBoundingBox(GeographicBoundingBox boundingBox)
     {
-        return new BoundingBox(boundingBox.getMinLonD(), boundingBox.getMaxLonD(), boundingBox.getMinLatD(),
+        return new BoundingBox(boundingBox.getMinLonD(), boundingBox.getMinLatD(), boundingBox.getMaxLonD(),
                 boundingBox.getMaxLatD());
     }
 
@@ -129,6 +135,6 @@ public final class GeoPackageCoordinateUtils
         double roundedMinLon = MathUtil.roundDecimalPlace(box.getMinLongitude(), 10);
         double roundedMaxLon = MathUtil.roundDecimalPlace(box.getMaxLongitude(), 10);
 
-        return new BoundingBox(roundedMinLon, roundedMaxLon, roundedMinLat, roundedMaxLat);
+        return new BoundingBox(roundedMinLon, roundedMinLat, roundedMaxLon, roundedMaxLat);
     }
 }

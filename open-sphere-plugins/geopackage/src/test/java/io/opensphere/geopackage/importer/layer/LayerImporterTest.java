@@ -43,10 +43,10 @@ import mil.nga.geopackage.features.columns.GeometryColumns;
 import mil.nga.geopackage.features.user.FeatureColumn;
 import mil.nga.geopackage.features.user.FeatureTable;
 import mil.nga.geopackage.features.user.MockFeatureRow;
-import mil.nga.geopackage.projection.ProjectionConstants;
 import mil.nga.geopackage.tiles.matrix.TileMatrix;
 import mil.nga.geopackage.tiles.matrixset.TileMatrixSet;
-import mil.nga.wkb.geom.GeometryType;
+import mil.nga.sf.proj.ProjectionConstants;
+import mil.nga.sf.GeometryType;
 
 /**
  * Tests importing layers from a geopackage file.
@@ -99,7 +99,7 @@ public class LayerImporterTest
         matrices.add(tileMatrix1);
         matrices.add(tileMatrix2);
 
-        BoundingBox boundingBox = new BoundingBox(10, 11, 10, 11);
+        BoundingBox boundingBox = new BoundingBox(10, 10, 11, 11);
 
         GeoPackage geoPackage = createPackage(support, matrices, boundingBox);
         List<DefaultCacheDeposit<GeoPackageLayer>> deposits = New.list();
@@ -233,7 +233,7 @@ public class LayerImporterTest
             Map<String, Object> tableData = New.map();
             tableData.put("column1", featureLayer);
 
-            mil.nga.wkb.geom.Point location = new mil.nga.wkb.geom.Point(5, 6);
+            mil.nga.sf.Point location = new mil.nga.sf.Point(5, 6);
             MockFeatureRow row = new MockFeatureRow(table, location, tableData);
             rows.add(row);
 

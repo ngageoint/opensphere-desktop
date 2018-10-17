@@ -91,7 +91,7 @@ public class MockTileDao extends TileDao
     @Override
     public BoundingBox getBoundingBox()
     {
-        return new BoundingBox(10, 11, 10, 11);
+        return new BoundingBox(10, 10, 11, 11);
     }
 
     @Override

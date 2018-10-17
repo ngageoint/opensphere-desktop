@@ -23,11 +23,11 @@ import mil.nga.geopackage.GeoPackage;
 import mil.nga.geopackage.core.contents.Contents;
 import mil.nga.geopackage.core.contents.ContentsDataType;
 import mil.nga.geopackage.core.srs.SpatialReferenceSystem;
-import mil.nga.geopackage.projection.ProjectionConstants;
 import mil.nga.geopackage.tiles.matrix.TileMatrix;
 import mil.nga.geopackage.tiles.matrixset.TileMatrixSet;
 import mil.nga.geopackage.tiles.user.TileDao;
 import mil.nga.geopackage.tiles.user.TileRow;
+import mil.nga.sf.proj.ProjectionConstants;
 
 /**
  * Unit test for {@link TileImporter} class.
@@ -56,7 +56,7 @@ public class TileImporterTest
         GeoPackageLayer featureLayer = new GeoPackageLayer(tileLayer.getPackageName(), tileLayer.getPackageFile(), "testFeature",
                 LayerType.FEATURE, 10);
         MockTileDao dao = createDao(support, 4);
-        BoundingBox boundingBox = new BoundingBox(10, 11, 10, 11);
+        BoundingBox boundingBox = new BoundingBox(10, 10, 11, 11);
 
         TileRowImporter rowImporter = createImporter(support, tileLayer, dao, boundingBox,
                 New.list(dao.getRows().get(0), dao.getRows().get(1)));
@@ -91,7 +91,7 @@ public class TileImporterTest
         GeoPackageLayer featureLayer = new GeoPackageLayer(tileLayer.getPackageName(), tileLayer.getPackageFile(), "testFeature",
                 LayerType.FEATURE, 10);
         MockTileDao dao = createDao(support, 4);
-        BoundingBox boundingBox = new BoundingBox(10, 11, 10, 11);
+        BoundingBox boundingBox = new BoundingBox(10, 10, 11, 11);
 
         TileRowImporter rowImporter = createImporter(support, tileLayer, dao, boundingBox, New.list(dao.getRows().get(0)));
 
@@ -169,7 +169,7 @@ public class TileImporterTest
         matrixSet.getSrs().setOrganization(ProjectionConstants.AUTHORITY_EPSG);
         matrixSet.getSrs().setOrganizationCoordsysId(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
         matrixSet.getSrs().setOrganizationCoordsysId(ProjectionConstants.EPSG_WEB_MERCATOR);
-        matrixSet.setBoundingBox(new BoundingBox(10, 11, 10, 11));
+        matrixSet.setBoundingBox(new BoundingBox(10, 10, 11, 11));
 
         TileMatrix matrix = new TileMatrix();
         matrix.setZoomLevel(8);

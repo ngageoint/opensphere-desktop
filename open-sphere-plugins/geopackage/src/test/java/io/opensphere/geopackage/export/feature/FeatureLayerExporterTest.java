@@ -48,10 +48,10 @@ import mil.nga.geopackage.features.user.FeatureDao;
 import mil.nga.geopackage.features.user.FeatureResultSet;
 import mil.nga.geopackage.features.user.FeatureRow;
 import mil.nga.geopackage.features.user.MockFeatureRow;
-import mil.nga.geopackage.projection.ProjectionConstants;
-import mil.nga.wkb.geom.Geometry;
-import mil.nga.wkb.geom.GeometryType;
-import mil.nga.wkb.geom.Point;
+import mil.nga.sf.Geometry;
+import mil.nga.sf.GeometryType;
+import mil.nga.sf.Point;
+import mil.nga.sf.proj.ProjectionConstants;
 
 /**
  * Unit test for {@link FeatureLayerExporter}.

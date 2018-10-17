@@ -13,7 +13,7 @@ import mil.nga.geopackage.features.user.FeatureColumn;
 import mil.nga.geopackage.features.user.FeatureDao;
 import mil.nga.geopackage.features.user.FeatureRow;
 import mil.nga.geopackage.geom.GeoPackageGeometryData;
-import mil.nga.wkb.geom.Geometry;
+import mil.nga.sf.Geometry;
 
 /**
  * Exports a {@link DataElement}s data and puts it into geopackage row.

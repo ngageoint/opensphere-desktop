@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 
 import io.opensphere.core.util.collections.New;
 import mil.nga.geopackage.features.user.FeatureRow;
-import mil.nga.geopackage.projection.ProjectionTransform;
+import mil.nga.sf.proj.ProjectionTransform;
 
 /**
  * Imports a {@link FeatureRow} and returns a Map of columns to their values.

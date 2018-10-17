@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ServiceLoader;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.cache.matcher.NumberPropertyMatcher;

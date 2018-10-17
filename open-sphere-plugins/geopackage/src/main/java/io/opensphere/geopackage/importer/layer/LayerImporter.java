@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.cache.DefaultCacheDeposit;
@@ -28,11 +28,11 @@ import mil.nga.geopackage.GeoPackage;
 import mil.nga.geopackage.extension.Extensions;
 import mil.nga.geopackage.extension.ExtensionsDao;
 import mil.nga.geopackage.features.user.FeatureDao;
-import mil.nga.geopackage.projection.Projection;
-import mil.nga.geopackage.projection.ProjectionConstants;
-import mil.nga.geopackage.projection.ProjectionTransform;
 import mil.nga.geopackage.tiles.matrix.TileMatrix;
 import mil.nga.geopackage.tiles.user.TileDao;
+import mil.nga.sf.proj.Projection;
+import mil.nga.sf.proj.ProjectionConstants;
+import mil.nga.sf.proj.ProjectionTransform;
 
 /**
  * Reads a layer information from a geopackage file and puts the necessary
@@ -154,7 +154,7 @@ public class LayerImporter
         {
             ProjectionTransform layerToGeodetic = tileProjection
                     .getTransformation(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
-            box = layerToGeodetic.transform(box);
+            box = box.transform(layerToGeodetic);
         }
 
         GeographicBoundingBox boundingBox = new GeographicBoundingBox(
