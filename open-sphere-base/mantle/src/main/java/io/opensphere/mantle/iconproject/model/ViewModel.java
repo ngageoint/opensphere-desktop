@@ -1,17 +1,10 @@
 package io.opensphere.mantle.iconproject.model;
 
 import io.opensphere.mantle.iconproject.panels.MainPanel;
-import io.opensphere.mantle.iconproject.panels.TopMenuBar;
 
 /** The model of the UI Display Panels. */
 public class ViewModel
 {
-    /**
-     * The HBox containing the top UI bar components for icon resizing, display
-     * view, and icon resizing.
-     */
-    private TopMenuBar myTopMenuBar;
-
     /**
      * The SplitPane containing the Tree hierarchy, Add, Generate, and Customize
      * Icon components on the Left and the Icon Display Grid on the Right.
@@ -20,26 +13,6 @@ public class ViewModel
 
     /** The option to disable or enable the user to select multiple icons. */
     private boolean myMultiSelectEnabled;
-
-    /**
-     * Sets the top menu bar.
-     *
-     * @param topMenuBar the menu bar.
-     */
-    public void setTopMenuBar(TopMenuBar topMenuBar)
-    {
-        myTopMenuBar = topMenuBar;
-    }
-
-    /**
-     * Gets the top menu bar.
-     *
-     * @return the menu bar.
-     */
-    public TopMenuBar getTopMenuBar()
-    {
-        return myTopMenuBar;
-    }
 
     /**
      * Sets the main display panel.

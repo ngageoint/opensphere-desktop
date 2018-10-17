@@ -56,8 +56,8 @@ public class IconCustomizerPane extends BorderPane
     /** The Y value model. */
     private final DoubleProperty myYPosition = new SimpleDoubleProperty(0.);
 
-    /** The save state selection. */
-    private final BooleanProperty mySave = new SimpleBooleanProperty(false);
+    /** Whether or not to overwrite the icon being customized. */
+    private final BooleanProperty myOverwriteIcon = new SimpleBooleanProperty(false);
 
     /** The ColorPicker that determines the icon color. */
     private ColorPicker myColorPicker;
@@ -72,7 +72,7 @@ public class IconCustomizerPane extends BorderPane
     private final IconRecord myIconRecord;
 
     /** The purple HBox containing the displayed icon. */
-    private HBox myIconDisplay;
+    private final HBox myIconDisplay;
 
     /** The Color chosen for customized icon. */
     private Color myColor;
@@ -213,7 +213,7 @@ public class IconCustomizerPane extends BorderPane
 
         CheckBox saveState = new CheckBox();
         saveState.selectedProperty().set(false);
-        saveState.selectedProperty().bindBidirectional(mySave);
+        saveState.selectedProperty().bindBidirectional(myOverwriteIcon);
 
         saveInfo.getChildren().addAll(helpInfo, saveState);
         saveInfo.setSpacing(5);
@@ -240,7 +240,7 @@ public class IconCustomizerPane extends BorderPane
         iconDisplayer.setId("BoxStyle");
         
         myIconView = new ImageView(myIconRecord.getImageURL().toString());
-        myIconView.rotateProperty().bind(myRotation);
+        myIconView.rotateProperty().bindBidirectional(myRotation);
         myIconView.translateXProperty().bindBidirectional(myXPosition);
         myIconView.translateYProperty().bindBidirectional(myYPosition);
 
@@ -271,8 +271,8 @@ public class IconCustomizerPane extends BorderPane
             myIconView.setFitHeight(iconActual.getHeight());
         }
 
-        myIconView.scaleXProperty().bind(myScale);
-        myIconView.scaleYProperty().bind(myScale);
+        myIconView.scaleXProperty().bindBidirectional(myScale);
+        myIconView.scaleYProperty().bindBidirectional(myScale);
 
         iconDisplayer.getChildren().addAll(myIconView);
         return iconDisplayer;
@@ -298,7 +298,7 @@ public class IconCustomizerPane extends BorderPane
     }
 
     /**
-     * Retrieves the final processed image as a BufferedImage.
+     * Retrieves the final processed image as a WritableImage.
      *
      * @return the image to be saved.
      */
@@ -333,13 +333,13 @@ public class IconCustomizerPane extends BorderPane
     }
 
     /**
-     * Sends the Icon Record to be used elsewhere.
+     * Gets if the icon being customized should be overwritten by the new icon.
      *
-     * @return the currently modified icon.
+     * @return if the icon should be overwritten.
      */
-    public boolean getSaveState()
+    public boolean getOverwriteIcon()
     {
-        return mySave.get();
+        return myOverwriteIcon.get();
     }
 
     /**

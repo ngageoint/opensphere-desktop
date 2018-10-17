@@ -40,9 +40,9 @@ public class IconChooserDisplayerImpl implements IconChooserDisplayer
         EventQueueUtilities.runOnEDT(() ->
         {
             IconProjDialog fileDialog = new IconProjDialog(myParent.get(), toolbox, false, false);
-            fileDialog.getMyPanelModel().getSelectedRecord().addListener((o, v, n) ->
+            fileDialog.getPanelModel().getSelectedRecord().addListener((o, v, n) ->
             {
-                selectedIcon.set(fileDialog.getMyPanelModel().getSelectedRecord().get());
+                selectedIcon.set(fileDialog.getPanelModel().getSelectedRecord().get());
             });
             fileDialog.setVisible(true);
         });

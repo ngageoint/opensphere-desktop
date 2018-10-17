@@ -26,7 +26,7 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
     private final NameType myNameType;
 
     /** The TreeItem. */
-    private final ObjectProperty<TreeItem<String>> myItem = new SimpleObjectProperty<>();
+    private final TreeItem<String> myTreeItem;
 
     /** The Type. */
     private final Type myType;
@@ -35,8 +35,7 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
     private final String myParent;
 
     /** The Observable Selected Tree Node. */
-    @SuppressWarnings("rawtypes")
-    private ObjectProperty<TreeView> mySelectedTreeNode = new SimpleObjectProperty<>();
+    private ObjectProperty<TreeView<String>> mySelectedTreeProperty = new SimpleObjectProperty<>();
 
     /**
      * Creates the folder node.
@@ -87,16 +86,16 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
         myType = type;
         myNameType = nametype;
         myLabel = label;
-        myItem.set(item);
+        myTreeItem = item;
         myIconRecords = records;
         myParent = parent;
-        myItem.get().setValue((myLabel));
+        myTreeItem.setValue((myLabel));
     }
 
     @Override
-    public ObjectProperty<TreeItem<String>> getMyTreeItem()
+    public TreeItem<String> getTreeItem()
     {
-        return myItem;
+        return myTreeItem;
     }
 
     @Override
@@ -112,10 +111,10 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
     }
 
     @Override
-    public List<IconRecord> getRecords(boolean recurse)
+    public List<IconRecord> getRecords()
     {
-        List<IconRecord> subList = New.linkedList();
-        getChildrenRecords(subList, myItem.get(), recurse);
+        List<IconRecord> subList = New.list();
+        getChildrenRecords(subList, myTreeItem);
         return subList.isEmpty() ? Collections.<IconRecord>emptyList() : New.list(subList);
     }
 
@@ -142,27 +141,37 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
      *
      * @param addToList the add to list
      * @param item the TreeItem
-     * @param recurse the recurse
      */
-    private void getChildrenRecords(List<IconRecord> addToList, TreeItem<String> item, boolean recurse)
+    private void getChildrenRecords(List<IconRecord> addToList, TreeItem<String> item)
     {
-        if (item != null)
+        if (item != null && myType == Type.LEAF)
         {
-            if (myType == Type.LEAF)
-            {
-                addToList.addAll(myIconRecords);
-            }
+            addToList.addAll(myIconRecords);
         }
     }
 
     /**
-     * Gets the value of the {@link #mySelectedTreeNode} field.
+     * Gets the value of the {@link #mySelectedTreeProperty} field.
      *
-     * @return the value stored in the {@link #mySelectedTreeNode} field.
+     * @return the value stored in the {@link #mySelectedTreeProperty} field
      */
-    @SuppressWarnings("rawtypes")
-    public ObjectProperty<TreeView> getMyObsTree()
+	public TreeView<String> getSelectedTree()
     {
-        return mySelectedTreeNode;
+        return mySelectedTreeProperty.get();
+    }
+
+	/**
+	 * Sets the value of the {@link #mySelectedTreeProperty} field.
+	 *
+	 * @param selectedTree the value to be stored in the {@link #mySelectedTreeProperty} field
+	 */
+    public void setSelectedTree(TreeView<String> selectedTree)
+    {
+        mySelectedTreeProperty.set(selectedTree);
+    }
+
+    public ObjectProperty<TreeView<String>> selectedTreeProperty()
+    {
+        return mySelectedTreeProperty;
     }
 }

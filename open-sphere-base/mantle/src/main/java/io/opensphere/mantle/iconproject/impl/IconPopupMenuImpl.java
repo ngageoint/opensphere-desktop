@@ -17,10 +17,10 @@ import io.opensphere.mantle.iconproject.view.IconCustomizerDialog;
 public class IconPopupMenuImpl
 {
     /** The selected icon. */
-    private IconRecord mySelectedIcon;
+    private final IconRecord mySelectedIcon;
 
     /** The current UI model. */
-    private PanelModel myPanelModel;
+    private final PanelModel myPanelModel;
 
     /**
      * The constructor for IconPopupMenuImpl.

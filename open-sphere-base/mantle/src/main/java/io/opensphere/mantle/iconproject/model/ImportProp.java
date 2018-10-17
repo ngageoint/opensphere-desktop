@@ -1,64 +1,67 @@
 package io.opensphere.mantle.iconproject.model;
 
-import java.util.Set;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
- * This model is used to track the collection and subcollection choices the user
+ * This model is used to track the Collection and SubCollection choices the user
  * makes when importing icons from file or folder.
  */
 public class ImportProp
 {
     /** The Collection Name. */
-    private final StringProperty myCollectionName = new SimpleStringProperty("Default");
-
-    /** The SubCollection List. */
-    private Set<String> mySubCollectionList;
+    private StringProperty myCollectionProperty = new SimpleStringProperty("Default");
 
     /** The SubCollection Name. */
-    private final StringProperty mySubCollectionName = new SimpleStringProperty("");
+    private String mySubCollectionProperty = "";
 
     /**
-     * Gets the unique SubCollection chosen by the user during icon importation.
+     * Gets the unique SubCollection name.
      *
-     * @return the chosen SubCollection Name.
+     * @return the SubCollection Name.
      */
-    public StringProperty getSubCollectionName()
+    public String getSubCollectionName()
     {
-        return mySubCollectionName;
+        return mySubCollectionProperty;
     }
 
     /**
-     * Gets the list of SubCollection names.
+     * Sets the unique SubCollection name.
      *
-     * @return the List of SubCollection names that are
-     *         attached to {@link #myCollectionName}.
+     * @param name the SubCollection name
      */
-    public Set<String> getSubCollectionList()
+    public void setSubCollectionName(String name)
     {
-        return mySubCollectionList;
+        mySubCollectionProperty = name;
     }
 
     /**
-     * Sets the SubCollection Names that come from the parent.
-     * {@link #myCollectionName.}
+     * Gets the property containing the collection name.
      *
-     * @param the List containing the sub collection names
+     * @return the collection property
      */
-    public void setSubCollectionList(Set<String> subCollectionList)
+    public StringProperty collectionProperty()
     {
-        mySubCollectionList = subCollectionList;
+        return myCollectionProperty;
     }
 
     /**
-     * Returns one unique collection name, chosen or created by the User.
+     * Gets the unique Collection name.
      *
-     * @return the collection name
+     * @return the Collection name
      */
-    public StringProperty getCollectionName()
+    public String getCollectionName()
     {
-        return myCollectionName;
+        return myCollectionProperty.get();
+    }
+
+    /**
+     * Sets the unique Collection name.
+     *
+     * @param name the Collection name
+     */
+    public void setCollectionName(String name)
+    {
+        myCollectionProperty.set(name);
     }
 }

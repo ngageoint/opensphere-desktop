@@ -107,25 +107,25 @@ public class TreeBuilder extends TreeItem<String>
                     List<IconRecord> defaultRecList = iconRecordMap.get(defaultSubCategory);
                     myIconTreeObject = DefaultIconRecordTreeItemObject.createLeafNode(mainNode, collection, defaultRecList,
                             IconRecordTreeItemUserObject.NameType.COLLECTION, null);
-                    myRecordMap.put(collection, myIconTreeObject.getRecords(true));
+                    myRecordMap.put(collection, myIconTreeObject.getRecords());
                 }
                 else
                 {
                     myIconTreeObject = DefaultIconRecordTreeItemObject.createFolderNode(mainNode, collection,
                             IconRecordTreeItemUserObject.NameType.COLLECTION, null);
-                    myRecordMap.put(collection, myIconTreeObject.getRecords(true));
+                    myRecordMap.put(collection, myIconTreeObject.getRecords());
                 }
 
-                getChildren().add(myIconTreeObject.getMyTreeItem().get());
+                getChildren().add(myIconTreeObject.getTreeItem());
                 for (String subCategory : subCategoryList)
                 {
                     TreeItem<String> newNode = new TreeItem<>();
                     myIconTreeObject = DefaultIconRecordTreeItemObject.createLeafNode(newNode, subCategory, iconRecordMap.get(subCategory),
                             IconRecordTreeItemUserObject.NameType.SUBCATEGORY, collection);
-                    mainNode.getChildren().add(myIconTreeObject.getMyTreeItem().get());
-                    myRecordMap.put(subCategory, myIconTreeObject.getRecords(true));
+                    mainNode.getChildren().add(myIconTreeObject.getTreeItem());
+                    myRecordMap.put(subCategory, myIconTreeObject.getRecords());
                     ArrayList<IconRecord> iconRecords = new ArrayList<>(myRecordMap.get(collection));
-                    iconRecords.addAll(myIconTreeObject.getRecords(true));
+                    iconRecords.addAll(myIconTreeObject.getRecords());
                     myRecordMap.put(collection, iconRecords);
                 }
             }

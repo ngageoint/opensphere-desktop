@@ -34,8 +34,7 @@ public class TreePopupMenuImpl
             IconRecord iconRecord = myPanelModel.getIconRegistry().getIconRecordByIconId(i);
             if (!(iconRecord == null))
             {
-                @SuppressWarnings("unchecked")
-                TreeItem<String> collectionName = (TreeItem<String>)myPanelModel.getTreeObject().getMyObsTree().get().getSelectionModel()
+                TreeItem<String> collectionName = (TreeItem<String>)myPanelModel.getTreeObject().getSelectedTree().getSelectionModel()
                         .selectedItemProperty().get();
                 if (iconRecord.getCollectionName().equals(collectionName.getValue()))
                 {
@@ -47,7 +46,7 @@ public class TreePopupMenuImpl
                 }
             }
         }
-        myPanelModel.getTreeObject().getMyObsTree().get().getRoot().getChildren()
-                .remove(myPanelModel.getTreeObject().getMyObsTree().get().getSelectionModel().getSelectedItem());
+        myPanelModel.getTreeObject().getSelectedTree().getRoot().getChildren()
+                .remove(myPanelModel.getTreeObject().getSelectedTree().getSelectionModel().getSelectedItem());
     }
 }

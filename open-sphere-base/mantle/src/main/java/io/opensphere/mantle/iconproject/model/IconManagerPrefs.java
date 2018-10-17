@@ -14,8 +14,6 @@
  * this program. If not, see <http://www.gnu.org/licenses/>. */
 package io.opensphere.mantle.iconproject.model;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.TreeItem;
 
 /**
@@ -25,7 +23,7 @@ import javafx.scene.control.TreeItem;
 public class IconManagerPrefs
 {
     /** The value used for the icon width. */
-    private final IntegerProperty myIconWidth = new SimpleIntegerProperty();
+    private int myIconWidth = 0;
 
     /** The tree which will be selected on start up. */
     private TreeItem<String> myTreeSelection = new TreeItem<>("temp");
@@ -35,9 +33,14 @@ public class IconManagerPrefs
      *
      * @return the icon width.
      */
-    public IntegerProperty getIconWidth()
+    public int getIconWidth()
     {
         return myIconWidth;
+    }
+
+    public void setIconWidth(int width)
+    {
+        myIconWidth = width;
     }
 
     public TreeItem<String> getTreeSelection()
