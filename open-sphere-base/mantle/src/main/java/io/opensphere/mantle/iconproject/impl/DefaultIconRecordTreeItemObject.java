@@ -170,6 +170,11 @@ public final class DefaultIconRecordTreeItemObject implements IconRecordTreeItem
         mySelectedTreeProperty.set(selectedTree);
     }
 
+    /**
+     * Gets the {@link #mySelectedTreeProperty} field.
+     *
+     * @return the selected tree property
+     */
     public ObjectProperty<TreeView<String>> selectedTreeProperty()
     {
         return mySelectedTreeProperty;
