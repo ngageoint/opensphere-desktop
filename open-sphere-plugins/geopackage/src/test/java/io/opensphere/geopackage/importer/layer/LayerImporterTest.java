@@ -99,7 +99,7 @@ public class LayerImporterTest
         matrices.add(tileMatrix1);
         matrices.add(tileMatrix2);
 
-        BoundingBox boundingBox = new BoundingBox(10, 11, 10, 11);
+        BoundingBox boundingBox = new BoundingBox(10, 10, 11, 11);
 
         GeoPackage geoPackage = createPackage(support, matrices, boundingBox);
         List<DefaultCacheDeposit<GeoPackageLayer>> deposits = New.list();

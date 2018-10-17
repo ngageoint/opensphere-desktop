@@ -62,9 +62,9 @@ public final class GeoPackageCoordinateUtils
         if (!StringUtils.equals(String.valueOf(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM), projection.getCode()))
         {
             ProjectionTransform layerToGeo = projection.getTransformation(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
-			GeometryEnvelope envelope = layerToGeo.transform(new GeometryEnvelope(box.getMinLongitude(),
-					box.getMinLatitude(), box.getMaxLongitude(), box.getMaxLatitude()));
-			box = new BoundingBox(envelope);
+            GeometryEnvelope envelope = layerToGeo.transform(new GeometryEnvelope(box.getMinLongitude(), box.getMinLatitude(),
+                    box.getMaxLongitude(), box.getMaxLatitude()));
+            box = new BoundingBox(envelope);
             box = roundToNearest(box);
         }
 
@@ -84,11 +84,11 @@ public final class GeoPackageCoordinateUtils
      */
     public BoundingBox convertToWebMercator(GeographicBoundingBox boundingBox)
     {
-        BoundingBox box = new BoundingBox(boundingBox.getMinLonD(), boundingBox.getMaxLonD(), boundingBox.getMinLatD(),
+        BoundingBox box = new BoundingBox(boundingBox.getMinLonD(), boundingBox.getMinLatD(), boundingBox.getMaxLonD(),
                 boundingBox.getMaxLatD());
-		GeometryEnvelope envelope = myGeoToMercator.transform(new GeometryEnvelope(box.getMinLongitude(),
-				box.getMinLatitude(), box.getMaxLongitude(), box.getMaxLatitude()));
-		box = new BoundingBox(envelope);
+        GeometryEnvelope envelope = myGeoToMercator.transform(
+                new GeometryEnvelope(box.getMinLongitude(), box.getMinLatitude(), box.getMaxLongitude(), box.getMaxLatitude()));
+        box = new BoundingBox(envelope);
         return box;
     }
 
@@ -101,7 +101,7 @@ public final class GeoPackageCoordinateUtils
      */
     public BoundingBox getBoundingBox(GeographicBoundingBox boundingBox)
     {
-        return new BoundingBox(boundingBox.getMinLonD(), boundingBox.getMaxLonD(), boundingBox.getMinLatD(),
+        return new BoundingBox(boundingBox.getMinLonD(), boundingBox.getMinLatD(), boundingBox.getMaxLonD(),
                 boundingBox.getMaxLatD());
     }
 
@@ -135,6 +135,6 @@ public final class GeoPackageCoordinateUtils
         double roundedMinLon = MathUtil.roundDecimalPlace(box.getMinLongitude(), 10);
         double roundedMaxLon = MathUtil.roundDecimalPlace(box.getMaxLongitude(), 10);
 
-        return new BoundingBox(roundedMinLon, roundedMaxLon, roundedMinLat, roundedMaxLat);
+        return new BoundingBox(roundedMinLon, roundedMinLat, roundedMaxLon, roundedMaxLat);
     }
 }
