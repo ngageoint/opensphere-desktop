@@ -23,7 +23,7 @@ import io.opensphere.mantle.data.util.DataElementLookupUtils;
 import mil.nga.geopackage.BoundingBox;
 import mil.nga.geopackage.GeoPackage;
 import mil.nga.geopackage.features.columns.GeometryColumns;
-import mil.nga.geopackage.projection.ProjectionConstants;
+import mil.nga.sf.proj.ProjectionConstants;
 
 /**
  * Unit test for {@link FeatureExporter}.

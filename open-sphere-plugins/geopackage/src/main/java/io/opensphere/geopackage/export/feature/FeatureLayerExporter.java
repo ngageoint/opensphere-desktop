@@ -24,9 +24,9 @@ import mil.nga.geopackage.db.GeoPackageDataType;
 import mil.nga.geopackage.features.columns.GeometryColumns;
 import mil.nga.geopackage.features.user.FeatureColumn;
 import mil.nga.geopackage.features.user.FeatureDao;
-import mil.nga.geopackage.projection.ProjectionConstants;
 import mil.nga.geopackage.schema.TableColumnKey;
-import mil.nga.wkb.geom.GeometryType;
+import mil.nga.sf.GeometryType;
+import mil.nga.sf.proj.ProjectionConstants;
 
 /**
  * Takes a {@link DataTypeInfo} and exports its features to a geopackage table.

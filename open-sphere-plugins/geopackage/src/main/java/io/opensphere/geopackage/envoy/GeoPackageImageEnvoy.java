@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.api.adapter.AbstractEnvoy;

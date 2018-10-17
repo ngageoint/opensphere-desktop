@@ -14,11 +14,11 @@ import io.opensphere.geopackage.model.GeoPackageColumns;
 import mil.nga.geopackage.features.user.FeatureColumn;
 import mil.nga.geopackage.features.user.FeatureTable;
 import mil.nga.geopackage.features.user.MockFeatureRow;
-import mil.nga.geopackage.projection.Projection;
-import mil.nga.geopackage.projection.ProjectionConstants;
-import mil.nga.geopackage.projection.ProjectionFactory;
-import mil.nga.geopackage.projection.ProjectionTransform;
-import mil.nga.wkb.geom.GeometryType;
+import mil.nga.sf.proj.Projection;
+import mil.nga.sf.proj.ProjectionConstants;
+import mil.nga.sf.proj.ProjectionFactory;
+import mil.nga.sf.proj.ProjectionTransform;
+import mil.nga.sf.GeometryType;
 
 /**
  * Unit test for {@link RowImporter}.
@@ -42,7 +42,7 @@ public class RowImporterTest
 
         FeatureTable table = new FeatureTable("test", New.list(FeatureColumn.createPrimaryKeyColumn(0, "key"),
                 FeatureColumn.createGeometryColumn(1, "geom", GeometryType.POINT, false, null)));
-        mil.nga.wkb.geom.Point location = new mil.nga.wkb.geom.Point(5, 6);
+        mil.nga.sf.Point location = new mil.nga.sf.Point(5, 6);
         MockFeatureRow row = new MockFeatureRow(table, location, tableData);
         RowImporter importer = new RowImporter();
         Map<String, Serializable> importedRow = importer.importRow(row, toGeodetic);

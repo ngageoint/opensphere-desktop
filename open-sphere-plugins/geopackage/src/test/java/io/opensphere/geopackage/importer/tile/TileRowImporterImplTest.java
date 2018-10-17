@@ -35,14 +35,15 @@ import mil.nga.geopackage.BoundingBox;
 import mil.nga.geopackage.core.contents.Contents;
 import mil.nga.geopackage.core.contents.ContentsDataType;
 import mil.nga.geopackage.core.srs.SpatialReferenceSystem;
-import mil.nga.geopackage.projection.Projection;
-import mil.nga.geopackage.projection.ProjectionConstants;
-import mil.nga.geopackage.projection.ProjectionFactory;
-import mil.nga.geopackage.projection.ProjectionTransform;
 import mil.nga.geopackage.tiles.matrix.TileMatrix;
 import mil.nga.geopackage.tiles.matrixset.TileMatrixSet;
 import mil.nga.geopackage.tiles.user.TileDao;
 import mil.nga.geopackage.tiles.user.TileRow;
+import mil.nga.sf.GeometryEnvelope;
+import mil.nga.sf.proj.Projection;
+import mil.nga.sf.proj.ProjectionConstants;
+import mil.nga.sf.proj.ProjectionFactory;
+import mil.nga.sf.proj.ProjectionTransform;
 
 /**
  * Unit test for the {@link TileRowImporterImpl} class.
@@ -202,13 +203,13 @@ public class TileRowImporterImplTest
      */
     private BoundingBox createBoundBox()
     {
-        BoundingBox boundingBox = new BoundingBox(10, 11, 10, 11);
+        GeometryEnvelope boundingBox = new GeometryEnvelope(10, 11, 10, 11);
 
         Projection geodetic = ProjectionFactory.getProjection(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
         ProjectionTransform transform = geodetic.getTransformation(ProjectionConstants.EPSG_WEB_MERCATOR);
         boundingBox = transform.transform(boundingBox);
 
-        return boundingBox;
+        return new BoundingBox(boundingBox);
     }
 
     /**

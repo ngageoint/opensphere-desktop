@@ -23,11 +23,11 @@ import mil.nga.geopackage.GeoPackage;
 import mil.nga.geopackage.core.contents.Contents;
 import mil.nga.geopackage.core.contents.ContentsDataType;
 import mil.nga.geopackage.core.srs.SpatialReferenceSystem;
-import mil.nga.geopackage.projection.ProjectionConstants;
 import mil.nga.geopackage.tiles.matrix.TileMatrix;
 import mil.nga.geopackage.tiles.matrixset.TileMatrixSet;
 import mil.nga.geopackage.tiles.user.TileDao;
 import mil.nga.geopackage.tiles.user.TileRow;
+import mil.nga.sf.proj.ProjectionConstants;
 
 /**
  * Unit test for {@link TileImporter} class.

@@ -13,7 +13,7 @@ import mil.nga.geopackage.features.user.FeatureResultSet;
 import mil.nga.geopackage.features.user.FeatureRow;
 import mil.nga.geopackage.features.user.FeatureTable;
 import mil.nga.geopackage.features.user.MockFeatureRow;
-import mil.nga.wkb.geom.GeometryType;
+import mil.nga.sf.GeometryType;
 
 /**
  * Used for tests.

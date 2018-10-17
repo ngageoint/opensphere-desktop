@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 
-import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang.ArrayUtils;
 
 import io.opensphere.core.geometry.AbstractTileGeometry;
 import io.opensphere.core.geometry.GeometryRegistry;

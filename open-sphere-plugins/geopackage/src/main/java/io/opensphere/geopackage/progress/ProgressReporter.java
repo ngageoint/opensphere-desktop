@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import io.opensphere.core.util.taskactivity.CancellableTaskActivity;
 import io.opensphere.geopackage.model.GeoPackageLayer;

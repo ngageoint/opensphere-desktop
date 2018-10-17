@@ -10,8 +10,8 @@ import io.opensphere.geopackage.model.ProgressModel;
 import mil.nga.geopackage.features.user.FeatureDao;
 import mil.nga.geopackage.features.user.FeatureResultSet;
 import mil.nga.geopackage.features.user.FeatureRow;
-import mil.nga.geopackage.projection.ProjectionConstants;
-import mil.nga.geopackage.projection.ProjectionTransform;
+import mil.nga.sf.proj.ProjectionConstants;
+import mil.nga.sf.proj.ProjectionTransform;
 
 /**
  * Imports a whole geopackage table into a list of columns mapped to their

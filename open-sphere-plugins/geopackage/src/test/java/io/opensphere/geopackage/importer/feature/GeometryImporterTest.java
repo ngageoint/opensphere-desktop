@@ -24,13 +24,13 @@ import io.opensphere.geopackage.model.GeoPackageColumns;
 import mil.nga.geopackage.features.user.FeatureColumn;
 import mil.nga.geopackage.features.user.FeatureTable;
 import mil.nga.geopackage.features.user.MockFeatureRow;
-import mil.nga.geopackage.projection.Projection;
-import mil.nga.geopackage.projection.ProjectionConstants;
-import mil.nga.geopackage.projection.ProjectionFactory;
-import mil.nga.geopackage.projection.ProjectionTransform;
-import mil.nga.wkb.geom.CircularString;
-import mil.nga.wkb.geom.CompoundCurve;
-import mil.nga.wkb.geom.GeometryType;
+import mil.nga.sf.proj.Projection;
+import mil.nga.sf.proj.ProjectionConstants;
+import mil.nga.sf.proj.ProjectionFactory;
+import mil.nga.sf.proj.ProjectionTransform;
+import mil.nga.sf.CircularString;
+import mil.nga.sf.CompoundCurve;
+import mil.nga.sf.GeometryType;
 
 /**
  * Tests the {@link GeometryImporter} class.
@@ -65,13 +65,13 @@ public class GeometryImporterTest
         ProjectionTransform toGeodetic = webMercator.getTransformation(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
 
         CircularString geometry = new CircularString(true, false);
-        mil.nga.wkb.geom.Point point1 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 0));
+        mil.nga.sf.Point point1 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 0));
         point1.setZ(0d);
-        mil.nga.wkb.geom.Point point2 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 0));
+        mil.nga.sf.Point point2 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 0));
         point2.setZ(5d);
-        mil.nga.wkb.geom.Point point3 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 10));
+        mil.nga.sf.Point point3 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 10));
         point3.setZ(10d);
-        mil.nga.wkb.geom.Point point4 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 10));
+        mil.nga.sf.Point point4 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 10));
         point4.setZ(15d);
 
         geometry.addPoint(point1);
@@ -126,20 +126,20 @@ public class GeometryImporterTest
         ProjectionTransform toGeodetic = webMercator.getTransformation(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
 
         CompoundCurve geometry = new CompoundCurve(true, false);
-        mil.nga.wkb.geom.Point point1 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 0));
+        mil.nga.sf.Point point1 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 0));
         point1.setZ(0d);
-        mil.nga.wkb.geom.Point point2 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 0));
+        mil.nga.sf.Point point2 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 0));
         point2.setZ(5d);
-        mil.nga.wkb.geom.Point point3 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 10));
+        mil.nga.sf.Point point3 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 10));
         point3.setZ(10d);
-        mil.nga.wkb.geom.Point point4 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 10));
+        mil.nga.sf.Point point4 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 10));
         point4.setZ(15d);
 
-        mil.nga.wkb.geom.LineString lineString1 = new mil.nga.wkb.geom.LineString(true, false);
+        mil.nga.sf.LineString lineString1 = new mil.nga.sf.LineString(true, false);
         lineString1.addPoint(point1);
         lineString1.addPoint(point2);
 
-        mil.nga.wkb.geom.LineString lineString2 = new mil.nga.wkb.geom.LineString(true, false);
+        mil.nga.sf.LineString lineString2 = new mil.nga.sf.LineString(true, false);
         lineString2.addPoint(point3);
         lineString2.addPoint(point4);
 
@@ -192,17 +192,17 @@ public class GeometryImporterTest
                 .getTransformation(ProjectionConstants.EPSG_WEB_MERCATOR);
         ProjectionTransform toGeodetic = webMercator.getTransformation(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
 
-        mil.nga.wkb.geom.Polygon polygon = new mil.nga.wkb.geom.Polygon(true, false);
-        mil.nga.wkb.geom.Point point1 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 0));
+        mil.nga.sf.Polygon polygon = new mil.nga.sf.Polygon(true, false);
+        mil.nga.sf.Point point1 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 0));
         point1.setZ(0d);
-        mil.nga.wkb.geom.Point point2 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 0));
+        mil.nga.sf.Point point2 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 0));
         point2.setZ(5d);
-        mil.nga.wkb.geom.Point point3 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 10));
+        mil.nga.sf.Point point3 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 10));
         point3.setZ(10d);
-        mil.nga.wkb.geom.Point point4 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 10));
+        mil.nga.sf.Point point4 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 10));
         point4.setZ(15d);
 
-        mil.nga.wkb.geom.LineString lineString = new mil.nga.wkb.geom.LineString(true, false);
+        mil.nga.sf.LineString lineString = new mil.nga.sf.LineString(true, false);
         lineString.addPoint(point1);
         lineString.addPoint(point2);
         lineString.addPoint(point3);
@@ -210,10 +210,10 @@ public class GeometryImporterTest
         lineString.addPoint(point1);
         polygon.addRing(lineString);
 
-        mil.nga.wkb.geom.Point point = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 10));
+        mil.nga.sf.Point point = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 10));
         point.setZ(10d);
 
-        mil.nga.wkb.geom.GeometryCollection<mil.nga.wkb.geom.Geometry> geometryCollection = new mil.nga.wkb.geom.GeometryCollection<>(
+        mil.nga.sf.GeometryCollection<mil.nga.sf.Geometry> geometryCollection = new mil.nga.sf.GeometryCollection<>(
                 true, false);
         geometryCollection.addGeometry(polygon);
         geometryCollection.addGeometry(point);
@@ -276,17 +276,17 @@ public class GeometryImporterTest
                 .getTransformation(ProjectionConstants.EPSG_WEB_MERCATOR);
         ProjectionTransform toGeodetic = webMercator.getTransformation(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
 
-        mil.nga.wkb.geom.Polygon polygon = new mil.nga.wkb.geom.Polygon(true, false);
-        mil.nga.wkb.geom.Point point1 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 0));
+        mil.nga.sf.Polygon polygon = new mil.nga.sf.Polygon(true, false);
+        mil.nga.sf.Point point1 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 0));
         point1.setZ(0d);
-        mil.nga.wkb.geom.Point point2 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 0));
+        mil.nga.sf.Point point2 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 0));
         point2.setZ(5d);
-        mil.nga.wkb.geom.Point point3 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 10));
+        mil.nga.sf.Point point3 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 10));
         point3.setZ(10d);
-        mil.nga.wkb.geom.Point point4 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 10));
+        mil.nga.sf.Point point4 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 10));
         point4.setZ(15d);
 
-        mil.nga.wkb.geom.LineString lineString1 = new mil.nga.wkb.geom.LineString(true, false);
+        mil.nga.sf.LineString lineString1 = new mil.nga.sf.LineString(true, false);
         lineString1.addPoint(point1);
         lineString1.addPoint(point2);
         lineString1.addPoint(point3);
@@ -294,16 +294,16 @@ public class GeometryImporterTest
         lineString1.addPoint(point1);
         polygon.addRing(lineString1);
 
-        mil.nga.wkb.geom.Point point5 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 1, 1));
+        mil.nga.sf.Point point5 = toMercator.transform(new mil.nga.sf.Point(true, false, 1, 1));
         point5.setZ(0d);
-        mil.nga.wkb.geom.Point point6 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 9, 1));
+        mil.nga.sf.Point point6 = toMercator.transform(new mil.nga.sf.Point(true, false, 9, 1));
         point6.setZ(5d);
-        mil.nga.wkb.geom.Point point7 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 9, 9));
+        mil.nga.sf.Point point7 = toMercator.transform(new mil.nga.sf.Point(true, false, 9, 9));
         point7.setZ(10d);
-        mil.nga.wkb.geom.Point point8 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 1, 9));
+        mil.nga.sf.Point point8 = toMercator.transform(new mil.nga.sf.Point(true, false, 1, 9));
         point8.setZ(15d);
 
-        mil.nga.wkb.geom.LineString lineString2 = new mil.nga.wkb.geom.LineString(true, false);
+        mil.nga.sf.LineString lineString2 = new mil.nga.sf.LineString(true, false);
         lineString2.addPoint(point5);
         lineString2.addPoint(point6);
         lineString2.addPoint(point7);
@@ -381,16 +381,16 @@ public class GeometryImporterTest
                 .getTransformation(ProjectionConstants.EPSG_WEB_MERCATOR);
         ProjectionTransform toGeodetic = webMercator.getTransformation(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
 
-        mil.nga.wkb.geom.Point point1 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 0));
+        mil.nga.sf.Point point1 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 0));
         point1.setZ(0d);
-        mil.nga.wkb.geom.Point point2 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 0));
+        mil.nga.sf.Point point2 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 0));
         point2.setZ(5d);
-        mil.nga.wkb.geom.Point point3 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 10));
+        mil.nga.sf.Point point3 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 10));
         point3.setZ(10d);
-        mil.nga.wkb.geom.Point point4 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 10));
+        mil.nga.sf.Point point4 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 10));
         point4.setZ(15d);
 
-        mil.nga.wkb.geom.LineString lineString = new mil.nga.wkb.geom.LineString(true, false);
+        mil.nga.sf.LineString lineString = new mil.nga.sf.LineString(true, false);
         lineString.addPoint(point1);
         lineString.addPoint(point2);
         lineString.addPoint(point3);
@@ -442,21 +442,21 @@ public class GeometryImporterTest
                 .getTransformation(ProjectionConstants.EPSG_WEB_MERCATOR);
         ProjectionTransform toGeodetic = webMercator.getTransformation(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
 
-        mil.nga.wkb.geom.MultiLineString geometry = new mil.nga.wkb.geom.MultiLineString(true, false);
-        mil.nga.wkb.geom.Point point1 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 0));
+        mil.nga.sf.MultiLineString geometry = new mil.nga.sf.MultiLineString(true, false);
+        mil.nga.sf.Point point1 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 0));
         point1.setZ(0d);
-        mil.nga.wkb.geom.Point point2 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 0));
+        mil.nga.sf.Point point2 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 0));
         point2.setZ(5d);
-        mil.nga.wkb.geom.Point point3 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 10));
+        mil.nga.sf.Point point3 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 10));
         point3.setZ(10d);
-        mil.nga.wkb.geom.Point point4 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 10));
+        mil.nga.sf.Point point4 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 10));
         point4.setZ(15d);
 
-        mil.nga.wkb.geom.LineString lineString1 = new mil.nga.wkb.geom.LineString(true, false);
+        mil.nga.sf.LineString lineString1 = new mil.nga.sf.LineString(true, false);
         lineString1.addPoint(point1);
         lineString1.addPoint(point2);
 
-        mil.nga.wkb.geom.LineString lineString2 = new mil.nga.wkb.geom.LineString(true, false);
+        mil.nga.sf.LineString lineString2 = new mil.nga.sf.LineString(true, false);
         lineString2.addPoint(point3);
         lineString2.addPoint(point4);
 
@@ -509,16 +509,16 @@ public class GeometryImporterTest
                 .getTransformation(ProjectionConstants.EPSG_WEB_MERCATOR);
         ProjectionTransform toGeodetic = webMercator.getTransformation(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
 
-        mil.nga.wkb.geom.Point point1 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 0));
+        mil.nga.sf.Point point1 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 0));
         point1.setZ(0d);
-        mil.nga.wkb.geom.Point point2 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 0));
+        mil.nga.sf.Point point2 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 0));
         point2.setZ(5d);
-        mil.nga.wkb.geom.Point point3 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 10));
+        mil.nga.sf.Point point3 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 10));
         point3.setZ(10d);
-        mil.nga.wkb.geom.Point point4 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 10));
+        mil.nga.sf.Point point4 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 10));
         point4.setZ(15d);
 
-        mil.nga.wkb.geom.MultiPoint multiPoint = new mil.nga.wkb.geom.MultiPoint(true, false);
+        mil.nga.sf.MultiPoint multiPoint = new mil.nga.sf.MultiPoint(true, false);
         multiPoint.addPoint(point1);
         multiPoint.addPoint(point2);
         multiPoint.addPoint(point3);
@@ -570,18 +570,18 @@ public class GeometryImporterTest
                 .getTransformation(ProjectionConstants.EPSG_WEB_MERCATOR);
         ProjectionTransform toGeodetic = webMercator.getTransformation(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
 
-        mil.nga.wkb.geom.MultiPolygon geometry = new mil.nga.wkb.geom.MultiPolygon(true, false);
-        mil.nga.wkb.geom.Polygon polygon1 = new mil.nga.wkb.geom.Polygon(true, false);
-        mil.nga.wkb.geom.Point point1 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 0));
+        mil.nga.sf.MultiPolygon geometry = new mil.nga.sf.MultiPolygon(true, false);
+        mil.nga.sf.Polygon polygon1 = new mil.nga.sf.Polygon(true, false);
+        mil.nga.sf.Point point1 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 0));
         point1.setZ(0d);
-        mil.nga.wkb.geom.Point point2 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 0));
+        mil.nga.sf.Point point2 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 0));
         point2.setZ(5d);
-        mil.nga.wkb.geom.Point point3 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 10));
+        mil.nga.sf.Point point3 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 10));
         point3.setZ(10d);
-        mil.nga.wkb.geom.Point point4 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 10));
+        mil.nga.sf.Point point4 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 10));
         point4.setZ(15d);
 
-        mil.nga.wkb.geom.LineString lineString1 = new mil.nga.wkb.geom.LineString(true, false);
+        mil.nga.sf.LineString lineString1 = new mil.nga.sf.LineString(true, false);
         lineString1.addPoint(point1);
         lineString1.addPoint(point2);
         lineString1.addPoint(point3);
@@ -589,13 +589,13 @@ public class GeometryImporterTest
         lineString1.addPoint(point1);
         polygon1.addRing(lineString1);
 
-        mil.nga.wkb.geom.Polygon polygon2 = new mil.nga.wkb.geom.Polygon(true, false);
-        mil.nga.wkb.geom.Point point5 = toMercator.transform(new mil.nga.wkb.geom.Point(false, false, 0, 0));
-        mil.nga.wkb.geom.Point point6 = toMercator.transform(new mil.nga.wkb.geom.Point(false, false, -10, 0));
-        mil.nga.wkb.geom.Point point7 = toMercator.transform(new mil.nga.wkb.geom.Point(false, false, -10, 10));
-        mil.nga.wkb.geom.Point point8 = toMercator.transform(new mil.nga.wkb.geom.Point(false, false, 0, 10));
+        mil.nga.sf.Polygon polygon2 = new mil.nga.sf.Polygon(true, false);
+        mil.nga.sf.Point point5 = toMercator.transform(new mil.nga.sf.Point(false, false, 0, 0));
+        mil.nga.sf.Point point6 = toMercator.transform(new mil.nga.sf.Point(false, false, -10, 0));
+        mil.nga.sf.Point point7 = toMercator.transform(new mil.nga.sf.Point(false, false, -10, 10));
+        mil.nga.sf.Point point8 = toMercator.transform(new mil.nga.sf.Point(false, false, 0, 10));
 
-        mil.nga.wkb.geom.LineString lineString2 = new mil.nga.wkb.geom.LineString(true, false);
+        mil.nga.sf.LineString lineString2 = new mil.nga.sf.LineString(true, false);
         lineString2.addPoint(point5);
         lineString2.addPoint(point6);
         lineString2.addPoint(point7);
@@ -696,7 +696,7 @@ public class GeometryImporterTest
                 .getTransformation(ProjectionConstants.EPSG_WEB_MERCATOR);
         ProjectionTransform toGeodetic = webMercator.getTransformation(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
 
-        mil.nga.wkb.geom.Point point = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 10));
+        mil.nga.sf.Point point = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 10));
         point.setZ(10d);
 
         FeatureTable table = new FeatureTable(ourTableName, New.list(FeatureColumn.createPrimaryKeyColumn(0, ourKeyColumn),
@@ -729,7 +729,7 @@ public class GeometryImporterTest
                 .getTransformation(ProjectionConstants.EPSG_WEB_MERCATOR);
         ProjectionTransform toGeodetic = webMercator.getTransformation(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
 
-        mil.nga.wkb.geom.Point point = toMercator.transform(new mil.nga.wkb.geom.Point(false, false, 10, 10));
+        mil.nga.sf.Point point = toMercator.transform(new mil.nga.sf.Point(false, false, 10, 10));
 
         FeatureTable table = new FeatureTable(ourTableName, New.list(FeatureColumn.createPrimaryKeyColumn(0, ourKeyColumn),
                 FeatureColumn.createGeometryColumn(1, ourGeometryColumn, GeometryType.POINT, false, null)));
@@ -761,17 +761,17 @@ public class GeometryImporterTest
                 .getTransformation(ProjectionConstants.EPSG_WEB_MERCATOR);
         ProjectionTransform toGeodetic = webMercator.getTransformation(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
 
-        mil.nga.wkb.geom.Polygon polygon = new mil.nga.wkb.geom.Polygon(true, false);
-        mil.nga.wkb.geom.Point point1 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 0));
+        mil.nga.sf.Polygon polygon = new mil.nga.sf.Polygon(true, false);
+        mil.nga.sf.Point point1 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 0));
         point1.setZ(0d);
-        mil.nga.wkb.geom.Point point2 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 0));
+        mil.nga.sf.Point point2 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 0));
         point2.setZ(5d);
-        mil.nga.wkb.geom.Point point3 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 10));
+        mil.nga.sf.Point point3 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 10));
         point3.setZ(10d);
-        mil.nga.wkb.geom.Point point4 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 10));
+        mil.nga.sf.Point point4 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 10));
         point4.setZ(15d);
 
-        mil.nga.wkb.geom.LineString lineString = new mil.nga.wkb.geom.LineString(true, false);
+        mil.nga.sf.LineString lineString = new mil.nga.sf.LineString(true, false);
         lineString.addPoint(point1);
         lineString.addPoint(point2);
         lineString.addPoint(point3);
@@ -829,18 +829,18 @@ public class GeometryImporterTest
                 .getTransformation(ProjectionConstants.EPSG_WEB_MERCATOR);
         ProjectionTransform toGeodetic = webMercator.getTransformation(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
 
-        mil.nga.wkb.geom.PolyhedralSurface geometry = new mil.nga.wkb.geom.PolyhedralSurface(true, false);
-        mil.nga.wkb.geom.Polygon polygon1 = new mil.nga.wkb.geom.Polygon(true, false);
-        mil.nga.wkb.geom.Point point1 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 0));
+        mil.nga.sf.PolyhedralSurface geometry = new mil.nga.sf.PolyhedralSurface(true, false);
+        mil.nga.sf.Polygon polygon1 = new mil.nga.sf.Polygon(true, false);
+        mil.nga.sf.Point point1 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 0));
         point1.setZ(0d);
-        mil.nga.wkb.geom.Point point2 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 0));
+        mil.nga.sf.Point point2 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 0));
         point2.setZ(5d);
-        mil.nga.wkb.geom.Point point3 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 10));
+        mil.nga.sf.Point point3 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 10));
         point3.setZ(10d);
-        mil.nga.wkb.geom.Point point4 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 10));
+        mil.nga.sf.Point point4 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 10));
         point4.setZ(15d);
 
-        mil.nga.wkb.geom.LineString lineString1 = new mil.nga.wkb.geom.LineString(true, false);
+        mil.nga.sf.LineString lineString1 = new mil.nga.sf.LineString(true, false);
         lineString1.addPoint(point1);
         lineString1.addPoint(point2);
         lineString1.addPoint(point3);
@@ -848,17 +848,17 @@ public class GeometryImporterTest
         lineString1.addPoint(point1);
         polygon1.addRing(lineString1);
 
-        mil.nga.wkb.geom.Polygon polygon2 = new mil.nga.wkb.geom.Polygon(true, false);
-        mil.nga.wkb.geom.Point point5 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 0));
+        mil.nga.sf.Polygon polygon2 = new mil.nga.sf.Polygon(true, false);
+        mil.nga.sf.Point point5 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 0));
         point5.setZ(0d);
-        mil.nga.wkb.geom.Point point6 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, -10, 0));
+        mil.nga.sf.Point point6 = toMercator.transform(new mil.nga.sf.Point(true, false, -10, 0));
         point6.setZ(5d);
-        mil.nga.wkb.geom.Point point7 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, -10, 10));
+        mil.nga.sf.Point point7 = toMercator.transform(new mil.nga.sf.Point(true, false, -10, 10));
         point7.setZ(10d);
-        mil.nga.wkb.geom.Point point8 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 10));
+        mil.nga.sf.Point point8 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 10));
         point8.setZ(15d);
 
-        mil.nga.wkb.geom.LineString lineString2 = new mil.nga.wkb.geom.LineString(true, false);
+        mil.nga.sf.LineString lineString2 = new mil.nga.sf.LineString(true, false);
         lineString2.addPoint(point5);
         lineString2.addPoint(point6);
         lineString2.addPoint(point7);
@@ -939,18 +939,18 @@ public class GeometryImporterTest
                 .getTransformation(ProjectionConstants.EPSG_WEB_MERCATOR);
         ProjectionTransform toGeodetic = webMercator.getTransformation(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
 
-        mil.nga.wkb.geom.TIN geometry = new mil.nga.wkb.geom.TIN(true, false);
-        mil.nga.wkb.geom.Polygon polygon1 = new mil.nga.wkb.geom.Polygon(true, false);
-        mil.nga.wkb.geom.Point point1 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 0));
+        mil.nga.sf.TIN geometry = new mil.nga.sf.TIN(true, false);
+        mil.nga.sf.Polygon polygon1 = new mil.nga.sf.Polygon(true, false);
+        mil.nga.sf.Point point1 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 0));
         point1.setZ(0d);
-        mil.nga.wkb.geom.Point point2 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 0));
+        mil.nga.sf.Point point2 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 0));
         point2.setZ(5d);
-        mil.nga.wkb.geom.Point point3 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 10));
+        mil.nga.sf.Point point3 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 10));
         point3.setZ(10d);
-        mil.nga.wkb.geom.Point point4 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 10));
+        mil.nga.sf.Point point4 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 10));
         point4.setZ(15d);
 
-        mil.nga.wkb.geom.LineString lineString1 = new mil.nga.wkb.geom.LineString(true, false);
+        mil.nga.sf.LineString lineString1 = new mil.nga.sf.LineString(true, false);
         lineString1.addPoint(point1);
         lineString1.addPoint(point2);
         lineString1.addPoint(point3);
@@ -958,17 +958,17 @@ public class GeometryImporterTest
         lineString1.addPoint(point1);
         polygon1.addRing(lineString1);
 
-        mil.nga.wkb.geom.Polygon polygon2 = new mil.nga.wkb.geom.Polygon(true, false);
-        mil.nga.wkb.geom.Point point5 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 0));
+        mil.nga.sf.Polygon polygon2 = new mil.nga.sf.Polygon(true, false);
+        mil.nga.sf.Point point5 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 0));
         point5.setZ(0d);
-        mil.nga.wkb.geom.Point point6 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, -10, 0));
+        mil.nga.sf.Point point6 = toMercator.transform(new mil.nga.sf.Point(true, false, -10, 0));
         point6.setZ(5d);
-        mil.nga.wkb.geom.Point point7 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, -10, 10));
+        mil.nga.sf.Point point7 = toMercator.transform(new mil.nga.sf.Point(true, false, -10, 10));
         point7.setZ(10d);
-        mil.nga.wkb.geom.Point point8 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 10));
+        mil.nga.sf.Point point8 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 10));
         point8.setZ(15d);
 
-        mil.nga.wkb.geom.LineString lineString2 = new mil.nga.wkb.geom.LineString(true, false);
+        mil.nga.sf.LineString lineString2 = new mil.nga.sf.LineString(true, false);
         lineString2.addPoint(point5);
         lineString2.addPoint(point6);
         lineString2.addPoint(point7);
@@ -1049,17 +1049,17 @@ public class GeometryImporterTest
                 .getTransformation(ProjectionConstants.EPSG_WEB_MERCATOR);
         ProjectionTransform toGeodetic = webMercator.getTransformation(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
 
-        mil.nga.wkb.geom.Triangle polygon = new mil.nga.wkb.geom.Triangle(true, false);
-        mil.nga.wkb.geom.Point point1 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 0));
+        mil.nga.sf.Triangle polygon = new mil.nga.sf.Triangle(true, false);
+        mil.nga.sf.Point point1 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 0));
         point1.setZ(0d);
-        mil.nga.wkb.geom.Point point2 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 0));
+        mil.nga.sf.Point point2 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 0));
         point2.setZ(5d);
-        mil.nga.wkb.geom.Point point3 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 10, 10));
+        mil.nga.sf.Point point3 = toMercator.transform(new mil.nga.sf.Point(true, false, 10, 10));
         point3.setZ(10d);
-        mil.nga.wkb.geom.Point point4 = toMercator.transform(new mil.nga.wkb.geom.Point(true, false, 0, 10));
+        mil.nga.sf.Point point4 = toMercator.transform(new mil.nga.sf.Point(true, false, 0, 10));
         point4.setZ(15d);
 
-        mil.nga.wkb.geom.LineString lineString = new mil.nga.wkb.geom.LineString(true, false);
+        mil.nga.sf.LineString lineString = new mil.nga.sf.LineString(true, false);
         lineString.addPoint(point1);
         lineString.addPoint(point2);
         lineString.addPoint(point3);

@@ -25,8 +25,8 @@ import mil.nga.geopackage.features.columns.GeometryColumns;
 import mil.nga.geopackage.features.user.FeatureColumn;
 import mil.nga.geopackage.features.user.FeatureTable;
 import mil.nga.geopackage.features.user.MockFeatureRow;
-import mil.nga.geopackage.projection.ProjectionConstants;
-import mil.nga.wkb.geom.GeometryType;
+import mil.nga.sf.GeometryType;
+import mil.nga.sf.proj.ProjectionConstants;
 
 /**
  * Unit test for the {@link TableImporter} class.
@@ -133,7 +133,7 @@ public class TableImporterTest
             tableData.put("column2", 10 + i);
             tableData.put("column3", 54.3 + i);
 
-            mil.nga.wkb.geom.Point location = new mil.nga.wkb.geom.Point(5 + i, 6 + i);
+            mil.nga.sf.Point location = new mil.nga.sf.Point(5 + i, 6 + i);
             MockFeatureRow row = new MockFeatureRow(table, location, tableData);
             rows.add(row);
         }
