@@ -152,6 +152,7 @@ public class IconBuilderPane extends BorderPane
         spinner.setPrefWidth(mySpinerWidth);
         spinner.getValueFactory().valueProperty().bindBidirectional(myRotation);
         spinner.setEditable(true);
+        spinner.getStyleClass().clear();
 
         Label rotLabel = new Label("Rotation: ", spinner);
         rotLabel.setContentDisplay(ContentDisplay.BOTTOM);

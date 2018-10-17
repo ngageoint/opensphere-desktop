@@ -2,7 +2,6 @@ package io.opensphere.mantle.iconproject.model;
 
 import java.util.List;
 
-import javafx.beans.property.ObjectProperty;
 import javafx.scene.control.TreeItem;
 
 import io.opensphere.mantle.icon.IconRecord;
@@ -17,7 +16,7 @@ public interface IconRecordTreeItemUserObject
      *
      * @return the treeItem
      */
-    ObjectProperty<TreeItem<String>> getMyTreeItem();
+    TreeItem<String> getTreeItem();
 
     /**
      * Gets the label.
@@ -36,10 +35,9 @@ public interface IconRecordTreeItemUserObject
     /**
      * Gets icon records for this node.
      *
-     * @param recurse whether to get all children including children folders.
      * @return the child {@link IconRecord}s.
      */
-    List<IconRecord> getRecords(boolean recurse);
+    List<IconRecord> getRecords();
 
     /**
      * Gets the type.

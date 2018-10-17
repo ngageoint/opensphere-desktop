@@ -98,7 +98,7 @@ public class SubCollectPane extends VBox
         List<String> names = New.list(myCategorySet);
         Collections.sort(names);
         myComboBoxItems = FXCollections.observableArrayList(names);
-        myImportProps.getCollectionName().addListener((observable, oldValue, newValue) -> updateComboBox());
+        myImportProps.collectionProperty().addListener((observable, oldValue, newValue) -> updateComboBox());
         createPanel();
     }
 
@@ -106,7 +106,7 @@ public class SubCollectPane extends VBox
     private void createPanel()
     {
         HBox hbox = new HBox();
-        Label subCollectMessage = new Label("Do you want to add a sub-category to your icon?:");
+        Label subCollectMessage = new Label("Do you want to add a sub-category to your icon?");
         subCollectMessage.setFont(Font.font(subCollectMessage.getFont().getFamily(), FontPosture.ITALIC, 11));
         subCollectMessage.setContentDisplay(ContentDisplay.BOTTOM);
 
@@ -162,11 +162,11 @@ public class SubCollectPane extends VBox
     }
 
     /**
-     * Updates the values contained in the {@link #myComboBox }drop down menu.
+     * Updates the values contained in the {@link #myComboBox} drop down menu.
      */
     private void updateComboBox()
     {
-        List<String> names = New.list(myIconRegistry.getSubCategoiresForCollection(myImportProps.getCollectionName().get()));
+        List<String> names = New.list(myIconRegistry.getSubCategoiresForCollection(myImportProps.getCollectionName()));
         Collections.sort(names);
         myComboBoxItems = FXCollections.observableArrayList(names);
         getChildren().removeAll(getChildren());
@@ -180,28 +180,6 @@ public class SubCollectPane extends VBox
      */
     public String getSubCategory()
     {
-        if (myNewCategoryButton.isSelected())
-        {
-            return myComboBox.getSelectionModel().getSelectedItem().toString();
-        }
-        return null;
-    }
-
-    /**
-     * Checks if is no category.
-     *
-     * @return true, if is no category
-     */
-    public boolean isNoCategory()
-    {
-        return myNoneButton.isSelected();
-    }
-
-    /**
-     * Updates the value of the sub collection name in the model.
-     */
-    public void updateSubCollectName()
-    {
-        myPanelModel.getImportProps().getSubCollectionName().set(myComboBox.getValue());
+    	return myNewCategoryButton.isSelected() ? myComboBox.getSelectionModel().getSelectedItem() : null;
     }
 }

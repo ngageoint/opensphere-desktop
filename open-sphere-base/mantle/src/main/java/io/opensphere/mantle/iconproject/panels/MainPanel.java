@@ -35,7 +35,7 @@ import io.opensphere.mantle.iconproject.view.TreePopupMenu;
 public class MainPanel extends SplitPane
 {
     /** The Model. */
-    private PanelModel myPanelModel;
+    private final PanelModel myPanelModel;
 
     /** The Icon Display Grid. */
     private GridBuilder myIconGrid;
@@ -53,16 +53,16 @@ public class MainPanel extends SplitPane
     private TreeView<String> myTreeView;
 
     /** The left Panel. */
-    private AnchorPane myLeftView = new AnchorPane();
+    private final AnchorPane myLeftView = new AnchorPane();
 
     /** The treeBuilder object. */
     private TreeBuilder myTreeBuilder;
 
     /** The map of collection name keys and icon record list values. */
-    private Map<String, List<IconRecord>> myRecordMap = new HashMap<>();
+    private Map<String, List<IconRecord>> myRecordMap;
 
     /** The main panel's scroll pane which contains the grid of icons. */
-    private ScrollPane myScrollPane;
+    private final ScrollPane myScrollPane;
 
     /** The owner window of the main panel. */
     private final Window myOwner;
@@ -91,8 +91,8 @@ public class MainPanel extends SplitPane
         MenuItem folderOption = new MenuItem("Folder");
         myAddIconButton.getItems().addAll(fileOption, folderOption);
         myAddIconButton.setAlignment(Pos.CENTER);
-        fileOption.setOnAction(event -> EventQueue.invokeLater(() -> loadFromFile(myPanelModel.getImportProps().getCollectionName().get(),
-                    myPanelModel.getImportProps().getSubCollectionName().get())));
+        fileOption.setOnAction(event -> EventQueue.invokeLater(() -> loadFromFile(myPanelModel.getImportProps().getCollectionName(),
+                    myPanelModel.getImportProps().getSubCollectionName())));
 
         folderOption.setOnAction(event -> EventQueue.invokeLater(() -> addIconsFromFolder()));
 
@@ -133,8 +133,8 @@ public class MainPanel extends SplitPane
         myTreeView = new TreeView<>(myTreeBuilder);
         myTreeView.setShowRoot(false);
         myTreeView.setContextMenu(new TreePopupMenu(myPanelModel));
-        myPanelModel.getTreeObject().getMyObsTree().set(myTreeView);
-        myPanelModel.getTreeObject().getMyObsTree().addListener((o, v, n) -> refreshTree());
+        myPanelModel.getTreeObject().setSelectedTree(myTreeView);
+        myPanelModel.getTreeObject().selectedTreeProperty().addListener((o, v, n) -> refreshTree());
 
         AnchorPane.setBottomAnchor(myTreeView, 78.0);
         AnchorPane.setLeftAnchor(myTreeView, 0.0);
@@ -214,12 +214,12 @@ public class MainPanel extends SplitPane
         myScrollPane.setContent(myIconGrid = new GridBuilder(myPanelModel));
         if (myPanelModel.getIconRegistry().getCollectionNames().contains(collectionName))
         {
-            myPanelModel.getImportProps().getCollectionName().set(collectionName);
+            myPanelModel.getImportProps().setCollectionName(collectionName);
         }
         else
         {
-            myPanelModel.getImportProps().getCollectionName().set(myRecordMap.get(collectionName).get(0).getCollectionName());
-            myPanelModel.getImportProps().getSubCollectionName().set(collectionName);
+            myPanelModel.getImportProps().setCollectionName(myRecordMap.get(collectionName).get(0).getCollectionName());
+            myPanelModel.getImportProps().setSubCollectionName(collectionName);
         }
     }
 
@@ -267,15 +267,5 @@ public class MainPanel extends SplitPane
     public GridBuilder getIconGrid()
     {
         return myIconGrid;
-    }
-
-    /**
-     * Gets the scroll pane.
-     *
-     * @return the scroll pane
-     */
-    public ScrollPane getScrollPane()
-    {
-        return myScrollPane;
     }
 }

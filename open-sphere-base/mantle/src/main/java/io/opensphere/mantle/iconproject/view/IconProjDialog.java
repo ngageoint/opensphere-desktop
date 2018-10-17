@@ -37,7 +37,6 @@ public class IconProjDialog extends JFXDialog
      * @param multiSelectEnabled the option to enable or disable selecting multiple icons.
      */
 
-    @SuppressWarnings("unchecked")
     public IconProjDialog(Window owner, Toolbox tb, boolean showCancel, boolean multiSelectEnabled)
     {
         super(owner, "Icon Manager", showCancel);
@@ -51,9 +50,9 @@ public class IconProjDialog extends JFXDialog
         setMinimumSize(new Dimension(800, 600));
         setSize(875, 600);
         setFxNode(new IconProjView(myPanelModel));
-        if (myPanelModel.getIconRegistry().getManagerPrefs().getIconWidth().getValue() != 0)
+        if (myPanelModel.getIconRegistry().getManagerPrefs().getIconWidth() != 0)
         {
-            myPanelModel.getCurrentTileWidth().set(myPanelModel.getIconRegistry().getManagerPrefs().getIconWidth().get());
+            myPanelModel.getCurrentTileWidth().set(myPanelModel.getIconRegistry().getManagerPrefs().getIconWidth());
         }
 
         myPanelModel.getViewModel().getMainPanel().refresh();
@@ -67,13 +66,12 @@ public class IconProjDialog extends JFXDialog
      * selection. This ONLY saves during session. NOT across sessions.
      */
     // For now the only saved preference is display width.
-    @SuppressWarnings("unchecked")
     private void savePrefs()
     {
-        MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getManagerPrefs().getIconWidth()
-                .set(myPanelModel.getCurrentTileWidth().get());
+        MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getManagerPrefs().setIconWidth(
+                myPanelModel.getCurrentTileWidth().get());
         MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getManagerPrefs().setTreeSelection((TreeItem<String>)myPanelModel
-                .getTreeObject().getMyObsTree().get().getSelectionModel().selectedItemProperty().get());
+                .getTreeObject().getSelectedTree().getSelectionModel().selectedItemProperty().get());
     }
 
     /** Packages UI elements into one pane. */
@@ -86,10 +84,10 @@ public class IconProjDialog extends JFXDialog
         final private MainPanel myMainPanel;
 
         /** The Model for the entire UI. */
-        private PanelModel myPanelModel;
+        private final PanelModel myPanelModel;
 
         /** The model for the display panels. */
-        private ViewModel myViewModel;
+        private final ViewModel myViewModel;
 
         /**
          * Creates subpannels for UI.
@@ -105,7 +103,6 @@ public class IconProjDialog extends JFXDialog
             myViewModel.setMainPanel(myMainPanel);
 
             myTopMenuBar = new TopMenuBar(myPanelModel);
-            myViewModel.setTopMenuBar(myTopMenuBar);
 
             setTopAnchor(myMainPanel, 30.0);
             setBottomAnchor(myMainPanel, 0.0);
@@ -124,7 +121,7 @@ public class IconProjDialog extends JFXDialog
      *
      * @return the model used for the UI.
      */
-    public PanelModel getMyPanelModel()
+    public PanelModel getPanelModel()
     {
         return myPanelModel;
     }

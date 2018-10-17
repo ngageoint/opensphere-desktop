@@ -89,7 +89,7 @@ public class CollectNamesPane extends VBox
         myExistingComboBox.getSelectionModel().selectFirst();
         myExistingComboBox.setOnAction((event) ->
         {
-            myPanelModel.getImportProps().getCollectionName().set(myExistingComboBox.getValue());
+            myPanelModel.getImportProps().setCollectionName(myExistingComboBox.getValue());
             if (!myOptions.contains(myExistingComboBox.getValue()))
             {
                 myOptions.add(myExistingComboBox.getValue());
