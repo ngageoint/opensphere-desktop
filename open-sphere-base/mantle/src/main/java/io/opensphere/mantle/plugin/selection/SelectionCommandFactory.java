@@ -142,6 +142,7 @@ public class SelectionCommandFactory
         menuItems.add(createHeader("QUERY"));
         menuItems.add(ADD_FEATURES.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
         menuItems.add(LOAD_FEATURES.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
+        menuItems.add(CANCEL_QUERY.createMenuItem(listener));
         menuItems.add(createHeader("FEATURES"));
         menuItems.add(DESELECT.createMenuItem(listener));
         menuItems.add(REMOVE_ALL.createMenuItem(listener));
@@ -184,6 +185,7 @@ public class SelectionCommandFactory
         menuItems.add(createHeader("QUERY"));
         menuItems.add(ADD_FEATURES.createMenuItem(al, hasFilters ? FILTERS_ACTIVE : null));
         menuItems.add(LOAD_FEATURES.createMenuItem(al, hasFilters ? FILTERS_ACTIVE : null));
+        menuItems.add(CANCEL_QUERY.createMenuItem(al));
         menuItems.add(createHeader("FEATURES"));
         menuItems.add(DESELECT.createMenuItem(al));
         menuItems.add(REMOVE_ALL.createMenuItem(al));
@@ -191,7 +193,6 @@ public class SelectionCommandFactory
         menuItems.add(SELECT_EXCLUSIVE.createMenuItem(al));
         menuItems.add(createHeader("TOOLS"));
         menuItems.add(CREATE_BUFFER_REGION.createMenuItem(al));
-        menuItems.add(CANCEL_QUERY.createMenuItem(al));
         return menuItems;
     }
 
