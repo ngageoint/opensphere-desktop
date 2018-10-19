@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Function;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -30,7 +31,7 @@ import io.opensphere.core.geometry.PolylineGeometry;
 import io.opensphere.core.model.Altitude;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.Position;
-import io.opensphere.core.util.AwesomeIconRegular;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.StringUtilities;
@@ -258,7 +259,8 @@ public class RegionTypeController extends PlaceTypeController
                     && (key.getGeometry() instanceof PolygonGeometry || key.getGeometry() instanceof PolylineGeometry))
             {
                 JMenuItem saveMI = new JMenuItem("Save as Place");
-                saveMI.setIcon(new GenericFontIcon(AwesomeIconRegular.SAVE, Color.WHITE));
+                saveMI.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
+                saveMI.setIcon(new GenericFontIcon(AwesomeIconSolid.MAP_MARKER_ALT, Color.WHITE));
                 if (key.getGeometry() instanceof PolygonGeometry)
                 {
                     saveMI.addActionListener(e -> createRegionFromGeometry((PolygonGeometry)key.getGeometry()));

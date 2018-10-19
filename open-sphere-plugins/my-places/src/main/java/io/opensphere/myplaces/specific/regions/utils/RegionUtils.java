@@ -162,7 +162,7 @@ public final class RegionUtils
             List<Coordinate> coordinates = lineString.getCoordinates();
             List<GeographicPosition> points = coordinates.stream()
                     .map(c -> new GeographicPosition(LatLonAlt.createFromDegreesMeters(c.getLatitude(), c.getLongitude(),
-                            new Altitude(Length.create(Meters.class, c.getAltitude()), ReferenceLevel.ELLIPSOID))))
+                            new Altitude(Length.create(Meters.class, c.getAltitude()), ReferenceLevel.TERRAIN))))
                     .collect(Collectors.toList());
             builder.setVertices(points);
             builder.setDataModelId(DefaultMapAnnotationPoint.getNextId());

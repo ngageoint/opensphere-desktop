@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -232,6 +233,7 @@ public class MenuOption
         else
         {
             item = new JMenuItem(myLabel);
+            item.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
 
             item.setActionCommand(myCommand);
             if (myAccelerator != null)

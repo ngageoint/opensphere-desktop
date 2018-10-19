@@ -1,11 +1,14 @@
 package io.opensphere.myplaces.controllers;
 
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu.Separator;
@@ -64,14 +67,7 @@ public class SingleGroupContextMenuProvider extends MyPointsMenuItemProvider
     public void actionPerformed(ActionEvent e)
     {
         Object src = e.getSource();
-        if (getMenuItems().get(ItemType.CENTER_ON) == src)
-        {
-            if (myPlacemark != null)
-            {
-                myController.gotoPoint(myType);
-            }
-        }
-        else if (getMenuItems().get(ItemType.EDIT) == src)
+        if (getMenuItems().get(ItemType.EDIT) == src)
         {
             myType.launchEditor(myGroup, Collections.singletonList(myType));
         }
@@ -120,6 +116,12 @@ public class SingleGroupContextMenuProvider extends MyPointsMenuItemProvider
         }
 
         List<Component> menuItems = new LinkedList<>();
+
+        JLabel label = new JLabel("Area");
+        label.setBorder(BorderFactory.createEmptyBorder(6, 0, 6, 0));
+        label.setFont(label.getFont().deriveFont(Font.BOLD));
+        menuItems.add(label);
+
         if (myType == null)
         {
             menuItems.add(new CreateFolderMenuItem(myToolbox, myGroup));
