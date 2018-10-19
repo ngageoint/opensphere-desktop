@@ -153,6 +153,7 @@ public class SelectionCommandFactory
         menuItems.add(createHeader("Query"));
         menuItems.add(LOAD_FEATURES.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
         menuItems.add(ADD_FEATURES.createMenuItem(listener, hasFilters ? FILTERS_ACTIVE : null));
+        menuItems.add(CANCEL_QUERY.createMenuItem(listener));
         menuItems.add(new JSeparator());
         menuItems.add(createHeader("Features"));
         menuItems.add(SELECT.createMenuItem(listener));
@@ -202,6 +203,7 @@ public class SelectionCommandFactory
         menuItems.add(createHeader("Query"));
         menuItems.add(LOAD_FEATURES.createMenuItem(al, hasFilters ? FILTERS_ACTIVE : null));
         menuItems.add(ADD_FEATURES.createMenuItem(al, hasFilters ? FILTERS_ACTIVE : null));
+        menuItems.add(CANCEL_QUERY.createMenuItem(al));
         menuItems.add(new JSeparator());
         menuItems.add(createHeader("Features"));
         menuItems.add(SELECT.createMenuItem(al));
