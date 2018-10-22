@@ -35,6 +35,9 @@ public enum Styles
      */
     ELLIPSE("Ellipse"),
 
+    /** Displays a line of bearing. */
+    LINE_OF_BEARING("Line of Bearing"),
+
     /**
      * Displays an ellipse with a point in the center.
      */
