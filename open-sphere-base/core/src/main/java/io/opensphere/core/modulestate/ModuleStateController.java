@@ -27,6 +27,9 @@ public interface ModuleStateController
     /** The namespace for the state. */
     String STATE_NAMESPACE_V4 = "http://www.bit-sys.com/mist/state/v4";
 
+    /** The namespace for the state. */
+    String STATE_NAMESPACE_V4_ALT = "http://www.bit-sys.com/state/v4";
+
     /** The prefix for the state namespace. */
     String STATE_NAMESPACE_PREFIX = "";
 
