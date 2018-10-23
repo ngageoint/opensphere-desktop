@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>io.open-sphere.plugins</groupId>
 		<artifactId>open-sphere-plugins</artifactId>
-		<version>5.2.5.0</version>
+		<version>5.2.5.1</version>
 	</parent>
 
 	<artifactId>mapzen</artifactId>
