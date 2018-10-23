@@ -9,10 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
-
 import org.apache.log4j.Logger;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.geometry.AbstractRenderableGeometry;
 import io.opensphere.core.geometry.Geometry;
@@ -294,8 +293,8 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
         }
 
         builder.setPosition(gp);
-        builder.setHorizontalAlignment(.5f);
-        builder.setVerticalAlignment(1f);
+        builder.setHorizontalAlignment(0F);
+        builder.setVerticalAlignment(.5F);
         builder.setText(labValue);
         builder.setFont(Font.SANS_SERIF + " " + getLabelSize());
         builder.setOutlined(true);
