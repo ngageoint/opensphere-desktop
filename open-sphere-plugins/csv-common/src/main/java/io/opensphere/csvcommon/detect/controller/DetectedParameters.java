@@ -19,6 +19,7 @@ public class DetectedParameters
     /** Altitude parameter. */
     private ValuesWithConfidence<SpecialColumn> myAltitudeParameter;
 
+    /** The color parameter. */
     private ValuesWithConfidence<SpecialColumn> myColorParameter;
 
     /** Column format parameter. */
