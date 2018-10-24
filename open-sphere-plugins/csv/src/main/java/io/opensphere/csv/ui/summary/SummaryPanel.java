@@ -231,7 +231,6 @@ public class SummaryPanel extends CSVWizardPanel
 
         final JXTable previewTable = new JXTable(myCsvLineTableModel);
         previewTable.setAutoResizeMode(JXTable.AUTO_RESIZE_OFF);
-
         final TableCellRenderer defaultRenderer = previewTable.getTableHeader().getDefaultRenderer();
         previewTable.getTableHeader().setDefaultRenderer(new TableCellRenderer()
         {
