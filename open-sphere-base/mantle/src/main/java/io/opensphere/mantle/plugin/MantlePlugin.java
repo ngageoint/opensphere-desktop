@@ -50,6 +50,7 @@ import io.opensphere.mantle.data.geom.style.impl.SobelEdgeDetectionTileVisualiza
 import io.opensphere.mantle.data.geom.style.impl.StyleUtils;
 import io.opensphere.mantle.data.geom.style.labelcontroller.LabelHoverController;
 import io.opensphere.mantle.data.geom.style.tilecontroller.TileStyleTransformController;
+import io.opensphere.mantle.data.impl.specialkey.ColorKey;
 import io.opensphere.mantle.data.impl.specialkey.EllipseSemiMajorAxisKey;
 import io.opensphere.mantle.data.impl.specialkey.EllipseSemiMinorAxisKey;
 import io.opensphere.mantle.data.impl.specialkey.HeadingKey;
@@ -142,6 +143,7 @@ public class MantlePlugin extends PluginAdapter
         columnTypeDetector.addSpecialColumnDetector(EllipseSemiMinorAxisKey.DEFAULT);
         columnTypeDetector.addSpecialColumnDetector(HeadingKey.DEFAULT);
         columnTypeDetector.addSpecialColumnDetector(SpeedKey.DEFAULT);
+        columnTypeDetector.addSpecialColumnDetector(ColorKey.DEFAULT);
 
         createAndInstallEventCoalescers();
 

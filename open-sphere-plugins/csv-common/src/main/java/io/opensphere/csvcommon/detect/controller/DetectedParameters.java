@@ -19,6 +19,8 @@ public class DetectedParameters
     /** Altitude parameter. */
     private ValuesWithConfidence<SpecialColumn> myAltitudeParameter;
 
+    private ValuesWithConfidence<SpecialColumn> myColorParameter;
+
     /** Column format parameter. */
     private ValuesWithConfidence<? extends ColumnFormatParameters> myColumnFormatParameter;
 
@@ -61,6 +63,27 @@ public class DetectedParameters
     public void setAltitudeParameter(ValuesWithConfidence<SpecialColumn> altitudeParameter)
     {
         myAltitudeParameter = altitudeParameter;
+    }
+
+    /**
+     * Gets the value of the {@link #myColorParameter} field.
+     *
+     * @return the value stored in the {@link #myColorParameter} field.
+     */
+    public ValuesWithConfidence<SpecialColumn> getColorParameter()
+    {
+        return myColorParameter;
+    }
+
+    /**
+     * Sets the value of the {@link #myColorParameter} field.
+     *
+     * @param colorParameter the value to store in the {@link #myColorParameter}
+     *            field.
+     */
+    public void setColorParameter(ValuesWithConfidence<SpecialColumn> colorParameter)
+    {
+        myColorParameter = colorParameter;
     }
 
     /**

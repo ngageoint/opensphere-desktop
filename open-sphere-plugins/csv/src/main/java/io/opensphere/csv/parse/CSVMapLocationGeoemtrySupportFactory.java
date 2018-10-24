@@ -62,7 +62,7 @@ public class CSVMapLocationGeoemtrySupportFactory implements GeomSupportFactory
                 break;
             case ELLIPSE_ELEMENTS:
                 geomSupport = new SimpleMapEllipseGeometrySupport(createLatLonAlt(ptData), floatOrNothing(ptData.getSma()),
-                        floatOrNothing(ptData.getSmi()), floatOrNothing(ptData.getOrnt()));
+                        floatOrNothing(ptData.getSmi()), floatOrNothing(ptData.getOrientation()));
                 break;
             case LOB_ELEMENTS:
                 geomSupport = new SimpleMapLineOfBearingGeometrySupport(createLatLonAlt(ptData), floatOrNothing(ptData.getLob()),
