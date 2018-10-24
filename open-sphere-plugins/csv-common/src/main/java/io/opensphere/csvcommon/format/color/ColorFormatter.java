@@ -5,8 +5,7 @@ import java.text.ParseException;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-
+import io.opensphere.csvcommon.detect.util.ColorUtilities;
 import io.opensphere.csvcommon.format.CellFormatter;
 
 /**
@@ -23,50 +22,7 @@ public class ColorFormatter implements CellFormatter
     @Override
     public Object formatCell(String cellValue, String format) throws ParseException
     {
-        Color returnValue = null;
-
-        String parseValue = cellValue;
-        // if user shortcutted the value with one character per
-        // field, double each character (e.g.: FFF is white, but
-        // should be FFFFFF for parsing purposes)
-        if (parseValue.length() >= 3 && parseValue.length() <= 4)
-        {
-            parseValue = "";
-            for (int i = 0; i < cellValue.length(); i++)
-            {
-                parseValue += cellValue.charAt(i) + cellValue.charAt(i);
-            }
-        }
-
-        if (parseValue.matches("[0-9a-fA-F]{6,8}"))
-        {
-            parseValue = "#" + cellValue;
-        }
-
-        if (parseValue.startsWith("#") || StringUtils.startsWithIgnoreCase(cellValue, "0x"))
-        {
-            if (cellValue.length() == 8)
-            {
-                // need to do it this way, because Java.awt.Color won't parse
-                // Opaque with a leading alpha channel, as it attempts to parse
-                // as an integer, which blows past Integer.MAX_VALUE for leading
-                // values of 0xFF.
-                long longValue = Long.decode(parseValue).longValue();
-                int alpha = (int)((longValue >> 24) & 0xFF);
-                int red = (int)((longValue >> 16) & 0xFF);
-                int green = (int)((longValue >> 8) & 0xFF);
-                int blue = (int)(longValue & 0xFF);
-
-                returnValue = new Color(red, green, blue, alpha);
-            }
-            else if (cellValue.length() == 6)
-            {
-                int i = Integer.decode(parseValue).intValue();
-                returnValue = new Color((i >> 16) & 0xFF, (i >> 8) & 0xFF, i & 0xFF);
-            }
-        }
-
-        return returnValue;
+        return ColorUtilities.toColor(cellValue);
     }
 
     /**

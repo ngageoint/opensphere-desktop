@@ -29,6 +29,7 @@ import io.opensphere.csvcommon.config.v1.CSVColumnInfo;
 import io.opensphere.csvcommon.config.v2.CSVDelimitedColumnFormat;
 import io.opensphere.csvcommon.config.v2.CSVFixedWidthColumnFormat;
 import io.opensphere.csvcommon.config.v2.CSVParseParameters;
+import io.opensphere.csvcommon.detect.util.ColorUtilities;
 import io.opensphere.importer.config.ColumnType;
 import io.opensphere.importer.config.ColumnType.Category;
 import io.opensphere.importer.config.SpecialColumn;
@@ -715,53 +716,8 @@ public abstract class CsvProviderBase implements DataElementProvider
                 }
                 else if (columnType == ColumnType.COLOR)
                 {
-                    String parseValue = cellValue;
-                    // if user shortcutted the value with one character per
-                    // field, double each character (e.g.: FFF is white, but
-                    // should be FFFFFF for parsing purposes)
-                    if (parseValue.length() >= 3 && parseValue.length() <= 4)
-                    {
-                        parseValue = "";
-                        for (int i = 0; i < cellValue.length(); i++)
-                        {
-                            parseValue += cellValue.charAt(i) + cellValue.charAt(i);
-                        }
-                    }
-
-                    if (parseValue.matches("[0-9a-fA-F]{6,8}"))
-                    {
-                        parseValue = "#" + cellValue;
-                    }
-
-                    if (parseValue.startsWith("#") || StringUtils.startsWithIgnoreCase(cellValue, "0x"))
-                    {
-                        if (cellValue.length() == 8)
-                        {
-                            // need to do it this way, because Java.awt.Color
-                            // won't parse Opaque with a leading alpha channel,
-                            // as it attempts to parse as an integer, which
-                            // blows past Integer.MAX_VALUE for leading values
-                            // of 0xFF.
-                            long value = Long.decode(parseValue).longValue();
-                            int alpha = (int)((value >> 24) & 0xFF);
-                            int red = (int)((value >> 16) & 0xFF);
-                            int green = (int)((value >> 8) & 0xFF);
-                            int blue = (int)(value & 0xFF);
-
-                            ptData.setColor(new Color(red, green, blue, alpha));
-                        }
-                        else if (cellValue.length() == 6)
-                        {
-                            int i = Integer.decode(parseValue).intValue();
-                            ptData.setColor(new Color((i >> 16) & 0xFF, (i >> 8) & 0xFF, i & 0xFF));
-                        }
-
-                        metaDataProvider.setValue(colName, cellValue);
-                    }
-                    else
-                    {
-                        LOGGER.warn("Unrecognized color value format. Using default color.");
-                    }
+                    ptData.setColor(ColorUtilities.toColor(cellValue));
+                    metaDataProvider.setValue(colName, cellValue);
                 }
                 else
                 {
