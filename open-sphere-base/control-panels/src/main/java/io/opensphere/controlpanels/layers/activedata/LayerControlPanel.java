@@ -280,9 +280,9 @@ public abstract class LayerControlPanel extends AbstractHUDPanel
                         {
                             if (c instanceof DefaultTileLevelController)
                             {
-                                DefaultTileLevelController levelController = (DefaultTileLevelController)c;
-                                getTileLevelSpinner().setModel(new SpinnerNumberModel(levelController.getCurrentHoldLevel(),
-                                        levelController.getMinimumHoldLevel(), levelController.getMaxGeneration(), 1));
+                                DefaultTileLevelController defaultController = (DefaultTileLevelController)c;
+                                getTileLevelSpinner().setModel(new SpinnerNumberModel(defaultController.getCurrentHoldLevel(),
+                                        defaultController.getMinimumHoldLevel(), defaultController.getMaxGeneration(), 1));
                             }
                             else
                             {
@@ -485,8 +485,17 @@ public abstract class LayerControlPanel extends AbstractHUDPanel
                         }
                     }
 
-                    int spinnerMax = fTlc.getMaxGeneration() > 0 ? fTlc.getMaxGeneration() : 1;
-                    getTileLevelSpinner().setModel(new SpinnerNumberModel(curGen, 0, spinnerMax, 1));
+                    if (fTlc instanceof DefaultTileLevelController)
+                    {
+                        DefaultTileLevelController defaultController = (DefaultTileLevelController)fTlc;
+                        getTileLevelSpinner().setModel(new SpinnerNumberModel(defaultController.getCurrentHoldLevel(),
+                                        defaultController.getMinimumHoldLevel(), defaultController.getMaxGeneration(), 1));
+                    }
+                    else
+                    {
+                        int spinnerMax = fTlc.getMaxGeneration() > 0 ? fTlc.getMaxGeneration() : 1;
+                        getTileLevelSpinner().setModel(new SpinnerNumberModel(curGen, 0, spinnerMax, 1));
+                    }
                     getTileLevelSpinner().setEnabled(fTlc.getMaxGeneration() != 0 && getTileHoldLevelCheckBox().isSelected());
                     getSpinnerLabel().setEnabled(fTlc.getMaxGeneration() != 0 && getTileHoldLevelCheckBox().isSelected());
                     getTileLevelControlPanel().setVisible(true);
@@ -494,7 +503,6 @@ public abstract class LayerControlPanel extends AbstractHUDPanel
                 else
                 {
                     getTileHoldLevelCheckBox().setSelected(false);
-                    getTileLevelSpinner().setValue(Integer.valueOf(0));
                     getTileLevelSpinner().setEnabled(false);
                     getSpinnerLabel().setEnabled(false);
                     getTileLevelControlPanel().setVisible(false);

@@ -24,7 +24,7 @@ public class DefaultTileLevelController implements TileLevelController
     private final ReentrantLock myDividerLock;
 
     /** The Property for the hold level. */
-    private final IntegerProperty myHoldLevelProperty;
+    private final IntegerProperty myCurrentHoldLevelProperty;
 
     /** The Max generation. -1 implies unknown */
     private int myMaxGeneration = -1;
@@ -47,7 +47,7 @@ public class DefaultTileLevelController implements TileLevelController
         myTileGeometryLock = new ReentrantLock();
         myDividers = new WeakHashSet<>();
         myTileGeometrySet = new WeakHashSet<>();
-        myHoldLevelProperty = new SimpleIntegerProperty(0);
+        myCurrentHoldLevelProperty = new SimpleIntegerProperty(0);
     }
 
     /**
@@ -177,17 +177,17 @@ public class DefaultTileLevelController implements TileLevelController
      */
     public int getCurrentHoldLevel()
     {
-        return myHoldLevelProperty.get();
+        return myCurrentHoldLevelProperty.get();
     }
 
     /**
-     * Gets the hold level property.
+     * Gets the current hold level property.
      *
-     * @return the hold level property
+     * @return the current hold level property
      */
-    public IntegerProperty getHoldLevelProperty()
+    public IntegerProperty getCurrentHoldLevelProperty()
     {
-        return myHoldLevelProperty;
+        return myCurrentHoldLevelProperty;
     }
 
     @Override
@@ -312,7 +312,7 @@ public class DefaultTileLevelController implements TileLevelController
      */
     public void setCurrentHoldLevel(int holdLevel)
     {
-        myHoldLevelProperty.set(holdLevel);
+        myCurrentHoldLevelProperty.set(holdLevel);
     }
 
     /**
