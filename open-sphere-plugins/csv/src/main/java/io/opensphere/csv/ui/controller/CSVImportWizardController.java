@@ -575,6 +575,25 @@ public class CSVImportWizardController implements Observer
     }
 
     /**
+     * Copies the detected color parameters to the parse parameters.
+     *
+     * @param detected the detected parameters
+     * @param parse the CSV parameters
+     * @param confidenceThreshold the confidence threshold at which the column
+     *            was detected.
+     */
+    private void copyDetectedColorParametersToParseParameters(DetectedParameters detected, CSVParseParameters parse,
+            double confidenceThreshold)
+    {
+        if (detected.getColorParameter() != null && detected.getColorParameter().getBestConfidence() > confidenceThreshold)
+        {
+            SpecialColumn colorColumn = detected.getColorParameter().getBestValue();
+            colorColumn.setFormat("color");
+            parse.getSpecialColumns().add(colorColumn);
+        }
+    }
+
+    /**
      * Copy the detected parameters into the parse parameters.
      *
      * @param cellSampler The cell sampler used to detect parameters.
@@ -651,6 +670,7 @@ public class CSVImportWizardController implements Observer
         copyDetectedLocationParametersToParseParameters(detected, parse, ourConfidenceThreshold);
         copyDetectedAltitudeParametersToParseParameters(detected, parse, ourConfidenceThreshold);
         copyDetectedLOBParametersToParseParameters(detected, parse, ourConfidenceThreshold);
+        copyDetectedColorParametersToParseParameters(detected, parse, ourConfidenceThreshold);
         copyDetectedColumnFormat(detected, parse, ourConfidenceThreshold);
         parse.getSpecialColumns().addAll(detected.getOtherColumns());
     }
