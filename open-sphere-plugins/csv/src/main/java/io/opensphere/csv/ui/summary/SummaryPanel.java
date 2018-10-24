@@ -1,7 +1,6 @@
 package io.opensphere.csv.ui.summary;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -17,7 +16,6 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableCellRenderer;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jdesktop.swingx.JXTable;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
@@ -43,7 +41,6 @@ import io.opensphere.csvcommon.config.v2.CSVParseParameters;
 import io.opensphere.csvcommon.detect.controller.DetectedParameters;
 import io.opensphere.csvcommon.ui.CsvLineTableModel;
 import io.opensphere.csvcommon.ui.CsvUiUtilities;
-import io.opensphere.importer.config.ColumnType;
 import io.opensphere.importer.config.LayerSettings;
 import io.opensphere.importer.config.SpecialColumn;
 
@@ -236,84 +233,6 @@ public class SummaryPanel extends CSVWizardPanel
         previewTable.setAutoResizeMode(JXTable.AUTO_RESIZE_OFF);
 
         final TableCellRenderer defaultRenderer = previewTable.getTableHeader().getDefaultRenderer();
-        previewTable.setDefaultRenderer(String.class, new TableCellRenderer()
-        {
-
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-                    int row, int column)
-            {
-                Component component = defaultRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
-                        column);
-                if (!mySpecialColumnMap.isEmpty() && column > -1)
-                {
-                    String columnName = table.getColumnName(column);
-
-                    int parameterColumn = mySelectedParams.getColumnNames().indexOf(columnName);
-
-                    SpecialColumn specialColumn = mySpecialColumnMap.get(parameterColumn);
-                    if (specialColumn != null && specialColumn.getColumnType() == ColumnType.COLOR)
-                    {
-                        ((JLabel)component).setText("");
-                        String cellValue = value.toString();
-                        String parseValue = cellValue;
-                        // if user shortcutted the value with one character per
-                        // field, double each character (e.g.: FFF is white, but
-                        // should be FFFFFF for parsing purposes)
-                        if (parseValue.length() >= 3 && parseValue.length() <= 4)
-                        {
-                            parseValue = "";
-                            for (int i = 0; i < cellValue.length(); i++)
-                            {
-                                parseValue += cellValue.charAt(i) + cellValue.charAt(i);
-                            }
-                        }
-
-                        if (parseValue.matches("[0-9a-fA-F]{6,8}"))
-                        {
-                            parseValue = "#" + cellValue;
-                        }
-
-                        if (parseValue.startsWith("#") || StringUtils.startsWithIgnoreCase(cellValue, "0x"))
-                        {
-                            if (cellValue.length() == 8)
-                            {
-                                // need to do it this way, because
-                                // Java.awt.Color
-                                // won't parse Opaque with a leading alpha
-                                // channel,
-                                // as it attempts to parse as an integer, which
-                                // blows past Integer.MAX_VALUE for leading
-                                // values
-                                // of 0xFF.
-                                long longValue = Long.decode(parseValue).longValue();
-                                int alpha = (int)((longValue >> 24) & 0xFF);
-                                int red = (int)((longValue >> 16) & 0xFF);
-                                int green = (int)((longValue >> 8) & 0xFF);
-                                int blue = (int)(longValue & 0xFF);
-
-                                ((JLabel)component).setBackground(new Color(red, green, blue, alpha));
-                            }
-                            else if (cellValue.length() == 6)
-                            {
-                                int i = Integer.decode(parseValue).intValue();
-                                ((JLabel)component).setBackground(new Color((i >> 16) & 0xFF, (i >> 8) & 0xFF, i & 0xFF));
-                            }
-                        }
-                        else
-                        {
-                            ((JLabel)component).setText(value.toString());
-                        }
-                    }
-                    else
-                    {
-                        ((JLabel)component).setText(value.toString());
-                    }
-                }
-                return component;
-            }
-        });
-
         previewTable.getTableHeader().setDefaultRenderer(new TableCellRenderer()
         {
             @Override
