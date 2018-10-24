@@ -3,7 +3,6 @@ package io.opensphere.csvcommon.format.color;
 import java.awt.Color;
 import java.text.ParseException;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -11,11 +10,10 @@ import org.apache.commons.lang3.StringUtils;
 import io.opensphere.csvcommon.format.CellFormatter;
 
 /**
- *
+ * A cell formatter used to convert String values to Color objects.
  */
 public class ColorFormatter implements CellFormatter
 {
-
     /**
      * {@inheritDoc}
      *
@@ -102,7 +100,7 @@ public class ColorFormatter implements CellFormatter
     @Override
     public Collection<String> getKnownPossibleFormats()
     {
-        return Collections.emptyList();
+        return List.of("color");
     }
 
     /**
@@ -113,7 +111,7 @@ public class ColorFormatter implements CellFormatter
     @Override
     public String getSystemFormat()
     {
-        return null;
+        return "color";
     }
 
     /**
@@ -124,6 +122,6 @@ public class ColorFormatter implements CellFormatter
     @Override
     public String getFormat(List<String> values)
     {
-        return null;
+        return "color";
     }
 }
