@@ -7,7 +7,8 @@ import io.opensphere.csvcommon.detect.util.CSVColumnPrefsUtil;
 import io.opensphere.importer.config.ColumnType;
 
 /**
- *
+ * The ColorDecider will determine if there exists 1 or more columns that
+ * qualify as a 'COLOR' column.
  */
 public class ColorDecider extends SingleLocationColumnDecider
 {
