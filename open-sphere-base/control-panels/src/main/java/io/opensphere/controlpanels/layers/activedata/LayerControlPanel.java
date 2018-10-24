@@ -16,8 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import io.opensphere.controlpanels.layers.activedata.controller.LayerColorController;
 import io.opensphere.controlpanels.layers.activedata.controller.OpacityColorAdapter;
@@ -226,16 +224,12 @@ public abstract class LayerControlPanel extends AbstractHUDPanel
      */
     private void handleDataTypeVisibilityChange(final DataTypeVisibilityChangeEvent event)
     {
-        EventQueueUtilities.runOnEDT(new Runnable()
+        EventQueueUtilities.runOnEDT(() ->
         {
-            @Override
-            public void run()
+            DataGroupInfo selectedGroup = getSelectedDataGroup();
+            if (selectedGroup != null && selectedGroup.hasMember(event.getDataTypeInfo(), false))
             {
-                DataGroupInfo selectedGroup = getSelectedDataGroup();
-                if (selectedGroup != null && selectedGroup.hasMember(event.getDataTypeInfo(), false))
-                {
-                    updateTileLevelControlPanel();
-                }
+                updateTileLevelControlPanel();
             }
         });
     }
@@ -270,45 +264,41 @@ public abstract class LayerControlPanel extends AbstractHUDPanel
             myTileLevelHoldCheckBox = new JCheckBox("Hold Level", false);
             myTileLevelHoldCheckBox.setFocusable(false);
             myTileLevelHoldCheckBox.setBorder(null);
-            myTileLevelHoldCheckBox.addActionListener(new ActionListener()
+            myTileLevelHoldCheckBox.addActionListener(l ->
             {
-                @Override
-                public void actionPerformed(ActionEvent e)
+                Set<TileLevelController> tlcControllers = getTileLevelControllers();
+                if (tlcControllers != null)
                 {
-                    Set<TileLevelController> tlcControllers = getTileLevelControllers();
-                    if (tlcControllers != null)
+                    for (TileLevelController c : tlcControllers)
                     {
-                        for (TileLevelController c : tlcControllers)
+                        if (c.getMaxGeneration() == -1)
                         {
-                            if (c.getMaxGeneration() == -1)
+                            continue;
+                        }
+                        c.setDivisionOverride(myTileLevelHoldCheckBox.isSelected());
+                        try
+                        {
+                            if (c instanceof DefaultTileLevelController)
                             {
-                                continue;
+                                DefaultTileLevelController levelController = (DefaultTileLevelController)c;
+                                getTileLevelSpinner().setModel(new SpinnerNumberModel(levelController.getCurrentHoldLevel(),
+                                        levelController.getMinimumHoldLevel(), levelController.getMaxGeneration(), 1));
                             }
-                            c.setDivisionOverride(myTileLevelHoldCheckBox.isSelected());
-                            try
+                            else
                             {
-                                if (c instanceof DefaultTileLevelController)
-                                {
-                                    DefaultTileLevelController levelController = (DefaultTileLevelController)c;
-                                    getTileLevelSpinner().setModel(new SpinnerNumberModel(levelController.getCurrentHoldLevel(),
-                                            levelController.getMinimumHoldLevel(), levelController.getMaxGeneration(), 1));
-                                }
-                                else
-                                {
-                                    getTileLevelSpinner().setModel(
-                                            new SpinnerNumberModel(c.getDivisionHoldGeneration(), 0, c.getMaxGeneration(), 1));
-                                }
-                            }
-                            catch (IllegalArgumentException ex)
-                            {
-                                getTileLevelSpinner()
-                                        .setModel(new SpinnerNumberModel(c.getMaxGeneration(), 0, c.getMaxGeneration(), 1));
+                                getTileLevelSpinner().setModel(
+                                        new SpinnerNumberModel(c.getDivisionHoldGeneration(), 0, c.getMaxGeneration(), 1));
                             }
                         }
+                        catch (IllegalArgumentException ex)
+                        {
+                            getTileLevelSpinner()
+                                    .setModel(new SpinnerNumberModel(c.getMaxGeneration(), 0, c.getMaxGeneration(), 1));
+                        }
                     }
-                    getTileLevelSpinner().setEnabled(myTileLevelHoldCheckBox.isSelected());
-                    getSpinnerLabel().setEnabled(myTileLevelHoldCheckBox.isSelected());
                 }
+                getTileLevelSpinner().setEnabled(myTileLevelHoldCheckBox.isSelected());
+                getSpinnerLabel().setEnabled(myTileLevelHoldCheckBox.isSelected());
             });
             myTileLevelHoldCheckBox.setEnabled(false);
             getTileLevelSpinner().setEnabled(false);
@@ -378,25 +368,21 @@ public abstract class LayerControlPanel extends AbstractHUDPanel
             myTileLevelSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 15, 1));
             myTileLevelSpinner.setBackground(ourComponentBackground);
             myTileLevelSpinner.setFocusable(false);
-            myTileLevelSpinner.addChangeListener(new ChangeListener()
+            myTileLevelSpinner.addChangeListener(l ->
             {
-                @Override
-                public void stateChanged(ChangeEvent e)
+                Object spinnerValue = myTileLevelSpinner.getValue();
+                if (spinnerValue instanceof Number)
                 {
-                    Object spinnerValue = myTileLevelSpinner.getValue();
-                    if (spinnerValue instanceof Number)
+                    Number spinnerNumber = (Number)spinnerValue;
+                    Set<TileLevelController> tlcControllers = getTileLevelControllers();
+                    if (tlcControllers != null)
                     {
-                        Number spinnerNumber = (Number)spinnerValue;
-                        Set<TileLevelController> tlcControllers = getTileLevelControllers();
-                        if (tlcControllers != null)
+                        for (TileLevelController c : tlcControllers)
                         {
-                            for (TileLevelController c : tlcControllers)
+                            c.setDivisionHoldGeneration(spinnerNumber.intValue());
+                            if (c instanceof DefaultTileLevelController)
                             {
-                                c.setDivisionHoldGeneration(spinnerNumber.intValue());
-                                if (c instanceof DefaultTileLevelController)
-                                {
-                                    ((DefaultTileLevelController)c).setCurrentHoldLevel(spinnerNumber.intValue());
-                                }
+                                ((DefaultTileLevelController)c).setCurrentHoldLevel(spinnerNumber.intValue());
                             }
                         }
                     }
@@ -481,56 +467,48 @@ public abstract class LayerControlPanel extends AbstractHUDPanel
         final Set<TileLevelController> tlcSet = getTileLevelControllers();
         if (tlcSet != null && !tlcSet.isEmpty())
         {
-            EventQueueUtilities.runOnEDT(new Runnable()
+            EventQueueUtilities.runOnEDT(() ->
             {
-                @Override
-                public void run()
+                TileLevelController fTlc = tlcSet.iterator().next();
+                boolean hasActiveTypes = hasActiveTileDataTypes();
+                getTileHoldLevelCheckBox().setEnabled(fTlc != null && hasActiveTypes);
+                if (fTlc != null && hasActiveTypes)
                 {
-                    TileLevelController fTlc = tlcSet.iterator().next();
-                    boolean hasActiveTypes = hasActiveTileDataTypes();
-                    getTileHoldLevelCheckBox().setEnabled(fTlc != null && hasActiveTypes);
-                    if (fTlc != null && hasActiveTypes)
+                    getTileHoldLevelCheckBox().setSelected(fTlc.isDivisionOverride());
+                    int curGen = fTlc.getCurrentGeneration();
+                    if (curGen > fTlc.getMaxGeneration() && fTlc.getMaxGeneration() >= 0)
                     {
-                        getTileHoldLevelCheckBox().setSelected(fTlc.isDivisionOverride());
-                        int curGen = fTlc.getCurrentGeneration();
-                        if (curGen > fTlc.getMaxGeneration() && fTlc.getMaxGeneration() >= 0)
+                        curGen = fTlc.getMaxGeneration();
+                        for (TileLevelController c : tlcSet)
                         {
-                            curGen = fTlc.getMaxGeneration();
-                            for (TileLevelController c : tlcSet)
-                            {
-                                c.setDivisionHoldGeneration(curGen);
-                            }
+                            c.setDivisionHoldGeneration(curGen);
                         }
+                    }
 
-                        int spinnerMax = fTlc.getMaxGeneration() > 0 ? fTlc.getMaxGeneration() : 1;
-                        getTileLevelSpinner().setModel(new SpinnerNumberModel(curGen, 0, spinnerMax, 1));
-                        getTileLevelSpinner().setEnabled(fTlc.getMaxGeneration() != 0 && getTileHoldLevelCheckBox().isSelected());
-                        getSpinnerLabel().setEnabled(fTlc.getMaxGeneration() != 0 && getTileHoldLevelCheckBox().isSelected());
-                        getTileLevelControlPanel().setVisible(true);
-                    }
-                    else
-                    {
-                        getTileHoldLevelCheckBox().setSelected(false);
-                        getTileLevelSpinner().setValue(Integer.valueOf(0));
-                        getTileLevelSpinner().setEnabled(false);
-                        getSpinnerLabel().setEnabled(false);
-                        getTileLevelControlPanel().setVisible(false);
-                    }
+                    int spinnerMax = fTlc.getMaxGeneration() > 0 ? fTlc.getMaxGeneration() : 1;
+                    getTileLevelSpinner().setModel(new SpinnerNumberModel(curGen, 0, spinnerMax, 1));
+                    getTileLevelSpinner().setEnabled(fTlc.getMaxGeneration() != 0 && getTileHoldLevelCheckBox().isSelected());
+                    getSpinnerLabel().setEnabled(fTlc.getMaxGeneration() != 0 && getTileHoldLevelCheckBox().isSelected());
+                    getTileLevelControlPanel().setVisible(true);
+                }
+                else
+                {
+                    getTileHoldLevelCheckBox().setSelected(false);
+                    getTileLevelSpinner().setValue(Integer.valueOf(0));
+                    getTileLevelSpinner().setEnabled(false);
+                    getSpinnerLabel().setEnabled(false);
+                    getTileLevelControlPanel().setVisible(false);
                 }
             });
         }
         else
         {
-            EventQueueUtilities.runOnEDT(new Runnable()
+            EventQueueUtilities.runOnEDT(() ->
             {
-                @Override
-                public void run()
-                {
-                    getTileLevelSpinner().setEnabled(false);
-                    getTileHoldLevelCheckBox().setEnabled(false);
-                    getSpinnerLabel().setEnabled(false);
-                    getTileLevelControlPanel().setVisible(false);
-                }
+                getTileLevelSpinner().setEnabled(false);
+                getTileHoldLevelCheckBox().setEnabled(false);
+                getSpinnerLabel().setEnabled(false);
+                getTileLevelControlPanel().setVisible(false);
             });
         }
     }
