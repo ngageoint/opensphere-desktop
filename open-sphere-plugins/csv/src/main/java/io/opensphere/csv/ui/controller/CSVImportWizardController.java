@@ -587,7 +587,9 @@ public class CSVImportWizardController implements Observer
     {
         if (detected.getColorParameter() != null && detected.getColorParameter().getBestConfidence() > confidenceThreshold)
         {
-            parse.getSpecialColumns().add(detected.getColorParameter().getBestValue());
+            SpecialColumn colorColumn = detected.getColorParameter().getBestValue();
+            colorColumn.setFormat("color");
+            parse.getSpecialColumns().add(colorColumn);
         }
     }
 
