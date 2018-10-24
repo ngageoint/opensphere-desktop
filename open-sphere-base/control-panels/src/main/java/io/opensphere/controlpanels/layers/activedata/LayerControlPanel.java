@@ -37,6 +37,7 @@ import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.TileLevelController;
 import io.opensphere.mantle.data.event.DataTypeVisibilityChangeEvent;
+import io.opensphere.mantle.data.impl.DefaultTileLevelController;
 import io.opensphere.mantle.gui.color.DataTypeColorChooser;
 
 /**
@@ -286,8 +287,17 @@ public abstract class LayerControlPanel extends AbstractHUDPanel
                             c.setDivisionOverride(myTileLevelHoldCheckBox.isSelected());
                             try
                             {
-                                getTileLevelSpinner().setModel(
-                                        new SpinnerNumberModel(c.getDivisionHoldGeneration(), 0, c.getMaxGeneration(), 1));
+                                if (c instanceof DefaultTileLevelController)
+                                {
+                                    DefaultTileLevelController levelController = (DefaultTileLevelController)c;
+                                    getTileLevelSpinner().setModel(new SpinnerNumberModel(levelController.getCurrentHoldLevel(),
+                                            levelController.getMinimumHoldLevel(), levelController.getMaxGeneration(), 1));
+                                }
+                                else
+                                {
+                                    getTileLevelSpinner().setModel(
+                                            new SpinnerNumberModel(c.getDivisionHoldGeneration(), 0, c.getMaxGeneration(), 1));
+                                }
                             }
                             catch (IllegalArgumentException ex)
                             {
@@ -383,6 +393,10 @@ public abstract class LayerControlPanel extends AbstractHUDPanel
                             for (TileLevelController c : tlcControllers)
                             {
                                 c.setDivisionHoldGeneration(spinnerNumber.intValue());
+                                if (c instanceof DefaultTileLevelController)
+                                {
+                                    ((DefaultTileLevelController)c).setCurrentHoldLevel(spinnerNumber.intValue());
+                                }
                             }
                         }
                     }

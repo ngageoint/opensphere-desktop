@@ -9,6 +9,8 @@ import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.collections.WeakHashSet;
 import io.opensphere.mantle.data.TileLevelController;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  * The Class DefaultTileLevelController.
@@ -21,8 +23,14 @@ public class DefaultTileLevelController implements TileLevelController
     /** The Divider lock. */
     private final ReentrantLock myDividerLock;
 
+    /** The Property for the hold level. */
+    private final IntegerProperty myHoldLevelProperty;
+
     /** The Max generation. -1 implies unknown */
     private int myMaxGeneration = -1;
+
+    /** The minimum hold level. */
+    private int myMinimumHoldLevel;
 
     /** The Divider lock. */
     private final ReentrantLock myTileGeometryLock;
@@ -39,6 +47,7 @@ public class DefaultTileLevelController implements TileLevelController
         myTileGeometryLock = new ReentrantLock();
         myDividers = new WeakHashSet<>();
         myTileGeometrySet = new WeakHashSet<>();
+        myHoldLevelProperty = new SimpleIntegerProperty(0);
     }
 
     /**
@@ -161,10 +170,40 @@ public class DefaultTileLevelController implements TileLevelController
         return holdGen;
     }
 
+    /**
+     * Gets the current level that is being held at.
+     *
+     * @return the current hold level
+     */
+    public int getCurrentHoldLevel()
+    {
+        return myHoldLevelProperty.get();
+    }
+
+    /**
+     * Gets the hold level property.
+     *
+     * @return the hold level property
+     */
+    public IntegerProperty getHoldLevelProperty()
+    {
+        return myHoldLevelProperty;
+    }
+
     @Override
     public int getMaxGeneration()
     {
         return myMaxGeneration;
+    }
+
+    /**
+     * Gets the minimum hold level.
+     *
+     * @return the minimum hold level
+     */
+    public int getMinimumHoldLevel()
+    {
+        return myMinimumHoldLevel;
     }
 
     @Override
@@ -267,6 +306,16 @@ public class DefaultTileLevelController implements TileLevelController
     }
 
     /**
+     * Sets the current level to be held at.
+     *
+     * @param holdLevel the new current hold level
+     */
+    public void setCurrentHoldLevel(int holdLevel)
+    {
+        myHoldLevelProperty.set(holdLevel);
+    }
+
+    /**
      * Sets the max generation. (-1 implies unknown or undetermined ).
      *
      * @param maxGen the new max generation (-1 implies unknown or undetermined
@@ -275,6 +324,16 @@ public class DefaultTileLevelController implements TileLevelController
     public void setMaxGeneration(int maxGen)
     {
         myMaxGeneration = maxGen;
+    }
+
+    /**
+     * Sets the minimum hold level.
+     *
+     * @param holdLevel the new minimum hold level
+     */
+    public void setMinimumHoldLevel(int holdLevel)
+    {
+        myMinimumHoldLevel = holdLevel;
     }
 
     @Override

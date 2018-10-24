@@ -78,7 +78,7 @@ public class XYZMantleController extends DataRegistryListenerAdapter<XYZTileLaye
     private final SettingsBroker mySettingsBroker;
 
     /**
-     * The order manager for tile layers that have corresponding feature data
+     * The order manager for tile layers that have corresponding feature data.
      */
     private final DefaultDataTypeInfoOrderManager myTileOrderManager;
 
@@ -305,7 +305,17 @@ public class XYZMantleController extends DataRegistryListenerAdapter<XYZTileLaye
         props.setOpacity(opacity);
         DefaultMapTileVisualizationInfo mapVisInfo = new DefaultMapTileVisualizationInfo(MapVisualizationType.IMAGE_TILE, props,
                 true);
-        mapVisInfo.setTileLevelController(new DefaultTileLevelController());
+        DefaultTileLevelController levelController = new DefaultTileLevelController();
+        levelController.setMaxGeneration(dataType.getLayerInfo().getMaxLevelsDefault());
+        levelController.setMinimumHoldLevel(layer.getMinZoomLevel());
+        levelController.getHoldLevelProperty().addListener((obsValue, oldValue, newValue) ->
+        {
+            XYZSettings settings = mySettingsBroker.getSettings(layer);
+            settings.setMaxZoomLevelCurrent(newValue.intValue());
+            mySettingsBroker.saveSettings(settings);
+            layer.setMaxLevelsUser(newValue.intValue());
+        });
+        mapVisInfo.setTileLevelController(levelController);
         dataType.setMapVisualizationInfo(mapVisInfo);
         DataGroupInfo layerGroup = suggestedLayerGroup;
 
