@@ -12,7 +12,6 @@ import io.opensphere.importer.config.ColumnType;
  */
 public class ColorDecider extends SingleLocationColumnDecider
 {
-
     /** The list of long names used for color columns. */
     private final List<String> myLongNames;
 
