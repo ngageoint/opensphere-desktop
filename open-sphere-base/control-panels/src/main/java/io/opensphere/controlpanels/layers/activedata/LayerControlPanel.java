@@ -264,37 +264,34 @@ public abstract class LayerControlPanel extends AbstractHUDPanel
             myTileLevelHoldCheckBox = new JCheckBox("Hold Level", false);
             myTileLevelHoldCheckBox.setFocusable(false);
             myTileLevelHoldCheckBox.setBorder(null);
-            myTileLevelHoldCheckBox.addActionListener(l ->
+            myTileLevelHoldCheckBox.addActionListener(e ->
             {
-                Set<TileLevelController> tlcControllers = getTileLevelControllers();
-                if (tlcControllers != null)
+                Set<TileLevelController> tileLevelControllers = getTileLevelControllers();
+                for (TileLevelController controller : tileLevelControllers)
                 {
-                    for (TileLevelController c : tlcControllers)
+                    if (controller.getMaxGeneration() == -1)
                     {
-                        if (c.getMaxGeneration() == -1)
+                        continue;
+                    }
+                    controller.setDivisionOverride(myTileLevelHoldCheckBox.isSelected());
+                    try
+                    {
+                        if (controller instanceof DefaultTileLevelController)
                         {
-                            continue;
+                            DefaultTileLevelController defaultController = (DefaultTileLevelController)controller;
+                            getTileLevelSpinner().setModel(new SpinnerNumberModel(defaultController.getCurrentHoldLevel(),
+                                    defaultController.getMinimumHoldLevel(), defaultController.getMaxGeneration(), 1));
                         }
-                        c.setDivisionOverride(myTileLevelHoldCheckBox.isSelected());
-                        try
+                        else
                         {
-                            if (c instanceof DefaultTileLevelController)
-                            {
-                                DefaultTileLevelController defaultController = (DefaultTileLevelController)c;
-                                getTileLevelSpinner().setModel(new SpinnerNumberModel(defaultController.getCurrentHoldLevel(),
-                                        defaultController.getMinimumHoldLevel(), defaultController.getMaxGeneration(), 1));
-                            }
-                            else
-                            {
-                                getTileLevelSpinner().setModel(
-                                        new SpinnerNumberModel(c.getDivisionHoldGeneration(), 0, c.getMaxGeneration(), 1));
-                            }
+                            getTileLevelSpinner().setModel(
+                                    new SpinnerNumberModel(controller.getDivisionHoldGeneration(), 0, controller.getMaxGeneration(), 1));
                         }
-                        catch (IllegalArgumentException ex)
-                        {
-                            getTileLevelSpinner()
-                                    .setModel(new SpinnerNumberModel(c.getMaxGeneration(), 0, c.getMaxGeneration(), 1));
-                        }
+                    }
+                    catch (IllegalArgumentException ex)
+                    {
+                        getTileLevelSpinner()
+                                .setModel(new SpinnerNumberModel(controller.getMaxGeneration(), 0, controller.getMaxGeneration(), 1));
                     }
                 }
                 getTileLevelSpinner().setEnabled(myTileLevelHoldCheckBox.isSelected());
@@ -314,7 +311,7 @@ public abstract class LayerControlPanel extends AbstractHUDPanel
      */
     private Set<TileLevelController> getTileLevelControllers()
     {
-        Set<TileLevelController> tlcSet = New.set();
+        Set<TileLevelController> tileLevelControllers = New.set();
         DataTypeInfo selectedType = getSelectedDataType();
         DataGroupInfo selectedGroup = getSelectedDataGroup();
         if (selectedType != null)
@@ -322,7 +319,7 @@ public abstract class LayerControlPanel extends AbstractHUDPanel
             if (selectedType.getMapVisualizationInfo() != null
                     && selectedType.getMapVisualizationInfo().getTileLevelController() != null)
             {
-                tlcSet.add(selectedType.getMapVisualizationInfo().getTileLevelController());
+                tileLevelControllers.add(selectedType.getMapVisualizationInfo().getTileLevelController());
             }
         }
         else if (selectedGroup != null)
@@ -331,11 +328,11 @@ public abstract class LayerControlPanel extends AbstractHUDPanel
             {
                 if (dti.getMapVisualizationInfo() != null && dti.getMapVisualizationInfo().getTileLevelController() != null)
                 {
-                    tlcSet.add(dti.getMapVisualizationInfo().getTileLevelController());
+                    tileLevelControllers.add(dti.getMapVisualizationInfo().getTileLevelController());
                 }
             }
         }
-        return tlcSet;
+        return tileLevelControllers;
     }
 
     /**
@@ -368,22 +365,18 @@ public abstract class LayerControlPanel extends AbstractHUDPanel
             myTileLevelSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 15, 1));
             myTileLevelSpinner.setBackground(ourComponentBackground);
             myTileLevelSpinner.setFocusable(false);
-            myTileLevelSpinner.addChangeListener(l ->
+            myTileLevelSpinner.addChangeListener(e ->
             {
                 Object spinnerValue = myTileLevelSpinner.getValue();
                 if (spinnerValue instanceof Number)
                 {
                     Number spinnerNumber = (Number)spinnerValue;
-                    Set<TileLevelController> tlcControllers = getTileLevelControllers();
-                    if (tlcControllers != null)
+                    for (TileLevelController controller : getTileLevelControllers())
                     {
-                        for (TileLevelController c : tlcControllers)
+                        controller.setDivisionHoldGeneration(spinnerNumber.intValue());
+                        if (controller instanceof DefaultTileLevelController)
                         {
-                            c.setDivisionHoldGeneration(spinnerNumber.intValue());
-                            if (c instanceof DefaultTileLevelController)
-                            {
-                                ((DefaultTileLevelController)c).setCurrentHoldLevel(spinnerNumber.intValue());
-                            }
+                            ((DefaultTileLevelController)controller).setCurrentHoldLevel(spinnerNumber.intValue());
                         }
                     }
                 }
@@ -464,40 +457,36 @@ public abstract class LayerControlPanel extends AbstractHUDPanel
      */
     protected void updateTileLevelControlPanel()
     {
-        final Set<TileLevelController> tlcSet = getTileLevelControllers();
-        if (tlcSet != null && !tlcSet.isEmpty())
+        final Set<TileLevelController> tileLevelControllers = getTileLevelControllers();
+        if (!tileLevelControllers.isEmpty())
         {
             EventQueueUtilities.runOnEDT(() ->
             {
-                TileLevelController fTlc = tlcSet.iterator().next();
+                TileLevelController firstController = tileLevelControllers.iterator().next();
                 boolean hasActiveTypes = hasActiveTileDataTypes();
-                getTileHoldLevelCheckBox().setEnabled(fTlc != null && hasActiveTypes);
-                if (fTlc != null && hasActiveTypes)
+                getTileHoldLevelCheckBox().setEnabled(firstController != null && hasActiveTypes);
+                if (firstController != null && hasActiveTypes)
                 {
-                    getTileHoldLevelCheckBox().setSelected(fTlc.isDivisionOverride());
-                    int curGen = fTlc.getCurrentGeneration();
-                    if (curGen > fTlc.getMaxGeneration() && fTlc.getMaxGeneration() >= 0)
+                    getTileHoldLevelCheckBox().setSelected(firstController.isDivisionOverride());
+                    int currentGeneration = firstController.getCurrentGeneration();
+                    if (currentGeneration > firstController.getMaxGeneration() && firstController.getMaxGeneration() >= 0)
                     {
-                        curGen = fTlc.getMaxGeneration();
-                        for (TileLevelController c : tlcSet)
-                        {
-                            c.setDivisionHoldGeneration(curGen);
-                        }
+                        tileLevelControllers.forEach(c -> c.setDivisionHoldGeneration(firstController.getMaxGeneration()));
                     }
 
-                    if (fTlc instanceof DefaultTileLevelController)
+                    if (firstController instanceof DefaultTileLevelController)
                     {
-                        DefaultTileLevelController defaultController = (DefaultTileLevelController)fTlc;
+                        DefaultTileLevelController defaultController = (DefaultTileLevelController)firstController;
                         getTileLevelSpinner().setModel(new SpinnerNumberModel(defaultController.getCurrentHoldLevel(),
-                                        defaultController.getMinimumHoldLevel(), defaultController.getMaxGeneration(), 1));
+                                defaultController.getMinimumHoldLevel(), defaultController.getMaxGeneration(), 1));
                     }
                     else
                     {
-                        int spinnerMax = fTlc.getMaxGeneration() > 0 ? fTlc.getMaxGeneration() : 1;
-                        getTileLevelSpinner().setModel(new SpinnerNumberModel(curGen, 0, spinnerMax, 1));
+                        int spinnerMax = firstController.getMaxGeneration() > 0 ? firstController.getMaxGeneration() : 1;
+                        getTileLevelSpinner().setModel(new SpinnerNumberModel(currentGeneration, 0, spinnerMax, 1));
                     }
-                    getTileLevelSpinner().setEnabled(fTlc.getMaxGeneration() != 0 && getTileHoldLevelCheckBox().isSelected());
-                    getSpinnerLabel().setEnabled(fTlc.getMaxGeneration() != 0 && getTileHoldLevelCheckBox().isSelected());
+                    getTileLevelSpinner().setEnabled(firstController.getMaxGeneration() != 0 && getTileHoldLevelCheckBox().isSelected());
+                    getSpinnerLabel().setEnabled(firstController.getMaxGeneration() != 0 && getTileHoldLevelCheckBox().isSelected());
                     getTileLevelControlPanel().setVisible(true);
                 }
                 else

@@ -71,14 +71,14 @@ public class DefaultTileLevelController implements TileLevelController
     /**
      * Adds the tile geometries.
      *
-     * @param geoms the geoms
+     * @param geometries the geometries
      */
-    public void addTileGeometries(Collection<? extends AbstractTileGeometry<?>> geoms)
+    public void addTileGeometries(Collection<? extends AbstractTileGeometry<?>> geometries)
     {
         myTileGeometryLock.lock();
         try
         {
-            myTileGeometrySet.addAll(geoms);
+            myTileGeometrySet.addAll(geometries);
         }
         finally
         {
@@ -125,21 +125,21 @@ public class DefaultTileLevelController implements TileLevelController
         myTileGeometryLock.lock();
         try
         {
-            for (AbstractTileGeometry<?> geom : myTileGeometrySet)
+            for (AbstractTileGeometry<?> geometry : myTileGeometrySet)
             {
                 Collection<AbstractTileGeometry<?>> descendants = New.collection();
-                geom.getDescendants(descendants);
+                geometry.getDescendants(descendants);
 
-                if (geom.getGeneration() > maxGenerationValue)
+                if (geometry.getGeneration() > maxGenerationValue)
                 {
-                    maxGenerationValue = geom.getGeneration();
+                    maxGenerationValue = geometry.getGeneration();
                 }
 
-                for (AbstractTileGeometry<?> desc : descendants)
+                for (AbstractTileGeometry<?> descendant : descendants)
                 {
-                    if (desc.getGeneration() > maxGenerationValue)
+                    if (descendant.getGeneration() > maxGenerationValue)
                     {
-                        maxGenerationValue = desc.getGeneration();
+                        maxGenerationValue = descendant.getGeneration();
                     }
                 }
             }
@@ -154,20 +154,20 @@ public class DefaultTileLevelController implements TileLevelController
     @Override
     public int getDivisionHoldGeneration()
     {
-        int holdGen = 0;
+        int holdGeneration = 0;
         myDividerLock.lock();
         try
         {
             if (myDividers != null && !myDividers.isEmpty())
             {
-                holdGen = myDividers.iterator().next().getHoldGeneration();
+                holdGeneration = myDividers.iterator().next().getHoldGeneration();
             }
         }
         finally
         {
             myDividerLock.unlock();
         }
-        return holdGen;
+        return holdGeneration;
     }
 
     /**
@@ -185,7 +185,7 @@ public class DefaultTileLevelController implements TileLevelController
      *
      * @return the current hold level property
      */
-    public IntegerProperty getCurrentHoldLevelProperty()
+    public IntegerProperty currentHoldLevelProperty()
     {
         return myCurrentHoldLevelProperty;
     }
@@ -209,20 +209,20 @@ public class DefaultTileLevelController implements TileLevelController
     @Override
     public boolean isDivisionOverride()
     {
-        boolean divOverride = false;
+        boolean divisionOverride = false;
         myDividerLock.lock();
         try
         {
             if (myDividers != null && !myDividers.isEmpty())
             {
-                divOverride = myDividers.iterator().next().isDivisionOverride();
+                divisionOverride = myDividers.iterator().next().isDivisionOverride();
             }
         }
         finally
         {
             myDividerLock.unlock();
         }
-        return divOverride;
+        return divisionOverride;
     }
 
     /**
@@ -244,23 +244,23 @@ public class DefaultTileLevelController implements TileLevelController
     }
 
     @Override
-    public void setDivisionHoldGeneration(int pGen)
+    public void setDivisionHoldGeneration(int newGeneration)
     {
-        int gen = pGen;
-        if (gen < 0)
+        int generation = newGeneration;
+        if (generation < 0)
         {
             throw new IllegalArgumentException("Division hold generation can not be less than zero.");
         }
-        else if (myMaxGeneration != -1 && gen > myMaxGeneration)
+        else if (myMaxGeneration != -1 && generation > myMaxGeneration)
         {
-            gen = myMaxGeneration;
+            generation = myMaxGeneration;
         }
         myDividerLock.lock();
         try
         {
             for (AbstractDivider<GeographicPosition> divider : myDividers)
             {
-                divider.setDivisionHoldGeneration(gen);
+                divider.setDivisionHoldGeneration(generation);
             }
         }
         finally
@@ -277,10 +277,10 @@ public class DefaultTileLevelController implements TileLevelController
         {
             if (enabled)
             {
-                int curGen = getCurrentGeneration();
+                int currentGeneration = getCurrentGeneration();
                 for (AbstractDivider<GeographicPosition> divider : myDividers)
                 {
-                    divider.setDivisionHoldGeneration(curGen);
+                    divider.setDivisionHoldGeneration(currentGeneration);
                 }
                 for (AbstractDivider<GeographicPosition> divider : myDividers)
                 {
@@ -318,12 +318,12 @@ public class DefaultTileLevelController implements TileLevelController
     /**
      * Sets the max generation. (-1 implies unknown or undetermined ).
      *
-     * @param maxGen the new max generation (-1 implies unknown or undetermined
+     * @param maxGeneration the new max generation (-1 implies unknown or undetermined
      *            ).
      */
-    public void setMaxGeneration(int maxGen)
+    public void setMaxGeneration(int maxGeneration)
     {
-        myMaxGeneration = maxGen;
+        myMaxGeneration = maxGeneration;
     }
 
     /**

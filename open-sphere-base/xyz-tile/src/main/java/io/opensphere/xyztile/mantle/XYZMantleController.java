@@ -309,7 +309,7 @@ public class XYZMantleController extends DataRegistryListenerAdapter<XYZTileLaye
         levelController.setMaxGeneration(dataType.getLayerInfo().getMaxLevelsDefault());
         levelController.setMinimumHoldLevel(layer.getMinZoomLevel() + 1);
         levelController.setCurrentHoldLevel(dataType.getLayerInfo().getMaxLevelsDefault());
-        levelController.getCurrentHoldLevelProperty().addListener((obsValue, oldValue, newValue) ->
+        levelController.currentHoldLevelProperty().addListener((obsValue, oldValue, newValue) ->
         {
             XYZSettings settings = mySettingsBroker.getSettings(layer);
             settings.setMaxZoomLevelCurrent(newValue.intValue());
