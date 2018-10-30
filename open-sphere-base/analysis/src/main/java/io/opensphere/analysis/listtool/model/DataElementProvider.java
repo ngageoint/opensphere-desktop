@@ -7,8 +7,6 @@ import java.util.Objects;
 import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 
-import javafx.beans.value.ChangeListener;
-
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableModel;
 
@@ -32,6 +30,7 @@ import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.element.MapDataElement;
 import io.opensphere.mantle.data.util.DataElementLookupUtils;
 import io.opensphere.mantle.util.MantleToolboxUtils;
+import javafx.beans.value.ChangeListener;
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.NotThreadSafe;
 
@@ -431,9 +430,10 @@ class DataElementProvider extends AbstractRowDataProvider<List<?>>
     public DataElement lookupDataElement(long id)
     {
         DataElement dataElement = myDataElementLookupUtils.getDataElement(id, myDataType, myDataType.getTypeKey());
-        if (dataElement instanceof MapDataElement)
+        if (dataElement instanceof MapDataElement && ((MapDataElement)dataElement).getMapGeometrySupport() != null)
         {
-            // If the element is a MapDataElement, generate a replacement element with MGRS Derived data
+            // If the element is a MapDataElement, generate a replacement
+            // element with MGRS Derived data
             return MGRSUtilities.getMGRSDataElement((MapDataElement)dataElement,
                     MGRSPreferences.getToolMGRSPrecision(myToolbox.getPreferencesRegistry()), this);
         }
