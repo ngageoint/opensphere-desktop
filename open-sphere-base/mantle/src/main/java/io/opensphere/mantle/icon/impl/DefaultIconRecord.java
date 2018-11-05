@@ -6,6 +6,7 @@ import java.util.Objects;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
+import javafx.scene.image.Image;
 
 /**
  * The Class DefaultIconRecord.
@@ -20,6 +21,9 @@ public class DefaultIconRecord implements IconRecord
 
     /** The Image provider. */
     private final URL myImageURLValue;
+
+    /** A lazily instantiated image. */
+    private Image myImage;
 
     /** The Source. */
     private final String mySourceKey;
@@ -41,6 +45,7 @@ public class DefaultIconRecord implements IconRecord
         myCollectionNameString = ip.getCollectionName() == null ? DEFAULT_COLLECTION : ip.getCollectionName();
         mySubCategoryValue = ip.getSubCategory();
         mySourceKey = ip.getSourceKey();
+        myImage = new Image(myImageURLValue.toString());
     }
 
     @Override
@@ -78,6 +83,17 @@ public class DefaultIconRecord implements IconRecord
     public URL getImageURL()
     {
         return myImageURLValue;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.icon.IconRecord#getImage()
+     */
+    @Override
+    public Image getImage()
+    {
+        return myImage;
     }
 
     @Override

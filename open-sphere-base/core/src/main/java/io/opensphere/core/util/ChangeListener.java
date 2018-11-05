@@ -7,7 +7,9 @@ package io.opensphere.core.util;
  * {@link ObservableValue#removeListener(ChangeListener)}
  *
  * @param <T> The type of the wrapped value.
+ * @deprecated use javafx.beans.value.ChangeListener<T> instead.
  */
+@Deprecated
 @FunctionalInterface
 public interface ChangeListener<T>
 {

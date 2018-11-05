@@ -2,6 +2,8 @@ package io.opensphere.mantle.icon;
 
 import java.net.URL;
 
+import javafx.scene.image.Image;
+
 /**
  * The Interface IconRecord.
  */
@@ -36,6 +38,8 @@ public interface IconRecord
      * @return the image provider
      */
     URL getImageURL();
+
+    Image getImage();
 
     /**
      * Gets the source key.

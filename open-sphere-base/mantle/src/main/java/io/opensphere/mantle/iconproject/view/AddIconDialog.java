@@ -5,6 +5,7 @@ import java.awt.Window;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -81,7 +82,7 @@ public class AddIconDialog extends JFXDialog
                 JOptionPane.showMessageDialog(myOwner, "Failed to load one or more icons: " + resultFile.getAbsolutePath(),
                         "Image Load Error", JOptionPane.ERROR_MESSAGE);
             }
-            myPanelModel.getViewModel().getMainPanel().refresh();
+//            myPanelModel.getViewModel().getMainPanel().refresh();
         }
     }
 }

@@ -92,7 +92,7 @@ public class SubCollectPane extends VBox
     public SubCollectPane(PanelModel panelModel)
     {
         myPanelModel = panelModel;
-        myImportProps = myPanelModel.getImportProps();
+        myImportProps = myPanelModel.getImportProperties();
         myIconRegistry = myPanelModel.getIconRegistry();
         myCategorySet = myIconRegistry.getSubCategoiresForCollection("Default");
         List<String> names = New.list(myCategorySet);

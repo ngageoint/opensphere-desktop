@@ -2,14 +2,17 @@ package io.opensphere.mantle.iconproject.view;
 
 import java.awt.Dimension;
 import java.awt.Window;
+import java.net.URL;
+import java.util.function.Supplier;
+
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.fx.JFXDialog;
+import io.opensphere.core.util.net.UrlUtilities;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.model.ViewModel;
-import io.opensphere.mantle.iconproject.panels.MainPanel;
-import io.opensphere.mantle.iconproject.panels.TopMenuBar;
+import io.opensphere.mantle.iconproject.panels.IconEditor;
 import io.opensphere.mantle.util.MantleToolboxUtils;
-import javafx.scene.control.TreeItem;
+import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 
 /** Main UI Frame. */
@@ -34,31 +37,45 @@ public class IconProjDialog extends JFXDialog
      * @param tb the toolbox for registry items.
      * @param showCancel the boolean to toggle the JFX Dialog to show or not
      *            show the cancel option.
-     * @param multiSelectEnabled the option to enable or disable selecting multiple icons.
+     * @param multiSelectEnabled the option to enable or disable selecting
+     *            multiple icons.
+     * @param style
      */
 
-    public IconProjDialog(Window owner, Toolbox tb, boolean showCancel, boolean multiSelectEnabled)
+    public IconProjDialog(Window owner, Toolbox tb, boolean showCancel, boolean multiSelectEnabled,
+            Supplier<String> initialValueSupplier)
     {
         super(owner, "Icon Manager", showCancel);
         myToolbox = tb;
         myPanelModel = new PanelModel(myToolbox);
+
         myPanelModel.setOwner(owner);
         myPanelModel.setIconRegistry(MantleToolboxUtils.getMantleToolbox(tb).getIconRegistry());
+
+        if (initialValueSupplier != null)
+        {
+            String value = initialValueSupplier.get();
+            URL url = UrlUtilities.toURL(value);
+            if (url != null)
+            {
+                myPanelModel.getSelectedRecord().set(myPanelModel.getIconRegistry().getIconRecord(url));
+            }
+        }
+
         myViewModel = new ViewModel();
         myViewModel.setMultiSelectEnabled(multiSelectEnabled);
         myPanelModel.setViewModel(myViewModel);
         setMinimumSize(new Dimension(800, 600));
         setSize(875, 600);
         setFxNode(new IconProjView(myPanelModel));
+
         if (myPanelModel.getIconRegistry().getManagerPrefs().getIconWidth() != 0)
         {
-            myPanelModel.getCurrentTileWidth().set(myPanelModel.getIconRegistry().getManagerPrefs().getIconWidth());
+            myPanelModel.tileWidthProperty().set(myPanelModel.getIconRegistry().getManagerPrefs().getIconWidth());
         }
 
-        myPanelModel.getViewModel().getMainPanel().refresh();
         setLocationRelativeTo(owner);
         setAcceptListener(() -> savePrefs());
-        myPanelModel.getViewModel().getMainPanel().setDividerPositions(.28);
     }
 
     /**
@@ -68,20 +85,18 @@ public class IconProjDialog extends JFXDialog
     // For now the only saved preference is display width.
     private void savePrefs()
     {
-        MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getManagerPrefs().setIconWidth(
-                myPanelModel.getCurrentTileWidth().get());
-        MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getManagerPrefs().setTreeSelection((TreeItem<String>)myPanelModel
-                .getTreeObject().getSelectedTree().getSelectionModel().selectedItemProperty().get());
+        MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getManagerPrefs()
+                .setIconWidth((int)myPanelModel.tileWidthProperty().get());
+
+//        MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getManagerPrefs().setTreeSelection(
+//                myPanelModel.getTreeObject().getSelectedTree().getSelectionModel().selectedItemProperty().get());
     }
 
     /** Packages UI elements into one pane. */
     public class IconProjView extends AnchorPane
     {
-        /** The top bar consisting of view,sizing, and filter. */
-        final private TopMenuBar myTopMenuBar;
-
         /** Panel comprised of Tree and icon display. */
-        final private MainPanel myMainPanel;
+        final private Node myMainPanel;
 
         /** The Model for the entire UI. */
         private final PanelModel myPanelModel;
@@ -99,20 +114,38 @@ public class IconProjDialog extends JFXDialog
             myPanelModel = panelModel;
             myViewModel = myPanelModel.getViewModel();
 
-            myMainPanel = new MainPanel(myPanelModel);
+            myMainPanel = new IconEditor(myPanelModel);
             myViewModel.setMainPanel(myMainPanel);
 
-            myTopMenuBar = new TopMenuBar(myPanelModel);
-
-            setTopAnchor(myMainPanel, 30.0);
+            setTopAnchor(myMainPanel, 0.0);
             setBottomAnchor(myMainPanel, 0.0);
-            setLeftAnchor(myMainPanel, -8.);
+            setLeftAnchor(myMainPanel, 0.);
             setRightAnchor(myMainPanel, 0.);
-            setLeftAnchor(myTopMenuBar, 0.);
-            setRightAnchor(myTopMenuBar, 0.);
 
             myPanelModel.setViewModel(myViewModel);
-            getChildren().addAll(myMainPanel, myTopMenuBar);
+            getChildren().addAll(myMainPanel);
+
+            setOnKeyTyped(e ->
+            {
+                if (e.getCharacter().equals("\b"))
+                {
+                    String current = myPanelModel.searchTextProperty().get();
+                    if (current.length() > 0)
+                    {
+                        current = current.substring(0, current.length() - 1);
+                    }
+                    myPanelModel.searchTextProperty().set(current);
+                }
+                else
+                {
+                    String current = myPanelModel.searchTextProperty().get();
+                    if (current == null)
+                    {
+                        current = "";
+                    }
+                    myPanelModel.searchTextProperty().set(current + e.getCharacter());
+                }
+            });
         }
     }
 

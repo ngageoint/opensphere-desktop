@@ -84,7 +84,7 @@ class MantleMenuInit
         {
             Quantify.collectMetric("mist3d.menu-bar.tools.icon-manager");
             IconProjDialog internIconManager = new IconProjDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
-                    myToolbox, false, true);
+                    myToolbox, false, true, null);
             internIconManager.setVisible(true);
         });
         myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.TOOLS_MENU)

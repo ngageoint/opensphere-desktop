@@ -38,6 +38,10 @@
     -fx-font-family: "Font Awesome 5 Brands Regular";
 }
 
+.icons-WebHostingHub-Glyphs { 
+	-fx-font-family: "WebHostingHub-Glyphs";
+}
+
 .icons-FontAwesome {
     -fx-font-family: FontAwesome;
 }

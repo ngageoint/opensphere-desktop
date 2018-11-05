@@ -2,8 +2,6 @@ package io.opensphere.controlpanels.iconpicker.ui;
 
 import java.util.function.Supplier;
 
-import javafx.beans.property.ObjectProperty;
-
 import javax.swing.JFrame;
 
 import io.opensphere.controlpanels.iconpicker.controller.IconChooserDisplayer;
@@ -12,6 +10,7 @@ import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.impl.gui.IconChooserDialog;
 import io.opensphere.mantle.iconproject.view.IconProjDialog;
+import javafx.beans.property.ObjectProperty;
 
 /**
  * Displays the {@link IconChooserDialog} and gets the {@link IconRecord} from
@@ -39,9 +38,16 @@ public class IconChooserDisplayerImpl implements IconChooserDisplayer
     {
         EventQueueUtilities.runOnEDT(() ->
         {
-            IconProjDialog fileDialog = new IconProjDialog(myParent.get(), toolbox, false, false);
-            fileDialog.getPanelModel().getSelectedRecord().addListener((o, v, n) ->
-                    selectedIcon.set(fileDialog.getPanelModel().getSelectedRecord().get()));
+            IconProjDialog fileDialog = new IconProjDialog(myParent.get(), toolbox, false, false, () ->
+            {
+                if (selectedIcon.get() != null)
+                {
+                    return selectedIcon.get().getImageURL().toString();
+                }
+                return null;
+            });
+            fileDialog.getPanelModel().getSelectedRecord()
+                    .addListener((o, v, n) -> selectedIcon.set(fileDialog.getPanelModel().getSelectedRecord().get()));
             fileDialog.setVisible(true);
         });
     }

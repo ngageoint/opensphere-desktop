@@ -2,6 +2,7 @@ package io.opensphere.mantle.iconproject.impl;
 
 import java.util.List;
 import java.util.Set;
+
 import javax.swing.JOptionPane;
 
 import io.opensphere.core.util.collections.New;
@@ -63,7 +64,7 @@ public class IconPopupMenuImpl
                     null, "User");
             myPanelModel.getIconRegistry().addIcon(provider, this);
         }
-        myPanelModel.getViewModel().getMainPanel().refresh();
+//        myPanelModel.getViewModel().getMainPanel().refresh();
     }
 
     /**
@@ -109,14 +110,14 @@ public class IconPopupMenuImpl
                 myPanelModel.getIconRegistry().deleteIcon(myPanelModel.getSelectedRecord().get(), myPanelModel);
             }
         }
-        myPanelModel.getViewModel().getMainPanel().refresh();
+//        myPanelModel.getViewModel().getMainPanel().refresh();
     }
 
     /** Un-Selects all selected Icons visually and in the registry. */
     public void unSelectAllIcons()
     {
-        myPanelModel.getAllSelectedIcons().values().stream().filter(b -> myPanelModel.getViewModel().getMainPanel().getIconGrid()
-                .getChildren().contains(b)).forEach(b -> b.setStyle(""));
+//        myPanelModel.getAllSelectedIcons().values().stream().filter(b -> myPanelModel.getViewModel().getMainPanel().getIconGrid()
+//                .getChildren().contains(b)).forEach(b -> b.setStyle(""));
         myPanelModel.getAllSelectedIcons().clear();
         myPanelModel.getSingleSelectedIcon().clear();
     }
@@ -126,7 +127,7 @@ public class IconPopupMenuImpl
     {
         myPanelModel.getSingleSelectedIcon().forEach((i, b) ->
         {
-            myPanelModel.getAllSelectedIcons().remove(i);            
+            myPanelModel.getAllSelectedIcons().remove(i);
             b.setStyle("");
         });
         myPanelModel.getSingleSelectedIcon().clear();

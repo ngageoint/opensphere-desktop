@@ -3,26 +3,67 @@ package io.opensphere.mantle.iconproject.model;
 import java.awt.Window;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.control.Button;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.javafx.ConcurrentDoubleProperty;
+import io.opensphere.core.util.javafx.ConcurrentStringProperty;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
+import io.opensphere.mantle.icon.IconRegistryListener;
 import io.opensphere.mantle.iconproject.impl.DefaultIconRecordTreeItemObject;
+import io.opensphere.mantle.iconproject.model.IconRegistryChangeListener.Change;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.StringProperty;
+import javafx.scene.Node;
 
 /** The model for the IconManagerFrame. */
 public class PanelModel
 {
+    /**
+     * A pass-through registry listener used to inform functional-interface type
+     * listeners of registry additions / removals.
+     */
+    private final class PassThroughIconRegistryListener implements IconRegistryListener
+    {
+        @Override
+        public void iconsUnassigned(List<Long> deIds, Object source)
+        {
+            /* intentionally blank */
+        }
+
+        @Override
+        public void iconsRemoved(List<IconRecord> removed, Object source)
+        {
+            Change change = new Change(null, removed);
+            myRegistryChangeListeners.forEach(c -> c.onChanged(change));
+        }
+
+        @Override
+        public void iconsAdded(List<IconRecord> added, Object source)
+        {
+            Change change = new Change(added, null);
+            myRegistryChangeListeners.forEach(c -> c.onChanged(change));
+        }
+
+        @Override
+        public void iconAssigned(long iconId, List<Long> deIds, Object source)
+        {
+            /* intentionally blank */
+        }
+    }
+
     /** View set to default of Grid. */
     private final ObjectProperty<ViewStyle> myViewStyle = new SimpleObjectProperty<>(this, "viewtype", ViewStyle.GRID);
 
     /** The selected icon to be used for customization dialogs. */
     private final ObjectProperty<IconRecord> mySelectedRecord = new SimpleObjectProperty<>();
+
+    /** The selected icon to be used for customization dialogs. */
+    private final ObjectProperty<IconRecord> myPreviewRecordProperty = new SimpleObjectProperty<>();
 
     /** The registry of icons. */
     private IconRegistry myIconRegistry;
@@ -33,11 +74,14 @@ public class PanelModel
     /** The owner of this window. */
     private Window myOwner;
 
+    /** The model in which search text is maintained. */
+    private StringProperty mySearchText = new ConcurrentStringProperty();
+
     /**
      * The value used for the tilewidth. The number inside is the default value
      * on program startup.
      */
-    private final IntegerProperty myCurrentTileWidth = new SimpleIntegerProperty(80);
+    private final DoubleProperty myCurrentTileWidth = new ConcurrentDoubleProperty(80);
 
     /** The import property. */
     private ImportProp myImportProps = new ImportProp();
@@ -52,7 +96,7 @@ public class PanelModel
     private ViewModel myViewModel;
 
     /** The icons currently selected. */
-    private final HashMap<IconRecord, Button> myAllSelectedIcons = new HashMap<>();
+    private final HashMap<IconRecord, Node> myAllSelectedIcons = new HashMap<>();
 
     /** The Tree model. */
     private DefaultIconRecordTreeItemObject myTreeObject;
@@ -61,21 +105,28 @@ public class PanelModel
      * Used to keep track of which icon and button are selected on the grid for
      * single selection purposes.
      */
-    private final HashMap<IconRecord, Button> mySingleSelectedIcon = new HashMap<>();
+    private final HashMap<IconRecord, Node> mySingleSelectedIcon = new HashMap<>();
 
-    /** Whether to use the filtered icon record list or the regular one. */ 
+    /** Whether to use the filtered icon record list or the regular one. */
     private boolean myUseFilteredList;
+
+    /** The set of change listeners called when icons are added or removed. */
+    private final Set<IconRegistryChangeListener> myRegistryChangeListeners = New.set();
+
+    /** The registry listener used to react to additions and removals. */
+    private final IconRegistryListener myRegistryListener;
 
     /**
      * Builds the panel to use inside the Icon Manager.
      *
      * @param toolbox the toolbox
      */
-    public PanelModel (Toolbox toolbox)
+    public PanelModel(Toolbox toolbox)
     {
         myToolbox = toolbox;
         myFilteredIconRecordList = New.list();
         myUseFilteredList = false;
+        myRegistryListener = new PassThroughIconRegistryListener();
     }
 
     /**
@@ -83,7 +134,7 @@ public class PanelModel
      *
      * @return the chosen view.
      */
-    public ObjectProperty<ViewStyle> getViewStyle()
+    public ObjectProperty<ViewStyle> viewStyleProperty()
     {
         return myViewStyle;
     }
@@ -99,23 +150,21 @@ public class PanelModel
     }
 
     /**
-     * Gets the tile width.
-     *
-     * @return the width of the tiles
-     */
-    public IntegerProperty getCurrentTileWidth()
-    {
-        return myCurrentTileWidth;
-    }
-
-    /**
      * Sets the myIconRegistry.
      *
      * @param iconRegistry the icon registry
      */
     public void setIconRegistry(IconRegistry iconRegistry)
     {
+        if (iconRegistry == null && myIconRegistry != null)
+        {
+            myIconRegistry.removeListener(myRegistryListener);
+        }
         myIconRegistry = iconRegistry;
+        if (myIconRegistry != null)
+        {
+            myIconRegistry.addListener(myRegistryListener);
+        }
     }
 
     /**
@@ -126,6 +175,26 @@ public class PanelModel
     public Toolbox getToolbox()
     {
         return myToolbox;
+    }
+
+    /**
+     * Gets the tile width.
+     *
+     * @return the width of the tiles
+     */
+    public DoubleProperty tileWidthProperty()
+    {
+        return myCurrentTileWidth;
+    }
+
+    /**
+     * Gets the value of the {@link #mySearchText} field.
+     *
+     * @return the value stored in the {@link #mySearchText} field.
+     */
+    public StringProperty searchTextProperty()
+    {
+        return mySearchText;
     }
 
     /**
@@ -153,7 +222,7 @@ public class PanelModel
      *
      * @return the import properties
      */
-    public ImportProp getImportProps()
+    public ImportProp getImportProperties()
     {
         return myImportProps;
     }
@@ -163,7 +232,7 @@ public class PanelModel
      *
      * @param importProps the import properties
      */
-    public void setImportProps(ImportProp importProps)
+    public void setImportProperties(ImportProp importProps)
     {
         myImportProps = importProps;
     }
@@ -223,7 +292,7 @@ public class PanelModel
      *
      * @return the value stored in the {@link #myAllSelectedIcons} field.
      */
-    public HashMap<IconRecord, Button> getAllSelectedIcons()
+    public HashMap<IconRecord, Node> getAllSelectedIcons()
     {
         return myAllSelectedIcons;
     }
@@ -236,6 +305,16 @@ public class PanelModel
     public ObjectProperty<IconRecord> getSelectedRecord()
     {
         return mySelectedRecord;
+    }
+
+    /**
+     * Gets the value of the {@link #myPreviewRecordProperty} field.
+     *
+     * @return the value stored in the {@link #myPreviewRecordProperty} field.
+     */
+    public ObjectProperty<IconRecord> previewRecordProperty()
+    {
+        return myPreviewRecordProperty;
     }
 
     /**
@@ -263,7 +342,7 @@ public class PanelModel
      *
      * @return the selected button
      */
-    public HashMap<IconRecord, Button> getSingleSelectedIcon()
+    public HashMap<IconRecord, Node> getSingleSelectedIcon()
     {
         return mySingleSelectedIcon;
     }
@@ -281,10 +360,31 @@ public class PanelModel
     /**
      * Sets whether to use the filtered list.
      *
-     * @param whether to use the filtered list
+     * @param useFilteredList true to force the use of the filtered list, false
+     *            otherwise.
      */
     public void setUseFilteredList(boolean useFilteredList)
     {
         myUseFilteredList = useFilteredList;
+    }
+
+    /**
+     * Adds a new listener to be notified of registry adds and removes.
+     *
+     * @param listener the listener to add.
+     */
+    public void addRegistryChangeListener(IconRegistryChangeListener listener)
+    {
+        myRegistryChangeListeners.add(listener);
+    }
+
+    /**
+     * Removes the listener from notification of registry adds and removes.
+     *
+     * @param listener the listener to remove.
+     */
+    public void removeRegistryChangeListener(IconRegistryChangeListener listener)
+    {
+        myRegistryChangeListeners.remove(listener);
     }
 }

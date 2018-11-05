@@ -1,5 +1,8 @@
 package io.opensphere.core.util.fx;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import io.opensphere.core.util.FontIconEnum;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -132,5 +135,60 @@ public final class FxIcons
         label.setStyle(style);
 
         return label;
+    }
+
+    /**
+     * Creates a {@link Label} containing the named icon, at the supplied font
+     * size using the supplied color.
+     *
+     * @param icon the name of the icon to render in the label.
+     * @param color the color with which to render the icon.
+     * @param size the size of the icon in the Label, expressed as a font size.
+     * @return a new {@link Label} containing the named icon.
+     */
+    public static Label createClearIcon(FontIconEnum icon, Color color, int size)
+    {
+        Label label = new Label(icon.getFontCode());
+        label.setTextFill(color);
+        label.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+        String fontName = "icons-" + icon.getFont().getFontName().replaceAll("\\s", "-");
+        label.getStyleClass().addAll(fontName);
+        String style = "-fx-font-size: " + size + "px; -fx-text-fill: rgb(" + (int)(color.getRed() * 255) + ","
+                + (int)(color.getGreen() * 255) + "," + (int)(color.getBlue() * 255) + ");";
+        label.setStyle(style);
+
+        return label;
+    }
+
+    /**
+     * Creates a {@link Label} containing the named icon, at the supplied font
+     * size using the supplied color.
+     *
+     * @param icon the name of the icon to render in the label.
+     * @param color the color with which to render the icon.
+     * @param size the size of the icon in the Label, expressed as a font size.
+     * @return a new {@link Label} containing the named icon.
+     */
+    public static Label createClearIcon(Color color, int size, FontIconEnum... icons)
+    {
+        Label label;
+        if (icons.length > 0)
+        {
+            label = new Label(Arrays.stream(icons).map(i -> i.getFontCode()).collect(Collectors.joining(" ")));
+            label.setTextFill(color);
+            label.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+            String fontName = "icons-" + icons[0].getFont().getFontName().replaceAll("\\s", "-");
+            label.getStyleClass().addAll(fontName);
+            String style = "-fx-font-size: " + size + "px; -fx-text-fill: rgb(" + (int)(color.getRed() * 255) + ","
+                    + (int)(color.getGreen() * 255) + "," + (int)(color.getBlue() * 255) + ");";
+            label.setStyle(style);
+        }
+        else
+        {
+            label = new Label();
+        }
+
+        return label;
+
     }
 }

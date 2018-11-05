@@ -149,7 +149,7 @@ public class IconRegistryImpl implements IconRegistry
             myDataElementIdLock.unlock();
         }
         myChangeSupport.notifyListeners(
-            listener -> listener.iconsUnassigned(Collections.singletonList(Long.valueOf(deId)), source), EXECUTOR);
+                listener -> listener.iconsUnassigned(Collections.singletonList(Long.valueOf(deId)), source), EXECUTOR);
     }
 
     @Override
@@ -565,7 +565,7 @@ public class IconRegistryImpl implements IconRegistry
             myDataElementIdLock.unlock();
         }
         myChangeSupport.notifyListeners(
-            listener -> listener.iconAssigned(iconId, Collections.singletonList(Long.valueOf(deId)), source), EXECUTOR);
+                listener -> listener.iconAssigned(iconId, Collections.singletonList(Long.valueOf(deId)), source), EXECUTOR);
     }
 
     @Override
@@ -682,6 +682,7 @@ public class IconRegistryImpl implements IconRegistry
             final IconRecord fAddedRec = record;
             myChangeSupport.notifyListeners(listener -> listener.iconsAdded(Collections.singletonList(fAddedRec), source),
                     EXECUTOR);
+
             if (saveToConfig)
             {
                 saveLater();

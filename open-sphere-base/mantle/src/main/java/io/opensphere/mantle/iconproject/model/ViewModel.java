@@ -1,6 +1,6 @@
 package io.opensphere.mantle.iconproject.model;
 
-import io.opensphere.mantle.iconproject.panels.MainPanel;
+import javafx.scene.Node;
 
 /** The model of the UI Display Panels. */
 public class ViewModel
@@ -9,7 +9,7 @@ public class ViewModel
      * The SplitPane containing the Tree hierarchy, Add, Generate, and Customize
      * Icon components on the Left and the Icon Display Grid on the Right.
      */
-    private MainPanel myMainPanel;
+    private Node myMainPanel;
 
     /** The option to disable or enable the user to select multiple icons. */
     private boolean myMultiSelectEnabled;
@@ -19,7 +19,7 @@ public class ViewModel
      *
      * @param mainPanel the main split panel display.
      */
-    public void setMainPanel(MainPanel mainPanel)
+    public void setMainPanel(Node mainPanel)
     {
         myMainPanel = mainPanel;
     }
@@ -29,7 +29,7 @@ public class ViewModel
      *
      * @return the current main panel.
      */
-    public MainPanel getMainPanel()
+    public Node getMainPanel()
     {
         return myMainPanel;
     }

@@ -9,9 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.image.WritableImage;
-
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FilenameUtils;
@@ -24,6 +21,8 @@ import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.panels.IconCustomizerPane;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.WritableImage;
 
 /** The window to customize icons. */
 public class IconCustomizerDialog extends JFXDialog
@@ -103,7 +102,7 @@ public class IconCustomizerDialog extends JFXDialog
                 IconProvider provider = new DefaultIconProvider(imageURL, IconRecord.USER_ADDED_COLLECTION, null, "User");
                 myIconRegistry.addIcon(provider, this);
             }
-            myPanelModel.getViewModel().getMainPanel().refresh();
+//            myPanelModel.getViewModel().getMainPanel().refresh();
         }
         catch (IOException e)
         {
