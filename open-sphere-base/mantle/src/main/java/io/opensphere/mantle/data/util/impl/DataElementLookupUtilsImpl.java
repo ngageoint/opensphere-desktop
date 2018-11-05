@@ -949,6 +949,19 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
         {
             myCacheId = cacheId;
         }
+
+        /**
+         * {@inheritDoc}
+         *
+         * @see io.opensphere.mantle.data.element.DataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo)
+         */
+        @Override
+        public DataElement cloneForDatatype(DataTypeInfo datatype)
+        {
+            ResultDataElement clone = new ResultDataElement(myOrigId * 10, myTimeSpan, datatype, myMetaDataProvider,
+                    myVisualizationState);
+            return clone;
+        }
     }
 
     /**
@@ -992,6 +1005,19 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
         public void setMapGeometrySupport(MapGeometrySupport mgs)
         {
             throw new UnsupportedOperationException();
+        }
+
+        /**
+         * {@inheritDoc}
+         *
+         * @see io.opensphere.mantle.data.util.impl.DataElementLookupUtilsImpl.ResultDataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo)
+         */
+        @Override
+        public DataElement cloneForDatatype(DataTypeInfo datatype)
+        {
+            ResultMapDataElement clone = new ResultMapDataElement(getId() * 10, getTimeSpan(), datatype, getMetaData(),
+                    getVisualizationState(), myMapGeometrySupport);
+            return clone;
         }
     }
 }

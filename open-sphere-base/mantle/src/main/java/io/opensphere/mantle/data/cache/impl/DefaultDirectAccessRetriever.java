@@ -30,6 +30,9 @@ public class DefaultDirectAccessRetriever implements DirectAccessRetriever
     /** The Dynamic column coordinator. */
     private final DynamicMetadataDataTypeController myDynamicColumnCoordinator;
 
+    /** The manager used to access metadata. */
+    private final DynamicMetadataManagerImpl myDynamicMetadataManager;
+
     /**
      * Instantiates a new default direct access retriever.
      *
@@ -41,6 +44,7 @@ public class DefaultDirectAccessRetriever implements DirectAccessRetriever
     {
         myDataType = dti;
         myCacheRefMap = cacheRefMap;
+        myDynamicMetadataManager = dcm;
         myDynamicColumnCoordinator = dcm.getController(myDataType.getTypeKey());
     }
 
@@ -198,5 +202,25 @@ public class DefaultDirectAccessRetriever implements DirectAccessRetriever
     private CacheEntry getCacheEntryForCacheId(long cacheId)
     {
         return myCacheRefMap.apply(cacheId);
+    }
+
+    /**
+     * Gets the value of the {@link #myCacheRefMap} field.
+     *
+     * @return the value stored in the {@link #myCacheRefMap} field.
+     */
+    public LongFunction<CacheEntry> getCacheRefMap()
+    {
+        return myCacheRefMap;
+    }
+
+    /**
+     * Gets the value of the {@link #myDynamicMetadataManager} field.
+     *
+     * @return the value stored in the {@link #myDynamicMetadataManager} field.
+     */
+    public DynamicMetadataManagerImpl getDynamicMetadataManager()
+    {
+        return myDynamicMetadataManager;
     }
 }

@@ -206,4 +206,17 @@ public class DefaultDataElement implements DataElement
         }
         return sb.toString();
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.element.DataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo)
+     */
+    @Override
+    public DataElement cloneForDatatype(DataTypeInfo datatype)
+    {
+        DefaultDataElement clone = new DefaultDataElement(myId * 10, myTimeSpan, datatype, myMetaDataProvider,
+                myVisualizationState.isMapDataElement());
+        return clone;
+    }
 }

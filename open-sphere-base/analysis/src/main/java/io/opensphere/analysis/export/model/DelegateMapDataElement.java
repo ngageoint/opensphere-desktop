@@ -119,4 +119,18 @@ public class DelegateMapDataElement implements MapDataElement
     {
         myOriginal.setMapGeometrySupport(mgs);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.element.DataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo)
+     */
+    @Override
+    public DataElement cloneForDatatype(DataTypeInfo datatype)
+    {
+        MapDataElement originalDelegate = (MapDataElement)myOriginal.cloneForDatatype(datatype);
+
+        DelegateMapDataElement clone = new DelegateMapDataElement(originalDelegate, myMetaDataProvider);
+        return clone;
+    }
 }

@@ -393,4 +393,14 @@ public class DiskCacheDirectAccessRetriever extends DefaultDirectAccessRetriever
         ObjectInputStream ois = new ObjectInputStream(elementBAIS);
         return DiskDecodeHelper.decodeOriginId(ois);
     }
+
+    /**
+     * Gets the value of the {@link #myDiskCacheAssistant} field.
+     *
+     * @return the value stored in the {@link #myDiskCacheAssistant} field.
+     */
+    public DiskCacheAssistant getDiskCacheAssistant()
+    {
+        return myDiskCacheAssistant;
+    }
 }

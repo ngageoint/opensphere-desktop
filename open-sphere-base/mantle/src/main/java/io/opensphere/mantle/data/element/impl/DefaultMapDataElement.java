@@ -2,6 +2,7 @@ package io.opensphere.mantle.data.element.impl;
 
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.mantle.data.DataTypeInfo;
+import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.element.MapDataElement;
 import io.opensphere.mantle.data.element.MetaDataProvider;
 import io.opensphere.mantle.data.geom.MapGeometrySupport;
@@ -113,5 +114,18 @@ public class DefaultMapDataElement extends DefaultDataElement implements MapData
             sb.append(myMapGeometrySupport.toString());
         }
         return sb.toString();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.element.impl.DefaultDataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo)
+     */
+    @Override
+    public DataElement cloneForDatatype(DataTypeInfo datatype)
+    {
+        DefaultMapDataElement clone = new DefaultMapDataElement(getId() * 10, getTimeSpan(), datatype, getMetaData(),
+                myMapGeometrySupport);
+        return clone;
     }
 }

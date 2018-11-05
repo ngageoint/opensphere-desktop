@@ -3,6 +3,8 @@ package io.opensphere.analysis.listtool.model;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.cache.DirectAccessRetriever;
+import io.opensphere.mantle.data.cache.impl.DefaultDirectAccessRetriever;
+import io.opensphere.mantle.data.cache.impl.DiskCacheDirectAccessRetriever;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.element.MetaDataProvider;
 import io.opensphere.mantle.data.element.VisualizationState;
@@ -112,5 +114,38 @@ class DirectAccessDataElement implements DataElement
     protected DirectAccessRetriever getDirectAccessRetriever()
     {
         return myDirectAccessRetriever;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.element.DataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo)
+     */
+    @Override
+    public DataElement cloneForDatatype(DataTypeInfo datatype)
+    {
+        DirectAccessRetriever cloneRetriever;
+
+        if (myDirectAccessRetriever instanceof DiskCacheDirectAccessRetriever)
+        {
+            DiskCacheDirectAccessRetriever original = (DiskCacheDirectAccessRetriever)myDirectAccessRetriever;
+
+            cloneRetriever = new DiskCacheDirectAccessRetriever(original.getDiskCacheAssistant(), datatype,
+                    original.getCacheRefMap(), original.getDynamicMetadataManager());
+        }
+        else if (myDirectAccessRetriever instanceof DefaultDirectAccessRetriever)
+        {
+            DefaultDirectAccessRetriever original = (DefaultDirectAccessRetriever)myDirectAccessRetriever;
+            cloneRetriever = new DefaultDirectAccessRetriever(datatype, original.getCacheRefMap(),
+                    original.getDynamicMetadataManager());
+        }
+        else
+        {
+            throw new UnsupportedOperationException(
+                    "Unable to clone. Unclonable direct access retriever: " + myDirectAccessRetriever.getClass().getName());
+        }
+
+        DirectAccessDataElement clone = new DirectAccessDataElement(myCacheId * 10, cloneRetriever);
+        return clone;
     }
 }

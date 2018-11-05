@@ -97,4 +97,11 @@ public interface DataElement extends Model
      *            {@link DataElementCache}.
      */
     void setIdInCache(long cacheId);
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see java.lang.Object#clone()
+     */
+    DataElement cloneForDatatype(DataTypeInfo datatype);
 }

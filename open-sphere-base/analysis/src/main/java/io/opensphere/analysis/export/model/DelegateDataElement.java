@@ -105,4 +105,17 @@ public class DelegateDataElement implements DataElement
     {
         myOriginal.setIdInCache(cacheId);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.element.DataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo)
+     */
+    @Override
+    public DataElement cloneForDatatype(DataTypeInfo datatype)
+    {
+        DataElement alernateOriginal = myOriginal.cloneForDatatype(datatype);
+        DelegateDataElement dataElement = new DelegateDataElement(alernateOriginal, myMetaDataProvider);
+        return dataElement;
+    }
 }
