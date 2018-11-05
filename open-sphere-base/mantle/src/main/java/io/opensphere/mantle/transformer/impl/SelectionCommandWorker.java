@@ -41,6 +41,7 @@ public class SelectionCommandWorker extends PolygonRegionCommandWorker
             MantleToolboxUtils.getDataElementUpdateUtils(getProvider().getToolbox()).setDataElementsSelectionState(
                     getIntersectingIdSet(), idsToChange, getProvider().getDataType().getTypeKey(),
                     getProvider().getUpdateSource());
+            
         }
         else if (command.equals(SelectionCommandFactory.SELECT_EXCLUSIVE))
         {

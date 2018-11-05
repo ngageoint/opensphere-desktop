@@ -36,7 +36,7 @@ class BaseballTableModel extends AbstractColumnTableModel
     /**
      * Constructor.
      *
-     * @param element the data element
+     * @param elements the data elements
      * @param prefsRegistry The preferences registry
      */
     public BaseballTableModel(DataElement element, PreferencesRegistry prefsRegistry)
