@@ -26,6 +26,12 @@ public final class SwingUtilities
     private static final Logger LOG = Logger.getLogger(SwingUtilities.class);
 
     /**
+     * The {@link Font} object in which the web-hosting-hub glyphs package is
+     * contained.
+     */
+    public static final Font WEB_HOSTING_HUB_GLYPHS_FONT = getWebHostingHubGlyphFont();
+
+    /**
      * The {@link Font} object in which the font-awesome package is contained.
      */
     public static final Font FONT_AWESOME_SOLID_FONT = getFontAwesomeSolidFont();
@@ -119,6 +125,18 @@ public final class SwingUtilities
             item.setAccelerator(accelerator);
         }
         return item;
+    }
+
+    /**
+     * Creates the web-hosting-hub glyph {@link Font} object, loading all icons
+     * contained within the package.
+     *
+     * @return the {@link Font} object containing the web-hosting-hub glyph
+     *         icons.
+     */
+    public static Font getWebHostingHubGlyphFont()
+    {
+        return getFont("/fonts/webhostinghub-glyphs.ttf");
     }
 
     /**

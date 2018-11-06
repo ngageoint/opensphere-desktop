@@ -3,12 +3,16 @@ package io.opensphere.core.util.swing;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import javax.swing.Icon;
+
+import org.apache.log4j.Logger;
 
 import io.opensphere.core.util.FontIconEnum;
 
@@ -21,6 +25,9 @@ import io.opensphere.core.util.FontIconEnum;
  */
 public class GenericFontIcon implements Icon, FontIcon
 {
+    /** The logger used to capture output from instances of this class. */
+    private static final Logger LOG = Logger.getLogger(GenericFontIcon.class);
+
     /** The default color of the icon. */
     private static final Color DEFAULT_COLOR = Color.BLACK;
 
@@ -204,12 +211,29 @@ public class GenericFontIcon implements Icon, FontIcon
 
                 Graphics2D graphics = myBuffer.createGraphics();
                 graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
                 graphics.setFont(myFont.deriveFont(Font.PLAIN, getSize()));
 
-                graphics.setColor(getColor());
+                FontMetrics fontMetrics = graphics.getFontMetrics(myFont.deriveFont(Font.PLAIN, getSize()));
+                Rectangle2D stringBounds = fontMetrics.getStringBounds(myIcon.getFontCode(), graphics);
 
-                graphics.drawString(myIcon.getFontCode(), getXPos(), getYPos()+1);
+                float xPositionRaw = (width - (float)stringBounds.getWidth()) / 2.0F + (getSize() * myIcon.getXDrawingOffset());
+                float yPositionRaw = Math.abs((float)stringBounds.getY()) + (getSize() * myIcon.getYDrawingOffset());
+
+                graphics.setColor(getColor());
+                graphics.drawString(myIcon.getFontCode(), xPositionRaw, yPositionRaw);
+
+                if (LOG.isTraceEnabled())
+                {
+                    LOG.info(myIcon.getClass().getName() + "." + myIcon.getGlyphName() + ": size: " + getSize() + " cw: " + width
+                            + " ch: " + height + " w: " + stringBounds.getWidth() + ", h: " + stringBounds.getHeight() + " x: "
+                            + stringBounds.getX() + " y: " + stringBounds.getY() + " cx: " + stringBounds.getCenterX() + " cy: "
+                            + stringBounds.getCenterY() + " dx: " + xPositionRaw + " dy: " + yPositionRaw);
+
+                    graphics.setColor(Color.RED);
+                    graphics.drawLine(0, 0, width - 1, height - 1);
+                    graphics.drawLine(0, height - 1, width - 1, 0);
+                    graphics.drawRect(0, 0, width - 1, height - 1);
+                }
                 graphics.dispose();
             }
         }

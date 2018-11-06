@@ -64,6 +64,16 @@ public final class FXUtilities
      */
     private static final Logger LOG = Logger.getLogger(FXUtilities.class);
 
+    static
+    {
+        loadFont("FontAwesome Regular", "/fonts/fa-regular-400.ttf");
+        loadFont("FontAwesome Solid", "/fonts/fa-solid-900.ttf");
+        loadFont("FontAwesome Brands", "/fonts/fa-brands-400.ttf");
+        loadFont("WebHostingHub Glyphs", "/fonts/webhostinghub-glyphs.ttf");
+        loadFont("GovIcons", "/fonts/govicons-webfont.ttf");
+        loadFont("Military Ranks", "/fonts/military-rank-icons.ttf");
+    }
+
     /**
      * Adds some style to the parent.
      *
@@ -594,10 +604,6 @@ public final class FXUtilities
      */
     private static void addDesktopStyle(ObservableList<String> stylesheets)
     {
-        loadFont("FontAwesome Regular", "/fonts/fa-regular-400.ttf");
-        loadFont("FontAwesome Solid", "/fonts/fa-solid-900.ttf");
-        loadFont("FontAwesome Brands", "/fonts/fa-brands-400.ttf");
-
         stylesheets.add(FXUtilities.class.getResource("/styles/opensphere.css").toExternalForm());
     }
 

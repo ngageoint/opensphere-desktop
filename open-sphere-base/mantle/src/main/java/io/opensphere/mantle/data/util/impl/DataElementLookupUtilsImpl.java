@@ -1017,6 +1017,7 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
         {
             ResultMapDataElement clone = new ResultMapDataElement(getId() * 10, getTimeSpan(), datatype, getMetaData(),
                     getVisualizationState(), myMapGeometrySupport);
+            clone.setIdInCache(this.getIdInCache());
             return clone;
         }
     }

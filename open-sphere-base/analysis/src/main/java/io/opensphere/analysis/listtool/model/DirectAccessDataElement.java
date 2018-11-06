@@ -145,7 +145,7 @@ class DirectAccessDataElement implements DataElement
                     "Unable to clone. Unclonable direct access retriever: " + myDirectAccessRetriever.getClass().getName());
         }
 
-        DirectAccessDataElement clone = new DirectAccessDataElement(myCacheId * 10, cloneRetriever);
+        DirectAccessDataElement clone = new DirectAccessDataElement(myCacheId, cloneRetriever);
         return clone;
     }
 }

@@ -1,6 +1,8 @@
 package io.opensphere.analysis.listtool.model;
 
+import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.cache.DirectAccessRetriever;
+import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.element.MapDataElement;
 import io.opensphere.mantle.data.geom.MapGeometrySupport;
 
@@ -31,5 +33,17 @@ class DirectAccessMapDataElement extends DirectAccessDataElement implements MapD
     public void setMapGeometrySupport(MapGeometrySupport mgs)
     {
         throw new UnsupportedOperationException("setMapGeometrySupport() is not supported for DirectAccessMapDataElement");
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.analysis.listtool.model.DirectAccessDataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo)
+     */
+    @Override
+    public DataElement cloneForDatatype(DataTypeInfo datatype)
+    {
+        // TODO Auto-generated method stub
+        return super.cloneForDatatype(datatype);
     }
 }

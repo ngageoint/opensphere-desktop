@@ -6,7 +6,7 @@ import java.awt.GraphicsEnvironment;
 import io.opensphere.core.util.swing.SwingUtilities;
 
 /**
- *  An enumeration over the set of available FontAwesome Solid icons.
+ * An enumeration over the set of available FontAwesome Solid icons.
  */
 public enum AwesomeIconSolid implements FontIconEnum
 {
@@ -1649,7 +1649,7 @@ public enum AwesomeIconSolid implements FontIconEnum
     TICKET_ALT("\uf3ff"),
 
     /** A constant used to reference the 'times' icon. */
-    TIMES("\uf00d"),
+    TIMES("\uf00d", -0.046875F, -0.09375F),
 
     /** A constant used to reference the 'times_circle' icon. */
     TIMES_CIRCLE("\uf057"),
@@ -1904,6 +1904,10 @@ public enum AwesomeIconSolid implements FontIconEnum
      */
     private String myFontCode;
 
+    private float myXOffset;
+
+    private float myYOffset;
+
     /**
      * Creates a new font code enum instance.
      *
@@ -1912,6 +1916,21 @@ public enum AwesomeIconSolid implements FontIconEnum
     private AwesomeIconSolid(String pFontCode)
     {
         myFontCode = pFontCode;
+        myXOffset = 0;
+        myYOffset = 0;
+    }
+
+
+    /**
+     * Creates a new font code enum instance.
+     *
+     * @param pFontCode the font code defining the icon.
+     */
+    private AwesomeIconSolid(String pFontCode, float xOffset, float yOffset)
+    {
+        myFontCode = pFontCode;
+        myXOffset = xOffset;
+        myYOffset = yOffset;
     }
 
     /**
@@ -1929,5 +1948,39 @@ public enum AwesomeIconSolid implements FontIconEnum
     public Font getFont()
     {
         return SwingUtilities.FONT_AWESOME_SOLID_FONT;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.util.FontIconEnum#getXDrawingOffset()
+     */
+    @Override
+    public float getXDrawingOffset()
+    {
+        return myXOffset;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.util.FontIconEnum#getYDrawingOffset()
+     */
+    @Override
+    public float getYDrawingOffset()
+    {
+        return myYOffset;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.util.FontIconEnum#getGlyphName()
+     */
+    @Override
+    public String getGlyphName()
+    {
+        return name();
     }
 }

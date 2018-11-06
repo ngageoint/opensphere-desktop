@@ -403,4 +403,37 @@ public enum AwesomeIconRegular implements FontIconEnum
     {
         return SwingUtilities.FONT_AWESOME_REGULAR_FONT;
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.util.FontIconEnum#getXDrawingOffset()
+     */
+    @Override
+    public float getXDrawingOffset()
+    {
+        return 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.util.FontIconEnum#getYDrawingOffset()
+     */
+    @Override
+    public float getYDrawingOffset()
+    {
+        return 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.util.FontIconEnum#getGlyphName()
+     */
+    @Override
+    public String getGlyphName()
+    {
+        return name();
+    }
 }

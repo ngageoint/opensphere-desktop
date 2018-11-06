@@ -18,4 +18,24 @@ public interface FontIconEnum
      * @return the font
      */
     Font getFont();
+
+    /**
+     * A Y offset, in pixels, of the font glyph. Allows for corrections of
+     * specific icons. May be zero.
+     *
+     * @return a drawing offset in the y direction. Positive values indicate a
+     *         downward direction, negative up.
+     */
+    float getYDrawingOffset();
+
+    /**
+     * An X offset, in pixels, of the font glyph. Allows for corrections of
+     * specific icons. May be zero.
+     *
+     * @return a drawing offset in the y direction. Positive values indicate a
+     *         rightward direction, negative leftward.
+     */
+    float getXDrawingOffset();
+
+    String getGlyphName();
 }

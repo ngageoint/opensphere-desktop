@@ -99,9 +99,11 @@ public interface DataElement extends Model
     void setIdInCache(long cacheId);
 
     /**
-     * {@inheritDoc}
+     * Creates a shallow copy of the data element, and sets the parent datatype
+     * to the supplied value.
      *
-     * @see java.lang.Object#clone()
+     * @param datatype the datatype to use as the parent of the cloned instance.
+     * @return a clone of the datatype.
      */
     DataElement cloneForDatatype(DataTypeInfo datatype);
 }
