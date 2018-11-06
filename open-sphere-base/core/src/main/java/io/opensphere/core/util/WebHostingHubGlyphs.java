@@ -4171,8 +4171,16 @@ public enum WebHostingHubGlyphs implements FontIconEnum
      */
     private String myFontCode;
 
+    /**
+     * a drawing offset in the x direction. Positive values indicate a rightward
+     * direction, negative leftward.
+     */
     private float myXOffset;
 
+    /**
+     * a drawing offset in the y direction. Positive values indicate a downward
+     * direction, negative up.
+     */
     private float myYOffset;
 
     /**
@@ -4191,6 +4199,10 @@ public enum WebHostingHubGlyphs implements FontIconEnum
      * Creates a new font code enum instance.
      *
      * @param pFontCode the font code defining the icon.
+     * @param xOffset a drawing offset in the x direction. Positive values
+     *            indicate a rightward direction, negative leftward.
+     * @param yOffset a drawing offset in the y direction. Positive values
+     *            indicate a downward direction, negative up.
      */
     private WebHostingHubGlyphs(String pFontCode, float xOffset, float yOffset)
     {
