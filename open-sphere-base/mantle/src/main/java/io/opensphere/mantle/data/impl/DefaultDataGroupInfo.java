@@ -484,6 +484,45 @@ public class DefaultDataGroupInfo implements DataGroupInfo
     }
 
     @Override
+    public Set<DataGroupInfo> findChildren(Predicate<? super DataGroupInfo> dgiFilter, boolean recursive,
+            boolean stopOnFirstFound)
+    {
+        Utilities.checkNull(dgiFilter, "dtiFilter");
+        Set<DataGroupInfo> resultSet = new HashSet<>();
+        myModificationLock.readLock().lock();
+        try
+        {
+            for (DataGroupInfo dataGroupInfo : myChildren)
+            {
+                if (dgiFilter.test(dataGroupInfo))
+                {
+                    resultSet.add(dataGroupInfo);
+                    if (stopOnFirstFound)
+                    {
+                        break;
+                    }
+                }
+            }
+            if (recursive && (!stopOnFirstFound || resultSet.isEmpty()))
+            {
+                for (DataGroupInfo dgi : myChildren)
+                {
+                    resultSet.addAll(dgi.findChildren(dgiFilter, recursive, stopOnFirstFound));
+                    if (stopOnFirstFound && !resultSet.isEmpty())
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+        finally
+        {
+            myModificationLock.readLock().unlock();
+        }
+        return resultSet.isEmpty() ? Collections.<DataGroupInfo>emptySet() : resultSet;
+    }
+
+    @Override
     public Set<DataTypeInfo> findMembers(Predicate<? super DataTypeInfo> dtiFilter, boolean recursive, boolean stopOnFirstFound)
     {
         Utilities.checkNull(dtiFilter, "dtiFilter");
