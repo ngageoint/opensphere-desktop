@@ -853,24 +853,33 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
     private static class ResultDataElement implements DataElement
     {
         /** The my dti. */
-        private final DataTypeInfo myDTI;
+        private DataTypeInfo myDTI;
 
         /** The my meta data provider. */
-        private final MetaDataProvider myMetaDataProvider;
+        private MetaDataProvider myMetaDataProvider;
 
         /** The my orig id. */
-        private final long myOrigId;
+        private long myOrigId;
 
         /** The my time span. */
-        private final TimeSpan myTimeSpan;
+        private TimeSpan myTimeSpan;
 
         /** The my visualization state. */
-        private final VisualizationState myVisualizationState;
+        private VisualizationState myVisualizationState;
 
         /**
          * The id in the cache.
          */
         private long myCacheId;
+
+        protected ResultDataElement(ResultDataElement source)
+        {
+            myDTI = source.myDTI;
+            myMetaDataProvider = source.myMetaDataProvider.createCopy();
+            myOrigId = source.myOrigId;
+            myTimeSpan = source.myTimeSpan;
+            myVisualizationState = new VisualizationState(source.myVisualizationState);
+        }
 
         /**
          * Instantiates a new result data element.
@@ -888,6 +897,68 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
             myDTI = dti;
             myMetaDataProvider = mdp;
             myVisualizationState = vs;
+        }
+
+        /**
+         * Sets the value of the {@link #myDTI} field.
+         *
+         * @param dTI the value to store in the {@link #myDTI} field.
+         */
+        protected void setDTI(DataTypeInfo dTI)
+        {
+            myDTI = dTI;
+        }
+
+        /**
+         * Sets the value of the {@link #myMetaDataProvider} field.
+         *
+         * @param metaDataProvider the value to store in the
+         *            {@link #myMetaDataProvider} field.
+         */
+        protected void setMetaDataProvider(MetaDataProvider metaDataProvider)
+        {
+            myMetaDataProvider = metaDataProvider;
+        }
+
+        /**
+         * Sets the value of the {@link #myOrigId} field.
+         *
+         * @param origId the value to store in the {@link #myOrigId} field.
+         */
+        protected void setOrigId(long origId)
+        {
+            myOrigId = origId;
+        }
+
+        /**
+         * Sets the value of the {@link #myTimeSpan} field.
+         *
+         * @param timeSpan the value to store in the {@link #myTimeSpan} field.
+         */
+        protected void setTimeSpan(TimeSpan timeSpan)
+        {
+            myTimeSpan = timeSpan;
+        }
+
+        /**
+         * Sets the value of the {@link #myVisualizationState} field.
+         *
+         * @param visualizationState the value to store in the
+         *            {@link #myVisualizationState} field.
+         */
+        protected void setVisualizationState(VisualizationState visualizationState)
+        {
+            myVisualizationState = visualizationState;
+        }
+
+        /**
+         * Sets the value of the {@link #myCacheId} field.
+         *
+         * @param cacheId the value to store in the {@link #myCacheId} field.
+         */
+        protected void setCacheId(long cacheId)
+        {
+            myCacheId = cacheId;
         }
 
         @Override
@@ -973,6 +1044,16 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
         private final MapGeometrySupport myMapGeometrySupport;
 
         /**
+         *
+         */
+        public ResultMapDataElement(ResultMapDataElement source)
+        {
+            super(source);
+
+            myMapGeometrySupport = source.myMapGeometrySupport.createCopy();
+        }
+
+        /**
          * Instantiates a new result map data element.
          *
          * @param origId the orig id
@@ -1015,8 +1096,10 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
         @Override
         public DataElement cloneForDatatype(DataTypeInfo datatype)
         {
-            ResultMapDataElement clone = new ResultMapDataElement(getId() * 10, getTimeSpan(), datatype, getMetaData(),
-                    getVisualizationState(), myMapGeometrySupport);
+            ResultMapDataElement clone = new ResultMapDataElement(this);
+            clone.setCacheId(this.getIdInCache());
+            clone.setDTI(datatype);
+            clone.setMetaDataProvider(this.getMetaData().createCopy());
             clone.setIdInCache(this.getIdInCache());
             return clone;
         }
