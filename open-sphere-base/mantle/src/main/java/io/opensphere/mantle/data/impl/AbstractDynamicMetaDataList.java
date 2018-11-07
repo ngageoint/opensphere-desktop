@@ -254,4 +254,15 @@ public abstract class AbstractDynamicMetaDataList implements DynamicMetaDataList
             throw new IndexOutOfBoundsException("Index must be 0 <= index < " + size());
         }
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.element.MetaDataProvider#createCopy()
+     */
+    @Override
+    public MetaDataProvider createCopy()
+    {
+        throw new UnsupportedOperationException();
+    }
 }

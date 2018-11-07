@@ -41,7 +41,7 @@ public class DefaultDataElement implements DataElement
         myCacheId = source.myCacheId;
         myDataTypeInfo = source.myDataTypeInfo;
         myId = source.myId;
-        myMetaDataProvider = source.myMetaDataProvider;
+        myMetaDataProvider = source.myMetaDataProvider.createCopy();
         myTimeSpan = source.myTimeSpan;
 
         myVisualizationState = new VisualizationState(source.myVisualizationState.isMapDataElement());
@@ -49,7 +49,7 @@ public class DefaultDataElement implements DataElement
         myVisualizationState.setAltitudeAdjust(source.getVisualizationState().getAltitudeAdjust());
         myVisualizationState.setHasAlternateGeometrySupport(getVisualizationState().hasAlternateGeometrySupport());
         myVisualizationState.setLobVisible(getVisualizationState().isLobVisible());
-        myVisualizationState.setSelected(getVisualizationState().isSelected());
+        myVisualizationState.setSelected(false);
         myVisualizationState.setVisible(getVisualizationState().isVisible());
     }
 

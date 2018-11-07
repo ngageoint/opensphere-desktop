@@ -16,7 +16,17 @@ public abstract class AbstractMDILinkedMetaDataProvider implements MetaDataProvi
     private final MetaDataInfo myMetaDataInfo;
 
     /**
-     * CTOR.
+     * Copy constructor.
+     *
+     * @param source the source object from which data is copied.
+     */
+    protected AbstractMDILinkedMetaDataProvider(AbstractMDILinkedMetaDataProvider source)
+    {
+        myMetaDataInfo = source.myMetaDataInfo.createCopy();
+    }
+
+    /**
+     * Default Constructor.
      *
      * @param mdi the MetaDataInfo to be linked to.
      */

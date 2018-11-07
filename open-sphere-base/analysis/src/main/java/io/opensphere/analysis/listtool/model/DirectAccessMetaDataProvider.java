@@ -31,6 +31,17 @@ class DirectAccessMetaDataProvider implements MetaDataProvider
         myDirectAccessRetriever = directAccessRetriever;
     }
 
+    /**
+     * Copy constructor.
+     *
+     * @param source the source object from which to copy data.
+     */
+    public DirectAccessMetaDataProvider(DirectAccessMetaDataProvider source)
+    {
+        myCacheId = source.myCacheId;
+        myDirectAccessRetriever = source.myDirectAccessRetriever;
+    }
+
     @Override
     public List<String> getKeys()
     {
@@ -87,5 +98,16 @@ class DirectAccessMetaDataProvider implements MetaDataProvider
     public boolean valuesMutable()
     {
         throw new UnsupportedOperationException("valuesMutable() is not supported for DirectAccessMetaDataProvider");
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.element.MetaDataProvider#createCopy()
+     */
+    @Override
+    public MetaDataProvider createCopy()
+    {
+        return new DirectAccessMetaDataProvider(this);
     }
 }

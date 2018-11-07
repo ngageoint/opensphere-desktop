@@ -344,4 +344,6 @@ public interface MetaDataInfo
      *         maintained.
      */
     StringProperty uniqueIdentifierKeyProperty();
+
+    MetaDataInfo createCopy();
 }

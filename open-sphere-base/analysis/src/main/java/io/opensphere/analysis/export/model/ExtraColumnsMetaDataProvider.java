@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.data.element.MetaDataProvider;
@@ -25,6 +26,17 @@ public class ExtraColumnsMetaDataProvider implements MetaDataProvider
      * metadata.
      */
     private final MetaDataProvider myOriginal;
+
+    /**
+     * Copy constructor.
+     *
+     * @param source the source object from which to copy data.
+     */
+    protected ExtraColumnsMetaDataProvider(ExtraColumnsMetaDataProvider source)
+    {
+        myExtraColumns = source.myExtraColumns.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+        myOriginal = source.myOriginal.createCopy();
+    }
 
     /**
      * Constructs a new metadata provider.
@@ -152,5 +164,16 @@ public class ExtraColumnsMetaDataProvider implements MetaDataProvider
     public MetaDataProvider getOriginal()
     {
         return myOriginal;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.element.MetaDataProvider#createCopy()
+     */
+    @Override
+    public MetaDataProvider createCopy()
+    {
+        return new ExtraColumnsMetaDataProvider(this);
     }
 }

@@ -84,4 +84,6 @@ public interface MetaDataProvider
      * @return true if keys are mutable on the fly, false if not.
      */
     boolean valuesMutable();
+
+    MetaDataProvider createCopy();
 }

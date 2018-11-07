@@ -18,6 +18,20 @@ public class ColumnTypeDetectorImpl implements ColumnTypeDetector
     private final List<SpecialColumnDetector> myDetectors = new CopyOnWriteArrayList<>();
 
     /**
+     *
+     */
+    public ColumnTypeDetectorImpl()
+    {
+        // TODO Auto-generated constructor stub
+    }
+
+    protected ColumnTypeDetectorImpl(ColumnTypeDetectorImpl source)
+    {
+        // TODO deep copy here
+        source.myDetectors.forEach(myDetectors::add);
+    }
+
+    /**
      * Adds the supplied detector instance to the set of available detectors.
      *
      * @param detector the detector to add.
@@ -86,5 +100,16 @@ public class ColumnTypeDetectorImpl implements ColumnTypeDetector
             }
         }
         return specialKey;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.ColumnTypeDetector#createCopy()
+     */
+    @Override
+    public ColumnTypeDetector createCopy()
+    {
+        return new ColumnTypeDetectorImpl(this);
     }
 }

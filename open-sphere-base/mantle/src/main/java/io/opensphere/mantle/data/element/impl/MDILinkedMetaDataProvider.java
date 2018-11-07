@@ -35,7 +35,19 @@ public class MDILinkedMetaDataProvider extends AbstractMDILinkedMetaDataProvider
     }
 
     /**
-     * CTOR.
+     * Copy constructor.
+     *
+     * @param source the source object from which to copy data.
+     */
+    protected MDILinkedMetaDataProvider(MDILinkedMetaDataProvider source)
+    {
+        super(source);
+        myValues = New.list(source.myValues);
+        myValuesMutable = source.myValuesMutable;
+    }
+
+    /**
+     * Primary constructor.
      *
      * @param mdi the MetaDataInfo to be linked to.
      */
@@ -144,5 +156,16 @@ public class MDILinkedMetaDataProvider extends AbstractMDILinkedMetaDataProvider
     public boolean valuesMutable()
     {
         return myValuesMutable;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.element.MetaDataProvider#createCopy()
+     */
+    @Override
+    public MetaDataProvider createCopy()
+    {
+        return new MDILinkedMetaDataProvider(this);
     }
 }

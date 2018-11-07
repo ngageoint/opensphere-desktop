@@ -37,4 +37,6 @@ public interface ColumnTypeDetector
      * @return the special key or null if it wasn't detected
      */
     SpecialKey detectColumn(String columnName);
+
+    ColumnTypeDetector createCopy();
 }

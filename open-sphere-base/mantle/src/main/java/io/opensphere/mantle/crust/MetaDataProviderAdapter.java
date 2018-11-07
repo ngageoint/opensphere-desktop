@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.data.element.MetaDataProvider;
 
 /**
@@ -14,7 +15,23 @@ import io.opensphere.mantle.data.element.MetaDataProvider;
 public abstract class MetaDataProviderAdapter implements MetaDataProvider
 {
     /** The set of supported field names. */
-    protected Set<String> myFieldNames;
+    private Set<String> myFieldNames;
+
+    /**
+     * Copy constructor.
+     *
+     * @param source the object from which data is read.
+     */
+    protected MetaDataProviderAdapter(MetaDataProviderAdapter source)
+    {
+        myFieldNames = New.set(source.myFieldNames);
+    }
+
+    /** Creates a new adapter. */
+    public MetaDataProviderAdapter()
+    {
+        /* intentionally blank */
+    }
 
     /**
      * Sets the value of the {@link #myFieldNames} field.
