@@ -5,7 +5,6 @@ import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.element.MapDataElement;
 import io.opensphere.mantle.data.element.MetaDataProvider;
-import io.opensphere.mantle.data.element.VisualizationState;
 import io.opensphere.mantle.data.geom.MapGeometrySupport;
 
 /**
@@ -15,6 +14,16 @@ public class DefaultMapDataElement extends DefaultDataElement implements MapData
 {
     /** The {@link MapGeometrySupport}. */
     private MapGeometrySupport myMapGeometrySupport;
+
+    /**
+     * @param source the source from which to copy data.
+     */
+    public DefaultMapDataElement(DefaultMapDataElement source)
+    {
+        super(source);
+
+        myMapGeometrySupport = source.myMapGeometrySupport.createCopy();
+    }
 
     /**
      * CTOR with id and {@link MapGeometrySupport}. Note: Displayable is true by
@@ -125,16 +134,8 @@ public class DefaultMapDataElement extends DefaultDataElement implements MapData
     @Override
     public DataElement cloneForDatatype(DataTypeInfo datatype)
     {
-        DefaultMapDataElement clone = new DefaultMapDataElement(getId() * 10, getTimeSpan(), datatype, getMetaData(),
-                myMapGeometrySupport.createCopy());
-
-        VisualizationState visualizationState = clone.getVisualizationState();
-        visualizationState.setColor(getVisualizationState().getColor());
-        visualizationState.setAltitudeAdjust(getVisualizationState().getAltitudeAdjust());
-        visualizationState.setHasAlternateGeometrySupport(getVisualizationState().hasAlternateGeometrySupport());
-        visualizationState.setLobVisible(getVisualizationState().isLobVisible());
-        visualizationState.setSelected(getVisualizationState().isSelected());
-        visualizationState.setVisible(getVisualizationState().isVisible());
+        DefaultMapDataElement clone = new DefaultMapDataElement(this);
+        clone.setDataTypeInfo(datatype);
 
         return clone;
     }
