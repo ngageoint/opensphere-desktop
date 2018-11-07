@@ -17,12 +17,22 @@ public class DefaultMapPointGeometrySupport extends AbstractLocationGeometrySupp
     /** The scale. */
     private float myScale = 1f;
 
-    /**
-     * CTOR.
-     */
+    /** Default constructor. */
     public DefaultMapPointGeometrySupport()
     {
         super();
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param source the source from which to copy data.
+     */
+    public DefaultMapPointGeometrySupport(DefaultMapPointGeometrySupport source)
+    {
+        super(source);
+
+        myScale = source.myScale;
     }
 
     /**
@@ -65,5 +75,16 @@ public class DefaultMapPointGeometrySupport extends AbstractLocationGeometrySupp
     public void setScale(float scale)
     {
         myScale = scale;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.geom.MapGeometrySupport#createCopy()
+     */
+    @Override
+    public DefaultMapPointGeometrySupport createCopy()
+    {
+        return new DefaultMapPointGeometrySupport(this);
     }
 }

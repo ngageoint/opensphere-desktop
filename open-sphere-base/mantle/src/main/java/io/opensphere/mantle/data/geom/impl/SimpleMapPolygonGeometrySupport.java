@@ -15,9 +15,7 @@ import io.opensphere.mantle.data.geom.MapPolygonGeometrySupport;
  */
 public class SimpleMapPolygonGeometrySupport extends AbstractSimpleMapPathGeometrySupport implements MapPolygonGeometrySupport
 {
-    /**
-     * Serial version UID.
-     */
+    /** Serial version UID. */
     private static final long serialVersionUID = 1L;
 
     /**
@@ -35,18 +33,32 @@ public class SimpleMapPolygonGeometrySupport extends AbstractSimpleMapPathGeomet
     /** The flag that sets if the line for the polygon is drawn or not. */
     private boolean myLineDrawn = true;
 
-    /**
-     * Basic CTOR.
-     */
+    /** Default constructor. */
     public SimpleMapPolygonGeometrySupport()
     {
         super();
     }
 
     /**
-     * CTOR with initial location list.
+     * Default constructor.
      *
-     * @param locations - the locations
+     * @param source the source object from which to copy data.
+     */
+    public SimpleMapPolygonGeometrySupport(SimpleMapPolygonGeometrySupport source)
+    {
+        super(source);
+
+        myColorOfFill = source.myColorOfFill;
+        myFilled = source.myFilled;
+        // TODO: make this a deep copy:
+        myHoles.addAll(source.myHoles);
+        myLineDrawn = source.myLineDrawn;
+    }
+
+    /**
+     * Constructor with initial location list.
+     *
+     * @param locations the locations
      * @param holes The interior holes of the polygon.
      */
     public SimpleMapPolygonGeometrySupport(List<? extends LatLonAlt> locations,
@@ -154,5 +166,16 @@ public class SimpleMapPolygonGeometrySupport extends AbstractSimpleMapPathGeomet
     public void setLineDrawn(boolean drawn)
     {
         myLineDrawn = drawn;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.geom.MapGeometrySupport#createCopy()
+     */
+    @Override
+    public SimpleMapPolygonGeometrySupport createCopy()
+    {
+        return new SimpleMapPolygonGeometrySupport(this);
     }
 }

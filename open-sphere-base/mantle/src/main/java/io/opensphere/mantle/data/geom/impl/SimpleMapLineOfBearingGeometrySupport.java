@@ -20,21 +20,32 @@ public class SimpleMapLineOfBearingGeometrySupport extends SimpleMapPointGeometr
     private static final long serialVersionUID = 1L;
 
     /** The line length (km). */
-    private float myLLength;
+    private float myLineLength;
 
     /** The line orientation (degrees clockwise from north). */
-    private float myOrient;
+    private float myOrientation;
 
-    /**
-     * CTOR.
-     */
+    /** Default constructor. */
     public SimpleMapLineOfBearingGeometrySupport()
     {
         super();
     }
 
     /**
-     * CTOR with {@link LatLonAlt}.
+     * Default constructor.
+     *
+     * @param source the source object from which to copy data.
+     */
+    public SimpleMapLineOfBearingGeometrySupport(SimpleMapLineOfBearingGeometrySupport source)
+    {
+        super(source);
+
+        myLineLength = source.myLineLength;
+        myOrientation = source.myOrientation;
+    }
+
+    /**
+     * Constructor with {@link LatLonAlt}.
      *
      * @param loc - the location
      */
@@ -44,7 +55,7 @@ public class SimpleMapLineOfBearingGeometrySupport extends SimpleMapPointGeometr
     }
 
     /**
-     * CTOR with location position, orientation, and length.
+     * Constructor with location position, orientation, and length.
      *
      * @param loc - the location
      * @param orient - the orientation in degrees clockwise from north.
@@ -53,8 +64,8 @@ public class SimpleMapLineOfBearingGeometrySupport extends SimpleMapPointGeometr
     public SimpleMapLineOfBearingGeometrySupport(LatLonAlt loc, float orient, float length)
     {
         super(loc);
-        myOrient = orient;
-        myLLength = length;
+        myOrientation = orient;
+        myLineLength = length;
     }
 
     @Override
@@ -69,8 +80,8 @@ public class SimpleMapLineOfBearingGeometrySupport extends SimpleMapPointGeometr
             return false;
         }
         SimpleMapLineOfBearingGeometrySupport other = (SimpleMapLineOfBearingGeometrySupport)obj;
-        return Float.floatToIntBits(myLLength) == Float.floatToIntBits(other.myLLength)
-                && Float.floatToIntBits(myOrient) == Float.floatToIntBits(other.myOrient);
+        return Float.floatToIntBits(myLineLength) == Float.floatToIntBits(other.myLineLength)
+                && Float.floatToIntBits(myOrientation) == Float.floatToIntBits(other.myOrientation);
     }
 
     @Override
@@ -88,13 +99,13 @@ public class SimpleMapLineOfBearingGeometrySupport extends SimpleMapPointGeometr
     @Override
     public float getLength()
     {
-        return myLLength;
+        return myLineLength;
     }
 
     @Override
     public float getOrientation()
     {
-        return myOrient;
+        return myOrientation;
     }
 
     @Override
@@ -108,20 +119,31 @@ public class SimpleMapLineOfBearingGeometrySupport extends SimpleMapPointGeometr
     {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + Float.floatToIntBits(myLLength);
-        result = prime * result + Float.floatToIntBits(myOrient);
+        result = prime * result + Float.floatToIntBits(myLineLength);
+        result = prime * result + Float.floatToIntBits(myOrientation);
         return result;
     }
 
     @Override
     public void setLength(float length)
     {
-        myLLength = length;
+        myLineLength = length;
     }
 
     @Override
     public void setOrientation(float orient)
     {
-        myOrient = orient;
+        myOrientation = orient;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.geom.MapGeometrySupport#createCopy()
+     */
+    @Override
+    public SimpleMapLineOfBearingGeometrySupport createCopy()
+    {
+        return new SimpleMapLineOfBearingGeometrySupport(this);
     }
 }

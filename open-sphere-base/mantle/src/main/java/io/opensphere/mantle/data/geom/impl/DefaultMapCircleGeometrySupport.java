@@ -25,6 +25,17 @@ public class DefaultMapCircleGeometrySupport extends AbstractLocationGeometrySup
     }
 
     /**
+     * Copy Constructor.
+     *
+     * @param source the source object from which to copy data.
+     */
+    public DefaultMapCircleGeometrySupport(DefaultMapCircleGeometrySupport source)
+    {
+        super(source);
+        myRadius = source.myRadius;
+    }
+
+    /**
      * Constructor with {@link LatLonAlt}.
      *
      * @param loc - the location
@@ -98,5 +109,16 @@ public class DefaultMapCircleGeometrySupport extends AbstractLocationGeometrySup
     public void setRadius(float radius)
     {
         myRadius = radius;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.geom.MapGeometrySupport#createCopy()
+     */
+    @Override
+    public DefaultMapCircleGeometrySupport createCopy()
+    {
+        return new DefaultMapCircleGeometrySupport(this);
     }
 }

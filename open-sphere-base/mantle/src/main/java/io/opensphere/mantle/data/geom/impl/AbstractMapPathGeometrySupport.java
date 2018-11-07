@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import org.checkerframework.checker.units.qual.s;
+
 import io.opensphere.core.model.GeographicBoundingBox;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.LineType;
@@ -32,12 +34,25 @@ public abstract class AbstractMapPathGeometrySupport extends AbstractDefaultMapG
     /** Location list. */
     private final List<LatLonAlt> myLocations;
 
-    /**
-     * Basic CTOR.
-     */
+    /** Default constructor. */
     public AbstractMapPathGeometrySupport()
     {
         myLocations = new LinkedList<>();
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param source the source object from which to copy data.
+     */
+    public AbstractMapPathGeometrySupport(AbstractMapPathGeometrySupport source)
+    {
+        super(source);
+        myLocations = new LinkedList<>();
+        // TODO need to create copies of the locations as well?
+        myLocations.addAll(source.myLocations);
+        myLineType = source.myLineType;
+        myLineWidth = source.myLineWidth;
     }
 
     /**

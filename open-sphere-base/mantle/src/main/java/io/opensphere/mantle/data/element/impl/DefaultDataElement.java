@@ -217,6 +217,15 @@ public class DefaultDataElement implements DataElement
     {
         DefaultDataElement clone = new DefaultDataElement(myId * 10, myTimeSpan, datatype, myMetaDataProvider,
                 myVisualizationState.isMapDataElement());
+
+        VisualizationState visualizationState = clone.getVisualizationState();
+        visualizationState.setColor(getVisualizationState().getColor());
+        visualizationState.setAltitudeAdjust(getVisualizationState().getAltitudeAdjust());
+        visualizationState.setHasAlternateGeometrySupport(getVisualizationState().hasAlternateGeometrySupport());
+        visualizationState.setLobVisible(getVisualizationState().isLobVisible());
+        visualizationState.setSelected(getVisualizationState().isSelected());
+        visualizationState.setVisible(getVisualizationState().isVisible());
+
         return clone;
     }
 }

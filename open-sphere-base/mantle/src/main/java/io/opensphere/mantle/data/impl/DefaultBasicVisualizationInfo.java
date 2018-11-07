@@ -6,15 +6,14 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Set;
 
-import net.jcip.annotations.GuardedBy;
-import net.jcip.annotations.ThreadSafe;
-
 import io.opensphere.core.util.ColorUtilities;
 import io.opensphere.core.util.ObservableValue;
 import io.opensphere.core.util.StrongObservableValue;
 import io.opensphere.core.util.lang.ToStringHelper;
 import io.opensphere.mantle.data.BasicVisualizationInfo;
 import io.opensphere.mantle.data.LoadsTo;
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * The Class DefaultBasicVisualizationInfo.
@@ -265,5 +264,21 @@ public class DefaultBasicVisualizationInfo implements BasicVisualizationInfo
     protected void setDefaultTypeColor(Color c)
     {
         myDefaultTypeColor = c == null ? DEFAULT_DEFAULT_COLOR : c;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.BasicVisualizationInfo#createDeepCopy()
+     */
+    @Override
+    public DefaultBasicVisualizationInfo createDeepCopy()
+    {
+        Color sourceColor = getDefaultTypeColor();
+        Color copyColor = new Color(sourceColor.getRed(), sourceColor.getGreen(), sourceColor.getBlue(),
+                sourceColor.getTransparency());
+        DefaultBasicVisualizationInfo copy = new DefaultBasicVisualizationInfo(getLoadsTo(), copyColor, usesDataElements());
+
+        return copy;
     }
 }

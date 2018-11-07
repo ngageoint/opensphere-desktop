@@ -4,6 +4,7 @@ import java.util.List;
 
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.mantle.data.MapVisualizationType;
+import io.opensphere.mantle.data.geom.MapGeometrySupport;
 import io.opensphere.mantle.data.geom.MapPolylineGeometrySupport;
 
 /**
@@ -11,17 +12,24 @@ import io.opensphere.mantle.data.geom.MapPolylineGeometrySupport;
  */
 public class DefaultMapPolylineGeometrySupport extends AbstractMapPathGeometrySupport implements MapPolylineGeometrySupport
 {
-    /**
-     * Serial version UID.
-     */
+    /** Serial version UID. */
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Basic CTOR.
-     */
+    /** Default constructor. */
     public DefaultMapPolylineGeometrySupport()
     {
         super();
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param source the object from which to copy data.
+     */
+    public DefaultMapPolylineGeometrySupport(DefaultMapPolylineGeometrySupport source)
+    {
+        super(source);
+        // nothing to copy here.
     }
 
     /**
@@ -58,5 +66,16 @@ public class DefaultMapPolylineGeometrySupport extends AbstractMapPathGeometrySu
     public boolean isClosed()
     {
         return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.geom.MapGeometrySupport#createCopy()
+     */
+    @Override
+    public MapGeometrySupport createCopy()
+    {
+        return new DefaultMapPolylineGeometrySupport(this);
     }
 }

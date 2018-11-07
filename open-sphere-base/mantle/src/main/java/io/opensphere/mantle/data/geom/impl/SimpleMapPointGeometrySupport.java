@@ -18,16 +18,26 @@ public class SimpleMapPointGeometrySupport extends AbstractSimpleLocationGeometr
     /** The scale. */
     private float myScale = 1f;
 
-    /**
-     * CTOR.
-     */
+    /** Default constructor. */
     public SimpleMapPointGeometrySupport()
     {
         super();
     }
 
     /**
-     * CTOR with {@link LatLonAlt}.
+     * Default constructor.
+     *
+     * @param source the source object from which to copy data.
+     */
+    public SimpleMapPointGeometrySupport(SimpleMapPointGeometrySupport source)
+    {
+        super(source);
+
+        myScale = source.myScale;
+    }
+
+    /**
+     * Constructor with {@link LatLonAlt}.
      *
      * @param loc - the location
      */
@@ -58,5 +68,16 @@ public class SimpleMapPointGeometrySupport extends AbstractSimpleLocationGeometr
     public void setScale(float scale)
     {
         myScale = scale;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.geom.MapGeometrySupport#createCopy()
+     */
+    @Override
+    public SimpleMapPointGeometrySupport createCopy()
+    {
+        return new SimpleMapPointGeometrySupport(this);
     }
 }

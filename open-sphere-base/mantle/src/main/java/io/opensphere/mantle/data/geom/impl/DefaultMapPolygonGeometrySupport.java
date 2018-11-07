@@ -7,6 +7,7 @@ import java.util.List;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.data.MapVisualizationType;
+import io.opensphere.mantle.data.geom.MapGeometrySupport;
 import io.opensphere.mantle.data.geom.MapPolygonGeometrySupport;
 
 /**
@@ -34,12 +35,26 @@ public class DefaultMapPolygonGeometrySupport extends AbstractMapPathGeometrySup
     /** The flag that sets if the line for the polygon is drawn or not. */
     private boolean myLineIsDrawn = true;
 
-    /**
-     * Basic CTOR.
-     */
+    /** Default constructor. */
     public DefaultMapPolygonGeometrySupport()
     {
         super();
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param source the source object from which to copy data.
+     */
+    public DefaultMapPolygonGeometrySupport(DefaultMapPolygonGeometrySupport source)
+    {
+        super(source);
+
+        myFillColor = source.myFillColor;
+        // TODO: Create deep copy here:
+        myHoles.addAll(source.myHoles);
+        myIsFilled = source.myIsFilled;
+        myLineIsDrawn = source.myLineIsDrawn;
     }
 
     /**
@@ -153,5 +168,16 @@ public class DefaultMapPolygonGeometrySupport extends AbstractMapPathGeometrySup
     public void setLineDrawn(boolean drawn)
     {
         myLineIsDrawn = drawn;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.geom.MapGeometrySupport#createCopy()
+     */
+    @Override
+    public MapGeometrySupport createCopy()
+    {
+        return new DefaultMapPolygonGeometrySupport(this);
     }
 }

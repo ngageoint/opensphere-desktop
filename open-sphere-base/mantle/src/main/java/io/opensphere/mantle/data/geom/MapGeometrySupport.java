@@ -128,4 +128,6 @@ public interface MapGeometrySupport extends Serializable, VisualizationSupport
      * @param tip the tool tip
      */
     void setToolTip(String tip);
+
+    MapGeometrySupport createCopy();
 }

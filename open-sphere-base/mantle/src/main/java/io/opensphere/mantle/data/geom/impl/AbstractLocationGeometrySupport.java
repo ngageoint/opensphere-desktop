@@ -22,11 +22,22 @@ public abstract class AbstractLocationGeometrySupport extends AbstractDefaultMap
     private static final LatLonAlt ZERO_ZERO_ZERO = LatLonAlt.createFromDegrees(0.0, 0.0);
 
     /**
-     * CTOR.
+     * Default constructor.
      */
     public AbstractLocationGeometrySupport()
     {
         super();
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param source the source object from which to copy data.
+     */
+    public AbstractLocationGeometrySupport(AbstractLocationGeometrySupport source)
+    {
+        super(source);
+        // nothing unique here to copy
     }
 
     /**

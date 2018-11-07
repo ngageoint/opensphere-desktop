@@ -7,15 +7,11 @@ import io.opensphere.mantle.data.MapVisualizationType;
 import io.opensphere.mantle.data.geom.MapLineOfBearingGeometrySupport;
 import io.opensphere.mantle.data.geom.util.MapGeometrySupportUtils;
 
-/**
- * A Default Map Point Geometry Support.
- */
+/** A Default Map Point Geometry Support. */
 public class DefaultMapLineOfBearingGeometrySupport extends DefaultMapPointGeometrySupport
         implements MapLineOfBearingGeometrySupport
 {
-    /**
-     * Serial version UID.
-     */
+    /** Serial version UID. */
     private static final long serialVersionUID = 1L;
 
     /** The line length (km). */
@@ -24,12 +20,23 @@ public class DefaultMapLineOfBearingGeometrySupport extends DefaultMapPointGeome
     /** The line orientation (degrees clockwise from north). */
     private float myOrientation;
 
-    /**
-     * CTOR.
-     */
+    /** Default constructor. */
     public DefaultMapLineOfBearingGeometrySupport()
     {
         super();
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param source the source object from which to copy data.
+     */
+    public DefaultMapLineOfBearingGeometrySupport(DefaultMapLineOfBearingGeometrySupport source)
+    {
+        super(source);
+
+        myLineLength = source.myLineLength;
+        myOrientation = source.myOrientation;
     }
 
     /**
@@ -122,5 +129,16 @@ public class DefaultMapLineOfBearingGeometrySupport extends DefaultMapPointGeome
     public void setOrientation(float orient)
     {
         myOrientation = orient;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.geom.impl.DefaultMapPointGeometrySupport#createCopy()
+     */
+    @Override
+    public DefaultMapLineOfBearingGeometrySupport createCopy()
+    {
+        return new DefaultMapLineOfBearingGeometrySupport(this);
     }
 }
