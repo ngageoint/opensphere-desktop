@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 import io.opensphere.core.util.collections.New;
+import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.element.MetaDataProvider;
 
@@ -161,11 +162,11 @@ public class MDILinkedMetaDataProvider extends AbstractMDILinkedMetaDataProvider
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.mantle.data.element.MetaDataProvider#createCopy()
+     * @see io.opensphere.mantle.data.element.MetaDataProvider#createCopy(DataTypeInfo)
      */
     @Override
-    public MetaDataProvider createCopy()
+    public MetaDataProvider createCopy(DataTypeInfo newDataType)
     {
-        return new MDILinkedMetaDataProvider(this);
+        return new MDILinkedMetaDataProvider(newDataType.getMetaDataInfo(), New.list(myValues), this.myValuesMutable);
     }
 }

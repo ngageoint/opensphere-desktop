@@ -41,7 +41,7 @@ public class DefaultDataElement implements DataElement
         myCacheId = source.myCacheId;
         myDataTypeInfo = source.myDataTypeInfo;
         myId = source.myId;
-        myMetaDataProvider = source.myMetaDataProvider.createCopy();
+        myMetaDataProvider = source.myMetaDataProvider.createCopy(null);
         myTimeSpan = source.myTimeSpan;
 
         myVisualizationState = new VisualizationState(source.myVisualizationState.isMapDataElement());
@@ -158,6 +158,7 @@ public class DefaultDataElement implements DataElement
     protected void setDataTypeInfo(DataTypeInfo dataTypeInfo)
     {
         myDataTypeInfo = dataTypeInfo;
+        myMetaDataProvider = myMetaDataProvider.createCopy(myDataTypeInfo);
     }
 
     @Override
@@ -264,13 +265,18 @@ public class DefaultDataElement implements DataElement
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.mantle.data.element.DataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo)
+     * @see io.opensphere.mantle.data.element.DataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo,
+     *      long)
      */
     @Override
-    public DataElement cloneForDatatype(DataTypeInfo datatype)
+    public DataElement cloneForDatatype(DataTypeInfo datatype, long newId)
     {
         DefaultDataElement clone = new DefaultDataElement(this);
+        clone.setId(newId);
         clone.setDataTypeInfo(datatype);
+
+        MetaDataProvider mdiClone = myMetaDataProvider.createCopy(datatype);
+        clone.setMetaDataProvider(mdiClone);
 
 //        DefaultDataElement clone = new DefaultDataElement(myId * 10, myTimeSpan, datatype, myMetaDataProvider,
 //                myVisualizationState.isMapDataElement());

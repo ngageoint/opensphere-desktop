@@ -875,7 +875,7 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
         protected ResultDataElement(ResultDataElement source)
         {
             myDTI = source.myDTI;
-            myMetaDataProvider = source.myMetaDataProvider.createCopy();
+            myMetaDataProvider = source.myMetaDataProvider;
             myOrigId = source.myOrigId;
             myTimeSpan = source.myTimeSpan;
             myVisualizationState = new VisualizationState(source.myVisualizationState);
@@ -1024,13 +1024,15 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
         /**
          * {@inheritDoc}
          *
-         * @see io.opensphere.mantle.data.element.DataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo)
+         * @see io.opensphere.mantle.data.element.DataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo,
+         *      long)
          */
         @Override
-        public DataElement cloneForDatatype(DataTypeInfo datatype)
+        public DataElement cloneForDatatype(DataTypeInfo datatype, long newId)
         {
-            ResultDataElement clone = new ResultDataElement(myOrigId * 10, myTimeSpan, datatype, myMetaDataProvider,
-                    myVisualizationState);
+            MetaDataProvider mdpClone = myMetaDataProvider.createCopy(datatype);
+            ResultDataElement clone = new ResultDataElement(newId, myTimeSpan, datatype, mdpClone, myVisualizationState);
+
             return clone;
         }
     }
@@ -1091,15 +1093,18 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
         /**
          * {@inheritDoc}
          *
-         * @see io.opensphere.mantle.data.util.impl.DataElementLookupUtilsImpl.ResultDataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo)
+         * @see io.opensphere.mantle.data.util.impl.DataElementLookupUtilsImpl.ResultDataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo,
+         *      long)
          */
         @Override
-        public DataElement cloneForDatatype(DataTypeInfo datatype)
+        public DataElement cloneForDatatype(DataTypeInfo datatype, long newId)
         {
             ResultMapDataElement clone = new ResultMapDataElement(this);
+            clone.setOrigId(newId);
             clone.setCacheId(this.getIdInCache());
             clone.setDTI(datatype);
-            clone.setMetaDataProvider(this.getMetaData().createCopy());
+            clone.setMetaDataProvider(this.getMetaData().createCopy(datatype));
+
             clone.setIdInCache(this.getIdInCache());
             return clone;
         }

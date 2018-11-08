@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import io.opensphere.core.util.collections.CollectionUtilities;
+import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.cache.DirectAccessRetriever;
 import io.opensphere.mantle.data.element.MetaDataProvider;
 
@@ -103,10 +104,10 @@ class DirectAccessMetaDataProvider implements MetaDataProvider
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.mantle.data.element.MetaDataProvider#createCopy()
+     * @see io.opensphere.mantle.data.element.MetaDataProvider#createCopy(DataTypeInfo)
      */
     @Override
-    public MetaDataProvider createCopy()
+    public MetaDataProvider createCopy(DataTypeInfo newDataType)
     {
         return new DirectAccessMetaDataProvider(this);
     }

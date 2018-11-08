@@ -123,12 +123,12 @@ public class DelegateMapDataElement implements MapDataElement
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.mantle.data.element.DataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo)
+     * @see io.opensphere.mantle.data.element.DataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo, long)
      */
     @Override
-    public DataElement cloneForDatatype(DataTypeInfo datatype)
+    public DataElement cloneForDatatype(DataTypeInfo datatype, long newId)
     {
-        MapDataElement originalDelegate = (MapDataElement)myOriginal.cloneForDatatype(datatype);
+        MapDataElement originalDelegate = (MapDataElement)myOriginal.cloneForDatatype(datatype, -1);
 
         DelegateMapDataElement clone = new DelegateMapDataElement(originalDelegate, myMetaDataProvider);
         return clone;

@@ -103,7 +103,8 @@ public interface DataElement extends Model
      * to the supplied value.
      *
      * @param datatype the datatype to use as the parent of the cloned instance.
+     * @param newId TODO
      * @return a clone of the datatype.
      */
-    DataElement cloneForDatatype(DataTypeInfo datatype);
+    DataElement cloneForDatatype(DataTypeInfo datatype, long newId);
 }

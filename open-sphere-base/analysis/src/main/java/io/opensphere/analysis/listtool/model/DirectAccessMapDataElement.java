@@ -2,6 +2,8 @@ package io.opensphere.analysis.listtool.model;
 
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.cache.DirectAccessRetriever;
+import io.opensphere.mantle.data.cache.impl.DefaultDirectAccessRetriever;
+import io.opensphere.mantle.data.cache.impl.DiskCacheDirectAccessRetriever;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.element.MapDataElement;
 import io.opensphere.mantle.data.geom.MapGeometrySupport;
@@ -12,6 +14,11 @@ import io.opensphere.mantle.data.geom.MapGeometrySupport;
  */
 class DirectAccessMapDataElement extends DirectAccessDataElement implements MapDataElement
 {
+    protected DirectAccessMapDataElement(DirectAccessMapDataElement source)
+    {
+        super(source.getCacheId(), source.getDirectAccessRetriever());
+    }
+
     /**
      * Constructor.
      *
@@ -38,12 +45,33 @@ class DirectAccessMapDataElement extends DirectAccessDataElement implements MapD
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.analysis.listtool.model.DirectAccessDataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo)
+     * @see io.opensphere.analysis.listtool.model.DirectAccessDataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo,
+     *      long)
      */
     @Override
-    public DataElement cloneForDatatype(DataTypeInfo datatype)
+    public DataElement cloneForDatatype(DataTypeInfo datatype, long newId)
     {
-        // TODO Auto-generated method stub
-        return super.cloneForDatatype(datatype);
+        DirectAccessRetriever cloneRetriever;
+
+        if (getDirectAccessRetriever() instanceof DiskCacheDirectAccessRetriever)
+        {
+            DiskCacheDirectAccessRetriever original = (DiskCacheDirectAccessRetriever)getDirectAccessRetriever();
+
+            cloneRetriever = new DiskCacheDirectAccessRetriever(original.getDiskCacheAssistant(), datatype,
+                    original.getCacheRefMap(), original.getDynamicMetadataManager());
+        }
+        else if (getDirectAccessRetriever() instanceof DefaultDirectAccessRetriever)
+        {
+            DefaultDirectAccessRetriever original = (DefaultDirectAccessRetriever)getDirectAccessRetriever();
+            cloneRetriever = new DefaultDirectAccessRetriever(datatype, original.getCacheRefMap(),
+                    original.getDynamicMetadataManager());
+        }
+        else
+        {
+            throw new UnsupportedOperationException(
+                    "Unable to clone. Unclonable direct access retriever: " + getDirectAccessRetriever().getClass().getName());
+        }
+
+        return new DirectAccessMapDataElement(this.getCacheId(), cloneRetriever);
     }
 }

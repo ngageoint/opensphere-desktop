@@ -129,13 +129,15 @@ public class DefaultMapDataElement extends DefaultDataElement implements MapData
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.mantle.data.element.impl.DefaultDataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo)
+     * @see io.opensphere.mantle.data.element.impl.DefaultDataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo, long)
      */
     @Override
-    public DataElement cloneForDatatype(DataTypeInfo datatype)
+    public DataElement cloneForDatatype(DataTypeInfo datatype, long newId)
     {
         DefaultMapDataElement clone = new DefaultMapDataElement(this);
+        clone.setId(newId);
         clone.setDataTypeInfo(datatype);
+        clone.setMetaDataProvider(getMetaData().createCopy(datatype));
 
         return clone;
     }

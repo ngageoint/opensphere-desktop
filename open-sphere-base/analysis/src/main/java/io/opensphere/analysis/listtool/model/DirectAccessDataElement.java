@@ -119,10 +119,10 @@ class DirectAccessDataElement implements DataElement
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.mantle.data.element.DataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo)
+     * @see io.opensphere.mantle.data.element.DataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo, long)
      */
     @Override
-    public DataElement cloneForDatatype(DataTypeInfo datatype)
+    public DataElement cloneForDatatype(DataTypeInfo datatype, long newId)
     {
         DirectAccessRetriever cloneRetriever;
 

@@ -109,13 +109,14 @@ public class DelegateDataElement implements DataElement
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.mantle.data.element.DataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo)
+     * @see io.opensphere.mantle.data.element.DataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo, long)
      */
     @Override
-    public DataElement cloneForDatatype(DataTypeInfo datatype)
+    public DataElement cloneForDatatype(DataTypeInfo datatype, long newId)
     {
-        DataElement alernateOriginal = myOriginal.cloneForDatatype(datatype);
-        DelegateDataElement dataElement = new DelegateDataElement(alernateOriginal, myMetaDataProvider);
+        DataElement alternateOriginal = myOriginal.cloneForDatatype(datatype, newId);
+        DelegateDataElement dataElement = new DelegateDataElement(alternateOriginal, myMetaDataProvider);
+
         return dataElement;
     }
 }

@@ -3,6 +3,8 @@ package io.opensphere.mantle.data.element;
 import java.io.Serializable;
 import java.util.List;
 
+import io.opensphere.mantle.data.DataTypeInfo;
+
 /**
  * Interface for DataElements that provide Meta Data for tooling.
  */
@@ -85,5 +87,5 @@ public interface MetaDataProvider
      */
     boolean valuesMutable();
 
-    MetaDataProvider createCopy();
+    MetaDataProvider createCopy(DataTypeInfo datatype);
 }

@@ -6,8 +6,11 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Map.Entry;
+import java.util.Set;
 
+import io.opensphere.core.util.collections.New;
+import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.element.MetaDataProvider;
 
 /**
@@ -36,8 +39,15 @@ public class SimpleMetaDataProvider implements MetaDataProvider, Serializable
      */
     protected SimpleMetaDataProvider(SimpleMetaDataProvider source)
     {
-        myKeyToValueMap = source.myKeyToValueMap.entrySet().stream()
-                .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+        myKeyToValueMap = New.map(source.myKeyToValueMap.size());
+        Set<Entry<String, Serializable>> entrySet = source.myKeyToValueMap.entrySet();
+        for (Entry<String, Serializable> entry : entrySet)
+        {
+            myKeyToValueMap.put(entry.getKey(), entry.getValue());
+        }
+//
+//        myKeyToValueMap = source.myKeyToValueMap.entrySet().stream()
+//                .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
     }
 
     /**
@@ -121,10 +131,10 @@ public class SimpleMetaDataProvider implements MetaDataProvider, Serializable
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.mantle.data.element.MetaDataProvider#createCopy()
+     * @see io.opensphere.mantle.data.element.MetaDataProvider#createCopy(DataTypeInfo)
      */
     @Override
-    public MetaDataProvider createCopy()
+    public MetaDataProvider createCopy(DataTypeInfo newDataTypeInfo)
     {
         return new SimpleMetaDataProvider(this);
     }

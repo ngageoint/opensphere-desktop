@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import io.opensphere.mantle.data.DataTypeInfo;
+import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.element.MetaDataProvider;
 
 /**
@@ -60,10 +62,10 @@ public class SimpleMetaDataProvider extends MetaDataProviderAdapter
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.mantle.data.element.MetaDataProvider#createCopy()
+     * @see io.opensphere.mantle.data.element.MetaDataProvider#createCopy(MetaDataInfo)
      */
     @Override
-    public MetaDataProvider createCopy()
+    public MetaDataProvider createCopy(DataTypeInfo newDataTypeInfo)
     {
         return new SimpleMetaDataProvider(this);
     }
