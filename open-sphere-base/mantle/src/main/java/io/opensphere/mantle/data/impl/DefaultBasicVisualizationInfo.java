@@ -279,6 +279,8 @@ public class DefaultBasicVisualizationInfo implements BasicVisualizationInfo
                 sourceColor.getTransparency());
         DefaultBasicVisualizationInfo copy = new DefaultBasicVisualizationInfo(getLoadsTo(), copyColor, usesDataElements());
 
+        copy.mySupportedLoadsToTypes.addAll(this.mySupportedLoadsToTypes);
+
         return copy;
     }
 }
