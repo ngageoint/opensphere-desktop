@@ -36,7 +36,7 @@ public class TreePopupMenuImpl
             {
                 TreeItem<String> collectionName = (TreeItem<String>)myPanelModel.getTreeObject().getSelectedTree().getSelectionModel()
                         .selectedItemProperty().get();
-                if (iconRecord.getCollectionName().equals(collectionName.getValue()))
+                if (iconRecord.collectionNameProperty().equals(collectionName.getValue()))
                 {
                     myPanelModel.getIconRegistry().removeIcon(iconRecord, this);
                     if (doDelete)

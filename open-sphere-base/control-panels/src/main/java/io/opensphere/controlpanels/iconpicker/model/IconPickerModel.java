@@ -1,6 +1,7 @@
 package io.opensphere.controlpanels.iconpicker.model;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.LongProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.image.Image;
@@ -13,7 +14,7 @@ public class IconPickerModel
     /**
      * The id of the chosen icon.
      */
-    private final IntegerProperty myIconId;
+    private final LongProperty myIconId;
 
     /**
      * The icon image.
@@ -26,7 +27,7 @@ public class IconPickerModel
      * @param iconIdProperty An {@link IntegerProperty} to be used as the icon
      *            id property.
      */
-    public IconPickerModel(IntegerProperty iconIdProperty)
+    public IconPickerModel(LongProperty iconIdProperty)
     {
         myIconId = iconIdProperty;
     }
@@ -36,7 +37,7 @@ public class IconPickerModel
      *
      * @return The icon id property.
      */
-    public IntegerProperty icondIdProperty()
+    public LongProperty icondIdProperty()
     {
         return myIconId;
     }
@@ -56,7 +57,7 @@ public class IconPickerModel
      *
      * @return the iconId.
      */
-    public int getIconId()
+    public long getIconId()
     {
         return myIconId.get();
     }
@@ -66,7 +67,7 @@ public class IconPickerModel
      *
      * @param iconId the iconId to set.
      */
-    public void setIconId(int iconId)
+    public void setIconId(long iconId)
     {
         myIconId.set(iconId);
     }

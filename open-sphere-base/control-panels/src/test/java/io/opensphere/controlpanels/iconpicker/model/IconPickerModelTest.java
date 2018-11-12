@@ -3,14 +3,13 @@ package io.opensphere.controlpanels.iconpicker.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.image.Image;
-
 import org.junit.Test;
 
 import io.opensphere.core.util.image.ImageUtil;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
 
 /**
  * Unit test for the {@link IconPickerModel}.
@@ -23,7 +22,7 @@ public class IconPickerModelTest
     @Test
     public void test()
     {
-        IntegerProperty iconId = new SimpleIntegerProperty();
+        LongProperty iconId = new SimpleLongProperty();
         IconPickerModel model = new IconPickerModel(iconId);
 
         assertSame(iconId, model.icondIdProperty());

@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
-import gnu.trove.list.TIntList;
-import gnu.trove.list.array.TIntArrayList;
+import gnu.trove.list.TLongList;
+import gnu.trove.list.array.TLongArrayList;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.mantle.icon.IconProvider;
@@ -85,8 +85,8 @@ public abstract class AbstractIconLoader
     {
         List<IconRecord> records = new LinkedList<>(getIconsFromRegistry(iconRegistry));
 
-        Map<String, Integer> publicUrlToIdMap = records.stream()
-                .collect(Collectors.toMap(r -> getPublicUrl(r.getImageURL()), r -> Integer.valueOf(r.getId()), (v1, v2) -> v2));
+        Map<String, Long> publicUrlToIdMap = records.stream().collect(Collectors
+                .toMap(r -> getPublicUrl(r.imageURLProperty().get()), r -> Long.valueOf(r.idProperty().get()), (v1, v2) -> v2));
 
         removeOldRecords(iconRegistry, records);
 
@@ -107,7 +107,7 @@ public abstract class AbstractIconLoader
     protected List<IconRecord> getIconsFromRegistry(IconRegistry iconRegistry)
     {
         return iconRegistry.getIconRecords(
-                r -> myCollectionName.equals(r.getCollectionName()) && mySubCategoryName.equals(r.getSubCategory()));
+                r -> myCollectionName.equals(r.collectionNameProperty()) && mySubCategoryName.equals(r.subCategoryProperty()));
     }
 
     /**
@@ -125,17 +125,17 @@ public abstract class AbstractIconLoader
             {
                 String currentDirectory = getDirectory(url);
 
-                TIntList removedIds = new TIntArrayList();
+                TLongList removedIds = new TLongArrayList();
                 for (Iterator<IconRecord> iter = records.iterator(); iter.hasNext();)
                 {
                     IconRecord record = iter.next();
 
-                    String directory = getDirectory(record.getImageURL());
+                    String directory = getDirectory(record.imageURLProperty().get());
                     boolean isCurrent = currentDirectory.equals(directory);
                     if (!isCurrent)
                     {
                         iter.remove();
-                        removedIds.add(record.getId());
+                        removedIds.add(record.idProperty().get());
                     }
                 }
 
@@ -155,13 +155,13 @@ public abstract class AbstractIconLoader
      *            consistent)
      * @return the icon records
      */
-    protected List<IconRecord> readIconsFromFile(IconRegistry iconRegistry, Map<String, Integer> publicUrlToIdMap)
+    protected List<IconRecord> readIconsFromFile(IconRegistry iconRegistry, Map<String, Long> publicUrlToIdMap)
     {
         List<IconProvider> iconProviders = readFile().stream().map(this::getResource).filter(Objects::nonNull)
                 .map(url -> IconProviderFactory.create(url, myCollectionName, mySubCategoryName, mySourceKey))
                 .filter(Objects::nonNull).collect(Collectors.toList());
 
-        List<Integer> ids = iconProviders.stream().map(p -> publicUrlToIdMap.get(getPublicUrl(p.getIconURL())))
+        List<Long> ids = iconProviders.stream().map(p -> publicUrlToIdMap.get(getPublicUrl(p.getIconURL())))
                 .collect(Collectors.toList());
 
         return iconRegistry.addIcons(iconProviders, ids, getClass());
@@ -178,7 +178,7 @@ public abstract class AbstractIconLoader
         Map<String, URL> map = New.map(records.size());
         for (IconRecord record : records)
         {
-            map.put(getPublicUrl(record.getImageURL()), record.getImageURL());
+            map.put(getPublicUrl(record.imageURLProperty().get()), record.imageURLProperty().get());
         }
         return map;
     }

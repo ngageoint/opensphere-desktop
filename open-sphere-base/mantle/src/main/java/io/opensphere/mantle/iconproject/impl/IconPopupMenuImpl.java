@@ -51,8 +51,8 @@ public class IconPopupMenuImpl
             List<IconProvider> providerList = New.list(recordSet.size());
             for (IconRecord rec : recordSet)
             {
-                DefaultIconProvider provider = new DefaultIconProvider(rec.getImageURL(), IconRecord.FAVORITES_COLLECTION, null,
-                        "User");
+                DefaultIconProvider provider = new DefaultIconProvider(rec.imageURLProperty().get(),
+                        IconRecord.FAVORITES_COLLECTION, null, "User");
                 providerList.add(provider);
 
                 myPanelModel.getIconRegistry().addIcon(provider, this);
@@ -60,8 +60,8 @@ public class IconPopupMenuImpl
         }
         else
         {
-            DefaultIconProvider provider = new DefaultIconProvider(mySelectedIcon.getImageURL(), IconRecord.FAVORITES_COLLECTION,
-                    null, "User");
+            DefaultIconProvider provider = new DefaultIconProvider(mySelectedIcon.imageURLProperty().get(),
+                    IconRecord.FAVORITES_COLLECTION, null, "User");
             myPanelModel.getIconRegistry().addIcon(provider, this);
         }
 //        myPanelModel.getViewModel().getMainPanel().refresh();

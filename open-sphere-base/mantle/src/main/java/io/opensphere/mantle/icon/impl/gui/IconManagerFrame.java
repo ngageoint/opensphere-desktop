@@ -25,8 +25,8 @@ import javax.swing.JPopupMenu;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import gnu.trove.list.TIntList;
-import gnu.trove.list.array.TIntArrayList;
+import gnu.trove.list.TLongList;
+import gnu.trove.list.array.TLongArrayList;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.filesystem.MnemonicFileChooser;
@@ -148,7 +148,7 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
     /**
      * Initiates icon resizing.
      *
-     * @param enlarge the {@link #JButton reduceButton/increaseButton}
+     * @param enlarge the {@link #JButton} reduceButton/increaseButton
      */
     private void setIconSize(boolean enlarge)
     {
@@ -196,7 +196,7 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
     @Override
     public void iconsAdded(List<IconRecord> added, Object source)
     {
-        String collection = !added.isEmpty() ? added.get(0).getCollectionName() : null;
+        String collection = !added.isEmpty() ? added.get(0).collectionNameProperty().get() : null;
         myChooserPanel.refreshFromRegistry(collection);
     }
 
@@ -209,7 +209,7 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
     @Override
     public void iconsRemoved(List<IconRecord> removed, Object source)
     {
-        String collection = !removed.isEmpty() ? removed.get(0).getCollectionName() : null;
+        String collection = !removed.isEmpty() ? removed.get(0).collectionNameProperty().get() : null;
         myChooserPanel.refreshFromRegistry(collection);
     }
 
@@ -295,8 +295,8 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
             List<IconProvider> providerList = New.list(recordSet.size());
             for (IconRecord rec : recordSet)
             {
-                DefaultIconProvider provider = new DefaultIconProvider(rec.getImageURL(), IconRecord.FAVORITES_COLLECTION, null,
-                        "User");
+                DefaultIconProvider provider = new DefaultIconProvider(rec.imageURLProperty().get(),
+                        IconRecord.FAVORITES_COLLECTION, null, "User");
                 providerList.add(provider);
             }
             MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().addIcons(providerList, this);
@@ -399,10 +399,10 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
                     "Delete Icon Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (result == JOptionPane.YES_OPTION)
             {
-                TIntList idList = new TIntArrayList(recordSet.size());
+                TLongList idList = new TLongArrayList(recordSet.size());
                 for (IconRecord rec : recordSet)
                 {
-                    idList.add(rec.getId());
+                    idList.add(rec.idProperty().get());
                 }
                 MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().removeIcons(idList, this);
             }
@@ -454,16 +454,16 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
                     "Delete Icon Set Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (result == JOptionPane.YES_OPTION)
             {
-                TIntList iconIdList = null;
+                TLongList iconIdList = null;
                 if (obj.getNameType() == NameType.COLLECTION)
                 {
                     iconIdList = myIconRegistry
-                            .getIconIds(value -> Objects.equals(value.getCollectionName(), obj.getLabel()));
+                            .getIconIds(value -> Objects.equals(value.collectionNameProperty().get(), obj.getLabel()));
                 }
                 else
                 {
                     // Subcategory.
-                    iconIdList = myIconRegistry.getIconIds(value -> Objects.equals(value.getSubCategory(), obj.getLabel()));
+                    iconIdList = myIconRegistry.getIconIds(value -> Objects.equals(value.subCategoryProperty(), obj.getLabel()));
                 }
                 if (!iconIdList.isEmpty())
                 {

@@ -42,7 +42,7 @@ public class IconChooserDisplayerImpl implements IconChooserDisplayer
             {
                 if (selectedIcon.get() != null)
                 {
-                    return selectedIcon.get().getImageURL().toString();
+                    return selectedIcon.get().imageURLProperty().toString();
                 }
                 return null;
             });

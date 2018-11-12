@@ -66,7 +66,7 @@ public class IconEditor extends BorderPane
 
         for (String collection : collectionNames)
         {
-            IconGridView content = new IconGridView(panelModel, r -> r.getCollectionName().equals(collection));
+            IconGridView content = new IconGridView(panelModel, r -> r.collectionNameProperty().equals(collection));
             Tab tab = new Tab(collection, content);
 
             content.displayProperty().addListener((obs, ov, nv) ->
@@ -123,7 +123,7 @@ public class IconEditor extends BorderPane
 
         if (myPanelModel.getSelectedRecord().get() != null)
         {
-            String name = myPanelModel.getSelectedRecord().get().getCollectionName();
+            String name = myPanelModel.getSelectedRecord().get().collectionNameProperty().get();
             myIconTabs.getSelectionModel().select(myTabs.get(name).getFirstObject());
         }
     }

@@ -45,8 +45,8 @@ import javax.swing.tree.TreeSelectionModel;
 
 import org.jdesktop.swingx.JXBusyLabel;
 
-import gnu.trove.list.TIntList;
-import gnu.trove.list.array.TIntArrayList;
+import gnu.trove.list.TLongList;
+import gnu.trove.list.array.TLongArrayList;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.WeakChangeSupport;
@@ -469,7 +469,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
                         {
                             IconRecordTreeNodeUserObject irNode = (IconRecordTreeNodeUserObject)userObj;
                             boolean hasIcon = irNode.getRecords(true).stream()
-                                    .anyMatch(r -> mySelectedUrl.equals(r.getImageURL().toString()));
+                                    .anyMatch(r -> mySelectedUrl.equals(r.imageURLProperty().toString()));
                             if (hasIcon)
                             {
                                 nodeToSelect = mtn;
@@ -726,7 +726,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
             {
                 myTileWidth += 100;
             }
-            int iconWidth = (int)(myTileWidth - borderSize);
+            int iconWidth = myTileWidth - borderSize;
             int width = myGridPanel.getWidth();
             if (width < 0 || width > 5000)
             {
@@ -802,7 +802,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
         private List<RecordImageIcon> buildImageList(int iconWidth)
         {
             List<RecordImageIcon> icons = New.list(myIconRecordList.size());
-            TIntList brokenIconIds = new TIntArrayList();
+            TLongList brokenIconIds = new TLongArrayList();
             for (IconRecord record : myIconRecordList)
             {
                 RecordImageIcon icon = loadImage(record, iconWidth);
@@ -812,7 +812,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
                 }
                 else
                 {
-                    brokenIconIds.add(record.getId());
+                    brokenIconIds.add(record.idProperty().get());
                 }
 
                 if (isInterrupted())
@@ -847,7 +847,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
             JLabel nameLB = new JLabel(rec.getRecord().getName());
             recBTPanel.add(nameLB, BorderLayout.SOUTH);
 
-            String urlStr = rec.getRecord().getImageURL().toString();
+            String urlStr = rec.getRecord().imageURLProperty().toString();
             imageBT.setToolTipText(urlStr);
             recBTPanel.add(imageBT, BorderLayout.CENTER);
             return recBTPanel;
@@ -865,7 +865,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
             BufferedImage image;
             try
             {
-                image = ImageIO.read(record.getImageURL());
+                image = ImageIO.read(record.imageURLProperty().get());
             }
             catch (IOException e)
             {

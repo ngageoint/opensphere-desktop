@@ -44,15 +44,17 @@ public class IconTreeBuilder
     {
         DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode();
         List<IconRecord> records = myIconRegistry.getIconRecords(filter);
-        Collections.sort(records, (r1, r2) -> AlphanumComparator.compareNatural(r1.getImageURL().toString(), r2.getImageURL().toString()));
+        Collections.sort(records,
+                (r1, r2) -> AlphanumComparator.compareNatural(r1.imageURLProperty().toString(), r2.imageURLProperty().toString()));
         Set<String> collectionSet = New.set();
         Map<String, Map<String, List<IconRecord>>> iconRecordMapCollection = New.map();
         String defaultSubCategory = "DEFAULT";
         for (IconRecord record : records)
         {
-            String collectionName = record.getCollectionName() == null ? IconRecord.DEFAULT_COLLECTION : record.getCollectionName();
+            String collectionName = record.collectionNameProperty() == null ? IconRecord.DEFAULT_COLLECTION
+                    : record.collectionNameProperty().get();
             collectionSet.add(collectionName);
-            String subCategory = record.getSubCategory() == null ? defaultSubCategory : record.getSubCategory();
+            String subCategory = record.subCategoryProperty() == null ? defaultSubCategory : record.subCategoryProperty().get();
             Map<String, List<IconRecord>> iconRecordMap = iconRecordMapCollection.computeIfAbsent(collectionName, k -> New.map());
             List<IconRecord> recordList = iconRecordMap.computeIfAbsent(subCategory, k -> New.linkedList());
             recordList.add(record);
@@ -68,8 +70,7 @@ public class IconTreeBuilder
      *
      * @param rootNode the root node
      * @param collectionSet the collection set
-     * @param iconRecordMapCollection the collection to sub cat icon rec
-     *            map
+     * @param iconRecordMapCollection the collection to sub cat icon rec map
      * @param defaultSubCategory the default sub cat
      */
     private void buildTreeFromMaps(DefaultMutableTreeNode rootNode, Set<String> collectionSet,
@@ -100,8 +101,8 @@ public class IconTreeBuilder
                 if (subCategoryList.remove(defaultSubCategory))
                 {
                     List<IconRecord> defaultRecList = iconRecordMap.get(defaultSubCategory);
-                    collectionNode.setUserObject(DefaultIconRecordTreeNodeUserObject.createLeafNode(collectionNode, collection, defaultRecList,
-                            IconRecordTreeNodeUserObject.NameType.COLLECTION));
+                    collectionNode.setUserObject(DefaultIconRecordTreeNodeUserObject.createLeafNode(collectionNode, collection,
+                            defaultRecList, IconRecordTreeNodeUserObject.NameType.COLLECTION));
                 }
                 else
                 {

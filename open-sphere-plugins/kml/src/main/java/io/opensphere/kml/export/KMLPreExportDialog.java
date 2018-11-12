@@ -278,7 +278,7 @@ public class KMLPreExportDialog extends OptionDialog implements KMLExportOptions
         {
             if (action.getActionCommand() == IconChooserDialog.ICON_SELECTED)
             {
-                myIconFileField.setText(fileDialog.getSelectedIcon().getImageURL().getFile());
+                myIconFileField.setText(fileDialog.getSelectedIcon().imageURLProperty().get().getFile());
             }
         });
         fileDialog.setVisible(true);

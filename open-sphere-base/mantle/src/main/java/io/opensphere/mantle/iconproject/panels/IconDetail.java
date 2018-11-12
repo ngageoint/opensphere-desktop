@@ -71,7 +71,7 @@ public class IconDetail extends AnchorPane
             if (nv != null)
             {
                 myNameLabel.setText(nv.getName());
-                mySourceLabel.setText(nv.getCollectionName());
+                mySourceLabel.setText(nv.collectionNameProperty().get());
             }
         });
 
@@ -129,7 +129,7 @@ public class IconDetail extends AnchorPane
         }
         else
         {
-            Image image = icon.getImage();
+            Image image = icon.imageProperty().get();
             double xOrigin = canvas.getWidth() / 2;
             double xOffset = 0;
             if (model.horizontalMoveProperty().get() != 0)

@@ -27,7 +27,7 @@ public class IconRecordConfig implements IconProvider
 
     /** The icon ID. */
     @XmlAttribute(name = "id")
-    private int myId;
+    private long myId;
 
     /** The Parameter value class. */
     @XmlAttribute(name = "collectionName")
@@ -59,11 +59,11 @@ public class IconRecordConfig implements IconProvider
      */
     public IconRecordConfig(IconRecord rec)
     {
-        myId = rec.getId();
-        myImageURLString = rec.getImageURL() == null ? null : rec.getImageURL().toString();
-        myCollectionName = rec.getCollectionName();
-        mySubCategory = rec.getSubCategory();
-        mySourceKey = rec.getSourceKey();
+        myId = rec.idProperty().get();
+        myImageURLString = rec.imageURLProperty() == null ? null : rec.imageURLProperty().toString();
+        myCollectionName = rec.collectionNameProperty().get();
+        mySubCategory = rec.subCategoryProperty().get();
+        mySourceKey = rec.sourceKeyProperty().get();
     }
 
     /**
@@ -71,7 +71,7 @@ public class IconRecordConfig implements IconProvider
      *
      * @return the icon ID
      */
-    public int getId()
+    public long getId()
     {
         return myId;
     }

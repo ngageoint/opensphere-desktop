@@ -83,7 +83,7 @@ public class IconCustomizerDialog extends JFXDialog
             {
                 try
                 {
-                    String filename = icon.getImageURL().toString();
+                    String filename = icon.imageURLProperty().toString();
                     filename = filename.replace("file:", "");
                     filename = filename.replace("%20", " ");
                     ImageIO.write(bufImageRGB, FilenameUtils.getExtension(filename), new File(filename));

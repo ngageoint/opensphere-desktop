@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import javafx.scene.control.TreeItem;
-
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRecordTreeNodeUserObject;
@@ -18,6 +16,7 @@ import io.opensphere.mantle.icon.impl.gui.AlphanumComparator;
 import io.opensphere.mantle.iconproject.impl.DefaultIconRecordTreeItemObject;
 import io.opensphere.mantle.iconproject.model.IconRecordTreeItemUserObject;
 import io.opensphere.mantle.iconproject.model.PanelModel;
+import javafx.scene.control.TreeItem;
 
 /**
  * The TreeBuilder class.
@@ -52,15 +51,16 @@ public class TreeBuilder extends TreeItem<String>
         myIconRegistry = myPanelModel.getIconRegistry();
 
         List<IconRecord> records = myIconRegistry.getIconRecords(filter);
-        Collections.sort(records, (r1, r2) -> AlphanumComparator.compareNatural(r1.getImageURL().toString(), r2.getImageURL().toString()));
+        Collections.sort(records, (r1, r2) -> AlphanumComparator.compareNatural(r1.imageURLProperty().toString(), r2.imageURLProperty().toString()));
         Set<String> collectionSet = New.set();
         Map<String, Map<String, List<IconRecord>>> iconRecordMapCollection = New.map();
         String defaultSubCategory = "DEFAULT";
         for (IconRecord record : records)
         {
-            String collection = record.getCollectionName() == null ? IconRecord.DEFAULT_COLLECTION : record.getCollectionName();
+            String collection = record.collectionNameProperty() == null ? IconRecord.DEFAULT_COLLECTION
+                    : record.collectionNameProperty().get();
             collectionSet.add(collection);
-            String subCategory = record.getSubCategory() == null ? defaultSubCategory : record.getSubCategory();
+            String subCategory = record.subCategoryProperty() == null ? defaultSubCategory : record.subCategoryProperty().get();
             Map<String, List<IconRecord>> iconRecordMap = iconRecordMapCollection.computeIfAbsent(collection, k -> New.map());
             List<IconRecord> recordList = iconRecordMap.computeIfAbsent(subCategory, k -> New.linkedList());
             recordList.add(record);

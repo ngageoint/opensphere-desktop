@@ -53,7 +53,7 @@ public class IconRotationDialog extends JFXDialog
         setAcceptListener(() -> saveRotatedIcon(record, pane.getRotation()));
         try
         {
-            BufferedImage image = ImageIO.read(record.getImageURL());
+            BufferedImage image = ImageIO.read(record.imageURLProperty().get());
             setSize(image.getWidth() + 50, image.getHeight() + 170);
         }
         catch (IOException e)
@@ -73,7 +73,7 @@ public class IconRotationDialog extends JFXDialog
     {
         try
         {
-            BufferedImage image = ImageIO.read(record.getImageURL());
+            BufferedImage image = ImageIO.read(record.imageURLProperty().get());
             RotateImageProcessor processor = new RotateImageProcessor(rotation, false, null);
             image = processor.process(image);
 

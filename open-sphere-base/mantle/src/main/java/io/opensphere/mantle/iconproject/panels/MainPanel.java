@@ -90,8 +90,9 @@ public class MainPanel extends SplitPane
         MenuItem folderOption = new MenuItem("Folder");
         myAddIconButton.getItems().addAll(fileOption, folderOption);
         myAddIconButton.setAlignment(Pos.CENTER);
-        fileOption.setOnAction(event -> EventQueue.invokeLater(() -> loadFromFile(myPanelModel.getImportProperties().getCollectionName(),
-                    myPanelModel.getImportProperties().getSubCollectionName())));
+        fileOption.setOnAction(
+                event -> EventQueue.invokeLater(() -> loadFromFile(myPanelModel.getImportProperties().getCollectionName(),
+                        myPanelModel.getImportProperties().getSubCollectionName())));
 
         folderOption.setOnAction(event -> EventQueue.invokeLater(() -> addIconsFromFolder()));
 
@@ -102,10 +103,10 @@ public class MainPanel extends SplitPane
         AnchorPane.setBottomAnchor(myGenerateIconButton, 0.0);
         myGenerateIconButton.lockButton(myGenerateIconButton);
         myGenerateIconButton.setOnAction(event -> EventQueue.invokeLater(() ->
-            {
-                IconProjGenDialog dialog = new IconProjGenDialog(myOwner, myPanelModel.getIconRegistry(), this);
-                dialog.setVisible(true);
-            }));
+        {
+            IconProjGenDialog dialog = new IconProjGenDialog(myOwner, myPanelModel.getIconRegistry(), this);
+            dialog.setVisible(true);
+        }));
 
 //        myScrollPane = new ScrollPane(myIconGrid);
 //        myScrollPane.setPannable(true);
@@ -185,8 +186,8 @@ public class MainPanel extends SplitPane
         {
             refreshTree();
             myRecordMap = new HashMap<>(myTreeBuilder.getRecordMap());
-            String item = myTreeView.getSelectionModel().getSelectedItem() == null ? myTreeView.getTreeItem(0).getValue() :
-                    myTreeView.getSelectionModel().getSelectedItem().getValue();
+            String item = myTreeView.getSelectionModel().getSelectedItem() == null ? myTreeView.getTreeItem(0).getValue()
+                    : myTreeView.getSelectionModel().getSelectedItem().getValue();
             myPanelModel.setRecordList(myRecordMap.get(item));
 //            myScrollPane.setContent(myIconGrid = new GridBuilder(myPanelModel));
             myPanelModel.getAllSelectedIcons().clear();
@@ -223,7 +224,8 @@ public class MainPanel extends SplitPane
         }
         else
         {
-            myPanelModel.getImportProperties().setCollectionName(myRecordMap.get(collectionName).get(0).getCollectionName());
+            myPanelModel.getImportProperties()
+                    .setCollectionName(myRecordMap.get(collectionName).get(0).collectionNameProperty().get());
             myPanelModel.getImportProperties().setSubCollectionName(collectionName);
         }
     }

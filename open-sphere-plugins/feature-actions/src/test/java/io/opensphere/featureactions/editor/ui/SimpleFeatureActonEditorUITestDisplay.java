@@ -505,8 +505,8 @@ public class SimpleFeatureActonEditorUITestDisplay
         EasyMock.expect(controller.getDataTypeInfoForType(ourLayerId)).andReturn(layer).atLeastOnce();
 
         IconRecord record = support.createMock(IconRecord.class);
-        EasyMock.expect(Integer.valueOf(record.getId())).andReturn(Integer.valueOf(iconId)).anyTimes();
-        EasyMock.expect(record.getImageURL()).andReturn(IconRegistry.DEFAULT_ICON_URL).atLeastOnce();
+        EasyMock.expect(Long.valueOf(record.idProperty().get())).andReturn(Long.valueOf(iconId)).anyTimes();
+        EasyMock.expect(record.imageURLProperty().get()).andReturn(IconRegistry.DEFAULT_ICON_URL).atLeastOnce();
 
         IconRegistry iconRegistry = support.createMock(IconRegistry.class);
         if (iconId == 7)

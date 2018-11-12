@@ -181,8 +181,8 @@ public class IconChooserDialog extends JDialog
         IconRecord rec = myChooserPanel.getLastPopupTriggerIconRecord();
         if (rec != null)
         {
-            DefaultIconProvider provider = new DefaultIconProvider(rec.getImageURL(), IconRecord.FAVORITES_COLLECTION, null,
-                    "User");
+            DefaultIconProvider provider = new DefaultIconProvider(rec.imageURLProperty().get(), IconRecord.FAVORITES_COLLECTION,
+                    null, "User");
             MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().addIcon(provider, this);
             myChooserPanel.refreshFromRegistry(IconRecord.FAVORITES_COLLECTION);
         }
@@ -220,13 +220,15 @@ public class IconChooserDialog extends JDialog
         IconRecord record = myChooserPanel.getLastPopupTriggerIconRecord();
         if (record != null)
         {
-            int result = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete the selected icon?\n"
-                    + "\nThe icon file on your computer will not be deleted \n" + "but the application will no longer remember it.",
+            int result = JOptionPane.showConfirmDialog(this,
+                    "Are you sure you want to delete the selected icon?\n"
+                            + "\nThe icon file on your computer will not be deleted \n"
+                            + "but the application will no longer remember it.",
                     "Delete Icon Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (result == JOptionPane.YES_OPTION)
             {
                 MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().removeIcon(record, this);
-                myChooserPanel.refreshFromRegistry(record.getCollectionName());
+                myChooserPanel.refreshFromRegistry(record.collectionNameProperty().get());
             }
         }
     }

@@ -4,6 +4,12 @@ import java.awt.Window;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
+
+import org.apache.log4j.Logger;
+
+import io.opensphere.mantle.icon.IconRecord;
+import io.opensphere.mantle.iconproject.model.PanelModel;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -30,13 +36,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
-
-import javax.imageio.ImageIO;
-
-import org.apache.log4j.Logger;
-
-import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.iconproject.model.PanelModel;
 
 /** Panel for building custom icons. */
 public class IconCustomizerPane extends BorderPane
@@ -238,8 +237,8 @@ public class IconCustomizerPane extends BorderPane
         iconDisplayer.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;"
                 + "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
         iconDisplayer.setId("BoxStyle");
-        
-        myIconView = new ImageView(myIconRecord.getImageURL().toString());
+
+        myIconView = new ImageView(myIconRecord.imageURLProperty().toString());
         myIconView.rotateProperty().bindBidirectional(myRotation);
         myIconView.translateXProperty().bindBidirectional(myXPosition);
         myIconView.translateYProperty().bindBidirectional(myYPosition);
@@ -247,7 +246,7 @@ public class IconCustomizerPane extends BorderPane
         BufferedImage iconActual = null;
         try
         {
-            iconActual = ImageIO.read(myIconRecord.getImageURL());
+            iconActual = ImageIO.read(myIconRecord.imageURLProperty().get());
         }
         catch (IOException e)
         {
