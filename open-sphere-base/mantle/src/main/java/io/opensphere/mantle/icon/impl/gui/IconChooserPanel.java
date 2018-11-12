@@ -469,7 +469,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
                         {
                             IconRecordTreeNodeUserObject irNode = (IconRecordTreeNodeUserObject)userObj;
                             boolean hasIcon = irNode.getRecords(true).stream()
-                                    .anyMatch(r -> mySelectedUrl.equals(r.imageURLProperty().toString()));
+                                    .anyMatch(r -> mySelectedUrl.equals(r.imageURLProperty().get().toString()));
                             if (hasIcon)
                             {
                                 nodeToSelect = mtn;
@@ -847,7 +847,7 @@ public class IconChooserPanel extends JPanel implements TreeSelectionListener
             JLabel nameLB = new JLabel(rec.getRecord().getName());
             recBTPanel.add(nameLB, BorderLayout.SOUTH);
 
-            String urlStr = rec.getRecord().imageURLProperty().toString();
+            String urlStr = rec.getRecord().imageURLProperty().get().toString();
             imageBT.setToolTipText(urlStr);
             recBTPanel.add(imageBT, BorderLayout.CENTER);
             return recBTPanel;

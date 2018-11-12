@@ -130,7 +130,7 @@ public interface IconRecord
      */
     default String getName()
     {
-        String urlStr = imageURLProperty().toString();
+        String urlStr = imageURLProperty().get().toString();
         String nameStr = urlStr;
         int lastIndexOfSlash = urlStr.lastIndexOf('\\');
         if (lastIndexOfSlash == -1)

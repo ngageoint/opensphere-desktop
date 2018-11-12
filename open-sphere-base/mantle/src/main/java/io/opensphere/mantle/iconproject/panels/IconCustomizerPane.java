@@ -238,7 +238,7 @@ public class IconCustomizerPane extends BorderPane
                 + "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: purple;");
         iconDisplayer.setId("BoxStyle");
 
-        myIconView = new ImageView(myIconRecord.imageURLProperty().toString());
+        myIconView = new ImageView(myIconRecord.imageURLProperty().get().toString());
         myIconView.rotateProperty().bindBidirectional(myRotation);
         myIconView.translateXProperty().bindBidirectional(myXPosition);
         myIconView.translateYProperty().bindBidirectional(myYPosition);

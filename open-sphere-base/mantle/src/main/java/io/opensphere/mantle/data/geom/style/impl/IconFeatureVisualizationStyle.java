@@ -840,7 +840,7 @@ public class IconFeatureVisualizationStyle extends AbstractLocationFeatureVisual
      */
     private void loadDefaultIconRecord()
     {
-        if (myTempIconRecord == null || !Objects.equals(getIconURL(), myTempIconRecord.imageURLProperty().toString()))
+        if (myTempIconRecord == null || !Objects.equals(getIconURL(), myTempIconRecord.imageURLProperty().get().toString()))
         {
             IconRegistry reg = MantleToolboxUtils.getMantleToolbox(getToolbox()).getIconRegistry();
             URL iconURL = null;

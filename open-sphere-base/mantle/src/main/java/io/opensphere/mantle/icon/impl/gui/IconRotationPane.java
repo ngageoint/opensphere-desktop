@@ -58,7 +58,7 @@ public class IconRotationPane extends BorderPane
      */
     private ImageView createImageView(IconRecord record)
     {
-        ImageView imageView = new ImageView(record.imageURLProperty().toString());
+        ImageView imageView = new ImageView(record.imageURLProperty().get().toString());
         imageView.rotateProperty().bind(myRotation);
 
         BufferedImage iconActual = null;

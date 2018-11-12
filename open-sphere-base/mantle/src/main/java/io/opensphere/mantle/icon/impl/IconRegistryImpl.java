@@ -322,7 +322,7 @@ public class IconRegistryImpl implements IconRegistry
         {
             myIconIdToIconRecordMap.forEachEntry((iconId, record) ->
             {
-                if (Objects.equals(urlStr, record.imageURLProperty().toString()))
+                if (Objects.equals(urlStr, record.imageURLProperty().get().toString()))
                 {
                     recList.add(record);
                     return false;
@@ -811,7 +811,7 @@ public class IconRegistryImpl implements IconRegistry
 
         // Clean up duplicates of the default icon
         TLongList iconIds = getIconIds(r -> IconRecord.DEFAULT_COLLECTION.equals(r.collectionNameProperty().get())
-                && r.sourceKeyProperty() == null && !DEFAULT_ICON_URL.equals(r.imageURLProperty()));
+                && r.sourceKeyProperty() == null && !DEFAULT_ICON_URL.equals(r.imageURLProperty().get()));
         if (!iconIds.isEmpty())
         {
             removeIcons(iconIds, this);
@@ -856,7 +856,7 @@ public class IconRegistryImpl implements IconRegistry
     @Override
     public void deleteIcon(IconRecord iconToDelete, PanelModel thePanelModel)
     {
-        String filename = iconToDelete.imageURLProperty().toString();
+        String filename = iconToDelete.imageURLProperty().get().toString();
         // This loop logic is to make sure it is removed from all the
         // directories. The null check ensures it works on all machines since
         // icon # may change on computer to computer.
@@ -865,7 +865,7 @@ public class IconRegistryImpl implements IconRegistry
             IconRecord iconRecord = thePanelModel.getIconRegistry().getIconRecordByIconId(idx);
             if (iconRecord != null)
             {
-                if (iconRecord.imageURLProperty().toString().equals(filename))
+                if (iconRecord.imageURLProperty().get().toString().equals(filename))
                 {
                     thePanelModel.getIconRegistry().removeIcon(this.getIconRecordByIconId(idx), this);
                 }

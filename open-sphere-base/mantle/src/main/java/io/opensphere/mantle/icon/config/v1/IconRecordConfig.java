@@ -60,7 +60,7 @@ public class IconRecordConfig implements IconProvider
     public IconRecordConfig(IconRecord rec)
     {
         myId = rec.idProperty().get();
-        myImageURLString = rec.imageURLProperty() == null ? null : rec.imageURLProperty().toString();
+        myImageURLString = rec.imageURLProperty().get() == null ? null : rec.imageURLProperty().get().toString();
         myCollectionName = rec.collectionNameProperty().get();
         mySubCategory = rec.subCategoryProperty().get();
         mySourceKey = rec.sourceKeyProperty().get();

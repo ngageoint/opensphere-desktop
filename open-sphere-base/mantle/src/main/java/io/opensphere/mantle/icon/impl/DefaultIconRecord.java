@@ -79,7 +79,7 @@ public class DefaultIconRecord implements IconRecord
         myCollectionNameProperty.set(ip.getCollectionName() == null ? DEFAULT_COLLECTION : ip.getCollectionName());
         mySubCategoryProperty.set(ip.getSubCategory());
         mySourceKeyProperty.set(ip.getSourceKey());
-        myImage.set(new Image(myImageURLProperty.toString()));
+        myImage.set(new Image(myImageURLProperty.get().toString()));
     }
 
     @Override
