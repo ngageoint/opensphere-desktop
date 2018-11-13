@@ -1,5 +1,6 @@
 package io.opensphere.mantle.iconproject.panels.transform;
 
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.WebHostingHubGlyphs;
 import io.opensphere.core.util.fx.FxIcons;
 import javafx.geometry.Pos;
@@ -7,6 +8,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory.DoubleSpinnerValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
@@ -34,10 +36,21 @@ public class ScaleTransform extends AbstractTransform
         horizontalIcon.setAlignment(Pos.CENTER);
 
         Slider verticalScale = createSlider(model.verticalScaleProperty(), .1, 5, 1.0);
+        verticalScale.blockIncrementProperty().set(.1);
+
         Spinner<Double> verticalScaleSpinner = createSpinner(model.verticalScaleProperty(), .1, 5, 1);
+        ((DoubleSpinnerValueFactory)verticalScaleSpinner.getValueFactory()).setAmountToStepBy(.05);
+        Label verticalReset = FxIcons.createClearIcon(AwesomeIconSolid.TIMES_CIRCLE, Color.WHITE, 10);
+        verticalReset.setOnMouseClicked(e -> model.verticalScaleProperty().set(1.0));
+        verticalReset.setAlignment(Pos.CENTER);
 
         Slider horizontalScale = createSlider(model.horizontalScaleProperty(), .1, 5, 1.0);
+        horizontalScale.blockIncrementProperty().set(.1);
         Spinner<Double> horizontalScaleSpinner = createSpinner(model.horizontalScaleProperty(), .1, 5, 1);
+        ((DoubleSpinnerValueFactory)horizontalScaleSpinner.getValueFactory()).setAmountToStepBy(.05);
+        Label horizontalReset = FxIcons.createClearIcon(AwesomeIconSolid.TIMES_CIRCLE, Color.WHITE, 10);
+        horizontalReset.setOnMouseClicked(e -> model.horizontalScaleProperty().set(1.0));
+        horizontalReset.setAlignment(Pos.CENTER);
 
         HBox.setHgrow(verticalIcon, Priority.NEVER);
         HBox.setHgrow(horizontalIcon, Priority.NEVER);
@@ -45,6 +58,8 @@ public class ScaleTransform extends AbstractTransform
         HBox.setHgrow(verticalScale, Priority.ALWAYS);
         HBox.setHgrow(horizontalScaleSpinner, Priority.NEVER);
         HBox.setHgrow(verticalScaleSpinner, Priority.NEVER);
+        HBox.setHgrow(verticalReset, Priority.NEVER);
+        HBox.setHgrow(horizontalReset, Priority.NEVER);
 
         CheckBox lockPerspective = new CheckBox("Lock Together");
         lockPerspective.selectedProperty().set(true);
@@ -61,8 +76,11 @@ public class ScaleTransform extends AbstractTransform
             }
         });
 
-        getChildren().add(new HBox(verticalIcon, verticalScale, verticalScaleSpinner));
-        getChildren().add(new HBox(horizontalIcon, horizontalScale, horizontalScaleSpinner));
+        getChildren().add(new HBox(verticalIcon, verticalScale, verticalScaleSpinner, verticalReset));
+        getChildren().add(new HBox(horizontalIcon, horizontalScale, horizontalScaleSpinner, horizontalReset));
         getChildren().add(lockPerspective);
+
+        verticalScale.valueProperty().set(1.0);
+        horizontalScale.valueProperty().set(1.0);
     }
 }

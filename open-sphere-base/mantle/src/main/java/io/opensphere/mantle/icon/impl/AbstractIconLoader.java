@@ -106,8 +106,8 @@ public abstract class AbstractIconLoader
      */
     protected List<IconRecord> getIconsFromRegistry(IconRegistry iconRegistry)
     {
-        return iconRegistry.getIconRecords(
-                r -> myCollectionName.equals(r.collectionNameProperty()) && mySubCategoryName.equals(r.subCategoryProperty()));
+        return iconRegistry.getIconRecords(r -> myCollectionName.equals(r.collectionNameProperty().get())
+                && mySubCategoryName.equals(r.subCategoryProperty().get()));
     }
 
     /**

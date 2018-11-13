@@ -463,7 +463,8 @@ public class IconManagerFrame extends JFrame implements IconRegistryListener
                 else
                 {
                     // Subcategory.
-                    iconIdList = myIconRegistry.getIconIds(value -> Objects.equals(value.subCategoryProperty(), obj.getLabel()));
+                    iconIdList = myIconRegistry
+                            .getIconIds(value -> Objects.equals(value.subCategoryProperty().get(), obj.getLabel()));
                 }
                 if (!iconIdList.isEmpty())
                 {

@@ -41,6 +41,9 @@ public class IconGridView extends AnchorPane
     /** The model in which state is maintained. */
     private final PanelModel myModel;
 
+    /**
+     * The display state of the grid view. tied to the empty state of the items.
+     */
     private final BooleanProperty myDisplayProperty;
 
     /**
@@ -95,6 +98,13 @@ public class IconGridView extends AnchorPane
         return myDisplayProperty;
     }
 
+    /**
+     * Creates a composite predicate to determine if the icon matches the group
+     * and any search terms entered by the user.
+     *
+     * @return a composite predicate to determine if the icon matches the group
+     *         and any search terms entered by the user.
+     */
     private Predicate<IconRecord> composePredicate()
     {
         Predicate<IconRecord> composedPredicate = myPredicate;
@@ -107,7 +117,7 @@ public class IconGridView extends AnchorPane
     }
 
     /**
-     * @return
+     * Refreshes the contents of the tab.
      */
     public void refresh()
     {

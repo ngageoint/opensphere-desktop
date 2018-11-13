@@ -18,9 +18,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
-/**
- *
- */
+/** An panel on which the icon may be selected by the user. */
 public class IconEditor extends BorderPane
 {
     /** The model in which state is maintained. */
@@ -38,8 +36,10 @@ public class IconEditor extends BorderPane
     /** The component in which set controls are managed. */
     private final Node mySetControlPane;
 
+    /** A dictionary of tabs of icons, organized by icon set. */
     private final Map<String, Pair<Tab, IconGridView>> myTabs;
 
+    /** A flag used to track the sorting state of the editor. */
     private transient boolean mySorting;
 
     /**
@@ -66,7 +66,7 @@ public class IconEditor extends BorderPane
 
         for (String collection : collectionNames)
         {
-            IconGridView content = new IconGridView(panelModel, r -> r.collectionNameProperty().equals(collection));
+            IconGridView content = new IconGridView(panelModel, r -> r.collectionNameProperty().get().equals(collection));
             Tab tab = new Tab(collection, content);
 
             content.displayProperty().addListener((obs, ov, nv) ->

@@ -56,9 +56,6 @@ public class PanelModel
         }
     }
 
-    /** View set to default of Grid. */
-    private final ObjectProperty<ViewStyle> myViewStyle = new SimpleObjectProperty<>(this, "viewtype", ViewStyle.GRID);
-
     /** The selected icon to be used for customization dialogs. */
     private final ObjectProperty<IconRecord> mySelectedRecord = new SimpleObjectProperty<>();
 
@@ -127,16 +124,6 @@ public class PanelModel
         myFilteredIconRecordList = New.list();
         myUseFilteredList = false;
         myRegistryListener = new PassThroughIconRegistryListener();
-    }
-
-    /**
-     * Gets the icon display view style.
-     *
-     * @return the chosen view.
-     */
-    public ObjectProperty<ViewStyle> viewStyleProperty()
-    {
-        return myViewStyle;
     }
 
     /**

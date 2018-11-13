@@ -6,26 +6,29 @@ import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.panels.transform.TransformModel;
 import io.opensphere.mantle.iconproject.panels.transform.TransformPanel;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.transform.Affine;
+import javafx.scene.transform.NonInvertibleTransformException;
 
-/**
- * A panel in which icon details are displayed.
- */
+/** A panel in which icon details are displayed. */
 public class IconDetail extends AnchorPane
 {
     /** The logger used to capture output from instances of this class. */
     private static final Logger LOG = Logger.getLogger(IconDetail.class);
-
-    /** A zoomed in view of the selected icon. */
-    private final ImageView myImagePreview;
 
     /** The label in which the name of the icon is displayed. */
     private final Label myNameLabel;
@@ -36,6 +39,7 @@ public class IconDetail extends AnchorPane
     /** The label in which the tags applied to the icon are displayed. */
     private final Label myTagsLabel;
 
+    /** The panel on which transformations occur. */
     private final TransformPanel myTransformPanel;
 
     /**
@@ -45,17 +49,11 @@ public class IconDetail extends AnchorPane
      */
     public IconDetail(PanelModel model)
     {
-
         setMaxWidth(250);
         setMinWidth(250);
 
-        Canvas canvas = new Canvas(250, 250);
+        Canvas canvas = new Canvas(246, 250);
         canvas.getGraphicsContext2D().drawImage(null, USE_COMPUTED_SIZE, BASELINE_OFFSET_SAME_AS_HEIGHT);
-
-        myImagePreview = new ImageView();
-//        myImagePreview.fitHeightProperty().bind(this.widthProperty());
-//        myImagePreview.fitWidthProperty().bind(this.widthProperty());
-        myImagePreview.setPreserveRatio(true);
 
         model.previewRecordProperty().addListener((obs, ov, nv) ->
         {
@@ -75,17 +73,18 @@ public class IconDetail extends AnchorPane
             }
         });
 
-        VBox box = new VBox();
+        VBox box = new VBox(5);
         box.setAlignment(Pos.TOP_CENTER);
 
-//        Node hbox = Borders.wrap(myImagePreview).lineBorder().color(Color.GREY).innerPadding(1).outerPadding(0).buildAll();
-//        Node hbox = Borders.wrap(canvas).lineBorder().color(Color.GREY).innerPadding(1).outerPadding(0).buildAll();
-
-        getChildren().add(canvas);
-        setTopAnchor(canvas, 0.0);
-        setLeftAnchor(canvas, 0.0);
-        setRightAnchor(canvas, 0.0);
-        setBottomAnchor(canvas, 275.0);
+        HBox canvasBox = new HBox(canvas);
+        Border border = new Border(new BorderStroke(new Color(0.247058824, 0.247058824, 0.305882353, 1), BorderStrokeStyle.SOLID,
+                null, BorderWidths.DEFAULT, new Insets(0, 0, 10, 2)));
+        canvasBox.setBorder(border);
+        getChildren().add(canvasBox);
+        setTopAnchor(canvasBox, 0.0);
+        setLeftAnchor(canvasBox, 0.0);
+        setRightAnchor(canvasBox, 0.0);
+        setBottomAnchor(canvasBox, 255.0);
 
         GridPane grid = new GridPane();
         grid.add(new Label("Name:"), 0, 0);
@@ -115,11 +114,18 @@ public class IconDetail extends AnchorPane
 
         getChildren().add(box);
 
-        setTopAnchor(box, 250.0);
-        setLeftAnchor(box, 0.0);
+        setTopAnchor(box, 275.0);
+        setLeftAnchor(box, 2.0);
         setRightAnchor(box, 0.0);
     }
 
+    /**
+     * Draws the preview of the supplied icon on the supplied canvas, applying
+     * any transforms specified by the user.
+     *
+     * @param canvas the canvas on which to draw the preview.
+     * @param icon the icon from which to extract the image for the preview.
+     */
     private void redrawPreview(Canvas canvas, IconRecord icon)
     {
         TransformModel model = myTransformPanel.getModel();
@@ -131,53 +137,43 @@ public class IconDetail extends AnchorPane
         {
             Image image = icon.imageProperty().get();
             double xOrigin = canvas.getWidth() / 2;
-            double xOffset = 0;
-            if (model.horizontalMoveProperty().get() != 0)
-            {
-                xOffset = xOrigin * (model.horizontalMoveProperty().get() / 100);
-            }
             double yOrigin = canvas.getHeight() / 2;
-            double yOffset = 0;
-            if (model.verticalMoveProperty().get() != 0)
-            {
-                yOffset = yOrigin * (model.verticalMoveProperty().get() / 100);
-            }
 
             canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-            double drawX = 0 - image.getWidth() / 2;
-            double drawY = 0 - image.getHeight() / 2;
-
-            LOG.info("     X Origin: " + xOrigin);
-            LOG.info("     Y Origin: " + yOrigin);
-            LOG.info("       H Move: " + model.horizontalMoveProperty().get());
-            LOG.info("       V Move: " + model.verticalMoveProperty().get());
-            LOG.info("     X Offset: " + xOffset);
-            LOG.info("     Y Offset: " + yOffset);
-            LOG.info(" Canvas Width: " + canvas.getWidth());
-            LOG.info("Canvas Height: " + canvas.getHeight());
-            LOG.info("   Icon Width: " + image.getWidth());
-            LOG.info("  Icon Height: " + image.getHeight());
-            LOG.info("       X Draw: " + xOffset);
-            LOG.info("       Y Draw: " + yOffset);
+            double drawX = 0 - (image.getWidth() * model.horizontalScaleProperty().get()) / 2;
+            double drawY = 0 - (image.getHeight() * model.verticalScaleProperty().get()) / 2;
 
             GraphicsContext graphicsContext2D = canvas.getGraphicsContext2D();
 
-            // translate to the middle:
+            double horizontalTranslate = xOrigin + drawX + model.horizontalMoveProperty().get();
+            double mxx = model.horizontalScaleProperty().get();
+            double mxy = 0;
+            double tx = horizontalTranslate;
 
-            graphicsContext2D.translate(xOrigin, yOrigin);
-            graphicsContext2D.translate(xOffset, yOffset);
-            graphicsContext2D.rotate(model.rotationProperty().get());
-            graphicsContext2D.translate(drawX, drawY);
-//            graphicsContext2D.scale(model.horizontalScaleProperty().get(), model.verticalScaleProperty().get());
-            graphicsContext2D.drawImage(image, 0, 0);
-            canvas.getGraphicsContext2D().strokeRect(0, 0, image.getWidth(), image.getHeight());
-//            graphicsContext2D.scale(-model.horizontalScaleProperty().get(), -model.verticalScaleProperty().get());
-            graphicsContext2D.translate(-drawX, -drawY);
-            graphicsContext2D.rotate(-model.rotationProperty().get());
-            graphicsContext2D.translate(-xOffset, -yOffset);
-            graphicsContext2D.translate(-xOrigin, -yOrigin);
-            canvas.getGraphicsContext2D().strokeRect(1, 1, canvas.getWidth() - 1, canvas.getHeight() - 1);
+            double verticalTranslate = yOrigin + drawY + model.verticalMoveProperty().get();
+            double myx = 0;
+            double myy = model.verticalScaleProperty().get();
+            double ty = verticalTranslate;
+
+            Affine affine = new Affine(mxx, mxy, tx, myx, myy, ty);
+            affine.appendRotation(model.rotationProperty().get(), image.getWidth() / 2, image.getHeight() / 2);
+
+            if (LOG.isTraceEnabled())
+            {
+                LOG.trace("Affine: " + affine.toString());
+            }
+
+            try
+            {
+                graphicsContext2D.setTransform(affine);
+                graphicsContext2D.drawImage(image, 0, 0);
+                Affine inverseAffine = affine.createInverse();
+                graphicsContext2D.transform(inverseAffine);
+            }
+            catch (NonInvertibleTransformException e)
+            {
+                LOG.error("Unable to invert scale transform", e);
+            }
         }
     }
-
 }

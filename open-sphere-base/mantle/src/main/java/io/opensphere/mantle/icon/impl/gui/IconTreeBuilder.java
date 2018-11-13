@@ -52,10 +52,11 @@ public class IconTreeBuilder
         String defaultSubCategory = "DEFAULT";
         for (IconRecord record : records)
         {
-            String collectionName = record.collectionNameProperty() == null ? IconRecord.DEFAULT_COLLECTION
+            String collectionName = record.collectionNameProperty().get() == null ? IconRecord.DEFAULT_COLLECTION
                     : record.collectionNameProperty().get();
             collectionSet.add(collectionName);
-            String subCategory = record.subCategoryProperty() == null ? defaultSubCategory : record.subCategoryProperty().get();
+            String subCategory = record.subCategoryProperty().get() == null ? defaultSubCategory
+                    : record.subCategoryProperty().get();
             Map<String, List<IconRecord>> iconRecordMap = iconRecordMapCollection.computeIfAbsent(collectionName, k -> New.map());
             List<IconRecord> recordList = iconRecordMap.computeIfAbsent(subCategory, k -> New.linkedList());
             recordList.add(record);

@@ -66,6 +66,8 @@ public class IconGridCell extends GridCell<IconRecord>
             imageView.onMouseEnteredProperty().set(null);
             imageView.onMouseExitedProperty().set(null);
             imageView.onMouseClickedProperty().set(null);
+
+            imageView.setImage(null);
             setGraphic(null);
         }
         else
@@ -88,7 +90,7 @@ public class IconGridCell extends GridCell<IconRecord>
             });
             myContainer.setOnMouseClicked(e -> handleMouseClick(item, imageView));
 
-            imageView.imageProperty().bindBidirectional(item.imageProperty());
+            imageView.setImage(item.imageProperty().get());
             setGraphic(myContainer);
         }
     }
