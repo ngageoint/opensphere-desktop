@@ -19,7 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 /** An panel on which the icon may be selected by the user. */
-public class IconEditor extends BorderPane
+public class IconSelectionPanel extends BorderPane
 {
     /** The model in which state is maintained. */
     private final PanelModel myPanelModel;
@@ -47,7 +47,7 @@ public class IconEditor extends BorderPane
      *
      * @param panelModel the model through which state is maintained.
      */
-    public IconEditor(PanelModel panelModel)
+    public IconSelectionPanel(PanelModel panelModel)
     {
         myPanelModel = panelModel;
         myDetailPane = new IconDetail(panelModel);

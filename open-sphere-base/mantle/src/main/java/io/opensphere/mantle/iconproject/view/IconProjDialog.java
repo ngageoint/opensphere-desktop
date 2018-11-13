@@ -10,7 +10,7 @@ import io.opensphere.core.util.fx.JFXDialog;
 import io.opensphere.core.util.net.UrlUtilities;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import io.opensphere.mantle.iconproject.model.ViewModel;
-import io.opensphere.mantle.iconproject.panels.IconEditor;
+import io.opensphere.mantle.iconproject.panels.IconSelectionPanel;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
@@ -114,7 +114,7 @@ public class IconProjDialog extends JFXDialog
             myPanelModel = panelModel;
             myViewModel = myPanelModel.getViewModel();
 
-            myMainPanel = new IconEditor(myPanelModel);
+            myMainPanel = new IconSelectionPanel(myPanelModel);
             myViewModel.setMainPanel(myMainPanel);
 
             setTopAnchor(myMainPanel, 0.0);
