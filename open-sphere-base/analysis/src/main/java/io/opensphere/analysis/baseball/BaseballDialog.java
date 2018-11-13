@@ -37,6 +37,7 @@ class BaseballDialog extends JDialog
     /** The renderer. */
     private BaseballRenderer myRenderer;
 
+    private BaseballRenderer myLeftRenderer;
     /**
      * Constructor.
      *
@@ -83,9 +84,14 @@ class BaseballDialog extends JDialog
 
         ObservableList<String> elementTimes = FXCollections.observableArrayList();
         elements.forEach(e -> elementTimes.add(e.getTimeSpan().toDisplayString()));
-        ListView<String> elementTimesss = new ListView<String>(elementTimes);
-//        myLeftTable.setModel(elementTimesss);
+        
+        ListView<String> times = new ListView<String>();
+        times.setItems(elementTimes);
+        times.setPrefSize(200, 200);
+//        myLeftTable;
+        BaseballTimeModel timeModel = new BaseballTimeModel(elements);
         elementTimes.forEach(e -> System.out.println(e));
+//        myLeftRenderer = new BaseballRenderer(timeModel, myLeftTable, myPrefsRegistry);
         myLeftTable.setModel(new BaseballTimeModel(elements));
         myLeftTable.packAll();
 

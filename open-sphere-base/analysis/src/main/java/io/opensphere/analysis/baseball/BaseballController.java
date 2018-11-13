@@ -1,5 +1,8 @@
 package io.opensphere.analysis.baseball;
 
+import java.awt.Dialog.ModalityType;
+import java.awt.Dimension;
+import java.awt.Window;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,6 +23,7 @@ import io.opensphere.core.model.Altitude.ReferenceLevel;
 import io.opensphere.core.projection.GeographicBody3D;
 import io.opensphere.core.util.ThreadConfined;
 import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.fx.JFXDialog;
 import io.opensphere.core.util.jts.JTSUtilities;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.core.viewer.impl.Viewer3D;
@@ -117,7 +121,7 @@ public class BaseballController extends EventListenerService
 
 //            if (element != null)
 //            {
-            EventQueueUtilities.invokeLater(() -> showDialog(dataElements));
+            EventQueueUtilities.runOnEDT(() -> newDialog(dataElements));
 //            }
         }
     }
@@ -138,5 +142,17 @@ public class BaseballController extends EventListenerService
         }
         myDialog.setDataElement(elements);
         myDialog.setVisible(true);
+    }
+
+    private void newDialog(List<DataElement> elements)
+    {
+        Window owner = myToolbox.getUIRegistry().getMainFrameProvider().get();
+        JFXDialog dialog = new JFXDialog(owner, "Feature Info");
+        dialog.setFxNode(new BaseballPanel(myToolbox, elements));
+        dialog.setSize(new Dimension(900, 600));
+        dialog.setResizable(true);
+        dialog.setLocationRelativeTo(owner);
+        dialog.setModalityType(ModalityType.MODELESS);
+        dialog.setVisible(true);
     }
 }
