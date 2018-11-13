@@ -12,7 +12,6 @@ import io.opensphere.core.util.javafx.ConcurrentStringProperty;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.IconRegistryListener;
-import io.opensphere.mantle.iconproject.impl.DefaultIconRecordTreeItemObject;
 import io.opensphere.mantle.iconproject.model.IconRegistryChangeListener.Change;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
@@ -94,9 +93,6 @@ public class PanelModel
 
     /** The icons currently selected. */
     private final HashMap<IconRecord, Node> myAllSelectedIcons = new HashMap<>();
-
-    /** The Tree model. */
-    private DefaultIconRecordTreeItemObject myTreeObject;
 
     /**
      * Used to keep track of which icon and button are selected on the grid for
@@ -289,7 +285,7 @@ public class PanelModel
      *
      * @return the value stored in the {@link #mySelectedRecord} field.
      */
-    public ObjectProperty<IconRecord> getSelectedRecord()
+    public ObjectProperty<IconRecord> selectedRecordProperty()
     {
         return mySelectedRecord;
     }
@@ -302,26 +298,6 @@ public class PanelModel
     public ObjectProperty<IconRecord> previewRecordProperty()
     {
         return myPreviewRecordProperty;
-    }
-
-    /**
-     * Gets the value of the {@link #myTreeObject} field.
-     *
-     * @return the value stored in the {@link #myTreeObject} field.
-     */
-    public DefaultIconRecordTreeItemObject getTreeObject()
-    {
-        return myTreeObject;
-    }
-
-    /**
-     * Sets the value of the {@link #myTreeObject} field.
-     *
-     * @param treeObject the value to store in the {@link #myTreeObject} field.
-     */
-    public void setTreeObject(DefaultIconRecordTreeItemObject treeObject)
-    {
-        myTreeObject = treeObject;
     }
 
     /**

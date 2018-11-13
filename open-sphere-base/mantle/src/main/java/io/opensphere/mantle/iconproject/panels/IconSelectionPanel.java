@@ -121,9 +121,9 @@ public class IconSelectionPanel extends BorderPane
         setCenter(anchorPane);
         setRight(myDetailPane);
 
-        if (myPanelModel.getSelectedRecord().get() != null)
+        if (myPanelModel.selectedRecordProperty().get() != null)
         {
-            String name = myPanelModel.getSelectedRecord().get().collectionNameProperty().get();
+            String name = myPanelModel.selectedRecordProperty().get().collectionNameProperty().get();
             myIconTabs.getSelectionModel().select(myTabs.get(name).getFirstObject());
         }
     }

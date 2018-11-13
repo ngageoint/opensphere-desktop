@@ -55,17 +55,13 @@ public class IconDetail extends AnchorPane
         Canvas canvas = new Canvas(246, 250);
         canvas.getGraphicsContext2D().drawImage(null, USE_COMPUTED_SIZE, BASELINE_OFFSET_SAME_AS_HEIGHT);
 
-        model.previewRecordProperty().addListener((obs, ov, nv) ->
-        {
-            redrawPreview(canvas, nv);
-        });
-
         myNameLabel = new Label();
         mySourceLabel = new Label();
         myTagsLabel = new Label();
 
-        model.previewRecordProperty().addListener((obs, ov, nv) ->
+        model.selectedRecordProperty().addListener((obs, ov, nv) ->
         {
+            redrawPreview(canvas, nv);
             if (nv != null)
             {
                 myNameLabel.setText(nv.getName());
@@ -100,15 +96,15 @@ public class IconDetail extends AnchorPane
 
         TransformModel transformModel = myTransformPanel.getModel();
         transformModel.horizontalMoveProperty()
-                .addListener((obs, ov, nv) -> redrawPreview(canvas, model.previewRecordProperty().get()));
+                .addListener((obs, ov, nv) -> redrawPreview(canvas, model.selectedRecordProperty().get()));
         transformModel.verticalMoveProperty()
-                .addListener((obs, ov, nv) -> redrawPreview(canvas, model.previewRecordProperty().get()));
+                .addListener((obs, ov, nv) -> redrawPreview(canvas, model.selectedRecordProperty().get()));
         transformModel.rotationProperty()
-                .addListener((obs, ov, nv) -> redrawPreview(canvas, model.previewRecordProperty().get()));
+                .addListener((obs, ov, nv) -> redrawPreview(canvas, model.selectedRecordProperty().get()));
         transformModel.horizontalScaleProperty()
-                .addListener((obs, ov, nv) -> redrawPreview(canvas, model.previewRecordProperty().get()));
+                .addListener((obs, ov, nv) -> redrawPreview(canvas, model.selectedRecordProperty().get()));
         transformModel.verticalScaleProperty()
-                .addListener((obs, ov, nv) -> redrawPreview(canvas, model.previewRecordProperty().get()));
+                .addListener((obs, ov, nv) -> redrawPreview(canvas, model.selectedRecordProperty().get()));
 
         box.getChildren().add(myTransformPanel);
 
@@ -117,6 +113,8 @@ public class IconDetail extends AnchorPane
         setTopAnchor(box, 275.0);
         setLeftAnchor(box, 2.0);
         setRightAnchor(box, 0.0);
+
+        redrawPreview(canvas, model.selectedRecordProperty().get());
     }
 
     /**

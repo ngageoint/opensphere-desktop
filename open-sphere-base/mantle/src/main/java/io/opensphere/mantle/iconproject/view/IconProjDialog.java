@@ -58,7 +58,7 @@ public class IconProjDialog extends JFXDialog
             URL url = UrlUtilities.toURL(value);
             if (url != null)
             {
-                myPanelModel.getSelectedRecord().set(myPanelModel.getIconRegistry().getIconRecord(url));
+                myPanelModel.selectedRecordProperty().set(myPanelModel.getIconRegistry().getIconRecord(url));
             }
         }
 

@@ -109,7 +109,7 @@ public class IconChooserStyleParameterEditorPanel extends AbstractStyleParameter
 
             if (!(fileDialog.getResponse() == null || fileDialog.getResponse().equals(ButtonData.CANCEL_CLOSE)))
             {
-                IconRecord rec = fileDialog.getPanelModel().getSelectedRecord().get();
+                IconRecord rec = fileDialog.getPanelModel().selectedRecordProperty().get();
                 setParamValue(rec.imageURLProperty().get().toString());
             }
         }

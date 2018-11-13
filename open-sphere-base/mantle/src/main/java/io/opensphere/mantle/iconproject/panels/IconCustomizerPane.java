@@ -84,7 +84,7 @@ public class IconCustomizerPane extends BorderPane
      */
     public IconCustomizerPane(Window owner, PanelModel panelModel)
     {
-        myIconRecord = panelModel.getSelectedRecord().get();
+        myIconRecord = panelModel.selectedRecordProperty().get();
 
         setCenter(myIconDisplay = createImageView());
         setRight(createRight());

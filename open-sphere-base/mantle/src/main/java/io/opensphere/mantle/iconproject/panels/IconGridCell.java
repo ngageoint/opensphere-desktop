@@ -50,13 +50,16 @@ public class IconGridCell extends GridCell<IconRecord>
 
     /**
      * {@inheritDoc}
+     *
+     * @see javafx.scene.control.Cell#updateItem(java.lang.Object, boolean)
      */
     @Override
     protected void updateItem(IconRecord item, boolean empty)
     {
         super.updateItem(item, empty);
+        setStyle(null);
 
-        if (myModel.getSelectedRecord().get() != null && myModel.getSelectedRecord().get().equals(item))
+        if (myModel.selectedRecordProperty().get() != null && myModel.selectedRecordProperty().get().equals(item))
         {
             setStyle("-fx-effect: dropshadow(three-pass-box, lime, 15,.5, 0, 0);");
         }
@@ -68,18 +71,16 @@ public class IconGridCell extends GridCell<IconRecord>
             imageView.onMouseClickedProperty().set(null);
 
             imageView.setImage(null);
+            setStyle(null);
             setGraphic(null);
         }
         else
         {
-            myContainer.setOnMouseEntered(e ->
-            {
-                setStyle("-fx-effect: dropshadow(three-pass-box, aqua, 15,.5, 0, 0);");
-                myModel.previewRecordProperty().set(item);
-            });
+            setStyle(null);
+            myContainer.setOnMouseEntered(e -> setStyle("-fx-effect: dropshadow(three-pass-box, aqua, 15,.5, 0, 0);"));
             myContainer.setOnMouseExited(e ->
             {
-                if (myModel.getSelectedRecord().get() != null && myModel.getSelectedRecord().get().equals(item))
+                if (myModel.selectedRecordProperty().get() != null && myModel.selectedRecordProperty().get().equals(item))
                 {
                     setStyle("-fx-effect: dropshadow(three-pass-box, lime, 15,.5, 0, 0);");
                 }
@@ -103,7 +104,7 @@ public class IconGridCell extends GridCell<IconRecord>
      */
     private void handleMouseClick(IconRecord record, Node source)
     {
-        myModel.getSelectedRecord().set(record);
+        myModel.selectedRecordProperty().set(record);
         myModel.getSingleSelectedIcon().clear();
         myModel.getSingleSelectedIcon().put(record, source);
     }

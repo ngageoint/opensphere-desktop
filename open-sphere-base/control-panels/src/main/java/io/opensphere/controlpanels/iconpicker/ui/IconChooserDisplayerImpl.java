@@ -46,8 +46,8 @@ public class IconChooserDisplayerImpl implements IconChooserDisplayer
                 }
                 return null;
             });
-            fileDialog.getPanelModel().getSelectedRecord()
-                    .addListener((o, v, n) -> selectedIcon.set(fileDialog.getPanelModel().getSelectedRecord().get()));
+            fileDialog.getPanelModel().selectedRecordProperty()
+                    .addListener((o, v, n) -> selectedIcon.set(fileDialog.getPanelModel().selectedRecordProperty().get()));
             fileDialog.setVisible(true);
         });
     }
