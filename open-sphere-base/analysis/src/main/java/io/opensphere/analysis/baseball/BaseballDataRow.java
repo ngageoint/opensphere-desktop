@@ -9,7 +9,9 @@ import javafx.scene.layout.GridPane;
 
 public class BaseballDataRow extends ListCell<Pair<String, String>>
 {
-	@Override
+    private final static String EMPTY_VALUE = "";
+
+    @Override
     protected void updateItem(Pair<String, String> item, boolean empty)
     {
         super.updateItem(item, empty);
@@ -29,14 +31,13 @@ public class BaseballDataRow extends ListCell<Pair<String, String>>
         GridPane box = new GridPane();
         box.setHgap(5);
         box.add(new Label(item.getFirstObject()), 0, 0);
-        String secondLabel = item.getSecondObject() == null ? "" : item.getSecondObject().toString();
+        String secondLabel = item.getSecondObject() == null ? EMPTY_VALUE : item.getSecondObject().toString();
         box.add(new Label(secondLabel), 1, 0);
         ColumnConstraints column1 = new ColumnConstraints();
         column1.setPercentWidth(50);
         ColumnConstraints column2 = new ColumnConstraints();
         column2.setPercentWidth(50);
         box.getColumnConstraints().addAll(column1, column2);
-        box.setHgap(5);
         return box;
     }
 }

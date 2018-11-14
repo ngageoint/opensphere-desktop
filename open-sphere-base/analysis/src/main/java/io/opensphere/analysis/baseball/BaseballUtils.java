@@ -4,11 +4,19 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import io.opensphere.core.mgrs.MGRSConverter;
+import io.opensphere.core.mgrs.MGRSUtil;
+import io.opensphere.core.mgrs.UTM;
+import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.GeographicPositionFormat;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.preferences.ListToolPreferences;
 import io.opensphere.core.units.angle.DegreesMinutesSeconds;
+import io.opensphere.mantle.data.element.DataElement;
+import io.opensphere.mantle.data.element.MapDataElement;
+import io.opensphere.mantle.data.geom.MapGeometrySupport;
+import io.opensphere.mantle.data.geom.MapLocationGeometrySupport;
 import io.opensphere.mantle.util.TimeSpanUtility;
 
 public class BaseballUtils
@@ -22,18 +30,36 @@ public class BaseballUtils
      * @param type the coordtype
      * @return the formatted value
      */
-    public static String formatCoordinate(Object value, GeographicPositionFormat format, CoordType type)
+    public static String formatCoordinate(Double value, GeographicPositionFormat format, CoordType type)
     {
-        Double coord = (Double)value;
         if (format == GeographicPositionFormat.DMSDEG)
         {
-            return DegreesMinutesSeconds.getShortLabelString(coord.doubleValue(), 12, 0, type.positive, type.negative);
+            return DegreesMinutesSeconds.getShortLabelString(value.doubleValue(), 12, 0, type.positive, type.negative);
         }
-        if (format == GeographicPositionFormat.DEG_DMIN)
+        else if (format == GeographicPositionFormat.DEG_DMIN)
         {
-            return toDdmString(coord.doubleValue(), 3, type);
+            return toDdmString(value.doubleValue(), 3, type);
         }
-        return coord.toString();
+        return value.toString();
+    }
+
+    public static String formatMGRS(DataElement dataElement)
+    {
+        MapGeometrySupport geometrySupport = ((MapDataElement)dataElement).getMapGeometrySupport();
+        MGRSConverter converter = new MGRSConverter();
+        String mgrs = "";
+        if (geometrySupport instanceof MapLocationGeometrySupport)
+        {
+            MapLocationGeometrySupport locationSupport = (MapLocationGeometrySupport)geometrySupport;
+            LatLonAlt location = locationSupport.getLocation();
+            UTM utmCoords = new UTM(new GeographicPosition(location));
+            mgrs = converter.createString(utmCoords);
+//            if (myMGRSPrecision != 10)
+//            {
+//                value = MGRSUtil.reducePrecision(value, myMGRSPrecision);
+//            }
+        }
+        return mgrs;
     }
 
     public static String formatNumber(Number value)
