@@ -118,10 +118,7 @@ public class BaseballUtils
         {
             return LatLonAlt.latToDdmString(deg, roundOff);
         }
-        else
-        {
-            return LatLonAlt.lonToDdmString(deg, roundOff);
-        }
+        return LatLonAlt.lonToDdmString(deg, roundOff);
     }
 
     /** Coordinate type. */

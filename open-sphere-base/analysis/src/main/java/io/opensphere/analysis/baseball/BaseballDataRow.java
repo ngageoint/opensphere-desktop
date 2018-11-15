@@ -12,10 +12,10 @@ import javafx.scene.layout.GridPane;
  */
 public class BaseballDataRow extends ListCell<Pair<String, String>>
 {
-	/** The constant EMPTY_VALUE */
+	/** The constant EMPTY_VALUE. */
     private final static String EMPTY_VALUE = "";
 
-    /** The constant BACKGROUND */
+    /** The constant BACKGROUND. */
     private final static String BACKGROUND = "-fx-background-color: transparent";
 
     @Override
