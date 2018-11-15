@@ -54,9 +54,9 @@ public class BaseballUtils
             LatLonAlt location = locationSupport.getLocation();
             UTM utmCoords = new UTM(new GeographicPosition(location));
             mgrs = converter.createString(utmCoords);
-//            if (myMGRSPrecision != 10)
+//            if (precision != 10)
 //            {
-//                value = MGRSUtil.reducePrecision(value, myMGRSPrecision);
+//                mgrs = MGRSUtil.reducePrecision(mgrs, precision);
 //            }
         }
         return mgrs;

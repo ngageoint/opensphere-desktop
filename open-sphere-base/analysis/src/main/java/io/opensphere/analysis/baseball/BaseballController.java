@@ -73,7 +73,7 @@ public class BaseballController extends EventListenerService
             DataElementLookupUtils lookupUtils = MantleToolboxUtils.getDataElementLookupUtils(myToolbox);
             List<DataElement> dataElements = New.list();
 //            final DataElement element = lookupUtils.getDataElement(event.getRegistryId(), null, event.getDataTypeKey());
-            GeometryFactory gf = new GeometryFactory();
+            GeometryFactory geometryFactory = new GeometryFactory();
 //            Projection proj = myToolbox.getMapManager().getProjection().getSnapshot();
             MapGeometrySupport mgs = MantleToolboxUtils.getDataElementLookupUtils(myToolbox).getMapGeometrySupport(event.getRegistryId());
 
@@ -85,10 +85,11 @@ public class BaseballController extends EventListenerService
                 Vector2i innerVector = myToolbox.getMapManager().convertToPoint(innerPosition);
                 Vector2i outerVector = new Vector2i(innerVector.getX(), innerVector.getY() + 10);
                 GeographicPosition outerPosition = myToolbox.getMapManager().convertToPosition(outerVector, ReferenceLevel.TERRAIN);
-                double radius = GeographicBody3D.greatCircleDistanceM(center, outerPosition.getLatLonAlt(), WGS84EarthConstants.RADIUS_EQUATORIAL_M);
+                double radius = GeographicBody3D.greatCircleDistanceM(center, outerPosition.getLatLonAlt(),
+                        WGS84EarthConstants.RADIUS_EQUATORIAL_M);
 //                System.out.println("Radius: " + radius);
                 LatLonAlt edge = GeographicBody3D.greatCircleEndPosition(center, 0, WGS84EarthConstants.RADIUS_EQUATORIAL_M, radius);
-                Polygon pg = JTSUtilities.createCircle(center, edge, JTSUtilities.NUM_CIRCLE_SEGMENTS);
+                Polygon polygon = JTSUtilities.createCircle(center, edge, JTSUtilities.NUM_CIRCLE_SEGMENTS);
                 StyleTransformerGeometryProcessor processor = null;
                 MapDataElementTransformer transformer = MantleToolboxUtils.getMantleToolbox(myToolbox).getDataTypeController()
                         .getTransformerForType(event.getDataTypeKey());
@@ -105,7 +106,7 @@ public class BaseballController extends EventListenerService
                     {
 //                        count++;
                         if (geometry.jtsIntersectionTests(new Geometry.JTSIntersectionTests(true, true, false),
-                                Collections.singletonList(pg), gf))
+                                Collections.singletonList(polygon), geometryFactory))
                         {
                             dataElements.add(lookupUtils.getDataElement(geometry.getDataModelId()
                                     & processor.getDataModelIdFromGeometryIdBitMask(), null, null));
@@ -119,14 +120,11 @@ public class BaseballController extends EventListenerService
                     processor.getGeometrySetLock().unlock();
                 }
             }
-//            MapGeometrySupportUtils.generateArcLengthCircle(mgs, 50000, 16, proj);
-//            MantleToolboxUtils.getMantleToolbox(myToolbox).getDataElementCache().getAllElementIdsAsList();
-//            MantleToolboxUtils.getMantleToolbox(myToolbox).getDataElementCache();
 
-//            if (element != null)
-//            {
-            EventQueueUtilities.runOnEDT(() -> newDialog(dataElements));
-//            }
+            if (dataElements.size() > 0)
+            {
+                EventQueueUtilities.runOnEDT(() -> newDialog(dataElements));
+            }
         }
     }
 
@@ -142,7 +140,6 @@ public class BaseballController extends EventListenerService
             myDialog = new BaseballDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
                     myToolbox.getPreferencesRegistry());
             myDialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-            System.out.println("Null dialog");
         }
         myDialog.setDataElement(elements);
         myDialog.setVisible(true);

@@ -110,17 +110,23 @@ public class BaseballPanel extends GridPane
         else
         {
             List<Pair<String, String>> data = New.list();
-            GeographicPositionFormat temp = myPositionFormat;
+            GeographicPositionFormat tempFormat = myPositionFormat;
             myPositionFormat = GeographicPositionFormat.DECDEG;
             data.add(new Pair<>("Field", "Value"));
-            for (String key : myActiveDataElement.getMetaData().getKeys())
+            myActiveDataElement.getMetaData().getKeys().stream().forEach(key ->
             {
-                Object value = myActiveDataElement.getMetaData().getValue(key);
-                String secondElement = getValueAsString(key, value, myActiveDataElement);
-            	data.add(new Pair<>(key, secondElement));
-            } 
+                Object elementValue = myActiveDataElement.getMetaData().getValue(key);
+                String pairValue = getValueAsString(key, elementValue, myActiveDataElement);
+            	data.add(new Pair<>(key, pairValue));
+            });
+//            for (String key : myActiveDataElement.getMetaData().getKeys())
+//            {
+//                Object value = myActiveDataElement.getMetaData().getValue(key);
+//                String secondElement = getValueAsString(key, value, myActiveDataElement);
+//            	data.add(new Pair<>(key, secondElement));
+//            }
             myDataView.setItems(FXCollections.observableList(data));
-            myPositionFormat = temp;
+            myPositionFormat = tempFormat;
 //            System.out.println(dataElement.getDataTypeInfo().getMetaDataInfo().getSpecialKeyToTypeMap());
         }
         setCoordinates();
@@ -136,7 +142,8 @@ public class BaseballPanel extends GridPane
         myElementsView.setCellFactory((param) ->
         {
         	BaseballTimeRow row = new BaseballTimeRow();
-        	row.setOnMousePressed(e -> {
+        	row.setOnMousePressed(e ->
+        	{
         	    myActiveDataElement = row.getDataElement();
         	    setDataView();
         	});
@@ -192,30 +199,29 @@ public class BaseballPanel extends GridPane
     private Node createTopRight()
     {
         HBox box = new HBox();
-        myDDButton.setOnAction(e -> 
+        myDDButton.setOnAction(e ->
         {
             myPositionFormat = GeographicPositionFormat.DECDEG;
             setCoordinates();
             clearButtonStyles();
             myDDButton.setStyle(BUTTON_STYLE);
-            
         });
         myDDButton.setStyle(BUTTON_STYLE);
-        myDMSButton.setOnAction(e -> 
+        myDMSButton.setOnAction(e ->
         {
             myPositionFormat = GeographicPositionFormat.DMSDEG;
             setCoordinates();
             clearButtonStyles();
             myDMSButton.setStyle(BUTTON_STYLE);
         });
-        myDDMButton.setOnAction(e -> 
+        myDDMButton.setOnAction(e ->
         {
             myPositionFormat = GeographicPositionFormat.DEG_DMIN;
             setCoordinates();
             clearButtonStyles();
             myDDMButton.setStyle(BUTTON_STYLE);
         });
-        myMGRSButton.setOnAction(e -> 
+        myMGRSButton.setOnAction(e ->
         {
             myPositionFormat = GeographicPositionFormat.MGRS;
             setCoordinates();
