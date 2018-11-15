@@ -64,9 +64,7 @@ public class BaseballController extends EventListenerService
         {
             DataElementLookupUtils lookupUtils = MantleToolboxUtils.getDataElementLookupUtils(myToolbox);
             List<DataElement> dataElements = New.list();
-//            final DataElement element = lookupUtils.getDataElement(event.getRegistryId(), null, event.getDataTypeKey());
             GeometryFactory geometryFactory = new GeometryFactory();
-//            Projection proj = myToolbox.getMapManager().getProjection().getSnapshot();
             MapGeometrySupport mgs = MantleToolboxUtils.getDataElementLookupUtils(myToolbox).getMapGeometrySupport(event.getRegistryId());
 
             GeographicBoundingBox bb = mgs.getBoundingBox(myToolbox.getMapManager().getProjection(Viewer3D.class).getSnapshot());
@@ -79,7 +77,6 @@ public class BaseballController extends EventListenerService
                 GeographicPosition outerPosition = myToolbox.getMapManager().convertToPosition(outerVector, ReferenceLevel.TERRAIN);
                 double radius = GeographicBody3D.greatCircleDistanceM(center, outerPosition.getLatLonAlt(),
                         WGS84EarthConstants.RADIUS_EQUATORIAL_M);
-//                System.out.println("Radius: " + radius);
                 LatLonAlt edge = GeographicBody3D.greatCircleEndPosition(center, 0, WGS84EarthConstants.RADIUS_EQUATORIAL_M, radius);
                 Polygon polygon = JTSUtilities.createCircle(center, edge, JTSUtilities.NUM_CIRCLE_SEGMENTS);
                 StyleTransformerGeometryProcessor processor = null;
@@ -89,14 +86,12 @@ public class BaseballController extends EventListenerService
                 {
                     processor = ((StyleMapDataElementTransformer)transformer).getGeometryProcessor();
                 }
-//                int count = 0;
 
                 processor.getGeometrySetLock().lock();
                 try
                 {
                     for (Geometry geometry : processor.getGeometrySet())
                     {
-//                        count++;
                         if (geometry.jtsIntersectionTests(new Geometry.JTSIntersectionTests(true, true, false),
                                 Collections.singletonList(polygon), geometryFactory))
                         {
@@ -104,8 +99,6 @@ public class BaseballController extends EventListenerService
                                     & processor.getDataModelIdFromGeometryIdBitMask(), null, null));
                         }
                     }
-//                    dataElements.forEach(e -> System.out.println(e.getId()));
-//                    System.out.println("Total points checked: " + count);
                 }
                 finally
                 {

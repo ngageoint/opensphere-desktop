@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import io.opensphere.core.mgrs.MGRSConverter;
-import io.opensphere.core.mgrs.MGRSUtil;
 import io.opensphere.core.mgrs.UTM;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.GeographicPositionFormat;

@@ -11,7 +11,6 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.model.GeographicPositionFormat;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.preferences.ListToolPreferences;
-import io.opensphere.core.util.Colors;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.Pair;
 import io.opensphere.mantle.data.SpecialKey;
@@ -19,18 +18,14 @@ import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.impl.specialkey.LatitudeKey;
 import io.opensphere.mantle.data.impl.specialkey.LongitudeKey;
 import javafx.collections.FXCollections;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 
 /**
  * The main panel for the baseball dialog.
@@ -100,78 +95,6 @@ public class BaseballPanel extends GridPane
     }
 
     /**
-     * Sets the coordinate label based off the currently active data element
-     * and the selected coordinate format.
-     */
-    private void setCoordinates()
-    {
-        if (myActiveDataElement == null)
-        {
-            myCoordinates.setText("");
-        }
-        else if (myPositionFormat == GeographicPositionFormat.MGRS)
-        {
-            myCoordinates.setText(BaseballUtils.formatMGRS(myActiveDataElement));
-        }
-        else
-        {
-            String latitudeKey = myActiveDataElement.getDataTypeInfo().getMetaDataInfo().getLatitudeKey();
-            Object latitudeValue = myActiveDataElement.getMetaData().getValue(latitudeKey);
-        	String latitude = getValueAsString(latitudeKey, latitudeValue, myActiveDataElement);
-
-        	String longitudeKey = myActiveDataElement.getDataTypeInfo().getMetaDataInfo().getLongitudeKey();
-            Object longitudeValue = myActiveDataElement.getMetaData().getValue(longitudeKey);
-        	String longitude = getValueAsString(longitudeKey, longitudeValue, myActiveDataElement);
-
-        	myCoordinates.setText(latitude + " " + longitude);
-        }
-    }
-
-    /**
-     * Sets the data information section based off the active data element.
-     */
-    private void setDataView()
-    {
-        if (myActiveDataElement == null)
-        {
-            myDataView.setItems(null);
-        }
-        else
-        {
-            List<Pair<String, String>> data = New.list();
-            GeographicPositionFormat tempFormat = myPositionFormat;
-            myPositionFormat = GeographicPositionFormat.DECDEG;
-            data.add(new Pair<>("Field", "Value"));
-            myActiveDataElement.getMetaData().getKeys().stream().forEach(key ->
-            {
-                Object elementValue = myActiveDataElement.getMetaData().getValue(key);
-                String pairValue = getValueAsString(key, elementValue, myActiveDataElement);
-                data.add(new Pair<>(key, pairValue));
-            });
-//            for (String key : myActiveDataElement.getMetaData().getKeys())
-//            {
-//                Object value = myActiveDataElement.getMetaData().getValue(key);
-//                String secondElement = getValueAsString(key, value, myActiveDataElement);
-//            	data.add(new Pair<>(key, secondElement));
-//            }
-            myDataView.setItems(FXCollections.observableList(data));
-            myPositionFormat = tempFormat;
-//            System.out.println(dataElement.getDataTypeInfo().getMetaDataInfo().getSpecialKeyToTypeMap());
-        }
-        setCoordinates();
-	}
-
-    /**
-     * Sets the number of features label.
-     *
-     * @param numberOfFeatures the number of features
-     */
-    private void setFeatureCount(int numberOfFeatures)
-    {
-        myFeatureCount.setText(numberOfFeatures + " Features");
-    }
-
-    /**
      * Creates the DataElement list section of the panel.
      *
      * @return the DataElement node
@@ -194,49 +117,6 @@ public class BaseballPanel extends GridPane
         return myElementsView;
     }
 
-    /**
-     * Creates the search bar section of the panel.
-     *
-     * @return the search bar node
-     */
-    private Node createSearchBar()
-    {
-        TextField search = new TextField();
-        search.setPromptText("search features");
-        search.setOnKeyTyped(e -> 
-        {
-//            List<DataElement> filteredDataList = myElements.stream().filter(t ->
-//                    StringUtils.containsIgnoreCase(t.getTimeSpan().toDisplayString(), search.getText())).sorted((f, s) ->
-//                    s.getTimeSpan().compareTo(f.getTimeSpan())).collect(Collectors.toList());
-            if (StringUtils.isEmpty(search.getText()))
-            {
-                myElementsView.setItems(FXCollections.observableList(myElements));
-                myActiveDataElement = myElements.get(0);
-                setDataView();
-                setFeatureCount(myElements.size());
-                return;
-            }
-
-        	List<DataElement> filteredDataList = searchFilterDataElements(search.getText());
-            myElementsView.setItems(FXCollections.observableList(filteredDataList));
-            if (filteredDataList.size() > 0)
-            {
-                myActiveDataElement = filteredDataList.get(0);
-                setDataView();
-                setFeatureCount(filteredDataList.size());
-            }
-            else
-            {
-                myActiveDataElement = null;
-                setDataView();
-                setFeatureCount(0);
-            }
-        });
-        search.setMaxWidth(250);
-        search.setPrefWidth(250);
-
-        return search;
-    }
 
     /**
      * Creates the data information section of the panel.
@@ -293,14 +173,44 @@ public class BaseballPanel extends GridPane
     }
 
     /**
-     * Gets the special key for the given row.
+     * Creates the search bar section of the panel.
      *
-     * @param rowIndex the row index
-     * @return the specialKey
+     * @return the search bar node
      */
-    private SpecialKey getSpecialKey(String key, DataElement dataElement)
+    private Node createSearchBar()
     {
-        return dataElement.getDataTypeInfo().getMetaDataInfo().getSpecialTypeForKey(key);
+        TextField search = new TextField();
+        search.setPromptText("search features");
+        search.setOnKeyTyped(e -> 
+        {
+            if (StringUtils.isEmpty(search.getText()))
+            {
+                myElementsView.setItems(FXCollections.observableList(myElements));
+                myActiveDataElement = myElements.get(0);
+                setDataView();
+                setFeatureCount(myElements.size());
+                return;
+            }
+
+        	List<DataElement> filteredDataList = searchFilterDataElements(search.getText());
+            myElementsView.setItems(FXCollections.observableList(filteredDataList));
+            if (filteredDataList.size() > 0)
+            {
+                myActiveDataElement = filteredDataList.get(0);
+                setDataView();
+                setFeatureCount(filteredDataList.size());
+            }
+            else
+            {
+                myActiveDataElement = null;
+                setDataView();
+                setFeatureCount(0);
+            }
+        });
+        search.setMaxWidth(250);
+        search.setPrefWidth(250);
+
+        return search;
     }
 
     /**
@@ -320,7 +230,7 @@ public class BaseballPanel extends GridPane
         }
         else if (value instanceof Double)
         {
-            SpecialKey specialType = getSpecialKey(key, dataElement);
+            SpecialKey specialType = dataElement.getDataTypeInfo().getMetaDataInfo().getSpecialTypeForKey(key);
             if (specialType instanceof LatitudeKey)
             {
             	returnValue = BaseballUtils.formatCoordinate((Double)value, myPositionFormat, CoordType.LAT);
@@ -367,6 +277,71 @@ public class BaseballPanel extends GridPane
         myDDMButton.setStyle("");
         myMGRSButton.setStyle("");
         button.setStyle(BUTTON_STYLE);
+    }
+
+    /**
+     * Sets the coordinate label based off the currently active data element
+     * and the selected coordinate format.
+     */
+    private void setCoordinates()
+    {
+        if (myActiveDataElement == null)
+        {
+            myCoordinates.setText("");
+        }
+        else if (myPositionFormat == GeographicPositionFormat.MGRS)
+        {
+            myCoordinates.setText(BaseballUtils.formatMGRS(myActiveDataElement));
+        }
+        else
+        {
+            String latitudeKey = myActiveDataElement.getDataTypeInfo().getMetaDataInfo().getLatitudeKey();
+            Object latitudeValue = myActiveDataElement.getMetaData().getValue(latitudeKey);
+        	String latitude = getValueAsString(latitudeKey, latitudeValue, myActiveDataElement);
+
+        	String longitudeKey = myActiveDataElement.getDataTypeInfo().getMetaDataInfo().getLongitudeKey();
+            Object longitudeValue = myActiveDataElement.getMetaData().getValue(longitudeKey);
+        	String longitude = getValueAsString(longitudeKey, longitudeValue, myActiveDataElement);
+
+        	myCoordinates.setText(latitude + " " + longitude);
+        }
+    }
+
+    /**
+     * Sets the data information section based off the active data element.
+     */
+    private void setDataView()
+    {
+        if (myActiveDataElement == null)
+        {
+            myDataView.setItems(null);
+        }
+        else
+        {
+            List<Pair<String, String>> data = New.list();
+            GeographicPositionFormat tempFormat = myPositionFormat;
+            myPositionFormat = GeographicPositionFormat.DECDEG;
+            data.add(new Pair<>("Field", "Value"));
+            myActiveDataElement.getMetaData().getKeys().stream().forEach(key ->
+            {
+                Object elementValue = myActiveDataElement.getMetaData().getValue(key);
+                String pairValue = getValueAsString(key, elementValue, myActiveDataElement);
+                data.add(new Pair<>(key, pairValue));
+            });
+            myDataView.setItems(FXCollections.observableList(data));
+            myPositionFormat = tempFormat;
+        }
+        setCoordinates();
+	}
+
+    /**
+     * Sets the number of features label.
+     *
+     * @param numberOfFeatures the number of features
+     */
+    private void setFeatureCount(int numberOfFeatures)
+    {
+        myFeatureCount.setText(numberOfFeatures + " Features");
     }
 
     /**
