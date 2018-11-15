@@ -103,7 +103,7 @@ public class BaseballPanel extends GridPane
     {
         myElementsView.setCellFactory((param) ->
         {
-        	BaseballElementRow row = new BaseballElementRow();
+            BaseballElementRow row = new BaseballElementRow();
             row.setOnMousePressed(e ->
             {
                 myActiveDataElement = row.getDataElement();
@@ -127,8 +127,8 @@ public class BaseballPanel extends GridPane
     {
         myDataView.setCellFactory((param) ->
         {
-        	BaseballDataRow row = new BaseballDataRow();
-        	return row;
+            BaseballDataRow row = new BaseballDataRow();
+            return row;
         });
         GridPane.setHgrow(myDataView, Priority.ALWAYS);
         GridPane.setVgrow(myDataView, Priority.ALWAYS);
@@ -224,7 +224,7 @@ public class BaseballPanel extends GridPane
     private String getValueAsString(String key, Object value, DataElement dataElement)
     {
         String returnValue;
-    	if (value == null)
+        if (value == null)
         {
             returnValue = null;
         }
@@ -233,11 +233,11 @@ public class BaseballPanel extends GridPane
             SpecialKey specialType = dataElement.getDataTypeInfo().getMetaDataInfo().getSpecialTypeForKey(key);
             if (specialType instanceof LatitudeKey)
             {
-            	returnValue = BaseballUtils.formatCoordinate((Double)value, myPositionFormat, CoordType.LAT);
+                returnValue = BaseballUtils.formatCoordinate((Double)value, myPositionFormat, CoordType.LAT);
             }
             else if (specialType instanceof LongitudeKey)
             {
-            	returnValue = BaseballUtils.formatCoordinate((Double)value, myPositionFormat, CoordType.LON);
+                returnValue = BaseballUtils.formatCoordinate((Double)value, myPositionFormat, CoordType.LON);
             }
             else
             {
@@ -246,17 +246,17 @@ public class BaseballPanel extends GridPane
         }
         else if (value instanceof Number)
         {
-        	returnValue = BaseballUtils.formatNumber((Number)value);
+            returnValue = BaseballUtils.formatNumber((Number)value);
         }
         else if (value instanceof Date)
         {
-        	returnValue = BaseballUtils.formatDate((Date)value, myToolbox.getPreferencesRegistry().getPreferences(ListToolPreferences.class)
+            returnValue = BaseballUtils.formatDate((Date)value, myToolbox.getPreferencesRegistry().getPreferences(ListToolPreferences.class)
                     .getInt(ListToolPreferences.LIST_TOOL_TIME_PRECISION_DIGITS, 0));
         }
         else if (value instanceof TimeSpan)
         {
-        	returnValue = BaseballUtils.formatTimeSpan((TimeSpan)value, myToolbox.getPreferencesRegistry()
-        	        .getPreferences(ListToolPreferences.class).getInt(ListToolPreferences.LIST_TOOL_TIME_PRECISION_DIGITS, 0));
+            returnValue = BaseballUtils.formatTimeSpan((TimeSpan)value, myToolbox.getPreferencesRegistry()
+                    .getPreferences(ListToolPreferences.class).getInt(ListToolPreferences.LIST_TOOL_TIME_PRECISION_DIGITS, 0));
         }
         else
         {
@@ -299,11 +299,11 @@ public class BaseballPanel extends GridPane
             Object latitudeValue = myActiveDataElement.getMetaData().getValue(latitudeKey);
         	String latitude = getValueAsString(latitudeKey, latitudeValue, myActiveDataElement);
 
-        	String longitudeKey = myActiveDataElement.getDataTypeInfo().getMetaDataInfo().getLongitudeKey();
+            String longitudeKey = myActiveDataElement.getDataTypeInfo().getMetaDataInfo().getLongitudeKey();
             Object longitudeValue = myActiveDataElement.getMetaData().getValue(longitudeKey);
-        	String longitude = getValueAsString(longitudeKey, longitudeValue, myActiveDataElement);
+            String longitude = getValueAsString(longitudeKey, longitudeValue, myActiveDataElement);
 
-        	myCoordinates.setText(latitude + " " + longitude);
+            myCoordinates.setText(latitude + " " + longitude);
         }
     }
 
