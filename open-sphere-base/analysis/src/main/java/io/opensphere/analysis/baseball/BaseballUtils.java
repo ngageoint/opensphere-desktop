@@ -88,8 +88,8 @@ public class BaseballUtils
      */
     public static String formatDate(Date value, int precision)
     {
-    	SimpleDateFormat formatter = ListToolPreferences.getSimpleDateFormatForPrecision(precision);
-    	return formatter.format(value);
+        SimpleDateFormat formatter = ListToolPreferences.getSimpleDateFormatForPrecision(precision);
+        return formatter.format(value);
     }
 
     /**
@@ -101,8 +101,8 @@ public class BaseballUtils
      */
     public static String formatTimeSpan(TimeSpan value, int precision)
     {
-    	SimpleDateFormat formatter = ListToolPreferences.getSimpleDateFormatForPrecision(precision);
-    	return TimeSpanUtility.formatTimeSpan(formatter, value);
+        SimpleDateFormat formatter = ListToolPreferences.getSimpleDateFormatForPrecision(precision);
+        return TimeSpanUtility.formatTimeSpan(formatter, value);
     }
 
     /**

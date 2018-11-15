@@ -297,7 +297,7 @@ public class BaseballPanel extends GridPane
         {
             String latitudeKey = myActiveDataElement.getDataTypeInfo().getMetaDataInfo().getLatitudeKey();
             Object latitudeValue = myActiveDataElement.getMetaData().getValue(latitudeKey);
-        	String latitude = getValueAsString(latitudeKey, latitudeValue, myActiveDataElement);
+            String latitude = getValueAsString(latitudeKey, latitudeValue, myActiveDataElement);
 
             String longitudeKey = myActiveDataElement.getDataTypeInfo().getMetaDataInfo().getLongitudeKey();
             Object longitudeValue = myActiveDataElement.getMetaData().getValue(longitudeKey);
@@ -332,7 +332,7 @@ public class BaseballPanel extends GridPane
             myPositionFormat = tempFormat;
         }
         setCoordinates();
-	}
+    }
 
     /**
      * Sets the number of features label.
@@ -357,9 +357,9 @@ public class BaseballPanel extends GridPane
         {
             if (StringUtils.containsIgnoreCase(getValueAsString(key, e.getMetaData().getValue(key), e), filter)
                     && !filteredList.contains(e))
-                {
-                    filteredList.add(e);
-                }
+            {
+                filteredList.add(e);
+            }
         }));
         return sortDataElementsByTime(filteredList);
     }

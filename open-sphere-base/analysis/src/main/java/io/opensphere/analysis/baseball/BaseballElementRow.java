@@ -40,7 +40,7 @@ public class BaseballElementRow extends ListCell<DataElement>
      */
     private Node buildList(DataElement item)
     {
-    	Circle colorCircle = new Circle();
+        Circle colorCircle = new Circle();
         colorCircle.setFill(FXUtilities.fromAwtColor(item.getVisualizationState().getColor()));
         colorCircle.setRadius(10);
         Label myTime = new Label(item.getTimeSpan().toDisplayString());
