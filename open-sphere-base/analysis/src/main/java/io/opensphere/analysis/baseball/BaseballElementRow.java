@@ -1,6 +1,5 @@
 package io.opensphere.analysis.baseball;
 
-
 import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.mantle.data.element.DataElement;
 import javafx.scene.Node;
@@ -9,8 +8,12 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 
-public class BaseballTimeRow extends ListCell<DataElement>
+/**
+ * The row constructor for DataElements for the baseball card.
+ */
+public class BaseballElementRow extends ListCell<DataElement>
 {
+    /** The DataElement the row is being built for. */
     private DataElement myDataElement;
 
     @Override
@@ -29,6 +32,12 @@ public class BaseballTimeRow extends ListCell<DataElement>
         }
     }
 
+    /**
+     * Build a row in the DataElement list.
+     *
+     * @param item the DataElement to be added to the row
+     * @return the new row
+     */
     private Node buildList(DataElement item)
     {
     	Circle colorCircle = new Circle();
@@ -42,6 +51,11 @@ public class BaseballTimeRow extends ListCell<DataElement>
         return box;
     }
 
+    /**
+     * Gets the DataElement for this row.
+     *
+     * @return the DataElement
+     */
     public DataElement getDataElement()
     {
         return myDataElement;

@@ -2,14 +2,21 @@ package io.opensphere.analysis.baseball;
 
 import io.opensphere.core.util.lang.Pair;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 
+/**
+ * The row constructor for the data for the baseball card.
+ */
 public class BaseballDataRow extends ListCell<Pair<String, String>>
 {
+	/** The constant EMPTY_VALUE */
     private final static String EMPTY_VALUE = "";
+
+    /** The constant BACKGROUND */
+    private final static String BACKGROUND = "-fx-background-color: transparent";
 
     @Override
     protected void updateItem(Pair<String, String> item, boolean empty)
@@ -26,13 +33,25 @@ public class BaseballDataRow extends ListCell<Pair<String, String>>
         }
     }
 
+    /**
+     * Build a row in the data list.
+     *
+     * @param item the pair of strings to be added to the row
+     * @return the new row
+     */
     private Node buildList(Pair<String, String> item)
     {
         GridPane box = new GridPane();
         box.setHgap(5);
-        box.add(new Label(item.getFirstObject()), 0, 0);
+        TextField field1 = new TextField(item.getFirstObject());
+        field1.setStyle(BACKGROUND);
+        field1.setEditable(false);
+        box.add(field1, 0, 0);
         String secondLabel = item.getSecondObject() == null ? EMPTY_VALUE : item.getSecondObject().toString();
-        box.add(new Label(secondLabel), 1, 0);
+        TextField field2 = new TextField(secondLabel);
+        field2.setStyle(BACKGROUND);
+        field2.setEditable(false);
+        box.add(field2, 1, 0);
         ColumnConstraints column1 = new ColumnConstraints();
         column1.setPercentWidth(50);
         ColumnConstraints column2 = new ColumnConstraints();

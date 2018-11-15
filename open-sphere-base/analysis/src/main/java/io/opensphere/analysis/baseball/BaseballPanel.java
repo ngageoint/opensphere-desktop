@@ -32,42 +32,64 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 
+/**
+ * The main panel for the baseball dialog.
+ */
 public class BaseballPanel extends GridPane
 {
+    /** The background color for selected buttons. */
     private static final String BUTTON_STYLE = "-fx-background-color: #0096C9";
 
-	private DataElement myActiveDataElement;
+    /** The currently displayed data element. */
+    private DataElement myActiveDataElement;
 
+    /** The decimal-degrees button. */
     private final Button myDDButton = new Button("DD");
 
+    /** The degrees-minutes-seconds button. */
     private final Button myDMSButton = new Button("DMS");
 
+    /** The decimal-degrees-minutes button. */
     private final Button myDDMButton = new Button("DDM");
 
+    /** The military grid reference system button. */
     private final Button myMGRSButton = new Button("MGRS");
 
+    /** The list of all DataElements that can be displayed. */
     private final List<DataElement> myElements;
 
+    /** The list of DataElements that are currently shown. */
     private final ListView<DataElement> myElementsView = new ListView<>();
 
+    /** The list of information being displayed about the active data element. */
     private final ListView<Pair<String, String>> myDataView = new ListView<>();
 
+    /** The label that displays the coordinate information about the active data element */
     private final Label myCoordinates = new Label();
 
+    /** The label that displays the current number of features shown. */
     private final Label myFeatureCount = new Label();
 
+    /** Which format to display coordinates in. */
     private GeographicPositionFormat myPositionFormat = GeographicPositionFormat.DECDEG;
 
+    /** The toolbox. */
     private final Toolbox myToolbox;
 
+    /**
+     * Constructs and initializes a new panel.
+     *
+     * @param toolbox the toolbox
+     * @param elements the list of elements
+     */
     public BaseballPanel(Toolbox toolbox, List<DataElement> elements)
     {
         myToolbox = toolbox;
-        myElements = elements.stream().sorted((f, s) -> s.getTimeSpan().compareTo(f.getTimeSpan())).collect(Collectors.toList());
-        add(createElementList(), 0, 2);
+        myElements = sortDataElementsByTime(elements);
+        add(createDataElementList(), 0, 2);
         add(createSearchBar(), 0, 0);
         add(createDataArea(), 1, 2);
-        add(createTopRight(), 1, 0);
+        add(createCoordinateButtons(), 1, 0);
         myActiveDataElement = myElements.get(0);
         setDataView();
         add(myFeatureCount, 0, 1);
@@ -77,6 +99,10 @@ public class BaseballPanel extends GridPane
         setVgap(10);
     }
 
+    /**
+     * Sets the coordinate label based off the currently active data element
+     * and the selected coordinate format.
+     */
     private void setCoordinates()
     {
         if (myActiveDataElement == null)
@@ -101,6 +127,9 @@ public class BaseballPanel extends GridPane
         }
     }
 
+    /**
+     * Sets the data information section based off the active data element.
+     */
     private void setDataView()
     {
         if (myActiveDataElement == null)
@@ -117,7 +146,7 @@ public class BaseballPanel extends GridPane
             {
                 Object elementValue = myActiveDataElement.getMetaData().getValue(key);
                 String pairValue = getValueAsString(key, elementValue, myActiveDataElement);
-            	data.add(new Pair<>(key, pairValue));
+                data.add(new Pair<>(key, pairValue));
             });
 //            for (String key : myActiveDataElement.getMetaData().getKeys())
 //            {
@@ -132,22 +161,32 @@ public class BaseballPanel extends GridPane
         setCoordinates();
 	}
 
+    /**
+     * Sets the number of features label.
+     *
+     * @param numberOfFeatures the number of features
+     */
     private void setFeatureCount(int numberOfFeatures)
     {
         myFeatureCount.setText(numberOfFeatures + " Features");
     }
 
-    private Node createElementList()
+    /**
+     * Creates the DataElement list section of the panel.
+     *
+     * @return the DataElement node
+     */
+    private Node createDataElementList()
     {
         myElementsView.setCellFactory((param) ->
         {
-        	BaseballTimeRow row = new BaseballTimeRow();
-        	row.setOnMousePressed(e ->
-        	{
-        	    myActiveDataElement = row.getDataElement();
-        	    setDataView();
-        	});
-        	return row;
+        	BaseballElementRow row = new BaseballElementRow();
+            row.setOnMousePressed(e ->
+            {
+                myActiveDataElement = row.getDataElement();
+                setDataView();
+            });
+            return row;
         });
         
         myElementsView.setItems(FXCollections.observableList(myElements));
@@ -155,15 +194,30 @@ public class BaseballPanel extends GridPane
         return myElementsView;
     }
 
+    /**
+     * Creates the search bar section of the panel.
+     *
+     * @return the search bar node
+     */
     private Node createSearchBar()
     {
         TextField search = new TextField();
         search.setPromptText("search features");
         search.setOnKeyTyped(e -> 
         {
-            List<DataElement> filteredDataList = myElements.stream().filter(t ->
-                    StringUtils.containsIgnoreCase(t.getTimeSpan().toDisplayString(), search.getText())).sorted((f, s) ->
-                    s.getTimeSpan().compareTo(f.getTimeSpan())).collect(Collectors.toList());
+//            List<DataElement> filteredDataList = myElements.stream().filter(t ->
+//                    StringUtils.containsIgnoreCase(t.getTimeSpan().toDisplayString(), search.getText())).sorted((f, s) ->
+//                    s.getTimeSpan().compareTo(f.getTimeSpan())).collect(Collectors.toList());
+            if (StringUtils.isEmpty(search.getText()))
+            {
+                myElementsView.setItems(FXCollections.observableList(myElements));
+                myActiveDataElement = myElements.get(0);
+                setDataView();
+                setFeatureCount(myElements.size());
+                return;
+            }
+
+        	List<DataElement> filteredDataList = searchFilterDataElements(search.getText());
             myElementsView.setItems(FXCollections.observableList(filteredDataList));
             if (filteredDataList.size() > 0)
             {
@@ -184,6 +238,11 @@ public class BaseballPanel extends GridPane
         return search;
     }
 
+    /**
+     * Creates the data information section of the panel.
+     *
+     * @return the data information node
+     */
     private Node createDataArea()
     {
         myDataView.setCellFactory((param) ->
@@ -196,37 +255,38 @@ public class BaseballPanel extends GridPane
         return myDataView;
     }
 
-    private Node createTopRight()
+    /**
+     * Creates the coordinate button section of the panel.
+     *
+     * @return the coordinate buttons node
+     */
+    private Node createCoordinateButtons()
     {
         HBox box = new HBox();
         myDDButton.setOnAction(e ->
         {
             myPositionFormat = GeographicPositionFormat.DECDEG;
             setCoordinates();
-            clearButtonStyles();
-            myDDButton.setStyle(BUTTON_STYLE);
+            setButtonStyles(myDDButton);
         });
         myDDButton.setStyle(BUTTON_STYLE);
         myDMSButton.setOnAction(e ->
         {
             myPositionFormat = GeographicPositionFormat.DMSDEG;
             setCoordinates();
-            clearButtonStyles();
-            myDMSButton.setStyle(BUTTON_STYLE);
+            setButtonStyles(myDMSButton);
         });
         myDDMButton.setOnAction(e ->
         {
             myPositionFormat = GeographicPositionFormat.DEG_DMIN;
             setCoordinates();
-            clearButtonStyles();
-            myDDMButton.setStyle(BUTTON_STYLE);
+            setButtonStyles(myDDMButton);
         });
         myMGRSButton.setOnAction(e ->
         {
             myPositionFormat = GeographicPositionFormat.MGRS;
             setCoordinates();
-            clearButtonStyles();
-            myMGRSButton.setStyle(BUTTON_STYLE);
+            setButtonStyles(myMGRSButton);
         });
         box.getChildren().addAll(myDDButton, myDMSButton, myDDMButton, myMGRSButton);
         return box;
@@ -243,6 +303,14 @@ public class BaseballPanel extends GridPane
         return dataElement.getDataTypeInfo().getMetaDataInfo().getSpecialTypeForKey(key);
     }
 
+    /**
+     * Gets a String representation of the value.
+     *
+     * @param key the key name
+     * @param value the value
+     * @param dataElement the DataElement
+     * @return the String representation of the value
+     */
     private String getValueAsString(String key, Object value, DataElement dataElement)
     {
         String returnValue;
@@ -287,11 +355,48 @@ public class BaseballPanel extends GridPane
         return returnValue;
     }
 
-    private void clearButtonStyles()
+    /**
+     * Clears the styles for the coordinate buttons, then sets the style for selected button.
+     *
+     * @param button the button
+     */
+    private void setButtonStyles(Button button)
     {
         myDDButton.setStyle("");
         myDMSButton.setStyle("");
         myDDMButton.setStyle("");
         myMGRSButton.setStyle("");
+        button.setStyle(BUTTON_STYLE);
+    }
+
+    /**
+     * Filters DataElements based on if any value in the DataElement contains the filter.
+     *
+     * @param filter the filter
+     * @return the time-based sorted list of filtered DataElements
+     */
+    private List<DataElement> searchFilterDataElements(String filter)
+    {
+        List<DataElement> filteredList = New.list();
+        myElements.stream().forEach(e -> e.getMetaData().getKeys().stream().forEach(key ->
+        {
+            if (StringUtils.containsIgnoreCase(getValueAsString(key, e.getMetaData().getValue(key), e), filter)
+                    && !filteredList.contains(e))
+                {
+                    filteredList.add(e);
+                }
+        }));
+        return sortDataElementsByTime(filteredList);
+    }
+
+    /**
+     * Sorts the list of DataElements by their timespan, latest first.
+     *
+     * @param elements the list of DataElements
+     * @return the sorted list of DataElements
+     */
+    private List<DataElement> sortDataElementsByTime(List<DataElement> elements)
+    {
+        return elements.stream().sorted((f, s) -> s.getTimeSpan().compareTo(f.getTimeSpan())).collect(Collectors.toList());
     }
 }

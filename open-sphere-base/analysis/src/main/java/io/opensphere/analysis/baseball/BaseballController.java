@@ -6,8 +6,6 @@ import java.awt.Window;
 import java.util.Collections;
 import java.util.List;
 
-import javax.swing.WindowConstants;
-
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Polygon;
 
@@ -21,9 +19,7 @@ import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.Altitude.ReferenceLevel;
 import io.opensphere.core.projection.GeographicBody3D;
-import io.opensphere.core.util.ThreadConfined;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.fx.JFXDialog;
 import io.opensphere.core.util.jts.JTSUtilities;
 import io.opensphere.core.util.swing.EventQueueUtilities;
@@ -44,10 +40,6 @@ public class BaseballController extends EventListenerService
 {
     /** The toolbox. */
     private final Toolbox myToolbox;
-
-    /** The dialog. */
-    @ThreadConfined("EDT")
-    private BaseballDialog myDialog;
 
     /**
      * Constructor.
@@ -123,29 +115,17 @@ public class BaseballController extends EventListenerService
 
             if (dataElements.size() > 0)
             {
-                EventQueueUtilities.runOnEDT(() -> newDialog(dataElements));
+                EventQueueUtilities.runOnEDT(() -> showDialog(dataElements));
             }
         }
     }
 
     /**
-     * Shows the dialog for the data element.
+     * Shows the baseball dialog for the data elements.
      *
-     * @param element the data element
+     * @param elements the data elements
      */
     private void showDialog(List<DataElement> elements)
-    {
-        if (myDialog == null)
-        {
-            myDialog = new BaseballDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
-                    myToolbox.getPreferencesRegistry());
-            myDialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        }
-        myDialog.setDataElement(elements);
-        myDialog.setVisible(true);
-    }
-
-    private void newDialog(List<DataElement> elements)
     {
         Window owner = myToolbox.getUIRegistry().getMainFrameProvider().get();
         JFXDialog dialog = new JFXDialog(owner, "Feature Info", false);

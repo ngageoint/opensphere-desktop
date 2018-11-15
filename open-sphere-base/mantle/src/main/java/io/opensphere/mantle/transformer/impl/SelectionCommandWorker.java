@@ -57,7 +57,6 @@ public class SelectionCommandWorker extends PolygonRegionCommandWorker
             MantleToolboxUtils.getDataElementUpdateUtils(getProvider().getToolbox()).setDataElementsSelectionState(
                     Collections.<Long>emptySet(), idsToChange, getProvider().getDataType().getTypeKey(),
                     getProvider().getUpdateSource());
-
         }
     }
 }

@@ -19,9 +19,11 @@ import io.opensphere.mantle.data.geom.MapGeometrySupport;
 import io.opensphere.mantle.data.geom.MapLocationGeometrySupport;
 import io.opensphere.mantle.util.TimeSpanUtility;
 
+/**
+ * The utility class for the baseball card, contains String conversions.
+ */
 public class BaseballUtils
 {
-
     /**
      * Calculate the formatted value based on the current format.
      *
@@ -43,6 +45,12 @@ public class BaseballUtils
         return value.toString();
     }
 
+    /**
+     * Formats the location data of the element into MGRS form.
+     *
+     * @param dataElement the DataElement
+     * @return the MGRS representation of the location
+     */
     public static String formatMGRS(DataElement dataElement)
     {
         MapGeometrySupport geometrySupport = ((MapDataElement)dataElement).getMapGeometrySupport();
@@ -54,14 +62,16 @@ public class BaseballUtils
             LatLonAlt location = locationSupport.getLocation();
             UTM utmCoords = new UTM(new GeographicPosition(location));
             mgrs = converter.createString(utmCoords);
-//            if (precision != 10)
-//            {
-//                mgrs = MGRSUtil.reducePrecision(mgrs, precision);
-//            }
         }
         return mgrs;
     }
 
+    /**
+     * Formats the number into a baseball card-friendly String.
+     *
+     * @param value the Number
+     * @return the formatted number
+     */
     public static String formatNumber(Number value)
     {
         NumberFormat formatter = NumberFormat.getInstance();
@@ -70,12 +80,26 @@ public class BaseballUtils
         return formatter.format(value);
     }
 
+    /**
+     * Formats the Date into a baseball card-friendly String, using the given precision.
+     *
+     * @param value the Date
+     * @param precision the precision
+     * @return the formatted date
+     */
     public static String formatDate(Date value, int precision)
     {
     	SimpleDateFormat formatter = ListToolPreferences.getSimpleDateFormatForPrecision(precision);
     	return formatter.format(value);
     }
 
+    /**
+     * Formats the TimeSpan into a baseball card-friendly Stringm using the given precision.
+     *
+     * @param value the TimeSpan
+     * @param precision the precision
+     * @return the formatted timespan
+     */
     public static String formatTimeSpan(TimeSpan value, int precision)
     {
     	SimpleDateFormat formatter = ListToolPreferences.getSimpleDateFormatForPrecision(precision);
