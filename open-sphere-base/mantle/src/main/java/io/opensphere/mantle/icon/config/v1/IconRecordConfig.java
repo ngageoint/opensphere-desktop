@@ -1,5 +1,7 @@
 package io.opensphere.mantle.icon.config.v1;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -50,6 +52,7 @@ public class IconRecordConfig implements IconProvider
      */
     public IconRecordConfig()
     {
+        /* intentionally blank */
     }
 
     /**
@@ -64,6 +67,17 @@ public class IconRecordConfig implements IconProvider
         myCollectionName = rec.collectionNameProperty().get();
         mySubCategory = rec.subCategoryProperty().get();
         mySourceKey = rec.sourceKeyProperty().get();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.icon.IconProvider#getIconImageData()
+     */
+    @Override
+    public InputStream getIconImageData() throws IOException
+    {
+        return getIconURL().openStream();
     }
 
     /**
@@ -94,7 +108,7 @@ public class IconRecordConfig implements IconProvider
             }
             catch (MalformedURLException e)
             {
-                LOGGER.error("Failed to create URL from config value: [" + myImageURLString + "]");
+                LOGGER.error("Failed to create URL from config value: [" + myImageURLString + "]", e);
             }
         }
         return aURL;

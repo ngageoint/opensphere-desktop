@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 import org.controlsfx.control.GridView;
 
 import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.javafx.ConcurrentBooleanProperty;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
@@ -82,8 +83,10 @@ public class IconGridView extends AnchorPane
         AnchorPane.setLeftAnchor(myGrid, 0.0);
         AnchorPane.setBottomAnchor(myGrid, 0.0);
 
-        myDisplayProperty = new ConcurrentBooleanProperty(!myGrid.itemsProperty().get().isEmpty());
-        myGrid.itemsProperty().addListener((observable, oldValue, newValue) -> myDisplayProperty.set(!newValue.isEmpty()));
+//        myDisplayProperty = new ConcurrentBooleanProperty(!myGrid.itemsProperty().get().isEmpty());
+//        myGrid.itemsProperty().addListener((observable, oldValue, newValue) -> myDisplayProperty.set(!newValue.isEmpty()));
+
+        myDisplayProperty = new ConcurrentBooleanProperty(true);
 
         Platform.runLater(() -> requestFocus());
     }
@@ -121,7 +124,19 @@ public class IconGridView extends AnchorPane
      */
     public void refresh()
     {
-        myGrid.itemsProperty().get().clear();
-        myGrid.itemsProperty().get().addAll(myRegistry.getIconRecords(composePredicate()).stream().toArray(IconRecord[]::new));
+        IconRecord[] iconRecords = myRegistry.getIconRecords(composePredicate()).stream().toArray(IconRecord[]::new);
+        if (!Platform.isFxApplicationThread())
+        {
+            FXUtilities.runOnFXThread(() ->
+            {
+                myGrid.itemsProperty().get().clear();
+                myGrid.itemsProperty().get().addAll(iconRecords);
+            });
+        }
+        else
+        {
+            myGrid.itemsProperty().get().clear();
+            myGrid.itemsProperty().get().addAll(iconRecords);
+        }
     }
 }

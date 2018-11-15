@@ -1,0 +1,48 @@
+# text
+text/html		html htm HTML HTM
+text/plain		txt text TXT TEXT
+
+# images
+image/jpeg		jpg jpeg jpe jfif jif JPG JPEG JPE JFIF JIF 
+image/png		png PNG
+image/gif		gif GIF
+image/tiff		tiff tif
+image/x-icon		ico ICO
+image/bmp		bmp BMP
+
+# application text
+application/postscript	ai eps ps
+application/rtf		rtf
+application/x-tex	tex
+application/x-texinfo	texinfo texi
+application/x-troff	t tr roff
+
+# audio
+audio/basic		au
+audio/midi		midi mid
+audio/x-aifc		aifc
+audio/x-aiff            aif aiff
+audio/x-mpeg		mpeg mpg
+audio/x-wav             wav
+
+# video
+video/mpeg		mpeg mpg mpe
+video/quicktime		qt mov
+video/x-msvideo		avi
+
+# archives
+application/zip		zip ZIP
+application/x-tar		tar TAR
+application/x-tar+gzip		tar.gz tgz TAR.GZ TGZ
+application/x-tar+x-bzip2		tar.bz2 tbz2 TAR.BZ2 TBZ2
+application/x-tar+x-compress	tar.Z TAR.Z
+application/x-tar+x-lzma		tar.lzma TAR.LZMA
+application/x-tar+x-xz		tar.xz TAR.XZ
+application/java-archive jar JAR
+
+#compression
+application/gzip		gz GZ
+application/x-bzip2		bz2 BZ2
+application/x-compress		Z
+application/x-lzma		lzma LZMA
+application/x-xz		xz XZ

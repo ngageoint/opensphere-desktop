@@ -1,5 +1,7 @@
 package io.opensphere.mantle.icon.impl;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
 import io.opensphere.mantle.icon.IconProvider;
@@ -47,6 +49,17 @@ public class DefaultIconProvider implements IconProvider
     public URL getIconURL()
     {
         return myImageURL;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.icon.IconProvider#getIconImageData()
+     */
+    @Override
+    public InputStream getIconImageData() throws IOException
+    {
+        return myImageURL.openStream();
     }
 
     @Override

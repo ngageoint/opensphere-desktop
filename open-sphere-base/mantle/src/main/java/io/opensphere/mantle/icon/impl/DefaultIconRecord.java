@@ -1,5 +1,7 @@
 package io.opensphere.mantle.icon.impl;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Objects;
 
@@ -79,7 +81,19 @@ public class DefaultIconRecord implements IconRecord
         myCollectionNameProperty.set(ip.getCollectionName() == null ? DEFAULT_COLLECTION : ip.getCollectionName());
         mySubCategoryProperty.set(ip.getSubCategory());
         mySourceKeyProperty.set(ip.getSourceKey());
-        myImage.set(new Image(myImageURLProperty.get().toString()));
+        if (myImageURLProperty.get() != null)
+        {
+            try (InputStream stream = ip.getIconImageData())
+            {
+                myImage.set(new Image(stream));
+            }
+            catch (IOException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+//            myImage.set(new Image(myImageURLProperty.get().toString()));
+        }
     }
 
     @Override

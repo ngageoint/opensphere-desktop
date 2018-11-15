@@ -1,9 +1,15 @@
 package io.opensphere.mantle.iconproject.panels;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.controlsfx.control.textfield.CustomTextField;
 
 import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.fx.FxIcons;
+import io.opensphere.mantle.icon.IconProvider;
+import io.opensphere.mantle.icon.IconSource;
+import io.opensphere.mantle.icon.IconSourceFactory;
 import io.opensphere.mantle.iconproject.model.PanelModel;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -43,6 +49,21 @@ public class TopMenuBar extends HBox
         Label addIcon = FxIcons.createClearIcon(AwesomeIconSolid.PLUS, Color.LIME, 16);
         myAddIconsButton = new MenuButton("Add Icons", addIcon);
         myAddIconsButton.setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+
+        Collection<IconSource> iconSources = IconSourceFactory.getInstance().getIconSources();
+        for (IconSource iconSource : iconSources)
+        {
+            MenuItem item = new MenuItem("Add " + iconSource.getName(),
+                    FxIcons.createClearIcon(AwesomeIconSolid.PLUS_CIRCLE, Color.LIGHTGREY, 12));
+            item.onActionProperty().set(e ->
+            {
+                iconSource.getUserInput(this);
+                List<IconProvider> iconProviders = iconSource.getIconProviders();
+                panelModel.getIconRegistry().addIcons(iconProviders, iconSources);
+            });
+            myAddIconsButton.getItems().add(item);
+
+        }
 
         myAddIconsButton.getItems()
                 .add(new MenuItem("Add single icon", FxIcons.createClearIcon(AwesomeIconSolid.PLUS_CIRCLE, Color.LIGHTGREY, 12)));

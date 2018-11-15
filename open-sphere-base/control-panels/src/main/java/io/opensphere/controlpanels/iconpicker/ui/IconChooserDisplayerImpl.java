@@ -9,7 +9,7 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.impl.gui.IconChooserDialog;
-import io.opensphere.mantle.iconproject.view.IconProjDialog;
+import io.opensphere.mantle.iconproject.view.IconDialog;
 import javafx.beans.property.ObjectProperty;
 
 /**
@@ -38,17 +38,11 @@ public class IconChooserDisplayerImpl implements IconChooserDisplayer
     {
         EventQueueUtilities.runOnEDT(() ->
         {
-            IconProjDialog fileDialog = new IconProjDialog(myParent.get(), toolbox, false, false, () ->
-            {
-                if (selectedIcon.get() != null)
-                {
-                    return selectedIcon.get().imageURLProperty().get().toString();
-                }
-                return null;
-            });
-            fileDialog.getPanelModel().selectedRecordProperty()
-                    .addListener((o, v, n) -> selectedIcon.set(fileDialog.getPanelModel().selectedRecordProperty().get()));
-            fileDialog.setVisible(true);
+            IconDialog dialog = new IconDialog(toolbox, myParent.get());
+            dialog.setInitialValueSupplier(
+                    () -> selectedIcon.get() != null ? selectedIcon.get().imageURLProperty().get().toString() : null);
+            dialog.setAcceptListener(r -> selectedIcon.set(r));
+            dialog.setVisible(true);
         });
     }
 }
