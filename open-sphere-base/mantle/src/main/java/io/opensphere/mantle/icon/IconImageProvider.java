@@ -23,6 +23,7 @@ import io.opensphere.core.image.processor.ImageProcessor;
 import io.opensphere.core.server.HttpServer;
 import io.opensphere.core.server.ResponseValues;
 import io.opensphere.core.server.ServerProvider;
+import io.opensphere.core.util.io.IOUtilities;
 import io.opensphere.core.util.lang.HashCodeHelper;
 import io.opensphere.core.util.net.UrlUtilities;
 
@@ -304,7 +305,7 @@ public class IconImageProvider implements ImmediateImageProvider<Void>
         InputStream stream = null;
         if (UrlUtilities.isFile(myURL))
         {
-            stream = myURL.openStream();
+            stream = IOUtilities.getInputStream(myURL);
             response.setResponseCode(HttpURLConnection.HTTP_OK);
         }
         else

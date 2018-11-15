@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.log4j.Logger;
 
+import io.opensphere.core.util.io.IOUtilities;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
 
@@ -77,7 +78,7 @@ public class IconRecordConfig implements IconProvider
     @Override
     public InputStream getIconImageData() throws IOException
     {
-        return getIconURL().openStream();
+        return IOUtilities.getInputStream(getIconURL());
     }
 
     /**

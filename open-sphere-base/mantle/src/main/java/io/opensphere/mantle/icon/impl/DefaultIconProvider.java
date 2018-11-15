@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+import io.opensphere.core.util.io.IOUtilities;
 import io.opensphere.mantle.icon.IconProvider;
 
 /**
@@ -59,7 +60,7 @@ public class DefaultIconProvider implements IconProvider
     @Override
     public InputStream getIconImageData() throws IOException
     {
-        return myImageURL.openStream();
+        return IOUtilities.getInputStream(myImageURL);
     }
 
     @Override

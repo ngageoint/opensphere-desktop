@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import io.opensphere.core.util.image.ImageUtil;
+import io.opensphere.core.util.io.IOUtilities;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.mantle.data.geom.style.MutableVisualizationStyle;
 import io.opensphere.mantle.iconproject.view.IconDialog;
@@ -48,7 +49,7 @@ public class IconChooserStyleParameterEditorPanel extends AbstractStyleParameter
         BufferedImage icon = null;
         try
         {
-            icon = ImageIO.read(iconURL);
+            icon = ImageIO.read(IOUtilities.getInputStream(iconURL));
         }
         catch (IOException e)
         {
