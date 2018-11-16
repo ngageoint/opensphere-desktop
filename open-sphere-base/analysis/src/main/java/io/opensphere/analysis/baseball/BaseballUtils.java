@@ -128,7 +128,7 @@ public class BaseballUtils
         LAT('N', 'S'),
 
         /** Longitude. */
-        LON('W', 'E');
+        LON('E', 'W');
 
         /** Positive direction. */
         private char positive;

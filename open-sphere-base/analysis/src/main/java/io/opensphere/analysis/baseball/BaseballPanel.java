@@ -106,8 +106,11 @@ public class BaseballPanel extends GridPane
             BaseballElementRow row = new BaseballElementRow();
             row.setOnMousePressed(e ->
             {
-                myActiveDataElement = row.getDataElement();
-                setDataView();
+                if (row.getDataElement() != null)
+                {
+                    myActiveDataElement = row.getDataElement();
+                    setDataView();
+                }
             });
             return row;
         });
