@@ -24,6 +24,7 @@ import io.opensphere.core.util.fx.JFXDialog;
 import io.opensphere.core.util.jts.JTSUtilities;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.core.viewer.impl.Viewer3D;
+import io.opensphere.mantle.controller.DataTypeController;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.element.event.DataElementDoubleClickedEvent;
 import io.opensphere.mantle.data.geom.MapGeometrySupport;
@@ -65,12 +66,13 @@ public class BaseballController extends EventListenerService
             DataElementLookupUtils lookupUtils = MantleToolboxUtils.getDataElementLookupUtils(myToolbox);
             List<DataElement> dataElements = New.list();
             GeometryFactory geometryFactory = new GeometryFactory();
-            MapGeometrySupport mgs = MantleToolboxUtils.getDataElementLookupUtils(myToolbox).getMapGeometrySupport(event.getRegistryId());
+            MapGeometrySupport support = lookupUtils.getMapGeometrySupport(event.getRegistryId());
 
-            GeographicBoundingBox bb = mgs.getBoundingBox(myToolbox.getMapManager().getProjection(Viewer3D.class).getSnapshot());
-            if (bb != null)
+            GeographicBoundingBox boundingBox = support.getBoundingBox(myToolbox.getMapManager()
+                    .getProjection(Viewer3D.class).getSnapshot());
+            if (boundingBox != null)
             {
-                LatLonAlt center = bb.getCenter().getLatLonAlt();
+                LatLonAlt center = boundingBox.getCenter().getLatLonAlt();
                 GeographicPosition innerPosition = new GeographicPosition(center);
                 Vector2i innerVector = myToolbox.getMapManager().convertToPoint(innerPosition);
                 Vector2i outerVector = new Vector2i(innerVector.getX(), innerVector.getY() + 10);
@@ -80,34 +82,36 @@ public class BaseballController extends EventListenerService
                 LatLonAlt edge = GeographicBody3D.greatCircleEndPosition(center, 0, WGS84EarthConstants.RADIUS_EQUATORIAL_M, radius);
                 Polygon polygon = JTSUtilities.createCircle(center, edge, JTSUtilities.NUM_CIRCLE_SEGMENTS);
                 StyleTransformerGeometryProcessor processor = null;
-                MapDataElementTransformer transformer = MantleToolboxUtils.getMantleToolbox(myToolbox).getDataTypeController()
-                        .getTransformerForType(event.getDataTypeKey());
-                if (transformer instanceof StyleMapDataElementTransformer)
-                {
-                    processor = ((StyleMapDataElementTransformer)transformer).getGeometryProcessor();
-                }
 
-                processor.getGeometrySetLock().lock();
-                try
+                DataTypeController dataTypeController = MantleToolboxUtils.getMantleToolbox(myToolbox).getDataTypeController();
+                List<String> typeKeyList = New.list();
+                dataTypeController.getDataTypeInfo().stream().forEach(e -> typeKeyList.add(e.getTypeKey()));
+
+                for (String typeKey : typeKeyList)
                 {
-                    for (Geometry geometry : processor.getGeometrySet())
+                    MapDataElementTransformer transformer = dataTypeController.getTransformerForType(typeKey);
+                    if (transformer instanceof StyleMapDataElementTransformer)
                     {
-                        if (geometry.jtsIntersectionTests(new Geometry.JTSIntersectionTests(true, true, false),
-                                Collections.singletonList(polygon), geometryFactory))
+                        processor = ((StyleMapDataElementTransformer)transformer).getGeometryProcessor();
+                        processor.getGeometrySetLock().lock();
+                        try
                         {
-                            dataElements.add(lookupUtils.getDataElement(geometry.getDataModelId()
-                                    & processor.getDataModelIdFromGeometryIdBitMask(), null, null));
+                            for (Geometry geometry : processor.getGeometrySet())
+                            {
+                                if (geometry.jtsIntersectionTests(new Geometry.JTSIntersectionTests(true, true, false),
+                                        Collections.singletonList(polygon), geometryFactory))
+                                {
+                                    dataElements.add(lookupUtils.getDataElement(geometry.getDataModelId()
+                                            & processor.getDataModelIdFromGeometryIdBitMask(), null, null));
+                                }
+                            }
+                        }
+                        finally
+                        {
+                            processor.getGeometrySetLock().unlock();
                         }
                     }
                 }
-                finally
-                {
-                    processor.getGeometrySetLock().unlock();
-                }
-            }
-
-            if (dataElements.size() > 0)
-            {
                 EventQueueUtilities.runOnEDT(() -> showDialog(dataElements));
             }
         }
