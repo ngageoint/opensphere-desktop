@@ -361,6 +361,7 @@ public class LoggerDialog extends AbstractInternalFrame
 
                 node = child;
             }
+
             ((LoggerNode)node.getUserObject()).setLogger(logger);
         }
 
