@@ -36,7 +36,7 @@ public class Quantify
      */
     public static void collectMetric(String key)
     {
-        if (ourToolbox != null)
+        if (ourToolbox != null && QuantifyToolboxUtils.getQuantifyToolbox(ourToolbox) != null)
         {
             QuantifyToolboxUtils.getQuantifyToolbox(ourToolbox).getQuantifyService().collectMetric(key);
         }
@@ -51,7 +51,7 @@ public class Quantify
      */
     public static void collectConditionalMetric(String key, boolean condition)
     {
-        if (ourToolbox != null && condition)
+        if (ourToolbox != null && QuantifyToolboxUtils.getQuantifyToolbox(ourToolbox) != null && condition)
         {
             QuantifyToolboxUtils.getQuantifyToolbox(ourToolbox).getQuantifyService().collectMetric(key);
         }
@@ -66,7 +66,7 @@ public class Quantify
      */
     public static void collectEnableDisableMetric(String keyPrefix, boolean condition)
     {
-        if (ourToolbox != null)
+        if (ourToolbox != null && QuantifyToolboxUtils.getQuantifyToolbox(ourToolbox) != null)
         {
             if (condition)
             {
