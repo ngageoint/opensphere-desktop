@@ -8,13 +8,11 @@ import io.opensphere.controlpanels.iconpicker.controller.IconChooserDisplayer;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.icon.impl.gui.IconChooserDialog;
 import io.opensphere.mantle.iconproject.view.IconDialog;
 import javafx.beans.property.ObjectProperty;
 
 /**
- * Displays the {@link IconChooserDialog} and gets the {@link IconRecord} from
- * the user.
+ * Displays the IconChooserDialog and gets the {@link IconRecord} from the user.
  */
 public class IconChooserDisplayerImpl implements IconChooserDisplayer
 {

@@ -4,27 +4,23 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.fx.FxIcons;
+import io.opensphere.core.util.fx.OSTabPane;
 import io.opensphere.core.util.lang.Pair;
 import io.opensphere.mantle.iconproject.model.IconRegistryChangeListener;
 import io.opensphere.mantle.iconproject.model.PanelModel;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TabPane.TabDragPolicy;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.Priority;
 
 /** An panel on which the icon may be selected by the user. */
 public class IconSelectionPanel extends BorderPane
@@ -33,7 +29,7 @@ public class IconSelectionPanel extends BorderPane
     private final PanelModel myPanelModel;
 
     /** The tab pane in which icons for each set are rendered. */
-    private final TabPane myIconTabs;
+    private final OSTabPane myIconTabs;
 
     /** The detail panel in which information about an icon is displayed. */
     private final Node myDetailPane;
@@ -59,8 +55,17 @@ public class IconSelectionPanel extends BorderPane
     {
         myPanelModel = panelModel;
         myDetailPane = new IconDetail(panelModel);
+
+        HBox box = new HBox(5);
+        Label iconScaleLabel = new Label("Icon Scale:");
+        box.getChildren().add(iconScaleLabel);
+
         myZoomControlPane = new Slider(20, 150, 60);
         myZoomControlPane.setTooltip(new Tooltip("Adjust the size of the displayed icons"));
+        box.getChildren().add(myZoomControlPane);
+
+        HBox.setHgrow(myZoomControlPane, Priority.ALWAYS);
+        HBox.setHgrow(iconScaleLabel, Priority.NEVER);
 
         myPanelModel.tileWidthProperty().bindBidirectional(myZoomControlPane.valueProperty());
 
@@ -69,7 +74,9 @@ public class IconSelectionPanel extends BorderPane
         List<String> collectionNames = New.list(myPanelModel.getIconRegistry().getCollectionNames());
         Collections.sort(collectionNames);
 
-        myIconTabs = new TabPane();
+        myIconTabs = new OSTabPane();
+        myIconTabs.tabDragPolicyProperty().set(TabDragPolicy.REORDER);
+        myIconTabs.newTabAction().set(e -> createSet());
         myTabs = New.map();
 
         for (String collection : collectionNames)
@@ -96,28 +103,6 @@ public class IconSelectionPanel extends BorderPane
             }
         }
 
-        // HBox of control buttons
-        Button addSetButton = new Button();
-        addSetButton.setGraphic(FxIcons.createClearIcon(AwesomeIconSolid.PLUS_CIRCLE, Color.LIME, 12));
-        addSetButton.setStyle(
-                "-fx-border-width: 0; -fx-background-radius: 0; -fx-background-color: transparent; -fx-content-display: graphic-only;");
-        addSetButton.setOnMouseEntered(e -> addSetButton.setStyle(
-                "-fx-border-width: 0; -fx-background-radius: 0; -fx-background-color: transparent; -fx-effect: dropshadow(three-pass-box, lime, 15,.25, 0, 0); -fx-content-display: graphic-only;"));
-        addSetButton.setOnMouseExited(e -> addSetButton.setStyle(
-                "-fx-border-width: 0; -fx-background-radius: 0; -fx-background-color: transparent; -fx-content-display: graphic-only;"));
-        addSetButton.setTooltip(new Tooltip("Add a new icon set."));
-        addSetButton.setOnAction(e -> createSet());
-
-        // Anchor the controls
-        AnchorPane anchor = new AnchorPane();
-        anchor.getChildren().addAll(myIconTabs, addSetButton);
-        AnchorPane.setTopAnchor(addSetButton, 3.0);
-        AnchorPane.setRightAnchor(addSetButton, 5.0);
-        AnchorPane.setTopAnchor(myIconTabs, 1.0);
-        AnchorPane.setRightAnchor(myIconTabs, 1.0);
-        AnchorPane.setLeftAnchor(myIconTabs, 1.0);
-        AnchorPane.setBottomAnchor(myIconTabs, 1.0);
-
         myIconTabs.getTabs().addListener((ListChangeListener.Change<? extends Tab> c) ->
         {
             if (!mySorting)
@@ -133,20 +118,20 @@ public class IconSelectionPanel extends BorderPane
             myTabs.values().stream().map(p -> p.getSecondObject()).forEach(g -> g.refresh());
         });
 
-        AnchorPane anchorPane = new AnchorPane(mySetControlPane, anchor, myZoomControlPane);
+        AnchorPane anchorPane = new AnchorPane(mySetControlPane, myIconTabs, box);
 
         AnchorPane.setRightAnchor(mySetControlPane, 0.0);
         AnchorPane.setLeftAnchor(mySetControlPane, 0.0);
         AnchorPane.setTopAnchor(mySetControlPane, 0.0);
 
-        AnchorPane.setRightAnchor(anchor, 0.0);
-        AnchorPane.setLeftAnchor(anchor, 0.0);
-        AnchorPane.setTopAnchor(anchor, 30.0);
-        AnchorPane.setBottomAnchor(anchor, 15.0);
+        AnchorPane.setRightAnchor(myIconTabs, 0.0);
+        AnchorPane.setLeftAnchor(myIconTabs, 0.0);
+        AnchorPane.setTopAnchor(myIconTabs, 30.0);
+        AnchorPane.setBottomAnchor(myIconTabs, 15.0);
 
-        AnchorPane.setRightAnchor(myZoomControlPane, 0.0);
-        AnchorPane.setLeftAnchor(myZoomControlPane, 0.0);
-        AnchorPane.setBottomAnchor(myZoomControlPane, 0.0);
+        AnchorPane.setRightAnchor(box, 0.0);
+        AnchorPane.setLeftAnchor(box, 0.0);
+        AnchorPane.setBottomAnchor(box, 0.0);
 
         setCenter(anchorPane);
         setRight(myDetailPane);
@@ -160,28 +145,7 @@ public class IconSelectionPanel extends BorderPane
 
     private void createSet()
     {
-        Tab tab = new Tab();
-        TextField tabName = new TextField("<New Icon Set>");
-        Label label = new Label();
-        tabName.textProperty().bindBidirectional(label.textProperty());
-        tab.setGraphic(tabName);
-        tabName.onActionProperty().set(e -> tab.setGraphic(label));
-        label.setOnMouseClicked(e ->
-        {
-            if (e.getClickCount() >= 2)
-            {
-                tabName.setText(label.getText());
-                tab.setGraphic(tabName);
-                tabName.selectAll();
-                tabName.requestFocus();
-            }
-        });
-        IconGridView content = new IconGridView(myPanelModel,
-                r -> r.collectionNameProperty().get().equals(label.textProperty().get()));
-        content.displayProperty().set(true);
-        tab.contentProperty().set(content);
-        myIconTabs.getTabs().add(tab);
-        tabName.selectAll();
-        tabName.requestFocus();
+        Tab tab = new Tab("<New Icon Set>");
+        myIconTabs.getTabs().add(myIconTabs.getTabs().size(), tab);
     }
 }

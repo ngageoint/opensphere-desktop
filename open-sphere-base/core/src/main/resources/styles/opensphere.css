@@ -462,3 +462,50 @@
     -fx-padding: 0.333333em 0.333333em 0.333333em 0.333333em;
     -fx-effect: dropshadow(two-pass-box, -fx-shadow-highlight-color, 1, 0.0, 0, 1.4);
 }
+
+.tab-pane > .tab-header-area > .os-control-buttons-tab > .container > .tab-down-button {
+/*    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: -1 0 5 0, 0 1 6 1, 1 2 7 2;*/
+    -fx-padding: 4 4 9 4;
+    -fx-background-radius: 10;
+}
+.tab-pane:bottom > .tab-header-area > .os-control-buttons-tab > .container > .tab-down-button {
+    -fx-padding: -5 4 4 4; /* TODO convert to ems */
+}
+.tab-pane > .tab-header-area > .os-control-buttons-tab > .container > .tab-down-button:hover {
+    -fx-color: -fx-hover-base;
+}
+.tab-pane > .tab-header-area > .os-control-buttons-tab > .container > .tab-down-button:pressed {
+    -fx-color: -fx-pressed-base;
+}
+.tab-pane > .tab-header-area > .os-control-buttons-tab > .container > .tab-down-button > .arrow  {
+    -fx-background-color: -fx-mark-highlight-color, -fx-mark-color;
+    -fx-background-insets: 0 0 -1 0, 0;
+    -fx-padding: 0.166667em 0.333333em 0.166667em 0.333333em; /* 2 4 2 4 */
+    -fx-shape: "M 0 0 h 7 l -3.5 4 z";
+}
+
+.tab-pane > .tab-header-area > .os-control-buttons-tab > .container > .add-tab-button {
+/*    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: -1 0 5 0, 0 1 6 1, 1 2 7 2;*/
+    -fx-padding:  0em 0.0416665em .5em 0.0416665em;
+    -fx-background-radius: 10;
+}
+.tab-pane:bottom > .tab-header-area > .os-control-buttons-tab > .container > .add-tab-button {
+    -fx-padding: -5 2 4 4; /* TODO convert to ems */
+}
+.tab-pane > .tab-header-area > .os-control-buttons-tab > .container > .add-tab-button:hover {
+    -fx-color: -fx-hover-base;
+}
+.tab-pane > .tab-header-area > .os-control-buttons-tab > .container > .add-tab-button:pressed {
+    -fx-color: -fx-pressed-base;
+}
+.tab-pane > .tab-header-area > .os-control-buttons-tab > .container > .add-tab-button > .plus  {
+    -fx-padding: 0.166667em 0.083333em 0.166667em 0.083333em; /* 2 4 2 4 */
+}
+.tab-pane > .tab-header-area > .os-control-buttons-tab > .container > .add-tab-button > .plus > .plus-path  {
+    -fx-fill: lime; 
+}
+.tab-pane > .tab-header-area > .os-control-buttons-tab > .container > .add-tab-button > .plus > .plus-path:hover  {
+    -fx-effect: dropshadow(three-pass-box, white, 15,.25, 0, 0);
+}
