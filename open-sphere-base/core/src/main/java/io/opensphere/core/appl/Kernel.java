@@ -26,6 +26,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.jdesktop.swingx.JXBusyLabel;
 
@@ -43,6 +44,7 @@ import io.opensphere.core.event.ApplicationLifecycleEvent;
 import io.opensphere.core.event.EventListener;
 import io.opensphere.core.pipeline.Pipeline;
 import io.opensphere.core.pipeline.PipelineImpl;
+import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.MemoryUtilities;
 import io.opensphere.core.util.SystemPropertyLoader;
@@ -243,6 +245,18 @@ public class Kernel
                 shutdown(2);
             }
         };
+
+        Preferences preferences = myToolbox.getPreferencesRegistry().getPreferences(org.apache.log4j.LogManager.class);
+        preferences.keys().stream().forEach(key ->
+        {
+            String levelName = preferences.getString(key, null);
+            if (levelName != null)
+            {
+                Level level = Level.toLevel(levelName);
+                Logger.getLogger(key).setLevel(level);
+            }
+        });
+
         myToolbox.getSystemToolbox().getSplashScreenManager().setInitMessage("Initializing Kernel");
 
         myListenerHelper = new ToolboxListenerHelper(myToolbox, myExecutorManager);
