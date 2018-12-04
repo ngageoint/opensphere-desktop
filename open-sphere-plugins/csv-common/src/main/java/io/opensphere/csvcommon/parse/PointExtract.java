@@ -1,5 +1,6 @@
 package io.opensphere.csvcommon.parse;
 
+import java.awt.Color;
 import java.util.Date;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -30,7 +31,7 @@ public class PointExtract
     private Double myLon;
 
     /** ornt. */
-    private Double myOrnt;
+    private Double myOrientation;
 
     /** The radius. */
     private Double myRadius;
@@ -43,6 +44,9 @@ public class PointExtract
 
     /** The WKT geometry. */
     private Geometry myWKTGeometry;
+
+    /** The color assigned to the point. */
+    private Color myColor;
 
     /**
      * Gets the alt.
@@ -115,13 +119,13 @@ public class PointExtract
     }
 
     /**
-     * Gets the ornt.
+     * Gets the orientation.
      *
-     * @return the ornt
+     * @return the orientation
      */
-    public Double getOrnt()
+    public Double getOrientation()
     {
-        return myOrnt;
+        return myOrientation;
     }
 
     /**
@@ -215,13 +219,13 @@ public class PointExtract
     }
 
     /**
-     * Sets the ornt.
+     * Sets the orientation.
      *
-     * @param ornt the new ornt
+     * @param orientation the new orientation
      */
-    public void setOrnt(Double ornt)
+    public void setOrientation(Double orientation)
     {
-        myOrnt = ornt;
+        myOrientation = orientation;
     }
 
     /**
@@ -262,5 +266,25 @@ public class PointExtract
     public void setWKTGeometry(Geometry wKTGeometry)
     {
         myWKTGeometry = wKTGeometry;
+    }
+
+    /**
+     * Sets the value of the {@link #myColor} field.
+     *
+     * @param color the value to store in the {@link #myColor} field.
+     */
+    public void setColor(Color color)
+    {
+        myColor = color;
+    }
+
+    /**
+     * Gets the value of the {@link #myColor} field.
+     *
+     * @return the value stored in the {@link #myColor} field.
+     */
+    public Color getColor()
+    {
+        return myColor;
     }
 }

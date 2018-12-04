@@ -3,7 +3,11 @@
 	<parent>
 		<groupId>io.open-sphere</groupId>
 		<artifactId>open-sphere-base</artifactId>
+<<<<<<< HEAD
 		<version>5.2.6-SNAPSHOT</version>
+=======
+		<version>5.2.5.1</version>
+>>>>>>> release_5.2.5
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>

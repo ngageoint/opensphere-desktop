@@ -119,6 +119,20 @@ public interface QueryRegionManager
     void removeQueryRegion(Collection<? extends Geometry> polygons);
 
     /**
+     * Center on the supplied geometries.
+     *
+     * @param polygons The geometries.
+     */
+    void centerOnRegion(Collection<? extends Geometry> polygons);
+
+    /**
+     * Zoom to the supplied geometries.
+     *
+     * @param polygons The geometries.
+     */
+    void zoomToRegion(Collection<? extends Geometry> polygons);
+
+    /**
      * Removes the query region.
      *
      * @param region The region.

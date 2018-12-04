@@ -2,6 +2,7 @@ package io.opensphere.mantle.plugin.selection.impl;
 
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JMenuItem;
 
 import org.apache.commons.lang3.StringUtils;
@@ -177,6 +178,7 @@ public abstract class AbstractSelectionCommand implements SelectionCommand
             lb.append(labelAppend);
         }
         JMenuItem jmi = new JMenuItem(lb.toString());
+        jmi.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
         if (getIcon() != null)
         {
             jmi.setIcon(getIcon());

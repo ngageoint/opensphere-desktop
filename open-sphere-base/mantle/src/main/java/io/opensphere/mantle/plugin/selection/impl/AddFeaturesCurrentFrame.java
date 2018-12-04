@@ -18,6 +18,6 @@ public class AddFeaturesCurrentFrame extends AbstractSelectionCommand
     public AddFeaturesCurrentFrame()
     {
         super("ADD_FEATURES_CURRENT_FRAME", "Add in Current Frame", "Add features in region for active data types current time frame only",
-                SelectionCommandGroup.QUERY, new GenericFontIcon(AwesomeIconSolid.PLUS_CIRCLE, Color.WHITE, 12));
+                SelectionCommandGroup.QUERY, new GenericFontIcon(AwesomeIconSolid.PLUS_CIRCLE, Color.WHITE));
     }
 }

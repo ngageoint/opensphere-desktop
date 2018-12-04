@@ -1,17 +1,22 @@
 package io.opensphere.myplaces.specific;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.JMenuItem;
 
 import de.micromata.opengis.kml.v_2_2_0.Data;
 import de.micromata.opengis.kml.v_2_2_0.Placemark;
-import de.micromata.opengis.kml.v_2_2_0.Point;
+import io.opensphere.core.util.AwesomeIconSolid;
+import io.opensphere.core.util.FontIconEnum;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.EventQueueUtilities;
+import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.kml.gx.Track;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.myplaces.constants.Constants;
@@ -24,7 +29,7 @@ import io.opensphere.myplaces.models.DataTypeInfoMyPlaceChangedEvent;
 public abstract class MyPointsMenuItemProvider implements ActionListener
 {
     /** The Menu components. */
-    protected final Map<ItemType, JMenuItem> menuItems = New.map();
+    private final Map<ItemType, JMenuItem> myMenuItems = New.map();
 
     /**
      * Instantiates a new places context menu provider.
@@ -36,10 +41,14 @@ public abstract class MyPointsMenuItemProvider implements ActionListener
             for (ItemType type : ItemType.values())
             {
                 JMenuItem item = new JMenuItem(type.toString());
+                if (type.getIcon() != null)
+                {
+                    item.setIcon(type.getIcon());
+                }
+                item.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
                 item.addActionListener(e -> actionPerformed(e));
-                menuItems.put(type, item);
+                myMenuItems.put(type, item);
             }
-
         });
     }
 
@@ -52,10 +61,6 @@ public abstract class MyPointsMenuItemProvider implements ActionListener
      */
     public void addMenuItems(List<Component> menuItems, Placemark result, ItemType type)
     {
-        if (type == ItemType.CENTER_ON && result.getGeometry() instanceof Point)
-        {
-            menuItems.add(getMenuItems().get(type));
-        }
         if (!(result.getGeometry() instanceof Track) && (type.equals(ItemType.HIDE_POINT) || type.equals(ItemType.SHOW_POINT)))
         {
             for (Data data : result.getExtendedData().getData())
@@ -122,7 +127,7 @@ public abstract class MyPointsMenuItemProvider implements ActionListener
      */
     public Map<ItemType, JMenuItem> getMenuItems()
     {
-        return menuItems;
+        return myMenuItems;
     }
 
     /**
@@ -130,29 +135,29 @@ public abstract class MyPointsMenuItemProvider implements ActionListener
      */
     public enum ItemType
     {
-        /** The CENTER_ON item. */
-        CENTER_ON("Center on", false, true, false, true),
-
         /** The EDIT item. */
-        EDIT("Edit", true, false, false, true),
+        EDIT("Edit Place", AwesomeIconSolid.PENCIL_ALT, true, false, false, true),
 
         /** The DELETE item. */
-        DELETE("Delete", true, true, true, true),
+        DELETE("Remove Feature", AwesomeIconSolid.TIMES, true, false, true, true),
 
         /** The HIDE_POINT item. */
-        HIDE_POINT("Hide Feature", false, false, false, true),
+        HIDE_POINT("Hide Feature", AwesomeIconSolid.EYE_SLASH, false, false, false, true),
 
         /** The SHOW_POINT item. */
-        SHOW_POINT("Show Feature", false, false, false, true),
+        SHOW_POINT("Show Feature", AwesomeIconSolid.EYE, false, false, false, true),
 
         /** The HIDE_BUBBLE item. */
-        HIDE_BUBBLE("Hide Bubble", false, false, false, true),
+        HIDE_BUBBLE("Hide Bubble", AwesomeIconSolid.EYE_SLASH, false, false, false, true),
 
         /** The SHOW_BUBBLE item. */
-        SHOW_BUBBLE("Show Bubble", false, true, false, true);
+        SHOW_BUBBLE("Show Bubble", AwesomeIconSolid.EYE, false, false, false, true);
 
         /** The Label. */
         private final String myLabel;
+
+        /** The Label. */
+        private final Icon myIcon;
 
         /** If this item is required or not. */
         private boolean myIsRequired;
@@ -179,9 +184,11 @@ public abstract class MyPointsMenuItemProvider implements ActionListener
          * @param needsDataGroup Indicates if the data group info is needed.
          * @param needsDataType Indicates if the data type info is needed.
          */
-        ItemType(String label, boolean required, boolean isGroup, boolean needsDataGroup, boolean needsDataType)
+        ItemType(String label, FontIconEnum icon, boolean required, boolean isGroup, boolean needsDataGroup,
+                boolean needsDataType)
         {
             myLabel = label;
+            myIcon = new GenericFontIcon(icon, Color.WHITE);
             myIsRequired = required;
             myIsGroup = isGroup;
             myNeedsDataGroup = needsDataGroup;
@@ -232,6 +239,16 @@ public abstract class MyPointsMenuItemProvider implements ActionListener
         public String toString()
         {
             return myLabel;
+        }
+
+        /**
+         * Gets the value of the {@link #myIcon} field.
+         *
+         * @return the value stored in the {@link #myIcon} field.
+         */
+        public Icon getIcon()
+        {
+            return myIcon;
         }
     }
 }

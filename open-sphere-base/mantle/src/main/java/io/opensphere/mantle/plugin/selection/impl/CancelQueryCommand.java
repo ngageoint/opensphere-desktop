@@ -1,5 +1,9 @@
 package io.opensphere.mantle.plugin.selection.impl;
 
+import java.awt.Color;
+
+import io.opensphere.core.util.AwesomeIconSolid;
+import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.mantle.plugin.selection.SelectionCommandGroup;
 
 /**
@@ -12,6 +16,7 @@ public class CancelQueryCommand extends AbstractSelectionCommand
      */
     public CancelQueryCommand()
     {
-        super("CANCEL_QUERY", "Cancel Query", "Cancel query from retrieving any more feature data", SelectionCommandGroup.QUERY);
+        super("CANCEL_QUERY", "Cancel Query", "Cancel query from retrieving any more feature data", SelectionCommandGroup.QUERY,
+                new GenericFontIcon(AwesomeIconSolid.TIMES_CIRCLE, Color.WHITE));
     }
 }

@@ -19,6 +19,6 @@ public class LoadFeaturesCurrentFrameCommand extends AbstractSelectionCommand
     {
         super("LOAD_FEATURES_CURRENT_FRAME", "Load in Current Frame",
                 "Clear all loaded features and load new features in region for active data types current time frame only",
-                SelectionCommandGroup.FEATURES, new GenericFontIcon(AwesomeIconRegular.CIRCLE, Color.WHITE, 12));
+                SelectionCommandGroup.FEATURES, new GenericFontIcon(AwesomeIconRegular.CIRCLE, Color.WHITE));
     }
 }
