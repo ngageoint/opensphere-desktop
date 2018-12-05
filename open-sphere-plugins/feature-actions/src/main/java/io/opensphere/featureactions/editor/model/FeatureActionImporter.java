@@ -280,7 +280,6 @@ public class FeatureActionImporter implements FileOrURLImporter
 
         FeatureActions featureActions = ((JAXBElement<FeatureActions>)featureActionsElement).getValue();
 
-        myModel.getFeatureGroups().clear();
         List<FeatureAction> actions = featureActions.getActions();
         for (FeatureAction featureAction : actions)
         {
