@@ -1,5 +1,6 @@
 package io.opensphere.controlpanels.viewbookmark.controller;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
@@ -11,6 +12,7 @@ import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.control.action.context.ContextIdentifiers;
 import io.opensphere.core.control.action.context.ScreenPositionContextKey;
 import io.opensphere.core.model.GeographicPosition;
+import io.opensphere.core.util.image.IconUtil;
 
 /**
  * The Class ViewBookmarkMenuItemProvider.
@@ -21,7 +23,7 @@ public class ViewBookmarkMenuItemProvider
     private final ViewBookmarkController myController;
 
     /** The default context menu provider. */
-    private final ContextMenuProvider<ScreenPositionContextKey> myViewBookmarkMenuProvider = new ContextMenuProvider<ScreenPositionContextKey>()
+    private final ContextMenuProvider<ScreenPositionContextKey> myViewBookmarkMenuProvider = new ContextMenuProvider<>()
     {
         @Override
         public List<JMenuItem> getMenuItems(String contextId, ScreenPositionContextKey key)
@@ -29,7 +31,8 @@ public class ViewBookmarkMenuItemProvider
             final GeographicPosition pos = myController.convertPointToGeographicPosition(key.getPosition().asPoint());
             if (pos != null)
             {
-                JMenuItem mi = new JMenuItem("Save the current viewer position...");
+                JMenuItem mi = new JMenuItem("Save the current viewer position",
+                        IconUtil.getColorizedIcon("/images/earth-boresight.png", Color.WHITE, 16));
                 mi.addActionListener(new ActionListener()
                 {
                     @Override
@@ -40,10 +43,7 @@ public class ViewBookmarkMenuItemProvider
                 });
                 return Collections.singletonList(mi);
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         @Override

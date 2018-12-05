@@ -1,5 +1,6 @@
 package io.opensphere.csv;
 
+import java.awt.Color;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import io.opensphere.mantle.data.impl.DefaultDataTypeInfo;
 import io.opensphere.mantle.data.impl.DefaultMapFeatureVisualizationInfo;
 import io.opensphere.mantle.data.impl.DefaultMetaDataInfo;
 import io.opensphere.mantle.data.impl.specialkey.AltitudeKey;
+import io.opensphere.mantle.data.impl.specialkey.ColorKey;
 import io.opensphere.mantle.data.impl.specialkey.EllipseOrientationKey;
 import io.opensphere.mantle.data.impl.specialkey.EllipseSemiMajorAxisKey;
 import io.opensphere.mantle.data.impl.specialkey.EllipseSemiMinorAxisKey;
@@ -297,6 +299,10 @@ public final class CSVTypeInfoGenerator
                         SpeedErrorKey specialType = unit != null ? new SpeedErrorKey(unit) : SpeedErrorKey.DEFAULT;
                         columnInfo.setSpecialType(specialType);
                     }
+                        break;
+                    case COLOR:
+                        columnInfo.setColumnClass(Color.class);
+                        columnInfo.setSpecialType(ColorKey.DEFAULT);
                         break;
                     default:
                         break;

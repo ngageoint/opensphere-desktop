@@ -293,8 +293,8 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
         }
 
         builder.setPosition(gp);
-        builder.setHorizontalAlignment(.5f);
-        builder.setVerticalAlignment(1f);
+        builder.setHorizontalAlignment(0F);
+        builder.setVerticalAlignment(.5F);
         builder.setText(labValue);
         builder.setFont(Font.SANS_SERIF + " " + getLabelSize());
         builder.setOutlined(true);

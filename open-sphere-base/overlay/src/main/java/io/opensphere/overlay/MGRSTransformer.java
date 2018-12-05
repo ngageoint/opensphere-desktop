@@ -31,7 +31,7 @@ import io.opensphere.core.mgrs.GridRectangle;
 import io.opensphere.core.mgrs.GridSegments;
 import io.opensphere.core.mgrs.MGRSConverter;
 import io.opensphere.core.mgrs.MGRSConverter.LatitudeBandData;
-import io.opensphere.core.mgrs.MGRSUtil;
+import io.opensphere.core.mgrs.MGRSCalcUtils;
 import io.opensphere.core.mgrs.UTM;
 import io.opensphere.core.mgrs.UTM.Hemisphere;
 import io.opensphere.core.model.Altitude;
@@ -584,7 +584,7 @@ public class MGRSTransformer extends DefaultTransformer
             GeographicPosition upperLeftPos = getProjection().convertToPosition(upperLeftModel, ReferenceLevel.ELLIPSOID);
             GeographicPosition lowerRightPos = getProjection().convertToPosition(lowerRightModel, ReferenceLevel.ELLIPSOID);
 
-            myViewBBox = MGRSUtil.calculateBoundingBox(lowerRightPos, lowerLeftPos, upperLeftPos, upperRightPos);
+            myViewBBox = MGRSCalcUtils.calculateBoundingBox(lowerRightPos, lowerLeftPos, upperLeftPos, upperRightPos);
         }
         else
         {
@@ -955,14 +955,14 @@ public class MGRSTransformer extends DefaultTransformer
                 return null;
             }
 
-            newGrid.setGridSegments(MGRSUtil.determineRenderableLines(getBoundingBox(), sePos, swPos, nwPos, nePos));
+            newGrid.setGridSegments(MGRSCalcUtils.determineRenderableLines(getBoundingBox(), sePos, swPos, nwPos, nePos));
 
-            newGrid.setSWPos(MGRSUtil.checkPosition(getBoundingBox(), swPos, sePos, nwPos));
-            newGrid.setNWPos(MGRSUtil.checkPosition(getBoundingBox(), nwPos, nePos, swPos));
-            newGrid.setNEPos(MGRSUtil.checkPosition(getBoundingBox(), nePos, nwPos, sePos));
-            newGrid.setSEPos(MGRSUtil.checkPosition(getBoundingBox(), sePos, swPos, nePos));
+            newGrid.setSWPos(MGRSCalcUtils.checkPosition(getBoundingBox(), swPos, sePos, nwPos));
+            newGrid.setNWPos(MGRSCalcUtils.checkPosition(getBoundingBox(), nwPos, nePos, swPos));
+            newGrid.setNEPos(MGRSCalcUtils.checkPosition(getBoundingBox(), nePos, nwPos, sePos));
+            newGrid.setSEPos(MGRSCalcUtils.checkPosition(getBoundingBox(), sePos, swPos, nePos));
 
-            MGRSUtil.checkForTriangle(newGrid);
+            MGRSCalcUtils.checkForTriangle(newGrid);
 
             if (newGrid.getSWPos() == null || newGrid.getNWPos() == null || newGrid.getNEPos() == null
                     || newGrid.getSEPos() == null)
@@ -971,7 +971,7 @@ public class MGRSTransformer extends DefaultTransformer
                 return null;
             }
 
-            GeographicPosition centerPos = MGRSUtil.getCenterPoint(newGrid.getSEPos(), newGrid.getSWPos(), newGrid.getNWPos(),
+            GeographicPosition centerPos = MGRSCalcUtils.getCenterPoint(newGrid.getSEPos(), newGrid.getSWPos(), newGrid.getNWPos(),
                     newGrid.getNEPos());
 
             newGrid.setCenterPosition(centerPos);
@@ -991,7 +991,7 @@ public class MGRSTransformer extends DefaultTransformer
             }
 
             newGrid.setBoundingBox(
-                    MGRSUtil.createBoundingBox(newGrid.getSEPos(), newGrid.getSWPos(), newGrid.getNWPos(), newGrid.getNEPos()));
+                    MGRSCalcUtils.createBoundingBox(newGrid.getSEPos(), newGrid.getSWPos(), newGrid.getNWPos(), newGrid.getNEPos()));
 
             return newGrid;
         }
@@ -1641,13 +1641,13 @@ public class MGRSTransformer extends DefaultTransformer
             GeographicBoundingBox bigBox = getBoundingBox();
 
             // Find the grid segments that will actually be used to display.
-            newGrid.setGridSegments(MGRSUtil.determineRenderableLines(bigBox, sePos, swPos, nwPos, nePos));
+            newGrid.setGridSegments(MGRSCalcUtils.determineRenderableLines(bigBox, sePos, swPos, nwPos, nePos));
 
             // Find the corner positions that will be used for bounding box.
-            GeographicPosition northWest = MGRSUtil.checkPosition(bigBox, nwPos, nePos, swPos);
-            GeographicPosition northEast = MGRSUtil.checkPosition(bigBox, nePos, nwPos, sePos);
-            GeographicPosition southEast = MGRSUtil.checkPosition(bigBox, sePos, swPos, nePos);
-            GeographicPosition southWest = MGRSUtil.checkPosition(bigBox, swPos, sePos, nwPos);
+            GeographicPosition northWest = MGRSCalcUtils.checkPosition(bigBox, nwPos, nePos, swPos);
+            GeographicPosition northEast = MGRSCalcUtils.checkPosition(bigBox, nePos, nwPos, sePos);
+            GeographicPosition southEast = MGRSCalcUtils.checkPosition(bigBox, sePos, swPos, nePos);
+            GeographicPosition southWest = MGRSCalcUtils.checkPosition(bigBox, swPos, sePos, nwPos);
 
             // Determine the name
             String mgrsName = determineName(parentZone, swEasting + size / 2, swNorthing + size / 2);
@@ -1665,9 +1665,9 @@ public class MGRSTransformer extends DefaultTransformer
             newGrid.setNWPos(northWest);
             newGrid.setNEPos(northEast);
 
-            MGRSUtil.checkForTriangle(newGrid);
+            MGRSCalcUtils.checkForTriangle(newGrid);
 
-            newGrid.setOnBorder(MGRSUtil.checkForBorder(newGrid, sePos, swPos, nwPos, nePos));
+            newGrid.setOnBorder(MGRSCalcUtils.checkForBorder(newGrid, sePos, swPos, nwPos, nePos));
 
             if (newGrid.getSEPos() == null || newGrid.getSWPos() == null || newGrid.getNWPos() == null
                     || newGrid.getNEPos() == null)
@@ -1676,12 +1676,12 @@ public class MGRSTransformer extends DefaultTransformer
                 return null;
             }
 
-            GeographicPosition centerPosition = MGRSUtil.getCenterPoint(newGrid.getSEPos(), newGrid.getSWPos(),
+            GeographicPosition centerPosition = MGRSCalcUtils.getCenterPoint(newGrid.getSEPos(), newGrid.getSWPos(),
                     newGrid.getNWPos(), newGrid.getNEPos());
             newGrid.setCenterPosition(centerPosition);
 
             newGrid.setBoundingBox(
-                    MGRSUtil.createBoundingBox(newGrid.getSEPos(), newGrid.getSWPos(), newGrid.getNWPos(), newGrid.getNEPos()));
+                    MGRSCalcUtils.createBoundingBox(newGrid.getSEPos(), newGrid.getSWPos(), newGrid.getNWPos(), newGrid.getNEPos()));
 
             newGrid.setSWEasting(swEasting);
             newGrid.setSWNorthing(swNorthing);

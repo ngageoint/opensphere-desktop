@@ -37,6 +37,6 @@ public final class LocationDeciderFactory
     public List<LocationDecider> buildDeciders(PreferencesRegistry prefsRegistry)
     {
         return New.list(new LatLonDecider(prefsRegistry), new MGRSDecider(prefsRegistry), new PositionDecider(prefsRegistry),
-                new WktDecider(prefsRegistry));
+                new WktDecider(prefsRegistry), new ColorDecider(prefsRegistry));
     }
 }

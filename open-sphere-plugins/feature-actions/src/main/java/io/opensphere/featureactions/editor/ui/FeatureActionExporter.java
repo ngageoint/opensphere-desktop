@@ -14,15 +14,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPathExpressionException;
 
 import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 
-import io.opensphere.core.modulestate.StateXML;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.XMLUtilities;
 import io.opensphere.core.util.collections.New;
@@ -32,12 +28,18 @@ import io.opensphere.core.util.swing.RadioButtonPanel;
 import io.opensphere.featureactions.editor.model.SimpleFeatureAction;
 import io.opensphere.featureactions.editor.model.SimpleFeatureActionGroup;
 import io.opensphere.featureactions.editor.ui.DetailEditor.StackLayout;
+import io.opensphere.featureactions.model.FeatureAction;
+import io.opensphere.featureactions.model.FeatureActions;
+import io.opensphere.featureactions.model.FeatureActionsFactory;
 
 /** Provides an export to file menu for feature actions. */
 public class FeatureActionExporter
 {
     /** Logger reference. */
     private static final Logger LOGGER = Logger.getLogger(FeatureActionExporter.class);
+
+    /** The JAXB context classes. */
+    private static final Class<?>[] CLASSES = new Class<?>[] { FeatureActionsFactory.class };
 
     /** Option to export only active feature actions. */
     private static final String EXPORT_ACTIVE = "Export Active (Checked)";
@@ -64,7 +66,8 @@ public class FeatureActionExporter
      * Constructor.
      *
      * @param prefRegistry The preferences registry.
-     * @param layerName The name of the layer that has feature actions being exported
+     * @param layerName The name of the layer that has feature actions being
+     *            exported
      * @param groupList The list of feature action groups in the layer.
      */
     public FeatureActionExporter(PreferencesRegistry prefRegistry, String layerName, List<SimpleFeatureActionGroup> groupList)
@@ -96,70 +99,46 @@ public class FeatureActionExporter
         dialog.buildAndShow();
         if (dialog.getSelection() == JOptionPane.OK_OPTION)
         {
-            try
+            FeatureActions featureActions = new FeatureActions();
+            List<FeatureAction> actions = featureActions.getActions();
+            for (SimpleFeatureActionGroup featureActionGroup : myGroupList)
             {
-                Document doc = XMLUtilities.newDocument();
-                for (SimpleFeatureActionGroup featureActionGroup : myGroupList)
-                {
-                    for (SimpleFeatureAction featureAction : featureActionGroup.getActions())
-                    {
-                        if (checkExportValidity(featureAction))
-                        {
-                            Node baseNode = StateXML.createChildNode(doc, doc, doc, "/:featureActions", "featureActions");
-                            XMLUtilities.marshalJAXBObjectToElement(featureAction.getFeatureAction(), baseNode);
-                        }
-                    }
-                }
-                saveExportToFile(parentDialog, doc);
+                featureActionGroup.getActions().stream().filter(this::checkExportValidity)
+                        .map(SimpleFeatureAction::getFeatureAction).forEach(actions::add);
             }
-            catch (ParserConfigurationException | XPathExpressionException | JAXBException e)
-            {
-                LOGGER.error("Failure to export Feature Actions to file.", e);
-            }
+            saveExportToFile(parentDialog, featureActions);
         }
     }
 
     /**
-     * Saves all the valid feature actions to the xml file.
+     * Saves all the valid feature actions to the XML file.
      *
      * @param parentComponent The parent component.
-     * @param doc The document to save the feature actions to.
+     * @param featureActions The content to save the feature actions to.
      */
-    private void saveExportToFile(Component parentComponent, Document doc)
+    private void saveExportToFile(Component parentComponent, FeatureActions featureActions)
     {
-        OutputStream outputStream;
         MnemonicFileChooser chooser = new MnemonicFileChooser(myPrefsRegistry, getClass().getName());
         chooser.setSelectedFile(new File(myName.getText() + ".xml"));
-        while (true)
+        int result = chooser.showSaveDialog(parentComponent, Collections.singleton(".xml"));
+        if (result == JFileChooser.APPROVE_OPTION)
         {
-            int result = chooser.showSaveDialog(parentComponent, Collections.singleton(".xml"));
-            if (result == JFileChooser.APPROVE_OPTION)
+            try (OutputStream outputStream = new FileOutputStream(chooser.getSelectedFile()))
             {
-                File saveFile = chooser.getSelectedFile();
-                try
-                {
-                    outputStream = new FileOutputStream(saveFile);
-                    break;
-                }
-                catch (FileNotFoundException e)
-                {
-                    LOGGER.error("Failed to write to selected file [" + saveFile.getAbsolutePath() + "]: " + e, e);
-                    JOptionPane.showMessageDialog(parentComponent, "Failed to write to file: " + e.getMessage(),
-                            "Error writing to file", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-            else
-            {
-                outputStream = null;
-                break;
-            }
-        }
-        if (outputStream != null)
-        {
-            try
-            {
-                XMLUtilities.format(doc, outputStream, null);
+                JAXBElement<FeatureActions> featureActionsElement = new FeatureActionsFactory()
+                        .createFeatureActions(featureActions);
+                XMLUtilities.writeXMLObject(featureActionsElement, outputStream, CLASSES);
                 outputStream.close();
+            }
+            catch (JAXBException e)
+            {
+                LOGGER.error("Failure to export Feature Actions to file.", e);
+            }
+            catch (FileNotFoundException e)
+            {
+                LOGGER.error("Failed to write to selected file [" + chooser.getSelectedFile().getAbsolutePath() + "]: " + e, e);
+                JOptionPane.showMessageDialog(parentComponent, "Failed to write to file: " + e.getMessage(),
+                        "Error writing to file", JOptionPane.ERROR_MESSAGE);
             }
             catch (IOException e)
             {
@@ -172,11 +151,12 @@ public class FeatureActionExporter
      * Checks whether the feature action is going to be exported.
      *
      * @param featureAction The feature action to check.
-     * @return True if the feature action is allowed to be exported, false otherwise.
+     * @return True if the feature action is allowed to be exported, false
+     *         otherwise.
      */
     private boolean checkExportValidity(SimpleFeatureAction featureAction)
     {
-        return myButtonPanel.getSelection().equals(EXPORT_ALL) || (myButtonPanel.getSelection().equals(EXPORT_ACTIVE)
-               && featureAction.getFeatureAction().isEnabled());
+        return myButtonPanel.getSelection().equals(EXPORT_ALL)
+                || (myButtonPanel.getSelection().equals(EXPORT_ACTIVE) && featureAction.getFeatureAction().isEnabled());
     }
 }

@@ -17,6 +17,6 @@ public class DeselectCommand extends AbstractSelectionCommand
     public DeselectCommand()
     {
         super("DESELECT", "Deselect All", "Deselect all features in region", SelectionCommandGroup.FEATURES,
-                new GenericFontIcon(AwesomeIconSolid.TIMES_CIRCLE, Color.WHITE, 12));
+                new GenericFontIcon(AwesomeIconSolid.TIMES_CIRCLE, Color.WHITE));
     }
 }

@@ -37,11 +37,13 @@ import io.opensphere.core.geometry.renderproperties.DefaultPointRenderProperties
 import io.opensphere.core.math.Vector2i;
 import io.opensphere.core.model.Altitude.ReferenceLevel;
 import io.opensphere.core.model.GeographicPosition;
+import io.opensphere.core.model.Position;
 import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.NamedThreadFactory;
 import io.opensphere.core.util.ref.WeakReference;
+import io.opensphere.core.viewer.impl.ViewerAnimator;
 import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.controller.DataTypeController;
 import io.opensphere.mantle.data.DataTypeInfo;
@@ -511,7 +513,7 @@ public class SelectionHandler
         }
         else if (myLastGeometry instanceof PolylineGeometry || myLastGeometry instanceof PointGeometry)
         {
-            myBufferRegionCreator.createBuffer(myLastGeometry);
+            processCommand(cmd, myLastGeometry);
         }
     }
 
@@ -559,6 +561,44 @@ public class SelectionHandler
             return new GeometryGroupGeometry(builder, pGeometry.getRenderProperties());
         }
         return pGeometry;
+    }
+
+    private void processCommand(SelectionCommand cmd, Geometry geometry)
+    {
+        if (cmd.equals(SelectionCommandFactory.ZOOM))
+        {
+            List<Position> positions = New.list();
+            if (geometry instanceof PolylineGeometry)
+            {
+                positions.addAll(((PolylineGeometry)geometry).getVertices());
+            }
+            else if (geometry instanceof PointGeometry)
+            {
+                positions.add(((PointGeometry)geometry).getPosition());
+            }
+
+            ViewerAnimator animator = new ViewerAnimator(myToolbox.getMapManager().getStandardViewer(), positions, true);
+            animator.start();
+        }
+        else if (cmd.equals(SelectionCommandFactory.CENTER))
+        {
+            List<Position> positions = New.list();
+            if (geometry instanceof PolylineGeometry)
+            {
+                positions.addAll(((PolylineGeometry)geometry).getVertices());
+            }
+            else if (geometry instanceof PointGeometry)
+            {
+                positions.add(((PointGeometry)geometry).getPosition());
+            }
+
+            ViewerAnimator animator = new ViewerAnimator(myToolbox.getMapManager().getStandardViewer(), positions, false);
+            animator.start();
+        }
+        else if (cmd.equals(SelectionCommandFactory.CREATE_BUFFER_REGION))
+        {
+            myBufferRegionCreator.createBuffer(myLastGeometry);
+        }
     }
 
     /**

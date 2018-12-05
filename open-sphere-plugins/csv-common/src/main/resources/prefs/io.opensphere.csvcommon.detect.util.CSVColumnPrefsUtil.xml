@@ -132,6 +132,11 @@
 			<Value>WKT-GEOMETRY</Value>
 		</StringList>
 	</preference>
+	<preference key="COLOR" class="io.opensphere.core.util.xml.StringList">
+		<StringList>
+			<Value>COLOR</Value>
+		</StringList>
+	</preference>
 	<preference key="TIMESTAMP_exclude" class="io.opensphere.core.util.xml.StringList">
 		<StringList>
 			<Value>MOD</Value>

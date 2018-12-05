@@ -5,6 +5,7 @@ import java.util.Map;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.csvcommon.format.CellFormatter;
+import io.opensphere.csvcommon.format.color.ColorFormatter;
 import io.opensphere.csvcommon.format.datetime.DateFormatter;
 import io.opensphere.csvcommon.format.datetime.DateTimeFormatter;
 import io.opensphere.csvcommon.format.datetime.TimeFormatter;
@@ -60,6 +61,10 @@ public final class CellFormatterFactory
             else if (columnType == ColumnType.POSITION)
             {
                 formatter = new PositionFormatter(preferencesRegistry);
+            }
+            else if (columnType == ColumnType.COLOR)
+            {
+                formatter = new ColorFormatter();
             }
 
             if (formatter != null)
