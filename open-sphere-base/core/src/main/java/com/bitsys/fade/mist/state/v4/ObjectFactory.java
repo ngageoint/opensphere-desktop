@@ -433,7 +433,7 @@ public class ObjectFactory {
      * }{@code <}{@link FeatureActionType }{@code >}}
      *
      */
-    @XmlElementDecl(namespace = "http://www.bit-sys.com/mist/state/v4", name = "featureAction")
+    @XmlElementDecl(namespace = "http://www.bit-sys.com/mist/state/v4", name = "featureActions")
     public JAXBElement<FeatureActionArrayType> createFeatureActions(FeatureActionArrayType value) {
         return new JAXBElement<FeatureActionArrayType>(_FeatureActions_QNAME, FeatureActionArrayType.class, null, value);
     }
