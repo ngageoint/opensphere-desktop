@@ -11,14 +11,13 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import io.opensphere.analysis.table.functions.ColumnFunction;
-import io.opensphere.analysis.table.model.MGRSMetaColumn;
 import io.opensphere.analysis.table.model.MetaColumn;
 import io.opensphere.analysis.table.model.MetaColumnsTableModel;
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.model.time.TimeSpanList;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.table.AbstractColumnTableModel;
-import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.SpecialKey;
 import io.opensphere.mantle.data.dynmeta.DynamicMetadataDataTypeController;
@@ -56,10 +55,10 @@ public class ListToolTableModel extends AbstractColumnTableModel implements Meta
     /**
      * Constructor.
      *
-     * @param mantleToolbox the mantle toolbox
+     * @param toolbox the toolbox
      * @param dataType the data type
      */
-    public ListToolTableModel(MantleToolbox mantleToolbox, DataTypeInfo dataType)
+    public ListToolTableModel(Toolbox toolbox, DataTypeInfo dataType)
     {
         super();
 
@@ -68,7 +67,7 @@ public class ListToolTableModel extends AbstractColumnTableModel implements Meta
         myMetaColumns = Collections.unmodifiableList(createMetaColumns());
         setColumnInfo();
 
-        setRowDataProvider(new DataElementProvider(this, mantleToolbox, dataType, myMetaColumns, myTimeColumnIndex));
+        setRowDataProvider(new DataElementProvider(this, toolbox, dataType, myMetaColumns, myTimeColumnIndex));
     }
 
     @Override
@@ -410,7 +409,6 @@ public class ListToolTableModel extends AbstractColumnTableModel implements Meta
                         : Boolean.valueOf(dataElement.getVisualizationState().isLobVisible());
             }
         });
-        metaColumns.add(new MGRSMetaColumn());
         return metaColumns;
     }
 

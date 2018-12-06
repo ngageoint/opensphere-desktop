@@ -44,6 +44,12 @@ public class GenericFontIcon implements Icon, FontIcon
     private int mySize;
 
     /**
+     * The size of the icon, expressed as a font size. Defaults to
+     * {@value #DEFAULT_SIZE}.
+     */
+    private int myFontSize;
+
+    /**
      * The width of the icon paint area, calculated based on the value of
      * {@link #mySize}.
      */
@@ -256,6 +262,7 @@ public class GenericFontIcon implements Icon, FontIcon
                 myYPos = null;
 
                 mySize = pSize;
+                myFontSize = mySize;
                 Font font = myFont.deriveFont(Font.PLAIN, getSize());
 
                 BufferedImage temp = new BufferedImage(mySize, mySize, BufferedImage.TYPE_INT_ARGB);
@@ -265,6 +272,21 @@ public class GenericFontIcon implements Icon, FontIcon
                 myHeight = graphics.getFontMetrics().charWidth(myIcon.getFontCode().charAt(0));
 
                 graphics.dispose();
+                if (myWidth > mySize || myHeight > mySize)
+                {
+                    while (myWidth >= mySize || myHeight >= mySize)
+                    {
+                        myFontSize--;
+                        font = myIcon.getFont().deriveFont(Font.PLAIN, myFontSize);
+
+                        temp = new BufferedImage(myFontSize, myFontSize, BufferedImage.TYPE_INT_ARGB);
+                        Graphics2D tempGraphics = temp.createGraphics();
+                        tempGraphics.setFont(font);
+                        myWidth = tempGraphics.getFontMetrics().stringWidth(myIcon.getFontCode());
+                        myHeight = tempGraphics.getFontMetrics().getHeight();
+                        tempGraphics.dispose();
+                    }
+                }
             }
             invalidate();
         }

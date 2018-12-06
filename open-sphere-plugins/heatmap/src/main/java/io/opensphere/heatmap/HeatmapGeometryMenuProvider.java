@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JMenuItem;
 
 import io.opensphere.core.Toolbox;
@@ -89,7 +90,8 @@ public class HeatmapGeometryMenuProvider implements ContextMenuProvider<Geometry
         {
             JMenuItem menuItem = SwingUtilities.newMenuItem(HeatmapController.MENU_TEXT,
                 e -> myHeatmapController.create(geometry));
-            menuItem.setIcon( new GenericFontIcon(AwesomeIconSolid.FIRE, Color.WHITE, 12));
+            menuItem.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
+            menuItem.setIcon(new GenericFontIcon(AwesomeIconSolid.FIRE, Color.WHITE));
             menuItems = Collections.singletonList(menuItem);
         }
 

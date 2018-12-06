@@ -17,6 +17,6 @@ public class AddFeaturesCommand extends AbstractSelectionCommand
     public AddFeaturesCommand()
     {
         super("ADD_FEATURES", "Add", "Add features in region for active data types", SelectionCommandGroup.QUERY,
-                new GenericFontIcon(AwesomeIconSolid.PLUS_CIRCLE, Color.WHITE, 12));
+                new GenericFontIcon(AwesomeIconSolid.PLUS_CIRCLE, Color.WHITE));
     }
 }

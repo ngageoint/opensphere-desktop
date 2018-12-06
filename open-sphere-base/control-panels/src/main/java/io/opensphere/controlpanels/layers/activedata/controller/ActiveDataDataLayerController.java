@@ -179,7 +179,7 @@ public class ActiveDataDataLayerController extends AbstractDiscoveryDataLayerCon
             }
             else
             {
-                typesGroup.removeMember(dataTypeToDelete, false, this);
+                typesGroup.removeMember(dataTypeToDelete, true, this);
             }
         }
         else if (typesGroup != null)

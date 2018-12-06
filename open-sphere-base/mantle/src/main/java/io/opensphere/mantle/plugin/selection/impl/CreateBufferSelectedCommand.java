@@ -19,6 +19,6 @@ public class CreateBufferSelectedCommand extends AbstractSelectionCommand
     {
         super("CREATE_BUFFER_REGION_FOR_SELECTED_SEGMENT", "Create Buffer Region For Selected",
                 "Create a polygon that buffers the selected item, which can be used for queries, selections, etc.",
-                SelectionCommandGroup.TOOLS, new GenericFontIcon(AwesomeIconSolid.BULLSEYE, Color.WHITE, 12));
+                SelectionCommandGroup.TOOLS, new GenericFontIcon(AwesomeIconSolid.BULLSEYE, Color.WHITE));
     }
 }

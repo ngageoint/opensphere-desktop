@@ -29,6 +29,7 @@ import io.opensphere.csvcommon.config.v1.CSVColumnInfo;
 import io.opensphere.csvcommon.config.v2.CSVDelimitedColumnFormat;
 import io.opensphere.csvcommon.config.v2.CSVFixedWidthColumnFormat;
 import io.opensphere.csvcommon.config.v2.CSVParseParameters;
+import io.opensphere.csvcommon.detect.util.ColorUtilities;
 import io.opensphere.importer.config.ColumnType;
 import io.opensphere.importer.config.ColumnType.Category;
 import io.opensphere.importer.config.SpecialColumn;
@@ -196,30 +197,35 @@ public abstract class CsvProviderBase implements DataElementProvider
 
     /**
      * Gets the URI of the data, depending on the specific source.
+     *
      * @return the URI
      */
     protected abstract URI getSourceUri();
 
     /**
      * Retrieve parsing parameters for CSV records from the specific source.
+     *
      * @return the CSVParseParameters
      */
     protected abstract CSVParseParameters getParseParams();
 
     /**
      * Get the column filtering info from the specific source.
+     *
      * @return a Set of column names
      */
     protected abstract Set<String> getColumnFilter();
 
     /**
      * Determine the Color to use for visible features.
+     *
      * @return the feature Color
      */
     protected abstract Color getLayerColor();
 
     /**
      * Some applications may choose to suppress warnings selectively.
+     *
      * @param parts the parts
      * @return true if and only if a warning is allowed
      */
@@ -230,8 +236,9 @@ public abstract class CsvProviderBase implements DataElementProvider
     }
 
     /**
-     * Apply labels to the CSV features.  By default, this does nothing;
-     * override to provide this capability in subclasses.
+     * Apply labels to the CSV features. By default, this does nothing; override
+     * to provide this capability in subclasses.
+     *
      * @param dtiKey the type key
      * @param metaDataProvider the feature metadata
      */
@@ -393,8 +400,8 @@ public abstract class CsvProviderBase implements DataElementProvider
         {
             myHadError = true;
             StringBuilder sb = new StringBuilder(64);
-            sb.append("Encountered a problem reading the CSV File ").append(getSourceUri())
-                    .append("\n" + "   MESSAGE: ").append(e.getMessage());
+            sb.append("Encountered a problem reading the CSV File ").append(getSourceUri()).append("\n" + "   MESSAGE: ")
+                    .append(e.getMessage());
             myErrorMessages.add(sb.toString());
 
             myNextElementToReturn = null;
@@ -404,8 +411,8 @@ public abstract class CsvProviderBase implements DataElementProvider
         {
             myHadError = true;
             StringBuilder sb = new StringBuilder(64);
-            sb.append("Encountered a problem loading the CSV File ").append(getSourceUri())
-                    .append("\n" + "   MESSAGE: ").append(e.getMessage());
+            sb.append("Encountered a problem loading the CSV File ").append(getSourceUri()).append("\n" + "   MESSAGE: ")
+                    .append(e.getMessage());
             myErrorMessages.add(sb.toString());
             myNextElementToReturn = null;
             myTaskActivity.setComplete(true);
@@ -654,13 +661,13 @@ public abstract class CsvProviderBase implements DataElementProvider
             final ColumnType columnType = Utilities.getValue(specialColumn.getColumnType(), ColumnType.OTHER);
             if (columnType.getCategory() == Category.TEMPORAL)
             {
-                new CSVTimeExtractor(getParseParams(), myToolbox.getPreferencesRegistry()).extractTime(
-                        specialColumn, cellValue, colName, ptData, metaDataProvider, parts);
+                new CSVTimeExtractor(getParseParams(), myToolbox.getPreferencesRegistry()).extractTime(specialColumn, cellValue,
+                        colName, ptData, metaDataProvider, parts);
             }
             else if (columnType.getCategory() == Category.SPATIAL)
             {
-                new CSVLocationExtractor(getParseParams()).extractLocation(
-                        specialColumn, cellValue, colName, ptData, metaDataProvider);
+                new CSVLocationExtractor(getParseParams()).extractLocation(specialColumn, cellValue, colName, ptData,
+                        metaDataProvider);
             }
             else if (!myFilteredColumns.contains(colName))
             {
@@ -691,7 +698,7 @@ public abstract class CsvProviderBase implements DataElementProvider
                 }
                 else if (columnType == ColumnType.ORIENTATION)
                 {
-                    ptData.setOrnt(Double.valueOf(cellValue));
+                    ptData.setOrientation(Double.valueOf(cellValue));
                     metaDataProvider.setValue(colName, cellValue);
                 }
                 else if (columnType == ColumnType.RADIUS)
@@ -705,6 +712,11 @@ public abstract class CsvProviderBase implements DataElementProvider
                 else if (columnType == ColumnType.LOB || (columnType == ColumnType.HEADING && ptData.getLob() == null))
                 {
                     ptData.setLob(Double.valueOf(cellValue));
+                    metaDataProvider.setValue(colName, cellValue);
+                }
+                else if (columnType == ColumnType.COLOR)
+                {
+                    ptData.setColor(ColorUtilities.toColor(cellValue));
                     metaDataProvider.setValue(colName, cellValue);
                 }
                 else
@@ -846,7 +858,15 @@ public abstract class CsvProviderBase implements DataElementProvider
             {
                 geomSupport.setTimeSpan(ts);
                 de = new DefaultMapDataElement(ourIDCounter.incrementAndGet(), ts, myTypeInfo, metaDataProvider, geomSupport);
-                de.getVisualizationState().setColor(getLayerColor());
+
+                if (ptData.getColor() != null)
+                {
+                    de.getVisualizationState().setColor(ptData.getColor());
+                }
+                else
+                {
+                    de.getVisualizationState().setColor(getLayerColor());
+                }
             }
             else
             {
@@ -855,11 +875,19 @@ public abstract class CsvProviderBase implements DataElementProvider
         }
         else
         {
-            MapLocationGeometrySupport geomSupport = geomFact.createGeometrySupport(
-                    myTypeInfo.getMapVisualizationInfo(), ptData, getLayerColor());
+            MapLocationGeometrySupport geomSupport = geomFact.createGeometrySupport(myTypeInfo.getMapVisualizationInfo(), ptData,
+                    getLayerColor());
             geomSupport.setTimeSpan(ts);
             de = new DefaultMapDataElement(ourIDCounter.incrementAndGet(), ts, myTypeInfo, metaDataProvider, geomSupport);
-            de.getVisualizationState().setColor(getLayerColor());
+
+            if (ptData.getColor() != null)
+            {
+                de.getVisualizationState().setColor(ptData.getColor());
+            }
+            else
+            {
+                de.getVisualizationState().setColor(getLayerColor());
+            }
         }
         return de;
     }

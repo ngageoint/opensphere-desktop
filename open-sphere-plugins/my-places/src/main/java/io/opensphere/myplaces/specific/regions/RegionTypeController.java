@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Function;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -23,12 +24,16 @@ import io.opensphere.core.control.action.ContextActionManager;
 import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.control.action.context.ContextIdentifiers;
 import io.opensphere.core.control.action.context.GeometryContextKey;
+import io.opensphere.core.geometry.Geometry;
+import io.opensphere.core.geometry.GeometryGroupGeometry;
 import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.geometry.PolylineGeometry;
 import io.opensphere.core.model.Altitude;
 import io.opensphere.core.model.LatLonAlt;
-import io.opensphere.core.util.AwesomeIconRegular;
+import io.opensphere.core.model.Position;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.Utilities;
+import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.mantle.data.MapVisualizationType;
@@ -128,6 +133,58 @@ public class RegionTypeController extends PlaceTypeController
     }
 
     /**
+     * Creates the save roi from the geometry.
+     *
+     * @param geometry the geometry
+     */
+    public void createRegion(Geometry geometry)
+    {
+        if (geometry instanceof PolygonGeometry)
+        {
+            createRegionFromGeometry((PolygonGeometry)geometry);
+        }
+        else if (geometry instanceof GeometryGroupGeometry)
+        {
+            createRegionFromMultiGeometry((GeometryGroupGeometry)geometry);
+        }
+        else
+        {
+            throw new UnsupportedOperationException(
+                    "Geometries of type '" + geometry.getClass().getName() + "' are not supported.");
+        }
+    }
+
+    /**
+     * Creates the save roi from multiple geometries.
+     *
+     * @param geometries the group of geometries
+     */
+    protected void createRegionFromMultiGeometry(GeometryGroupGeometry geometries)
+    {
+        assert EventQueue.isDispatchThread();
+        Set<String> names = new TreeSet<>();
+        Function<Placemark, Void> func = input ->
+        {
+            if (input.getGeometry() instanceof Polygon && input.getName().startsWith("Region-"))
+            {
+                names.add(input.getName());
+            }
+            return null;
+        };
+        myPlacesModel.applyToEachPlacemark(func);
+        String roiName = StringUtilities.getUniqueName("Region-", names);
+        MyPlacesDataGroupInfo parentDataGroup = myPlacesModel.getDataGroups();
+        List<Position> vertices = New.list();
+        geometries.getGeometries().stream().filter(g -> g instanceof PolygonGeometry)
+                .forEach(g -> vertices.addAll(((PolygonGeometry)g).getVertices()));
+        Collection<List<? extends Position>> holes = New.collection();
+        geometries.getGeometries().stream().filter(g -> g instanceof PolygonGeometry)
+                .forEach(g -> (((PolygonGeometry)g).getHoles()).forEach(e -> holes.add(e)));
+        Placemark placemark = RegionUtils.createRegionFromPositions(new Folder(), roiName, vertices, holes);
+        launchEditor(placemark, parentDataGroup);
+    }
+
+    /**
      * Creates the save roi from geometry.
      *
      * @param geometry the geometry
@@ -197,11 +254,13 @@ public class RegionTypeController extends PlaceTypeController
         public List<Component> getMenuItems(String contextId, GeometryContextKey key)
         {
             List<Component> options = new LinkedList<>();
-            if (ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT.equals(contextId)
+            if ((ContextIdentifiers.GEOMETRY_COMPLETED_CONTEXT.equals(contextId)
                     || ContextIdentifiers.GEOMETRY_SELECTION_CONTEXT.equals(contextId))
+                    && (key.getGeometry() instanceof PolygonGeometry || key.getGeometry() instanceof PolylineGeometry))
             {
                 JMenuItem saveMI = new JMenuItem("Save as Place");
-                saveMI.setIcon(new GenericFontIcon(AwesomeIconRegular.SAVE, Color.WHITE));
+                saveMI.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
+                saveMI.setIcon(new GenericFontIcon(AwesomeIconSolid.MAP_MARKER_ALT, Color.WHITE));
                 if (key.getGeometry() instanceof PolygonGeometry)
                 {
                     saveMI.addActionListener(e -> createRegionFromGeometry((PolygonGeometry)key.getGeometry()));

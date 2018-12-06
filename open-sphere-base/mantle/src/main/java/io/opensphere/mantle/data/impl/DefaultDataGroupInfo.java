@@ -1047,6 +1047,11 @@ public class DefaultDataGroupInfo implements DataGroupInfo
                     removed = dgi.removeMember(dti, recursive, source);
                     if (removed)
                     {
+                        if (dgi.getMembers(false).isEmpty() && dgi.getChildren().isEmpty())
+                        {
+                            // remove the group too:
+                            removeChild(dgi, source);
+                        }
                         break;
                     }
                 }

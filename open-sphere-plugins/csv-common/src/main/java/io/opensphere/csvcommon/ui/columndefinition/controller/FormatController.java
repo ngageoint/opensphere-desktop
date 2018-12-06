@@ -143,13 +143,14 @@ public class FormatController extends BaseSelectedColumnObserver implements Tabl
         {
             return null;
         }
-        List<String> fmtList = myModel.getSampleData().stream()
-                .map(r -> r.get(getSelectedColumn().getColumnId())).collect(Collectors.toList());
+        List<String> fmtList = myModel.getSampleData().stream().map(r -> r.get(getSelectedColumn().getColumnId()))
+                .collect(Collectors.toList());
         return formatter.getFormat(fmtList);
     }
 
     /**
      * Populates the available formats for the selected data type.
+     *
      * @return the list of format Strings
      */
     private List<String> populateFormats()
@@ -203,8 +204,7 @@ public class FormatController extends BaseSelectedColumnObserver implements Tabl
         {
             return;
         }
-        CellFormatter formatter = new CellFormatterFactory().getFormatter(
-                ColumnType.fromString(type), myPreferencesRegistry);
+        CellFormatter formatter = new CellFormatterFactory().getFormatter(ColumnType.fromString(type), myPreferencesRegistry);
         if (formatter instanceof CellFormatSaver)
         {
             ((CellFormatSaver)formatter).saveNewFormat(fmt);

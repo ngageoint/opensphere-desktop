@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.CoordinateSequence;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -29,6 +31,9 @@ import io.opensphere.core.model.time.TimeSpan;
  */
 public final class PolylineGeometryUtils
 {
+    /** The logger used to capture output from instances of this class. */
+    private static final Logger LOG = Logger.getLogger(PolylineGeometryUtils.class);
+
     /**
      * The JTS factory used to create new geometries.
      */
@@ -100,6 +105,10 @@ public final class PolylineGeometryUtils
         Coordinate[] coordinateArray = new Coordinate[coordinates.size()];
         coordinateArray = coordinates.toArray(coordinateArray);
 
+        if (coordinateArray.length < 2)
+        {
+            return null;
+        }
         return new LineString(new CoordinateArraySequence(coordinateArray), GEOMETRY_FACTORY);
     }
 
@@ -218,7 +227,15 @@ public final class PolylineGeometryUtils
         Set<LineString> lineStrings = new HashSet<>();
         for (PolylineGeometry polylineGeometry : pPolylineGeometries)
         {
-            lineStrings.add(convertToLineString(polylineGeometry));
+            LineString lineString = convertToLineString(polylineGeometry);
+            if (lineString != null)
+            {
+                lineStrings.add(lineString);
+            }
+            else
+            {
+                LOG.info("Omitted polyline with single vertex.");
+            }
         }
 
         LineString[] lineStringArray = new LineString[lineStrings.size()];

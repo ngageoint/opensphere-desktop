@@ -17,6 +17,6 @@ public class RemoveAllFeaturesCommand extends AbstractSelectionCommand
     public RemoveAllFeaturesCommand()
     {
         super("REMOVE_ALL", "Remove Features in Region", "Remove all features in region", SelectionCommandGroup.FEATURES,
-                new GenericFontIcon(AwesomeIconSolid.TIMES, Color.WHITE, 12));
+                new GenericFontIcon(AwesomeIconSolid.TIMES, Color.WHITE));
     }
 }

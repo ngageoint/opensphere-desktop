@@ -4,9 +4,6 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import java.util.Set;
 
-import javafx.collections.ListChangeListener;
-import javafx.scene.control.TitledPane;
-
 import io.opensphere.controlpanels.layers.importdata.ImportDataController;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.importer.ImportType;
@@ -21,6 +18,8 @@ import io.opensphere.featureactions.model.FeatureAction;
 import io.opensphere.featureactions.model.StyleAction;
 import io.opensphere.featureactions.registry.FeatureActionsRegistry;
 import io.opensphere.mantle.data.DataTypeInfo;
+import javafx.collections.ListChangeListener;
+import javafx.scene.control.TitledPane;
 
 /**
  * Keeps the {@link SimpleFeatureActionEditor} synchronized with the
@@ -52,7 +51,7 @@ public class SimpleFeatureActionEditorBinder
     private final Toolbox myToolbox;
 
     /** The parent dialog for the detail editor. */
-    private final Component parentDialog;
+    private final Component myParentDialog;
 
     /**
      * Constructs a new binder.
@@ -69,7 +68,7 @@ public class SimpleFeatureActionEditorBinder
         myToolbox = toolbox;
         myEditor = editor;
         layer = type;
-        parentDialog = dialog;
+        myParentDialog = dialog;
         myController = new FeatureActionEditController(actionRegistry, layer.getTypeKey());
         bindUI();
     }
@@ -89,7 +88,7 @@ public class SimpleFeatureActionEditorBinder
      */
     private TitledPane addGroup(SimpleFeatureActionGroup group)
     {
-        SimpleFeatureActionPane pane = new SimpleFeatureActionPane(myToolbox, myModel, group, layer, parentDialog, myDnDHandler);
+        SimpleFeatureActionPane pane = new SimpleFeatureActionPane(myToolbox, myModel, group, layer, myParentDialog, myDnDHandler);
         FeatureActionTitledPane titled = new FeatureActionTitledPane(myEditor.getAccordion(), myModel, group, pane,
                 myToolbox.getUIRegistry());
         myDnDHandler.handlePane(titled, group);
@@ -207,7 +206,7 @@ public class SimpleFeatureActionEditorBinder
     {
         FeatureActionExporter exporter = new FeatureActionExporter(myToolbox.getPreferencesRegistry(),
                 layer.getDisplayName(), myModel.getFeatureGroups());
-        exporter.launch(parentDialog);
+        exporter.launch(myParentDialog);
     }
 
     /**
@@ -215,7 +214,7 @@ public class SimpleFeatureActionEditorBinder
      */
     private void handleImport()
     {
-        FeatureActionImporter importer = new FeatureActionImporter(myModel, parentDialog);
+        FeatureActionImporter importer = new FeatureActionImporter(myModel);
         EventQueue.invokeLater(() -> ImportDataController.getInstance(myToolbox).importSpecific(importer, ImportType.FILE));
     }
 }

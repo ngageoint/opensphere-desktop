@@ -24,11 +24,13 @@ import io.opensphere.core.event.EventListenerService;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.MultiPolygonGeometry;
 import io.opensphere.core.geometry.PolygonGeometry;
+import io.opensphere.core.geometry.PolylineGeometry;
 import io.opensphere.core.geometry.constraint.Constraints;
 import io.opensphere.core.geometry.renderproperties.DefaultPolygonRenderProperties;
 import io.opensphere.core.geometry.renderproperties.PolygonRenderProperties;
 import io.opensphere.core.geometry.renderproperties.StippleModelConfig;
 import io.opensphere.core.geometry.renderproperties.ZOrderRenderProperties;
+import io.opensphere.core.model.Position;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.modulestate.ModuleStateController;
 import io.opensphere.core.quantify.Quantify;
@@ -38,6 +40,7 @@ import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.NamedThreadFactory;
+import io.opensphere.core.viewer.impl.ViewerAnimator;
 import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.controller.event.DataTypeInfoFocusEvent;
 import io.opensphere.mantle.data.DataTypeInfo;
@@ -306,6 +309,38 @@ public class QueryRegionManagerImpl extends EventListenerService implements Quer
     /**
      * {@inheritDoc}
      *
+     * @see io.opensphere.mantle.plugin.queryregion.QueryRegionManager#centerOnRegion(java.util.Collection)
+     */
+    @Override
+    public void centerOnRegion(Collection<? extends Geometry> geometries)
+    {
+        List<Position> positions = New.list();
+        geometries.stream().filter(g -> g instanceof PolylineGeometry).map(g -> ((PolylineGeometry)g).getVertices())
+                .forEach(positions::addAll);
+
+        ViewerAnimator animator = new ViewerAnimator(myToolbox.getMapManager().getStandardViewer(), positions, false);
+        animator.start();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.plugin.queryregion.QueryRegionManager#zoomToRegion(java.util.Collection)
+     */
+    @Override
+    public void zoomToRegion(Collection<? extends Geometry> geometries)
+    {
+        List<Position> positions = New.list();
+        geometries.stream().filter(g -> g instanceof PolylineGeometry).map(g -> ((PolylineGeometry)g).getVertices())
+                .forEach(positions::addAll);
+
+        ViewerAnimator animator = new ViewerAnimator(myToolbox.getMapManager().getStandardViewer(), positions, true);
+        animator.start();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @see io.opensphere.mantle.plugin.selection.SelectionCommandProcessor#selectionOccurred(java.util.Collection,
      *      io.opensphere.mantle.plugin.selection.SelectionCommand)
      */
@@ -335,6 +370,14 @@ public class QueryRegionManagerImpl extends EventListenerService implements Quer
         else if (cmd.equals(SelectionCommandFactory.CANCEL_QUERY))
         {
             removeQueryRegion(bounds);
+        }
+        else if (cmd.equals(SelectionCommandFactory.CENTER))
+        {
+            centerOnRegion(bounds);
+        }
+        else if (cmd.equals(SelectionCommandFactory.ZOOM))
+        {
+            zoomToRegion(bounds);
         }
     }
 

@@ -18,11 +18,9 @@ import io.opensphere.core.datafilter.DataFilter;
 import io.opensphere.core.datafilter.DataFilterRegistryListener;
 import io.opensphere.core.datafilter.impl.DataFilterRegistryAdapter;
 import io.opensphere.core.event.EventListener;
-import io.opensphere.core.preferences.PreferenceChangeEvent;
 import io.opensphere.core.preferences.PreferenceChangeListener;
 import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.ChangeSupport;
-import io.opensphere.core.util.ChangeSupport.Callback;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.concurrent.ProcrastinatingExecutor;
 import io.opensphere.core.util.lang.StringUtilities;
@@ -296,8 +294,6 @@ public abstract class AbstractDiscoveryDataLayerController implements EventListe
 
             Set<DataGroupInfo> dgiSet = getDataGroupInfoSet();
 
-//            Set<DataGroupInfo> dgiSet = getServerOnlyDataGroupInfoSet();
-
             GroupByTreeBuilder builder = getGroupByTreeBuilder();
             long start = System.nanoTime();
             myUnfilteredTree = DataGroupInfoGroupByUtility.createGroupByTree(builder, getNodeUserObjectGenerator(), dgiSet);
@@ -333,39 +329,6 @@ public abstract class AbstractDiscoveryDataLayerController implements EventListe
      * @return the node user object generator
      */
     public abstract NodeUserObjectGenerator getNodeUserObjectGenerator();
-
-//    /**
-//     * Gets the available data groups.
-//     *
-//     * @return the available data groups
-//     */
-//    public TreeNode getGroupTree()
-//    {
-//        if (myTreeNeedsRebuild)
-//        {
-//            LOGGER.trace("Rebuild Tree");
-//
-//            Set<DataGroupInfo> dgiSet = getDataGroupInfoSet();
-//
-//            GroupByTreeBuilder builder = getGroupByTreeBuilder();
-//            long start = System.nanoTime();
-//            myUnfilteredTree = DataGroupInfoGroupByUtility.createGroupByTree(builder, getNodeUserObjectGenerator(), dgiSet);
-//            LOGGER.trace(StringUtilities.formatTimingMessage("Built Tree In: ", System.nanoTime() - start));
-//            myTreeNeedsRebuild = false;
-//        }
-//        if (StringUtils.isBlank(myViewFilter))
-//        {
-//            myFilteredTree = myUnfilteredTree;
-//        }
-//        else
-//        {
-//            LOGGER.trace("Filter Tree");
-//            long start = System.nanoTime();
-//            myFilteredTree = filterTree(myUnfilteredTree, myViewFilter);
-//            LOGGER.trace(StringUtilities.formatTimingMessage("Filtered Tree In: ", System.nanoTime() - start));
-//        }
-//        return myFilteredTree;
-//    }
 
     /**
      * Get the orderTreeEventController.
@@ -440,7 +403,8 @@ public abstract class AbstractDiscoveryDataLayerController implements EventListe
     }
 
     /**
-     * Gets the value of the treeNeedsRebuild ({@link #myTreeNeedsRebuild}) field.
+     * Gets the value of the treeNeedsRebuild ({@link #myTreeNeedsRebuild})
+     * field.
      *
      * @return the value stored in the {@link #myTreeNeedsRebuild} field.
      */
@@ -480,8 +444,8 @@ public abstract class AbstractDiscoveryDataLayerController implements EventListe
     /**
      * Sets the value of the unfilteredTree ({@link #myUnfilteredTree}) field.
      *
-     * @param unfilteredTree
-     *            the value to store in the {@link #myUnfilteredTree} field.
+     * @param unfilteredTree the value to store in the {@link #myUnfilteredTree}
+     *            field.
      */
     protected void setUnfilteredTree(TreeNode unfilteredTree)
     {
@@ -501,8 +465,8 @@ public abstract class AbstractDiscoveryDataLayerController implements EventListe
     /**
      * Sets the value of the filteredTree ({@link #myFilteredTree}) field.
      *
-     * @param filteredTree
-     *            the value to store in the {@link #myFilteredTree} field.
+     * @param filteredTree the value to store in the {@link #myFilteredTree}
+     *            field.
      */
     protected void setFilteredTree(TreeNode filteredTree)
     {
@@ -536,14 +500,10 @@ public abstract class AbstractDiscoveryDataLayerController implements EventListe
      */
     protected PreferenceChangeListener getShowLayerTypeLabelsPreferencesChangeListener()
     {
-        return new PreferenceChangeListener()
+        return (evt) ->
         {
-            @Override
-            public void preferenceChange(PreferenceChangeEvent evt)
-            {
-                updateGroupNodeUserObjectLabels();
-                notifyUpdateTreeLabelsRequest();
-            }
+            updateGroupNodeUserObjectLabels();
+            notifyUpdateTreeLabelsRequest();
         };
     }
 
@@ -559,14 +519,7 @@ public abstract class AbstractDiscoveryDataLayerController implements EventListe
      */
     protected void notifyDataGroupsChanged()
     {
-        myChangeSupport.notifyListeners(new Callback<DiscoveryDataLayerChangeListener>()
-        {
-            @Override
-            public void notify(DiscoveryDataLayerChangeListener listener)
-            {
-                listener.dataGroupsChanged();
-            }
-        }, myDataGroupsChangedExecutor);
+        myChangeSupport.notifyListeners(listener -> listener.dataGroupsChanged(), myDataGroupsChangedExecutor);
     }
 
     /**
@@ -576,14 +529,7 @@ public abstract class AbstractDiscoveryDataLayerController implements EventListe
      */
     protected void notifyGroupsVisibilityChanged(final DataTypeVisibilityChangeEvent event)
     {
-        myChangeSupport.notifyListeners(new Callback<DiscoveryDataLayerChangeListener>()
-        {
-            @Override
-            public void notify(DiscoveryDataLayerChangeListener listener)
-            {
-                listener.dataGroupVisibilityChanged(event);
-            }
-        }, myGroupVisChangedExecutor);
+        myChangeSupport.notifyListeners(listener -> listener.dataGroupVisibilityChanged(event), myGroupVisChangedExecutor);
     }
 
     /**
@@ -591,14 +537,7 @@ public abstract class AbstractDiscoveryDataLayerController implements EventListe
      */
     protected void notifyRepaintTreeRequest()
     {
-        myChangeSupport.notifyListeners(new Callback<DiscoveryDataLayerChangeListener>()
-        {
-            @Override
-            public void notify(DiscoveryDataLayerChangeListener listener)
-            {
-                listener.treeRepaintRequest();
-            }
-        }, myRepaintTreeExecutor);
+        myChangeSupport.notifyListeners(listener -> listener.treeRepaintRequest(), myRepaintTreeExecutor);
     }
 
     /**
@@ -606,14 +545,7 @@ public abstract class AbstractDiscoveryDataLayerController implements EventListe
      */
     protected void notifyUpdateTreeLabelsRequest()
     {
-        myChangeSupport.notifyListeners(new Callback<DiscoveryDataLayerChangeListener>()
-        {
-            @Override
-            public void notify(DiscoveryDataLayerChangeListener listener)
-            {
-                listener.refreshTreeLabelRequest();
-            }
-        }, myUpdateLabelsExecutor);
+        myChangeSupport.notifyListeners(listener -> listener.refreshTreeLabelRequest(), myUpdateLabelsExecutor);
     }
 
     /**
@@ -682,15 +614,7 @@ public abstract class AbstractDiscoveryDataLayerController implements EventListe
      */
     private EventListener<DataTypeInfoTagsChangeEvent> createDataTypeTagsChangedEventListener()
     {
-        EventListener<DataTypeInfoTagsChangeEvent> listener = new EventListener<DataTypeInfoTagsChangeEvent>()
-        {
-            @Override
-            public void notify(DataTypeInfoTagsChangeEvent event)
-            {
-                handleTagsChanged(event);
-            }
-        };
-        return listener;
+        return event -> handleTagsChanged(event);
     }
 
     /**

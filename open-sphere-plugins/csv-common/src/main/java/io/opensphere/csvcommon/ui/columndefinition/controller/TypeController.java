@@ -89,32 +89,7 @@ public class TypeController implements Observer
      */
     private List<ColumnType> getAllDataTypes()
     {
-        List<ColumnType> allDataTypes = New.list();
-
-        allDataTypes.add(ColumnType.TIMESTAMP);
-        allDataTypes.add(ColumnType.DATE);
-        allDataTypes.add(ColumnType.TIME);
-        allDataTypes.add(ColumnType.DOWN_TIMESTAMP);
-        allDataTypes.add(ColumnType.DOWN_DATE);
-        allDataTypes.add(ColumnType.DOWN_TIME);
-        allDataTypes.add(ColumnType.LAT);
-        allDataTypes.add(ColumnType.LON);
-        allDataTypes.add(ColumnType.MGRS);
-        allDataTypes.add(ColumnType.POSITION);
-        allDataTypes.add(ColumnType.WKT_GEOMETRY);
-        allDataTypes.add(ColumnType.ALT);
-        allDataTypes.add(ColumnType.SEMIMAJOR);
-        allDataTypes.add(ColumnType.SEMIMINOR);
-        allDataTypes.add(ColumnType.ORIENTATION);
-        allDataTypes.add(ColumnType.RADIUS);
-        allDataTypes.add(ColumnType.LOB);
-        allDataTypes.add(ColumnType.ASSOCIATION_ID);
-        allDataTypes.add(ColumnType.HEADING);
-        allDataTypes.add(ColumnType.SPEED);
-        allDataTypes.add(ColumnType.HEADING_ERROR);
-        allDataTypes.add(ColumnType.SPEED_ERROR);
-
-        return allDataTypes;
+        return New.list(ColumnType.values());
     }
 
     /**

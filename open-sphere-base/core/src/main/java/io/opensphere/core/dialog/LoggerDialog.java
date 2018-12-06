@@ -42,6 +42,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 
 import io.opensphere.core.hud.awt.AbstractInternalFrame;
+import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.swing.AbstractHUDPanel;
@@ -63,6 +64,9 @@ public class LoggerDialog extends AbstractInternalFrame
      * Serial version UID.
      */
     private static final long serialVersionUID = 1L;
+
+    /** The Logger preferences. */
+    private final Preferences myPreferences;
 
     /** The node selected by the search. */
     private DefaultMutableTreeNode mySelectedNode;
@@ -92,6 +96,7 @@ public class LoggerDialog extends AbstractInternalFrame
     {
         super(aTitle, true, true, true);
 
+        myPreferences = preferencesRegistry.getPreferences(LogManager.class);
         DefaultMutableTreeNode root = new DefaultMutableTreeNode(new LoggerNode(LogManager.getRootLogger()));
         buildTreeFromRoot(root);
         myTree = new JTree(root);
@@ -229,6 +234,7 @@ public class LoggerDialog extends AbstractInternalFrame
         if (logger != null)
         {
             logger.setLevel(level);
+            myPreferences.putString(logger.getName(), logger.getEffectiveLevel().toString(), this);
             myTree.repaint();
         }
     }
