@@ -28,6 +28,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Region;
 
 /**
  * An alert dialog that renders a JavaFX component and buttons within a Swing
@@ -128,7 +129,12 @@ public class JFXAlert extends JDialog
      */
     public JFXAlert(Window owner, JFXAlertType alertType, String title, String message, ButtonType... buttons)
     {
-        this(owner, alertType, title, () -> new Label(message), buttons);
+        this(owner, alertType, title, () ->
+        {
+            Label label = new Label(message);
+            label.setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+            return label;
+        }, buttons);
     }
 
     /**
