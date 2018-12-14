@@ -40,7 +40,7 @@ public class NetworkManagerFrame extends AbstractInternalFrame
 
         FXUtilities.runOnFXThread(this::createView);
 
-        setSize(300, 450);
+        setSize(1215, 450);
         setPreferredSize(getSize());
         setMinimumSize(getSize());
 

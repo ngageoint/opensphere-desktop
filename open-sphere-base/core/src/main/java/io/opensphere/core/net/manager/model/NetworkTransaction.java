@@ -20,8 +20,10 @@ import com.bitsys.common.http.message.HttpResponse;
 import io.opensphere.core.net.NetworkReceiveEvent;
 import io.opensphere.core.net.NetworkTransmitEvent;
 import io.opensphere.core.util.javafx.ConcurrentObjectProperty;
+import io.opensphere.core.util.javafx.ConcurrentStringProperty;
 import io.opensphere.core.util.lang.StringUtilities;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -52,7 +54,7 @@ public class NetworkTransaction
      */
     private Date myTransactionEnd;
 
-    private String myUrl;
+    private StringProperty myUrl = new ConcurrentStringProperty();
 
     private String myProtocol;
 
@@ -120,13 +122,13 @@ public class NetworkTransaction
             myRequestMethod = request.getMethod();
 
             URI uri = request.getURI();
-            myUrl = uri.toASCIIString();
+            myUrl.set(uri.toASCIIString());
             myDomain = uri.getHost();
             try
             {
                 URL url = uri.toURL();
                 myProtocol = url.getProtocol();
-                myFile = myUrl.replaceAll(myProtocol + "://" + myDomain, "");
+                myFile = myUrl.get().replaceAll(myProtocol + "://" + myDomain, "");
             }
             catch (MalformedURLException e)
             {
@@ -226,6 +228,16 @@ public class NetworkTransaction
      * @return the value of the myUrl field.
      */
     public String getUrl()
+    {
+        return myUrl.get();
+    }
+
+    /**
+     * Gets the value of the {@link #myUrl} field.
+     *
+     * @return the value of the myUrl field.
+     */
+    public StringProperty urlProperty()
     {
         return myUrl;
     }

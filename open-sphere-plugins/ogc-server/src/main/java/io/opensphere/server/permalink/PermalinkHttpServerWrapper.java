@@ -91,6 +91,13 @@ public class PermalinkHttpServerWrapper implements PermalinkHttpServer
     }
 
     @Override
+    public CancellableInputStream sendDelete(URL url, Map<String, String> extraHeaderValues, ResponseValues response)
+        throws IOException, URISyntaxException
+    {
+        return myServer.sendDelete(url, extraHeaderValues, response);
+    }
+
+    @Override
     public CancellableInputStream sendGet(URL url, Map<String, String> extraHeaderValues, ResponseValues response)
         throws IOException, URISyntaxException
     {
