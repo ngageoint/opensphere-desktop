@@ -4,6 +4,7 @@ import java.util.Date;
 
 import io.opensphere.core.event.AbstractEvent;
 
+/** An abstract base class from which all network events descend. */
 public abstract class NetworkEvent extends AbstractEvent
 {
     /** The time at which the event took place. */
@@ -19,18 +20,32 @@ public abstract class NetworkEvent extends AbstractEvent
     /** The state of the event. */
     private State myState;
 
+    /**
+     * Creates a new network event with default values.
+     */
     public NetworkEvent()
     {
         myEventTime = new Date();
         myState = State.COMPLETED;
     }
 
+    /**
+     * Creates a new network event with the supplied transaction ID.
+     *
+     * @param transactionId the unique identifier applied to the transaction.
+     */
     public NetworkEvent(String transactionId)
     {
         this();
         myTransactionId = transactionId;
     }
 
+    /**
+     * Creates a new network event with the supplied parameters.
+     *
+     * @param transactionId the unique identifier applied to the transaction.
+     * @param state The state of the event.
+     */
     public NetworkEvent(String transactionId, State state)
     {
         this(transactionId);

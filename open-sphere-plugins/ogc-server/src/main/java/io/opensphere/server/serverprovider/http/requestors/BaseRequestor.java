@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.UUID;
 import java.util.function.Function;
 import java.util.zip.GZIPInputStream;
 
@@ -16,6 +17,9 @@ import com.bitsys.common.http.message.HttpRequest;
 import com.bitsys.common.http.message.HttpResponse;
 
 import io.opensphere.core.common.connection.HttpHeaders.HttpResponseHeader;
+import io.opensphere.core.event.EventManager;
+import io.opensphere.core.net.NetworkReceiveEvent;
+import io.opensphere.core.net.NetworkTransmitEvent;
 import io.opensphere.core.server.ResponseValues;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.io.CancellableInputStream;
@@ -25,22 +29,20 @@ import io.opensphere.server.serverprovider.http.header.HeaderValues;
 /**
  * A base abstract requestor class containing common functionality used by the
  * requestors.
- *
  */
 public abstract class BaseRequestor
 {
     /** The logger. */
     private static final Logger LOGGER = Logger.getLogger(BaseRequestor.class);
 
-    /**
-     * Used to communicate to the server.
-     */
+    /** Used to communicate to the server. */
     private final HttpClient myClient;
 
-    /**
-     * Contains the header values.
-     */
+    /** Contains the header values. */
     private final HeaderValues myHeaderValues;
+
+    /** The manager through which events are sent. */
+    private EventManager myEventManager;
 
     /**
      * Constructs a base requestor.
@@ -48,11 +50,13 @@ public abstract class BaseRequestor
      * @param client The HttpClient object to use to communicate with the
      *            server.
      * @param headerValues Contains the header values.
+     * @param eventManager The manager through which events are sent.
      */
-    public BaseRequestor(HttpClient client, HeaderValues headerValues)
+    public BaseRequestor(HttpClient client, HeaderValues headerValues, EventManager eventManager)
     {
         myClient = client;
         myHeaderValues = headerValues;
+        myEventManager = eventManager;
     }
 
     /**
@@ -108,7 +112,13 @@ public abstract class BaseRequestor
             LOGGER.debug("Sending request: " + request);
         }
 
+        String transactionId = UUID.randomUUID().toString();
+        NetworkTransmitEvent transmitEvent = new NetworkTransmitEvent(request, transactionId);
+        myEventManager.publishEvent(transmitEvent);
         HttpResponse response = myClient.execute(request);
+
+        NetworkReceiveEvent receiveEvent = new NetworkReceiveEvent(response, transactionId);
+
         try
         {
             if (LOGGER.isDebugEnabled())
@@ -125,6 +135,7 @@ public abstract class BaseRequestor
             if (entity != null)
             {
                 responseValues.setContentLength(entity.getContentLength());
+
                 InputStream returnData = entity.getContent();
 
                 String encoding = responseValues.getHeaderValue("Content-Encoding");
@@ -155,6 +166,7 @@ public abstract class BaseRequestor
         }
         finally
         {
+            myEventManager.publishEvent(receiveEvent);
             if (!success)
             {
                 Utilities.close(response);

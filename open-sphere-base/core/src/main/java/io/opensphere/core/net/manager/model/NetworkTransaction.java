@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package io.opensphere.core.net.manager.model;
 
@@ -9,14 +9,16 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.util.Date;
-import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 
+import com.bitsys.common.http.entity.HttpEntity;
 import com.bitsys.common.http.message.HttpRequest;
 import com.bitsys.common.http.message.HttpResponse;
-import com.google.common.collect.ListMultimap;
 
+import io.opensphere.core.net.NetworkReceiveEvent;
+import io.opensphere.core.net.NetworkTransmitEvent;
 import io.opensphere.core.util.javafx.ConcurrentObjectProperty;
 import io.opensphere.core.util.lang.StringUtilities;
 import javafx.beans.property.ObjectProperty;
@@ -24,17 +26,30 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- * @author Robert
- *
+ * A model of a network transaction, in which all fields describing the
+ * transaction are encapsulated and observable.
  */
 public class NetworkTransaction
 {
-    private final ObjectProperty<HttpRequest> myRequestProperty = new ConcurrentObjectProperty<>();
+    /** The logger used to capture output from instances of this class. */
+    private static final Logger LOG = Logger.getLogger(NetworkTransaction.class);
 
-    private final ObjectProperty<HttpResponse> myResponseProperty = new ConcurrentObjectProperty<>();
+    /** The optional transaction ID used to identify the transaction. */
+    private final String myTransactionId;
 
+    /** The property in which the send event is maintained. */
+    private final ObjectProperty<NetworkTransmitEvent> mySendEventProperty = new ConcurrentObjectProperty<>();
+
+    /** The property in which the receive event is maintained. */
+    private final ObjectProperty<NetworkReceiveEvent> myReceiveEventProperty = new ConcurrentObjectProperty<>();
+
+    /** The date / time at which the send event was initiated. */
     private Date myTransactionStart;
 
+    /**
+     * The date / time at which the send event concluded, or if a response was
+     * received, the last byte of the response was received.
+     */
     private Date myTransactionEnd;
 
     private String myUrl;
@@ -62,6 +77,8 @@ public class NetworkTransaction
 
     private String myRequestBody;
 
+    private InputStream myResponseBody;
+
     private final ObservableList<HttpKeyValuePair> myRequestHeaders = FXCollections.observableArrayList();
 
     private final ObservableList<HttpKeyValuePair> myResponseHeaders = FXCollections.observableArrayList();
@@ -69,20 +86,39 @@ public class NetworkTransaction
     private final ObservableList<HttpKeyValuePair> myRequestParameters = FXCollections.observableArrayList();
 
     /**
-     * 
+     *
      */
-    public NetworkTransaction()
+    public NetworkTransaction(String transactionId)
     {
-        myRequestProperty.addListener((obs, ov, nv) -> updateValues(nv));
-        myResponseProperty.addListener((obs, ov, nv) -> updateValues(nv));
+        myTransactionId = transactionId;
+        mySendEventProperty.addListener((obs, ov, nv) -> updateValues(nv));
+        myReceiveEventProperty.addListener((obs, ov, nv) -> updateValues(nv));
     }
 
-    protected void updateValues(HttpRequest request)
+    /**
+     * Gets the value of the {@link #myTransactionId} field.
+     *
+     * @return the value stored in the {@link #myTransactionId} field.
+     */
+    public String getTransactionId()
     {
+        return myTransactionId;
+    }
+
+    /**
+     * Updates the transaction with the send event's information.
+     *
+     * @param event the event to process.
+     */
+    private void updateValues(NetworkTransmitEvent event)
+    {
+        HttpRequest request = event.getRequest();
+        myTransactionStart = event.getEventTime();
+
         if (request != null)
         {
             myRequestMethod = request.getMethod();
-            myBytesSent = request.getEntity().getContentLength();
+
             URI uri = request.getURI();
             myUrl = uri.toASCIIString();
             myDomain = uri.getHost();
@@ -94,67 +130,74 @@ public class NetworkTransaction
             }
             catch (MalformedURLException e)
             {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                LOG.debug("Malformed URL.", e);
             }
 
-            ListMultimap<String, String> headers = request.getHeaders();
-            Set<String> keys = headers.keySet();
-            for (String key : keys)
-            {
-                headers.get(key).stream().forEach(v -> myRequestHeaders.add(new HttpKeyValuePair(key, v)));
-            }
+            request.getHeaders().forEach((k, v) -> myRequestHeaders.add(new HttpKeyValuePair(k, v)));
 
-            // we can only read the body if the entity is marked as repeatable.
-            if (request.getEntity().getContentLength() > 0 && request.getEntity().isRepeatable())
+            if (request.getEntity() != null)
             {
-                try (InputStream bodyStream = request.getEntity().getContent())
+                myBytesSent = request.getEntity().getContentLength();
+                // we can only read the body if the entity is marked as
+                // repeatable.
+                if (request.getEntity().getContentLength() > 0 && request.getEntity().isRepeatable())
                 {
-                    myRequestBody = IOUtils.toString(bodyStream, StringUtilities.DEFAULT_CHARSET);
-                }
-                catch (IOException e)
-                {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    try (InputStream bodyStream = request.getEntity().getContent())
+                    {
+                        myRequestBody = IOUtils.toString(bodyStream, StringUtilities.DEFAULT_CHARSET);
+                    }
+                    catch (IOException e)
+                    {
+                        LOG.debug("Malformed URL.", e);
+                    }
                 }
             }
-        }
-        else
-        {
-
         }
     }
 
-    protected void updateValues(HttpResponse response)
+    /**
+     * Updates the transaction with the receive event's information.
+     *
+     * @param event the event to process.
+     */
+    private void updateValues(NetworkReceiveEvent event)
     {
+        HttpResponse response = event.getResponse();
+        myTransactionEnd = event.getEventTime();
         if (response != null)
         {
+            myStatus = response.getStatusCode();
+            myResponseBody = event.getContent();
 
-        }
-        else
-        {
+            response.getHeaders().forEach((k, v) -> myResponseHeaders.add(new HttpKeyValuePair(k, v)));
 
+            if (response.getEntity() != null)
+            {
+                HttpEntity entity = response.getEntity();
+                myBytesReceived = entity.getContentLength();
+                myContentType = entity.getContentType().getMimeType();
+            }
         }
     }
 
     /**
-     * Gets the value of the {@link #myRequestProperty} field.
+     * Gets the value of the {@link #mySendEventProperty} field.
      *
-     * @return the value of the myRequestProperty field.
+     * @return the value of the mySendEventProperty field.
      */
-    public ObjectProperty<HttpRequest> getRequestProperty()
+    public ObjectProperty<NetworkTransmitEvent> sendEventProperty()
     {
-        return myRequestProperty;
+        return mySendEventProperty;
     }
 
     /**
-     * Gets the value of the {@link #myResponseProperty} field.
+     * Gets the value of the {@link #myReceiveEventProperty} field.
      *
-     * @return the value of the myResponseProperty field.
+     * @return the value of the myReceiveEventProperty field.
      */
-    public ObjectProperty<HttpResponse> getResponseProperty()
+    public ObjectProperty<NetworkReceiveEvent> receiveEventProperty()
     {
-        return myResponseProperty;
+        return myReceiveEventProperty;
     }
 
     /**
@@ -260,9 +303,9 @@ public class NetworkTransaction
     /**
      * Gets the value of the {@link #myContentType} field.
      *
-     * @return the value of the myRequestType field.
+     * @return the value stored in the {@link #myContentType} field.
      */
-    public String getRequestType()
+    public String getContentType()
     {
         return myContentType;
     }
@@ -305,5 +348,15 @@ public class NetworkTransaction
     public ObservableList<HttpKeyValuePair> getRequestParameters()
     {
         return myRequestParameters;
+    }
+
+    /**
+     * Gets the value of the {@link #myResponseBody} field.
+     *
+     * @return the value stored in the {@link #myResponseBody} field.
+     */
+    public InputStream getResponseBody()
+    {
+        return myResponseBody;
     }
 }
