@@ -8,6 +8,7 @@ import io.opensphere.core.net.NetworkReceiveEvent;
 import io.opensphere.core.net.NetworkTransmitEvent;
 import io.opensphere.core.net.manager.model.NetworkTransaction;
 import io.opensphere.core.net.manager.model.NetworkTransactionModel;
+import io.opensphere.core.util.fx.FXUtilities;
 
 /** A controller used to orchestrate the network manager. */
 public class NetworkManagerController
@@ -80,8 +81,7 @@ public class NetworkManagerController
     {
         NetworkTransaction transaction = new NetworkTransaction(event.getTransactionId());
         transaction.sendEventProperty().set(event);
-        // transaction.updateValues(event);
-        myModel.getTransactions().add(transaction);
+        FXUtilities.runOnFXThread(() -> myModel.getTransactions().offer(transaction));
     }
 
     /**
@@ -95,10 +95,11 @@ public class NetworkManagerController
         NetworkTransaction transaction = myModel.getTransaction(event.getTransactionId());
         if (transaction == null)
         {
-            LOG.warn("Attempted to process a network received event with no submit event.");
+            // this happens when the buffer has already aged off the send event
+            // when the receive event happens. Generally safe to ignore.
+            LOG.trace("Attempted to process a network received event with no submit event.");
             return;
         }
         transaction.receiveEventProperty().set(event);
-        // transaction.updateValues(event);
     }
 }

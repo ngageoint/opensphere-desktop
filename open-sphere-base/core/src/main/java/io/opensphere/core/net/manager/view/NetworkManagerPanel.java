@@ -44,7 +44,7 @@ public class NetworkManagerPanel extends SplitPane
     public NetworkManagerPanel(Toolbox toolbox, NetworkManagerController controller)
     {
         orientationProperty().set(Orientation.VERTICAL);
-        setDividerPositions(.3);
+        setDividerPositions(.1);
         myController = controller;
         myModel = myController.getModel();
         myEvents = myModel.getTransactions();

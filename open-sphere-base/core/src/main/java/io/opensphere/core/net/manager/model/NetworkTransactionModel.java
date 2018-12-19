@@ -6,13 +6,11 @@ import java.util.stream.Collectors;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.collections.ObservableBuffer;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 
 /** The model in which network transactions are stored. */
 public class NetworkTransactionModel
 {
     /** The transactions stored by the model. */
-    // private final ObservableList<NetworkTransaction> myTransactions;
     private final ObservableBuffer<NetworkTransaction> myTransactions;
 
     /** A lookup table mapping the transaction ID to the transaction. */
@@ -23,8 +21,8 @@ public class NetworkTransactionModel
      */
     public NetworkTransactionModel()
     {
-        // myTransactions = FXCollections.observableArrayList();
-        myTransactions = new ObservableBuffer<>(100);
+        // for now, limit storage to only the most recent 1000 transactions:
+        myTransactions = new ObservableBuffer<>(1000);
         myTransactionDictionary = New.map();
 
         myTransactions.addListener((ListChangeListener.Change<? extends NetworkTransaction> e) ->
@@ -52,7 +50,7 @@ public class NetworkTransactionModel
      *
      * @return the value stored in the {@link #myTransactions} field.
      */
-    public ObservableList<NetworkTransaction> getTransactions()
+    public ObservableBuffer<NetworkTransaction> getTransactions()
     {
         return myTransactions;
     }
