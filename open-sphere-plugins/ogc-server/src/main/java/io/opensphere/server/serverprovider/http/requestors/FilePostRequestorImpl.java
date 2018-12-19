@@ -16,6 +16,7 @@ import com.bitsys.common.http.header.ContentType;
 import com.bitsys.common.http.message.HttpRequest;
 import com.bitsys.common.http.message.HttpRequestFactory;
 
+import io.opensphere.core.event.EventManager;
 import io.opensphere.core.server.ResponseValues;
 import io.opensphere.core.util.io.CancellableInputStream;
 import io.opensphere.server.serverprovider.http.header.HeaderValues;
@@ -32,10 +33,11 @@ public class FilePostRequestorImpl extends BaseRequestor implements FilePostRequ
      * @param client The HttpClient object to use to communicate with the
      *            server.
      * @param headerValues Contains the header values.
+     * @param eventManager The manager through which events are sent.
      */
-    public FilePostRequestorImpl(HttpClient client, HeaderValues headerValues)
+    public FilePostRequestorImpl(HttpClient client, HeaderValues headerValues, EventManager eventManager)
     {
-        super(client, headerValues);
+        super(client, headerValues, eventManager);
     }
 
     @Override

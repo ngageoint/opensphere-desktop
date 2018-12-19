@@ -10,6 +10,7 @@ import com.bitsys.common.http.client.HttpClient;
 import com.bitsys.common.http.message.HttpRequest;
 import com.bitsys.common.http.message.HttpRequestFactory;
 
+import io.opensphere.core.event.EventManager;
 import io.opensphere.core.server.ResponseValues;
 import io.opensphere.server.serverprovider.http.header.HeaderValues;
 
@@ -24,10 +25,11 @@ public class HeadRequestorImpl extends BaseRequestor implements HeadRequestor
      * @param client The HttpClient object to use to communicate with the
      *            server.
      * @param headerValues Contains the header values.
+     * @param eventManager The manager through which events are sent.
      */
-    public HeadRequestorImpl(HttpClient client, HeaderValues headerValues)
+    public HeadRequestorImpl(HttpClient client, HeaderValues headerValues, EventManager eventManager)
     {
-        super(client, headerValues);
+        super(client, headerValues, eventManager);
     }
 
     /**

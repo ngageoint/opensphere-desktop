@@ -37,6 +37,7 @@ import io.opensphere.core.metrics.MetricsRegistry;
 import io.opensphere.core.modulestate.ModuleStateManager;
 import io.opensphere.core.modulestate.ModuleStateManagerImpl;
 import io.opensphere.core.net.NetworkConfigurationOptionsProvider;
+import io.opensphere.core.net.manager.controller.NetworkManagerController;
 import io.opensphere.core.order.OrderManagerRegistry;
 import io.opensphere.core.order.impl.DefaultOrderCategory;
 import io.opensphere.core.preferences.PreferencesRegistry;
@@ -94,6 +95,9 @@ abstract class ToolboxImpl implements Toolbox
 
     /** The state controller for the time manager. */
     private final TimeManagerStateController myTimeManagerStateController;
+
+    /** The controller for the network manager. */
+    private final NetworkManagerController myNetworkManagerController;
 
     /**
      * Construct the toolbox.
@@ -183,6 +187,9 @@ abstract class ToolboxImpl implements Toolbox
         myModuleStateManager.registerModuleStateController("Animation", myAnimationManagerStateController);
         myModuleStateManager.registerModuleStateController("Time", myTimeManagerStateController);
 
+        myNetworkManagerController = new NetworkManagerController(this);
+        myNetworkManagerController.open();
+
         LOGGER.info(StringUtilities.formatTimingMessage("Initialized toolbox in ", System.nanoTime() - start));
     }
 
@@ -191,6 +198,7 @@ abstract class ToolboxImpl implements Toolbox
     {
         myRegistryManager.close();
         myMapManager.removeControlListeners();
+        myNetworkManagerController.close();
     }
 
     /**
@@ -349,6 +357,17 @@ abstract class ToolboxImpl implements Toolbox
     public StatisticsManager getStatisticsManager()
     {
         return myStatisticsManager;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.Toolbox#getNetworkManagerController()
+     */
+    @Override
+    public NetworkManagerController getNetworkManagerController()
+    {
+        return myNetworkManagerController;
     }
 
     /**

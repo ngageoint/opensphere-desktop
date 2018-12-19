@@ -28,6 +28,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpHeaders;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.RedirectStrategy;
 import org.apache.http.client.methods.HttpDelete;
@@ -85,10 +86,10 @@ public class DefaultHttpClient implements CloseableHttpClient
     protected final class ApacheAbortableProxy implements Abortable
     {
         /** The abortable Apache request. */
-        private final HttpUriRequest apacheRequest;
+        private final HttpUriRequest myApacheRequest;
 
         /** Indicates if abort has been called. */
-        private final AtomicBoolean aborted = new AtomicBoolean();
+        private final AtomicBoolean myAborted = new AtomicBoolean();
 
         /**
          * Constructs a new instance from the given abortable Apache request.
@@ -101,42 +102,45 @@ public class DefaultHttpClient implements CloseableHttpClient
             {
                 throw new IllegalArgumentException("The HTTP URI request is null");
             }
-            this.apacheRequest = apacheRequest;
+            this.myApacheRequest = apacheRequest;
         }
 
         @Override
         public boolean isAborted()
         {
-            return aborted.get();
+            return myAborted.get();
         }
 
         @Override
         public void abort()
         {
-            apacheRequest.abort();
-            aborted.set(true);
+            myApacheRequest.abort();
+            myAborted.set(true);
         }
     }
 
     /** The options for this HTTP client. */
-    private final HttpClientOptions options = new HttpClientOptions();
+    private final HttpClientOptions myOptions = new HttpClientOptions();
 
     /** The Apache HTTP client instance. */
-    private org.apache.http.client.HttpClient httpClient;
+    private org.apache.http.client.HttpClient myApacheHttpClient;
 
     /** The caching credentials provider. */
-    private CachingCredentialsProvider cachingCredentialsProvider;
+    private CachingCredentialsProvider myCachingCredentialsProvider;
 
     /** The caching host name verifier. */
-    private CachingHostNameVerifier cachingHostNameVerifier;
+    private CachingHostNameVerifier myCachingHostNameVerifier;
 
     /** The caching certificate verifier. */
-    private CachingCertificateVerifier cachingCertificateVerifier;
+    private CachingCertificateVerifier myCachingCertificateVerifier;
+
+    /** The store in which cookies are exposed. */
+    private CookieStore myCookieStore;
 
     @Override
     public HttpClientOptions getOptions()
     {
-        return options;
+        return myOptions;
     }
 
     @Override
@@ -302,7 +306,8 @@ public class DefaultHttpClient implements CloseableHttpClient
      *
      * @param apacheResponse the response to convert.
      * @return the converted response.
-     * @throws IOException
+     * @throws IOException if the response cannot be generated from the supplied
+     *             parameter.
      */
     protected HttpResponse fromApacheResponse(final org.apache.http.HttpResponse apacheResponse) throws IOException
     {
@@ -327,11 +332,11 @@ public class DefaultHttpClient implements CloseableHttpClient
      */
     protected org.apache.http.client.HttpClient getHttpClient()
     {
-        if (httpClient == null)
+        if (myApacheHttpClient == null)
         {
             createHttpClient();
         }
-        return httpClient;
+        return myApacheHttpClient;
     }
 
     /**
@@ -340,7 +345,7 @@ public class DefaultHttpClient implements CloseableHttpClient
      */
     protected synchronized void createHttpClient()
     {
-        if (httpClient == null)
+        if (myApacheHttpClient == null)
         {
             final HttpParams params = new SyncBasicHttpParams();
             configureParameters(params);
@@ -356,43 +361,51 @@ public class DefaultHttpClient implements CloseableHttpClient
             final org.apache.http.impl.client.DefaultHttpClient defaultHttpClient = new org.apache.http.impl.client.DefaultHttpClient(
                     conman, params);
 
+            myCookieStore = defaultHttpClient.getCookieStore();
+
             configureCredentialsProvider(defaultHttpClient);
             configureRedirectStrategy(defaultHttpClient);
 
             // Add dynamic proxying support.
-            httpClient = new ProxyingHttpClient(defaultHttpClient, getOptions());
+            myApacheHttpClient = new ProxyingHttpClient(defaultHttpClient, getOptions());
 
             // Add decompression support.
             if (getOptions().isContentDecompressed())
             {
-                httpClient = new DecompressingHttpClient(httpClient);
+                myApacheHttpClient = new DecompressingHttpClient(myApacheHttpClient);
             }
         }
     }
 
-//    private void newCreateHttpClient()
-//    {
-//        // Configure the timeouts.
-//        final RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(options.getConnectTimeout() * 1000)
-//                .setSocketTimeout(options.getReadTimeout() * 1000).build();
-//
-//        // Configure the connection manager.
-//        // TODO: The schemeRegistry needs to be reproduced.
-//        final PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
-//        connManager.setDefaultMaxPerRoute(getOptions().getMaxConnectionsPerRoute());
-//        connManager.setMaxTotal(getOptions().getMaxConnections());
-//
-//        // Configure the proxying route planner.
-//        final HttpRoutePlanner routePlanner = new DynamicProxyRoutePlanner(getOptions().getProxyConfig().getProxyResolver());
-//        // TODO: The proxy credentials need to be provided.
-//
-//        final HttpClientBuilder builder = HttpClientBuilder.create();
-//        builder.setConnectionManager(connManager);
-//        builder.setDefaultRequestConfig(requestConfig);
-//        builder.setRoutePlanner(routePlanner);
-//        final org.apache.http.impl.client.CloseableHttpClient closeableHttpClient = builder.build();
-//        throw new UnsupportedOperationException("Using the new HTTP Client API is not yet supported");
-//    }
+    // private void newCreateHttpClient()
+    // {
+    // // Configure the timeouts.
+    // final RequestConfig requestConfig =
+    // RequestConfig.custom().setConnectTimeout(options.getConnectTimeout() *
+    // 1000)
+    // .setSocketTimeout(options.getReadTimeout() * 1000).build();
+    //
+    // // Configure the connection manager.
+    // // TODO: The schemeRegistry needs to be reproduced.
+    // final PoolingHttpClientConnectionManager connManager = new
+    // PoolingHttpClientConnectionManager();
+    // connManager.setDefaultMaxPerRoute(getOptions().getMaxConnectionsPerRoute());
+    // connManager.setMaxTotal(getOptions().getMaxConnections());
+    //
+    // // Configure the proxying route planner.
+    // final HttpRoutePlanner routePlanner = new
+    // DynamicProxyRoutePlanner(getOptions().getProxyConfig().getProxyResolver());
+    // // TODO: The proxy credentials need to be provided.
+    //
+    // final HttpClientBuilder builder = HttpClientBuilder.create();
+    // builder.setConnectionManager(connManager);
+    // builder.setDefaultRequestConfig(requestConfig);
+    // builder.setRoutePlanner(routePlanner);
+    // final org.apache.http.impl.client.CloseableHttpClient closeableHttpClient
+    // = builder.build();
+    // throw new UnsupportedOperationException("Using the new HTTP Client API is
+    // not yet supported");
+    // }
 
     /**
      * Configures the credentials provider.
@@ -406,9 +419,9 @@ public class DefaultHttpClient implements CloseableHttpClient
         // credentials cache that can be cleared. The second one is the
         // client-facing provider.
         final ApacheCredentialsProviderProxy secondProvider = new ApacheCredentialsProviderProxy(
-                options.getCredentialsProvider());
-        cachingCredentialsProvider = new CachingCredentialsProvider(secondProvider);
-        defaultHttpClient.setCredentialsProvider(cachingCredentialsProvider);
+                myOptions.getCredentialsProvider());
+        myCachingCredentialsProvider = new CachingCredentialsProvider(secondProvider);
+        defaultHttpClient.setCredentialsProvider(myCachingCredentialsProvider);
     }
 
     /**
@@ -419,7 +432,7 @@ public class DefaultHttpClient implements CloseableHttpClient
     private void configureRedirectStrategy(final org.apache.http.impl.client.DefaultHttpClient defaultHttpClient)
     {
         RedirectStrategy strategy;
-        switch (options.getRedirectMode())
+        switch (myOptions.getRedirectMode())
         {
             case LAX:
                 strategy = new LaxRedirectStrategy();
@@ -440,10 +453,10 @@ public class DefaultHttpClient implements CloseableHttpClient
      */
     private void configureParameters(final HttpParams params)
     {
-        params.setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, options.getConnectTimeout() * 1000);
-        params.setIntParameter(CoreConnectionPNames.SO_TIMEOUT, options.getReadTimeout() * 1000);
-        params.setBooleanParameter(CoreConnectionPNames.TCP_NODELAY, options.isTcpNoDelay());
-        params.setIntParameter(CoreConnectionPNames.SOCKET_BUFFER_SIZE, options.getSocketBufferSize());
+        params.setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, myOptions.getConnectTimeout() * 1000);
+        params.setIntParameter(CoreConnectionPNames.SO_TIMEOUT, myOptions.getReadTimeout() * 1000);
+        params.setBooleanParameter(CoreConnectionPNames.TCP_NODELAY, myOptions.isTcpNoDelay());
+        params.setIntParameter(CoreConnectionPNames.SOCKET_BUFFER_SIZE, myOptions.getSocketBufferSize());
     }
 
     /**
@@ -455,7 +468,7 @@ public class DefaultHttpClient implements CloseableHttpClient
     private void configureHttps(final SchemeRegistry schemeRegistry)
     {
         // Configure SSL.
-        final SslConfig sslConfig = options.getSslConfig();
+        final SslConfig sslConfig = myOptions.getSslConfig();
         final String protocol = "TLS";
         try
         {
@@ -465,9 +478,9 @@ public class DefaultHttpClient implements CloseableHttpClient
             sslContext.init(km, tm, null);
             // TODO: Handle the host name verification better: ALL vs.
             // Browser vs. Strict. Rename the internal verifier to callback?
-            cachingHostNameVerifier = new CachingHostNameVerifier(sslConfig.getHostNameVerifier());
+            myCachingHostNameVerifier = new CachingHostNameVerifier(sslConfig.getHostNameVerifier());
             final X509HostnameVerifier hostNameVerifier = new X509HostNameVerifierCourtRoom(
-                    SSLSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER, cachingHostNameVerifier);
+                    SSLSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER, myCachingHostNameVerifier);
             final SSLSocketCustomizer customizer = socket ->
             {
                 socket.setEnabledProtocols(sslConfig.getEnabledProtocols());
@@ -573,11 +586,11 @@ public class DefaultHttpClient implements CloseableHttpClient
             }
             final TrustManager[] defaultTrustManagers = factory.getTrustManagers();
             trustManagers = new TrustManager[defaultTrustManagers.length];
-            cachingCertificateVerifier = new CachingCertificateVerifier(sslConfig.getCertificateVerifier());
+            myCachingCertificateVerifier = new CachingCertificateVerifier(sslConfig.getCertificateVerifier());
             for (int ii = 0; ii < defaultTrustManagers.length; ii++)
             {
                 trustManagers[ii] = new InteractiveX509TrustManager((X509TrustManager)defaultTrustManagers[ii],
-                        cachingCertificateVerifier);
+                        myCachingCertificateVerifier);
             }
         }
 
@@ -588,20 +601,31 @@ public class DefaultHttpClient implements CloseableHttpClient
     public void clearCache(final ClearDataOptions options)
     {
         // TODO: Use more specific clearing options.
-        cachingCredentialsProvider.clear();
+        myCachingCredentialsProvider.clear();
 
-        if (cachingHostNameVerifier != null)
+        if (myCachingHostNameVerifier != null)
         {
-            cachingHostNameVerifier.clearCache(options.getClearSince());
+            myCachingHostNameVerifier.clearCache(options.getClearSince());
         }
 
-        if (cachingCertificateVerifier != null)
+        if (myCachingCertificateVerifier != null)
         {
-            cachingCertificateVerifier.clearCache(options.getClearSince());
+            myCachingCertificateVerifier.clearCache(options.getClearSince());
         }
 
         // TODO: Implement cache clearing.
         throw new UnsupportedOperationException("The clearCache method has not yet been implemented");
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.bitsys.common.http.client.HttpClient#getCookieStore()
+     */
+    @Override
+    public CookieStore getCookieStore()
+    {
+        return myCookieStore;
     }
 
     /**
@@ -613,9 +637,9 @@ public class DefaultHttpClient implements CloseableHttpClient
     @Override
     public void close() throws IOException
     {
-        if (httpClient instanceof DecompressingHttpClient)
+        if (myApacheHttpClient instanceof DecompressingHttpClient)
         {
-            final DecompressingHttpClient decompressingHttpClient = (DecompressingHttpClient)httpClient;
+            final DecompressingHttpClient decompressingHttpClient = (DecompressingHttpClient)myApacheHttpClient;
             ((Closeable)decompressingHttpClient.getHttpClient()).close();
         }
     }
