@@ -1,4 +1,4 @@
-package io.opensphere.mantle.iconproject.panels.transform;
+package io.opensphere.mantle.icon.chooser.view.transform;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.control.Slider;

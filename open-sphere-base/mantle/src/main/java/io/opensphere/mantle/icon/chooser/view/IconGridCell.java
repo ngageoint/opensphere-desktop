@@ -1,9 +1,9 @@
-package io.opensphere.mantle.iconproject.panels;
+package io.opensphere.mantle.icon.chooser.view;
 
 import org.controlsfx.control.GridCell;
 
 import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.iconproject.model.PanelModel;
+import io.opensphere.mantle.icon.chooser.model.IconModel;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -20,7 +20,7 @@ public class IconGridCell extends GridCell<IconRecord>
     private final ImageView imageView;
 
     /** The model in which state is maintained. */
-    private final PanelModel myModel;
+    private final IconModel myModel;
 
     /**
      * Creates a default ImageGridCell instance, which will preserve image
@@ -28,7 +28,7 @@ public class IconGridCell extends GridCell<IconRecord>
      *
      * @param model The model in which state is maintained.
      */
-    public IconGridCell(PanelModel model)
+    public IconGridCell(IconModel model)
     {
         myModel = model;
         getStyleClass().add("image-grid-cell");
@@ -105,7 +105,5 @@ public class IconGridCell extends GridCell<IconRecord>
     private void handleMouseClick(IconRecord record, Node source)
     {
         myModel.selectedRecordProperty().set(record);
-        myModel.getSingleSelectedIcon().clear();
-        myModel.getSingleSelectedIcon().put(record, source);
     }
 }

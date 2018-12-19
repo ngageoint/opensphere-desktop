@@ -8,7 +8,7 @@ import io.opensphere.controlpanels.iconpicker.controller.IconChooserDisplayer;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.iconproject.view.IconDialog;
+import io.opensphere.mantle.icon.chooser.view.IconDialog;
 import javafx.beans.property.ObjectProperty;
 
 /**

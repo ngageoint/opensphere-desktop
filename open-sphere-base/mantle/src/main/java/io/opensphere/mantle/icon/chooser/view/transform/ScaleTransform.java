@@ -1,8 +1,9 @@
-package io.opensphere.mantle.iconproject.panels.transform;
+package io.opensphere.mantle.icon.chooser.view.transform;
 
 import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.WebHostingHubGlyphs;
 import io.opensphere.core.util.fx.FxIcons;
+import io.opensphere.mantle.icon.chooser.model.TransformModel;
 import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -35,21 +36,23 @@ public class ScaleTransform extends AbstractTransform
         horizontalIcon.setMinWidth(25);
         horizontalIcon.setAlignment(Pos.CENTER);
 
-        Slider verticalScale = createSlider(model.verticalScaleProperty(), .1, 5, 1.0);
+        Slider verticalScale = createSlider(model.verticalScaleProperty(), .1, 5, TransformModel.DEFAULT_VERTICAL_SCALE);
         verticalScale.blockIncrementProperty().set(.1);
 
-        Spinner<Double> verticalScaleSpinner = createSpinner(model.verticalScaleProperty(), .1, 5, 1);
+        Spinner<Double> verticalScaleSpinner = createSpinner(model.verticalScaleProperty(), .1, 5,
+                TransformModel.DEFAULT_VERTICAL_SCALE);
         ((DoubleSpinnerValueFactory)verticalScaleSpinner.getValueFactory()).setAmountToStepBy(.05);
-        Label verticalReset = FxIcons.createClearIcon(AwesomeIconSolid.TIMES_CIRCLE, Color.WHITE, 10);
-        verticalReset.setOnMouseClicked(e -> model.verticalScaleProperty().set(1.0));
+        Label verticalReset = FxIcons.createClearIcon(AwesomeIconSolid.TIMES, Color.ORANGERED, 14);
+        verticalReset.setOnMouseClicked(e -> model.verticalScaleProperty().set(TransformModel.DEFAULT_VERTICAL_SCALE));
         verticalReset.setAlignment(Pos.CENTER);
 
-        Slider horizontalScale = createSlider(model.horizontalScaleProperty(), .1, 5, 1.0);
+        Slider horizontalScale = createSlider(model.horizontalScaleProperty(), .1, 5, TransformModel.DEFAULT_HORIZONTAL_SCALE);
         horizontalScale.blockIncrementProperty().set(.1);
-        Spinner<Double> horizontalScaleSpinner = createSpinner(model.horizontalScaleProperty(), .1, 5, 1);
+        Spinner<Double> horizontalScaleSpinner = createSpinner(model.horizontalScaleProperty(), .1, 5,
+                TransformModel.DEFAULT_HORIZONTAL_SCALE);
         ((DoubleSpinnerValueFactory)horizontalScaleSpinner.getValueFactory()).setAmountToStepBy(.05);
-        Label horizontalReset = FxIcons.createClearIcon(AwesomeIconSolid.TIMES_CIRCLE, Color.WHITE, 10);
-        horizontalReset.setOnMouseClicked(e -> model.horizontalScaleProperty().set(1.0));
+        Label horizontalReset = FxIcons.createClearIcon(AwesomeIconSolid.TIMES, Color.ORANGERED, 14);
+        horizontalReset.setOnMouseClicked(e -> model.horizontalScaleProperty().set(TransformModel.DEFAULT_HORIZONTAL_SCALE));
         horizontalReset.setAlignment(Pos.CENTER);
 
         HBox.setHgrow(verticalIcon, Priority.NEVER);
@@ -76,8 +79,12 @@ public class ScaleTransform extends AbstractTransform
             }
         });
 
-        getChildren().add(new HBox(verticalIcon, verticalScale, verticalScaleSpinner, verticalReset));
-        getChildren().add(new HBox(horizontalIcon, horizontalScale, horizontalScaleSpinner, horizontalReset));
+        HBox verticalBox = new HBox(5, verticalIcon, verticalScale, verticalScaleSpinner, verticalReset);
+        verticalBox.setAlignment(Pos.CENTER);
+        getChildren().add(verticalBox);
+        HBox horizontalBox = new HBox(5, horizontalIcon, horizontalScale, horizontalScaleSpinner, horizontalReset);
+        horizontalBox.setAlignment(Pos.CENTER);
+        getChildren().add(horizontalBox);
         getChildren().add(lockPerspective);
 
         verticalScale.valueProperty().set(1.0);

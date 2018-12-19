@@ -40,10 +40,10 @@ import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.IconRegistryListener;
 import io.opensphere.mantle.icon.LoadedIconPool;
+import io.opensphere.mantle.icon.chooser.model.IconManagerPrefs;
+import io.opensphere.mantle.icon.chooser.model.IconModel;
 import io.opensphere.mantle.icon.config.v1.IconRecordConfig;
 import io.opensphere.mantle.icon.config.v1.IconRegistryConfig;
-import io.opensphere.mantle.iconproject.model.IconManagerPrefs;
-import io.opensphere.mantle.iconproject.model.PanelModel;
 
 /**
  * The Class IconRegistryImpl.
@@ -854,7 +854,7 @@ public class IconRegistryImpl implements IconRegistry
      * @param thePanelModel the model to use for registry.
      */
     @Override
-    public void deleteIcon(IconRecord iconToDelete, PanelModel thePanelModel)
+    public void deleteIcon(IconRecord iconToDelete, IconModel thePanelModel)
     {
         String filename = iconToDelete.imageURLProperty().get().toString();
         // This loop logic is to make sure it is removed from all the

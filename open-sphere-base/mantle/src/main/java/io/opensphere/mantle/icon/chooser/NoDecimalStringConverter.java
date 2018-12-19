@@ -1,4 +1,4 @@
-package io.opensphere.mantle.iconproject.panels.transform;
+package io.opensphere.mantle.icon.chooser;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;

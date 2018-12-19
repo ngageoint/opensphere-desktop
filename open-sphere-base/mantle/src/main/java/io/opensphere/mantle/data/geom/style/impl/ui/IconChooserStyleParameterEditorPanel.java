@@ -22,7 +22,7 @@ import io.opensphere.core.util.image.ImageUtil;
 import io.opensphere.core.util.io.IOUtilities;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.mantle.data.geom.style.MutableVisualizationStyle;
-import io.opensphere.mantle.iconproject.view.IconDialog;
+import io.opensphere.mantle.icon.chooser.view.IconDialog;
 
 /**
  * The Class IconChooserStyleParameterEditorPanel.

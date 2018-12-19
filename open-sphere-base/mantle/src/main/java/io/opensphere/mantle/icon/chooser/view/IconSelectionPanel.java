@@ -1,4 +1,4 @@
-package io.opensphere.mantle.iconproject.panels;
+package io.opensphere.mantle.icon.chooser.view;
 
 import java.util.Collections;
 import java.util.List;
@@ -7,8 +7,8 @@ import java.util.Map;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.fx.OSTabPane;
 import io.opensphere.core.util.lang.Pair;
-import io.opensphere.mantle.iconproject.model.IconRegistryChangeListener;
-import io.opensphere.mantle.iconproject.model.PanelModel;
+import io.opensphere.mantle.icon.chooser.model.IconModel;
+import io.opensphere.mantle.icon.chooser.model.IconRegistryChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.scene.Node;
@@ -26,13 +26,13 @@ import javafx.scene.layout.Priority;
 public class IconSelectionPanel extends BorderPane
 {
     /** The model in which state is maintained. */
-    private final PanelModel myPanelModel;
+    private final IconModel myPanelModel;
 
     /** The tab pane in which icons for each set are rendered. */
     private final OSTabPane myIconTabs;
 
     /** The detail panel in which information about an icon is displayed. */
-    private final Node myDetailPane;
+    private final IconDetail myDetailPane;
 
     /** The slider in which icon zoom is managed. */
     private final Slider myZoomControlPane;
@@ -51,7 +51,7 @@ public class IconSelectionPanel extends BorderPane
      *
      * @param panelModel the model through which state is maintained.
      */
-    public IconSelectionPanel(PanelModel panelModel)
+    public IconSelectionPanel(IconModel panelModel)
     {
         myPanelModel = panelModel;
         myDetailPane = new IconDetail(panelModel);
@@ -69,7 +69,7 @@ public class IconSelectionPanel extends BorderPane
 
         myPanelModel.tileWidthProperty().bindBidirectional(myZoomControlPane.valueProperty());
 
-        mySetControlPane = new TopMenuBar(panelModel);
+        mySetControlPane = new SearchControlBar(panelModel);
 
         List<String> collectionNames = New.list(myPanelModel.getIconRegistry().getCollectionNames());
         Collections.sort(collectionNames);
@@ -147,5 +147,15 @@ public class IconSelectionPanel extends BorderPane
     {
         Tab tab = new Tab("<New Icon Set>");
         myIconTabs.getTabs().add(myIconTabs.getTabs().size(), tab);
+    }
+
+    /**
+     * Gets the value of the {@link #myDetailPane} field.
+     *
+     * @return the value of the myDetailPane field.
+     */
+    public IconDetail getDetailPane()
+    {
+        return myDetailPane;
     }
 }

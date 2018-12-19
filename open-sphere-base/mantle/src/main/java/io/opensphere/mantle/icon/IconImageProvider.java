@@ -84,7 +84,7 @@ public class IconImageProvider implements ImmediateImageProvider<Void>
         catch (IOException e)
         {
             brokenImage = null;
-            LOGGER.error("Failed to load broken image from url: " + ourBrokenImageURL);
+            LOGGER.error("Failed to load broken image from url: " + ourBrokenImageURL, e);
         }
         ourBrokenImage = new ImageIOImage(brokenImage);
     }

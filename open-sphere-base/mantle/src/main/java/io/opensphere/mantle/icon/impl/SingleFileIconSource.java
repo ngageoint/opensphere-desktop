@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.net.UrlUtilities;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
@@ -33,10 +34,10 @@ public class SingleFileIconSource implements IconSource<FileIconSourceModel>
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.mantle.icon.IconSource#getIconProviders()
+     * @see io.opensphere.mantle.icon.IconSource#getIconProviders(Toolbox)
      */
     @Override
-    public List<IconProvider> getIconProviders()
+    public List<IconProvider> getIconProviders(Toolbox toolbox)
     {
         return Collections
                 .singletonList(new DefaultIconProvider(UrlUtilities.toURLNew(myModel.fileProperty().get().getAbsolutePath()),

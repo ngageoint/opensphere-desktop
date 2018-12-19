@@ -7,22 +7,21 @@ import io.opensphere.mantle.icon.impl.CompressedCollectionIconSource;
 import io.opensphere.mantle.icon.impl.DirectoryCollectionIconSource;
 import io.opensphere.mantle.icon.impl.SingleFileIconSource;
 
-/**
- *
- */
+/** A factory used to create new Icon sources. */
 public class IconSourceFactory
 {
     /** Singleton reference. */
-    private static final IconSourceFactory ourInstance = new IconSourceFactory();
+    private static final IconSourceFactory INSTANCE = new IconSourceFactory();
 
-    private final Collection<IconSource> iconSources;
+    /** The icon sources managed by the factory. */
+    private final Collection<IconSource<? extends IconSourceModel>> myIconSources;
 
     /**
      * Private constructor to enforce singleton pattern.
      */
     private IconSourceFactory()
     {
-        iconSources = List.of(new SingleFileIconSource(), new CompressedCollectionIconSource(),
+        myIconSources = List.of(new SingleFileIconSource(), new CompressedCollectionIconSource(),
                 new DirectoryCollectionIconSource());
     }
 
@@ -33,11 +32,16 @@ public class IconSourceFactory
      */
     public static IconSourceFactory getInstance()
     {
-        return ourInstance;
+        return INSTANCE;
     }
 
-    public Collection<IconSource> getIconSources()
+    /**
+     * Gets the value of the {@link #myIconSources} field.
+     *
+     * @return the value of the myIconSources field.
+     */
+    public Collection<IconSource<? extends IconSourceModel>> getIconSources()
     {
-        return iconSources;
+        return myIconSources;
     }
 }

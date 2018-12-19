@@ -25,6 +25,8 @@ import org.apache.commons.compress.utils.SeekableInMemoryByteChannel;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import io.opensphere.core.Toolbox;
+import io.opensphere.core.dialog.alertviewer.event.UserMessageEvent;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
@@ -33,7 +35,7 @@ import javafx.scene.Node;
 import javafx.stage.FileChooser;
 
 /**
- *
+ * An icon source used to read icons from a compressed source (ZIP, GZ, etc.).
  */
 public class CompressedCollectionIconSource implements IconSource<FileIconSourceModel>
 {
@@ -43,6 +45,7 @@ public class CompressedCollectionIconSource implements IconSource<FileIconSource
     /** The model in which the icon source maintains state. */
     private final FileIconSourceModel myModel = new FileIconSourceModel();
 
+    /** A resolver used to find specific content types. */
     private static final MimetypesFileTypeMap MIME_TYPE_RESOLVER = new MimetypesFileTypeMap();
 
     /**
@@ -59,10 +62,10 @@ public class CompressedCollectionIconSource implements IconSource<FileIconSource
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.mantle.icon.IconSource#getIconProviders()
+     * @see io.opensphere.mantle.icon.IconSource#getIconProviders(Toolbox)
      */
     @Override
-    public List<IconProvider> getIconProviders()
+    public List<IconProvider> getIconProviders(Toolbox toolbox)
     {
         File file = myModel.fileProperty().get();
         List<IconProvider> results;
@@ -73,13 +76,23 @@ public class CompressedCollectionIconSource implements IconSource<FileIconSource
         catch (IOException e)
         {
             LOG.error("Unable to process archive.", e);
-            // TODO Show the user a toaster error
+            UserMessageEvent.error(toolbox.getEventManager(),
+                    "Unable to process archive from file '" + file.getAbsolutePath() + "'");
             results = Collections.emptyList();
         }
 
         return results;
     }
 
+    /**
+     * Processes the supplied stream, reading data from the compressed source.
+     * 
+     * @param name the name of the source.
+     * @param rootUri the root URIL of the source.
+     * @param stream the stream from which to read data.
+     * @return a list of icon providers generated from the supplied parameters.
+     * @throws IOException if the icons cannot be read from the supplied stream.
+     */
     private List<IconProvider> processStream(String name, URI rootUri, InputStream stream) throws IOException
     {
         List<IconProvider> results = New.list();
@@ -123,15 +136,42 @@ public class CompressedCollectionIconSource implements IconSource<FileIconSource
     }
 
     /**
-     * @param mimeType
-     * @param name
-     * @param rootUri
-     * @param stream
-     * @return
-     * @throws IOException
+     * Reads data from the supplied compressed archive stream, de-compressing it
+     * and then reading all matching files from within.
+     * 
+     * @param mimeType the MIME type of the content within the stream.
+     * @param name the name of the source.
+     * @param rootUri the root URI of the source.
+     * @param stream the stream to read.
+     * @return a {@link List} of {@link IconProvider}s read from the supplied
+     *         stream
+     * @throws IOException if the stream cannot be read.
      */
     private List<IconProvider> processCompressedArchive(String mimeType, String name, URI rootUri, InputStream stream)
         throws IOException
+    {
+        try (InputStream in = getCompressionStream(mimeType, stream))
+        {
+            if (in == null)
+            {
+                return Collections.emptyList();
+            }
+            String subname = name.substring(0, name.lastIndexOf('.'));
+            return processStream(subname, rootUri, in);
+        }
+    }
+
+    /**
+     * Creates a compression stream using the supplied mime type and input
+     * stream.
+     * 
+     * @param mimeType the mime type of the stream.
+     * @param stream the stream to wrap.
+     * @return an input stream wrapping the supplied input stream to read
+     *         compressed data.
+     * @throws IOException if the stream cannot be read.
+     */
+    private InputStream getCompressionStream(String mimeType, InputStream stream) throws IOException
     {
         InputStream in;
         if (StringUtils.equals(mimeType, "application/gzip"))
@@ -157,22 +197,22 @@ public class CompressedCollectionIconSource implements IconSource<FileIconSource
         else
         {
             LOG.warn("Unrecognized compression type: '" + mimeType + "'");
-            return Collections.emptyList();
+            in = null;
         }
-
-        String subname = name.substring(0, name.lastIndexOf('.'));
-        return processStream(subname, rootUri, in);
+        return in;
     }
 
     /**
-     * @param mimeType
-     * @param name
-     * @param rootUri
-     * @param stream
-     * @return
-     * @throws IOException
+     * Creates a combined tar + compression stream using the supplied mime type
+     * and input stream.
+     * 
+     * @param mimeType the mime type of the stream.
+     * @param stream the stream to wrap.
+     * @return an input stream wrapping the supplied input stream to read
+     *         compressed data.
+     * @throws IOException if the stream cannot be read.
      */
-    private List<IconProvider> processTarArchive(String mimeType, String name, URI rootUri, InputStream stream) throws IOException
+    private InputStream getTarCompressionStream(String mimeType, InputStream stream) throws IOException
     {
         InputStream in;
         if (StringUtils.equals(mimeType, "application/x-tar"))
@@ -202,32 +242,62 @@ public class CompressedCollectionIconSource implements IconSource<FileIconSource
         else
         {
             LOG.warn("Unrecognized tar compression type: '" + mimeType + "'");
-            return Collections.emptyList();
+            in = null;
         }
-
-        List<IconProvider> results = New.list();
-        TarArchiveInputStream tarIn = new TarArchiveInputStream(in);
-        TarArchiveEntry entry;
-        while ((entry = tarIn.getNextTarEntry()) != null)
-        {
-            if (!tarIn.canReadEntryData(entry))
-            {
-                continue;
-            }
-            if (!entry.isDirectory())
-            {
-                results.addAll(processStream(entry.getName(), rootUri, tarIn));
-            }
-        }
-        return results;
+        return in;
     }
 
     /**
-     * @param name
-     * @param rootUri
-     * @param stream
-     * @return
-     * @throws IOException
+     * Reads the supplied input stream as a (potentially compressed) tar
+     * archive.
+     * 
+     * @param mimeType the MIME type of the content of the stream.
+     * @param name the name of the data source.
+     * @param rootUri the root URI of the data source.
+     * @param stream the stream to read.
+     * @return a {@link List} of {@link IconProvider} instances generated from
+     *         the supplied stream.
+     * @throws IOException if the stream cannot be read.
+     */
+    private List<IconProvider> processTarArchive(String mimeType, String name, URI rootUri, InputStream stream) throws IOException
+    {
+        try (InputStream in = getTarCompressionStream(mimeType, stream))
+        {
+            if (in == null)
+            {
+                return Collections.emptyList();
+            }
+            List<IconProvider> results = New.list();
+            try (TarArchiveInputStream tarIn = new TarArchiveInputStream(in))
+            {
+                TarArchiveEntry entry;
+                while ((entry = tarIn.getNextTarEntry()) != null)
+                {
+                    if (!tarIn.canReadEntryData(entry))
+                    {
+                        continue;
+                    }
+                    if (!entry.isDirectory())
+                    {
+                        results.addAll(processStream(entry.getName(), rootUri, tarIn));
+                    }
+                }
+            }
+            return results;
+        }
+    }
+
+    /**
+     * Processes the the supplied stream to read an image from it, and generates
+     * an {@link IconProvider} using the contents.
+     * 
+     * @param name the name of the source from which to generate the provider.
+     * @param rootUri the root URI with which to create the provider.
+     * @param stream the stream to read for the icon image data.
+     * @return an {@link IconProvider} generated from the contents of the
+     *         supplied stream.
+     * @throws IOException if the data from the stream cannot be read, or if a
+     *             URI cannot be created.
      */
     private IconProvider processImageStream(String name, URI rootUri, InputStream stream) throws IOException
     {
@@ -256,6 +326,16 @@ public class CompressedCollectionIconSource implements IconSource<FileIconSource
         return provider;
     }
 
+    /**
+     * Processes the supplied input stream as a ZIP archive.
+     * 
+     * @param name the name of the data source to process.
+     * @param rootUri the root URI of the data source to process.
+     * @param stream the stream from which to read data.
+     * @return a {@link List} of {@link IconProvider}s generated from the
+     *         supplied input stream.
+     * @throws IOException if the stream cannot be read.
+     */
     private List<IconProvider> processZipArchive(String name, URI rootUri, InputStream stream) throws IOException
     {
         String currentFragment = rootUri.getFragment();
@@ -273,17 +353,6 @@ public class CompressedCollectionIconSource implements IconSource<FileIconSource
                 ZipArchiveEntry element = entries.nextElement();
                 if (!element.isDirectory())
                 {
-                    currentFragment += element.getName();
-                    URI path;
-                    try
-                    {
-                        path = new URI(rootUri.getScheme(), rootUri.getUserInfo(), rootUri.getHost(), rootUri.getPort(),
-                                rootUri.getPath(), rootUri.getQuery(), currentFragment);
-                    }
-                    catch (URISyntaxException e)
-                    {
-                        throw new IOException("Unable to construct path", e);
-                    }
                     results.addAll(processStream(element.getName(), rootUri, zipFile.getInputStream(element)));
                 }
             }

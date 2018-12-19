@@ -1,7 +1,5 @@
-package io.opensphere.mantle.iconproject.model;
+package io.opensphere.mantle.icon.chooser.model;
 
-import java.awt.Window;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -12,21 +10,21 @@ import io.opensphere.core.util.javafx.ConcurrentStringProperty;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.IconRegistryListener;
-import io.opensphere.mantle.iconproject.model.IconRegistryChangeListener.Change;
+import io.opensphere.mantle.icon.chooser.model.IconRegistryChangeListener.Change;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.Node;
 
 /** The model for the IconManagerFrame. */
-public class PanelModel
+public class IconModel
 {
     /**
      * A pass-through registry listener used to inform functional-interface type
-     * listeners of registry additions / removals.
+     * listeners of registry additions / removals. Not private to prevent
+     * generation of synthetic accessors.
      */
-    private final class PassThroughIconRegistryListener implements IconRegistryListener
+    final class PassThroughIconRegistryListener implements IconRegistryListener
     {
         @Override
         public void iconsUnassigned(List<Long> deIds, Object source)
@@ -67,59 +65,47 @@ public class PanelModel
     /** The toolbox. */
     private final Toolbox myToolbox;
 
-    /** The owner of this window. */
-    private Window myOwner;
-
     /** The model in which search text is maintained. */
     private StringProperty mySearchText = new ConcurrentStringProperty();
 
     /**
-     * The value used for the tilewidth. The number inside is the default value
+     * The value used for the tile width. The number inside is the default value
      * on program startup.
      */
     private final DoubleProperty myCurrentTileWidth = new ConcurrentDoubleProperty(80);
 
-    /** The import property. */
-    private ImportProp myImportProps = new ImportProp();
-
-    /** The icon record list. */
-    private List<IconRecord> myIconRecordList;
-
-    /** The filtered icon record list. */
-    private final List<IconRecord> myFilteredIconRecordList;
-
-    /** The model for the panels contained in the UI. */
-    private ViewModel myViewModel;
-
-    /** The icons currently selected. */
-    private final HashMap<IconRecord, Node> myAllSelectedIcons = new HashMap<>();
-
     /**
-     * Used to keep track of which icon and button are selected on the grid for
-     * single selection purposes.
+     * The set of change listeners called when icons are added or removed. Not
+     * private to prevent generation of synthetic accessors.
      */
-    private final HashMap<IconRecord, Node> mySingleSelectedIcon = new HashMap<>();
-
-    /** Whether to use the filtered icon record list or the regular one. */
-    private boolean myUseFilteredList;
-
-    /** The set of change listeners called when icons are added or removed. */
-    private final Set<IconRegistryChangeListener> myRegistryChangeListeners = New.set();
+    final Set<IconRegistryChangeListener> myRegistryChangeListeners = New.set();
 
     /** The registry listener used to react to additions and removals. */
     private final IconRegistryListener myRegistryListener;
+
+    /** The model in which customization state is maintained. */
+    private final CustomizationModel myCustomizationModel;
 
     /**
      * Builds the panel to use inside the Icon Manager.
      *
      * @param toolbox the toolbox
      */
-    public PanelModel(Toolbox toolbox)
+    public IconModel(Toolbox toolbox)
     {
         myToolbox = toolbox;
-        myFilteredIconRecordList = New.list();
-        myUseFilteredList = false;
         myRegistryListener = new PassThroughIconRegistryListener();
+        myCustomizationModel = new CustomizationModel();
+    }
+
+    /**
+     * Gets the value of the {@link #myCustomizationModel} field.
+     *
+     * @return the value of the myCustomizationModel field.
+     */
+    public CustomizationModel getCustomizationModel()
+    {
+        return myCustomizationModel;
     }
 
     /**
@@ -181,106 +167,6 @@ public class PanelModel
     }
 
     /**
-     * Sets the window's owner.
-     *
-     * @param owner the window's owner
-     */
-    public void setOwner(Window owner)
-    {
-        myOwner = owner;
-    }
-
-    /**
-     * Gets the window's owner.
-     *
-     * @return the window's owner
-     */
-    public Window getOwner()
-    {
-        return myOwner;
-    }
-
-    /**
-     * Gets the import properties.
-     *
-     * @return the import properties
-     */
-    public ImportProp getImportProperties()
-    {
-        return myImportProps;
-    }
-
-    /**
-     * Sets the import properties.
-     *
-     * @param importProps the import properties
-     */
-    public void setImportProperties(ImportProp importProps)
-    {
-        myImportProps = importProps;
-    }
-
-    /**
-     * Gets the icon record list.
-     *
-     * @return the icon record list
-     */
-    public List<IconRecord> getRecordList()
-    {
-        return myIconRecordList;
-    }
-
-    /**
-     * Sets the icon record list.
-     *
-     * @param list the icon record list
-     */
-    public void setRecordList(List<IconRecord> list)
-    {
-        myIconRecordList = list;
-    }
-
-    /**
-     * Gets the filtered icon record list.
-     *
-     * @return the filtered icon record list
-     */
-    public List<IconRecord> getFilteredRecordList()
-    {
-        return myFilteredIconRecordList;
-    }
-
-    /**
-     * Gets the value of the {@link #myViewModel} field.
-     *
-     * @return the value stored in the {@link #myViewModel} field.
-     */
-    public ViewModel getViewModel()
-    {
-        return myViewModel;
-    }
-
-    /**
-     * Sets the value of the {@link #myViewModel} field.
-     *
-     * @param viewModel the value to store in the {@link #myViewModel} field.
-     */
-    public void setViewModel(ViewModel viewModel)
-    {
-        myViewModel = viewModel;
-    }
-
-    /**
-     * Gets the value of the {@link #myAllSelectedIcons} field.
-     *
-     * @return the value stored in the {@link #myAllSelectedIcons} field.
-     */
-    public HashMap<IconRecord, Node> getAllSelectedIcons()
-    {
-        return myAllSelectedIcons;
-    }
-
-    /**
      * Gets the value of the {@link #mySelectedRecord} field.
      *
      * @return the value stored in the {@link #mySelectedRecord} field.
@@ -298,37 +184,6 @@ public class PanelModel
     public ObjectProperty<IconRecord> previewRecordProperty()
     {
         return myPreviewRecordProperty;
-    }
-
-    /**
-     * Gets the single, primary selected button.
-     *
-     * @return the selected button
-     */
-    public HashMap<IconRecord, Node> getSingleSelectedIcon()
-    {
-        return mySingleSelectedIcon;
-    }
-
-    /**
-     * Gets whether to use the filtered list.
-     *
-     * @return whether to use the filtered list
-     */
-    public boolean getUseFilteredList()
-    {
-        return myUseFilteredList;
-    }
-
-    /**
-     * Sets whether to use the filtered list.
-     *
-     * @param useFilteredList true to force the use of the filtered list, false
-     *            otherwise.
-     */
-    public void setUseFilteredList(boolean useFilteredList)
-    {
-        myUseFilteredList = useFilteredList;
     }
 
     /**

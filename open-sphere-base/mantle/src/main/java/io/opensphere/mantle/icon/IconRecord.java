@@ -122,25 +122,4 @@ public interface IconRecord
      * @return the sub category
      */
     StringProperty subCategoryProperty();
-
-    /**
-     * Gets the name of the record (based on the URL).
-     *
-     * @return the name
-     */
-    default String getName()
-    {
-        String urlStr = imageURLProperty().get().toString();
-        String nameStr = urlStr;
-        int lastIndexOfSlash = urlStr.lastIndexOf('\\');
-        if (lastIndexOfSlash == -1)
-        {
-            lastIndexOfSlash = urlStr.lastIndexOf('/');
-        }
-        if (lastIndexOfSlash != -1)
-        {
-            nameStr = urlStr.substring(lastIndexOfSlash + 1);
-        }
-        return nameStr;
-    }
 }

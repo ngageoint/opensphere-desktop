@@ -1,4 +1,4 @@
-package io.opensphere.mantle.iconproject.view;
+package io.opensphere.mantle.icon.chooser.view;
 
 import java.awt.Dimension;
 import java.awt.Window;
@@ -10,28 +10,25 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.fx.JFXDialog;
 import io.opensphere.core.util.net.UrlUtilities;
 import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.iconproject.model.PanelModel;
-import io.opensphere.mantle.iconproject.model.ViewModel;
-import io.opensphere.mantle.iconproject.panels.IconSelectionPanel;
+import io.opensphere.mantle.icon.chooser.controller.IconCustomizationController;
+import io.opensphere.mantle.icon.chooser.model.IconModel;
 import io.opensphere.mantle.util.MantleToolboxUtils;
-import javafx.scene.Node;
-import javafx.scene.layout.AnchorPane;
 
 /** Main UI Frame. */
 @SuppressWarnings("serial")
 public class IconDialog extends JFXDialog
 {
     /** The model to be shared between all the UI elements. */
-    private final PanelModel myPanelModel;
-
-    /** The model for the display panels. */
-    private final ViewModel myViewModel;
+    private final IconModel myPanelModel;
 
     /** The Toolbox. */
     private final Toolbox myToolbox;
 
     /** The consumer called when the user presses the accept button. */
     private Consumer<IconRecord> myAcceptListener;
+
+    /** The controller used for managing customization operations. */
+    private IconCustomizationController myCustomizationController;
 
     /**
      * Creates a new dialog with the supplied toolbox and owner.
@@ -89,18 +86,17 @@ public class IconDialog extends JFXDialog
     {
         super(owner, "Icon Manager", true);
         myToolbox = toolbox;
-        myPanelModel = new PanelModel(myToolbox);
-
-        myPanelModel.setOwner(owner);
+        myPanelModel = new IconModel(myToolbox);
         myPanelModel.setIconRegistry(MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry());
+
+        IconView iconView = new IconView(myPanelModel);
+        myCustomizationController = new IconCustomizationController(myPanelModel, iconView);
 
         setInitialValueSupplier(initialValueSupplier);
 
-        myViewModel = new ViewModel();
-        myPanelModel.setViewModel(myViewModel);
         setMinimumSize(new Dimension(800, 600));
         setSize(875, 600);
-        setFxNode(new IconProjView(myPanelModel));
+        setFxNode(iconView);
 
         if (myPanelModel.getIconRegistry().getManagerPrefs().getIconWidth() != 0)
         {
@@ -110,7 +106,7 @@ public class IconDialog extends JFXDialog
         myAcceptListener = acceptListener;
         super.setAcceptListener(() ->
         {
-            savePrefs();
+            savePreferences();
             if (myAcceptListener != null)
             {
                 myAcceptListener.accept(myPanelModel.selectedRecordProperty().get());
@@ -165,68 +161,10 @@ public class IconDialog extends JFXDialog
      * Saves icon manager preferences such as display width, display view, tree
      * selection. This ONLY saves during session. NOT across sessions.
      */
-    // For now the only saved preference is display width.
-    private void savePrefs()
+    private void savePreferences()
     {
         MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getManagerPrefs()
                 .setIconWidth((int)myPanelModel.tileWidthProperty().get());
-    }
-
-    /** Packages UI elements into one pane. */
-    public class IconProjView extends AnchorPane
-    {
-        /** Panel comprised of Tree and icon display. */
-        final private Node myMainPanel;
-
-        /** The Model for the entire UI. */
-        private final PanelModel myPanelModel;
-
-        /** The model for the display panels. */
-        private final ViewModel myViewModel;
-
-        /**
-         * Creates subpannels for UI.
-         *
-         * @param panelModel the model used for the UI.
-         */
-        public IconProjView(PanelModel panelModel)
-        {
-            myPanelModel = panelModel;
-            myViewModel = myPanelModel.getViewModel();
-
-            myMainPanel = new IconSelectionPanel(myPanelModel);
-            myViewModel.setMainPanel(myMainPanel);
-
-            setTopAnchor(myMainPanel, 0.0);
-            setBottomAnchor(myMainPanel, 0.0);
-            setLeftAnchor(myMainPanel, 0.);
-            setRightAnchor(myMainPanel, 0.);
-
-            myPanelModel.setViewModel(myViewModel);
-            getChildren().addAll(myMainPanel);
-
-            setOnKeyTyped(e ->
-            {
-                if (e.getCharacter().equals("\b"))
-                {
-                    String current = myPanelModel.searchTextProperty().get();
-                    if (current.length() > 0)
-                    {
-                        current = current.substring(0, current.length() - 1);
-                    }
-                    myPanelModel.searchTextProperty().set(current);
-                }
-                else
-                {
-                    String current = myPanelModel.searchTextProperty().get();
-                    if (current == null)
-                    {
-                        current = "";
-                    }
-                    myPanelModel.searchTextProperty().set(current + e.getCharacter());
-                }
-            });
-        }
     }
 
     /**
@@ -234,7 +172,7 @@ public class IconDialog extends JFXDialog
      *
      * @return the model used for the UI.
      */
-    public PanelModel getPanelModel()
+    public IconModel getPanelModel()
     {
         return myPanelModel;
     }

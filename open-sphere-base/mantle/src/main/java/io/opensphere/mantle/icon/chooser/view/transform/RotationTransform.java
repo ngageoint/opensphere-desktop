@@ -1,7 +1,8 @@
-package io.opensphere.mantle.iconproject.panels.transform;
+package io.opensphere.mantle.icon.chooser.view.transform;
 
 import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.fx.FxIcons;
+import io.opensphere.mantle.icon.chooser.model.TransformModel;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -26,12 +27,12 @@ public class RotationTransform extends AbstractTransform
         rotate.setAlignment(Pos.CENTER);
         rotate.setMinWidth(25);
 
-        Slider slider = createSlider(model.rotationProperty(), -180, 180, 0.0);
-        Spinner<Double> spinner = createSpinner(model.rotationProperty(), -180, 180, 0.0);
+        Slider slider = createSlider(model.rotationProperty(), -180, 180, TransformModel.DEFAULT_ROTATION);
+        Spinner<Double> spinner = createSpinner(model.rotationProperty(), -180, 180, TransformModel.DEFAULT_ROTATION);
         spinner.getValueFactory().setWrapAround(true);
 
-        Label reset = FxIcons.createClearIcon(AwesomeIconSolid.TIMES_CIRCLE, Color.WHITE, 10);
-        reset.setOnMouseClicked(e -> model.rotationProperty().set(0));
+        Label reset = FxIcons.createClearIcon(AwesomeIconSolid.TIMES, Color.ORANGERED, 14);
+        reset.setOnMouseClicked(e -> model.rotationProperty().set(TransformModel.DEFAULT_ROTATION));
         reset.setAlignment(Pos.CENTER);
 
         HBox.setHgrow(rotate, Priority.NEVER);

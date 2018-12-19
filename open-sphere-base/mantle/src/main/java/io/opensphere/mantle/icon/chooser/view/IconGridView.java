@@ -1,4 +1,4 @@
-package io.opensphere.mantle.iconproject.panels;
+package io.opensphere.mantle.icon.chooser.view;
 
 import java.util.function.Predicate;
 
@@ -9,7 +9,7 @@ import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.javafx.ConcurrentBooleanProperty;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
-import io.opensphere.mantle.iconproject.model.PanelModel;
+import io.opensphere.mantle.icon.chooser.model.IconModel;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.FXCollections;
@@ -40,7 +40,7 @@ public class IconGridView extends AnchorPane
     private final IconRegistry myRegistry;
 
     /** The model in which state is maintained. */
-    private final PanelModel myModel;
+    private final IconModel myModel;
 
     /**
      * The display state of the grid view. tied to the empty state of the items.
@@ -54,7 +54,7 @@ public class IconGridView extends AnchorPane
      * @param model the model to which to bind.
      * @param predicate the predicate used to define the set of included icons.
      */
-    public IconGridView(PanelModel model, Predicate<IconRecord> predicate)
+    public IconGridView(IconModel model, Predicate<IconRecord> predicate)
     {
         myModel = model;
 
@@ -74,7 +74,7 @@ public class IconGridView extends AnchorPane
         myModel.searchTextProperty().addListener((obs, ov, nv) ->
         {
             myActiveRestrictionPredicates.clear();
-            myActiveRestrictionPredicates.add(r -> r.getName().contains(nv));
+            myActiveRestrictionPredicates.add(r -> r.nameProperty().get().contains(nv));
         });
 
         getChildren().add(myGrid);
@@ -82,9 +82,6 @@ public class IconGridView extends AnchorPane
         AnchorPane.setTopAnchor(myGrid, 0.0);
         AnchorPane.setLeftAnchor(myGrid, 0.0);
         AnchorPane.setBottomAnchor(myGrid, 0.0);
-
-//        myDisplayProperty = new ConcurrentBooleanProperty(!myGrid.itemsProperty().get().isEmpty());
-//        myGrid.itemsProperty().addListener((observable, oldValue, newValue) -> myDisplayProperty.set(!newValue.isEmpty()));
 
         myDisplayProperty = new ConcurrentBooleanProperty(true);
 

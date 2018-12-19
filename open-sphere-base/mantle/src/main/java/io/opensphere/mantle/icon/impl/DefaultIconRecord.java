@@ -83,6 +83,24 @@ public class DefaultIconRecord implements IconRecord
         Utilities.checkNull(ip, "ip");
         myIdProperty.set(id);
         myImageURLProperty.set(ip.getIconURL());
+
+        imageURLProperty().addListener((obs, ov, nv) ->
+        {
+            String urlString = nv.toString();
+            String name = urlString;
+            int lastIndexOfSlash = urlString.lastIndexOf('\\');
+            if (lastIndexOfSlash == -1)
+            {
+                lastIndexOfSlash = urlString.lastIndexOf('/');
+            }
+            if (lastIndexOfSlash != -1)
+            {
+                name = urlString.substring(lastIndexOfSlash + 1);
+            }
+
+            myNameProperty.set(name);
+        });
+
         myCollectionNameProperty.set(ip.getCollectionName() == null ? DEFAULT_COLLECTION : ip.getCollectionName());
         mySubCategoryProperty.set(ip.getSubCategory());
         mySourceKeyProperty.set(ip.getSourceKey());

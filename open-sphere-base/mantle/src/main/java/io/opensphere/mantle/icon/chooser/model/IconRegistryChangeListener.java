@@ -1,4 +1,4 @@
-package io.opensphere.mantle.iconproject.model;
+package io.opensphere.mantle.icon.chooser.model;
 
 import java.util.Collections;
 import java.util.List;

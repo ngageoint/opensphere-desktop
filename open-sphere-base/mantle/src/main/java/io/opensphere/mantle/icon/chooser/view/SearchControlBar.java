@@ -1,6 +1,5 @@
-package io.opensphere.mantle.iconproject.panels;
+package io.opensphere.mantle.icon.chooser.view;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.controlsfx.control.textfield.CustomTextField;
@@ -8,9 +7,8 @@ import org.controlsfx.control.textfield.CustomTextField;
 import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.fx.FxIcons;
 import io.opensphere.mantle.icon.IconProvider;
-import io.opensphere.mantle.icon.IconSource;
 import io.opensphere.mantle.icon.IconSourceFactory;
-import io.opensphere.mantle.iconproject.model.PanelModel;
+import io.opensphere.mantle.icon.chooser.model.IconModel;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -21,7 +19,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 
 /** An HBox containing display size controls, view style, and filter options. */
-public class TopMenuBar extends HBox
+public class SearchControlBar extends HBox
 {
     /** The bar to enter text to filter icon results. */
     private final CustomTextField mySearchField;
@@ -34,7 +32,7 @@ public class TopMenuBar extends HBox
      *
      * @param panelModel the current UI model.
      */
-    public TopMenuBar(PanelModel panelModel)
+    public SearchControlBar(IconModel panelModel)
     {
         mySearchField = new CustomTextField();
 
@@ -50,19 +48,18 @@ public class TopMenuBar extends HBox
         myAddIconsButton = new MenuButton("Add Icons", addIcon);
         myAddIconsButton.setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
 
-        Collection<IconSource> iconSources = IconSourceFactory.getInstance().getIconSources();
-        for (IconSource iconSource : iconSources)
+        var iconSources = IconSourceFactory.getInstance().getIconSources();
+        for (var iconSource : iconSources)
         {
             MenuItem item = new MenuItem("Add " + iconSource.getName(),
                     FxIcons.createClearIcon(AwesomeIconSolid.PLUS_CIRCLE, Color.LIGHTGREY, 12));
             item.onActionProperty().set(e ->
             {
                 iconSource.getUserInput(this);
-                List<IconProvider> iconProviders = iconSource.getIconProviders();
+                List<IconProvider> iconProviders = iconSource.getIconProviders(panelModel.getToolbox());
                 panelModel.getIconRegistry().addIcons(iconProviders, iconSources);
             });
             myAddIconsButton.getItems().add(item);
-
         }
 
         myAddIconsButton.getItems()

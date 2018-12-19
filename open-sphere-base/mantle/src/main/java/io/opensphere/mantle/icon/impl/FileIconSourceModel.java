@@ -7,7 +7,7 @@ import io.opensphere.mantle.icon.IconSourceModel;
 import javafx.beans.property.ObjectProperty;
 
 /**
- *
+ * The source model for a file icon source.
  */
 public class FileIconSourceModel implements IconSourceModel
 {

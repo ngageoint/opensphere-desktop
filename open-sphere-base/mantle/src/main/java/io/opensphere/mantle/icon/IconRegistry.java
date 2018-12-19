@@ -8,8 +8,8 @@ import java.util.function.Predicate;
 
 import gnu.trove.list.TIntList;
 import gnu.trove.list.TLongList;
-import io.opensphere.mantle.iconproject.model.IconManagerPrefs;
-import io.opensphere.mantle.iconproject.model.PanelModel;
+import io.opensphere.mantle.icon.chooser.model.IconManagerPrefs;
+import io.opensphere.mantle.icon.chooser.model.IconModel;
 
 /**
  * The Interface IconRegistry.
@@ -232,7 +232,7 @@ public interface IconRegistry
      * @param iconToDelete the IconRecord to delete.
      * @param panelModel used for registry.
      */
-    void deleteIcon(IconRecord iconToDelete, PanelModel panelModel);
+    void deleteIcon(IconRecord iconToDelete, IconModel panelModel);
 
     /**
      * Removes the listener.

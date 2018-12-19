@@ -1,7 +1,8 @@
-package io.opensphere.mantle.iconproject.panels.transform;
+package io.opensphere.mantle.icon.chooser.view.transform;
 
 import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.fx.FxIcons;
+import io.opensphere.mantle.icon.chooser.model.TransformModel;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -31,18 +32,21 @@ public class MoveTransform extends AbstractTransform
         horizontalIcon.setMinWidth(25);
         horizontalIcon.setAlignment(Pos.CENTER);
 
-        Label recenterHorizontal = FxIcons.createClearIcon(AwesomeIconSolid.TIMES_CIRCLE, Color.WHITE, 10);
-        recenterHorizontal.setOnMouseClicked(e -> model.horizontalMoveProperty().set(0));
+        Label recenterHorizontal = FxIcons.createClearIcon(AwesomeIconSolid.TIMES, Color.ORANGERED, 14);
+        recenterHorizontal.setOnMouseClicked(e -> model.horizontalMoveProperty().set(TransformModel.DEFAULT_HORIZONTAL_MOVE));
         recenterHorizontal.setAlignment(Pos.CENTER);
-        Label recenterVertical = FxIcons.createClearIcon(AwesomeIconSolid.TIMES_CIRCLE, Color.WHITE, 10);
-        recenterVertical.setOnMouseClicked(e -> model.verticalMoveProperty().set(0));
+        Label recenterVertical = FxIcons.createClearIcon(AwesomeIconSolid.TIMES, Color.ORANGERED, 14);
+        recenterVertical.setOnMouseClicked(e -> model.verticalMoveProperty().set(TransformModel.DEFAULT_VERTICAL_MOVE));
         recenterVertical.setAlignment(Pos.CENTER);
 
-        Slider horizontalMoveSlider = createSlider(model.horizontalMoveProperty(), -100, 100, 0.0);
-        Spinner<Double> horizontalMoveSpinner = createSpinner(model.horizontalMoveProperty(), -100, 100, 0.0);
+        Slider horizontalMoveSlider = createSlider(model.horizontalMoveProperty(), -100, 100,
+                TransformModel.DEFAULT_HORIZONTAL_MOVE);
+        Spinner<Double> horizontalMoveSpinner = createSpinner(model.horizontalMoveProperty(), -100, 100,
+                TransformModel.DEFAULT_HORIZONTAL_MOVE);
 
-        Slider verticalMoveSlider = createSlider(model.verticalMoveProperty(), -100, 100, 0.0);
-        Spinner<Double> verticalMoveSpinner = createSpinner(model.verticalMoveProperty(), -100, 100, 0.0);
+        Slider verticalMoveSlider = createSlider(model.verticalMoveProperty(), -100, 100, TransformModel.DEFAULT_VERTICAL_MOVE);
+        Spinner<Double> verticalMoveSpinner = createSpinner(model.verticalMoveProperty(), -100, 100,
+                TransformModel.DEFAULT_VERTICAL_MOVE);
 
         HBox.setHgrow(verticalIcon, Priority.NEVER);
         HBox.setHgrow(horizontalIcon, Priority.NEVER);
@@ -52,7 +56,6 @@ public class MoveTransform extends AbstractTransform
         HBox.setHgrow(horizontalMoveSpinner, Priority.NEVER);
         HBox.setHgrow(recenterHorizontal, Priority.NEVER);
         HBox.setHgrow(recenterVertical, Priority.NEVER);
-
 
         HBox verticalAdjustBox = new HBox(5, verticalIcon, verticalMoveSlider, verticalMoveSpinner, recenterVertical);
         verticalAdjustBox.setAlignment(Pos.CENTER);
