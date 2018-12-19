@@ -9,7 +9,7 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
 
 /**
- *
+ * A panel in which the cookies used in the transaction are detailed.
  */
 public class CookiePanel extends VBox
 {

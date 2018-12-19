@@ -1,6 +1,3 @@
-/**
- *
- */
 package io.opensphere.core.net.manager.view;
 
 import io.opensphere.core.Toolbox;
@@ -18,7 +15,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 /**
- *
+ * The panel in which the network manager displays all transactions.
  */
 public class NetworkManagerPanel extends SplitPane
 {

@@ -9,7 +9,7 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
 
 /**
- *
+ * The panel on which the parameters used in the transaction are detailed. F
  */
 public class ParametersPanel extends VBox
 {

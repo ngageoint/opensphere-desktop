@@ -1,6 +1,3 @@
-/**
- *
- */
 package io.opensphere.core.net.manager.model;
 
 import java.io.IOException;

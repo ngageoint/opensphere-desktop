@@ -1,6 +1,3 @@
-/**
- *
- */
 package io.opensphere.core.net.manager.model;
 
 import io.opensphere.core.util.javafx.ConcurrentStringProperty;
