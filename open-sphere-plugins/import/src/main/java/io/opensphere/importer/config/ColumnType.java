@@ -5,6 +5,7 @@ import java.util.Arrays;
 import io.opensphere.core.common.configuration.date.DateFormat;
 import io.opensphere.core.util.lang.enums.EnumUtilities;
 import io.opensphere.mantle.data.SpecialKey;
+import io.opensphere.mantle.data.impl.specialkey.ColorKey;
 import io.opensphere.mantle.data.impl.specialkey.EllipseOrientationKey;
 import io.opensphere.mantle.data.impl.specialkey.EllipseSemiMajorAxisKey;
 import io.opensphere.mantle.data.impl.specialkey.EllipseSemiMinorAxisKey;
@@ -85,8 +86,10 @@ public enum ColumnType
     SPEED("Speed", SpeedKey.DEFAULT),
 
     /** Speed error. */
-    SPEED_ERROR("Speed Error", SpeedErrorKey.DEFAULT)
+    SPEED_ERROR("Speed Error", SpeedErrorKey.DEFAULT),
 
+    /** The column definition for a color column. */
+    COLOR("Color", ColorKey.DEFAULT)
     ;
 
     /** The display text. */

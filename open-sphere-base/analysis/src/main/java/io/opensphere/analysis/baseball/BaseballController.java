@@ -9,6 +9,7 @@ import java.util.List;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Polygon;
 
+import io.opensphere.analysis.util.MGRSUtilities;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.event.EventListenerService;
 import io.opensphere.core.geometry.Geometry;
@@ -26,6 +27,7 @@ import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.core.viewer.impl.Viewer3D;
 import io.opensphere.mantle.controller.DataTypeController;
 import io.opensphere.mantle.data.element.DataElement;
+import io.opensphere.mantle.data.element.MapDataElement;
 import io.opensphere.mantle.data.element.event.DataElementDoubleClickedEvent;
 import io.opensphere.mantle.data.geom.MapGeometrySupport;
 import io.opensphere.mantle.data.util.DataElementLookupUtils;

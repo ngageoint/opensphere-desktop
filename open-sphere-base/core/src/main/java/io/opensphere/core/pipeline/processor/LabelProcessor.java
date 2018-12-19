@@ -328,9 +328,22 @@ public class LabelProcessor extends AbstractProcessor<LabelGeometry>
                 return null;
             }
 
+            int horizontalOffset = 0;
+            int verticalOffset = 0;
+            if (hAlign == 0F)
+            {
+                // account for the cursor, in pixels, if left-aligned
+                horizontalOffset = 10;
+            }
+            if (vAlign == 1F)
+            {
+                // account for the cursor, in pixels, if top-aligned:
+                verticalOffset = -20;
+            }
+
             window = getPositionConverter().convertModelToWindow(model, Vector3d.ORIGIN);
-            window = new Vector3d(window.getX() - hAlign * lay.rect.getWidth(), window.getY() - vAlign * lay.rect.getHeight(),
-                    0.0);
+            window = new Vector3d(window.getX() - hAlign * lay.rect.getWidth() + horizontalOffset,
+                    window.getY() - vAlign * lay.rect.getHeight() + verticalOffset, 0.0);
 
             // Cache the bounding box of the label for occlusion testing.
             ScreenPosition ul = new ScreenPosition(window.getX(), window.getY());

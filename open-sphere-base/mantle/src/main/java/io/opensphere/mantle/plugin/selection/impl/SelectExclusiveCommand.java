@@ -17,7 +17,7 @@ public class SelectExclusiveCommand extends AbstractSelectionCommand
     public SelectExclusiveCommand()
     {
         super("SELECT_EXCLUSIVE", "Select Exclusive", "Select features in region, deselect all other features",
-                SelectionCommandGroup.FEATURES, new GenericFontIcon(AwesomeIconSolid.CHECK_CIRCLE, Color.WHITE, 12));
+                SelectionCommandGroup.FEATURES, new GenericFontIcon(AwesomeIconSolid.CHECK_CIRCLE, Color.WHITE));
     }
 
 }

@@ -18,6 +18,6 @@ public class LoadFeaturesCommand extends AbstractSelectionCommand
     public LoadFeaturesCommand()
     {
         super("LOAD_FEATURES", "Load", "Clear all loaded features and load new features in region for active data types",
-                SelectionCommandGroup.FEATURES, new GenericFontIcon(AwesomeIconRegular.CIRCLE, Color.WHITE, 12));
+                SelectionCommandGroup.FEATURES, new GenericFontIcon(AwesomeIconRegular.CIRCLE, Color.WHITE));
     }
 }

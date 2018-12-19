@@ -1,15 +1,11 @@
 package io.opensphere.myplaces.specific.tracks;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Color;
 import java.util.Collection;
 import java.util.List;
 
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-
-import org.apache.log4j.Logger;
 
 import de.micromata.opengis.kml.v_2_2_0.ExtendedData;
 import de.micromata.opengis.kml.v_2_2_0.Placemark;
@@ -18,14 +14,10 @@ import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.control.action.context.GeometryContextKey;
 import io.opensphere.core.geometry.PolylineGeometry;
 import io.opensphere.core.model.GeographicPosition;
-import io.opensphere.core.units.InvalidUnitsException;
-import io.opensphere.core.units.length.Length;
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.mantle.MantleToolbox;
-import io.opensphere.mantle.controller.DataTypeController;
+import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.mantle.data.DataTypeInfo;
-import io.opensphere.mantle.transformer.impl.DefaultMapDataElementTransformer;
-import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.myplaces.constants.Constants;
 import io.opensphere.myplaces.models.DataCouple;
 import io.opensphere.myplaces.models.DataTypeInfoMyPlaceChangedEvent;
@@ -37,25 +29,13 @@ import io.opensphere.tracktool.model.Track;
 import io.opensphere.tracktool.model.TrackNode;
 import io.opensphere.tracktool.registry.TrackRegistry;
 
-/**
- * Provides the context menu items for the context menu on the map.
- *
- */
+/** Provides the context menu items for the context menu on the map. */
 public class TracksContextMenuProvider implements ContextMenuProvider<GeometryContextKey>
 {
-    /**
-     * Used to log messages.
-     */
-    private static final Logger LOGGER = Logger.getLogger(TracksContextMenuProvider.class);
-
-    /**
-     * The toolbox.
-     */
+    /** The toolbox through which application state is accessed. */
     private final Toolbox myToolbox;
 
-    /**
-     * The model.
-     */
+    /** The model in which place data is stored. */
     private final MyPlacesModel myModel;
 
     /**
@@ -70,6 +50,12 @@ public class TracksContextMenuProvider implements ContextMenuProvider<GeometryCo
         myModel = model;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.control.action.ContextMenuProvider#getMenuItems(java.lang.String,
+     *      java.lang.Object)
+     */
     @Override
     public List<JMenuItem> getMenuItems(String contextId, GeometryContextKey key)
     {
@@ -85,100 +71,59 @@ public class TracksContextMenuProvider implements ContextMenuProvider<GeometryCo
         {
             menuItems = New.list();
 
-            JMenu unitsMenu = new JMenu("Change Units");
-            addUnitsMenuItems(geom, unitsMenu);
-            menuItems.add(unitsMenu);
-
-            JMenuItem select = new JMenuItem("Remove Track");
-            select.addActionListener(new ActionListener()
+            JMenuItem select = new JMenuItem("Remove Track", new GenericFontIcon(AwesomeIconSolid.TIMES, Color.WHITE));
+            select.addActionListener(e ->
             {
-                @Override
-                public void actionPerformed(ActionEvent e)
+                DataCouple couple = GroupUtils.getDataTypeAndParent(associatedTrack.getId(), myModel.getDataGroups());
+                if (couple.getDataType() != null)
                 {
-                    DataCouple couple = GroupUtils.getDataTypeAndParent(associatedTrack.getId(), myModel.getDataGroups());
-                    if (couple.getDataType() != null)
+                    int response = JOptionPane.showConfirmDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
+                            "Are you sure you want to delete " + couple.getDataType().getDisplayName() + "?",
+                            "Delete Confirmation", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (response == JOptionPane.OK_OPTION)
                     {
-                        int response = JOptionPane.showConfirmDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
-                                "Are you sure you want to delete " + couple.getDataType().getDisplayName() + "?",
-                                "Delete Confirmation", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-                        if (response == JOptionPane.OK_OPTION)
-                        {
-                            couple.getDataGroup().removeMember(couple.getDataType(), false, this);
-                        }
+                        couple.getDataGroup().removeMember(couple.getDataType(), false, this);
                     }
                 }
             });
             menuItems.add(select);
 
-            JMenuItem bufferForTrack = new JMenuItem("Create Buffer for Track");
-            bufferForTrack.addActionListener(e -> {
-                DataCouple couple = GroupUtils.getDataTypeAndParent(associatedTrack.getId(), myModel.getDataGroups());
-                if (couple.getDataType() != null)
-                {
-                    DataTypeInfo dataType = couple.getDataType();
-
-                    // DataElementLookupUtils dataElementLookupUtils = MantleToolboxUtils.getDataElementLookupUtils(myToolbox);
-                    // List<DataElement> dataElements = dataElementLookupUtils.getDataElements(dataType);
-
-                    MantleToolbox mantleToolbox = MantleToolboxUtils.getMantleToolbox(myToolbox);
-                    DataTypeController dataTypeController = mantleToolbox.getDataTypeController();
-                    DefaultMapDataElementTransformer transformer = (DefaultMapDataElementTransformer)dataTypeController
-                            .getTransformerForType(dataType.getTypeKey());
-
-                    // Set<Geometry> allGeometries = transformer.getGeometrySet();
-
-                    transformer.getDataModelIdFromGeometryId(getPriority());
-
-                    LOGGER.info("All Geometries retrieved.");
-                }
-
-            });
-
-            menuItems.add(bufferForTrack);
-
-
             final boolean bubbleState = associatedTrack.isShowBubble();
             String menuLabel = bubbleState ? "Hide Labels" : "Show Labels";
-            JMenuItem bubbles = new JMenuItem(menuLabel);
-            bubbles.addActionListener(new ActionListener()
+            GenericFontIcon menuIcon = new GenericFontIcon(
+                    bubbleState ? AwesomeIconSolid.COMMENT_SLASH : AwesomeIconSolid.COMMENT, Color.WHITE);
+            JMenuItem bubbles = new JMenuItem(menuLabel, menuIcon);
+            bubbles.addActionListener(e ->
             {
-                @Override
-                public void actionPerformed(ActionEvent e)
+                Placemark placemark = null;
+                DataCouple couple = GroupUtils.getDataTypeAndParent(associatedTrack.getId(), myModel.getDataGroups());
+                DataTypeInfo dataType = couple.getDataType();
+                if (dataType instanceof MyPlacesDataTypeInfo)
                 {
-                    Placemark placemark = null;
-                    DataCouple couple = GroupUtils.getDataTypeAndParent(associatedTrack.getId(), myModel.getDataGroups());
-                    DataTypeInfo dataType = couple.getDataType();
-                    if (dataType instanceof MyPlacesDataTypeInfo)
-                    {
-                        MyPlacesDataTypeInfo dataTypeInfo = (MyPlacesDataTypeInfo)dataType;
-                        placemark = dataTypeInfo.getKmlPlacemark();
-                        ExtendedData extendedData = placemark.getExtendedData();
+                    MyPlacesDataTypeInfo dataTypeInfo = (MyPlacesDataTypeInfo)dataType;
+                    placemark = dataTypeInfo.getKmlPlacemark();
+                    ExtendedData extendedData = placemark.getExtendedData();
 
-                        ExtendedDataUtils.putBoolean(extendedData, Constants.IS_ANNOHIDE_ID, bubbleState);
+                    ExtendedDataUtils.putBoolean(extendedData, Constants.IS_ANNOHIDE_ID, bubbleState);
 
-                        dataType.fireChangeEvent(new DataTypeInfoMyPlaceChangedEvent(dataType, this));
-                    }
+                    dataType.fireChangeEvent(new DataTypeInfoMyPlaceChangedEvent(dataType, this));
                 }
             });
             menuItems.add(bubbles);
 
-            JMenuItem selectEx = new JMenuItem("Clear Tracks");
-            selectEx.addActionListener(new ActionListener()
+            JMenuItem selectEx = new JMenuItem("Clear Tracks", new GenericFontIcon(AwesomeIconSolid.TIMES, Color.WHITE));
+            selectEx.addActionListener(e ->
             {
-                @Override
-                public void actionPerformed(ActionEvent e)
+                int response = JOptionPane.showConfirmDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
+                        "Are you sure you want to remove all tracks?", "Delete Tracks Confirmation", JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE);
+                if (response == JOptionPane.OK_OPTION)
                 {
-                    int response = JOptionPane.showConfirmDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
-                            "Are you sure you want to remove all tracks?", "Delete Tracks Confirmation",
-                            JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-                    if (response == JOptionPane.OK_OPTION)
+                    Collection<Track> allTracks = TrackRegistry.getInstance().getTracks();
+                    for (Track aTrack : allTracks)
                     {
-                        Collection<Track> allTracks = TrackRegistry.getInstance().getTracks();
-                        for (Track aTrack : allTracks)
-                        {
-                            DataCouple couple = GroupUtils.getDataTypeAndParent(aTrack.getId(), myModel.getDataGroups());
-                            couple.getDataGroup().removeMember(couple.getDataType(), false, this);
-                        }
+                        DataCouple couple = GroupUtils.getDataTypeAndParent(aTrack.getId(), myModel.getDataGroups());
+                        couple.getDataGroup().removeMember(couple.getDataType(), false, this);
                     }
                 }
             });
@@ -188,47 +133,15 @@ public class TracksContextMenuProvider implements ContextMenuProvider<GeometryCo
         return menuItems;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.control.action.ContextMenuProvider#getPriority()
+     */
     @Override
     public int getPriority()
     {
         return 11301;
-    }
-
-    /**
-     * Add all of the available units for the length to the menu.
-     *
-     * @param geom The geometry.
-     * @param unitsMenu The unit change sub-menu.
-     */
-    private void addUnitsMenuItems(final PolylineGeometry geom, JMenu unitsMenu)
-    {
-        Collection<Class<? extends Length>> availableUnits = myToolbox.getUnitsRegistry().getAvailableUnits(Length.class, true);
-        availableUnits.add(null);
-        for (final Class<? extends Length> lengthType : availableUnits)
-        {
-            JMenuItem unitsItem;
-            try
-            {
-                String selectionLabel = lengthType == null
-                        ? "System Default ("
-                                + Length.getSelectionLabel(myToolbox.getUnitsRegistry().getPreferredUnits(Length.class)) + ")"
-                        : Length.getSelectionLabel(lengthType);
-                unitsItem = new JMenuItem(selectionLabel);
-                unitsItem.addActionListener(new ActionListener()
-                {
-                    @Override
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        handleUnitChange(geom, lengthType);
-                    }
-                });
-                unitsMenu.add(unitsItem);
-            }
-            catch (InvalidUnitsException e)
-            {
-                LOGGER.warn("Could not use length type: " + e, e);
-            }
-        }
     }
 
     /**
@@ -266,35 +179,5 @@ public class TracksContextMenuProvider implements ContextMenuProvider<GeometryCo
         }
 
         return track;
-    }
-
-    /**
-     * Change the arc length label for the geometry to match the given units.
-     *
-     * @param geom The arc.
-     * @param units The units in which to display length.
-     */
-    private void handleUnitChange(PolylineGeometry geom, Class<? extends Length> units)
-    {
-        Track track = getAssociatedTrack(geom);
-        DataCouple couple = GroupUtils.getDataTypeAndParent(track.getId(), myModel.getDataGroups());
-        DataTypeInfo dataType = couple.getDataType();
-        if (dataType instanceof MyPlacesDataTypeInfo)
-        {
-            MyPlacesDataTypeInfo dataTypeInfo = (MyPlacesDataTypeInfo)dataType;
-            Placemark placemark = dataTypeInfo.getKmlPlacemark();
-            ExtendedData extendedData = placemark.getExtendedData();
-
-            if (units == null)
-            {
-                ExtendedDataUtils.removeData(extendedData, Constants.UNITS_ID);
-            }
-            else
-            {
-                ExtendedDataUtils.putString(extendedData, Constants.UNITS_ID, units.getName());
-            }
-
-            dataType.fireChangeEvent(new DataTypeInfoMyPlaceChangedEvent(dataType, this));
-        }
     }
 }

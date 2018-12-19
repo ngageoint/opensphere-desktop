@@ -17,6 +17,6 @@ public class SelectCommand extends AbstractSelectionCommand
     public SelectCommand()
     {
         super("SELECT", "Select", "Select features in region", SelectionCommandGroup.FEATURES,
-                new GenericFontIcon(AwesomeIconSolid.CHECK_CIRCLE, Color.WHITE, 12));
+                new GenericFontIcon(AwesomeIconSolid.CHECK_CIRCLE, Color.WHITE));
     }
 }

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Function;
 
 import com.bitsys.common.http.client.HttpClient;
@@ -30,6 +32,32 @@ public class DeleteRequestorImpl extends BaseRequestor implements DeleteRequesto
     public DeleteRequestorImpl(HttpClient client, HeaderValues headerValues)
     {
         super(client, headerValues);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.server.serverprovider.http.requestors.DeleteRequestor#sendDelete(java.net.URL,
+     *      java.util.Map, io.opensphere.core.server.ResponseValues)
+     */
+    @Override
+    public CancellableInputStream sendDelete(URL url, Map<String, String> extraHeaderValues, ResponseValues responseValues)
+        throws IOException, URISyntaxException
+    {
+        HttpRequest request = HttpRequestFactory.getInstance().delete(url.toURI());
+        for (Entry<String, String> extraHeader : extraHeaderValues.entrySet())
+        {
+            request.getHeaders().put(extraHeader.getKey(), extraHeader.getValue());
+        }
+        CancellableInputStream responseStream = executeRequest(request, responseValues);
+        return handleRedirect(responseStream, responseValues, new Function<String, HttpRequest>()
+        {
+            @Override
+            public HttpRequest apply(String newUrlString)
+            {
+                return HttpRequestFactory.getInstance().delete(URI.create(newUrlString));
+            }
+        });
     }
 
     @Override
