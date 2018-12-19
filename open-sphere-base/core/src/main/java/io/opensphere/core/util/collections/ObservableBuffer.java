@@ -1,23 +1,30 @@
 package io.opensphere.core.util.collections;
 
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.NoSuchElementException;
 import java.util.Queue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 import javafx.collections.ObservableListBase;
 
 /**
- * A fixed sized container in which data is stored in a first-in / first-out
- * manner (FIFO). This is a self-evicting queue such that when the queue reaches
- * this capacity, the oldest element in the queue is automatically removed to
- * make room for a new entry upon calling offer or add.
+ * A fixed sized container in which data is stored in order of insertion, with
+ * the newest element at the end of the container, and the oldest element at the
+ * beginning of the container. This container is of a fixed capacity, but will
+ * continue to accept new elements regardless of whether it is full or not. If
+ * the size is equal to the capacity and a new element is offered to the
+ * container, the oldest item in the buffer is pushed out before the new item is
+ * added.
  *
  * @param <E> The type of the elements contained in the buffer.
  */
 public class ObservableBuffer<E> extends ObservableListBase<E> implements Queue<E>
 {
     /** The queue backing this collection. */
-    private final LinkedBlockingQueue<E> myQueue;
+    private final LinkedList<E> myQueue;
+
+    /** The number of elements that can be stored in the buffer. */
+    private final int myCapacity;
 
     /**
      * Creates a new buffer storing elements in a fixed sized container. This is
@@ -30,7 +37,8 @@ public class ObservableBuffer<E> extends ObservableListBase<E> implements Queue<
      */
     public ObservableBuffer(int capacity)
     {
-        myQueue = new LinkedBlockingQueue<>(capacity);
+        myCapacity = capacity;
+        myQueue = new LinkedList<>();
     }
 
     /**
@@ -45,19 +53,12 @@ public class ObservableBuffer<E> extends ObservableListBase<E> implements Queue<
         synchronized (myQueue)
         {
             beginChange();
-            while (myQueue.remainingCapacity() < 1)
+            while (remainingCapacity() < 1)
             {
-                try
+                E removedElement = myQueue.removeFirst();
+                if (removedElement != null)
                 {
-                    E removedElement = myQueue.take();
-                    if (removedElement != null)
-                    {
-                        nextRemove(0, removedElement);
-                    }
-                }
-                catch (InterruptedException e)
-                {
-                    /* safe to ignore */
+                    nextRemove(0, removedElement);
                 }
             }
             changed = myQueue.offer(element);
@@ -71,6 +72,16 @@ public class ObservableBuffer<E> extends ObservableListBase<E> implements Queue<
     }
 
     /**
+     * Calculates and returns the amount of space left in the queue.
+     *
+     * @return the amount of space left in the queue.
+     */
+    protected int remainingCapacity()
+    {
+        return myCapacity - myQueue.size();
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @see java.util.AbstractList#add(java.lang.Object)
@@ -78,6 +89,11 @@ public class ObservableBuffer<E> extends ObservableListBase<E> implements Queue<
     @Override
     public boolean add(E e)
     {
+        if (remainingCapacity() == 0)
+        {
+            throw new IllegalStateException("Queue full");
+        }
+
         boolean changed = false;
         synchronized (myQueue)
         {
@@ -112,7 +128,7 @@ public class ObservableBuffer<E> extends ObservableListBase<E> implements Queue<
             beginChange();
             try
             {
-                removedItem = myQueue.remove();
+                removedItem = myQueue.removeLast();
                 nextRemove(0, removedItem);
             }
             finally
@@ -137,7 +153,7 @@ public class ObservableBuffer<E> extends ObservableListBase<E> implements Queue<
             beginChange();
             try
             {
-                removedItem = myQueue.poll();
+                removedItem = myQueue.pollLast();
                 nextRemove(0, removedItem);
             }
             finally
@@ -156,7 +172,11 @@ public class ObservableBuffer<E> extends ObservableListBase<E> implements Queue<
     @Override
     public E element()
     {
-        return myQueue.element();
+        if (myQueue.isEmpty())
+        {
+            throw new NoSuchElementException();
+        }
+        return myQueue.peekLast();
     }
 
     /**
@@ -167,7 +187,7 @@ public class ObservableBuffer<E> extends ObservableListBase<E> implements Queue<
     @Override
     public E peek()
     {
-        return myQueue.peek();
+        return myQueue.peekLast();
     }
 
     /**
@@ -178,6 +198,10 @@ public class ObservableBuffer<E> extends ObservableListBase<E> implements Queue<
     @Override
     public E get(int index)
     {
+        if (index < 0 || index >= myQueue.size())
+        {
+            throw new IndexOutOfBoundsException(0);
+        }
         E item = null;
         synchronized (myQueue)
         {

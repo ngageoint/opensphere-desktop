@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import io.opensphere.core.util.collections.New;
-import javafx.collections.FXCollections;
+import io.opensphere.core.util.collections.ObservableBuffer;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
@@ -12,7 +12,8 @@ import javafx.collections.ObservableList;
 public class NetworkTransactionModel
 {
     /** The transactions stored by the model. */
-    private final ObservableList<NetworkTransaction> myTransactions;
+    // private final ObservableList<NetworkTransaction> myTransactions;
+    private final ObservableBuffer<NetworkTransaction> myTransactions;
 
     /** A lookup table mapping the transaction ID to the transaction. */
     private final Map<String, NetworkTransaction> myTransactionDictionary;
@@ -22,7 +23,8 @@ public class NetworkTransactionModel
      */
     public NetworkTransactionModel()
     {
-        myTransactions = FXCollections.observableArrayList();
+        // myTransactions = FXCollections.observableArrayList();
+        myTransactions = new ObservableBuffer<>(100);
         myTransactionDictionary = New.map();
 
         myTransactions.addListener((ListChangeListener.Change<? extends NetworkTransaction> e) ->
