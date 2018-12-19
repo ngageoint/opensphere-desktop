@@ -2,6 +2,8 @@ package com.bitsys.common.http.client;
 
 import java.io.IOException;
 
+import org.apache.http.client.CookieStore;
+
 import com.bitsys.common.http.message.HttpRequest;
 import com.bitsys.common.http.message.HttpResponse;
 
@@ -20,6 +22,13 @@ public interface HttpClient
      * @return the options for this HTTP client.
      */
     HttpClientOptions getOptions();
+
+    /**
+     * Gets the value of the Cookie Store field.
+     *
+     * @return the value stored in the Cookie Store field.
+     */
+    CookieStore getCookieStore();
 
     /**
      * Executes the specified HTTP request.

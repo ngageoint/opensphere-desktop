@@ -28,6 +28,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpHeaders;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.RedirectStrategy;
 import org.apache.http.client.methods.HttpDelete;
@@ -132,6 +133,9 @@ public class DefaultHttpClient implements CloseableHttpClient
 
     /** The caching certificate verifier. */
     private CachingCertificateVerifier myCachingCertificateVerifier;
+
+    /** The store in which cookies are exposed. */
+    private CookieStore myCookieStore;
 
     @Override
     public HttpClientOptions getOptions()
@@ -356,6 +360,8 @@ public class DefaultHttpClient implements CloseableHttpClient
             conman.setMaxTotal(getOptions().getMaxConnections());
             final org.apache.http.impl.client.DefaultHttpClient defaultHttpClient = new org.apache.http.impl.client.DefaultHttpClient(
                     conman, params);
+
+            myCookieStore = defaultHttpClient.getCookieStore();
 
             configureCredentialsProvider(defaultHttpClient);
             configureRedirectStrategy(defaultHttpClient);
@@ -609,6 +615,17 @@ public class DefaultHttpClient implements CloseableHttpClient
 
         // TODO: Implement cache clearing.
         throw new UnsupportedOperationException("The clearCache method has not yet been implemented");
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.bitsys.common.http.client.HttpClient#getCookieStore()
+     */
+    @Override
+    public CookieStore getCookieStore()
+    {
+        return myCookieStore;
     }
 
     /**

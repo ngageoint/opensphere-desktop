@@ -11,6 +11,8 @@ import java.net.URL;
 import java.util.Date;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.http.client.CookieStore;
 import org.apache.log4j.Logger;
 
 import com.bitsys.common.http.entity.HttpEntity;
@@ -54,16 +56,25 @@ public class NetworkTransaction
      */
     private Date myTransactionEnd;
 
+    /** The property in which the string form of the URL is stored. */
     private StringProperty myUrl = new ConcurrentStringProperty();
 
+    /** The protocol used in the transaction. */
     private String myProtocol;
 
+    /** The domain called during the transaction. */
     private String myDomain;
 
+    /**
+     * The file portion of the URL called during the transaction (technically,
+     * this is actually, the 'path', 'query' and 'fragment').
+     */
     private String myFile;
 
+    /** The amount of data sent during the transaction. */
     private Long myBytesSent;
 
+    /** The amount of data received during the transaction. */
     private Long myBytesReceived;
 
     /**
@@ -72,23 +83,36 @@ public class NetworkTransaction
      */
     private String myRequestMethod;
 
+    /** The status of the transaction. */
     private Integer myStatus;
 
     /** The content type of the response. */
     private String myContentType;
 
+    /** The body of the request, if sent. */
     private String myRequestBody;
 
+    /** The body of the response, if sent. */
     private InputStream myResponseBody;
 
+    /** The cookies referenced during the transaction. */
+    private final ObservableList<HttpKeyValuePair> myRequestCookies = FXCollections.observableArrayList();
+
+    /** The headers sent during the transaction. */
     private final ObservableList<HttpKeyValuePair> myRequestHeaders = FXCollections.observableArrayList();
 
+    /** The headers received during the transaction. */
     private final ObservableList<HttpKeyValuePair> myResponseHeaders = FXCollections.observableArrayList();
 
+    /** The parameters sent during the transaction. */
     private final ObservableList<HttpKeyValuePair> myRequestParameters = FXCollections.observableArrayList();
 
     /**
+     * Creates a new transaction using the supplied transaction ID. The ID is
+     * used to link a request and a response into the the same transaction, as
+     * they may not occur synchronously.
      *
+     * @param transactionId the ID of the transaction.
      */
     public NetworkTransaction(String transactionId)
     {
@@ -117,6 +141,13 @@ public class NetworkTransaction
         HttpRequest request = event.getRequest();
         myTransactionStart = event.getEventTime();
 
+        CookieStore cookieStore = event.getCookieStore();
+        if (cookieStore != null)
+        {
+            cookieStore.getCookies().stream().map(c -> new HttpKeyValuePair(c.getName(), c.getValue()))
+                    .forEach(myRequestCookies::add);
+        }
+
         if (request != null)
         {
             myRequestMethod = request.getMethod();
@@ -129,6 +160,20 @@ public class NetworkTransaction
                 URL url = uri.toURL();
                 myProtocol = url.getProtocol();
                 myFile = myUrl.get().replaceAll(myProtocol + "://" + myDomain, "");
+
+                String queryString = url.getQuery();
+                if (StringUtils.isNotBlank(queryString))
+                {
+                    String[] tokens = queryString.split("&");
+                    for (String parameterPair : tokens)
+                    {
+                        if (parameterPair.contains("="))
+                        {
+                            String[] parameterTokens = parameterPair.split("=");
+                            myRequestParameters.add(new HttpKeyValuePair(parameterTokens[0], parameterTokens[1]));
+                        }
+                    }
+                }
             }
             catch (MalformedURLException e)
             {
@@ -360,6 +405,16 @@ public class NetworkTransaction
     public ObservableList<HttpKeyValuePair> getRequestParameters()
     {
         return myRequestParameters;
+    }
+
+    /**
+     * Gets the value of the {@link #myRequestCookies} field.
+     *
+     * @return the value stored in the {@link #myRequestCookies} field.
+     */
+    public ObservableList<HttpKeyValuePair> getRequestCookies()
+    {
+        return myRequestCookies;
     }
 
     /**

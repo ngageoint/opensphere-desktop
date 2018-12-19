@@ -8,7 +8,8 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 
 /**
- *
+ * A panel implementation in which details of a specific network transaction are
+ * displayed.
  */
 public class TransactionDetailPanel extends BorderPane
 {
@@ -18,31 +19,33 @@ public class TransactionDetailPanel extends BorderPane
      */
     private final ObjectProperty<NetworkTransaction> myTransactionProperty = new ConcurrentObjectProperty<>();
 
+    /** The panel on which the tabs are displayed. */
     private TabPane myTabPane;
 
+    /** The panel on which the headers are displayed. */
     private HeadersPanel myHeadersPanel;
 
+    /** The panel on which the parameters are displayed. */
     private ParametersPanel myParametersPanel;
 
-    private ResponsePanel myResponsePanel;
+    /** The panel on which cookies are displayed. */
+    private CookiePanel myCookiePanel;
 
-    /**
-     *
-     */
+    /** Creates a new detail panel. */
     public TransactionDetailPanel()
     {
         myHeadersPanel = new HeadersPanel();
         myParametersPanel = new ParametersPanel();
-        myResponsePanel = new ResponsePanel();
+        myCookiePanel = new CookiePanel();
 
         myHeadersPanel.transactionProperty().bind(myTransactionProperty);
         myParametersPanel.transactionProperty().bind(myTransactionProperty);
-        myResponsePanel.transactionProperty().bind(myTransactionProperty);
+        myCookiePanel.transactionProperty().bind(myTransactionProperty);
 
         myTabPane = new TabPane();
         myTabPane.getTabs().add(new Tab("Headers", myHeadersPanel));
         myTabPane.getTabs().add(new Tab("Parameters", myParametersPanel));
-        myTabPane.getTabs().add(new Tab("Response", myResponsePanel));
+        myTabPane.getTabs().add(new Tab("Cookies", myCookiePanel));
 
         setCenter(myTabPane);
     }

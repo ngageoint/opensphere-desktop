@@ -1,5 +1,8 @@
 package io.opensphere.core.net;
 
+import org.apache.http.client.CookieStore;
+
+import com.bitsys.common.http.client.HttpClientOptions;
 import com.bitsys.common.http.message.HttpRequest;
 
 /**
@@ -17,15 +20,19 @@ public class NetworkTransmitEvent extends NetworkEvent
     /** The HTTP request sent to the remote endpoint. */
     private final HttpRequest myRequest;
 
+    private HttpClientOptions myOptions;
+
+    private CookieStore myCookieStore;
+
     /**
      * Creates a new transmission event with the supplied information.
      *
      * @param request the HTTP request sent to the remote endpoint.
      * @param transactionId the unique identifier applied to the transaction.
      */
-    public NetworkTransmitEvent(HttpRequest request, String transactionId)
+    public NetworkTransmitEvent(HttpRequest request, HttpClientOptions options, String transactionId)
     {
-        this(request, transactionId, State.COMPLETED);
+        this(request, options, transactionId, State.COMPLETED);
     }
 
     /**
@@ -35,9 +42,9 @@ public class NetworkTransmitEvent extends NetworkEvent
      * @param transactionId the unique identifier applied to the transaction.
      * @param state the state of the event.
      */
-    public NetworkTransmitEvent(HttpRequest request, String transactionId, State state)
+    public NetworkTransmitEvent(HttpRequest request, HttpClientOptions options, String transactionId, State state)
     {
-        this(request, transactionId, state, false);
+        this(request, options, transactionId, state, false);
     }
 
     /**
@@ -50,10 +57,12 @@ public class NetworkTransmitEvent extends NetworkEvent
      *            pending and that the event framework should adjust
      *            accordingly.
      */
-    public NetworkTransmitEvent(HttpRequest request, String transactionId, State state, boolean expectingResponse)
+    public NetworkTransmitEvent(HttpRequest request, HttpClientOptions options, String transactionId, State state,
+            boolean expectingResponse)
     {
         super(transactionId, state);
         myRequest = request;
+        myOptions = options;
         myExpectingResponse = false;
     }
 
@@ -75,5 +84,36 @@ public class NetworkTransmitEvent extends NetworkEvent
     public HttpRequest getRequest()
     {
         return myRequest;
+    }
+
+    /**
+     * Gets the value of the {@link #myOptions} field.
+     *
+     * @return the value stored in the {@link #myOptions} field.
+     */
+    public HttpClientOptions getOptions()
+    {
+        return myOptions;
+    }
+
+    /**
+     * Sets the value of the {@link #myCookieStore} field.
+     *
+     * @param cookieStore the value to store in the {@link #myCookieStore}
+     *            field.
+     */
+    public void setCookieStore(CookieStore cookieStore)
+    {
+        myCookieStore = cookieStore;
+    }
+
+    /**
+     * Gets the value of the {@link #myCookieStore} field.
+     *
+     * @return the value stored in the {@link #myCookieStore} field.
+     */
+    public CookieStore getCookieStore()
+    {
+        return myCookieStore;
     }
 }

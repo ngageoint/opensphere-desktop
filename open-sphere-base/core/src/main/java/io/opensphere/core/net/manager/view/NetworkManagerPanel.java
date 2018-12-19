@@ -25,6 +25,7 @@ public class NetworkManagerPanel extends SplitPane
     /** The table view in which the network events are rendered. */
     private final TableView<NetworkTransaction> myNetworkTableView;
 
+    /** Panel in which the details of the selected transaction are displayed. */
     private final TransactionDetailPanel myDetailPanel;
 
     /** The model in which the transactions are stored for the table view. */
@@ -46,6 +47,7 @@ public class NetworkManagerPanel extends SplitPane
     public NetworkManagerPanel(Toolbox toolbox, NetworkManagerController controller)
     {
         orientationProperty().set(Orientation.VERTICAL);
+        setDividerPositions(.3);
         myController = controller;
         myModel = myController.getModel();
         myEvents = myModel.getTransactions();

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package io.opensphere.core.net.manager.model;
 
@@ -19,7 +19,7 @@ public class HttpKeyValuePair
     private final StringProperty myValueProperty = new ConcurrentStringProperty();
 
     /**
-     * 
+     * Creates an empty pair.
      */
     public HttpKeyValuePair()
     {
@@ -27,7 +27,10 @@ public class HttpKeyValuePair
     }
 
     /**
-     * 
+     * Creates a new pair using the supplied key and value.
+     *
+     * @param key the name of the pair.
+     * @param value the value of the pair.
      */
     public HttpKeyValuePair(String key, String value)
     {

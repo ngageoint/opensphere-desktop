@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 /**
  *
  */
-public class ParametersPanel extends VBox
+public class CookiePanel extends VBox
 {
     /**
      * The model of the network transaction currently being detailed by the
@@ -20,29 +20,29 @@ public class ParametersPanel extends VBox
     private final ObjectProperty<NetworkTransaction> myTransactionProperty = new ConcurrentObjectProperty<>();
 
     /** Creates a new parameters panel bound to the selected transaction. */
-    public ParametersPanel()
+    public CookiePanel()
     {
-        ListView<HttpKeyValuePair> queryParametersList = new ListView<>();
-        queryParametersList.setCellFactory(p -> new HeaderListCell());
-        TitledPane queryParametersPane = new TitledPane("Query Parameters", queryParametersList);
+        ListView<HttpKeyValuePair> list = new ListView<>();
+        list.setCellFactory(p -> new HeaderListCell());
+        TitledPane pane = new TitledPane("Request Cookies", list);
 
-        VBox parametersAccordion = new VBox(queryParametersPane);
-        queryParametersPane.setExpanded(true);
+        VBox accordion = new VBox(pane);
+        pane.setExpanded(true);
         myTransactionProperty.addListener((obs, ov, nv) ->
         {
             if (nv != null)
             {
 
-                queryParametersList.itemsProperty().get().clear();
-                queryParametersList.itemsProperty().get().addAll(myTransactionProperty.get().getRequestParameters());
+                list.itemsProperty().get().clear();
+                list.itemsProperty().get().addAll(myTransactionProperty.get().getRequestCookies());
             }
             else
             {
-                queryParametersList.itemsProperty().get().clear();
+                list.itemsProperty().get().clear();
             }
-            queryParametersList.refresh();
+            list.refresh();
         });
-        getChildren().add(parametersAccordion);
+        getChildren().add(accordion);
     }
 
     /**

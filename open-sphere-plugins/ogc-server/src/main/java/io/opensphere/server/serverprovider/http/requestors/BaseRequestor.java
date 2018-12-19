@@ -113,7 +113,8 @@ public abstract class BaseRequestor
         }
 
         String transactionId = UUID.randomUUID().toString();
-        NetworkTransmitEvent transmitEvent = new NetworkTransmitEvent(request, transactionId);
+        NetworkTransmitEvent transmitEvent = new NetworkTransmitEvent(request, myClient.getOptions(), transactionId);
+        transmitEvent.setCookieStore(getClient().getCookieStore());
         myEventManager.publishEvent(transmitEvent);
         HttpResponse response = myClient.execute(request);
 
