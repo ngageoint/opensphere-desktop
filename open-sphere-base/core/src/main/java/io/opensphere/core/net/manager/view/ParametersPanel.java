@@ -32,7 +32,6 @@ public class ParametersPanel extends VBox
         {
             if (nv != null)
             {
-
                 queryParametersList.itemsProperty().get().clear();
                 queryParametersList.itemsProperty().get().addAll(myTransactionProperty.get().getRequestParameters());
             }

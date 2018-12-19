@@ -27,7 +27,6 @@ public class ObservableBuffer<E> extends ObservableListBase<E> implements Queue<
      *
      * @param capacity the number of elements that can be stored in the buffer
      *            before the oldest item is pushed out.
-     *
      */
     public ObservableBuffer(int capacity)
     {
@@ -202,5 +201,4 @@ public class ObservableBuffer<E> extends ObservableListBase<E> implements Queue<
     {
         return myQueue.size();
     }
-
 }

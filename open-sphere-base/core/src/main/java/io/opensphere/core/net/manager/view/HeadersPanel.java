@@ -83,5 +83,4 @@ public class HeadersPanel extends VBox
     {
         return myTransactionProperty;
     }
-
 }

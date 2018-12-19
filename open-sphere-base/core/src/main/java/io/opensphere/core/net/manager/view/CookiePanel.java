@@ -32,7 +32,6 @@ public class CookiePanel extends VBox
         {
             if (nv != null)
             {
-
                 list.itemsProperty().get().clear();
                 list.itemsProperty().get().addAll(myTransactionProperty.get().getRequestCookies());
             }
