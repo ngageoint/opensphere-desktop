@@ -16,8 +16,8 @@ import com.bitsys.common.http.client.HttpClient;
 import com.bitsys.common.http.client.HttpClientOptions;
 import com.bitsys.common.http.client.ProxyConfig;
 import com.bitsys.common.http.proxy.ProxyHostConfig;
-import com.bitsys.common.http.proxy.ProxyResolver;
 import com.bitsys.common.http.proxy.ProxyHostConfig.ProxyType;
+import com.bitsys.common.http.proxy.ProxyResolver;
 
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.Pair;
@@ -36,7 +36,7 @@ public class RequestorProviderImplTest
     {
         HttpClient client = EasyMock.createMock(HttpClient.class);
 
-        RequestorProviderImpl provider = new RequestorProviderImpl(client, new HeaderConstantsMock());
+        RequestorProviderImpl provider = new RequestorProviderImpl(client, new HeaderConstantsMock(), null);
 
         BaseRequestor requestor = (BaseRequestor)provider.getFilePoster();
 
@@ -68,7 +68,7 @@ public class RequestorProviderImplTest
 
         EasyMock.replay(client);
 
-        RequestorProviderImpl requestorProvider = new RequestorProviderImpl(client, new HeaderConstantsMock());
+        RequestorProviderImpl requestorProvider = new RequestorProviderImpl(client, new HeaderConstantsMock(), null);
         requestorProvider.setBufferSize(1530);
 
         assertEquals(1530, requestorProvider.getClient().getOptions().getSocketBufferSize());
@@ -90,7 +90,7 @@ public class RequestorProviderImplTest
 
         EasyMock.replay(client);
 
-        RequestorProviderImpl requestorProvider = new RequestorProviderImpl(client, new HeaderConstantsMock());
+        RequestorProviderImpl requestorProvider = new RequestorProviderImpl(client, new HeaderConstantsMock(), null);
         requestorProvider.setTimeouts(120000, 200000);
 
         assertEquals(120, requestorProvider.getClient().getOptions().getReadTimeout());
@@ -124,7 +124,7 @@ public class RequestorProviderImplTest
 
         support.replayAll();
 
-        RequestorProviderImpl provider = new RequestorProviderImpl(client, new HeaderConstantsMock());
+        RequestorProviderImpl provider = new RequestorProviderImpl(client, new HeaderConstantsMock(), null);
 
         Pair<String, Integer> hostAndPort = provider.resolveProxy(testUrl);
 
@@ -153,7 +153,7 @@ public class RequestorProviderImplTest
 
         support.replayAll();
 
-        RequestorProviderImpl provider = new RequestorProviderImpl(client, new HeaderConstantsMock());
+        RequestorProviderImpl provider = new RequestorProviderImpl(client, new HeaderConstantsMock(), null);
 
         Pair<String, Integer> hostAndPort = provider.resolveProxy(testUrl);
 

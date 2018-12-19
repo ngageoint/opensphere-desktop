@@ -11,6 +11,7 @@ import io.opensphere.core.geometry.GeometryRegistry;
 import io.opensphere.core.importer.ImporterRegistry;
 import io.opensphere.core.metrics.MetricsRegistry;
 import io.opensphere.core.modulestate.ModuleStateManager;
+import io.opensphere.core.net.manager.controller.NetworkManagerController;
 import io.opensphere.core.order.OrderManagerRegistry;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.search.SearchRegistry;
@@ -24,8 +25,9 @@ import io.opensphere.core.util.registry.GenericRegistry;
 public interface Toolbox
 {
     /**
-     * Gets the statistics manager. The statistics manager allows for various parts
-     * of the application to contribute statistics for logging or other uses.
+     * Gets the statistics manager. The statistics manager allows for various
+     * parts of the application to contribute statistics for logging or other
+     * uses.
      *
      * @return an instance of the statistics manager.
      */
@@ -217,4 +219,11 @@ public interface Toolbox
      * @return The server provider registry.
      */
     ServerProviderRegistry getServerProviderRegistry();
+
+    /**
+     * Gets the controller for the network manager.
+     *
+     * @return the controller for the network manager.
+     */
+    NetworkManagerController getNetworkManagerController();
 }
