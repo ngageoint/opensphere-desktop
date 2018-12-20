@@ -40,11 +40,4 @@ public interface IconProvider
      * @return the source
      */
     String getSourceKey();
-
-    /**
-     * Gets the sub category for the icon.
-     *
-     * @return the sub category
-     */
-    String getSubCategory();
 }

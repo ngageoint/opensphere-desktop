@@ -22,7 +22,7 @@ public final class KmlIcons extends AbstractIconLoader
     {
         if (iconLoader == null)
         {
-            iconLoader = new KmlIcons("/images/maps.google.com/imageList.txt", "GoogleEarth", "KML Plugin", "maps.google.com");
+            iconLoader = new KmlIcons("/images/maps.google.com/imageList.txt", "GoogleEarth", "maps.google.com");
         }
 
         return iconLoader.getIconMap(iconRegistry);
@@ -33,12 +33,11 @@ public final class KmlIcons extends AbstractIconLoader
      *
      * @param pImageList the filepath of the list of images this will use
      * @param pCollectionName the name of the icon collection
-     * @param pSubCategoryName the name of the collection subcategory
      * @param pSourceKey the source key for records
      */
-    public KmlIcons(String pImageList, String pCollectionName, String pSubCategoryName, String pSourceKey)
+    public KmlIcons(String pImageList, String pCollectionName, String pSourceKey)
     {
-        super(pImageList, pCollectionName, pSubCategoryName, pSourceKey);
+        super(pImageList, pCollectionName, pSourceKey);
     }
 
     /**

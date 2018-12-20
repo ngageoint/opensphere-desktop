@@ -35,9 +35,6 @@ public abstract class AbstractIconLoader
     /** The icon collection. */
     private final String myCollectionName;
 
-    /** The collection subcategory. */
-    private final String mySubCategoryName;
-
     /** The icon record source. */
     private final String mySourceKey;
 
@@ -49,14 +46,12 @@ public abstract class AbstractIconLoader
      *
      * @param pImageList the filepath of the list of images this will use
      * @param pCollectionName the name of the icon collection
-     * @param pSubCategoryName the name of the collection subcategory
      * @param pSourceKey the source key for records
      */
-    public AbstractIconLoader(String pImageList, String pCollectionName, String pSubCategoryName, String pSourceKey)
+    public AbstractIconLoader(String pImageList, String pCollectionName, String pSourceKey)
     {
         myImageList = pImageList;
         myCollectionName = pCollectionName;
-        mySubCategoryName = pSubCategoryName;
         mySourceKey = pSourceKey;
     }
 
@@ -106,8 +101,7 @@ public abstract class AbstractIconLoader
      */
     protected List<IconRecord> getIconsFromRegistry(IconRegistry iconRegistry)
     {
-        return iconRegistry.getIconRecords(r -> myCollectionName.equals(r.collectionNameProperty().get())
-                && mySubCategoryName.equals(r.subCategoryProperty().get()));
+        return iconRegistry.getIconRecords(r -> myCollectionName.equals(r.collectionNameProperty().get()));
     }
 
     /**
@@ -158,8 +152,8 @@ public abstract class AbstractIconLoader
     protected List<IconRecord> readIconsFromFile(IconRegistry iconRegistry, Map<String, Long> publicUrlToIdMap)
     {
         List<IconProvider> iconProviders = readFile().stream().map(this::getResource).filter(Objects::nonNull)
-                .map(url -> IconProviderFactory.create(url, myCollectionName, mySubCategoryName, mySourceKey))
-                .filter(Objects::nonNull).collect(Collectors.toList());
+                .map(url -> IconProviderFactory.create(url, myCollectionName, mySourceKey)).filter(Objects::nonNull)
+                .collect(Collectors.toList());
 
         List<Long> ids = iconProviders.stream().map(p -> publicUrlToIdMap.get(getPublicUrl(p.getIconURL())))
                 .collect(Collectors.toList());

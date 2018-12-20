@@ -48,26 +48,20 @@ public class SearchControlBar extends HBox
         myAddIconsButton = new MenuButton("Add Icons", addIcon);
         myAddIconsButton.setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
 
-        var iconSources = IconSourceFactory.getInstance().getIconSources();
-        for (var iconSource : iconSources)
+        for (var iconSource : IconSourceFactory.getInstance().getIconSources())
         {
             MenuItem item = new MenuItem("Add " + iconSource.getName(),
                     FxIcons.createClearIcon(AwesomeIconSolid.PLUS_CIRCLE, Color.LIGHTGREY, 12));
             item.onActionProperty().set(e ->
             {
-                iconSource.getUserInput(this);
-                List<IconProvider> iconProviders = iconSource.getIconProviders(panelModel.getToolbox());
-                panelModel.getIconRegistry().addIcons(iconProviders, iconSources);
+                if (iconSource.getUserInput(this))
+                {
+                    List<IconProvider> iconProviders = iconSource.getIconProviders(panelModel.getToolbox());
+                    panelModel.getIconRegistry().addIcons(iconProviders, this);
+                }
             });
             myAddIconsButton.getItems().add(item);
         }
-
-        myAddIconsButton.getItems()
-                .add(new MenuItem("Add single icon", FxIcons.createClearIcon(AwesomeIconSolid.PLUS_CIRCLE, Color.LIGHTGREY, 12)));
-        myAddIconsButton.getItems().add(
-                new MenuItem("Add local icon set", FxIcons.createClearIcon(AwesomeIconSolid.PLUS_CIRCLE, Color.LIGHTGREY, 12)));
-        myAddIconsButton.getItems().add(
-                new MenuItem("Add remote icon set", FxIcons.createClearIcon(AwesomeIconSolid.PLUS_CIRCLE, Color.LIGHTGREY, 12)));
 
         getChildren().addAll(mySearchField, myAddIconsButton);
 

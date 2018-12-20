@@ -61,7 +61,7 @@ public class DirectoryCollectionIconSource implements IconSource<FileIconSourceM
     /**
      * Gets the set of icon providers from the path. This method recursively
      * examines all sub-directories of the supplied path.
-     * 
+     *
      * @param path the path to examine.
      * @return a list of icon providers generated from the recursive examination
      *         of the supplied path.
@@ -109,7 +109,7 @@ public class DirectoryCollectionIconSource implements IconSource<FileIconSourceM
      * Gets the icon provider for the supplied file. It is assumed that this
      * method is only called with a valid image file reference (which is why it
      * is private).
-     * 
+     *
      * @param file the file for which to get the icon provider.
      * @return an IconProvider to reference the supplied file.
      * @throws IOException if the file cannot be read.
@@ -117,7 +117,7 @@ public class DirectoryCollectionIconSource implements IconSource<FileIconSourceM
     private IconProvider getIconProvider(File file) throws IOException
     {
         // assumption: this is only called with valid image files
-        return new DefaultIconProvider(file.toURI().toURL(), IconRecord.USER_ADDED_COLLECTION, null, null);
+        return new DefaultIconProvider(file.toURI().toURL(), IconRecord.USER_ADDED_COLLECTION, null);
     }
 
     /**
@@ -137,7 +137,7 @@ public class DirectoryCollectionIconSource implements IconSource<FileIconSourceM
      * @see io.opensphere.mantle.icon.IconSource#getUserInput(Node)
      */
     @Override
-    public void getUserInput(Node parent)
+    public boolean getUserInput(Node parent)
     {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Select an Directory containing Icons");
@@ -146,6 +146,8 @@ public class DirectoryCollectionIconSource implements IconSource<FileIconSourceM
         if (file != null)
         {
             myModel.fileProperty().set(file);
+            return true;
         }
+        return false;
     }
 }

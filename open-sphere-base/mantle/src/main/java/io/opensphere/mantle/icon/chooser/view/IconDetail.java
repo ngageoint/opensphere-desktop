@@ -11,6 +11,10 @@ import javax.imageio.ImageIO;
 
 import org.apache.log4j.Logger;
 
+import io.opensphere.core.function.Procedure;
+import io.opensphere.core.util.AwesomeIconRegular;
+import io.opensphere.core.util.AwesomeIconSolid;
+import io.opensphere.core.util.fx.FxIcons;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.chooser.model.CustomizationModel;
@@ -21,6 +25,7 @@ import io.opensphere.mantle.icon.impl.DefaultIconProvider;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -35,6 +40,8 @@ import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Affine;
@@ -68,13 +75,32 @@ public class IconDetail extends AnchorPane
     private CustomizationModel myCustomizationModel;
 
     /**
+     * The procedure called when part of the selected icon record's model
+     * changes and the parent item needs to be refreshed.
+     */
+    private Procedure myRefreshProcedure;
+
+    /** The button to toggle to set favorite state. */
+    private Label myFavoriteToggleButton;
+
+    /** The node to use when the icon is not marked as a favorite. */
+    private Node myUnFavoriteIcon;
+
+    /** The node to use when the icon is marked as a favorite. */
+    private Node myFavoriteIcon;
+
+    /**
      * Creates a new detail panel bound to the supplied model.
      *
      * @param model the model to which to bind the panel.
+     * @param refreshProcedure The procedure called when part of the selected
+     *            icon record's model changes and the parent item needs to be
+     *            refreshed.
      */
-    public IconDetail(IconModel model)
+    public IconDetail(IconModel model, Procedure refreshProcedure)
     {
         myModel = model;
+        myRefreshProcedure = refreshProcedure;
         myCustomizationModel = model.getCustomizationModel();
         setMaxWidth(250);
         setMinWidth(250);
@@ -94,15 +120,41 @@ public class IconDetail extends AnchorPane
         VBox box = new VBox(5);
         box.setAlignment(Pos.TOP_CENTER);
 
+        StackPane stackPane = new StackPane();
+
+        myUnFavoriteIcon = FxIcons.createClearIcon(AwesomeIconRegular.STAR, Color.GREY, 16);
+        myFavoriteIcon = FxIcons.createClearIcon(AwesomeIconSolid.STAR, Color.GOLD, 16);
+
+        myFavoriteToggleButton = new Label();
+        myFavoriteToggleButton.setOnMouseClicked(e ->
+        {
+            if (myModel.selectedRecordProperty().get() != null && myModel.selectedRecordProperty().get().favoriteProperty().get())
+            {
+                myModel.selectedRecordProperty().get().favoriteProperty().set(false);
+                myFavoriteToggleButton.setGraphic(myUnFavoriteIcon);
+            }
+            else
+            {
+                myModel.selectedRecordProperty().get().favoriteProperty().set(true);
+                myFavoriteToggleButton.setGraphic(myFavoriteIcon);
+            }
+            myRefreshProcedure.invoke();
+        });
+
+        myFavoriteToggleButton.setPadding(new Insets(5));
+        HBox buttonBox = new HBox(myFavoriteToggleButton);
+        buttonBox.setAlignment(Pos.TOP_RIGHT);
+
         HBox canvasBox = new HBox(myCanvas);
         Border border = new Border(new BorderStroke(new Color(0.247058824, 0.247058824, 0.305882353, 1), BorderStrokeStyle.SOLID,
                 null, BorderWidths.DEFAULT, new Insets(0, 0, 10, 2)));
         canvasBox.setBorder(border);
-        getChildren().add(canvasBox);
-        setTopAnchor(canvasBox, 0.0);
-        setLeftAnchor(canvasBox, 0.0);
-        setRightAnchor(canvasBox, 0.0);
-        setBottomAnchor(canvasBox, 255.0);
+        stackPane.getChildren().addAll(canvasBox, buttonBox);
+
+        getChildren().add(stackPane);
+        setTopAnchor(stackPane, 0.0);
+        setLeftAnchor(stackPane, 0.0);
+        setRightAnchor(stackPane, 0.0);
 
         GridPane grid = new GridPane();
         grid.add(new Label("Name:"), 0, 0);
@@ -124,6 +176,10 @@ public class IconDetail extends AnchorPane
                 .addListener((obs, ov, nv) -> redrawPreview(model.selectedRecordProperty().get()));
         transformModel.verticalScaleProperty().addListener((obs, ov, nv) -> redrawPreview(model.selectedRecordProperty().get()));
 
+        HBox spacer = new HBox();
+        VBox.setVgrow(spacer, Priority.ALWAYS);
+        box.getChildren().add(spacer);
+
         box.getChildren().add(myTransformPanel);
 
         getChildren().add(box);
@@ -131,6 +187,7 @@ public class IconDetail extends AnchorPane
         setTopAnchor(box, 275.0);
         setLeftAnchor(box, 2.0);
         setRightAnchor(box, 0.0);
+        setBottomAnchor(box, 0.0);
 
         redrawPreview(model.selectedRecordProperty().get());
     }
@@ -157,7 +214,7 @@ public class IconDetail extends AnchorPane
 
             URL imageURL = myModel.getIconRegistry().getIconCache().cacheIcon(outputStream.toByteArray(),
                     myNameField.textProperty().get() + " User Edited Icon", true);
-            IconProvider provider = new DefaultIconProvider(imageURL, IconRecord.USER_ADDED_COLLECTION, null, "User");
+            IconProvider provider = new DefaultIconProvider(imageURL, IconRecord.USER_ADDED_COLLECTION, "User");
             myModel.getIconRegistry().addIcon(provider, this);
         }
         catch (IOException e)
@@ -169,11 +226,20 @@ public class IconDetail extends AnchorPane
     /**
      * Draws the preview of the supplied icon on the supplied canvas, applying
      * any transforms specified by the user.
-     * 
+     *
      * @param icon the icon from which to extract the image for the preview.
      */
     public void redrawPreview(IconRecord icon)
     {
+        if (icon != null && icon.favoriteProperty().get())
+        {
+            myFavoriteToggleButton.setGraphic(myFavoriteIcon);
+        }
+        else
+        {
+            myFavoriteToggleButton.setGraphic(myUnFavoriteIcon);
+        }
+
         TransformModel model = myTransformPanel.getModel();
         if (icon == null)
         {

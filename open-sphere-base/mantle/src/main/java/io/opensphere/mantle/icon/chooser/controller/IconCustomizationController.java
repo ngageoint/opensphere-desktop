@@ -1,9 +1,10 @@
 /**
- * 
+ *
  */
 package io.opensphere.mantle.icon.chooser.controller;
 
 import java.awt.Graphics2D;
+import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -45,7 +46,7 @@ public class IconCustomizationController
 
     /**
      * Creates a new controller with the supplied model and view.
-     * 
+     *
      * @param model the model in which the chooser's state is maintained.
      * @param iconView the view in which all icon operations are managed.
      */
@@ -73,7 +74,7 @@ public class IconCustomizationController
 
         BufferedImage bufImageARGB = SwingFXUtils.fromFXImage(image, null);
         BufferedImage bufImageRGB = new BufferedImage(bufImageARGB.getWidth(), bufImageARGB.getHeight(),
-                BufferedImage.TRANSLUCENT);
+                Transparency.TRANSLUCENT);
 
         Graphics2D graphics = bufImageRGB.createGraphics();
         graphics.drawImage(bufImageARGB, 0, 0, null);
@@ -84,7 +85,7 @@ public class IconCustomizationController
 
             URL imageURL = myModel.getIconRegistry().getIconCache().cacheIcon(outputStream.toByteArray(),
                     myCustomizationModel.nameProperty().get(), true);
-            IconProvider provider = new DefaultIconProvider(imageURL, myCustomizationModel.sourceProperty().get(), null, "User");
+            IconProvider provider = new DefaultIconProvider(imageURL, myCustomizationModel.sourceProperty().get(), "User");
             myModel.getIconRegistry().addIcon(provider, this);
         }
         catch (IOException e)

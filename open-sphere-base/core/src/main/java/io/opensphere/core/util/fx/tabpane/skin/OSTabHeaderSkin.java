@@ -78,10 +78,7 @@ public class OSTabHeaderSkin extends StackPane
     /** The clipping area of the tab. */
     private Rectangle myClip;
 
-    /** A flag used to determine if the tab name is being edited. */
-    // private BooleanProperty myEditingProperty = new
-    // ConcurrentBooleanProperty(false);
-
+    /** A the edit state of the tab. */
     private final ObjectProperty<TabEditPhase> myEditPhase = new ConcurrentObjectProperty<>(TabEditPhase.NOT_EDITING);
 
     /**

@@ -13,17 +13,16 @@ public class MemoryCachedIconProvider extends DefaultIconProvider
 
     /**
      * Creates a new icon provider using the supplied information.
-     * 
+     *
      * @param imageURL the URL of the icon.
      * @param imageData the contents of the icon as a byte array.
      * @param collectionName the name of the collection to which the icon
      *            belongs.
-     * @param subCategory the subcategory to which the icon belongs.
      * @param sourceKey the source key applied to the icon.
      */
-    public MemoryCachedIconProvider(URL imageURL, byte[] imageData, String collectionName, String subCategory, String sourceKey)
+    public MemoryCachedIconProvider(URL imageURL, byte[] imageData, String collectionName, String sourceKey)
     {
-        super(imageURL, collectionName, subCategory, sourceKey);
+        super(imageURL, collectionName, sourceKey);
         myImageData = imageData;
     }
 

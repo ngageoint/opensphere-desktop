@@ -8,12 +8,14 @@ import java.util.Objects;
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.util.Utilities;
+import io.opensphere.core.util.javafx.ConcurrentBooleanProperty;
 import io.opensphere.core.util.javafx.ConcurrentIntegerProperty;
 import io.opensphere.core.util.javafx.ConcurrentLongProperty;
 import io.opensphere.core.util.javafx.ConcurrentObjectProperty;
 import io.opensphere.core.util.javafx.ConcurrentStringProperty;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.ObjectProperty;
@@ -32,6 +34,9 @@ public class DefaultIconRecord implements IconRecord
 
     /** The list in which the tags are stored. */
     private final ObservableList<String> myTags = FXCollections.observableArrayList();
+
+    /** The property in which the 'favorite' state is stored. */
+    private final BooleanProperty myFavoriteProperty = new ConcurrentBooleanProperty(false);
 
     /** The Collection name. */
     private final StringProperty myCollectionNameProperty = new ConcurrentStringProperty();
@@ -69,9 +74,6 @@ public class DefaultIconRecord implements IconRecord
     /** The Source. */
     private final StringProperty mySourceKeyProperty = new ConcurrentStringProperty();
 
-    /** The Sub category. */
-    private final StringProperty mySubCategoryProperty = new ConcurrentStringProperty();
-
     /**
      * Instantiates a new abstract icon record.
      *
@@ -102,7 +104,6 @@ public class DefaultIconRecord implements IconRecord
         });
 
         myCollectionNameProperty.set(ip.getCollectionName() == null ? DEFAULT_COLLECTION : ip.getCollectionName());
-        mySubCategoryProperty.set(ip.getSubCategory());
         mySourceKeyProperty.set(ip.getSourceKey());
         if (myImageURLProperty.get() != null)
         {
@@ -132,8 +133,8 @@ public class DefaultIconRecord implements IconRecord
         String imageURLStr = myImageURLProperty == null ? null : myImageURLProperty.toString();
         String otherImageURLStr = other.myImageURLProperty == null ? null : other.myImageURLProperty.toString();
         return Objects.equals(myCollectionNameProperty, other.myCollectionNameProperty)
-                && Objects.equals(imageURLStr, otherImageURLStr) && Objects.equals(mySourceKeyProperty, other.mySourceKeyProperty)
-                && Objects.equals(mySubCategoryProperty, other.mySubCategoryProperty);
+                && Objects.equals(imageURLStr, otherImageURLStr)
+                && Objects.equals(mySourceKeyProperty, other.mySourceKeyProperty);
     }
 
     @Override
@@ -172,12 +173,6 @@ public class DefaultIconRecord implements IconRecord
     }
 
     @Override
-    public StringProperty subCategoryProperty()
-    {
-        return mySubCategoryProperty;
-    }
-
-    @Override
     public int hashCode()
     {
         final int prime = 31;
@@ -185,7 +180,6 @@ public class DefaultIconRecord implements IconRecord
         result = prime * result + (myCollectionNameProperty == null ? 0 : myCollectionNameProperty.hashCode());
         result = prime * result + (myImageURLProperty == null ? 0 : myImageURLProperty.toString().hashCode());
         result = prime * result + (mySourceKeyProperty == null ? 0 : mySourceKeyProperty.hashCode());
-        result = prime * result + (mySubCategoryProperty == null ? 0 : mySubCategoryProperty.hashCode());
         return result;
     }
 
@@ -194,7 +188,7 @@ public class DefaultIconRecord implements IconRecord
     {
         StringBuilder sb = new StringBuilder(64);
         sb.append("IconRecord: ID[").append(myIdProperty.get()).append("] Collection[").append(myCollectionNameProperty)
-                .append("] SubCat[").append(mySubCategoryProperty).append("] Src[").append(mySourceKeyProperty).append("] URL[")
+                .append("] Src[").append(mySourceKeyProperty).append("] URL[")
                 .append(myImageURLProperty == null ? "NULL" : myImageURLProperty.toString()).append(']');
         return sb.toString();
     }
@@ -285,5 +279,16 @@ public class DefaultIconRecord implements IconRecord
     public StringProperty descriptionProperty()
     {
         return myDescriptionProperty;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.icon.IconRecord#favoriteProperty()
+     */
+    @Override
+    public BooleanProperty favoriteProperty()
+    {
+        return myFavoriteProperty;
     }
 }

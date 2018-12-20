@@ -4,13 +4,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
+import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.fx.FxIcons;
 import io.opensphere.core.util.fx.OSTabPane;
 import io.opensphere.core.util.lang.Pair;
+import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.chooser.model.IconModel;
 import io.opensphere.mantle.icon.chooser.model.IconRegistryChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -21,10 +27,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.paint.Color;
 
 /** An panel on which the icon may be selected by the user. */
 public class IconSelectionPanel extends BorderPane
 {
+    /** The default zoom level. */
+    private static final int DEFAULT_ICON_SCALE = 60;
+
     /** The model in which state is maintained. */
     private final IconModel myPanelModel;
 
@@ -54,18 +64,24 @@ public class IconSelectionPanel extends BorderPane
     public IconSelectionPanel(IconModel panelModel)
     {
         myPanelModel = panelModel;
-        myDetailPane = new IconDetail(panelModel);
+        myDetailPane = new IconDetail(panelModel, this::refresh);
 
         HBox box = new HBox(5);
         Label iconScaleLabel = new Label("Icon Scale:");
         box.getChildren().add(iconScaleLabel);
 
-        myZoomControlPane = new Slider(20, 150, 60);
+        myZoomControlPane = new Slider(20, 150, DEFAULT_ICON_SCALE);
         myZoomControlPane.setTooltip(new Tooltip("Adjust the size of the displayed icons"));
         box.getChildren().add(myZoomControlPane);
 
+        Label scaleReset = FxIcons.createClearIcon(AwesomeIconSolid.TIMES, Color.ORANGERED, 14);
+        scaleReset.setOnMouseClicked(e -> myPanelModel.tileWidthProperty().set(DEFAULT_ICON_SCALE));
+        scaleReset.setAlignment(Pos.CENTER);
+        box.getChildren().add(scaleReset);
+
         HBox.setHgrow(myZoomControlPane, Priority.ALWAYS);
         HBox.setHgrow(iconScaleLabel, Priority.NEVER);
+        HBox.setHgrow(scaleReset, Priority.NEVER);
 
         myPanelModel.tileWidthProperty().bindBidirectional(myZoomControlPane.valueProperty());
 
@@ -81,7 +97,16 @@ public class IconSelectionPanel extends BorderPane
 
         for (String collection : collectionNames)
         {
-            IconGridView content = new IconGridView(panelModel, r -> r.collectionNameProperty().get().equals(collection));
+            IconGridView content;
+            if (StringUtils.equalsIgnoreCase(IconRecord.FAVORITES_COLLECTION, collection))
+            {
+                content = new IconGridView(panelModel, r -> r.favoriteProperty().get());
+            }
+            else
+            {
+                content = new IconGridView(panelModel, r -> r.collectionNameProperty().get().equals(collection));
+            }
+
             Tab tab = new Tab(collection, content);
 
             content.displayProperty().addListener((obs, ov, nv) ->
@@ -143,6 +168,7 @@ public class IconSelectionPanel extends BorderPane
         }
     }
 
+    /** An event handler used to create and add a new icon set. */
     private void createSet()
     {
         Tab tab = new Tab("<New Icon Set>");
@@ -157,5 +183,11 @@ public class IconSelectionPanel extends BorderPane
     public IconDetail getDetailPane()
     {
         return myDetailPane;
+    }
+
+    /** Refreshes the content on all of the tabs. */
+    private void refresh()
+    {
+        myTabs.values().forEach(c -> c.getSecondObject().refresh());
     }
 }

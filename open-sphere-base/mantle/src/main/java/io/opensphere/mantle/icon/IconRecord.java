@@ -2,6 +2,7 @@ package io.opensphere.mantle.icon;
 
 import java.net.URL;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.ObjectProperty;
@@ -22,6 +23,8 @@ public interface IconRecord
 
     /** The Constant USER_ADDED_COLLECTION. */
     String USER_ADDED_COLLECTION = "User Added";
+
+    BooleanProperty favoriteProperty();
 
     /**
      * Gets the property in which the name is maintained.
@@ -115,11 +118,4 @@ public interface IconRecord
      * @return the source key
      */
     StringProperty sourceKeyProperty();
-
-    /**
-     * Gets the sub category.
-     *
-     * @return the sub category
-     */
-    StringProperty subCategoryProperty();
 }

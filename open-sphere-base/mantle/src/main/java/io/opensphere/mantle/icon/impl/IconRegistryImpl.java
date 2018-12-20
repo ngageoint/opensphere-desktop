@@ -421,29 +421,6 @@ public class IconRegistryImpl implements IconRegistry
     }
 
     @Override
-    public Set<String> getSubCategoiresForCollection(final String collection)
-    {
-        final Set<String> subCatSet = New.set();
-        myIconRegistryLock.lock();
-        try
-        {
-            myIconIdToIconRecordMap.forEachEntry((iconId, record) ->
-            {
-                if (record.subCategoryProperty() != null && Objects.equals(collection, record.collectionNameProperty().get()))
-                {
-                    subCatSet.add(record.subCategoryProperty().get());
-                }
-                return true;
-            });
-        }
-        finally
-        {
-            myIconRegistryLock.unlock();
-        }
-        return subCatSet;
-    }
-
-    @Override
     public boolean removeIcon(IconRecord rec, Object source)
     {
         return rec != null && removeIcon(rec.idProperty().get(), source);
@@ -807,7 +784,7 @@ public class IconRegistryImpl implements IconRegistry
             addIcons(New.list(config.getIconRecords()), null, this, false);
         }
 
-        addIcon(new DefaultIconProvider(DEFAULT_ICON_URL, IconRecord.DEFAULT_COLLECTION, null, null), null, false);
+        addIcon(new DefaultIconProvider(DEFAULT_ICON_URL, IconRecord.DEFAULT_COLLECTION, null), null, false);
 
         // Clean up duplicates of the default icon
         TLongList iconIds = getIconIds(r -> IconRecord.DEFAULT_COLLECTION.equals(r.collectionNameProperty().get())

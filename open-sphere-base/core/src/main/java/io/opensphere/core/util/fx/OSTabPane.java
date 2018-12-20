@@ -10,7 +10,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
 /**
- *
+ * An extension to the tab pane which allows direct inline editing of the tab
+ * name.
  */
 public class OSTabPane extends TabPane
 {
@@ -22,16 +23,16 @@ public class OSTabPane extends TabPane
      */
     private ObjectProperty<EventHandler<ActionEvent>> myNewTabAction = new ConcurrentObjectProperty<>();
 
-    /**
-     *
-     */
+    /** Creates a new (empty) tab page. */
     public OSTabPane()
     {
         super();
     }
 
     /**
-     * @param tabs
+     * Creates a new tab page using the supplied tabs.
+     *
+     * @param tabs the tabs with which to pre-populate the pane.
      */
     public OSTabPane(Tab... tabs)
     {

@@ -86,7 +86,7 @@ public class CompressedCollectionIconSource implements IconSource<FileIconSource
 
     /**
      * Processes the supplied stream, reading data from the compressed source.
-     * 
+     *
      * @param name the name of the source.
      * @param rootUri the root URIL of the source.
      * @param stream the stream from which to read data.
@@ -138,7 +138,7 @@ public class CompressedCollectionIconSource implements IconSource<FileIconSource
     /**
      * Reads data from the supplied compressed archive stream, de-compressing it
      * and then reading all matching files from within.
-     * 
+     *
      * @param mimeType the MIME type of the content within the stream.
      * @param name the name of the source.
      * @param rootUri the root URI of the source.
@@ -164,7 +164,7 @@ public class CompressedCollectionIconSource implements IconSource<FileIconSource
     /**
      * Creates a compression stream using the supplied mime type and input
      * stream.
-     * 
+     *
      * @param mimeType the mime type of the stream.
      * @param stream the stream to wrap.
      * @return an input stream wrapping the supplied input stream to read
@@ -205,7 +205,7 @@ public class CompressedCollectionIconSource implements IconSource<FileIconSource
     /**
      * Creates a combined tar + compression stream using the supplied mime type
      * and input stream.
-     * 
+     *
      * @param mimeType the mime type of the stream.
      * @param stream the stream to wrap.
      * @return an input stream wrapping the supplied input stream to read
@@ -250,7 +250,7 @@ public class CompressedCollectionIconSource implements IconSource<FileIconSource
     /**
      * Reads the supplied input stream as a (potentially compressed) tar
      * archive.
-     * 
+     *
      * @param mimeType the MIME type of the content of the stream.
      * @param name the name of the data source.
      * @param rootUri the root URI of the data source.
@@ -290,7 +290,7 @@ public class CompressedCollectionIconSource implements IconSource<FileIconSource
     /**
      * Processes the the supplied stream to read an image from it, and generates
      * an {@link IconProvider} using the contents.
-     * 
+     *
      * @param name the name of the source from which to generate the provider.
      * @param rootUri the root URI with which to create the provider.
      * @param stream the stream to read for the icon image data.
@@ -320,15 +320,14 @@ public class CompressedCollectionIconSource implements IconSource<FileIconSource
         {
             throw new IOException("Unable to construct path", e);
         }
-        IconProvider provider = new MemoryCachedIconProvider(path.toURL(), contents, IconRecord.USER_ADDED_COLLECTION, null,
-                null);
+        IconProvider provider = new MemoryCachedIconProvider(path.toURL(), contents, IconRecord.USER_ADDED_COLLECTION, null);
 
         return provider;
     }
 
     /**
      * Processes the supplied input stream as a ZIP archive.
-     * 
+     *
      * @param name the name of the data source to process.
      * @param rootUri the root URI of the data source to process.
      * @param stream the stream from which to read data.
@@ -377,7 +376,7 @@ public class CompressedCollectionIconSource implements IconSource<FileIconSource
      * @see io.opensphere.mantle.icon.IconSource#getUserInput(Node)
      */
     @Override
-    public void getUserInput(Node parent)
+    public boolean getUserInput(Node parent)
     {
         FileChooser chooser = new FileChooser();
         chooser.getExtensionFilters()
@@ -394,6 +393,8 @@ public class CompressedCollectionIconSource implements IconSource<FileIconSource
         if (file != null)
         {
             myModel.fileProperty().set(file);
+            return true;
         }
+        return false;
     }
 }

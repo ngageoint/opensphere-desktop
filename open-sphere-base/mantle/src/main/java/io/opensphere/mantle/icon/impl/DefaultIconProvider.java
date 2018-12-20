@@ -21,9 +21,6 @@ public class DefaultIconProvider implements IconProvider
     /** The Source Key. */
     private final String mySourceKey;
 
-    /** The Sub category. */
-    private final String mySubCategory;
-
     /**
      * Instantiates a new default icon provider.
      *
@@ -32,11 +29,10 @@ public class DefaultIconProvider implements IconProvider
      * @param subCategory the sub category
      * @param sourceKey the source key
      */
-    public DefaultIconProvider(URL imageURL, String collectionName, String subCategory, String sourceKey)
+    public DefaultIconProvider(URL imageURL, String collectionName, String sourceKey)
     {
         myImageURL = imageURL;
         myCollectionName = collectionName;
-        mySubCategory = subCategory;
         mySourceKey = sourceKey;
     }
 
@@ -70,18 +66,11 @@ public class DefaultIconProvider implements IconProvider
     }
 
     @Override
-    public String getSubCategory()
-    {
-        return mySubCategory;
-    }
-
-    @Override
     public String toString()
     {
         StringBuilder sb = new StringBuilder(64);
-        sb.append(getClass().getName()).append(" ColName:").append(myCollectionName).append(" SubCat:").append(mySubCategory)
-                .append(" URL:").append(myImageURL == null ? "NULL" : myImageURL.toString()).append(" SourceKey:")
-                .append(mySourceKey);
+        sb.append(getClass().getName()).append(" ColName:").append(myCollectionName).append(" URL:")
+                .append(myImageURL == null ? "NULL" : myImageURL.toString()).append(" SourceKey:").append(mySourceKey);
         return sb.toString();
     }
 }

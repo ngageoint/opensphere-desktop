@@ -44,10 +44,6 @@ public class IconRecordConfig implements IconProvider
     @XmlAttribute(name = "sourceKey")
     private String mySourceKey;
 
-    /** The Parameter value. */
-    @XmlAttribute(name = "subCategory")
-    private String mySubCategory;
-
     /**
      * Instantiates a new icon record config.
      */
@@ -66,7 +62,6 @@ public class IconRecordConfig implements IconProvider
         myId = rec.idProperty().get();
         myImageURLString = rec.imageURLProperty().get() == null ? null : rec.imageURLProperty().get().toString();
         myCollectionName = rec.collectionNameProperty().get();
-        mySubCategory = rec.subCategoryProperty().get();
         mySourceKey = rec.sourceKeyProperty().get();
     }
 
@@ -131,12 +126,6 @@ public class IconRecordConfig implements IconProvider
         return mySourceKey;
     }
 
-    @Override
-    public String getSubCategory()
-    {
-        return mySubCategory;
-    }
-
     /**
      * Sets the id.
      *
@@ -175,15 +164,5 @@ public class IconRecordConfig implements IconProvider
     public void setSourceKey(String sourceKey)
     {
         mySourceKey = sourceKey;
-    }
-
-    /**
-     * Sets the sub category.
-     *
-     * @param subCategory the new sub category
-     */
-    public void setSubCategory(String subCategory)
-    {
-        mySubCategory = subCategory;
     }
 }

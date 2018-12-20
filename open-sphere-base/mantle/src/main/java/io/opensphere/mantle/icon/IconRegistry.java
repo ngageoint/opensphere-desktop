@@ -192,14 +192,6 @@ public interface IconRegistry
     LoadedIconPool getLoadedIconPool();
 
     /**
-     * Gets the sub categories for a collection name.
-     *
-     * @param collection the collection name
-     * @return the set of sub categories for a collection.
-     */
-    Set<String> getSubCategoiresForCollection(String collection);
-
-    /**
      * Removes the icon.
      *
      * @param record the {@link IconRecord}

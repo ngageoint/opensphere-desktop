@@ -39,9 +39,8 @@ public class SingleFileIconSource implements IconSource<FileIconSourceModel>
     @Override
     public List<IconProvider> getIconProviders(Toolbox toolbox)
     {
-        return Collections
-                .singletonList(new DefaultIconProvider(UrlUtilities.toURLNew(myModel.fileProperty().get().getAbsolutePath()),
-                        IconRecord.USER_ADDED_COLLECTION, null, null));
+        return Collections.singletonList(new DefaultIconProvider(
+                UrlUtilities.toURLNew(myModel.fileProperty().get().getAbsolutePath()), IconRecord.USER_ADDED_COLLECTION, null));
     }
 
     /**
@@ -61,7 +60,7 @@ public class SingleFileIconSource implements IconSource<FileIconSourceModel>
      * @see io.opensphere.mantle.icon.IconSource#getUserInput(Node)
      */
     @Override
-    public void getUserInput(Node parent)
+    public boolean getUserInput(Node parent)
     {
         FileChooser chooser = new FileChooser();
         chooser.getExtensionFilters().addAll(
@@ -80,6 +79,8 @@ public class SingleFileIconSource implements IconSource<FileIconSourceModel>
         if (file != null)
         {
             myModel.fileProperty().set(file);
+            return true;
         }
+        return false;
     }
 }
