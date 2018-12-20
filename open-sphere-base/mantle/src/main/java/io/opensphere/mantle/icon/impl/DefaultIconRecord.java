@@ -86,22 +86,8 @@ public class DefaultIconRecord implements IconRecord
         myIdProperty.set(id);
         myImageURLProperty.set(ip.getIconURL());
 
-        imageURLProperty().addListener((obs, ov, nv) ->
-        {
-            String urlString = nv.toString();
-            String name = urlString;
-            int lastIndexOfSlash = urlString.lastIndexOf('\\');
-            if (lastIndexOfSlash == -1)
-            {
-                lastIndexOfSlash = urlString.lastIndexOf('/');
-            }
-            if (lastIndexOfSlash != -1)
-            {
-                name = urlString.substring(lastIndexOfSlash + 1);
-            }
-
-            myNameProperty.set(name);
-        });
+        imageURLProperty().addListener((obs, ov, nv) -> myNameProperty.set(getName(nv)));
+        myNameProperty.set(getName(myImageURLProperty.get()));
 
         myCollectionNameProperty.set(ip.getCollectionName() == null ? DEFAULT_COLLECTION : ip.getCollectionName());
         mySourceKeyProperty.set(ip.getSourceKey());
@@ -116,6 +102,34 @@ public class DefaultIconRecord implements IconRecord
                 LOG.error("Unable to read image for icon from URL '" + myImageURLProperty.get() + "'", e);
             }
         }
+    }
+
+    /**
+     * Calculates and gets the name from the supplied URL.
+     *
+     * @param imageUrl the URL from which to get the name.
+     * @return the name extracted from the URL.
+     */
+    private String getName(URL imageUrl)
+    {
+        String returnValue = null;
+        if (imageUrl != null)
+        {
+            String urlString = imageUrl.toString();
+            String name = urlString;
+            int lastIndexOfSlash = urlString.lastIndexOf('\\');
+            if (lastIndexOfSlash == -1)
+            {
+                lastIndexOfSlash = urlString.lastIndexOf('/');
+            }
+            if (lastIndexOfSlash != -1)
+            {
+                name = urlString.substring(lastIndexOfSlash + 1);
+            }
+
+            returnValue = name;
+        }
+        return returnValue;
     }
 
     @Override

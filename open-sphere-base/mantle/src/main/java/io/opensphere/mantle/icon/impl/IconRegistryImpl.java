@@ -671,6 +671,17 @@ public class IconRegistryImpl implements IconRegistry
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.icon.IconRegistry#iconStateChanged()
+     */
+    @Override
+    public void iconStateChanged()
+    {
+        saveLater();
+    }
+
+    /**
      * Adds the icons.
      *
      * @param providerList the provider list
@@ -730,6 +741,7 @@ public class IconRegistryImpl implements IconRegistry
         if (id == 0)
         {
             record = new DefaultIconRecord(getId(provider, overrideId), provider);
+            record.favoriteProperty().set(provider.isFavorite());
             myIconIdToIconRecordMap.put(record.idProperty().get(), record);
             myIconRecordToIconIdMap.put(record, record.idProperty().get());
             wasAdded = true;

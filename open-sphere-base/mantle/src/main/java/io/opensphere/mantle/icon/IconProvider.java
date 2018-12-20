@@ -40,4 +40,11 @@ public interface IconProvider
      * @return the source
      */
     String getSourceKey();
+
+    /**
+     * Tests to determine if the icon is marked as a favorite.
+     *
+     * @return true if the icon is marked as a favorite, false otherwise.
+     */
+    boolean isFavorite();
 }

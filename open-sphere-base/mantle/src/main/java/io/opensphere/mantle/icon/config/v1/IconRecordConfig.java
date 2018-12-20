@@ -44,6 +44,10 @@ public class IconRecordConfig implements IconProvider
     @XmlAttribute(name = "sourceKey")
     private String mySourceKey;
 
+    /** The attribute used to mark the record as a favorite. */
+    @XmlAttribute(name = "favorite")
+    private boolean myFavorite;
+
     /**
      * Instantiates a new icon record config.
      */
@@ -63,6 +67,7 @@ public class IconRecordConfig implements IconProvider
         myImageURLString = rec.imageURLProperty().get() == null ? null : rec.imageURLProperty().get().toString();
         myCollectionName = rec.collectionNameProperty().get();
         mySourceKey = rec.sourceKeyProperty().get();
+        myFavorite = rec.favoriteProperty().get();
     }
 
     /**
@@ -164,5 +169,26 @@ public class IconRecordConfig implements IconProvider
     public void setSourceKey(String sourceKey)
     {
         mySourceKey = sourceKey;
+    }
+
+    /**
+     * Sets the value of the {@link #myFavorite} field.
+     *
+     * @param favorite the value to store in the {@link #myFavorite} field.
+     */
+    public void setFavorite(boolean favorite)
+    {
+        myFavorite = favorite;
+    }
+
+    /**
+     * Gets the value of the {@link #myFavorite} field.
+     *
+     * @return the value stored in the {@link #myFavorite} field.
+     */
+    @Override
+    public boolean isFavorite()
+    {
+        return myFavorite;
     }
 }

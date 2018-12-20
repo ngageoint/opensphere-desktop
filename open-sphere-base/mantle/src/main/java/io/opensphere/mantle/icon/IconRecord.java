@@ -24,6 +24,11 @@ public interface IconRecord
     /** The Constant USER_ADDED_COLLECTION. */
     String USER_ADDED_COLLECTION = "User Added";
 
+    /**
+     * Gets the property in which the favorite state is maintained.
+     *
+     * @return the property in which the favorite state is maintained.
+     */
     BooleanProperty favoriteProperty();
 
     /**

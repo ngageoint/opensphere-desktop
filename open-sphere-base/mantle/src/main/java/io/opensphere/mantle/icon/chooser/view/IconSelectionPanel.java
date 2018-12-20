@@ -189,5 +189,6 @@ public class IconSelectionPanel extends BorderPane
     private void refresh()
     {
         myTabs.values().forEach(c -> c.getSecondObject().refresh());
+        myPanelModel.getIconRegistry().iconStateChanged();
     }
 }

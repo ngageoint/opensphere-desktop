@@ -283,8 +283,11 @@ public interface IconRegistry
      * Sets up the preferences to be used when using the program. Are reset on
      * the start up of the program to their default values.
      *
-     * @return IconManagerPrefs the startup valeus for the tree selection, tile
+     * @return IconManagerPrefs the startup values for the tree selection, tile
      *         width, and view selection.
      */
     IconManagerPrefs getManagerPrefs();
+
+    /** Called when an icon's state changed. */
+    void iconStateChanged();
 }
