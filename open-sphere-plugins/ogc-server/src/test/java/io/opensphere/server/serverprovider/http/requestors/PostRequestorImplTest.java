@@ -90,7 +90,7 @@ public class PostRequestorImplTest
 
         ResponseValues responseValues = new ResponseValues();
 
-        PostRequestorImpl requestor = new PostRequestorImpl(client, new HeaderConstantsMock());
+        PostRequestorImpl requestor = new PostRequestorImpl(client, new HeaderConstantsMock(), null);
         CancellableInputStream actual = requestor.sendPost(url, postStream, responseValues);
 
         assertEquals(stream, actual.getWrappedInputStream());
@@ -126,7 +126,7 @@ public class PostRequestorImplTest
 
         ResponseValues responseValues = new ResponseValues();
 
-        PostRequestorImpl requestor = new PostRequestorImpl(client, new HeaderConstantsMock());
+        PostRequestorImpl requestor = new PostRequestorImpl(client, new HeaderConstantsMock(), null);
         CancellableInputStream actual = requestor.sendPost(url, postStream, responseValues, ContentType.APPLICATION_JSON);
 
         assertEquals(stream, actual.getWrappedInputStream());
@@ -164,7 +164,7 @@ public class PostRequestorImplTest
 
         ResponseValues responseValues = new ResponseValues();
 
-        PostRequestorImpl requestor = new PostRequestorImpl(client, new HeaderConstantsMock());
+        PostRequestorImpl requestor = new PostRequestorImpl(client, new HeaderConstantsMock(), null);
         CancellableInputStream actual = requestor.sendPost(url, formData, responseValues);
 
         assertEquals(stream, actual.getWrappedInputStream());
@@ -206,7 +206,7 @@ public class PostRequestorImplTest
 
         ResponseValues responseValues = new ResponseValues();
 
-        PostRequestorImpl requestor = new PostRequestorImpl(client, new HeaderConstantsMock());
+        PostRequestorImpl requestor = new PostRequestorImpl(client, new HeaderConstantsMock(), null);
         CancellableInputStream actual = requestor.sendPost(url, extraHeaderValues, formData, responseValues);
 
         assertEquals(stream, actual.getWrappedInputStream());
@@ -246,7 +246,7 @@ public class PostRequestorImplTest
         extraHeaderValues.put("key1", "value1");
         extraHeaderValues.put("key2", "value2");
 
-        PostRequestorImpl requestor = new PostRequestorImpl(client, new HeaderConstantsMock());
+        PostRequestorImpl requestor = new PostRequestorImpl(client, new HeaderConstantsMock(), null);
         CancellableInputStream actual = requestor.sendPost(url, postStream, extraHeaderValues, responseValues,
                 ContentType.APPLICATION_JSON);
 
@@ -283,7 +283,7 @@ public class PostRequestorImplTest
 
         ResponseValues responseValues = new ResponseValues();
 
-        PostRequestorImpl requestor = new PostRequestorImpl(client, new HeaderConstantsMock());
+        PostRequestorImpl requestor = new PostRequestorImpl(client, new HeaderConstantsMock(), null);
         CancellableInputStream actual = requestor.sendPost(url, postStream, responseValues);
 
         assertEquals(stream, actual.getWrappedInputStream());

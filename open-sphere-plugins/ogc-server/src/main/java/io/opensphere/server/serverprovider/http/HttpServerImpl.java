@@ -129,6 +129,16 @@ public class HttpServerImpl implements HttpServer
     }
 
     @Override
+    public CancellableInputStream sendDelete(URL url, Map<String, String> extraHeaderValues, ResponseValues response)
+        throws IOException, URISyntaxException
+    {
+        assert !EventQueue.isDispatchThread();
+        assert !Platform.isFxApplicationThread();
+
+        return myRequestorProvider.getDeleteRequestor().sendDelete(url, extraHeaderValues, response);
+    }
+
+    @Override
     public CancellableInputStream sendGet(URL url, Map<String, String> extraHeaderValues, ResponseValues response)
         throws IOException, URISyntaxException
     {
@@ -150,7 +160,8 @@ public class HttpServerImpl implements HttpServer
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.core.server.HttpServer#sendHead(java.net.URL, java.util.Map, io.opensphere.core.server.ResponseValues)
+     * @see io.opensphere.core.server.HttpServer#sendHead(java.net.URL,
+     *      java.util.Map, io.opensphere.core.server.ResponseValues)
      */
     @Override
     public void sendHead(URL url, Map<String, String> extraHeaderValues, ResponseValues response)
@@ -165,7 +176,8 @@ public class HttpServerImpl implements HttpServer
     /**
      * {@inheritDoc}
      *
-     * @see io.opensphere.core.server.HttpServer#sendHead(java.net.URL, io.opensphere.core.server.ResponseValues)
+     * @see io.opensphere.core.server.HttpServer#sendHead(java.net.URL,
+     *      io.opensphere.core.server.ResponseValues)
      */
     @Override
     public void sendHead(URL url, ResponseValues response) throws IOException, URISyntaxException

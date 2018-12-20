@@ -77,7 +77,7 @@ public class FilePostRequestorTest
 
         support.replayAll();
 
-        FilePostRequestorImpl requestor = new FilePostRequestorImpl(client, new HeaderConstantsMock());
+        FilePostRequestorImpl requestor = new FilePostRequestorImpl(client, new HeaderConstantsMock(), null);
 
         ResponseValues responseValues = new ResponseValues();
         CancellableInputStream actualReturn = requestor.postFileToServer(url, tempFile, responseValues);
@@ -117,7 +117,7 @@ public class FilePostRequestorTest
 
         support.replayAll();
 
-        FilePostRequestorImpl requestor = new FilePostRequestorImpl(client, new HeaderConstantsMock());
+        FilePostRequestorImpl requestor = new FilePostRequestorImpl(client, new HeaderConstantsMock(), null);
 
         ResponseValues responseValues = new ResponseValues();
         CancellableInputStream actualReturn = requestor.postFileToServer(url, tempFile, responseValues);

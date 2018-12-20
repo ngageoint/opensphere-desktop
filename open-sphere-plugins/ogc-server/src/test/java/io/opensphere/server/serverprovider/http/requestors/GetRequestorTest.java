@@ -69,7 +69,7 @@ public class GetRequestorTest
 
         ResponseValues responseValues = new ResponseValues();
 
-        GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock());
+        GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock(), null);
         CancellableInputStream actual = requestor.sendGet(url, responseValues);
 
         assertEquals(stream, actual.getWrappedInputStream());
@@ -102,7 +102,7 @@ public class GetRequestorTest
 
         ResponseValues responseValues = new ResponseValues();
 
-        GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock());
+        GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock(), null);
 
         Map<String, String> extraHeaderValues = New.map();
         extraHeaderValues.put("key1", "value1");
@@ -140,7 +140,7 @@ public class GetRequestorTest
 
         ResponseValues responseValues = new ResponseValues();
 
-        GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock());
+        GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock(), null);
         CancellableInputStream actual = requestor.sendGet(url, responseValues);
 
         assertEquals(stream, actual.getWrappedInputStream());
@@ -182,7 +182,7 @@ public class GetRequestorTest
 
         ResponseValues responseValues = new ResponseValues();
 
-        GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock());
+        GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock(), null);
         InputStream actual = requestor.sendGet(url, responseValues);
 
         List<Byte> bytes = New.list();

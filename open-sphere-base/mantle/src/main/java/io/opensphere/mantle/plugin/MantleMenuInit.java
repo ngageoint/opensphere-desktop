@@ -3,12 +3,15 @@ package io.opensphere.mantle.plugin;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.Collections;
 
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.ui.MenuBarRegistry;
+import io.opensphere.core.hud.awt.HUDJInternalFrame;
+import io.opensphere.core.net.manager.view.NetworkManagerFrame;
 import io.opensphere.core.quantify.Quantify;
 import io.opensphere.mantle.data.geom.style.dialog.VisualizationStyleControlDialog;
 import io.opensphere.mantle.iconproject.view.IconProjDialog;
@@ -92,7 +95,7 @@ class MantleMenuInit
     }
 
     /**
-     * Creates the and install vis style control dialog.
+     * Creates the and install visualization style control dialog.
      */
     public void createAndInstallVisStyleControlDialog()
     {
@@ -108,5 +111,22 @@ class MantleMenuInit
         });
         myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.TOOLS_MENU)
                 .add(visStyleControlMI);
+    }
+
+    /** Creates the and install the network manager dialog. */
+    public void createAndInstallNetworkManager()
+    {
+        assert EventQueue.isDispatchThread();
+
+        final NetworkManagerFrame frame = new NetworkManagerFrame(myToolbox, myToolbox.getNetworkManagerController());
+
+        HUDJInternalFrame hudFrame = new HUDJInternalFrame(new HUDJInternalFrame.Builder().setInternalFrame(frame));
+        myToolbox.getUIRegistry().getComponentRegistry().addObjectsForSource(this, Collections.singleton(hudFrame));
+
+        JMenuItem menuItem = new JMenuItem("Network Manager");
+        menuItem.addActionListener(e -> frame.setVisible(true));
+
+        myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.TOOLS_MENU)
+                .add(menuItem);
     }
 }

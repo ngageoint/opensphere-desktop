@@ -161,6 +161,7 @@ public class MantlePlugin extends PluginAdapter
             menuInit.createAndInstallVisStyleControlDialog();
             menuInit.createAndInstallIconManagerMenuItem();
             menuInit.createAndInstallDynamicEnumDebugPrintMenuItem();
+            menuInit.createAndInstallNetworkManager();
         });
     }
 

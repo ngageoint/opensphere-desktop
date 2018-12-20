@@ -69,7 +69,8 @@ public class HttpServerFactory implements ServerFactory
         new ConnectionPoolConfigurer().configure(httpClient);
 
         RequestorProviderImpl provider = new RequestorProviderImpl(httpClient,
-                new HeaderValuesImpl(toolbox.getGeometryRegistry().getRenderingCapabilities().getRendererIdentifier()));
+                new HeaderValuesImpl(toolbox.getGeometryRegistry().getRenderingCapabilities().getRendererIdentifier()),
+                toolbox.getEventManager());
         HttpServerImpl server = new HttpServerImpl(host, protocol, provider);
 
         return server;

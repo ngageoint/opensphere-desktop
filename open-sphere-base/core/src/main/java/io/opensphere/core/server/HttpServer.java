@@ -45,7 +45,7 @@ public interface HttpServer
      *             to a URI.
      */
     CancellableInputStream postFile(URL postToURL, Map<String, String> metaDataParts, File fileToPost, ResponseValues response)
-            throws IOException, URISyntaxException;
+        throws IOException, URISyntaxException;
 
     /**
      * Sends a file to the specified url.
@@ -59,7 +59,7 @@ public interface HttpServer
      *             to a URI.
      */
     CancellableInputStream postFile(URL postToURL, File fileToPost, ResponseValues response)
-            throws IOException, URISyntaxException;
+        throws IOException, URISyntaxException;
 
     /**
      * Gets a host and port to connect to based on the configured proxy settings
@@ -96,6 +96,23 @@ public interface HttpServer
     CancellableInputStream sendDelete(URL url, ResponseValues response) throws IOException, URISyntaxException;
 
     /**
+     * Sends a delete request to the server.
+     *
+     * @param url The url to the server which should include any parameters.
+     * @param extraHeaderValues Header values to add to the request header.
+     * @param response The response code and message returned from the delete
+     *            request.
+     * @return The input stream containing the data returned by the delete
+     *         request.
+     * @throws IOException Thrown if an error happens when communicating with
+     *             the server.
+     * @throws URISyntaxException Thrown if an error occurs converting the URL
+     *             to a URI.
+     */
+    CancellableInputStream sendDelete(URL url, Map<String, String> extraHeaderValues, ResponseValues response)
+        throws IOException, URISyntaxException;
+
+    /**
      * Sends a get request to the server.
      *
      * @param url The url to the server which should include any parameters.
@@ -109,7 +126,7 @@ public interface HttpServer
      *             to a URI.
      */
     CancellableInputStream sendGet(URL url, Map<String, String> extraHeaderValues, ResponseValues response)
-            throws IOException, URISyntaxException;
+        throws IOException, URISyntaxException;
 
     /**
      * Sends a get request to the server.
@@ -170,7 +187,7 @@ public interface HttpServer
      */
     CancellableInputStream sendPost(URL url, InputStream postData, Map<String, String> extraHeaderValues, ResponseValues response,
             ContentType contentType)
-                    throws IOException, URISyntaxException;
+        throws IOException, URISyntaxException;
 
     /**
      * Sends a post request to the server.
@@ -186,7 +203,7 @@ public interface HttpServer
      *             to a URI.
      */
     CancellableInputStream sendPost(URL url, InputStream postData, ResponseValues response)
-            throws IOException, URISyntaxException;
+        throws IOException, URISyntaxException;
 
     /**
      * Sends a post request to the server.
@@ -203,7 +220,7 @@ public interface HttpServer
      *             to a URI.
      */
     CancellableInputStream sendPost(URL url, InputStream postData, ResponseValues response, ContentType contentType)
-            throws IOException, URISyntaxException;
+        throws IOException, URISyntaxException;
 
     /**
      * Sends a post request to the server.
@@ -222,7 +239,7 @@ public interface HttpServer
      */
     CancellableInputStream sendPost(URL url, Map<String, String> extraHeaderValues, Map<String, String> postData,
             ResponseValues response)
-                    throws IOException, URISyntaxException;
+        throws IOException, URISyntaxException;
 
     /**
      * Sends a post request to the server.
@@ -238,7 +255,7 @@ public interface HttpServer
      *             to a URI.
      */
     CancellableInputStream sendPost(URL url, Map<String, String> postData, ResponseValues response)
-            throws IOException, URISyntaxException;
+        throws IOException, URISyntaxException;
 
     /**
      * Sets the size of the buffer used when reading http messages.
