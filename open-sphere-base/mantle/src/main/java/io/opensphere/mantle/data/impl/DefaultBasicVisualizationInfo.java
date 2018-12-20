@@ -276,7 +276,7 @@ public class DefaultBasicVisualizationInfo implements BasicVisualizationInfo
     {
         Color sourceColor = getDefaultTypeColor();
         Color copyColor = new Color(sourceColor.getRed(), sourceColor.getGreen(), sourceColor.getBlue(),
-                sourceColor.getTransparency());
+                sourceColor.getAlpha());
         DefaultBasicVisualizationInfo copy = new DefaultBasicVisualizationInfo(getLoadsTo(), copyColor, usesDataElements());
 
         copy.mySupportedLoadsToTypes.addAll(this.mySupportedLoadsToTypes);
