@@ -1,7 +1,5 @@
 package io.opensphere.mantle.icon.chooser.view;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -12,10 +10,12 @@ import io.opensphere.core.util.fx.FxIcons;
 import io.opensphere.core.util.fx.OSTabPane;
 import io.opensphere.core.util.lang.Pair;
 import io.opensphere.mantle.icon.IconRecord;
+import io.opensphere.mantle.icon.chooser.model.IconChooserModel;
 import io.opensphere.mantle.icon.chooser.model.IconModel;
 import io.opensphere.mantle.icon.chooser.model.IconRegistryChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.transformation.SortedList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -56,6 +56,8 @@ public class IconSelectionPanel extends BorderPane
     /** A flag used to track the sorting state of the editor. */
     private transient boolean mySorting;
 
+    private IconChooserModel myIconChooserModel;
+
     /**
      * Creates a new component bound to the supplied model.
      *
@@ -64,6 +66,7 @@ public class IconSelectionPanel extends BorderPane
     public IconSelectionPanel(IconModel panelModel)
     {
         myPanelModel = panelModel;
+        myIconChooserModel = myPanelModel.getModel();
         myDetailPane = new IconDetail(panelModel, this::refresh);
 
         HBox box = new HBox(5);
@@ -87,8 +90,9 @@ public class IconSelectionPanel extends BorderPane
 
         mySetControlPane = new SearchControlBar(panelModel);
 
-        List<String> collectionNames = New.list(myPanelModel.getIconRegistry().getCollectionNames());
-        Collections.sort(collectionNames);
+        SortedList<String> collectionNames = myIconChooserModel.getCollectionNames().sorted();
+//        List<String> collectionNames = New.list(myPanelModel.getIconRegistry().getCollectionNames());
+//        Collections.sort(collectionNames);
 
         myIconTabs = new OSTabPane();
         myIconTabs.tabDragPolicyProperty().set(TabDragPolicy.REORDER);

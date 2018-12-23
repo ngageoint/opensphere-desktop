@@ -58,8 +58,13 @@ public class IconCustomizationController
 
         myModel.selectedRecordProperty().addListener((obs, ov, nv) ->
         {
-            myCustomizationModel.nameProperty().set(nv.nameProperty().get());
-            myCustomizationModel.sourceProperty().set(nv.collectionNameProperty().get());
+            if (ov != null)
+            {
+                myCustomizationModel.nameProperty().unbindBidirectional(ov.nameProperty());
+                myCustomizationModel.sourceProperty().unbindBidirectional(ov.collectionNameProperty());
+            }
+            myCustomizationModel.nameProperty().bindBidirectional(nv.nameProperty());
+            myCustomizationModel.sourceProperty().bindBidirectional(nv.collectionNameProperty());
             myCustomizationModel.tagsProperty().set(nv.getTags().stream().collect(Collectors.joining(",")));
             myCustomizationModel.getTransformModel().resetAllToDefault();
             myDetailPanel.redrawPreview(nv);

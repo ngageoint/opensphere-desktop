@@ -29,6 +29,7 @@ import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -57,7 +58,7 @@ public class IconDetail extends AnchorPane
     private final TextField myNameField;
 
     /** The label in which the source collection of the icon is displayed. */
-    private final TextField mySourceField;
+    private final ComboBox<String> mySourceField;
 
     /** The label in which the tags applied to the icon are displayed. */
     private final TextField myTagsField;
@@ -111,8 +112,8 @@ public class IconDetail extends AnchorPane
         myNameField = new TextField();
         myNameField.textProperty().bindBidirectional(myCustomizationModel.nameProperty());
 
-        mySourceField = new TextField();
-        mySourceField.textProperty().bindBidirectional(myCustomizationModel.sourceProperty());
+        mySourceField = new ComboBox<>(myModel.getIconRegistry().getCollectionNameSet());
+        mySourceField.valueProperty().bindBidirectional(myCustomizationModel.sourceProperty());
 
         myTagsField = new TextField();
         myTagsField.textProperty().bindBidirectional(myCustomizationModel.tagsProperty());

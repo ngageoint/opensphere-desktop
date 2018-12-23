@@ -86,6 +86,8 @@ public class IconModel
     /** The model in which customization state is maintained. */
     private final CustomizationModel myCustomizationModel;
 
+    private final IconChooserModel myModel;
+
     /**
      * Builds the panel to use inside the Icon Manager.
      *
@@ -94,6 +96,7 @@ public class IconModel
     public IconModel(Toolbox toolbox)
     {
         myToolbox = toolbox;
+        myModel = new IconChooserModel();
         myRegistryListener = new PassThroughIconRegistryListener();
         myCustomizationModel = new CustomizationModel();
     }
@@ -130,10 +133,21 @@ public class IconModel
             myIconRegistry.removeListener(myRegistryListener);
         }
         myIconRegistry = iconRegistry;
+        myModel.setIconRegistry(iconRegistry);
         if (myIconRegistry != null)
         {
             myIconRegistry.addListener(myRegistryListener);
         }
+    }
+
+    /**
+     * Gets the value of the {@link #myModel} field.
+     *
+     * @return the value of the myModel field.
+     */
+    public IconChooserModel getModel()
+    {
+        return myModel;
     }
 
     /**

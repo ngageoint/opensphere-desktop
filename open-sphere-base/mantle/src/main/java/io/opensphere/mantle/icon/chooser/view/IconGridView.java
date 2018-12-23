@@ -2,13 +2,13 @@ package io.opensphere.mantle.icon.chooser.view;
 
 import java.util.function.Predicate;
 
+import org.apache.log4j.Logger;
 import org.controlsfx.control.GridView;
 
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.javafx.ConcurrentBooleanProperty;
 import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.icon.IconRegistry;
+import io.opensphere.mantle.icon.chooser.model.IconChooserModel;
 import io.opensphere.mantle.icon.chooser.model.IconModel;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -23,6 +23,9 @@ import javafx.scene.layout.AnchorPane;
  */
 public class IconGridView extends AnchorPane
 {
+    /** The {@link Logger} instance used to capture output from this class. */
+    private static final Logger LOG = Logger.getLogger(IconGridView.class);
+
     /** The grid in which the icons are rendered. */
     private final GridView<IconRecord> myGrid;
 
@@ -35,17 +38,17 @@ public class IconGridView extends AnchorPane
      * predicates.
      */
     private final ObservableSet<Predicate<IconRecord>> myActiveRestrictionPredicates;
-
-    /** The registry from which icons are read. */
-    private final IconRegistry myRegistry;
+//
+//    /** The registry from which icons are read. */
+//    private final IconRegistry myRegistry;
 
     /** The model in which state is maintained. */
     private final IconModel myModel;
 
-    /**
-     * The display state of the grid view. tied to the empty state of the items.
-     */
+    /** Display state of the grid view. tied to the empty state of the items. */
     private final BooleanProperty myDisplayProperty;
+
+    private IconChooserModel myIconChooserModel;
 
     /**
      * Creates a new grid view bound to the supplied model, and using the
@@ -58,6 +61,8 @@ public class IconGridView extends AnchorPane
     {
         myModel = model;
 
+        myIconChooserModel = myModel.getModel();
+
         myGrid = new GridView<>();
         myGrid.setHorizontalCellSpacing(4);
         myGrid.setVerticalCellSpacing(4);
@@ -65,7 +70,7 @@ public class IconGridView extends AnchorPane
         myGrid.cellHeightProperty().bind(myModel.tileWidthProperty());
         myGrid.setCellFactory(param -> new IconGridCell(model));
 
-        myRegistry = myModel.getIconRegistry();
+//        myRegistry = myModel.getIconRegistry();
         myPredicate = predicate;
         myActiveRestrictionPredicates = FXCollections.observableSet(New.set());
 
@@ -116,24 +121,26 @@ public class IconGridView extends AnchorPane
         return composedPredicate;
     }
 
-    /**
-     * Refreshes the contents of the tab.
-     */
+    /** Refreshes the contents of the tab. */
     public void refresh()
     {
-        IconRecord[] iconRecords = myRegistry.getIconRecords(composePredicate()).stream().toArray(IconRecord[]::new);
-        if (!Platform.isFxApplicationThread())
-        {
-            FXUtilities.runOnFXThread(() ->
-            {
-                myGrid.itemsProperty().get().clear();
-                myGrid.itemsProperty().get().addAll(iconRecords);
-            });
-        }
-        else
-        {
-            myGrid.itemsProperty().get().clear();
-            myGrid.itemsProperty().get().addAll(iconRecords);
-        }
+        LOG.info("Refreshing grid view.");
+
+        myGrid.itemsProperty().set(myIconChooserModel.getIconRecords(composePredicate()));
+//        IconRecord[] iconRecords = myRegistry.getIconRecords(composePredicate()).stream().toArray(IconRecord[]::new);
+//        if (!Platform.isFxApplicationThread())
+//        {
+//            FXUtilities.runOnFXThread(() ->
+//            {
+//                myGrid.itemsProperty().get().clear();
+//                myGrid.itemsProperty().get().addAll(iconRecords);
+//            });
+//        }
+//        else
+//        {
+//            myGrid.itemsProperty().get().clear();
+//            myGrid.itemsProperty().get().addAll(iconRecords);
+//        }
+        LOG.info("Finished refreshing grid view.");
     }
 }

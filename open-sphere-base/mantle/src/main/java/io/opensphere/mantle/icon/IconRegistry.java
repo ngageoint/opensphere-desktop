@@ -10,6 +10,7 @@ import gnu.trove.list.TIntList;
 import gnu.trove.list.TLongList;
 import io.opensphere.mantle.icon.chooser.model.IconManagerPrefs;
 import io.opensphere.mantle.icon.chooser.model.IconModel;
+import javafx.collections.ObservableList;
 
 /**
  * The Interface IconRegistry.
@@ -82,6 +83,8 @@ public interface IconRegistry
      * @return the all assigned element ids
      */
     List<Long> getAllAssignedElementIds();
+
+    ObservableList<String> getCollectionNameSet();
 
     /**
      * Gets the set of all collection names in use in the registry.
@@ -173,6 +176,13 @@ public interface IconRegistry
      * @return the icon records
      */
     List<IconRecord> getIconRecords(TIntList iconIds);
+
+    /**
+     * Gets complete collection of the {@link IconRecord}s from the registry.
+     *
+     * @return the icon records defined in the registry.
+     */
+    Collection<IconRecord> getIconRecords();
 
     /**
      * Gets the {@link IconRecord}s from the registry that match the
