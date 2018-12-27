@@ -71,6 +71,7 @@ public class QuerySelectorSplitButton extends SplitButton
     public QuerySelectorSplitButton(OverlayToolbox toolbox)
     {
         super(null, new GenericFontIcon(AwesomeIconRegular.SQUARE, IconUtil.DEFAULT_ICON_FOREGROUND), true);
+        setRolloverIcon(new GenericFontIcon(AwesomeIconRegular.SQUARE, IconUtil.DEFAULT_ICON_ROLLOVER));
 
         myQueryActions = New.map();
         QueryActionManager queryActionManager = toolbox.getQueryActionManager();
@@ -88,6 +89,7 @@ public class QuerySelectorSplitButton extends SplitButton
 
         {
             setIcon(myModeIcons.get(nv).iconProperty().get());
+            setRolloverIcon(myModeIcons.get(nv).rolloverIconProperty().get());
         });
 
         myToggledProperty = new ConcurrentBooleanProperty(false);
@@ -97,10 +99,12 @@ public class QuerySelectorSplitButton extends SplitButton
             if (nv)
             {
                 setIcon(myModeIcons.get(myCurrentSelectionMode.get()).selectedIconProperty().get());
+                setRolloverIcon(myModeIcons.get(myCurrentSelectionMode.get()).rolloverIconProperty().get());
             }
             else
             {
                 setIcon(myModeIcons.get(myCurrentSelectionMode.get()).iconProperty().get());
+                setRolloverIcon(myModeIcons.get(myCurrentSelectionMode.get()).rolloverIconProperty().get());
             }
         });
 
@@ -141,12 +145,15 @@ public class QuerySelectorSplitButton extends SplitButton
         JMenuItem item = new JMenuItem(metadata.labelProperty().get());
         item.setIcon(metadata.iconProperty().get());
         item.setSelectedIcon(metadata.selectedIconProperty().get());
+        item.setRolloverIcon(metadata.rolloverIconProperty().get());
         item.addActionListener(e ->
         {
             setIcon(metadata.selectedIconProperty().get());
+            setRolloverIcon(metadata.rolloverIconProperty().get());
             currentSelectionModeProperty().set(metadata.getMode());
             fireActionPerformed(e);
         });
+
 
         addMenuItem(item);
     }
@@ -172,6 +179,7 @@ public class QuerySelectorSplitButton extends SplitButton
         {
             item.setSelectedIcon(definition.selectedIconProperty().get());
         }
+        item.setRolloverIcon(definition.rolloverIconProperty().get());
 
         item.addActionListener(e -> definition.getEventListener().accept(new QueryEvent(item)));
         myQueryActions.put(definition, item);

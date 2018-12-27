@@ -12,7 +12,6 @@ import io.opensphere.core.util.lang.Pair;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.chooser.model.IconChooserModel;
 import io.opensphere.mantle.icon.chooser.model.IconModel;
-import io.opensphere.mantle.icon.chooser.model.IconRegistryChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.SortedList;
@@ -36,7 +35,7 @@ public class IconSelectionPanel extends BorderPane
     private static final int DEFAULT_ICON_SCALE = 60;
 
     /** The model in which state is maintained. */
-    private final IconModel myPanelModel;
+    final IconModel myPanelModel;
 
     /** The tab pane in which icons for each set are rendered. */
     private final OSTabPane myIconTabs;
@@ -56,6 +55,7 @@ public class IconSelectionPanel extends BorderPane
     /** A flag used to track the sorting state of the editor. */
     private transient boolean mySorting;
 
+    /** The model to which the icon chooser is bound. */
     private IconChooserModel myIconChooserModel;
 
     /**
@@ -91,8 +91,6 @@ public class IconSelectionPanel extends BorderPane
         mySetControlPane = new SearchControlBar(panelModel);
 
         SortedList<String> collectionNames = myIconChooserModel.getCollectionNames().sorted();
-//        List<String> collectionNames = New.list(myPanelModel.getIconRegistry().getCollectionNames());
-//        Collections.sort(collectionNames);
 
         myIconTabs = new OSTabPane();
         myIconTabs.tabDragPolicyProperty().set(TabDragPolicy.REORDER);
@@ -142,11 +140,6 @@ public class IconSelectionPanel extends BorderPane
             }
         });
 
-        myPanelModel.addRegistryChangeListener((IconRegistryChangeListener.Change c) ->
-        {
-            myTabs.values().stream().map(p -> p.getSecondObject()).forEach(g -> g.refresh());
-        });
-
         AnchorPane anchorPane = new AnchorPane(mySetControlPane, myIconTabs, box);
 
         AnchorPane.setRightAnchor(mySetControlPane, 0.0);
@@ -170,6 +163,11 @@ public class IconSelectionPanel extends BorderPane
             String name = myPanelModel.selectedRecordProperty().get().collectionNameProperty().get();
             myIconTabs.getSelectionModel().select(myTabs.get(name).getFirstObject());
         }
+
+        myPanelModel.searchTextProperty().addListener((obs, ov, nv) ->
+        {
+            refresh();
+        });
     }
 
     /** An event handler used to create and add a new icon set. */
@@ -192,7 +190,6 @@ public class IconSelectionPanel extends BorderPane
     /** Refreshes the content on all of the tabs. */
     private void refresh()
     {
-        myTabs.values().forEach(c -> c.getSecondObject().refresh());
         myPanelModel.getIconRegistry().iconStateChanged();
     }
 }

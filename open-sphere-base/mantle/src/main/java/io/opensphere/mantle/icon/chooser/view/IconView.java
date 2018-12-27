@@ -1,6 +1,7 @@
 package io.opensphere.mantle.icon.chooser.view;
 
 import io.opensphere.mantle.icon.chooser.model.IconModel;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 
 /** Packages UI elements into one pane. */
@@ -40,6 +41,10 @@ public class IconView extends AnchorPane
                     current = current.substring(0, current.length() - 1);
                 }
                 myPanelModel.searchTextProperty().set(current);
+            }
+            else if (KeyCode.ESCAPE.equals(e.getCode()) || e.getCharacter().charAt(0) == 27)
+            {
+                myPanelModel.searchTextProperty().set("");
             }
             else
             {

@@ -40,6 +40,7 @@ import io.opensphere.mantle.data.geom.style.impl.FilterGuiModTileVisualizationSt
 import io.opensphere.mantle.data.geom.style.impl.FilterSharpenTileVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.impl.FilterSmoothTileVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.impl.FilterSquareToothFaderTileVisualizationStyle;
+import io.opensphere.mantle.data.geom.style.impl.InvertColorTileVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.impl.LaplacianEdgeDetectionTileVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.impl.NormalTileVisualizationStyle;
 import io.opensphere.mantle.data.geom.style.impl.PointFeatureVisualizationStyle;
@@ -182,27 +183,24 @@ public class MantlePlugin extends PluginAdapter
                 DataElementAltitudeChangeEvent.class, new DataElementAltitudeChangeConsolidator());
         myDataElementAltitudeChangeCoalescer.start();
 
-        myDataElementColorChangeCoalescer = new EventCoalescer<>(myToolbox.getEventManager(),
-                DataElementColorChangeEvent.class, new DataElementColorChangeConsolidator());
+        myDataElementColorChangeCoalescer = new EventCoalescer<>(myToolbox.getEventManager(), DataElementColorChangeEvent.class,
+                new DataElementColorChangeConsolidator());
         myDataElementColorChangeCoalescer.start();
 
-        myDataElementLOBVisibleChangeCoalescer = new EventCoalescer<>(
-                myToolbox.getEventManager(), DataElementLOBVsibilityChangeEvent.class,
-                new DataElementLOBVisibilityChangeConsolidator());
+        myDataElementLOBVisibleChangeCoalescer = new EventCoalescer<>(myToolbox.getEventManager(),
+                DataElementLOBVsibilityChangeEvent.class, new DataElementLOBVisibilityChangeConsolidator());
         myDataElementLOBVisibleChangeCoalescer.start();
 
         myDataElementSelectionChangeCoalescer = new EventCoalescer<>(myToolbox.getEventManager(),
                 DataElementSelectionChangeEvent.class, new DataElementSelectionChangeConsolidator());
         myDataElementSelectionChangeCoalescer.start();
 
-        myDataElementMapGeometrySupportChangeCoalescer = new EventCoalescer<>(
-                myToolbox.getEventManager(), DataElementMapGeometrySupportChangeEvent.class,
-                new DataElementMapGeometrySupportChangeConsolidator());
+        myDataElementMapGeometrySupportChangeCoalescer = new EventCoalescer<>(myToolbox.getEventManager(),
+                DataElementMapGeometrySupportChangeEvent.class, new DataElementMapGeometrySupportChangeConsolidator());
         myDataElementSelectionChangeCoalescer.start();
 
-        myDataElementMetaDataChangeCoalescer = new EventCoalescer<>(
-                myToolbox.getEventManager(), DataElementMetaDataValueChangeEvent.class,
-                new DataElementMetaDataValueChangeConsolidator());
+        myDataElementMetaDataChangeCoalescer = new EventCoalescer<>(myToolbox.getEventManager(),
+                DataElementMetaDataValueChangeEvent.class, new DataElementMetaDataValueChangeConsolidator());
         myDataElementMetaDataChangeCoalescer.start();
     }
 
@@ -237,6 +235,7 @@ public class MantlePlugin extends PluginAdapter
         vsr.installStyle(LaplacianEdgeDetectionTileVisualizationStyle.class, this);
         vsr.installStyle(PrewittEdgeDetectionTileVisualizationStyle.class, this);
         vsr.installStyle(SobelEdgeDetectionTileVisualizationStyle.class, this);
+        vsr.installStyle(InvertColorTileVisualizationStyle.class, this);
 
         vsr.setDefaultStyle(TileVisualizationSupport.class, NormalTileVisualizationStyle.class, this);
     }

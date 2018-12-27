@@ -2,19 +2,16 @@ package io.opensphere.mantle.icon.chooser.view;
 
 import java.util.function.Predicate;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.GridView;
 
-import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.javafx.ConcurrentBooleanProperty;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.chooser.model.IconChooserModel;
 import io.opensphere.mantle.icon.chooser.model.IconModel;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableSet;
-import javafx.collections.SetChangeListener;
+import javafx.collections.ObservableList;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -23,24 +20,11 @@ import javafx.scene.layout.AnchorPane;
  */
 public class IconGridView extends AnchorPane
 {
-    /** The {@link Logger} instance used to capture output from this class. */
-    private static final Logger LOG = Logger.getLogger(IconGridView.class);
-
     /** The grid in which the icons are rendered. */
     private final GridView<IconRecord> myGrid;
 
     /** The predicate used to show all icons in the grid. */
     private final Predicate<IconRecord> myPredicate;
-
-    /**
-     * Additional predicates used further restrict the set of displayed icons.
-     * Used with the {@link #myPredicate} value to create a composite set of
-     * predicates.
-     */
-    private final ObservableSet<Predicate<IconRecord>> myActiveRestrictionPredicates;
-//
-//    /** The registry from which icons are read. */
-//    private final IconRegistry myRegistry;
 
     /** The model in which state is maintained. */
     private final IconModel myModel;
@@ -48,6 +32,7 @@ public class IconGridView extends AnchorPane
     /** Display state of the grid view. tied to the empty state of the items. */
     private final BooleanProperty myDisplayProperty;
 
+    /** The icon chooser model backing the grid view. */
     private IconChooserModel myIconChooserModel;
 
     /**
@@ -70,17 +55,24 @@ public class IconGridView extends AnchorPane
         myGrid.cellHeightProperty().bind(myModel.tileWidthProperty());
         myGrid.setCellFactory(param -> new IconGridCell(model));
 
-//        myRegistry = myModel.getIconRegistry();
         myPredicate = predicate;
-        myActiveRestrictionPredicates = FXCollections.observableSet(New.set());
 
-        refresh();
-        myActiveRestrictionPredicates.addListener((SetChangeListener.Change<? extends Predicate<IconRecord>> c) -> refresh());
         myModel.searchTextProperty().addListener((obs, ov, nv) ->
         {
-            myActiveRestrictionPredicates.clear();
-            myActiveRestrictionPredicates.add(r -> r.nameProperty().get().contains(nv));
+            ObservableList<IconRecord> filteredRecords = myIconChooserModel.getIconRecords(myPredicate).filtered(r ->
+            {
+                if (StringUtils.isEmpty(myModel.searchTextProperty().get()))
+                {
+                    return true;
+                }
+
+                return r.nameProperty().get().contains(myModel.searchTextProperty().get());
+            });
+
+            myGrid.itemsProperty().set(filteredRecords);
         });
+
+        myGrid.itemsProperty().set(myIconChooserModel.getIconRecords(myPredicate));
 
         getChildren().add(myGrid);
         AnchorPane.setRightAnchor(myGrid, 0.0);
@@ -101,46 +93,5 @@ public class IconGridView extends AnchorPane
     public BooleanProperty displayProperty()
     {
         return myDisplayProperty;
-    }
-
-    /**
-     * Creates a composite predicate to determine if the icon matches the group
-     * and any search terms entered by the user.
-     *
-     * @return a composite predicate to determine if the icon matches the group
-     *         and any search terms entered by the user.
-     */
-    private Predicate<IconRecord> composePredicate()
-    {
-        Predicate<IconRecord> composedPredicate = myPredicate;
-
-        for (Predicate<IconRecord> additionalPredicate : myActiveRestrictionPredicates)
-        {
-            composedPredicate = composedPredicate.and(additionalPredicate);
-        }
-        return composedPredicate;
-    }
-
-    /** Refreshes the contents of the tab. */
-    public void refresh()
-    {
-        LOG.info("Refreshing grid view.");
-
-        myGrid.itemsProperty().set(myIconChooserModel.getIconRecords(composePredicate()));
-//        IconRecord[] iconRecords = myRegistry.getIconRecords(composePredicate()).stream().toArray(IconRecord[]::new);
-//        if (!Platform.isFxApplicationThread())
-//        {
-//            FXUtilities.runOnFXThread(() ->
-//            {
-//                myGrid.itemsProperty().get().clear();
-//                myGrid.itemsProperty().get().addAll(iconRecords);
-//            });
-//        }
-//        else
-//        {
-//            myGrid.itemsProperty().get().clear();
-//            myGrid.itemsProperty().get().addAll(iconRecords);
-//        }
-        LOG.info("Finished refreshing grid view.");
     }
 }

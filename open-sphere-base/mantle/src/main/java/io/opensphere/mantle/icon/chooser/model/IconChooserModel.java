@@ -1,6 +1,5 @@
 package io.opensphere.mantle.icon.chooser.model;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -8,9 +7,9 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.IconRegistryListener;
@@ -51,7 +50,7 @@ public class IconChooserModel
      * The icon records stored in the model. This is updated and backed by the
      * icon registry. Package visibility to avoid synthetic accessor methods.
      */
-    final ObservableList<IconRecord> myIconRecords = FXCollections.observableArrayList(EXTRACTORS);
+    final ObservableList<IconRecord> myIconRecords;
 
     /**
      * An observable list of the unique collection names contained within all
@@ -70,6 +69,7 @@ public class IconChooserModel
      */
     public IconChooserModel()
     {
+        myIconRecords = FXCollections.observableArrayList(EXTRACTORS);
         myIconRecords.addListener((ListChangeListener<IconRecord>)c -> updateCollectionNames());
         myRegistryListener = new IconRegistryListener()
         {
@@ -88,7 +88,7 @@ public class IconChooserModel
             @Override
             public void iconsAdded(List<IconRecord> added, Object source)
             {
-                myIconRecords.addAll(added);
+                FXUtilities.runOnFXThread(() -> myIconRecords.addAll(added));
             }
 
             @Override
@@ -117,6 +117,7 @@ public class IconChooserModel
         Collection<IconRecord> iconRecords = myIconRegistry.getIconRecords();
         myIconRecords.retainAll(iconRecords);
         myIconRecords.addAll(CollectionUtils.disjunction(iconRecords, myIconRecords));
+        myIconRecords.sort((o1, o2) -> o1.nameProperty().get().compareTo(o2.nameProperty().get()));
     }
 
     /**
@@ -172,20 +173,5 @@ public class IconChooserModel
         // add new items present in the set not previously in the list:
         myCollectionNames.addAll(CollectionUtils.disjunction(set, myCollectionNames));
         LOG.info("Finished updating collection names.");
-    }
-
-    public ObservableList<IconRecord> getIconRecords(String collection)
-    {
-        return getIconRecords(r -> StringUtils.equals(r.collectionNameProperty().get(), collection));
-    }
-
-    public ObservableList<IconRecord> getFavoritedIconRecords()
-    {
-        return getIconRecords(r -> r.favoriteProperty().get());
-    }
-
-    public ObservableList<IconRecord> getIconRecordsWithTags(String... tags)
-    {
-        return getIconRecords(r -> r.getTags().containsAll(Arrays.asList(tags)));
     }
 }

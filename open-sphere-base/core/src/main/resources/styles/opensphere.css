@@ -1,25 +1,19 @@
 /* Styles used by JavaFX for the custom look & feel. */
 .root {
-    -opensphere-base: #535366;
-    -opensphere-dark: #3A3A47;
-    -opensphere-purple: #8D84BD;
+    -opensphere-base: #535353; 
+    -opensphere-dark: #3A3A3A; 
+    -opensphere-purple: #8D8D8D;
     -opensphere-purple-hover: ladder(-opensphere-purple, derive(-opensphere-purple, 20%) 20%,
         derive(-opensphere-purple, 30%) 35%, derive(-opensphere-purple, 40%) 50%);
     -opensphere-purple-pressed: derive(-opensphere-purple, -6%);
-    -opensphere-border: #8080A2;
+    -opensphere-border: #808080; 
     -fx-base: -opensphere-base;
-    -fx-background: #505061;
+    -fx-background: #505050; 
     -fx-control-inner-background: derive(-fx-base, 18%);
     -fx-control-inner-background-alt: derive(-fx-base, 26.4%);
     -fx-default-button: -opensphere-base;
 }
 
-/* swing look-and-feel
-.button {
-	-fx-outer-border: -opensphere-border;
-	-fx-inner-border: -fx-body-color;
-}
-*/
 .icons {
     -fx-font-size: 12px;
     -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;

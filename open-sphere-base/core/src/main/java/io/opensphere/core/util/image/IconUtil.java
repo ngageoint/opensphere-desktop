@@ -2,7 +2,6 @@ package io.opensphere.core.util.image;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -27,6 +26,9 @@ public final class IconUtil
 {
     /** Default icon foreground color. */
     public static final Color DEFAULT_ICON_FOREGROUND = new Color(97, 169, 220);
+
+    /** Default icon foreground color. */
+    public static final Color DEFAULT_ICON_ROLLOVER = new Color(0, 255, 255);
 
     /** Icon selection foreground. */
     public static final Color ICON_SELECTION_FOREGROUND = new Color(255, 244, 89);
@@ -313,7 +315,7 @@ public final class IconUtil
     public static BufferedImage getColorizedImage(ImageIcon icon, IconStyle style, Color color)
     {
         Paint paint;
-        final float upFactor = 1.6f;
+        final float upFactor = 4f;
         final float downFactor = .6f;
         switch (style)
         {
@@ -324,7 +326,7 @@ public final class IconUtil
             }
             case NORMAL:
             {
-                paint = new GradientPaint(0.0F, 0.0F, Color.WHITE, 0.0F, icon.getIconHeight() * downFactor, color);
+                paint = color;
                 break;
             }
             case ROLLOVER:
@@ -332,8 +334,7 @@ public final class IconUtil
                 float[] hsb = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
                 hsb[1] = MathUtil.clamp(hsb[1] * upFactor, 0f, 1f);
                 hsb[2] = MathUtil.clamp(hsb[2] * upFactor, 0f, 1f);
-                paint = new GradientPaint(0.0F, 0.0F, Color.WHITE, 0.0F, icon.getIconHeight() * downFactor,
-                        Color.getHSBColor(hsb[0], hsb[1], hsb[2]));
+                paint = Color.getHSBColor(hsb[0], hsb[1], hsb[2]).brighter().brighter().brighter();
                 break;
             }
             case PRESSED:
@@ -341,8 +342,7 @@ public final class IconUtil
                 float[] hsb = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
                 hsb[1] = MathUtil.clamp(hsb[1] * upFactor, 0f, 1f);
                 hsb[2] = MathUtil.clamp(hsb[2] * downFactor, 0f, 1f);
-                paint = new GradientPaint(0.0F, 0.0F, Color.WHITE, 0.0F, icon.getIconHeight() * downFactor,
-                        Color.getHSBColor(hsb[0], hsb[1], hsb[2]));
+                paint = Color.getHSBColor(hsb[0], hsb[1], hsb[2]);
                 break;
             }
             default:
@@ -547,7 +547,7 @@ public final class IconUtil
      * @throws IconRuntimeException If the resource cannot be loaded.
      */
     public static void setIcons(AbstractButton button, String resource, Color normalColor, Color selectColor)
-            throws IconRuntimeException
+        throws IconRuntimeException
     {
         setIcons(button, getIcon(resource), normalColor, selectColor);
     }

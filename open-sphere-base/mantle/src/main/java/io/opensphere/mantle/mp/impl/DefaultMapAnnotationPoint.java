@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 import io.opensphere.core.model.time.TimeSpan;
+import io.opensphere.core.util.Colors;
 import io.opensphere.mantle.mp.MapAnnotationPoint;
 import io.opensphere.mantle.mp.MapAnnotationPointChangeEvent;
 import io.opensphere.mantle.mp.MutableMapAnnotationPoint;
@@ -20,7 +21,8 @@ import io.opensphere.mantle.mp.event.impl.MapAnnotationPointMemberChangedEvent;
 public class DefaultMapAnnotationPoint implements MutableMapAnnotationPoint
 {
     /** The default color. */
-    public static final Color DEFAULT_COLOR = new Color(84, 84, 107, 190);
+    public static final Color DEFAULT_COLOR = new Color(Colors.LF_PRIMARY2.getRed(), Colors.LF_PRIMARY2.getGreen(),
+            Colors.LF_PRIMARY2.getBlue(), 190);
 
     /** The our id counter. */
     private static AtomicLong ourIdCounter = new AtomicLong(1000);

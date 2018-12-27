@@ -18,6 +18,9 @@ public class AbstractQueryActionDefinition
     /** The (optional) icon to use when the action is selected. */
     private final ObjectProperty<Icon> mySelectedIconProperty;
 
+    /** The (optional) icon to use when the action is rolled over. */
+    private final ObjectProperty<Icon> myRolloverIconProperty;
+
     /** The label displayed alongside the icon. */
     private final StringProperty myLabelProperty;
 
@@ -31,8 +34,19 @@ public class AbstractQueryActionDefinition
     {
         super();
         myIconProperty = new ConcurrentObjectProperty<>(icon);
+        myRolloverIconProperty = new ConcurrentObjectProperty<>();
         mySelectedIconProperty = new ConcurrentObjectProperty<>();
         myLabelProperty = new ConcurrentStringProperty(label);
+    }
+
+    /**
+     * Gets the value of the {@link #myRolloverIconProperty} field.
+     *
+     * @return the value of the myRolloverIconProperty field.
+     */
+    public ObjectProperty<Icon> rolloverIconProperty()
+    {
+        return myRolloverIconProperty;
     }
 
     /**

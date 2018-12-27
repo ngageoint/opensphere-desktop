@@ -39,7 +39,8 @@ import io.opensphere.core.util.swing.SwingImageHelper;
 public final class MapPointTransformerHelper
 {
     /** Background text of the label. */
-    static final Color ourBackgroundColor = new Color(84, 84, 107, 190);
+    static final Color ourBackgroundColor = new Color(Colors.LF_PRIMARY2.getRed(), Colors.LF_PRIMARY2.getGreen(),
+            Colors.LF_PRIMARY2.getBlue(), 190);
 
     /** Logger. */
     private static final Logger LOGGER = Logger.getLogger(MapPointTransformerHelper.class);
