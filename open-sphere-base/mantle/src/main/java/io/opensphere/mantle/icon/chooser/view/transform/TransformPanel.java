@@ -32,7 +32,7 @@ public class TransformPanel extends VBox
 
     /**
      * Creates a new Transform Panel.
-     * 
+     *
      * @param saveListener the procedure called when the user chooses to save
      *            transformation operations.
      */
@@ -50,6 +50,15 @@ public class TransformPanel extends VBox
         ToggleButton scaleButton = new ToggleButton("Scale");
         ToggleButton rotateButton = new ToggleButton("Rotate");
         SegmentedButton transformButtons = new SegmentedButton(moveButton, scaleButton, rotateButton);
+        // enforce persistent toggle, so that the user cannot untoggle all of
+        // the buttons:
+        transformButtons.toggleGroupProperty().get().selectedToggleProperty().addListener((obs, ov, nv) ->
+        {
+            if (nv == null)
+            {
+                ov.setSelected(true);
+            }
+        });
 
         transformDictionary.put(moveButton, new MoveTransform(myModel));
         transformDictionary.put(rotateButton, new RotationTransform(myModel));

@@ -14,7 +14,7 @@ public class IconView extends AnchorPane
     private final IconModel myPanelModel;
 
     /**
-     * Creates subpannels for UI.
+     * Creates sub-panels for UI.
      *
      * @param panelModel the model used for the UI.
      */
@@ -60,7 +60,7 @@ public class IconView extends AnchorPane
 
     /**
      * Gets the panel on which details are rendered.
-     * 
+     *
      * @return the panel on which details are rendered.
      */
     public IconDetail getDetailPanel()
