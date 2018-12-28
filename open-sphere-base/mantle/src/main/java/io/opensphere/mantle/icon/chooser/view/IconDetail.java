@@ -112,7 +112,7 @@ public class IconDetail extends AnchorPane
         myNameField = new TextField();
         myNameField.textProperty().bindBidirectional(myCustomizationModel.nameProperty());
 
-        mySourceField = new ComboBox<>(myModel.getIconRegistry().getCollectionNameSet());
+        mySourceField = new ComboBox<>(myModel.getModel().getCollectionNames());
         mySourceField.valueProperty().bindBidirectional(myCustomizationModel.sourceProperty());
 
         myTagsField = new TextField();
