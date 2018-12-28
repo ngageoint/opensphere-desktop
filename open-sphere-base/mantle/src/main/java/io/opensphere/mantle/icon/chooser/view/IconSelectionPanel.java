@@ -140,6 +140,15 @@ public class IconSelectionPanel extends BorderPane
             }
         });
 
+        myPanelModel.getCustomizationModel().sourceProperty().addListener((obs, ov, nv) ->
+        {
+            if (StringUtils.isNotBlank(myPanelModel.getCustomizationModel().sourceProperty().get()))
+            {
+                myIconTabs.selectionModelProperty().get()
+                        .select(myTabs.get(myPanelModel.getCustomizationModel().sourceProperty().get()).getFirstObject());
+            }
+        });
+
         AnchorPane anchorPane = new AnchorPane(mySetControlPane, myIconTabs, box);
 
         AnchorPane.setRightAnchor(mySetControlPane, 0.0);
@@ -157,12 +166,6 @@ public class IconSelectionPanel extends BorderPane
 
         setCenter(anchorPane);
         setRight(myDetailPane);
-
-        if (myPanelModel.selectedRecordProperty().get() != null)
-        {
-            String name = myPanelModel.selectedRecordProperty().get().collectionNameProperty().get();
-            myIconTabs.getSelectionModel().select(myTabs.get(name).getFirstObject());
-        }
 
         myPanelModel.searchTextProperty().addListener((obs, ov, nv) ->
         {
