@@ -457,6 +457,24 @@ public final class FXUtilities
     }
 
     /**
+     * Gets the optimal text color for the supplied background.
+     *
+     * @param backgroundColor the background color for which to get the optimal
+     *            text color.
+     * @return the optimal text color (white or black) for the uspplied
+     *         background color.
+     */
+    public static Color getTextColor(Color backgroundColor)
+    {
+        // Calculate the perceptive luminance (aka luma):
+        double luma = ((0.2126 * backgroundColor.getRed()) + (0.7152 * backgroundColor.getGreen())
+                + (0.0722 * backgroundColor.getBlue()));
+
+        // Return black for bright colors, white for dark colors
+        return luma > 0.585 ? Color.BLACK : Color.WHITE;
+    }
+
+    /**
      * Converts a JavaFX color to an AWT color. If no color is provided, default
      * to White.
      *

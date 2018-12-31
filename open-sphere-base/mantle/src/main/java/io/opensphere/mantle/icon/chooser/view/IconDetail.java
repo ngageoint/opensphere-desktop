@@ -14,7 +14,10 @@ import org.apache.log4j.Logger;
 import io.opensphere.core.function.Procedure;
 import io.opensphere.core.util.AwesomeIconRegular;
 import io.opensphere.core.util.AwesomeIconSolid;
+import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.fx.FxIcons;
+import io.opensphere.core.util.image.IconUtil;
+import io.opensphere.core.util.javafx.input.tags.TagField;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.chooser.model.CustomizationModel;
@@ -61,7 +64,7 @@ public class IconDetail extends AnchorPane
     private final ComboBox<String> mySourceField;
 
     /** The label in which the tags applied to the icon are displayed. */
-    private final TextField myTagsField;
+    private final TagField myTagsField;
 
     /** The panel on which transformations occur. */
     private final TransformPanel myTransformPanel;
@@ -110,13 +113,14 @@ public class IconDetail extends AnchorPane
         myCanvas.getGraphicsContext2D().drawImage(null, USE_COMPUTED_SIZE, BASELINE_OFFSET_SAME_AS_HEIGHT);
 
         myNameField = new TextField();
-        myNameField.textProperty().bindBidirectional(myCustomizationModel.nameProperty());
+        myNameField.textProperty().bind(myCustomizationModel.nameProperty());
 
         mySourceField = new ComboBox<>(myModel.getModel().getCollectionNames());
-        mySourceField.valueProperty().bindBidirectional(myCustomizationModel.sourceProperty());
+        mySourceField.valueProperty().bind(myCustomizationModel.sourceProperty());
 
-        myTagsField = new TextField();
-        myTagsField.textProperty().bindBidirectional(myCustomizationModel.tagsProperty());
+        myTagsField = new TagField();
+        myTagsField.tagColorProperty().set(FXUtilities.fromAwtColor(IconUtil.DEFAULT_ICON_FOREGROUND));
+        // myTagsField.textProperty().bind(myCustomizationModel.tagsProperty());
 
         VBox box = new VBox(5);
         box.setAlignment(Pos.TOP_CENTER);
@@ -158,11 +162,17 @@ public class IconDetail extends AnchorPane
         setRightAnchor(stackPane, 0.0);
 
         GridPane grid = new GridPane();
-        grid.add(new Label("Name:"), 0, 0);
+        Label nameLabel = new Label("Name:");
+        nameLabel.setMinWidth(USE_PREF_SIZE);
+        grid.add(nameLabel, 0, 0);
         grid.add(myNameField, 1, 0);
-        grid.add(new Label("Source:"), 0, 1);
+        Label sourceLabel = new Label("Source:");
+        sourceLabel.setMinWidth(USE_PREF_SIZE);
+        grid.add(sourceLabel, 0, 1);
         grid.add(mySourceField, 1, 1);
-        grid.add(new Label("Tags:"), 0, 2);
+        Label tagsLabel = new Label("Tags:");
+        tagsLabel.setMinWidth(USE_PREF_SIZE);
+        grid.add(tagsLabel, 0, 2);
         grid.add(myTagsField, 1, 2);
 
         box.getChildren().add(grid);
@@ -214,8 +224,9 @@ public class IconDetail extends AnchorPane
             ImageIO.write(bufImageRGB, "png", outputStream);
 
             URL imageURL = myModel.getIconRegistry().getIconCache().cacheIcon(outputStream.toByteArray(),
-                    myNameField.textProperty().get() + " User Edited Icon", true);
-            IconProvider provider = new DefaultIconProvider(imageURL, IconRecord.USER_ADDED_COLLECTION, "User");
+                    myNameField.textProperty().get(), true);
+            IconProvider provider = new DefaultIconProvider(imageURL, mySourceField.getSelectionModel().getSelectedItem(),
+                    "User");
             myModel.getIconRegistry().addIcon(provider, this);
         }
         catch (IOException e)
@@ -248,6 +259,8 @@ public class IconDetail extends AnchorPane
         }
         else
         {
+            myTagsField.getTags().clear();
+            // myTagsField.getTags().addAll(icon.getTags());
             Image image = icon.imageProperty().get();
             double xOrigin = myCanvas.getWidth() / 2;
             double yOrigin = myCanvas.getHeight() / 2;
