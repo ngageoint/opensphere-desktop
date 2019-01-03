@@ -300,6 +300,7 @@ public class IconImageProvider implements ImmediateImageProvider<Void>
      * @throws IOException If the there were issues connecting to the server.
      * @throws URISyntaxException If the url could not be converted to a URI.
      */
+    @SuppressWarnings("resource")
     private InputStream getStream(ResponseValues response) throws GeneralSecurityException, IOException, URISyntaxException
     {
         InputStream stream = null;

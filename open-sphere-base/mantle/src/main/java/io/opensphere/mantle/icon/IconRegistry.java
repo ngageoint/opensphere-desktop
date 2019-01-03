@@ -84,6 +84,11 @@ public interface IconRegistry
      */
     List<Long> getAllAssignedElementIds();
 
+    /**
+     * Gets the observable list in which the collection names are defined.
+     *
+     * @return the observable list in which the collection names are defined.
+     */
     ObservableList<String> getCollectionNameSet();
 
     /**
