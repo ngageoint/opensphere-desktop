@@ -27,52 +27,74 @@ import javafx.scene.input.MouseEvent;
  */
 public class OSTabPaneBehavior extends OSBehaviorBase<TabPane>
 {
+    /** The map for which this instance is configured. */
+    private final OSInputMap<TabPane> myTabPaneInputMap;
 
-    private final OSInputMap<TabPane> tabPaneInputMap;
-
+    /**
+     * Creates a new behavior for the supplied tab pane.
+     *
+     * @param tabPane the pane for which to create a new behavior.
+     */
     public OSTabPaneBehavior(TabPane tabPane)
     {
         super(tabPane);
 
         // create a map for TabPane-specific mappings (this reuses the default
-        // OSInputMap installed on the control, if it is non-null, allowing us to pick up any user-specified mappings)
-        tabPaneInputMap = createInputMap();
+        // OSInputMap installed on the control, if it is non-null, allowing us
+        // to pick up any user-specified mappings)
+        myTabPaneInputMap = createInputMap();
 
         // TabPane-specific mappings for key and mouse input
-        addDefaultMapping(tabPaneInputMap,
-            new KeyMapping(UP, e -> selectPreviousTab()),
-            new KeyMapping(DOWN, e -> selectNextTab()),
-            new KeyMapping(LEFT, e -> rtl(tabPane, this::selectNextTab, this::selectPreviousTab)),
-            new KeyMapping(RIGHT, e -> rtl(tabPane, this::selectPreviousTab, this::selectNextTab)),
-            new KeyMapping(HOME, e -> {
-                if (getNode().isFocused()) {
-                    moveSelection(-1, 1);
-                }
-            }),
-            new KeyMapping(END, e -> {
-                if (getNode().isFocused()) {
-                    moveSelection(getNode().getTabs().size(), -1);
-                }
-            }),
-            new KeyMapping(new OSKeyBinding(PAGE_UP).control(), e -> selectPreviousTab()),
-            new KeyMapping(new OSKeyBinding(PAGE_DOWN).control(), e -> selectNextTab()),
-            new KeyMapping(new OSKeyBinding(TAB).control(), e -> selectNextTab()),
-            new KeyMapping(new OSKeyBinding(TAB).control().shift(), e -> selectPreviousTab()),
-            new MouseMapping(MouseEvent.MOUSE_PRESSED, e -> getNode().requestFocus())
-        );
+        addDefaultMapping(myTabPaneInputMap, new KeyMapping(UP, e -> selectPreviousTab()),
+                new KeyMapping(DOWN, e -> selectNextTab()),
+                new KeyMapping(LEFT, e -> rtl(tabPane, this::selectNextTab, this::selectPreviousTab)),
+                new KeyMapping(RIGHT, e -> rtl(tabPane, this::selectPreviousTab, this::selectNextTab)), new KeyMapping(HOME, e ->
+                {
+                    if (getNode().isFocused())
+                    {
+                        moveSelection(-1, 1);
+                    }
+                }), new KeyMapping(END, e ->
+                {
+                    if (getNode().isFocused())
+                    {
+                        moveSelection(getNode().getTabs().size(), -1);
+                    }
+                }), new KeyMapping(new OSKeyBinding(PAGE_UP).control(), e -> selectPreviousTab()),
+                new KeyMapping(new OSKeyBinding(PAGE_DOWN).control(), e -> selectNextTab()),
+                new KeyMapping(new OSKeyBinding(TAB).control(), e -> selectNextTab()),
+                new KeyMapping(new OSKeyBinding(TAB).control().shift(), e -> selectPreviousTab()),
+                new MouseMapping(MouseEvent.MOUSE_PRESSED, e -> getNode().requestFocus()));
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.util.fx.tabpane.OSBehaviorBase#getInputMap()
+     */
     @Override
     public OSInputMap<TabPane> getInputMap()
     {
-        return tabPaneInputMap;
+        return myTabPaneInputMap;
     }
 
+    /**
+     * Selects the supplied tab in the tabbed pane.
+     *
+     * @param tab the tab to select in the selection model.
+     */
     public void selectTab(Tab tab)
     {
         getNode().getSelectionModel().select(tab);
     }
 
+    /**
+     * Tests to determine if the supplied tab can be closed.
+     *
+     * @param tab the tab to test.
+     * @return <code>true</code> if the tab can be closed, <code>false</code>
+     *         otherwise.
+     */
     public boolean canCloseTab(Tab tab)
     {
         Event event = new Event(tab, tab, Tab.TAB_CLOSE_REQUEST_EVENT);
@@ -80,6 +102,11 @@ public class OSTabPaneBehavior extends OSBehaviorBase<TabPane>
         return !event.isConsumed();
     }
 
+    /**
+     * Closes the supplied tab.
+     *
+     * @param tab the tab to close.
+     */
     public void closeTab(Tab tab)
     {
         TabPane tabPane = getNode();
@@ -96,24 +123,38 @@ public class OSTabPaneBehavior extends OSBehaviorBase<TabPane>
         }
     }
 
-    // Find a tab after the currently selected that is not disabled. Loop around
-    // if no tabs are found after currently selected tab.
+    /**
+     * Find a tab after the currently selected that is not disabled. Loop around
+     * if no tabs are found after currently selected tab.
+     */
     public void selectNextTab()
     {
         moveSelection(1);
     }
 
-    // Find a tab before the currently selected that is not disabled.
+    /** Find a tab before the currently selected that is not disabled. */
     public void selectPreviousTab()
     {
         moveSelection(-1);
     }
 
+    /**
+     * Find a tab some number of items away from the currently selected that is
+     * not disabled.
+     *
+     * @param delta the number of items to move.
+     */
     private void moveSelection(int delta)
     {
         moveSelection(getNode().getSelectionModel().getSelectedIndex(), delta);
     }
 
+    /**
+     * Moves the selection from the start index by the delta number of items.
+     *
+     * @param startIndex the initial index from which to start searching.
+     * @param delta the number of items to move the selection.
+     */
     private void moveSelection(int startIndex, int delta)
     {
         final TabPane tabPane = getNode();
@@ -131,6 +172,14 @@ public class OSTabPaneBehavior extends OSBehaviorBase<TabPane>
         tabPane.requestFocus();
     }
 
+    /**
+     * Finds the next valid tab from the start index, jumping the delta number
+     * of positions before beginning the examination.
+     *
+     * @param startIndex the initial examination location.
+     * @param delta the initial number of positions to move before searching.
+     * @return the index of the selected tab.
+     */
     private int findValidTab(int startIndex, int delta)
     {
         final TabPane tabPane = getNode();
@@ -152,6 +201,14 @@ public class OSTabPaneBehavior extends OSBehaviorBase<TabPane>
         return -1;
     }
 
+    /**
+     * Gets the next index of the item at the given value, with a maximum number
+     * of hops.
+     *
+     * @param value the starting point of the search.
+     * @param max the maximum number of movements to be performed.
+     * @return the next available index.
+     */
     private int nextIndex(int value, int max)
     {
         final int min = 0;
