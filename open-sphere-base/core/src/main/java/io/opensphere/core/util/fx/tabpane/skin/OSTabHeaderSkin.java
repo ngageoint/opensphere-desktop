@@ -1,6 +1,7 @@
 package io.opensphere.core.util.fx.tabpane.skin;
 
 import io.opensphere.core.util.fx.LambdaMultiplePropertyChangeListenerHandler;
+import io.opensphere.core.util.fx.OSTab;
 import io.opensphere.core.util.fx.OSUtil;
 import io.opensphere.core.util.fx.tabpane.OSTabAnimationState;
 import io.opensphere.core.util.fx.tabpane.OSTabPaneBehavior;
@@ -142,7 +143,10 @@ public class OSTabHeaderSkin extends StackPane
         myClip = new Rectangle();
         setClip(myClip);
 
-        // myEditingProperty.set(false);
+        if (myTab instanceof OSTab)
+        {
+            myEditPhase.bindBidirectional(((OSTab)myTab).tabEditPhaseProperty());
+        }
         myEditPhase.set(TabEditPhase.NOT_EDITING);
 
         myTextField = new TextField();

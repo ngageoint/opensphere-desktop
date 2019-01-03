@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import io.opensphere.core.util.fx.tabpane.inputmap.Mapping;
 import io.opensphere.core.util.fx.tabpane.inputmap.OSInputMap;
-import io.opensphere.core.util.fx.tabpane.inputmap.OSInputMap.Mapping;
 import javafx.scene.Node;
 
 /**

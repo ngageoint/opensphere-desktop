@@ -17,6 +17,7 @@ import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.util.Callback;
 
 /**
@@ -51,6 +52,8 @@ public class IconChooserModel
      * icon registry. Package visibility to avoid synthetic accessor methods.
      */
     final ObservableList<IconRecord> myIconRecords;
+
+    private final ObservableMap<String, IconSet> myCollections = FXCollections.observableHashMap();
 
     /**
      * An observable list of the unique collection names contained within all
@@ -136,7 +139,7 @@ public class IconChooserModel
      * but this list will only update with child record changes if the predicate
      * is configured on one of the fields defined within the extractor set
      * configured on {@link #myIconRecords} (defined in {@link #EXTRACTORS}).
-     * 
+     *
      * @param predicate the predicate with which to match icon records.
      * @return a live-filtered list of items matching the supplied predicate.
      */
@@ -172,6 +175,26 @@ public class IconChooserModel
         myCollectionNames.retainAll(set);
         // add new items present in the set not previously in the list:
         myCollectionNames.addAll(CollectionUtils.disjunction(set, myCollectionNames));
+
+        for (String name : myCollectionNames)
+        {
+            myCollections.computeIfAbsent(name, k ->
+            {
+                IconSet newIconSet = new IconSet();
+                newIconSet.setName(name);
+                return newIconSet;
+            });
+        }
         LOG.info("Finished updating collection names.");
+    }
+
+    /**
+     * Gets the value of the {@link #myCollections} field.
+     *
+     * @return the value stored in the {@link #myCollections} field.
+     */
+    public ObservableMap<String, IconSet> getCollections()
+    {
+        return myCollections;
     }
 }

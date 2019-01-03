@@ -7,7 +7,9 @@ import org.apache.commons.lang3.StringUtils;
 import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.fx.FxIcons;
+import io.opensphere.core.util.fx.OSTab;
 import io.opensphere.core.util.fx.OSTabPane;
+import io.opensphere.core.util.fx.tabpane.skin.TabEditPhase;
 import io.opensphere.core.util.lang.Pair;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.chooser.model.IconChooserModel;
@@ -176,8 +178,10 @@ public class IconSelectionPanel extends BorderPane
     /** An event handler used to create and add a new icon set. */
     private void createSet()
     {
-        Tab tab = new Tab("<New Icon Set>");
+        OSTab tab = new OSTab("<New Icon Set>");
         myIconTabs.getTabs().add(myIconTabs.getTabs().size(), tab);
+        myIconTabs.getSelectionModel().select(tab);
+        tab.tabEditPhaseProperty().set(TabEditPhase.EDITING);
     }
 
     /**

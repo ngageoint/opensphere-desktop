@@ -5,16 +5,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -23,42 +19,63 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.Node;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Pair;
 
 /**
  * OSInputMap is a class that is set on a given {@link Node}. When the Node
  * receives an input event from the system, it passes this event in to the
- * OSInputMap where the OSInputMap can check all installed
- * {@link OSInputMap.Mapping mappings} to see if there is any suitable mapping,
- * and if so, fire the provided {@link EventHandler}.
+ * OSInputMap where the OSInputMap can check all installed {@link Mapping
+ * mappings} to see if there is any suitable mapping, and if so, fire the
+ * provided {@link EventHandler}.
  *
  * @param <N> The type of the Node that the OSInputMap is installed in.
- * @since 9
  */
 public class OSInputMap<N extends Node> implements EventHandler<Event>
 {
-    /***************************************************************************
-     * * Private fields * *
-     **************************************************************************/
+    /** The node to which the input map is attached. */
+    private final N myNode;
 
-    private final N node;
+    /** An observable list of the input mappings defined for child nodes. */
+    private final ObservableList<OSInputMap<N>> myChildInputMaps;
 
-    private final ObservableList<OSInputMap<N>> childInputMaps;
+    /** The mappings contained within the input map. */
+    private final ObservableList<Mapping<?>> myMappings;
 
-    private final ObservableList<Mapping<?>> mappings;
+    /**
+     * The map of the installed event handlers, using the event type as the key,
+     * and the list of handlers as the value.
+     */
+    private final Map<EventType<?>, List<EventHandler<? super Event>>> myInstalledEventHandlers;
 
-//private final ObservableList<Predicate<? extends Event>> interceptors;
+    /**
+     * A dictionary of installed mappings bound to the event types and mappings.
+     */
+    private final Map<EventType<?>, List<Mapping<?>>> myEventTypeMappings;
 
-    private final Map<EventType<?>, List<EventHandler<? super Event>>> installedEventHandlers;
+    /** The input map of the parent node. */
+    private ReadOnlyObjectWrapper<OSInputMap<N>> myParentInputMap = new ReadOnlyObjectWrapper<>(this, "parentInputMap")
+    {
+        @Override
+        protected void invalidated()
+        {
+            // whenever the parent OSInputMap changes, we uninstall all
+            // mappings and then reprocess them so that they are installed in
+            // the correct root.
+            reprocessAllMappings();
+        }
+    };
 
-    private final Map<EventType, List<Mapping>> eventTypeMappings;
-
-    /***************************************************************************
-     * * Constructors * *
-     **************************************************************************/
+    /**
+     * The role of the interceptor is to block the OSInputMap on which it is set
+     * from executing any myMappings (contained within itself, or within a
+     * {@link #getChildInputMaps() child OSInputMap}, whenever the interceptor
+     * returns true. The interceptor is called every time an input event is
+     * received, and is allowed to reason on the given input event before
+     * returning a boolean value, where boolean true means block execution, and
+     * boolean false means to allow execution.
+     */
+    private ObjectProperty<Predicate<? extends Event>> myInterceptor = new SimpleObjectProperty<>(this, "interceptor");
 
     /**
      * Creates the new OSInputMap instance which is related specifically to the
@@ -73,14 +90,14 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
             throw new IllegalArgumentException("Node can not be null");
         }
 
-        this.node = node;
-        this.eventTypeMappings = new HashMap<>();
-        this.installedEventHandlers = new HashMap<>();
-//    this.interceptors = FXCollections.observableArrayList();
+        this.myNode = node;
+        this.myEventTypeMappings = new HashMap<>();
+        this.myInstalledEventHandlers = new HashMap<>();
+        // this.interceptors = FXCollections.observableArrayList();
 
         // listeners
-        this.mappings = FXCollections.observableArrayList();
-        mappings.addListener((ListChangeListener<Mapping<?>>)c ->
+        this.myMappings = FXCollections.observableArrayList();
+        myMappings.addListener((ListChangeListener<Mapping<?>>)c ->
         {
             while (c.next())
             {
@@ -111,14 +128,14 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
                     if (!toRemove.isEmpty())
                     {
                         getMappings().removeAll(toRemove);
-                        throw new IllegalArgumentException("Null mappings not permitted");
+                        throw new IllegalArgumentException("Null myMappings not permitted");
                     }
                 }
             }
         });
 
-        childInputMaps = FXCollections.observableArrayList();
-        childInputMaps.addListener((ListChangeListener<OSInputMap<N>>)c ->
+        myChildInputMaps = FXCollections.observableArrayList();
+        myChildInputMaps.addListener((ListChangeListener<OSInputMap<N>>)c ->
         {
             while (c.next())
             {
@@ -158,109 +175,52 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
         });
     }
 
-    /***************************************************************************
-     * * Properties * *
-     **************************************************************************/
-
-// --- parent behavior - for now this is an private property
-    private ReadOnlyObjectWrapper<OSInputMap<N>> parentInputMap = new ReadOnlyObjectWrapper<OSInputMap<N>>(this, "parentInputMap")
+    /**
+     * Adds the supplied event type to the input map.
+     *
+     * @param et the type to add to the input map.
+     */
+    private void addEventHandler(EventType<?> et)
     {
-        @Override
-        protected void invalidated()
+        List<EventHandler<? super Event>> eventHandlers = myInstalledEventHandlers.computeIfAbsent(et, f -> new ArrayList<>());
+
+        final EventHandler<? super Event> eventHandler = this::handle;
+
+        if (eventHandlers.isEmpty())
         {
-            // whenever the parent OSInputMap changes, we uninstall all mappings
-            // and
-            // then reprocess them so that they are installed in the correct
-            // root.
-            reprocessAllMappings();
+            myNode.addEventHandler(et, eventHandler);
         }
-    };
 
-    private final void setParentInputMap(OSInputMap<N> value)
-    {
-        parentInputMap.set(value);
-    }
-
-    private final OSInputMap<N> getParentInputMap()
-    {
-        return parentInputMap.get();
-    }
-
-    private final ReadOnlyObjectProperty<OSInputMap<N>> parentInputMapProperty()
-    {
-        return parentInputMap.getReadOnlyProperty();
-    }
-
-// --- interceptor
-    /**
-     * The role of the interceptor is to block the OSInputMap on which it is set
-     * from executing any mappings (contained within itself, or within a
-     * {@link #getChildInputMaps() child OSInputMap}, whenever the interceptor
-     * returns true. The interceptor is called every time an input event is
-     * received, and is allowed to reason on the given input event before
-     * returning a boolean value, where boolean true means block execution, and
-     * boolean false means to allow execution.
-     */
-    private ObjectProperty<Predicate<? extends Event>> interceptor = new SimpleObjectProperty<>(this, "interceptor");
-
-    public final Predicate<? extends Event> getInterceptor()
-    {
-        return interceptor.get();
-    }
-
-    public final void setInterceptor(Predicate<? extends Event> value)
-    {
-        interceptor.set(value);
-    }
-
-    public final ObjectProperty<Predicate<? extends Event>> interceptorProperty()
-    {
-        return interceptor;
-    }
-
-    /***************************************************************************
-     * * Public API * *
-     **************************************************************************/
-
-    /**
-     * The Node for which this OSInputMap is attached.
-     */
-    public final N getNode()
-    {
-        return node;
+        // We need to store these event handlers so we can dispose cleanly.
+        eventHandlers.add(eventHandler);
     }
 
     /**
-     * A mutable list of input mappings. Each will be considered whenever an
-     * input event is being looked up, and one of which may be used to handle
-     * the input event, based on the specifificity returned by each mapping
-     * (that is, the mapping with the highest specificity wins).
+     * Adds the supplied mapping to this instance.
+     *
+     * @param mapping the mapping to add to this instance.
      */
-    public ObservableList<Mapping<?>> getMappings()
+    private void addMapping(Mapping<?> mapping)
     {
-        return mappings;
-    }
+        OSInputMap<N> rootInputMap = getRootInputMap();
 
-    /**
-     * A mutable list of child InputMaps. An OSInputMap may have child input
-     * maps, as this allows for easy addition of mappings that are
-     * state-specific. For example, if a Node can be in two different states,
-     * and the input mappings are different for each, then it makes sense to
-     * have one root (and empty) OSInputMap, with two children input maps, where
-     * each is populated with the specific input mappings for one of the two
-     * states. To prevent the wrong input map from being considered, it is
-     * simply a matter of setting an appropriate {@link #interceptorProperty()
-     * interceptor} on each map, so that they are only considered in one of the
-     * two states.
-     */
-    public ObservableList<OSInputMap<N>> getChildInputMaps()
-    {
-        return childInputMaps;
+        // we want to track the event handlers we install, so that we can clean
+        // up in the dispose() method (and also so that we don't duplicate
+        // event handlers for a single event type). Because this is all handled
+        // in the root OSInputMap, we firstly find it, and then we defer to it.
+        rootInputMap.addEventHandler(mapping.myEventType);
+
+        // we maintain a separate map of all myMappings, which maps from the
+        // mapping event type into a list of myMappings. This allows for easier
+        // iteration in the lookup methods.
+        EventType<?> et = mapping.getEventType();
+        List<Mapping<?>> _eventTypeMappings = this.myEventTypeMappings.computeIfAbsent(et, f -> new ArrayList<>());
+        _eventTypeMappings.add(mapping);
     }
 
     /**
      * Disposes all child InputMaps, removes all event handlers from the Node,
-     * and clears the mappings list.
+     * and clears the myMappings list.
      */
     public void dispose()
     {
@@ -272,11 +232,117 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
         // uninstall event handlers
         removeAllEventHandlers();
 
-        // clear out all mappings
+        // clear out all myMappings
         getMappings().clear();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * A mutable list of child InputMaps. An OSInputMap may have child input
+     * maps, as this allows for easy addition of myMappings that are
+     * state-specific. For example, if a Node can be in two different states,
+     * and the input myMappings are different for each, then it makes sense to
+     * have one root (and empty) OSInputMap, with two children input maps, where
+     * each is populated with the specific input myMappings for one of the two
+     * states. To prevent the wrong input map from being considered, it is
+     * simply a matter of setting an appropriate {@link #interceptorProperty()
+     * myInterceptor} on each map, so that they are only considered in one of
+     * the two states.
+     *
+     * @return A mutable list of child InputMaps.
+     */
+    public ObservableList<OSInputMap<N>> getChildInputMaps()
+    {
+        return myChildInputMaps;
+    }
+
+    /**
+     * Gets the property in which the interceptor is stored.
+     *
+     * @return the property in which the interceptor is stored.
+     */
+    public final ObjectProperty<Predicate<? extends Event>> interceptorProperty()
+    {
+        return myInterceptor;
+    }
+
+    /**
+     * Gets the value of the {@link #myInterceptor} field.
+     *
+     * @return the value stored in the {@link #myInterceptor} field.
+     */
+    public final Predicate<? extends Event> getInterceptor()
+    {
+        return myInterceptor.get();
+    }
+
+    /**
+     * Sets the value of the {@link #myInterceptor} field.
+     *
+     * @param value the value to store in the {@link #myInterceptor} field.
+     */
+    public final void setInterceptor(Predicate<? extends Event> value)
+    {
+        myInterceptor.set(value);
+    }
+
+    /**
+     * A mutable list of input mappings. Each will be considered whenever an
+     * input event is being looked up, and one of which may be used to handle
+     * the input event, based on the specificity returned by each mapping (that
+     * is, the mapping with the highest specificity wins).
+     *
+     * @return A mutable list of input mappings.
+     */
+    public ObservableList<Mapping<?>> getMappings()
+    {
+        return myMappings;
+    }
+
+    /**
+     * Gets the Node for which this OSInputMap is attached.
+     *
+     * @return the Node for which this OSInputMap is attached.
+     */
+    public final N getNode()
+    {
+        return myNode;
+    }
+
+    /**
+     * Gets the value of the {@link #myParentInputMap} field.
+     *
+     * @return the value stored in the {@link #myParentInputMap} field.
+     */
+    private final OSInputMap<N> getParentInputMap()
+    {
+        return myParentInputMap.get();
+    }
+
+    /**
+     * Gets the input map of the root node in the scene graph.
+     *
+     * @return the input map of the root node in the scene graph.
+     */
+    private OSInputMap<N> getRootInputMap()
+    {
+        OSInputMap<N> rootInputMap = this;
+        while (true)
+        {
+            OSInputMap<N> parentInputMap = rootInputMap.getParentInputMap();
+            if (parentInputMap == null)
+            {
+                break;
+            }
+            rootInputMap = parentInputMap;
+        }
+        return rootInputMap;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see javafx.event.EventHandler#handle(javafx.event.Event)
+     */
     @Override
     public void handle(Event e)
     {
@@ -288,7 +354,7 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
         List<Mapping<?>> mappings = lookup(e, true);
         for (Mapping<?> mapping : mappings)
         {
-            EventHandler eventHandler = mapping.getEventHandler();
+            EventHandler<Event> eventHandler = (EventHandler<Event>)mapping.getEventHandler();
             if (eventHandler != null)
             {
                 eventHandler.handle(e);
@@ -306,9 +372,55 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
 
             // If we are here, the event has not been consumed, so we continue
             // looping through our list of matches. Refer to the documentation
-            // in
-            // lookup(Event) for more details on the list ordering.
+            // in lookup(Event) for more details on the list ordering.
         }
+    }
+
+    /**
+     * Returns a List of Mapping instances, in priority order (from highest
+     * priority to lowest priority). All myMappings in the list have the same
+     * value specificity, so are ranked based on the input map (with the leaf
+     * input maps taking precedence over parent / root input maps).
+     *
+     * @param event the event for which to search.
+     * @param testInterceptors <code>true</code> to force the search to test the
+     *            interceptors for results.
+     * @return a list of {@link Mapping}s matching the supplied event.
+     */
+    private List<Mapping<?>> lookup(Event event, boolean testInterceptors)
+    {
+        // firstly we look at ourselves to see if we have a mapping, assuming
+        // our interceptors are valid
+        if (testInterceptors)
+        {
+            boolean interceptorsApplies = testInterceptor(event, (Predicate<Event>)getInterceptor());
+
+            if (interceptorsApplies)
+            {
+                return Collections.emptyList();
+            }
+        }
+
+        List<Mapping<?>> mappings = new ArrayList<>();
+
+        int minSpecificity = 0;
+        List<Pair<Integer, Mapping<?>>> results = lookupMappingAndSpecificity(event, minSpecificity);
+        if (!results.isEmpty())
+        {
+            minSpecificity = results.get(0).getKey();
+            mappings.addAll(results.stream().map(pair -> pair.getValue()).collect(Collectors.toList()));
+        }
+
+        // but we always descend into our child input maps as well, to see if
+        // there is a more specific mapping there. If there is a mapping of
+        // equal specificity, we take the child mapping over the parent mapping.
+        for (int i = 0; i < getChildInputMaps().size(); i++)
+        {
+            OSInputMap<?> childInputMap = getChildInputMaps().get(i);
+            minSpecificity = scanRecursively(childInputMap, event, testInterceptors, minSpecificity, mappings);
+        }
+
+        return mappings;
     }
 
     /**
@@ -327,10 +439,10 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
      * For other Mapping subclasses, refer to their javadoc, and specifically
      * what is returned by {@link Mapping#getMappingKey()},
      *
-     * @param mappingKey
-     * @return
+     * @param mappingKey the key for which to search.
+     * @return an {@link Optional} instance containing mappings that match the
+     *         supplied key.
      */
-// TODO return all mappings, or just the first one?
     public Optional<Mapping<?>> lookupMapping(Object mappingKey)
     {
         if (mappingKey == null)
@@ -352,65 +464,128 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
         return mappings.size() > 0 ? Optional.of(mappings.get(0)) : Optional.empty();
     }
 
-    /***************************************************************************
-     * * Private implementation * *
-     **************************************************************************/
+    /**
+     * Searches for mappings, and generates a list of mappings and
+     * specificities.
+     *
+     * @param event the event for which to search.
+     * @param minSpecificity the minimum specificity to qualify as a search
+     *            result.
+     * @return a list of paired mappings and specificities.
+     */
+    private List<Pair<Integer, Mapping<?>>> lookupMappingAndSpecificity(final Event event, final int minSpecificity)
+    {
+        int _minSpecificity = minSpecificity;
 
+        List<Mapping<?>> mappings = this.myEventTypeMappings.getOrDefault(event.getEventType(), Collections.emptyList());
+        List<Pair<Integer, Mapping<?>>> result = new ArrayList<>();
+        for (Mapping<?> mapping : mappings)
+        {
+            if (mapping.isDisabled())
+            {
+                continue;
+            }
+
+            // test if mapping has an interceptor that will block this event.
+            // Interceptors return true if the interception should occur.
+            boolean interceptorsApplies = testInterceptor(event, (Predicate<Event>)mapping.getInterceptor());
+            if (interceptorsApplies)
+            {
+                continue;
+            }
+
+            int specificity = mapping.getSpecificity(event);
+            if (specificity > 0 && specificity == _minSpecificity)
+            {
+                result.add(new Pair<>(specificity, mapping));
+            }
+            else if (specificity > _minSpecificity)
+            {
+                result.clear();
+                result.add(new Pair<>(specificity, mapping));
+                _minSpecificity = specificity;
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Searches for the mappings associated with the supplied key.
+     *
+     * @param mappingKey the key for which to search.
+     * @return the mappings associated with the supplied key, empty if none
+     *         found.
+     */
     private List<Mapping<?>> lookupMappingKey(Object mappingKey)
     {
         return getMappings().stream().filter(mapping -> !mapping.isDisabled())
                 .filter(mapping -> mappingKey.equals(mapping.getMappingKey())).collect(Collectors.toList());
     }
 
-    /* Returns a List of Mapping instances, in priority order (from highest
-     * priority to lowest priority). All mappings in the list have the same
-     * value specificity, so are ranked based on the input map (with the leaf
-     * input maps taking precedence over parent / root input maps). */
-    private List<Mapping<?>> lookup(Event event, boolean testInterceptors)
+    /** Removes all event handlers from the input map. */
+    private void removeAllEventHandlers()
     {
-        // firstly we look at ourselves to see if we have a mapping, assuming
-        // our
-        // interceptors are valid
-        if (testInterceptors)
+        for (EventType<?> et : myInstalledEventHandlers.keySet())
         {
-            boolean interceptorsApplies = testInterceptor(event, getInterceptor());
-
-            if (interceptorsApplies)
+            List<EventHandler<? super Event>> handlers = myInstalledEventHandlers.get(et);
+            for (EventHandler<? super Event> handler : handlers)
             {
-                return Collections.emptyList();
+                // System.out.println("Removed event handler for type " + et);
+                myNode.removeEventHandler(et, handler);
             }
         }
-
-        List<Mapping<?>> mappings = new ArrayList<>();
-
-        int minSpecificity = 0;
-        List<Pair<Integer, Mapping<?>>> results = lookupMappingAndSpecificity(event, minSpecificity);
-        if (!results.isEmpty())
-        {
-            minSpecificity = results.get(0).getKey();
-            mappings.addAll(results.stream().map(pair -> pair.getValue()).collect(Collectors.toList()));
-        }
-
-        // but we always descend into our child input maps as well, to see if
-        // there
-        // is a more specific mapping there. If there is a mapping of equal
-        // specificity, we take the child mapping over the parent mapping.
-        for (int i = 0; i < getChildInputMaps().size(); i++)
-        {
-            OSInputMap childInputMap = getChildInputMaps().get(i);
-            minSpecificity = scanRecursively(childInputMap, event, testInterceptors, minSpecificity, mappings);
-        }
-
-        return mappings;
     }
 
+    /**
+     * Removes the supplied mapping from the input map.
+     *
+     * @param mapping the mapping to remove.
+     */
+    private void removeMapping(Mapping<?> mapping)
+    {
+        EventType<?> et = mapping.getEventType();
+        if (this.myEventTypeMappings.containsKey(et))
+        {
+            List<?> _eventTypeMappings = this.myEventTypeMappings.get(et);
+            _eventTypeMappings.remove(mapping);
+        }
+    }
+
+    /**
+     * Removes all event handlers and re-adds them. Package-level visibility to
+     * avoid creation of synthetic accessors.
+     */
+    void reprocessAllMappings()
+    {
+        removeAllEventHandlers();
+        this.myMappings.stream().forEach(this::addMapping);
+
+        // now do the same for all children
+        for (OSInputMap<N> child : getChildInputMaps())
+        {
+            child.reprocessAllMappings();
+        }
+    }
+
+    /**
+     * Recursively searches for the supplied mappings in the input map.
+     *
+     * @param inputMap the map in which to search.
+     * @param event the event type for which to test.
+     * @param testInterceptors a flag to force the testing of interceptors.
+     * @param minSpecificity the minimum specificity on which to consider a
+     *            match.
+     * @param mappings the mappings that matched the search.
+     * @return the minimum specificity matched during the search.
+     */
     private int scanRecursively(OSInputMap<?> inputMap, Event event, boolean testInterceptors, int minSpecificity,
             List<Mapping<?>> mappings)
     {
         // test if the childInputMap should be considered
         if (testInterceptors)
         {
-            boolean interceptorsApplies = testInterceptor(event, inputMap.getInterceptor());
+            boolean interceptorsApplies = testInterceptor(event, (Predicate<Event>)inputMap.getInterceptor());
             if (interceptorsApplies)
             {
                 return minSpecificity;
@@ -445,713 +620,25 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
         return minSpecificity;
     }
 
-    private OSInputMap<N> getRootInputMap()
+    /**
+     * Sets the value of the {@link #myParentInputMap} field.
+     *
+     * @param value the value to store in the {@link #myParentInputMap} field.
+     */
+    private final void setParentInputMap(OSInputMap<N> value)
     {
-        OSInputMap<N> rootInputMap = this;
-        while (true)
-        {
-            if (rootInputMap == null)
-            {
-                break;
-            }
-            OSInputMap<N> parentInputMap = rootInputMap.getParentInputMap();
-            if (parentInputMap == null)
-            {
-                break;
-            }
-            rootInputMap = parentInputMap;
-        }
-        return rootInputMap;
+        myParentInputMap.set(value);
     }
 
-    private void addMapping(Mapping<?> mapping)
-    {
-        OSInputMap<N> rootInputMap = getRootInputMap();
-
-        // we want to track the event handlers we install, so that we can clean
-        // up in the dispose() method (and also so that we don't duplicate
-        // event handlers for a single event type). Because this is all handled
-        // in the root OSInputMap, we firstly find it, and then we defer to it.
-        rootInputMap.addEventHandler(mapping.eventType);
-
-        // we maintain a separate map of all mappings, which maps from the
-        // mapping event type into a list of mappings. This allows for easier
-        // iteration in the lookup methods.
-        EventType<?> et = mapping.getEventType();
-        List<Mapping> _eventTypeMappings = this.eventTypeMappings.computeIfAbsent(et, f -> new ArrayList<>());
-        _eventTypeMappings.add(mapping);
-    }
-
-    private void removeMapping(Mapping<?> mapping)
-    {
-        EventType<?> et = mapping.getEventType();
-        if (this.eventTypeMappings.containsKey(et))
-        {
-            List<?> _eventTypeMappings = this.eventTypeMappings.get(et);
-            _eventTypeMappings.remove(mapping);
-
-            // TODO remove the event handler in the root if there are no more
-            // mappings of this type
-            // anywhere in the input map tree
-        }
-    }
-
-    private void addEventHandler(EventType et)
-    {
-        List<EventHandler<? super Event>> eventHandlers = installedEventHandlers.computeIfAbsent(et, f -> new ArrayList<>());
-
-        final EventHandler<? super Event> eventHandler = this::handle;
-
-        if (eventHandlers.isEmpty())
-        {
-//        System.out.println("Added event handler for type " + et);
-            node.addEventHandler(et, eventHandler);
-        }
-
-        // We need to store these event handlers so we can dispose cleanly.
-        eventHandlers.add(eventHandler);
-    }
-
-    private void removeAllEventHandlers()
-    {
-        for (EventType<?> et : installedEventHandlers.keySet())
-        {
-            List<EventHandler<? super Event>> handlers = installedEventHandlers.get(et);
-            for (EventHandler<? super Event> handler : handlers)
-            {
-//            System.out.println("Removed event handler for type " + et);
-                node.removeEventHandler(et, handler);
-            }
-        }
-    }
-
-    private void reprocessAllMappings()
-    {
-        removeAllEventHandlers();
-        this.mappings.stream().forEach(this::addMapping);
-
-        // now do the same for all children
-        for (OSInputMap<N> child : getChildInputMaps())
-        {
-            child.reprocessAllMappings();
-        }
-    }
-
-    private List<Pair<Integer, Mapping<?>>> lookupMappingAndSpecificity(final Event event, final int minSpecificity)
-    {
-        int _minSpecificity = minSpecificity;
-
-        List<Mapping> mappings = this.eventTypeMappings.getOrDefault(event.getEventType(), Collections.emptyList());
-        List<Pair<Integer, Mapping<?>>> result = new ArrayList<>();
-        for (Mapping mapping : mappings)
-        {
-            if (mapping.isDisabled())
-            {
-                continue;
-            }
-
-            // test if mapping has an interceptor that will block this event.
-            // Interceptors return true if the interception should occur.
-            boolean interceptorsApplies = testInterceptor(event, mapping.getInterceptor());
-            if (interceptorsApplies)
-            {
-                continue;
-            }
-
-            int specificity = mapping.getSpecificity(event);
-            if (specificity > 0 && specificity == _minSpecificity)
-            {
-                result.add(new Pair<>(specificity, mapping));
-            }
-            else if (specificity > _minSpecificity)
-            {
-                result.clear();
-                result.add(new Pair<>(specificity, mapping));
-                _minSpecificity = specificity;
-            }
-        }
-
-        return result;
-    }
-
-// Interceptors return true if the interception should occur.
-    private boolean testInterceptor(Event e, Predicate interceptor)
+    /**
+     * Tests the interceptors to determine if interception should occur.
+     *
+     * @param e the event to test.
+     * @param interceptor the interceptor to test.
+     * @return <code>true</code> if the interception should occur.
+     */
+    private boolean testInterceptor(Event e, Predicate<Event> interceptor)
     {
         return interceptor != null && interceptor.test(e);
-    }
-
-    /***************************************************************************
-     * * Support classes * *
-     **************************************************************************/
-
-    /**
-     * Abstract base class for all input mappings as used by the
-     * {@link OSInputMap} class.
-     *
-     * @param <T> The type of {@link Event} the mapping represents.
-     */
-    public static abstract class Mapping<T extends Event>
-    {
-
-        /***********************************************************************
-         * * Private fields * *
-         **********************************************************************/
-        private final EventType<T> eventType;
-
-        private final EventHandler<T> eventHandler;
-
-        /***********************************************************************
-         * * Constructors * *
-         **********************************************************************/
-
-        /**
-         * Creates a new Mapping instance.
-         *
-         * @param eventType The {@link EventType} that is being listened for.
-         * @param eventHandler The {@link EventHandler} to fire when the mapping
-         *            is selected as the most-specific mapping.
-         */
-        public Mapping(final EventType<T> eventType, final EventHandler<T> eventHandler)
-        {
-            this.eventType = eventType;
-            this.eventHandler = eventHandler;
-        }
-
-        /***********************************************************************
-         * * Abstract methods * *
-         **********************************************************************/
-
-        /**
-         * This method must be implemented by all mapping implementations such
-         * that it returns an integer value representing how closely the mapping
-         * matches the given {@link Event}. The higher the number, the greater
-         * the match. This allows the OSInputMap to determine which mapping is
-         * most specific, and to therefore fire the appropriate mapping
-         * {@link Mapping#getEventHandler() EventHandler}.
-         *
-         * @param event The {@link Event} that needs to be assessed for its
-         *            specificity.
-         * @return An integer indicating how close of a match the mapping is to
-         *         the given Event. The higher the number, the greater the
-         *         match.
-         */
-        public abstract int getSpecificity(Event event);
-
-        /***********************************************************************
-         * * Properties * *
-         **********************************************************************/
-
-        // --- disabled
-        /**
-         * By default all mappings are enabled (so this disabled property is set
-         * to false by default). In some cases it is useful to be able to
-         * disable a mapping until it is applicable. In these cases, users may
-         * simply toggle the disabled property until desired.
-         *
-         * <p>
-         * When the disabled property is true, the mapping will not be
-         * considered when input events are received, even if it is the most
-         * specific mapping available.
-         * </p>
-         */
-        private BooleanProperty disabled = new SimpleBooleanProperty(this, "disabled", false);
-
-        public final void setDisabled(boolean value)
-        {
-            disabled.set(value);
-        }
-
-        public final boolean isDisabled()
-        {
-            return disabled.get();
-        }
-
-        public final BooleanProperty disabledProperty()
-        {
-            return disabled;
-        }
-
-        // --- auto consume
-        /**
-         * By default mappings are set to 'auto consume' their specified event
-         * handler. This means that the event handler will not propagate
-         * further, but in some cases this is not desirable - sometimes it is
-         * preferred that the event continue to 'bubble up' to parent nodes so
-         * that they may also benefit from receiving this event. In these cases,
-         * it is important that this autoConsume property be changed from the
-         * default boolean true to instead be boolean false.
-         */
-        private BooleanProperty autoConsume = new SimpleBooleanProperty(this, "autoConsume", true);
-
-        public final void setAutoConsume(boolean value)
-        {
-            autoConsume.set(value);
-        }
-
-        public final boolean isAutoConsume()
-        {
-            return autoConsume.get();
-        }
-
-        public final BooleanProperty autoConsumeProperty()
-        {
-            return autoConsume;
-        }
-
-        /***********************************************************************
-         * * Public API * *
-         **********************************************************************/
-
-        /**
-         * The {@link EventType} that is being listened for.
-         */
-        public final EventType<T> getEventType()
-        {
-            return eventType;
-        }
-
-        /**
-         * The {@link EventHandler} that will be fired should this mapping be
-         * the most-specific mapping for a given input, and should it not be
-         * blocked by an interceptor (either at a
-         * {@link OSInputMap#interceptorProperty() input map} level or a
-         * {@link Mapping#interceptorProperty() mapping} level).
-         */
-        public final EventHandler<T> getEventHandler()
-        {
-            return eventHandler;
-        }
-
-        // --- interceptor
-        /**
-         * The role of the interceptor is to block the mapping on which it is
-         * set from executing, whenever the interceptor returns true. The
-         * interceptor is called every time the mapping is the best match for a
-         * given input event, and is allowed to reason on the given input event
-         * before returning a boolean value, where boolean true means block
-         * execution, and boolean false means to allow execution.
-         */
-        private ObjectProperty<Predicate<? extends Event>> interceptor = new SimpleObjectProperty<>(this, "interceptor");
-
-        public final Predicate<? extends Event> getInterceptor()
-        {
-            return interceptor.get();
-        }
-
-        public final void setInterceptor(Predicate<? extends Event> value)
-        {
-            interceptor.set(value);
-        }
-
-        public final ObjectProperty<Predicate<? extends Event>> interceptorProperty()
-        {
-            return interceptor;
-        }
-
-        /**
-         *
-         * @return
-         */
-        public Object getMappingKey()
-        {
-            return eventType;
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public boolean equals(Object o)
-        {
-            if (this == o)
-            {
-                return true;
-            }
-            if (!(o instanceof Mapping))
-            {
-                return false;
-            }
-
-            Mapping that = (Mapping)o;
-
-            if (eventType != null ? !eventType.equals(that.getEventType()) : that.getEventType() != null)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public int hashCode()
-        {
-            return eventType != null ? eventType.hashCode() : 0;
-        }
-    }
-
-    /**
-     * The KeyMapping class provides API to specify {@link OSInputMap.Mapping
-     * mappings} related to key input.
-     */
-    public static class KeyMapping extends Mapping<KeyEvent>
-    {
-
-        /***********************************************************************
-         * * Private fields * *
-         **********************************************************************/
-        private final OSKeyBinding keyBinding;
-
-        /***********************************************************************
-         * * Constructors * *
-         **********************************************************************/
-
-        /**
-         * Creates a new KeyMapping instance that will fire when the given
-         * {@link KeyCode} is entered into the application by the user, and this
-         * will result in the given {@link EventHandler} being fired.
-         *
-         * @param keyCode The {@link KeyCode} to listen for.
-         * @param eventHandler The {@link EventHandler} to fire when the
-         *            {@link KeyCode} is observed.
-         */
-        public KeyMapping(final KeyCode keyCode, final EventHandler<KeyEvent> eventHandler)
-        {
-            this(new OSKeyBinding(keyCode), eventHandler);
-        }
-
-        /**
-         * Creates a new KeyMapping instance that will fire when the given
-         * {@link KeyCode} is entered into the application by the user, and this
-         * will result in the given {@link EventHandler} being fired. The
-         * eventType argument can be one of the following:
-         *
-         * <ul>
-         * <li>{@link KeyEvent#ANY}</li>
-         * <li>{@link KeyEvent#KEY_PRESSED}</li>
-         * <li>{@link KeyEvent#KEY_TYPED}</li>
-         * <li>{@link KeyEvent#KEY_RELEASED}</li>
-         * </ul>
-         *
-         * @param keyCode The {@link KeyCode} to listen for.
-         * @param eventType The type of {@link KeyEvent} to listen for.
-         * @param eventHandler The {@link EventHandler} to fire when the
-         *            {@link KeyCode} is observed.
-         */
-        public KeyMapping(final KeyCode keyCode, final EventType<KeyEvent> eventType, final EventHandler<KeyEvent> eventHandler)
-        {
-            this(new OSKeyBinding(keyCode, eventType), eventHandler);
-        }
-
-        /**
-         * Creates a new KeyMapping instance that will fire when the given
-         * {@link OSKeyBinding} is entered into the application by the user, and
-         * this will result in the given {@link EventHandler} being fired.
-         *
-         * @param keyBinding The {@link OSKeyBinding} to listen for.
-         * @param eventHandler The {@link EventHandler} to fire when the
-         *            {@link OSKeyBinding} is observed.
-         */
-        public KeyMapping(OSKeyBinding keyBinding, final EventHandler<KeyEvent> eventHandler)
-        {
-            this(keyBinding, eventHandler, null);
-        }
-
-        /**
-         * Creates a new KeyMapping instance that will fire when the given
-         * {@link OSKeyBinding} is entered into the application by the user, and
-         * this will result in the given {@link EventHandler} being fired, as
-         * long as the given interceptor is not true.
-         *
-         * @param keyBinding The {@link OSKeyBinding} to listen for.
-         * @param eventHandler The {@link EventHandler} to fire when the
-         *            {@link OSKeyBinding} is observed.
-         * @param interceptor A {@link Predicate} that, if true, will prevent
-         *            the {@link EventHandler} from being fired.
-         */
-        public KeyMapping(OSKeyBinding keyBinding, final EventHandler<KeyEvent> eventHandler, Predicate<KeyEvent> interceptor)
-        {
-            super(keyBinding == null ? null : keyBinding.getType(), eventHandler);
-            if (keyBinding == null)
-            {
-                throw new IllegalArgumentException("KeyMapping keyBinding constructor argument can not be null");
-            }
-            this.keyBinding = keyBinding;
-            setInterceptor(interceptor);
-        }
-
-        /***********************************************************************
-         * * Public API * *
-         **********************************************************************/
-
-        /** {@inheritDoc} */
-        @Override
-        public Object getMappingKey()
-        {
-            return keyBinding;
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public int getSpecificity(Event e)
-        {
-            if (isDisabled())
-            {
-                return 0;
-            }
-            if (!(e instanceof KeyEvent))
-            {
-                return 0;
-            }
-            return keyBinding.getSpecificity((KeyEvent)e);
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public boolean equals(Object o)
-        {
-            if (this == o)
-            {
-                return true;
-            }
-            if (!(o instanceof KeyMapping))
-            {
-                return false;
-            }
-            if (!super.equals(o))
-            {
-                return false;
-            }
-
-            KeyMapping that = (KeyMapping)o;
-
-            // we know keyBinding is non-null here
-            return keyBinding.equals(that.keyBinding);
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public int hashCode()
-        {
-            return Objects.hash(keyBinding);
-        }
-    }
-
-    /**
-     * The MouseMapping class provides API to specify {@link OSInputMap.Mapping
-     * mappings} related to mouse input.
-     */
-    public static class MouseMapping extends Mapping<MouseEvent>
-    {
-
-        /***********************************************************************
-         * * Constructors * *
-         **********************************************************************/
-
-        /**
-         * Creates a new KeyMapping instance that will fire when the given
-         * {@link KeyCode} is entered into the application by the user, and this
-         * will result in the given {@link EventHandler} being fired. The
-         * eventType argument can be any of the {@link MouseEvent} event types,
-         * but typically it is one of the following:
-         *
-         * <ul>
-         * <li>{@link MouseEvent#ANY}</li>
-         * <li>{@link MouseEvent#MOUSE_PRESSED}</li>
-         * <li>{@link MouseEvent#MOUSE_CLICKED}</li>
-         * <li>{@link MouseEvent#MOUSE_RELEASED}</li>
-         * </ul>
-         *
-         * @param eventType The type of {@link MouseEvent} to listen for.
-         * @param eventHandler The {@link EventHandler} to fire when the
-         *            {@link MouseEvent} is observed.
-         */
-        public MouseMapping(final EventType<MouseEvent> eventType, final EventHandler<MouseEvent> eventHandler)
-        {
-            super(eventType, eventHandler);
-            if (eventType == null)
-            {
-                throw new IllegalArgumentException("MouseMapping eventType constructor argument can not be null");
-            }
-        }
-
-        /***********************************************************************
-         * * Public API * *
-         **********************************************************************/
-
-        /** {@inheritDoc} */
-        @Override
-        public int getSpecificity(Event e)
-        {
-            if (isDisabled())
-            {
-                return 0;
-            }
-            if (!(e instanceof MouseEvent))
-            {
-                return 0;
-            }
-            EventType<MouseEvent> et = getEventType();
-
-            // FIXME naive
-            int s = 0;
-            if (e.getEventType() == MouseEvent.MOUSE_CLICKED && et != MouseEvent.MOUSE_CLICKED)
-            {
-                return 0;
-            }
-            else
-            {
-                s++;
-            }
-            if (e.getEventType() == MouseEvent.MOUSE_DRAGGED && et != MouseEvent.MOUSE_DRAGGED)
-            {
-                return 0;
-            }
-            else
-            {
-                s++;
-            }
-            if (e.getEventType() == MouseEvent.MOUSE_ENTERED && et != MouseEvent.MOUSE_ENTERED)
-            {
-                return 0;
-            }
-            else
-            {
-                s++;
-            }
-            if (e.getEventType() == MouseEvent.MOUSE_ENTERED_TARGET && et != MouseEvent.MOUSE_ENTERED_TARGET)
-            {
-                return 0;
-            }
-            else
-            {
-                s++;
-            }
-            if (e.getEventType() == MouseEvent.MOUSE_EXITED && et != MouseEvent.MOUSE_EXITED)
-            {
-                return 0;
-            }
-            else
-            {
-                s++;
-            }
-            if (e.getEventType() == MouseEvent.MOUSE_EXITED_TARGET && et != MouseEvent.MOUSE_EXITED_TARGET)
-            {
-                return 0;
-            }
-            else
-            {
-                s++;
-            }
-            if (e.getEventType() == MouseEvent.MOUSE_MOVED && et != MouseEvent.MOUSE_MOVED)
-            {
-                return 0;
-            }
-            else
-            {
-                s++;
-            }
-            if (e.getEventType() == MouseEvent.MOUSE_PRESSED && et != MouseEvent.MOUSE_PRESSED)
-            {
-                return 0;
-            }
-            else
-            {
-                s++;
-            }
-            if (e.getEventType() == MouseEvent.MOUSE_RELEASED && et != MouseEvent.MOUSE_RELEASED)
-            {
-                return 0;
-            }
-            else
-            {
-                s++;
-            }
-
-            // TODO handle further checks
-
-            return s;
-        }
-    }
-
-    /**
-     * Convenience class that can act as an keyboard input interceptor, either
-     * at a {@link OSInputMap#interceptorProperty() input map} level or a
-     * {@link Mapping#interceptorProperty() mapping} level.
-     *
-     * @see OSInputMap#interceptorProperty()
-     * @see Mapping#interceptorProperty()
-     */
-    public static class KeyMappingInterceptor implements Predicate<Event>
-    {
-
-        private final OSKeyBinding keyBinding;
-
-        /**
-         * Creates a new KeyMappingInterceptor, which will block execution of
-         * event handlers (either at a {@link OSInputMap#interceptorProperty()
-         * input map} level or a {@link Mapping#interceptorProperty() mapping}
-         * level), where the input received is equal to the given
-         * {@link OSKeyBinding}.
-         *
-         * @param keyBinding The {@link OSKeyBinding} for which mapping
-         *            execution should be blocked.
-         */
-        public KeyMappingInterceptor(OSKeyBinding keyBinding)
-        {
-            this.keyBinding = keyBinding;
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public boolean test(Event event)
-        {
-            if (!(event instanceof KeyEvent))
-            {
-                return false;
-            }
-            return OSKeyBinding.toKeyBinding((KeyEvent)event).equals(keyBinding);
-        }
-    }
-
-    /**
-     * Convenience class that can act as a mouse input interceptor, either at a
-     * {@link OSInputMap#interceptorProperty() input map} level or a
-     * {@link Mapping#interceptorProperty() mapping} level.
-     *
-     * @see OSInputMap#interceptorProperty()
-     * @see Mapping#interceptorProperty()
-     */
-    public static class MouseMappingInterceptor implements Predicate<Event>
-    {
-
-        private final EventType<MouseEvent> eventType;
-
-        /**
-         * Creates a new MouseMappingInterceptor, which will block execution of
-         * event handlers (either at a {@link OSInputMap#interceptorProperty()
-         * input map} level or a {@link Mapping#interceptorProperty() mapping}
-         * level), where the input received is equal to the given
-         * {@link EventType}.
-         *
-         * @param eventType The {@link EventType} for which mapping execution
-         *            should be blocked (typically one of
-         *            {@link MouseEvent#MOUSE_PRESSED},
-         *            {@link MouseEvent#MOUSE_CLICKED}, or
-         *            {@link MouseEvent#MOUSE_RELEASED}).
-         */
-        public MouseMappingInterceptor(EventType<MouseEvent> eventType)
-        {
-            this.eventType = eventType;
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public boolean test(Event event)
-        {
-            if (!(event instanceof MouseEvent))
-            {
-                return false;
-            }
-            return event.getEventType() == this.eventType;
-        }
     }
 }

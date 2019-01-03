@@ -12,9 +12,9 @@ import static javafx.scene.input.KeyCode.UP;
 
 import java.util.List;
 
+import io.opensphere.core.util.fx.tabpane.inputmap.KeyMapping;
+import io.opensphere.core.util.fx.tabpane.inputmap.MouseMapping;
 import io.opensphere.core.util.fx.tabpane.inputmap.OSInputMap;
-import io.opensphere.core.util.fx.tabpane.inputmap.OSInputMap.KeyMapping;
-import io.opensphere.core.util.fx.tabpane.inputmap.OSInputMap.MouseMapping;
 import io.opensphere.core.util.fx.tabpane.inputmap.OSKeyBinding;
 import javafx.event.Event;
 import javafx.scene.control.SelectionModel;
@@ -54,10 +54,10 @@ public class OSTabPaneBehavior extends OSBehaviorBase<TabPane>
                     moveSelection(getNode().getTabs().size(), -1);
                 }
             }),
-            new KeyMapping(new OSKeyBinding(PAGE_UP).ctrl(), e -> selectPreviousTab()),
-            new KeyMapping(new OSKeyBinding(PAGE_DOWN).ctrl(), e -> selectNextTab()),
-            new KeyMapping(new OSKeyBinding(TAB).ctrl(), e -> selectNextTab()),
-            new KeyMapping(new OSKeyBinding(TAB).ctrl().shift(), e -> selectPreviousTab()),
+            new KeyMapping(new OSKeyBinding(PAGE_UP).control(), e -> selectPreviousTab()),
+            new KeyMapping(new OSKeyBinding(PAGE_DOWN).control(), e -> selectNextTab()),
+            new KeyMapping(new OSKeyBinding(TAB).control(), e -> selectNextTab()),
+            new KeyMapping(new OSKeyBinding(TAB).control().shift(), e -> selectPreviousTab()),
             new MouseMapping(MouseEvent.MOUSE_PRESSED, e -> getNode().requestFocus())
         );
     }
