@@ -28,6 +28,7 @@ public class IconDialog extends JFXDialog
     private Consumer<IconRecord> myAcceptListener;
 
     /** The controller used for managing customization operations. */
+    @SuppressWarnings("unused")
     private IconCustomizationController myCustomizationController;
 
     /**

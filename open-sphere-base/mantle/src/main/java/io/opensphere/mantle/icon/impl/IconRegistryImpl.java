@@ -15,9 +15,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Predicate;
-//import java.util.stream.Collectors;
-
-import org.apache.log4j.Logger;
+// import java.util.stream.Collectors;
 
 import gnu.trove.iterator.TIntIterator;
 import gnu.trove.iterator.TLongIterator;
@@ -49,7 +47,7 @@ import io.opensphere.mantle.icon.config.v1.IconRecordConfig;
 import io.opensphere.mantle.icon.config.v1.IconRegistryConfig;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
-//import javafx.collections.ListChangeListener;
+// import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
 /**
@@ -57,9 +55,6 @@ import javafx.collections.ObservableList;
  */
 public class IconRegistryImpl implements IconRegistry
 {
-    /** The logger used to capture output from this class. */
-    private static final Logger LOG = Logger.getLogger(IconRegistryImpl.class);
-
     /** The key used to store the preferences. */
     private static final String PREFERENCE_KEY = "iconConfig";
 
@@ -82,6 +77,7 @@ public class IconRegistryImpl implements IconRegistry
     /** The Icon id counter. */
     private final AtomicLong myIconIdCounter = new AtomicLong(0);
 
+    /** An observable list of icon records. */
     private final ObservableList<IconRecord> myIconRecords;
 
     /** The Icon id to icon record map. */
@@ -106,6 +102,7 @@ public class IconRegistryImpl implements IconRegistry
     /** The model containing the preferences for the Icon Manager start up. */
     private IconManagerPrefs myIconManagerPrefs = new IconManagerPrefs();
 
+    /** An observable list of collection names. */
     private final ObservableList<String> myCollectionNames = FXCollections.observableArrayList();
 
     /**
@@ -126,7 +123,6 @@ public class IconRegistryImpl implements IconRegistry
         myIconCache = new IconCacheImpl(iconCacheLocation);
         myChangeSupport = new WeakChangeSupport<>();
         myIconRecords = FXCollections.observableArrayList(param -> new Observable[] { param.collectionNameProperty() });
-//        myIconRecords.addListener((ListChangeListener<IconRecord>)c -> updateCollectionNames());
         load();
     }
 
@@ -487,26 +483,28 @@ public class IconRegistryImpl implements IconRegistry
             myChangeSupport.notifyListeners(listener -> listener.iconsRemoved(Collections.singletonList(fRemoved), source),
                     EXECUTOR);
             saveLater();
-//            updateCollectionNames();
+            // updateCollectionNames();
         }
         return removedRecord != null;
     }
-//
-//    private void updateCollectionNames()
-//    {
-//        LOG.info("Updating collection names.");
-//        IconRecord[] values = myIconIdToIconRecordMap.values(new IconRecord[myIconIdToIconRecordMap.size()]);
-//        Set<String> set = Arrays.stream(values).map(r -> r.collectionNameProperty().get()).distinct().collect(Collectors.toSet());
-//
-//        // ensure only the items in the set are present in the list:
-//        myCollectionNames.retainAll(set);
-//
-//        // add any new items present in the set that were not previously in the
-//        // list:
-//        set.removeAll(myCollectionNames);
-//        myCollectionNames.addAll(set);
-//        LOG.info("Finished updating collection names.");
-//    }
+    //
+    // private void updateCollectionNames()
+    // {
+    // LOG.info("Updating collection names.");
+    // IconRecord[] values = myIconIdToIconRecordMap.values(new
+    // IconRecord[myIconIdToIconRecordMap.size()]);
+    // Set<String> set = Arrays.stream(values).map(r ->
+    // r.collectionNameProperty().get()).distinct().collect(Collectors.toSet());
+    //
+    // // ensure only the items in the set are present in the list:
+    // myCollectionNames.retainAll(set);
+    //
+    // // add any new items present in the set that were not previously in the
+    // // list:
+    // set.removeAll(myCollectionNames);
+    // myCollectionNames.addAll(set);
+    // LOG.info("Finished updating collection names.");
+    // }
 
     @Override
     public boolean removeIcons(TLongList iconIdsToRemove, final Object source)
@@ -562,7 +560,7 @@ public class IconRegistryImpl implements IconRegistry
         }
         if (changed)
         {
-//            updateCollectionNames();
+            // updateCollectionNames();
         }
         return changed;
     }
@@ -705,8 +703,8 @@ public class IconRegistryImpl implements IconRegistry
         {
             Pair<IconRecord, Boolean> pair = createRecord(rec, null);
             record = pair.getFirstObject();
-//            myCollectionNames.add(record.collectionNameProperty().get());
-//            updateCollectionNames();
+            // myCollectionNames.add(record.collectionNameProperty().get());
+            // updateCollectionNames();
             wasAdded = pair.getSecondObject().booleanValue();
         }
         finally
@@ -762,8 +760,8 @@ public class IconRegistryImpl implements IconRegistry
                     IconProvider provider = providerList.get(i);
                     Long overrideId = ids != null ? ids.get(i) : null;
                     IconRecord record = createRecord(provider, overrideId).getFirstObject();
-//                    myCollectionNames.add(record.collectionNameProperty().get());
-//                    updateCollectionNames();
+                    // myCollectionNames.add(record.collectionNameProperty().get());
+                    // updateCollectionNames();
                     addedList.add(record);
                 }
             }

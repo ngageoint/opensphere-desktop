@@ -86,6 +86,7 @@ public class IconModel
     /** The model in which customization state is maintained. */
     private final CustomizationModel myCustomizationModel;
 
+    /** The chooser model in which the dialog's information is maintained. */
     private final IconChooserModel myModel;
 
     /**

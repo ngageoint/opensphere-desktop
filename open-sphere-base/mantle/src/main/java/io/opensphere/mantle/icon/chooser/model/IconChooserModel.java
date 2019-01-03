@@ -53,6 +53,9 @@ public class IconChooserModel
      */
     final ObservableList<IconRecord> myIconRecords;
 
+    /**
+     * A map of collection models using the name of the collection as the key.
+     */
     private final ObservableMap<String, IconSet> myCollections = FXCollections.observableHashMap();
 
     /**
