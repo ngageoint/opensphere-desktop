@@ -260,10 +260,7 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
 
         myTabContentRegions = FXCollections.<OSTabContentRegion>observableArrayList();
 
-        for (final Tab tab : getSkinnable().getTabs())
-        {
-            addTabContent(tab);
-        }
+        getSkinnable().getTabs().forEach(this::addTabContent);
 
         myTabHeaderAreaClipRectangle = new Rectangle();
         myTabHeaderArea = new OSTabHeaderArea(this);
