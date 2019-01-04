@@ -54,7 +54,7 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
     private final Map<EventType<?>, List<Mapping<?>>> myEventTypeMappings;
 
     /** The input map of the parent node. */
-    private ReadOnlyObjectWrapper<OSInputMap<N>> myParentInputMap = new ReadOnlyObjectWrapper<>(this, "parentInputMap")
+    private final ReadOnlyObjectWrapper<OSInputMap<N>> myParentInputMap = new ReadOnlyObjectWrapper<>(this, "parentInputMap")
     {
         @Override
         protected void invalidated()
@@ -75,7 +75,7 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
      * returning a boolean value, where boolean true means block execution, and
      * boolean false means to allow execution.
      */
-    private ObjectProperty<Predicate<? extends Event>> myInterceptor = new SimpleObjectProperty<>(this, "interceptor");
+    private final ObjectProperty<Predicate<? extends Event>> myInterceptor = new SimpleObjectProperty<>(this, "interceptor");
 
     /**
      * Creates the new OSInputMap instance which is related specifically to the
@@ -83,7 +83,7 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
      *
      * @param node The Node for which this OSInputMap is attached.
      */
-    public OSInputMap(N node)
+    public OSInputMap(final N node)
     {
         if (node == null)
         {
@@ -93,7 +93,6 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
         this.myNode = node;
         this.myEventTypeMappings = new HashMap<>();
         this.myInstalledEventHandlers = new HashMap<>();
-        // this.interceptors = FXCollections.observableArrayList();
 
         // listeners
         this.myMappings = FXCollections.observableArrayList();
@@ -104,7 +103,7 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
                 // TODO handle mapping removal
                 if (c.wasRemoved())
                 {
-                    for (Mapping<?> mapping : c.getRemoved())
+                    for (final Mapping<?> mapping : c.getRemoved())
                     {
                         removeMapping(mapping);
                     }
@@ -112,8 +111,8 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
 
                 if (c.wasAdded())
                 {
-                    List<Mapping<?>> toRemove = new ArrayList<>();
-                    for (Mapping<?> mapping : c.getAddedSubList())
+                    final List<Mapping<?>> toRemove = new ArrayList<>();
+                    for (final Mapping<?> mapping : c.getAddedSubList())
                     {
                         if (mapping == null)
                         {
@@ -141,7 +140,7 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
             {
                 if (c.wasRemoved())
                 {
-                    for (OSInputMap<N> map : c.getRemoved())
+                    for (final OSInputMap<N> map : c.getRemoved())
                     {
                         map.setParentInputMap(null);
                     }
@@ -149,12 +148,11 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
 
                 if (c.wasAdded())
                 {
-                    List<OSInputMap<N>> toRemove = new ArrayList<>();
-                    for (OSInputMap<N> map : c.getAddedSubList())
+                    final List<OSInputMap<N>> toRemove = new ArrayList<>();
+                    for (final OSInputMap<N> map : c.getAddedSubList())
                     {
                         // we check that the child input map maps to the same
-                        // node
-                        // as this input map
+                        // node as this input map
                         if (map.getNode() != getNode())
                         {
                             toRemove.add(map);
@@ -180,9 +178,10 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
      *
      * @param et the type to add to the input map.
      */
-    private void addEventHandler(EventType<?> et)
+    private void addEventHandler(final EventType<?> et)
     {
-        List<EventHandler<? super Event>> eventHandlers = myInstalledEventHandlers.computeIfAbsent(et, f -> new ArrayList<>());
+        final List<EventHandler<? super Event>> eventHandlers = myInstalledEventHandlers.computeIfAbsent(et,
+                f -> new ArrayList<>());
 
         final EventHandler<? super Event> eventHandler = this::handle;
 
@@ -200,9 +199,9 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
      *
      * @param mapping the mapping to add to this instance.
      */
-    private void addMapping(Mapping<?> mapping)
+    private void addMapping(final Mapping<?> mapping)
     {
-        OSInputMap<N> rootInputMap = getRootInputMap();
+        final OSInputMap<N> rootInputMap = getRootInputMap();
 
         // we want to track the event handlers we install, so that we can clean
         // up in the dispose() method (and also so that we don't duplicate
@@ -213,8 +212,8 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
         // we maintain a separate map of all myMappings, which maps from the
         // mapping event type into a list of myMappings. This allows for easier
         // iteration in the lookup methods.
-        EventType<?> et = mapping.getEventType();
-        List<Mapping<?>> _eventTypeMappings = this.myEventTypeMappings.computeIfAbsent(et, f -> new ArrayList<>());
+        final EventType<?> et = mapping.getEventType();
+        final List<Mapping<?>> _eventTypeMappings = this.myEventTypeMappings.computeIfAbsent(et, f -> new ArrayList<>());
         _eventTypeMappings.add(mapping);
     }
 
@@ -224,7 +223,7 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
      */
     public void dispose()
     {
-        for (OSInputMap<N> childInputMap : getChildInputMaps())
+        for (final OSInputMap<N> childInputMap : getChildInputMaps())
         {
             childInputMap.dispose();
         }
@@ -280,7 +279,7 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
      *
      * @param value the value to store in the {@link #myInterceptor} field.
      */
-    public final void setInterceptor(Predicate<? extends Event> value)
+    public final void setInterceptor(final Predicate<? extends Event> value)
     {
         myInterceptor.set(value);
     }
@@ -328,7 +327,7 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
         OSInputMap<N> rootInputMap = this;
         while (true)
         {
-            OSInputMap<N> parentInputMap = rootInputMap.getParentInputMap();
+            final OSInputMap<N> parentInputMap = rootInputMap.getParentInputMap();
             if (parentInputMap == null)
             {
                 break;
@@ -344,17 +343,17 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
      * @see javafx.event.EventHandler#handle(javafx.event.Event)
      */
     @Override
-    public void handle(Event e)
+    public void handle(final Event e)
     {
         if (e == null || e.isConsumed())
         {
             return;
         }
 
-        List<Mapping<?>> mappings = lookup(e, true);
-        for (Mapping<?> mapping : mappings)
+        final List<Mapping<?>> mappings = lookup(e, true);
+        for (final Mapping<?> mapping : mappings)
         {
-            EventHandler<Event> eventHandler = (EventHandler<Event>)mapping.getEventHandler();
+            final EventHandler<Event> eventHandler = (EventHandler<Event>)mapping.getEventHandler();
             if (eventHandler != null)
             {
                 eventHandler.handle(e);
@@ -387,13 +386,13 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
      *            interceptors for results.
      * @return a list of {@link Mapping}s matching the supplied event.
      */
-    private List<Mapping<?>> lookup(Event event, boolean testInterceptors)
+    private List<Mapping<?>> lookup(final Event event, final boolean testInterceptors)
     {
         // firstly we look at ourselves to see if we have a mapping, assuming
         // our interceptors are valid
         if (testInterceptors)
         {
-            boolean interceptorsApplies = testInterceptor(event, (Predicate<Event>)getInterceptor());
+            final boolean interceptorsApplies = testInterceptor(event, (Predicate<Event>)getInterceptor());
 
             if (interceptorsApplies)
             {
@@ -401,10 +400,10 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
             }
         }
 
-        List<Mapping<?>> mappings = new ArrayList<>();
+        final List<Mapping<?>> mappings = new ArrayList<>();
 
         int minSpecificity = 0;
-        List<Pair<Integer, Mapping<?>>> results = lookupMappingAndSpecificity(event, minSpecificity);
+        final List<Pair<Integer, Mapping<?>>> results = lookupMappingAndSpecificity(event, minSpecificity);
         if (!results.isEmpty())
         {
             minSpecificity = results.get(0).getKey();
@@ -416,7 +415,7 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
         // equal specificity, we take the child mapping over the parent mapping.
         for (int i = 0; i < getChildInputMaps().size(); i++)
         {
-            OSInputMap<?> childInputMap = getChildInputMaps().get(i);
+            final OSInputMap<?> childInputMap = getChildInputMaps().get(i);
             minSpecificity = scanRecursively(childInputMap, event, testInterceptors, minSpecificity, mappings);
         }
 
@@ -443,21 +442,21 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
      * @return an {@link Optional} instance containing mappings that match the
      *         supplied key.
      */
-    public Optional<Mapping<?>> lookupMapping(Object mappingKey)
+    public Optional<Mapping<?>> lookupMapping(final Object mappingKey)
     {
         if (mappingKey == null)
         {
             return Optional.empty();
         }
 
-        List<Mapping<?>> mappings = lookupMappingKey(mappingKey);
+        final List<Mapping<?>> mappings = lookupMappingKey(mappingKey);
 
         // descend into our child input maps as well
         for (int i = 0; i < getChildInputMaps().size(); i++)
         {
-            OSInputMap<N> childInputMap = getChildInputMaps().get(i);
+            final OSInputMap<N> childInputMap = getChildInputMaps().get(i);
 
-            List<Mapping<?>> childMappings = childInputMap.lookupMappingKey(mappingKey);
+            final List<Mapping<?>> childMappings = childInputMap.lookupMappingKey(mappingKey);
             mappings.addAll(0, childMappings);
         }
 
@@ -477,9 +476,9 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
     {
         int _minSpecificity = minSpecificity;
 
-        List<Mapping<?>> mappings = this.myEventTypeMappings.getOrDefault(event.getEventType(), Collections.emptyList());
-        List<Pair<Integer, Mapping<?>>> result = new ArrayList<>();
-        for (Mapping<?> mapping : mappings)
+        final List<Mapping<?>> mappings = this.myEventTypeMappings.getOrDefault(event.getEventType(), Collections.emptyList());
+        final List<Pair<Integer, Mapping<?>>> result = new ArrayList<>();
+        for (final Mapping<?> mapping : mappings)
         {
             if (mapping.isDisabled())
             {
@@ -488,13 +487,13 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
 
             // test if mapping has an interceptor that will block this event.
             // Interceptors return true if the interception should occur.
-            boolean interceptorsApplies = testInterceptor(event, (Predicate<Event>)mapping.getInterceptor());
+            final boolean interceptorsApplies = testInterceptor(event, (Predicate<Event>)mapping.getInterceptor());
             if (interceptorsApplies)
             {
                 continue;
             }
 
-            int specificity = mapping.getSpecificity(event);
+            final int specificity = mapping.getSpecificity(event);
             if (specificity > 0 && specificity == _minSpecificity)
             {
                 result.add(new Pair<>(specificity, mapping));
@@ -517,7 +516,7 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
      * @return the mappings associated with the supplied key, empty if none
      *         found.
      */
-    private List<Mapping<?>> lookupMappingKey(Object mappingKey)
+    private List<Mapping<?>> lookupMappingKey(final Object mappingKey)
     {
         return getMappings().stream().filter(mapping -> !mapping.isDisabled())
                 .filter(mapping -> mappingKey.equals(mapping.getMappingKey())).collect(Collectors.toList());
@@ -526,10 +525,10 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
     /** Removes all event handlers from the input map. */
     private void removeAllEventHandlers()
     {
-        for (EventType<?> et : myInstalledEventHandlers.keySet())
+        for (final EventType<?> et : myInstalledEventHandlers.keySet())
         {
-            List<EventHandler<? super Event>> handlers = myInstalledEventHandlers.get(et);
-            for (EventHandler<? super Event> handler : handlers)
+            final List<EventHandler<? super Event>> handlers = myInstalledEventHandlers.get(et);
+            for (final EventHandler<? super Event> handler : handlers)
             {
                 // System.out.println("Removed event handler for type " + et);
                 myNode.removeEventHandler(et, handler);
@@ -542,12 +541,12 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
      *
      * @param mapping the mapping to remove.
      */
-    private void removeMapping(Mapping<?> mapping)
+    private void removeMapping(final Mapping<?> mapping)
     {
-        EventType<?> et = mapping.getEventType();
+        final EventType<?> et = mapping.getEventType();
         if (this.myEventTypeMappings.containsKey(et))
         {
-            List<?> _eventTypeMappings = this.myEventTypeMappings.get(et);
+            final List<?> _eventTypeMappings = this.myEventTypeMappings.get(et);
             _eventTypeMappings.remove(mapping);
         }
     }
@@ -562,10 +561,7 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
         this.myMappings.stream().forEach(this::addMapping);
 
         // now do the same for all children
-        for (OSInputMap<N> child : getChildInputMaps())
-        {
-            child.reprocessAllMappings();
-        }
+        getChildInputMaps().stream().forEach(c -> c.reprocessAllMappings());
     }
 
     /**
@@ -579,13 +575,13 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
      * @param mappings the mappings that matched the search.
      * @return the minimum specificity matched during the search.
      */
-    private int scanRecursively(OSInputMap<?> inputMap, Event event, boolean testInterceptors, int minSpecificity,
-            List<Mapping<?>> mappings)
+    private int scanRecursively(final OSInputMap<?> inputMap, final Event event, final boolean testInterceptors,
+            int minSpecificity, final List<Mapping<?>> mappings)
     {
         // test if the childInputMap should be considered
         if (testInterceptors)
         {
-            boolean interceptorsApplies = testInterceptor(event, (Predicate<Event>)inputMap.getInterceptor());
+            final boolean interceptorsApplies = testInterceptor(event, (Predicate<Event>)inputMap.getInterceptor());
             if (interceptorsApplies)
             {
                 return minSpecificity;
@@ -593,11 +589,12 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
         }
 
         // look at the given OSInputMap
-        List<Pair<Integer, Mapping<?>>> childResults = inputMap.lookupMappingAndSpecificity(event, minSpecificity);
+        final List<Pair<Integer, Mapping<?>>> childResults = inputMap.lookupMappingAndSpecificity(event, minSpecificity);
         if (!childResults.isEmpty())
         {
-            int specificity = childResults.get(0).getKey();
-            List<Mapping<?>> childMappings = childResults.stream().map(pair -> pair.getValue()).collect(Collectors.toList());
+            final int specificity = childResults.get(0).getKey();
+            final List<Mapping<?>> childMappings = childResults.stream().map(pair -> pair.getValue())
+                    .collect(Collectors.toList());
             if (specificity == minSpecificity)
             {
                 mappings.addAll(0, childMappings);
@@ -625,7 +622,7 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
      *
      * @param value the value to store in the {@link #myParentInputMap} field.
      */
-    private final void setParentInputMap(OSInputMap<N> value)
+    private final void setParentInputMap(final OSInputMap<N> value)
     {
         myParentInputMap.set(value);
     }
@@ -637,7 +634,7 @@ public class OSInputMap<N extends Node> implements EventHandler<Event>
      * @param interceptor the interceptor to test.
      * @return <code>true</code> if the interception should occur.
      */
-    private boolean testInterceptor(Event e, Predicate<Event> interceptor)
+    private boolean testInterceptor(final Event e, final Predicate<Event> interceptor)
     {
         return interceptor != null && interceptor.test(e);
     }
