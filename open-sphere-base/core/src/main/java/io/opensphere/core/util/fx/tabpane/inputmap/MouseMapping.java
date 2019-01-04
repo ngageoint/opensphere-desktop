@@ -45,7 +45,7 @@ public class MouseMapping extends Mapping<MouseEvent>
      * @see io.opensphere.core.util.fx.tabpane.inputmap.Mapping#getSpecificity(javafx.event.Event)
      */
     @Override
-    public int getSpecificity(Event e)
+    public int getSpecificity(final Event e)
     {
         if (isDisabled())
         {
@@ -55,9 +55,8 @@ public class MouseMapping extends Mapping<MouseEvent>
         {
             return 0;
         }
-        EventType<MouseEvent> et = getEventType();
+        final EventType<MouseEvent> et = getEventType();
 
-        // FIXME naive
         int s = 0;
         if (e.getEventType() == MouseEvent.MOUSE_CLICKED && et != MouseEvent.MOUSE_CLICKED)
         {
