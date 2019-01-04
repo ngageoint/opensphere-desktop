@@ -27,27 +27,27 @@ public class IconModel
     final class PassThroughIconRegistryListener implements IconRegistryListener
     {
         @Override
-        public void iconsUnassigned(List<Long> deIds, Object source)
+        public void iconsUnassigned(final List<Long> deIds, final Object source)
         {
             /* intentionally blank */
         }
 
         @Override
-        public void iconsRemoved(List<IconRecord> removed, Object source)
+        public void iconsRemoved(final List<IconRecord> removed, final Object source)
         {
-            Change change = new Change(null, removed);
+            final Change change = new Change(null, removed);
             myRegistryChangeListeners.forEach(c -> c.onChanged(change));
         }
 
         @Override
-        public void iconsAdded(List<IconRecord> added, Object source)
+        public void iconsAdded(final List<IconRecord> added, final Object source)
         {
-            Change change = new Change(added, null);
+            final Change change = new Change(added, null);
             myRegistryChangeListeners.forEach(c -> c.onChanged(change));
         }
 
         @Override
-        public void iconAssigned(long iconId, List<Long> deIds, Object source)
+        public void iconAssigned(final long iconId, final List<Long> deIds, final Object source)
         {
             /* intentionally blank */
         }
@@ -66,7 +66,7 @@ public class IconModel
     private final Toolbox myToolbox;
 
     /** The model in which search text is maintained. */
-    private StringProperty mySearchText = new ConcurrentStringProperty();
+    private final StringProperty mySearchText = new ConcurrentStringProperty();
 
     /**
      * The value used for the tile width. The number inside is the default value
@@ -94,7 +94,7 @@ public class IconModel
      *
      * @param toolbox the toolbox
      */
-    public IconModel(Toolbox toolbox)
+    public IconModel(final Toolbox toolbox)
     {
         myToolbox = toolbox;
         myModel = new IconChooserModel();
@@ -127,7 +127,7 @@ public class IconModel
      *
      * @param iconRegistry the icon registry
      */
-    public void setIconRegistry(IconRegistry iconRegistry)
+    public void setIconRegistry(final IconRegistry iconRegistry)
     {
         if (iconRegistry == null && myIconRegistry != null)
         {
@@ -206,7 +206,7 @@ public class IconModel
      *
      * @param listener the listener to add.
      */
-    public void addRegistryChangeListener(IconRegistryChangeListener listener)
+    public void addRegistryChangeListener(final IconRegistryChangeListener listener)
     {
         myRegistryChangeListeners.add(listener);
     }
@@ -216,7 +216,7 @@ public class IconModel
      *
      * @param listener the listener to remove.
      */
-    public void removeRegistryChangeListener(IconRegistryChangeListener listener)
+    public void removeRegistryChangeListener(final IconRegistryChangeListener listener)
     {
         myRegistryChangeListeners.remove(listener);
     }
