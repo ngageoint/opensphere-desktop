@@ -3,10 +3,6 @@ package io.opensphere.controlpanels.iconpicker.controller;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.image.Image;
-
 import org.apache.log4j.Logger;
 
 import io.opensphere.controlpanels.iconpicker.model.IconPickerModel;
@@ -16,6 +12,9 @@ import io.opensphere.core.util.lang.ThreadUtilities;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.util.MantleToolboxUtils;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.image.Image;
 
 /**
  * Shows the Icon picker dialog to the user and updates the model when user
@@ -110,13 +109,13 @@ public class IconPickerController
         {
             try
             {
-                InputStream stream = record.getImageURL().openStream();
+                InputStream stream = record.imageURLProperty().get().openStream();
                 Image image = new Image(stream);
                 FXUtilities.runOnFXThread(() ->
                 {
                     if (userPicked)
                     {
-                        myModel.setIconId(record.getId());
+                        myModel.setIconId(record.idProperty().get());
                     }
                     myModel.setImage(image);
                 });

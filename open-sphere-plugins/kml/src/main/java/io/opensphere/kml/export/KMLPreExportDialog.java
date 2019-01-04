@@ -17,7 +17,7 @@ import javax.swing.border.TitledBorder;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.swing.GridBagPanel;
 import io.opensphere.core.util.swing.OptionDialog;
-import io.opensphere.mantle.icon.impl.gui.IconChooserDialog;
+import io.opensphere.mantle.icon.chooser.view.IconDialog;
 
 /**
  * The dialog with KML options.
@@ -272,16 +272,9 @@ public class KMLPreExportDialog extends OptionDialog implements KMLExportOptions
      */
     private void openIconChooser()
     {
-        IconChooserDialog fileDialog = new IconChooserDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(), true,
-                myToolbox);
-        fileDialog.addActionListener(action ->
-        {
-            if (action.getActionCommand() == IconChooserDialog.ICON_SELECTED)
-            {
-                myIconFileField.setText(fileDialog.getSelectedIcon().getImageURL().getFile());
-            }
-        });
-        fileDialog.setVisible(true);
+        IconDialog dialog = new IconDialog(myToolbox, myToolbox.getUIRegistry().getMainFrameProvider().get(),
+                r -> myIconFileField.setText(r.imageURLProperty().get().getFile()));
+        dialog.setVisible(true);
     }
 
     /**

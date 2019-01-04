@@ -36,18 +36,16 @@ public final class IconProviderFactory
      *
      * @param iconFile the icon file
      * @param collectionName the collection name
-     * @param subCategory the sub category
      * @param sourceKey the source key
      * @return the icon provider
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    public static IconProvider create(File iconFile, String collectionName, String subCategory, String sourceKey)
-        throws IOException
+    public static IconProvider create(File iconFile, String collectionName, String sourceKey) throws IOException
     {
         Utilities.checkNull(iconFile, "iconFile");
         try
         {
-            return create(iconFile.toURI().toURL(), collectionName, subCategory, sourceKey);
+            return create(iconFile.toURI().toURL(), collectionName, sourceKey);
         }
         catch (MalformedURLException e)
         {
@@ -60,13 +58,12 @@ public final class IconProviderFactory
      *
      * @param imageURL the image url
      * @param collectionName the collection name
-     * @param subCategory the sub category
      * @param sourceKey the source key
      * @return the icon provider
      */
-    public static IconProvider create(URL imageURL, String collectionName, String subCategory, String sourceKey)
+    public static IconProvider create(URL imageURL, String collectionName, String sourceKey)
     {
-        return new DefaultIconProvider(imageURL, collectionName, subCategory, sourceKey);
+        return new DefaultIconProvider(imageURL, collectionName, sourceKey);
     }
 
     /**
@@ -79,12 +76,12 @@ public final class IconProviderFactory
      * @param sourceKey the source key for traceability to the provider.
      * @param recurseSubDirectories the recurse sub directories ( true to
      *            recurse into sub-directories )
-     * @param subCatIfNotFromDirNames the sub cat if not from dir names
      * @return the list of {@link IconImageProvider}
      * @throws IOException Signals that an I/O exception has occurred.
      */
     public static List<DefaultIconProvider> createFromDirectory(File iconDirectory, String collectionName, String sourceKey,
-            boolean recurseSubDirectories, String subCatIfNotFromDirNames) throws IOException
+            boolean recurseSubDirectories)
+        throws IOException
     {
         List<DefaultIconProvider> result = New.linkedList();
         if (iconDirectory.isDirectory())
@@ -96,15 +93,13 @@ public final class IconProviderFactory
                 {
                     if (aFile.isDirectory() && recurseSubDirectories)
                     {
-                        createProvidersFromDirectory(result, aFile, collectionName, sourceKey, recurseSubDirectories,
-                                recurseSubDirectories, subCatIfNotFromDirNames);
+                        createProvidersFromDirectory(result, aFile, collectionName, sourceKey, recurseSubDirectories);
                     }
                     else
                     {
                         if (ourIconFileTypeFilter.test(aFile))
                         {
-                            result.add(new DefaultIconProvider(aFile.toURI().toURL(), collectionName, subCatIfNotFromDirNames,
-                                    sourceKey));
+                            result.add(new DefaultIconProvider(aFile.toURI().toURL(), collectionName, sourceKey));
                         }
                     }
                 }
@@ -114,7 +109,7 @@ public final class IconProviderFactory
         {
             if (ourIconFileTypeFilter.test(iconDirectory))
             {
-                result.add(new DefaultIconProvider(iconDirectory.toURI().toURL(), collectionName, null, sourceKey));
+                result.add(new DefaultIconProvider(iconDirectory.toURI().toURL(), collectionName, sourceKey));
             }
         }
         return result.isEmpty() ? Collections.<DefaultIconProvider>emptyList() : result;
@@ -128,13 +123,11 @@ public final class IconProviderFactory
      * @param collectionName the collection name
      * @param sourceKey the source key
      * @param recurseSubDirectories the recurse sub directories
-     * @param subDirsAsSubCategories the sub dirs as sub categories
-     * @param subCatIfNotFromDirNames the sub cat if not from dir names
      * @throws IOException Signals that an I/O exception has occurred.
      */
     private static void createProvidersFromDirectory(List<DefaultIconProvider> listToAddTo, File iconDirectory,
-            String collectionName, String sourceKey, boolean recurseSubDirectories, boolean subDirsAsSubCategories,
-            String subCatIfNotFromDirNames) throws IOException
+            String collectionName, String sourceKey, boolean recurseSubDirectories)
+        throws IOException
     {
         if (iconDirectory.isDirectory())
         {
@@ -145,16 +138,13 @@ public final class IconProviderFactory
                 {
                     if (aFile.isDirectory() && recurseSubDirectories)
                     {
-                        createProvidersFromDirectory(listToAddTo, aFile, collectionName, sourceKey, recurseSubDirectories,
-                                subDirsAsSubCategories, subCatIfNotFromDirNames);
+                        createProvidersFromDirectory(listToAddTo, aFile, collectionName, sourceKey, recurseSubDirectories);
                     }
                     else
                     {
                         if (ourIconFileTypeFilter.test(aFile))
                         {
-                            listToAddTo.add(new DefaultIconProvider(aFile.toURI().toURL(), collectionName,
-                                    subDirsAsSubCategories ? aFile.getParentFile().getName() : subCatIfNotFromDirNames,
-                                    sourceKey));
+                            listToAddTo.add(new DefaultIconProvider(aFile.toURI().toURL(), collectionName, sourceKey));
                         }
                     }
                 }

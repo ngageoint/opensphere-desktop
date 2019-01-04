@@ -28,6 +28,7 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.event.EventListener;
 import io.opensphere.core.hud.awt.AbstractInternalFrame;
 import io.opensphere.core.iconlegend.IconLegendRegistry;
+import io.opensphere.core.util.Colors;
 import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.image.IconUtil.IconType;
 import io.opensphere.core.util.lang.StringUtilities;
@@ -154,7 +155,7 @@ public class LayersFrame extends AbstractInternalFrame
         myLayerManagerTabbedPane.setTabPlacement(SwingConstants.TOP);
         myLayerManagerTabbedPane.addTab("Active", null, myActiveDataPanel, null);
         myLayerManagerTabbedPane.setSelectedIndex(0);
-        myLayerManagerTabbedPane.setBackgroundAt(0, new Color(141, 132, 189, 255));
+        myLayerManagerTabbedPane.setBackgroundAt(0, Colors.LF_PRIMARY2);
         myLayerManagerTabbedPane.setForeground(Color.WHITE);
 
         myLayerManagerTabbedPane.addChangeListener(new ChangeListener()
@@ -167,7 +168,7 @@ public class LayersFrame extends AbstractInternalFrame
                 JideTabbedPane pane = (JideTabbedPane)e.getSource();
                 pane.setBackgroundAt(lastTab, new Color(0, 0, 0, 0));
                 lastTab = pane.getSelectedIndex();
-                pane.setBackgroundAt(lastTab, new Color(141, 132, 189, 255));
+                pane.setBackgroundAt(lastTab, Colors.LF_PRIMARY2);
             }
         });
 
@@ -240,15 +241,14 @@ public class LayersFrame extends AbstractInternalFrame
             Icon addDataIcon = IconUtil.getColorizedIcon(IconType.PLUS, Color.GREEN);
             iconLegendRegistry.addIconToLegend(addDataIcon, "Add Data",
                     "Opens the 'Add Data' window. Users can import, activate/deactivate, edit, and remove layers from this window. "
-                    + "Use the dropdown menu to directly select a type of data to import.");
+                            + "Use the dropdown menu to directly select a type of data to import.");
 
             Icon layersIcon = IconUtil.getNormalIcon(IconType.STACK);
             iconLegendRegistry.addIconToLegend(layersIcon, "Active Layers",
                     "Opens the 'Layers' window, where users can interact with Layers, My Places, Areas, etc.");
 
             Icon deleteIcon = IconUtil.getNormalIcon(IconType.DELETE);
-            iconLegendRegistry.addIconToLegend(deleteIcon, "Delete My Place",
-                    "Deletes all currently selected My Places.");
+            iconLegendRegistry.addIconToLegend(deleteIcon, "Delete My Place", "Deletes all currently selected My Places.");
 
             Icon playIcon = IconUtil.getColorizedIcon(IconType.PLAY, Color.GREEN);
             iconLegendRegistry.addIconToLegend(playIcon, "Play Streaming Layers",

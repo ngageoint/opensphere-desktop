@@ -23,6 +23,7 @@ import io.opensphere.core.image.processor.ImageProcessor;
 import io.opensphere.core.server.HttpServer;
 import io.opensphere.core.server.ResponseValues;
 import io.opensphere.core.server.ServerProvider;
+import io.opensphere.core.util.io.IOUtilities;
 import io.opensphere.core.util.lang.HashCodeHelper;
 import io.opensphere.core.util.net.UrlUtilities;
 
@@ -83,7 +84,7 @@ public class IconImageProvider implements ImmediateImageProvider<Void>
         catch (IOException e)
         {
             brokenImage = null;
-            LOGGER.error("Failed to load broken image from url: " + ourBrokenImageURL);
+            LOGGER.error("Failed to load broken image from url: " + ourBrokenImageURL, e);
         }
         ourBrokenImage = new ImageIOImage(brokenImage);
     }
@@ -299,12 +300,13 @@ public class IconImageProvider implements ImmediateImageProvider<Void>
      * @throws IOException If the there were issues connecting to the server.
      * @throws URISyntaxException If the url could not be converted to a URI.
      */
+    @SuppressWarnings("resource")
     private InputStream getStream(ResponseValues response) throws GeneralSecurityException, IOException, URISyntaxException
     {
         InputStream stream = null;
         if (UrlUtilities.isFile(myURL))
         {
-            stream = myURL.openStream();
+            stream = IOUtilities.getInputStream(myURL);
             response.setResponseCode(HttpURLConnection.HTTP_OK);
         }
         else

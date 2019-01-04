@@ -23,6 +23,7 @@ public class SelectionModeQueryActionDefinition extends AbstractQueryActionDefin
     {
         super(new GenericFontIcon(icon, IconUtil.DEFAULT_ICON_FOREGROUND), label);
         selectedIconProperty().set(new GenericFontIcon(icon, IconUtil.ICON_SELECTION_FOREGROUND));
+        rolloverIconProperty().set(new GenericFontIcon(icon, IconUtil.DEFAULT_ICON_ROLLOVER));
         myMode = mode;
     }
 

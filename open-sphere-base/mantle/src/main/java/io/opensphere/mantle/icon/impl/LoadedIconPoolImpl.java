@@ -40,7 +40,7 @@ public class LoadedIconPoolImpl implements LoadedIconPool
     @Override
     public IconImageProvider getIconImageProvider(IconRecord record, ImageProcessor imageProcessor)
     {
-        IconImageProvider provider = new IconImageProvider(record.getImageURL(), imageProcessor, myToolbox);
+        IconImageProvider provider = new IconImageProvider(record.imageURLProperty().get(), imageProcessor, myToolbox);
         provider = myProviderPool.get(provider);
         return provider;
     }

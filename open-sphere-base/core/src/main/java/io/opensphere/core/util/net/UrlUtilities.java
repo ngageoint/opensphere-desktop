@@ -1,6 +1,7 @@
 package io.opensphere.core.util.net;
 
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.StringJoiner;
 
@@ -94,6 +95,39 @@ public final class UrlUtilities
         }
 
         return new ThreeTuple<>(protocol, host, Integer.valueOf(rtmpPort));
+    }
+
+    /**
+     * Tests to determine if the supplied URL contains a fragment (the portion
+     * after the '#' character).
+     *
+     * @param url the URL to examine.
+     * @return true if the URL contains a non-blank fragment section, false
+     *         otherwise.
+     */
+    public static boolean isFragmentPresent(URL url)
+    {
+        return StringUtils.isNotBlank(getFragment(url));
+    }
+
+    /**
+     * Gets the fragment portion of the supplied URL (the portion after the '#'
+     * character).
+     *
+     * @param url the URL from which to extract the fragment.
+     * @return the fragment extracted from the URL, or null if none is present.
+     */
+    public static String getFragment(URL url)
+    {
+        try
+        {
+            return url.toURI().getFragment();
+        }
+        catch (URISyntaxException e)
+        {
+            LOGGER.warn("Could not extract fragment from URL.", e);
+            return null;
+        }
     }
 
     /**

@@ -22,9 +22,9 @@ import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import javafx.application.Platform;
-import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.LongProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.image.ImageView;
 
 /**
@@ -76,7 +76,7 @@ public class IconPickerButtonTestDisplay
 
         support.replayAll();
 
-        IntegerProperty iconIdProperty = new SimpleIntegerProperty();
+        LongProperty iconIdProperty = new SimpleLongProperty();
         IconPickerButton button = new IconPickerButton(toolbox, iconIdProperty, displayer);
         ImageView imageView = (ImageView)button.getGraphic();
 
@@ -141,8 +141,8 @@ public class IconPickerButtonTestDisplay
     {
         IconRecord record = support.createMock(IconRecord.class);
 
-        EasyMock.expect(Integer.valueOf(record.getId())).andReturn(Integer.valueOf(ourImageId));
-        EasyMock.expect(record.getImageURL()).andReturn(new URL(ourImageUrl));
+        EasyMock.expect(Long.valueOf(record.idProperty().get())).andReturn(Long.valueOf(ourImageId));
+        EasyMock.expect(record.imageURLProperty().get()).andReturn(new URL(ourImageUrl));
 
         return record;
     }
@@ -156,7 +156,7 @@ public class IconPickerButtonTestDisplay
     private Toolbox createToolbox(EasyMockSupport support)
     {
         IconRecord record = support.createMock(IconRecord.class);
-        EasyMock.expect(record.getImageURL()).andReturn(IconRegistry.DEFAULT_ICON_URL);
+        EasyMock.expect(record.imageURLProperty().get()).andReturn(IconRegistry.DEFAULT_ICON_URL);
 
         IconRegistry iconRegistry = support.createMock(IconRegistry.class);
         EasyMock.expect(iconRegistry.getIconRecord(IconRegistry.DEFAULT_ICON_URL)).andReturn(record);

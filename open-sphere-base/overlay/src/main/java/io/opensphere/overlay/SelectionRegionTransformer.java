@@ -26,6 +26,7 @@ import io.opensphere.core.model.GeographicBoxAnchor;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.ScreenPosition;
+import io.opensphere.core.util.Colors;
 import io.opensphere.core.util.jts.core.JTSCoreGeometryUtilities;
 import io.opensphere.core.util.jts.core.JTSLineStringUtilities;
 import io.opensphere.core.util.swing.SwingImageHelper;
@@ -157,7 +158,8 @@ public class SelectionRegionTransformer extends DefaultTransformer
         List<String> lines = Arrays.asList(label.split("\n"));
         // Do not let the background color be completely transparent, otherwise
         // it would not be pickable except where there is text.
-        Color background = new Color(84, 84, 107, 140);
+        Color background = new Color(Colors.LF_PRIMARY2.getRed(), Colors.LF_PRIMARY2.getGreen(), Colors.LF_PRIMARY2.getBlue(),
+                140);
         BufferedImage image = SwingImageHelper.textToImage(true, lines, background, ourForegroundColor,
                 BorderFactory.createEmptyBorder(), Font.decode(LABEL_FONT));
         GeographicPosition attachment = new GeographicPosition(labelPos);

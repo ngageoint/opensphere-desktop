@@ -208,7 +208,7 @@ public class IconFeatureVisualizationStyle extends AbstractLocationFeatureVisual
         if (bd.getMGS() instanceof MapLocationGeometrySupport)
         {
             MapLocationGeometrySupport mlgs = (MapLocationGeometrySupport)bd.getMGS();
-            int iconId = getIconId(bd.getElementId());
+            long iconId = getIconId(bd.getElementId());
 
             StyleAltitudeReference altRef = getAltitudeReference();
             Altitude.ReferenceLevel refLevel = altRef.isAutomatic()
@@ -762,10 +762,10 @@ public class IconFeatureVisualizationStyle extends AbstractLocationFeatureVisual
      * @param elementId the element ID
      * @return the icon ID
      */
-    protected int getIconId(long elementId)
+    protected long getIconId(long elementId)
     {
         IconRegistry reg = MantleToolboxUtils.getMantleToolbox(getToolbox()).getIconRegistry();
-        int iconId = reg.getIconIdForElement(elementId);
+        long iconId = reg.getIconIdForElement(elementId);
         return iconId;
     }
 
@@ -777,7 +777,7 @@ public class IconFeatureVisualizationStyle extends AbstractLocationFeatureVisual
      * @param imageProcessor the optional image processor
      * @return the icon image provider
      */
-    private IconImageProvider determineIconProvider(int iconId, FeatureIndividualGeometryBuilderData bd,
+    private IconImageProvider determineIconProvider(long iconId, FeatureIndividualGeometryBuilderData bd,
             ImageProcessor imageProcessor)
     {
         IconImageProvider ip = null;
@@ -840,7 +840,7 @@ public class IconFeatureVisualizationStyle extends AbstractLocationFeatureVisual
      */
     private void loadDefaultIconRecord()
     {
-        if (myTempIconRecord == null || !Objects.equals(getIconURL(), myTempIconRecord.getImageURL().toString()))
+        if (myTempIconRecord == null || !Objects.equals(getIconURL(), myTempIconRecord.imageURLProperty().get().toString()))
         {
             IconRegistry reg = MantleToolboxUtils.getMantleToolbox(getToolbox()).getIconRegistry();
             URL iconURL = null;

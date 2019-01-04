@@ -110,7 +110,7 @@ public final class MapIconGeometryConverter extends AbstractGeometryConverter
         IconRecord record = iconReg.getIconRecord(iconURL);
         if (record == null)
         {
-            IconProvider ip = IconProviderFactory.create(iconURL, null, null, MapIconGeometryConverter.class.getName());
+            IconProvider ip = IconProviderFactory.create(iconURL, null, MapIconGeometryConverter.class.getName());
             record = iconReg.addIcon(ip, MapIconGeometryConverter.class);
         }
 

@@ -14,6 +14,7 @@ import java.util.function.Consumer;
 import javax.swing.ImageIcon;
 
 import org.apache.log4j.Logger;
+import org.controlsfx.glyphfont.GlyphFontRegistry;
 
 import io.opensphere.core.units.duration.Duration;
 import io.opensphere.core.units.duration.Nanoseconds;
@@ -63,6 +64,16 @@ public final class FXUtilities
      * The <code>Log</code> instance used for logging.
      */
     private static final Logger LOG = Logger.getLogger(FXUtilities.class);
+
+    static
+    {
+        loadFont("FontAwesome Regular", "/fonts/fa-regular-400.ttf");
+        loadFont("FontAwesome Solid", "/fonts/fa-solid-900.ttf");
+        loadFont("FontAwesome Brands", "/fonts/fa-brands-400.ttf");
+        loadFont("WebHostingHub Glyphs", "/fonts/webhostinghub-glyphs.ttf");
+        loadFont("GovIcons", "/fonts/govicons-webfont.ttf");
+        loadFont("Military Ranks", "/fonts/military-rank-icons.ttf");
+    }
 
     /**
      * Adds some style to the parent.
@@ -172,7 +183,7 @@ public final class FXUtilities
      * @throws TimeoutException If the request runs out of time.
      */
     public static void loadAndProcess(String url, Duration timeout, Consumer<? super WebEngine> engineConsumer)
-            throws ExecutionException, InterruptedException, TimeoutException
+        throws ExecutionException, InterruptedException, TimeoutException
     {
         loadAndProcess(timeout, engine -> engine.load(url), engineConsumer);
     }
@@ -191,7 +202,7 @@ public final class FXUtilities
      * @throws TimeoutException If the request runs out of time.
      */
     public static void loadContentAndProcess(String content, Duration timeout, Consumer<? super WebEngine> engineConsumer)
-            throws ExecutionException, InterruptedException, TimeoutException
+        throws ExecutionException, InterruptedException, TimeoutException
     {
         loadAndProcess(timeout, engine -> engine.loadContent(content), engineConsumer);
     }
@@ -446,6 +457,24 @@ public final class FXUtilities
     }
 
     /**
+     * Gets the optimal text color for the supplied background.
+     *
+     * @param backgroundColor the background color for which to get the optimal
+     *            text color.
+     * @return the optimal text color (white or black) for the uspplied
+     *         background color.
+     */
+    public static Color getTextColor(Color backgroundColor)
+    {
+        // Calculate the perceptive luminance (aka luma):
+        double luma = ((0.2126 * backgroundColor.getRed()) + (0.7152 * backgroundColor.getGreen())
+                + (0.0722 * backgroundColor.getBlue()));
+
+        // Return black for bright colors, white for dark colors
+        return luma > 0.585 ? Color.BLACK : Color.WHITE;
+    }
+
+    /**
      * Converts a JavaFX color to an AWT color. If no color is provided, default
      * to White.
      *
@@ -594,10 +623,6 @@ public final class FXUtilities
      */
     private static void addDesktopStyle(ObservableList<String> stylesheets)
     {
-        loadFont("FontAwesome Regular", "/fonts/fa-regular-400.ttf");
-        loadFont("FontAwesome Solid", "/fonts/fa-solid-900.ttf");
-        loadFont("FontAwesome Brands", "/fonts/fa-brands-400.ttf");
-
         stylesheets.add(FXUtilities.class.getResource("/styles/opensphere.css").toExternalForm());
     }
 
@@ -610,8 +635,12 @@ public final class FXUtilities
     private static void loadFont(String packageName, String fontPath)
     {
         final URL fontUrl = FXUtilities.class.getResource(fontPath);
+
         if (fontUrl != null)
         {
+            String fontFamilyName = packageName.replaceAll("\\s+", "-").toLowerCase();
+            GlyphFontRegistry.register(fontFamilyName, fontUrl.toString(), 12);
+
             Font font = Font.loadFont(fontUrl.toExternalForm(), 12);
             LOG.info("Loaded font " + packageName + " family: '" + font.getFamily() + "' name: '" + font.getName() + "'");
         }
@@ -636,7 +665,7 @@ public final class FXUtilities
      */
     private static void loadAndProcess(Duration timeout, Consumer<? super WebEngine> engineLoader,
             Consumer<? super WebEngine> engineConsumer)
-                    throws InterruptedException, TimeoutException, ExecutionException
+        throws InterruptedException, TimeoutException, ExecutionException
     {
         assert !Platform.isFxApplicationThread();
 
