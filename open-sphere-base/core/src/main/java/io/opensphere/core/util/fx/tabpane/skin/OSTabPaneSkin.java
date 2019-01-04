@@ -95,13 +95,13 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
     OSTabHeaderArea myTabHeaderArea;
 
     /** The regions in which the tab contents are rendered. */
-    private ObservableList<OSTabContentRegion> myTabContentRegions;
+    private final ObservableList<OSTabContentRegion> myTabContentRegions;
 
     /** The rectangle in which the clipping area is rendered. */
-    private Rectangle myClipRectangle;
+    private final Rectangle myClipRectangle;
 
     /** The tab header area clipping rectangle. */
-    private Rectangle myTabHeaderAreaClipRectangle;
+    private final Rectangle myTabHeaderAreaClipRectangle;
 
     /** The currently selected tab. */
     private Tab mySelectedTab;
@@ -140,13 +140,13 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
     final OSTabPaneBehavior myBehavior;
 
     /** The event handler called for drag events. */
-    private EventHandler<MouseEvent> myHeaderDraggedHandler = this::handleHeaderDragged;
+    private final EventHandler<MouseEvent> myHeaderDraggedHandler = this::handleHeaderDragged;
 
     /** The event handler called for mouse pressed events. */
-    private EventHandler<MouseEvent> myHeaderMousePressedHandler = this::handleHeaderMousePressed;
+    private final EventHandler<MouseEvent> myHeaderMousePressedHandler = this::handleHeaderMousePressed;
 
     /** The event handler called for mouse released events. */
-    private EventHandler<MouseEvent> myHeaderMouseReleasedHandler = this::handleHeaderMouseReleased;
+    private final EventHandler<MouseEvent> myHeaderMouseReleasedHandler = this::handleHeaderMouseReleased;
 
     /** The tab with which the held tab is swapped during animation events. */
     private Tab mySwapTab;
@@ -178,7 +178,7 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
             this::getDragHeaderSourceX, this::getDragHeaderTransitionX);
 
     /** A property in which the animation for opening a tab is maintained. */
-    private ObjectProperty<OSTabAnimation> myOpenTabAnimation = new StyleableObjectProperty<>(OSTabAnimation.GROW)
+    private final ObjectProperty<OSTabAnimation> myOpenTabAnimation = new StyleableObjectProperty<>(OSTabAnimation.GROW)
     {
         @Override
         public CssMetaData<TabPane, OSTabAnimation> getCssMetaData()
@@ -200,7 +200,7 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
     };
 
     /** A property in which the animation for closing a tab is maintained. */
-    private ObjectProperty<OSTabAnimation> myCloseTabAnimation = new StyleableObjectProperty<>(OSTabAnimation.GROW)
+    private final ObjectProperty<OSTabAnimation> myCloseTabAnimation = new StyleableObjectProperty<>(OSTabAnimation.GROW)
     {
         @Override
         public CssMetaData<TabPane, OSTabAnimation> getCssMetaData()
@@ -222,26 +222,22 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
     };
 
     /** A list change listener to react to children being added or removed. */
-    private ListChangeListener<Node> myChildListener = new ListChangeListener<>()
+    private final ListChangeListener<Node> myChildListener = change ->
     {
-        @Override
-        public void onChanged(Change<? extends Node> change)
+        while (change.next())
         {
-            while (change.next())
+            if (change.wasAdded())
             {
-                if (change.wasAdded())
+                for (final Node n1 : change.getAddedSubList())
                 {
-                    for (Node n : change.getAddedSubList())
-                    {
-                        addReorderListeners(n);
-                    }
+                    addReorderListeners(n1);
                 }
-                if (change.wasRemoved())
+            }
+            if (change.wasRemoved())
+            {
+                for (final Node n2 : change.getRemoved())
                 {
-                    for (Node n : change.getRemoved())
-                    {
-                        removeReorderListeners(n);
-                    }
+                    removeReorderListeners(n2);
                 }
             }
         }
@@ -254,17 +250,17 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
      *
      * @param control The control that this skin should be installed onto.
      */
-    public OSTabPaneSkin(TabPane control)
+    public OSTabPaneSkin(final TabPane control)
     {
         super(control);
-        this.myBehavior = new OSTabPaneBehavior(control);
+        myBehavior = new OSTabPaneBehavior(control);
 
         myClipRectangle = new Rectangle(control.getWidth(), control.getHeight());
         getSkinnable().setClip(myClipRectangle);
 
         myTabContentRegions = FXCollections.<OSTabContentRegion>observableArrayList();
 
-        for (Tab tab : getSkinnable().getTabs())
+        for (final Tab tab : getSkinnable().getTabs())
         {
             addTabContent(tab);
         }
@@ -321,11 +317,12 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
 
     /** {@inheritDoc} */
     @Override
-    protected double computePrefWidth(double height, double topInset, double rightInset, double bottomInset, double leftInset)
+    protected double computePrefWidth(final double height, final double topInset, final double rightInset,
+            final double bottomInset, final double leftInset)
     {
         // The TabPane can only be as wide as it widest content width.
         double maxw = 0.0;
-        for (OSTabContentRegion contentRegion : myTabContentRegions)
+        for (final OSTabContentRegion contentRegion : myTabContentRegions)
         {
             maxw = Math.max(maxw, snapSizeX(contentRegion.prefWidth(-1)));
         }
@@ -334,17 +331,18 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
         final double tabHeaderAreaSize = isHorizontal ? snapSizeX(myTabHeaderArea.prefWidth(-1))
                 : snapSizeY(myTabHeaderArea.prefHeight(-1));
 
-        double prefWidth = isHorizontal ? Math.max(maxw, tabHeaderAreaSize) : maxw + tabHeaderAreaSize;
+        final double prefWidth = isHorizontal ? Math.max(maxw, tabHeaderAreaSize) : maxw + tabHeaderAreaSize;
         return snapSizeX(prefWidth) + rightInset + leftInset;
     }
 
     /** {@inheritDoc} */
     @Override
-    protected double computePrefHeight(double width, double topInset, double rightInset, double bottomInset, double leftInset)
+    protected double computePrefHeight(final double width, final double topInset, final double rightInset,
+            final double bottomInset, final double leftInset)
     {
         // The TabPane can only be as high as it highest content height.
         double maxh = 0.0;
-        for (OSTabContentRegion contentRegion : myTabContentRegions)
+        for (final OSTabContentRegion contentRegion : myTabContentRegions)
         {
             maxh = Math.max(maxh, snapSizeY(contentRegion.prefHeight(-1)));
         }
@@ -353,15 +351,16 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
         final double tabHeaderAreaSize = isHorizontal ? snapSizeY(myTabHeaderArea.prefHeight(-1))
                 : snapSizeX(myTabHeaderArea.prefWidth(-1));
 
-        double prefHeight = isHorizontal ? maxh + snapSizeY(tabHeaderAreaSize) : Math.max(maxh, tabHeaderAreaSize);
+        final double prefHeight = isHorizontal ? maxh + snapSizeY(tabHeaderAreaSize) : Math.max(maxh, tabHeaderAreaSize);
         return snapSizeY(prefHeight) + topInset + bottomInset;
     }
 
     /** {@inheritDoc} */
     @Override
-    public double computeBaselineOffset(double topInset, double rightInset, double bottomInset, double leftInset)
+    public double computeBaselineOffset(final double topInset, final double rightInset, final double bottomInset,
+            final double leftInset)
     {
-        Side tabPosition = getSkinnable().getSide();
+        final Side tabPosition = getSkinnable().getSide();
         if (tabPosition == Side.TOP)
         {
             return myTabHeaderArea.getBaselineOffset() + topInset;
@@ -373,13 +372,13 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
     @Override
     protected void layoutChildren(final double x, final double y, final double w, final double h)
     {
-        TabPane tabPane = getSkinnable();
-        Side tabPosition = tabPane.getSide();
+        final TabPane tabPane = getSkinnable();
+        final Side tabPosition = tabPane.getSide();
 
-        double headerHeight = tabPosition.isHorizontal() ? snapSizeY(myTabHeaderArea.prefHeight(-1))
+        final double headerHeight = tabPosition.isHorizontal() ? snapSizeY(myTabHeaderArea.prefHeight(-1))
                 : snapSizeX(myTabHeaderArea.prefHeight(-1));
-        double tabsStartX = tabPosition.equals(Side.RIGHT) ? x + w - headerHeight : x;
-        double tabsStartY = tabPosition.equals(Side.BOTTOM) ? y + h - headerHeight : y;
+        final double tabsStartX = tabPosition.equals(Side.RIGHT) ? x + w - headerHeight : x;
+        final double tabsStartY = tabPosition.equals(Side.BOTTOM) ? y + h - headerHeight : y;
 
         final double leftInset = snappedLeftInset();
         final double topInset = snappedTopInset();
@@ -473,12 +472,12 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
             }
         }
 
-        double contentWidth = w - (isHorizontal() ? 0 : headerHeight);
-        double contentHeight = h - (isHorizontal() ? headerHeight : 0);
+        final double contentWidth = w - (isHorizontal() ? 0 : headerHeight);
+        final double contentHeight = h - (isHorizontal() ? headerHeight : 0);
 
         for (int i = 0, max = myTabContentRegions.size(); i < max; i++)
         {
-            OSTabContentRegion tabContent = myTabContentRegions.get(i);
+            final OSTabContentRegion tabContent = myTabContentRegions.get(i);
 
             tabContent.setAlignment(Pos.TOP_LEFT);
             if (tabContent.getClip() != null)
@@ -501,7 +500,7 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
      * @param pos the side for which to get the rotation value.
      * @return the rotation amount, in degrees, for the tabs on the given side.
      */
-    protected static int getRotation(Side pos)
+    protected static int getRotation(final Side pos)
     {
         switch (pos)
         {
@@ -522,9 +521,9 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
      *
      * @param tab the tab to skin and add.
      */
-    protected void addTabContent(Tab tab)
+    protected void addTabContent(final Tab tab)
     {
-        OSTabContentRegion tabContentRegion = new OSTabContentRegion(tab);
+        final OSTabContentRegion tabContentRegion = new OSTabContentRegion(tab);
         tabContentRegion.setClip(new Rectangle());
         myTabContentRegions.add(tabContentRegion);
         // We want the tab content to always sit below the tab headers
@@ -536,7 +535,7 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
      *
      * @param removedList the list of tabs to remove.
      */
-    protected void removeTabs(List<? extends Tab> removedList)
+    protected void removeTabs(final List<? extends Tab> removedList)
     {
         for (final Tab tab : removedList)
         {
@@ -551,11 +550,11 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
                 removeTabContent(tab);
 
                 // remove the menu item from the popup menu
-                ContextMenu popupMenu = myTabHeaderArea.getControlButtons().getPopup();
+                final ContextMenu popupMenu = myTabHeaderArea.getControlButtons().getPopup();
                 OSTabMenuItem tabItem = null;
                 if (popupMenu != null)
                 {
-                    for (MenuItem item : popupMenu.getItems())
+                    for (final MenuItem item : popupMenu.getItems())
                     {
                         tabItem = (OSTabMenuItem)item;
                         if (tab == tabItem.getTab())
@@ -575,7 +574,7 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
                 }
                 // end of removing menu item
 
-                EventHandler<ActionEvent> cleanup = ae ->
+                final EventHandler<ActionEvent> cleanup = ae ->
                 {
                     tabRegion.setAnimationState(OSTabAnimationState.NONE);
 
@@ -591,7 +590,7 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
                 {
                     tabRegion.setAnimationState(OSTabAnimationState.HIDING);
                     tabRegion.setCurrentAnimation(createTimeline(tabRegion, Duration.millis(ANIMATION_SPEED), 0.0F, cleanup));
-                    Timeline closedTabTimeline = tabRegion.getCurrentAnimation();
+                    final Timeline closedTabTimeline = tabRegion.getCurrentAnimation();
                     closedTabTimeline.play();
                 }
                 else
@@ -607,14 +606,14 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
      *
      * @param tab the tab for which to stop the animation.
      */
-    protected void stopCurrentAnimation(Tab tab)
+    protected void stopCurrentAnimation(final Tab tab)
     {
         final OSTabHeaderSkin tabRegion = myTabHeaderArea.getTabHeaderSkin(tab);
         if (tabRegion != null)
         {
             // Execute the code immediately, don't wait for the animation to
             // finish.
-            Timeline timeline = tabRegion.getCurrentAnimation();
+            final Timeline timeline = tabRegion.getCurrentAnimation();
             if (timeline != null && timeline.getStatus() == Animation.Status.RUNNING)
             {
                 timeline.getOnFinished().handle(null);
@@ -630,16 +629,16 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
      * @param addedList the list to add.
      * @param from the location at which to add the tabs.
      */
-    protected void addTabs(List<? extends Tab> addedList, int from)
+    protected void addTabs(final List<? extends Tab> addedList, final int from)
     {
         int i = 0;
 
         // RT-39984: check if any other tabs are animating - they must be
         // completed first.
-        List<Node> headers = new ArrayList<>(myTabHeaderArea.getHeadersDisplayRegion().getChildren());
-        for (Node n : headers)
+        final List<Node> headers = new ArrayList<>(myTabHeaderArea.getHeadersDisplayRegion().getChildren());
+        for (final Node n : headers)
         {
-            OSTabHeaderSkin header = (OSTabHeaderSkin)n;
+            final OSTabHeaderSkin header = (OSTabHeaderSkin)n;
             if (header.getAnimationState() == OSTabAnimationState.HIDING)
             {
                 stopCurrentAnimation(header.getTab());
@@ -656,7 +655,7 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
             {
                 myTabHeaderArea.setVisible(true);
             }
-            int index = from + i++;
+            final int index = from + i++;
             myTabHeaderArea.addTab(tab, index);
             addTabContent(tab);
             final OSTabHeaderSkin tabRegion = myTabHeaderArea.getTabHeaderSkin(tab);
@@ -689,8 +688,8 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
     {
         getSkinnable().getTabs().addListener((ListChangeListener<Tab>)c ->
         {
-            List<Tab> tabsToRemove = new ArrayList<>();
-            List<Tab> tabsToAdd = new ArrayList<>();
+            final List<Tab> tabsToRemove = new ArrayList<>();
+            final List<Tab> tabsToAdd = new ArrayList<>();
             int insertPos = -1;
 
             while (c.next())
@@ -699,24 +698,24 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
                 {
                     if (myDragState != OSDragState.REORDER)
                     {
-                        TabPane tabPane = getSkinnable();
-                        List<Tab> tabs = tabPane.getTabs();
+                        final TabPane tabPane = getSkinnable();
+                        final List<Tab> tabs = tabPane.getTabs();
 
                         // tabs sorted : create list of permutated tabs.
                         // clear selection, set tab animation to NONE
                         // remove permutated tabs, add them back in correct
                         // order.
                         // restore old selection, and old tab animation states.
-                        int size = c.getTo() - c.getFrom();
-                        Tab selTab = tabPane.getSelectionModel().getSelectedItem();
-                        List<Tab> permutatedTabs = new ArrayList<>(size);
+                        final int size = c.getTo() - c.getFrom();
+                        final Tab selTab = tabPane.getSelectionModel().getSelectedItem();
+                        final List<Tab> permutatedTabs = new ArrayList<>(size);
                         getSkinnable().getSelectionModel().clearSelection();
 
                         // save and set tab animation to none - as it is not a
                         // good idea
                         // to animate on the same data for open and close.
-                        OSTabAnimation prevOpenAnimation = myOpenTabAnimation.get();
-                        OSTabAnimation prevCloseAnimation = myCloseTabAnimation.get();
+                        final OSTabAnimation prevOpenAnimation = myOpenTabAnimation.get();
+                        final OSTabAnimation prevCloseAnimation = myCloseTabAnimation.get();
                         myOpenTabAnimation.set(OSTabAnimation.NONE);
                         myCloseTabAnimation.set(OSTabAnimation.NONE);
                         for (int i = c.getFrom(); i < c.getTo(); i++)
@@ -750,10 +749,10 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
             // and add in any new tabs (that we don't already have showing)
             if (!tabsToAdd.isEmpty())
             {
-                for (OSTabContentRegion tabContentRegion : myTabContentRegions)
+                for (final OSTabContentRegion tabContentRegion : myTabContentRegions)
                 {
-                    Tab tab = tabContentRegion.getTab();
-                    OSTabHeaderSkin tabHeader = myTabHeaderArea.getTabHeaderSkin(tab);
+                    final Tab tab = tabContentRegion.getTab();
+                    final OSTabHeaderSkin tabHeader = myTabHeaderArea.getTabHeaderSkin(tab);
                     if (!tabHeader.isClosing() && tabsToAdd.contains(tabContentRegion.getTab()))
                     {
                         tabsToAdd.remove(tabContentRegion.getTab());
@@ -773,9 +772,9 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
      *
      * @param tab the tab for which to remove the content area.
      */
-    protected void removeTabContent(Tab tab)
+    protected void removeTabContent(final Tab tab)
     {
-        for (OSTabContentRegion contentRegion : myTabContentRegions)
+        for (final OSTabContentRegion contentRegion : myTabContentRegions)
         {
             if (contentRegion.getTab().equals(tab))
             {
@@ -832,7 +831,7 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
      * @param n the node to clone.
      * @return the cloned node.
      */
-    public static Node clone(Node n)
+    public static Node clone(final Node n)
     {
         if (n == null)
         {
@@ -840,15 +839,15 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
         }
         if (n instanceof ImageView)
         {
-            ImageView iv = (ImageView)n;
-            ImageView imageview = new ImageView();
+            final ImageView iv = (ImageView)n;
+            final ImageView imageview = new ImageView();
             imageview.imageProperty().bind(iv.imageProperty());
             return imageview;
         }
         if (n instanceof Label)
         {
-            Label l = (Label)n;
-            Label label = new Label(l.getText(), clone(l.getGraphic()));
+            final Label l = (Label)n;
+            final Label label = new Label(l.getText(), clone(l.getGraphic()));
             label.textProperty().bind(l.textProperty());
             return label;
         }
@@ -867,10 +866,10 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
     protected Timeline createTimeline(final OSTabHeaderSkin tabRegion, final Duration duration, final double endValue,
             final EventHandler<ActionEvent> func)
     {
-        Timeline timeline = new Timeline();
+        final Timeline timeline = new Timeline();
         timeline.setCycleCount(1);
 
-        KeyValue keyValue = new KeyValue(tabRegion.animationTransitionProperty(), endValue, Interpolator.LINEAR);
+        final KeyValue keyValue = new KeyValue(tabRegion.animationTransitionProperty(), endValue, Interpolator.LINEAR);
         timeline.getKeyFrames().clear();
         timeline.getKeyFrames().add(new KeyFrame(duration, keyValue));
 
@@ -945,7 +944,7 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
      */
     protected boolean isHorizontal()
     {
-        Side tabPosition = getSkinnable().getSide();
+        final Side tabPosition = getSkinnable().getSide();
         return Side.TOP.equals(tabPosition) || Side.BOTTOM.equals(tabPosition);
     }
 
@@ -965,7 +964,7 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
      *
      * @param n the node to which to add the listeners.
      */
-    protected void addReorderListeners(Node n)
+    protected void addReorderListeners(final Node n)
     {
         n.addEventHandler(MouseEvent.MOUSE_PRESSED, myHeaderMousePressedHandler);
         n.addEventHandler(MouseEvent.MOUSE_RELEASED, myHeaderMouseReleasedHandler);
@@ -977,7 +976,7 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
      *
      * @param n the node from which to remove the listeners.
      */
-    protected void removeReorderListeners(Node n)
+    protected void removeReorderListeners(final Node n)
     {
         n.removeEventHandler(MouseEvent.MOUSE_PRESSED, myHeaderMousePressedHandler);
         n.removeEventHandler(MouseEvent.MOUSE_RELEASED, myHeaderMouseReleasedHandler);
@@ -991,7 +990,7 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
     {
         if (getSkinnable().getTabDragPolicy() == TabDragPolicy.FIXED || getSkinnable().getTabDragPolicy() == null)
         {
-            for (Node n : myHeadersRegion.getChildren())
+            for (final Node n : myHeadersRegion.getChildren())
             {
                 removeReorderListeners(n);
             }
@@ -999,7 +998,7 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
         }
         else if (getSkinnable().getTabDragPolicy() == TabDragPolicy.REORDER)
         {
-            for (Node n : myHeadersRegion.getChildren())
+            for (final Node n : myHeadersRegion.getChildren())
             {
                 addReorderListeners(n);
             }
@@ -1012,10 +1011,10 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
      *
      * @param headersRegion the region to reorder.
      */
-    protected void setupReordering(StackPane headersRegion)
+    protected void setupReordering(final StackPane headersRegion)
     {
         myDragState = OSDragState.NONE;
-        this.myHeadersRegion = headersRegion;
+        myHeadersRegion = headersRegion;
         updateListeners();
         getSkinnable().tabDragPolicyProperty().addListener((observable, oldValue, newValue) ->
         {
@@ -1032,7 +1031,7 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
      *
      * @param event the event fired by the mouse press.
      */
-    protected void handleHeaderMousePressed(MouseEvent event)
+    protected void handleHeaderMousePressed(final MouseEvent event)
     {
         if (event.getClickCount() == 1)
         {
@@ -1047,7 +1046,7 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
      *
      * @param event the event fired by the mouse release.
      */
-    protected void handleHeaderMouseReleased(MouseEvent event)
+    protected void handleHeaderMouseReleased(final MouseEvent event)
     {
         ((StackPane)event.getSource()).setMouseTransparent(false);
         stopDrag();
@@ -1060,7 +1059,7 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
      *
      * @param event the event fired by the mouse drag event.
      */
-    protected void handleHeaderDragged(MouseEvent event)
+    protected void handleHeaderDragged(final MouseEvent event)
     {
         perfromDrag(event);
     }
@@ -1088,7 +1087,7 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
      *
      * @param event the event for which to execute the drag operation.
      */
-    protected void perfromDrag(MouseEvent event)
+    protected void perfromDrag(final MouseEvent event)
     {
         if (myDragState == OSDragState.NONE)
         {
@@ -1100,8 +1099,8 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
         Bounds dragHeaderBounds;
         Bounds dropHeaderBounds;
         double draggedDist;
-        double mouseCurrentLoc = getHeaderRegionLocalX(event);
-        double dragDelta = getDragDelta(mouseCurrentLoc, myDragEventPreviousLocation);
+        final double mouseCurrentLoc = getHeaderRegionLocalX(event);
+        final double dragDelta = getDragDelta(mouseCurrentLoc, myDragEventPreviousLocation);
 
         if (dragDelta > 0)
         {
@@ -1242,7 +1241,7 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
      *
      * @param event the event that triggered the animation.
      */
-    protected void startDrag(MouseEvent event)
+    protected void startDrag(final MouseEvent event)
     {
         // Stop the animations if any are running from previous reorder.
         stopAnim(myDropHeaderAnimation);
@@ -1270,9 +1269,9 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
      * @param ev the event to convert to the parent's coordinate system.
      * @return the location of the event within the parent's coordinate system.
      */
-    protected double getHeaderRegionLocalX(MouseEvent ev)
+    protected double getHeaderRegionLocalX(final MouseEvent ev)
     {
-        Point2D sceneToLocalHR = myHeadersRegion.sceneToLocal(ev.getSceneX(), ev.getSceneY());
+        final Point2D sceneToLocalHR = myHeadersRegion.sceneToLocal(ev.getSceneX(), ev.getSceneY());
         return sceneToLocalHR.getX();
     }
 
@@ -1303,8 +1302,8 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
             // can't be replaced with a new class.
             try
             {
-                ObservableList<Tab> tabs = getSkinnable().getTabs();
-                Method reorderMethod = tabs.getClass().getDeclaredMethod("reorder", Tab.class, Tab.class);
+                final ObservableList<Tab> tabs = getSkinnable().getTabs();
+                final Method reorderMethod = tabs.getClass().getDeclaredMethod("reorder", Tab.class, Tab.class);
                 reorderMethod.setAccessible(true);
                 reorderMethod.invoke(tabs, myDragTabHeader.getTab(), mySwapTab);
             }
@@ -1360,7 +1359,7 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
      *
      * @param anim the animation to stop.
      */
-    protected void stopAnim(Animation anim)
+    protected void stopAnim(final Animation anim)
     {
         if (anim.getStatus() == Animation.Status.RUNNING)
         {
@@ -1377,7 +1376,7 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
      * @param prev the previous item from which to calculate the delta.
      * @return the distance between the two items.
      */
-    protected double getDragDelta(double curr, double prev)
+    protected double getDragDelta(final double curr, final double prev)
     {
         if (getSkinnable().getSide().equals(Side.TOP) || getSkinnable().getSide().equals(Side.RIGHT))
         {
