@@ -7,7 +7,7 @@ import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 
 /**
- *
+ * A listener used to register for notifications when the icon registry changes.
  */
 @FunctionalInterface
 public interface IconRegistryChangeListener
@@ -39,7 +39,7 @@ public interface IconRegistryChangeListener
          * @param removedList the list of removals to the registry, may be null.
          *
          */
-        public Change(List<IconRecord> addedList, List<IconRecord> removedList)
+        public Change(final List<IconRecord> addedList, final List<IconRecord> removedList)
         {
             if (addedList != null)
             {
@@ -152,5 +152,5 @@ public interface IconRegistryChangeListener
      * @param c an object representing the change that was done
      * @see Change
      */
-    public void onChanged(Change c);
+    void onChanged(Change c);
 }
