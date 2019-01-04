@@ -33,7 +33,7 @@ public class IconGridView extends AnchorPane
     private final BooleanProperty myDisplayProperty;
 
     /** The icon chooser model backing the grid view. */
-    private IconChooserModel myIconChooserModel;
+    private final IconChooserModel myIconChooserModel;
 
     /**
      * Creates a new grid view bound to the supplied model, and using the
@@ -42,7 +42,7 @@ public class IconGridView extends AnchorPane
      * @param model the model to which to bind.
      * @param predicate the predicate used to define the set of included icons.
      */
-    public IconGridView(IconModel model, Predicate<IconRecord> predicate)
+    public IconGridView(final IconModel model, final Predicate<IconRecord> predicate)
     {
         myModel = model;
 
@@ -59,7 +59,7 @@ public class IconGridView extends AnchorPane
 
         myModel.searchTextProperty().addListener((obs, ov, nv) ->
         {
-            ObservableList<IconRecord> filteredRecords = myIconChooserModel.getIconRecords(myPredicate).filtered(r ->
+            final ObservableList<IconRecord> filteredRecords = myIconChooserModel.getIconRecords(myPredicate).filtered(r ->
             {
                 if (StringUtils.isEmpty(myModel.searchTextProperty().get()))
                 {
