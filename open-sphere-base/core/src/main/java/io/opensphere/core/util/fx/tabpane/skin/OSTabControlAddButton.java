@@ -14,7 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.SVGPath;
 
 /**
- *
+ * A button used in the tab pane to add a new tab.
  */
 public class OSTabControlAddButton extends StackPane
 {
@@ -41,12 +41,12 @@ public class OSTabControlAddButton extends StackPane
      *
      * @param osTabPaneSkin the skin to which to bind.
      */
-    public OSTabControlAddButton(OSTabPaneSkin osTabPaneSkin)
+    public OSTabControlAddButton(final OSTabPaneSkin osTabPaneSkin)
     {
         myOsTabPaneSkin = osTabPaneSkin;
         getStyleClass().setAll("os-control-buttons-tab");
 
-        TabPane tabPane = myOsTabPaneSkin.getSkinnable();
+        final TabPane tabPane = myOsTabPaneSkin.getSkinnable();
 
         myGraphicButton = new Pane();
         myGraphicButton.getStyleClass().setAll("add-tab-button");
@@ -55,12 +55,12 @@ public class OSTabControlAddButton extends StackPane
         myGraphic.setManaged(false);
         myGraphic.getStyleClass().setAll("plus");
         myGraphic.setRotate(tabPane.getSide().equals(Side.BOTTOM) ? 180.0F : 0.0F);
-        SVGPath path = new SVGPath();
+        final SVGPath path = new SVGPath();
         path.getStyleClass().setAll("plus-path");
         path.setContent(
                 "M18,10h-4V6c0-1.104-0.896-2-2-2s-2,0.896-2,2l0.071,4H6c-1.104,0-2,0.896-2,2s0.896,2,2,2l4.071-0.071L10,18 c0,1.104,0.896,2,2,2s2-0.896,2-2v-4.071L18,14c1.104,0,2-0.896,2-2S19.104,10,18,10z");
-        Bounds bounds = path.getBoundsInParent();
-        double scale = Math.min(10 / bounds.getWidth(), 10 / bounds.getHeight());
+        final Bounds bounds = path.getBoundsInParent();
+        final double scale = Math.min(10 / bounds.getWidth(), 10 / bounds.getHeight());
         path.setScaleX(scale);
         path.setScaleY(scale);
         myGraphic.getChildren().add(path);
@@ -71,7 +71,7 @@ public class OSTabControlAddButton extends StackPane
         myInnerContainer = new StackPane()
         {
             @Override
-            protected double computePrefWidth(double height)
+            protected double computePrefWidth(final double height)
             {
                 double pw;
                 pw = snapSizeX(myGraphic.prefWidth(getHeight())) + snapSizeX(myGraphic.prefWidth(getHeight()));
@@ -83,7 +83,7 @@ public class OSTabControlAddButton extends StackPane
             }
 
             @Override
-            protected double computePrefHeight(double width)
+            protected double computePrefHeight(final double width)
             {
                 return Math.max(0.0F, snapSizeY(myGraphicButton.prefHeight(width)));
             }
@@ -91,20 +91,21 @@ public class OSTabControlAddButton extends StackPane
             @Override
             protected void layoutChildren()
             {
-                double x = 0;
-                double y = snappedTopInset();
-                double w = snapSizeX(getWidth()) - x + snappedLeftInset();
-                double h = snapSizeY(getHeight()) - y + snappedBottomInset();
+                final double x = 0;
+                final double y = snappedTopInset();
+                final double w = snapSizeX(getWidth()) - x + snappedLeftInset();
+                final double h = snapSizeY(getHeight()) - y + snappedBottomInset();
                 positionGraphic(myGraphicButton, myGraphic, x, y, w, h);
             }
 
-            private void positionGraphic(Pane btn, Node graphic, double x, double y, double width, double height)
+            private void positionGraphic(final Pane btn, final Node graphic, final double x, final double y, final double width,
+                    final double height)
             {
                 btn.resize(width, height);
                 positionInArea(btn, x, y, width, height, /* baseline ignored */0, HPos.CENTER, VPos.CENTER);
                 // center arrow region within arrow button
-                double graphicWidth = snapSizeX(graphic.prefWidth(-1));
-                double graphicHeight = snapSizeY(graphic.prefHeight(-1));
+                final double graphicWidth = snapSizeX(graphic.prefWidth(-1));
+                final double graphicHeight = snapSizeY(graphic.prefHeight(-1));
                 graphic.resize(graphicWidth, graphicHeight);
                 positionInArea(graphic, btn.snappedLeftInset(), btn.snappedTopInset(),
                         width - btn.snappedLeftInset() - btn.snappedRightInset(),
@@ -119,7 +120,7 @@ public class OSTabControlAddButton extends StackPane
 
         tabPane.sideProperty().addListener(valueModel ->
         {
-            Side tabPosition = myOsTabPaneSkin.getSkinnable().getSide();
+            final Side tabPosition = myOsTabPaneSkin.getSkinnable().getSide();
             myGraphic.setRotate(tabPosition.equals(Side.BOTTOM) ? 180.0F : 0.0F);
         });
         requestLayout();
@@ -135,7 +136,7 @@ public class OSTabControlAddButton extends StackPane
         if (myOsTabPaneSkin.getSkinnable() instanceof OSTabPane
                 && ((OSTabPane)myOsTabPaneSkin.getSkinnable()).newTabAction().get() != null)
         {
-            ActionEvent actionEvent = new ActionEvent(myOsTabPaneSkin.getSkinnable(), myOsTabPaneSkin.getSkinnable());
+            final ActionEvent actionEvent = new ActionEvent(myOsTabPaneSkin.getSkinnable(), myOsTabPaneSkin.getSkinnable());
             ((OSTabPane)myOsTabPaneSkin.getSkinnable()).newTabAction().get().handle(actionEvent);
         }
         else
@@ -150,7 +151,7 @@ public class OSTabControlAddButton extends StackPane
      * @see javafx.scene.layout.StackPane#computePrefWidth(double)
      */
     @Override
-    protected double computePrefWidth(double height)
+    protected double computePrefWidth(final double height)
     {
         double pw = snapSizeX(myInnerContainer.prefWidth(height));
         if (pw > 0)
@@ -166,7 +167,7 @@ public class OSTabControlAddButton extends StackPane
      * @see javafx.scene.layout.StackPane#computePrefHeight(double)
      */
     @Override
-    protected double computePrefHeight(double width)
+    protected double computePrefHeight(final double width)
     {
         return Math.max(myOsTabPaneSkin.getSkinnable().getTabMinHeight(), snapSizeX(myInnerContainer.prefHeight(width)))
                 + snappedTopInset() + snappedBottomInset();
@@ -180,10 +181,10 @@ public class OSTabControlAddButton extends StackPane
     @Override
     protected void layoutChildren()
     {
-        double x = snappedLeftInset();
-        double y = snappedTopInset();
-        double w = snapSizeX(getWidth()) - x + snappedRightInset();
-        double h = snapSizeY(getHeight()) - y + snappedBottomInset();
+        final double x = snappedLeftInset();
+        final double y = snappedTopInset();
+        final double w = snapSizeX(getWidth()) - x + snappedRightInset();
+        final double h = snapSizeY(getHeight()) - y + snappedBottomInset();
 
         myInnerContainer.resize(w, h);
         positionInArea(myInnerContainer, x, y, w, h, /* baseline ignored */0, HPos.CENTER, VPos.BOTTOM);
