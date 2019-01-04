@@ -20,38 +20,38 @@ import javafx.scene.paint.Color;
  */
 public class ScaleTransform extends AbstractTransform
 {
-
     /**
      * Creates a new transform panel bound to the supplied model.
      *
      * @param model the model in which transform state is maintained.
      */
-    public ScaleTransform(TransformModel model)
+    public ScaleTransform(final TransformModel model)
     {
-        Label verticalIcon = FxIcons.createClearIcon(WebHostingHubGlyphs.RESIZEVERTICALALT, Color.WHITE, 16);
+        final Label verticalIcon = FxIcons.createClearIcon(WebHostingHubGlyphs.RESIZEVERTICALALT, Color.WHITE, 16);
         verticalIcon.setAlignment(Pos.CENTER);
         verticalIcon.setMinWidth(25);
 
-        Label horizontalIcon = FxIcons.createClearIcon(WebHostingHubGlyphs.RESIZEHORIZONTALALT, Color.WHITE, 16);
+        final Label horizontalIcon = FxIcons.createClearIcon(WebHostingHubGlyphs.RESIZEHORIZONTALALT, Color.WHITE, 16);
         horizontalIcon.setMinWidth(25);
         horizontalIcon.setAlignment(Pos.CENTER);
 
-        Slider verticalScale = createSlider(model.verticalScaleProperty(), .1, 5, TransformModel.DEFAULT_VERTICAL_SCALE);
+        final Slider verticalScale = createSlider(model.verticalScaleProperty(), .1, 5, TransformModel.DEFAULT_VERTICAL_SCALE);
         verticalScale.blockIncrementProperty().set(.1);
 
-        Spinner<Double> verticalScaleSpinner = createSpinner(model.verticalScaleProperty(), .1, 5,
+        final Spinner<Double> verticalScaleSpinner = createSpinner(model.verticalScaleProperty(), .1, 5,
                 TransformModel.DEFAULT_VERTICAL_SCALE);
         ((DoubleSpinnerValueFactory)verticalScaleSpinner.getValueFactory()).setAmountToStepBy(.05);
-        Label verticalReset = FxIcons.createClearIcon(AwesomeIconSolid.TIMES, Color.ORANGERED, 14);
+        final Label verticalReset = FxIcons.createClearIcon(AwesomeIconSolid.TIMES, Color.ORANGERED, 14);
         verticalReset.setOnMouseClicked(e -> model.verticalScaleProperty().set(TransformModel.DEFAULT_VERTICAL_SCALE));
         verticalReset.setAlignment(Pos.CENTER);
 
-        Slider horizontalScale = createSlider(model.horizontalScaleProperty(), .1, 5, TransformModel.DEFAULT_HORIZONTAL_SCALE);
+        final Slider horizontalScale = createSlider(model.horizontalScaleProperty(), .1, 5,
+                TransformModel.DEFAULT_HORIZONTAL_SCALE);
         horizontalScale.blockIncrementProperty().set(.1);
-        Spinner<Double> horizontalScaleSpinner = createSpinner(model.horizontalScaleProperty(), .1, 5,
+        final Spinner<Double> horizontalScaleSpinner = createSpinner(model.horizontalScaleProperty(), .1, 5,
                 TransformModel.DEFAULT_HORIZONTAL_SCALE);
         ((DoubleSpinnerValueFactory)horizontalScaleSpinner.getValueFactory()).setAmountToStepBy(.05);
-        Label horizontalReset = FxIcons.createClearIcon(AwesomeIconSolid.TIMES, Color.ORANGERED, 14);
+        final Label horizontalReset = FxIcons.createClearIcon(AwesomeIconSolid.TIMES, Color.ORANGERED, 14);
         horizontalReset.setOnMouseClicked(e -> model.horizontalScaleProperty().set(TransformModel.DEFAULT_HORIZONTAL_SCALE));
         horizontalReset.setAlignment(Pos.CENTER);
 
@@ -64,7 +64,7 @@ public class ScaleTransform extends AbstractTransform
         HBox.setHgrow(verticalReset, Priority.NEVER);
         HBox.setHgrow(horizontalReset, Priority.NEVER);
 
-        CheckBox lockPerspective = new CheckBox("Lock Together");
+        final CheckBox lockPerspective = new CheckBox("Lock Together");
         lockPerspective.selectedProperty().set(true);
         verticalScale.valueProperty().bindBidirectional(horizontalScale.valueProperty());
         lockPerspective.selectedProperty().addListener((obs, ov, nv) ->
@@ -79,10 +79,10 @@ public class ScaleTransform extends AbstractTransform
             }
         });
 
-        HBox verticalBox = new HBox(5, verticalIcon, verticalScale, verticalScaleSpinner, verticalReset);
+        final HBox verticalBox = new HBox(5, verticalIcon, verticalScale, verticalScaleSpinner, verticalReset);
         verticalBox.setAlignment(Pos.CENTER);
         getChildren().add(verticalBox);
-        HBox horizontalBox = new HBox(5, horizontalIcon, horizontalScale, horizontalScaleSpinner, horizontalReset);
+        final HBox horizontalBox = new HBox(5, horizontalIcon, horizontalScale, horizontalScaleSpinner, horizontalReset);
         horizontalBox.setAlignment(Pos.CENTER);
         getChildren().add(horizontalBox);
         getChildren().add(lockPerspective);
