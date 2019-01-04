@@ -8,7 +8,7 @@ import javafx.beans.WeakListener;
  * Base class for expression helpers, which contains utility methods useful in
  * concrete implementations.
  */
-public class ExpressionHelperBase
+public abstract class ExpressionHelperBase
 {
     /**
      * Trims the size of the listeners, removing any garbage collected weak
