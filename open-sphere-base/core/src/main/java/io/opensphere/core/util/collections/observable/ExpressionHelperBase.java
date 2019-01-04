@@ -4,9 +4,21 @@ import java.util.function.Predicate;
 
 import javafx.beans.WeakListener;
 
+/**
+ * Base class for expression helpers, which contains utility methods useful in
+ * concrete implementations.
+ */
 public class ExpressionHelperBase
 {
-
+    /**
+     * Trims the size of the listeners, removing any garbage collected weak
+     * references.
+     *
+     * @param size the initial size of the array (note that the actual array may
+     *            be larger) to examine.
+     * @param listeners the listeners to examine for obsolete references.
+     * @return the new size, after removing obsolete references.
+     */
     protected static int trim(int size, Object[] listeners)
     {
         Predicate<Object> p = t -> t instanceof WeakListener && ((WeakListener)t).wasGarbageCollected();
