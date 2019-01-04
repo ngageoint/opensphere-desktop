@@ -421,9 +421,7 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
         }
         myTabHeaderAreaClipRectangle.setHeight(headerHeight);
 
-        // ==================================
         // position the tab content for the selected tab only
-        // ==================================
         // if the tabs are on the left, the content needs to be indented
         double contentStartX = 0;
         double contentStartY = 0;
@@ -645,8 +643,8 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
 
         for (final Tab tab : addedList)
         {
-            stopCurrentAnimation(tab); // Note that this must happen before
-                                       // addTab() call below
+            // Note that this must happen before addTab() call below
+            stopCurrentAnimation(tab);
             // A new tab was added - animate it out
             if (!myTabHeaderArea.isVisible())
             {
@@ -701,16 +699,16 @@ public class OSTabPaneSkin extends SkinBase<TabPane>
                         // tabs sorted : create list of permutated tabs.
                         // clear selection, set tab animation to NONE
                         // remove permutated tabs, add them back in correct
-                        // order.
-                        // restore old selection, and old tab animation states.
+                        // order. restore old selection, and old tab animation
+                        // states.
                         final int size = c.getTo() - c.getFrom();
                         final Tab selTab = tabPane.getSelectionModel().getSelectedItem();
                         final List<Tab> permutatedTabs = new ArrayList<>(size);
                         getSkinnable().getSelectionModel().clearSelection();
 
                         // save and set tab animation to none - as it is not a
-                        // good idea
-                        // to animate on the same data for open and close.
+                        // good idea to animate on the same data for open and
+                        // close.
                         final OSTabAnimation prevOpenAnimation = myOpenTabAnimation.get();
                         final OSTabAnimation prevCloseAnimation = myCloseTabAnimation.get();
                         myOpenTabAnimation.set(OSTabAnimation.NONE);
