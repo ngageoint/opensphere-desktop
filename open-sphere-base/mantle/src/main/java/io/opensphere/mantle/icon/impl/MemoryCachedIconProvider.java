@@ -9,7 +9,7 @@ import java.net.URL;
 public class MemoryCachedIconProvider extends DefaultIconProvider
 {
     /** The byte array in which the contents of the image are stored. */
-    private byte[] myImageData;
+    private final byte[] myImageData;
 
     /**
      * Creates a new icon provider using the supplied information.
@@ -20,7 +20,8 @@ public class MemoryCachedIconProvider extends DefaultIconProvider
      *            belongs.
      * @param sourceKey the source key applied to the icon.
      */
-    public MemoryCachedIconProvider(URL imageURL, byte[] imageData, String collectionName, String sourceKey)
+    public MemoryCachedIconProvider(final URL imageURL, final byte[] imageData, final String collectionName,
+            final String sourceKey)
     {
         super(imageURL, collectionName, sourceKey);
         myImageData = imageData;
