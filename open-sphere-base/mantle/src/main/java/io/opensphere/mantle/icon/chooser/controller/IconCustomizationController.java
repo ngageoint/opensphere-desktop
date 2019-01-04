@@ -1,6 +1,3 @@
-/**
- *
- */
 package io.opensphere.mantle.icon.chooser.controller;
 
 import io.opensphere.mantle.icon.chooser.model.CustomizationModel;
