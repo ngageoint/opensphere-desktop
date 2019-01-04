@@ -3,8 +3,6 @@
  */
 package io.opensphere.mantle.icon.chooser.controller;
 
-import java.util.stream.Collectors;
-
 import io.opensphere.mantle.icon.chooser.model.CustomizationModel;
 import io.opensphere.mantle.icon.chooser.model.IconModel;
 import io.opensphere.mantle.icon.chooser.view.IconDetail;
@@ -16,7 +14,7 @@ import io.opensphere.mantle.icon.chooser.view.IconView;
 public class IconCustomizationController
 {
     /** The model in which customization operations are stored. */
-    private CustomizationModel myCustomizationModel;
+    private final CustomizationModel myCustomizationModel;
 
     /** The icon model in which the chooser is backed. */
     private final IconModel myModel;
@@ -30,7 +28,7 @@ public class IconCustomizationController
      * @param model the model in which the chooser's state is maintained.
      * @param iconView the view in which all icon operations are managed.
      */
-    public IconCustomizationController(IconModel model, IconView iconView)
+    public IconCustomizationController(final IconModel model, final IconView iconView)
     {
         myModel = model;
         myDetailPanel = iconView.getDetailPanel();
@@ -45,7 +43,7 @@ public class IconCustomizationController
             }
             myCustomizationModel.nameProperty().bindBidirectional(nv.nameProperty());
             myCustomizationModel.sourceProperty().bindBidirectional(nv.collectionNameProperty());
-            myCustomizationModel.tagsProperty().set(nv.getTags().stream().collect(Collectors.joining(",")));
+            myCustomizationModel.getTags().setAll(nv.getTags());
             myCustomizationModel.getTransformModel().resetAllToDefault();
             myDetailPanel.redrawPreview(nv);
         });

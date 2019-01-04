@@ -6,17 +6,22 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.function.Procedure;
 import io.opensphere.core.util.AwesomeIconRegular;
 import io.opensphere.core.util.AwesomeIconSolid;
+import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.fx.FxIcons;
 import io.opensphere.core.util.image.IconUtil;
+import io.opensphere.core.util.javafx.input.tags.Tag;
 import io.opensphere.core.util.javafx.input.tags.TagField;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
@@ -25,6 +30,7 @@ import io.opensphere.mantle.icon.chooser.model.IconModel;
 import io.opensphere.mantle.icon.chooser.model.TransformModel;
 import io.opensphere.mantle.icon.chooser.view.transform.TransformPanel;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
+import javafx.collections.ListChangeListener;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -73,25 +79,25 @@ public class IconDetail extends AnchorPane
     private final Canvas myCanvas;
 
     /** The icon chooser model backing the panel. */
-    private IconModel myModel;
+    private final IconModel myModel;
 
     /** the model backing customization operations. */
-    private CustomizationModel myCustomizationModel;
+    private final CustomizationModel myCustomizationModel;
 
     /**
      * The procedure called when part of the selected icon record's model
      * changes and the parent item needs to be refreshed.
      */
-    private Procedure myRefreshProcedure;
+    private final Procedure myRefreshProcedure;
 
     /** The button to toggle to set favorite state. */
-    private Label myFavoriteToggleButton;
+    private final Label myFavoriteToggleButton;
 
     /** The node to use when the icon is not marked as a favorite. */
-    private Node myUnFavoriteIcon;
+    private final Node myUnFavoriteIcon;
 
     /** The node to use when the icon is marked as a favorite. */
-    private Node myFavoriteIcon;
+    private final Node myFavoriteIcon;
 
     /**
      * Creates a new detail panel bound to the supplied model.
@@ -101,7 +107,7 @@ public class IconDetail extends AnchorPane
      *            icon record's model changes and the parent item needs to be
      *            refreshed.
      */
-    public IconDetail(IconModel model, Procedure refreshProcedure)
+    public IconDetail(final IconModel model, final Procedure refreshProcedure)
     {
         myModel = model;
         myRefreshProcedure = refreshProcedure;
@@ -120,12 +126,32 @@ public class IconDetail extends AnchorPane
 
         myTagsField = new TagField();
         myTagsField.tagColorProperty().set(FXUtilities.fromAwtColor(IconUtil.DEFAULT_ICON_FOREGROUND));
-        // myTagsField.textProperty().bind(myCustomizationModel.tagsProperty());
+        myCustomizationModel.getTags().addListener((ListChangeListener<String>)c ->
+        {
+            while (c.next())
+            {
+                if (c.wasAdded())
+                {
+                    c.getAddedSubList().stream().map(v -> new Tag(v)).forEach(myTagsField::addTag);
+                }
+                if (c.wasRemoved())
+                {
+                    final List<? extends String> removedTags = c.getRemoved();
+                    final Set<Tag> tagsToRemove = New.set();
+                    for (final String removedTagName : removedTags)
+                    {
+                        myTagsField.getTags().stream().filter(t -> StringUtils.equals(t.textProperty().get(), removedTagName))
+                                .forEach(tagsToRemove::add);
+                    }
+                    myTagsField.getTags().removeAll(tagsToRemove);
+                }
+            }
+        });
 
-        VBox box = new VBox(5);
+        final VBox box = new VBox(5);
         box.setAlignment(Pos.TOP_CENTER);
 
-        StackPane stackPane = new StackPane();
+        final StackPane stackPane = new StackPane();
 
         myUnFavoriteIcon = FxIcons.createClearIcon(AwesomeIconRegular.STAR, Color.GREY, 16);
         myFavoriteIcon = FxIcons.createClearIcon(AwesomeIconSolid.STAR, Color.GOLD, 16);
@@ -147,12 +173,12 @@ public class IconDetail extends AnchorPane
         });
 
         myFavoriteToggleButton.setPadding(new Insets(5));
-        HBox buttonBox = new HBox(myFavoriteToggleButton);
+        final HBox buttonBox = new HBox(myFavoriteToggleButton);
         buttonBox.setAlignment(Pos.TOP_RIGHT);
 
-        HBox canvasBox = new HBox(myCanvas);
-        Border border = new Border(new BorderStroke(new Color(0.247058824, 0.247058824, 0.305882353, 1), BorderStrokeStyle.SOLID,
-                null, BorderWidths.DEFAULT, new Insets(0, 0, 10, 2)));
+        final HBox canvasBox = new HBox(myCanvas);
+        final Border border = new Border(new BorderStroke(new Color(0.247058824, 0.247058824, 0.305882353, 1),
+                BorderStrokeStyle.SOLID, null, BorderWidths.DEFAULT, new Insets(0, 0, 10, 2)));
         canvasBox.setBorder(border);
         stackPane.getChildren().addAll(canvasBox, buttonBox);
 
@@ -161,16 +187,16 @@ public class IconDetail extends AnchorPane
         setLeftAnchor(stackPane, 0.0);
         setRightAnchor(stackPane, 0.0);
 
-        GridPane grid = new GridPane();
-        Label nameLabel = new Label("Name:");
+        final GridPane grid = new GridPane();
+        final Label nameLabel = new Label("Name:");
         nameLabel.setMinWidth(USE_PREF_SIZE);
         grid.add(nameLabel, 0, 0);
         grid.add(myNameField, 1, 0);
-        Label sourceLabel = new Label("Source:");
+        final Label sourceLabel = new Label("Source:");
         sourceLabel.setMinWidth(USE_PREF_SIZE);
         grid.add(sourceLabel, 0, 1);
         grid.add(mySourceField, 1, 1);
-        Label tagsLabel = new Label("Tags:");
+        final Label tagsLabel = new Label("Tags:");
         tagsLabel.setMinWidth(USE_PREF_SIZE);
         grid.add(tagsLabel, 0, 2);
         grid.add(myTagsField, 1, 2);
@@ -179,7 +205,7 @@ public class IconDetail extends AnchorPane
 
         myTransformPanel = new TransformPanel(this::saveCanvas);
 
-        TransformModel transformModel = myTransformPanel.getModel();
+        final TransformModel transformModel = myTransformPanel.getModel();
         transformModel.horizontalMoveProperty().addListener((obs, ov, nv) -> redrawPreview(model.selectedRecordProperty().get()));
         transformModel.verticalMoveProperty().addListener((obs, ov, nv) -> redrawPreview(model.selectedRecordProperty().get()));
         transformModel.rotationProperty().addListener((obs, ov, nv) -> redrawPreview(model.selectedRecordProperty().get()));
@@ -187,7 +213,7 @@ public class IconDetail extends AnchorPane
                 .addListener((obs, ov, nv) -> redrawPreview(model.selectedRecordProperty().get()));
         transformModel.verticalScaleProperty().addListener((obs, ov, nv) -> redrawPreview(model.selectedRecordProperty().get()));
 
-        HBox spacer = new HBox();
+        final HBox spacer = new HBox();
         VBox.setVgrow(spacer, Priority.ALWAYS);
         box.getChildren().add(spacer);
 
@@ -208,28 +234,28 @@ public class IconDetail extends AnchorPane
      */
     private void saveCanvas()
     {
-        SnapshotParameters parameters = new SnapshotParameters();
+        final SnapshotParameters parameters = new SnapshotParameters();
         parameters.setFill(Color.TRANSPARENT);
-        WritableImage image = myCanvas.snapshot(parameters, null);
+        final WritableImage image = myCanvas.snapshot(parameters, null);
 
-        BufferedImage bufImageARGB = SwingFXUtils.fromFXImage(image, null);
-        BufferedImage bufImageRGB = new BufferedImage(bufImageARGB.getWidth(), bufImageARGB.getHeight(),
+        final BufferedImage bufImageARGB = SwingFXUtils.fromFXImage(image, null);
+        final BufferedImage bufImageRGB = new BufferedImage(bufImageARGB.getWidth(), bufImageARGB.getHeight(),
                 Transparency.TRANSLUCENT);
 
-        Graphics2D graphics = bufImageRGB.createGraphics();
+        final Graphics2D graphics = bufImageRGB.createGraphics();
         graphics.drawImage(bufImageARGB, 0, 0, null);
         try
         {
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             ImageIO.write(bufImageRGB, "png", outputStream);
 
-            URL imageURL = myModel.getIconRegistry().getIconCache().cacheIcon(outputStream.toByteArray(),
+            final URL imageURL = myModel.getIconRegistry().getIconCache().cacheIcon(outputStream.toByteArray(),
                     myNameField.textProperty().get(), true);
-            IconProvider provider = new DefaultIconProvider(imageURL, mySourceField.getSelectionModel().getSelectedItem(),
+            final IconProvider provider = new DefaultIconProvider(imageURL, mySourceField.getSelectionModel().getSelectedItem(),
                     "User");
             myModel.getIconRegistry().addIcon(provider, this);
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             LOG.error("Failed to write image.", e);
         }
@@ -241,7 +267,7 @@ public class IconDetail extends AnchorPane
      *
      * @param icon the icon from which to extract the image for the preview.
      */
-    public void redrawPreview(IconRecord icon)
+    public void redrawPreview(final IconRecord icon)
     {
         if (icon != null && icon.favoriteProperty().get())
         {
@@ -252,7 +278,7 @@ public class IconDetail extends AnchorPane
             myFavoriteToggleButton.setGraphic(myUnFavoriteIcon);
         }
 
-        TransformModel model = myTransformPanel.getModel();
+        final TransformModel model = myTransformPanel.getModel();
         if (icon == null)
         {
             myCanvas.getGraphicsContext2D().clearRect(0, 0, myCanvas.getWidth(), myCanvas.getHeight());
@@ -261,27 +287,27 @@ public class IconDetail extends AnchorPane
         {
             myTagsField.getTags().clear();
             // myTagsField.getTags().addAll(icon.getTags());
-            Image image = icon.imageProperty().get();
-            double xOrigin = myCanvas.getWidth() / 2;
-            double yOrigin = myCanvas.getHeight() / 2;
+            final Image image = icon.imageProperty().get();
+            final double xOrigin = myCanvas.getWidth() / 2;
+            final double yOrigin = myCanvas.getHeight() / 2;
 
             myCanvas.getGraphicsContext2D().clearRect(0, 0, myCanvas.getWidth(), myCanvas.getHeight());
-            double drawX = 0 - (image.getWidth() * model.horizontalScaleProperty().get()) / 2;
-            double drawY = 0 - (image.getHeight() * model.verticalScaleProperty().get()) / 2;
+            final double drawX = 0 - image.getWidth() * model.horizontalScaleProperty().get() / 2;
+            final double drawY = 0 - image.getHeight() * model.verticalScaleProperty().get() / 2;
 
-            GraphicsContext graphicsContext2D = myCanvas.getGraphicsContext2D();
+            final GraphicsContext graphicsContext2D = myCanvas.getGraphicsContext2D();
 
-            double horizontalTranslate = xOrigin + drawX + model.horizontalMoveProperty().get();
-            double mxx = model.horizontalScaleProperty().get();
-            double mxy = 0;
-            double tx = horizontalTranslate;
+            final double horizontalTranslate = xOrigin + drawX + model.horizontalMoveProperty().get();
+            final double mxx = model.horizontalScaleProperty().get();
+            final double mxy = 0;
+            final double tx = horizontalTranslate;
 
-            double verticalTranslate = yOrigin + drawY + model.verticalMoveProperty().get();
-            double myx = 0;
-            double myy = model.verticalScaleProperty().get();
-            double ty = verticalTranslate;
+            final double verticalTranslate = yOrigin + drawY + model.verticalMoveProperty().get();
+            final double myx = 0;
+            final double myy = model.verticalScaleProperty().get();
+            final double ty = verticalTranslate;
 
-            Affine affine = new Affine(mxx, mxy, tx, myx, myy, ty);
+            final Affine affine = new Affine(mxx, mxy, tx, myx, myy, ty);
             affine.appendRotation(model.rotationProperty().get(), image.getWidth() / 2, image.getHeight() / 2);
 
             if (LOG.isTraceEnabled())
@@ -293,10 +319,10 @@ public class IconDetail extends AnchorPane
             {
                 graphicsContext2D.setTransform(affine);
                 graphicsContext2D.drawImage(image, 0, 0);
-                Affine inverseAffine = affine.createInverse();
+                final Affine inverseAffine = affine.createInverse();
                 graphicsContext2D.transform(inverseAffine);
             }
-            catch (NonInvertibleTransformException e)
+            catch (final NonInvertibleTransformException e)
             {
                 LOG.error("Unable to invert scale transform", e);
             }

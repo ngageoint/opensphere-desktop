@@ -2,6 +2,8 @@ package io.opensphere.mantle.icon.chooser.model;
 
 import io.opensphere.core.util.javafx.ConcurrentStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /** A model in which the customization information is maintained. */
 public class CustomizationModel
@@ -16,7 +18,7 @@ public class CustomizationModel
     private final StringProperty mySourceProperty = new ConcurrentStringProperty();
 
     /** The property in which the user-entered tags are maintained. */
-    private final StringProperty myTagsProperty = new ConcurrentStringProperty();
+    private final ObservableList<String> myTags = FXCollections.observableArrayList();
 
     /**
      * Gets the value of the {@link #myNameProperty} field.
@@ -39,13 +41,13 @@ public class CustomizationModel
     }
 
     /**
-     * Gets the value of the {@link #myTagsProperty} field.
+     * Gets the value of the {@link #myTags} field.
      *
-     * @return the value of the myTagsProperty field.
+     * @return the value stored in the {@link #myTags} field.
      */
-    public StringProperty tagsProperty()
+    public ObservableList<String> getTags()
     {
-        return myTagsProperty;
+        return myTags;
     }
 
     /**
