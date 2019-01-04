@@ -13,7 +13,7 @@ import javafx.scene.Node;
 import javafx.stage.FileChooser;
 
 /**
- *
+ * A basic icon source used to load the contents of a single icon image file.
  */
 public class SingleFileIconSource implements IconSource<FileIconSourceModel>
 {
@@ -37,7 +37,7 @@ public class SingleFileIconSource implements IconSource<FileIconSourceModel>
      * @see io.opensphere.mantle.icon.IconSource#getIconProviders(Toolbox)
      */
     @Override
-    public List<IconProvider> getIconProviders(Toolbox toolbox)
+    public List<IconProvider> getIconProviders(final Toolbox toolbox)
     {
         return Collections.singletonList(new DefaultIconProvider(
                 UrlUtilities.toURLNew(myModel.fileProperty().get().getAbsolutePath()), IconRecord.USER_ADDED_COLLECTION, null));
@@ -60,9 +60,9 @@ public class SingleFileIconSource implements IconSource<FileIconSourceModel>
      * @see io.opensphere.mantle.icon.IconSource#getUserInput(Node)
      */
     @Override
-    public boolean getUserInput(Node parent)
+    public boolean getUserInput(final Node parent)
     {
-        FileChooser chooser = new FileChooser();
+        final FileChooser chooser = new FileChooser();
         chooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("All Images", "*.jpg", "*.jpeg", "*.jpe", "*.jfif", "*.jif", "*.JPG", "*.JPEG",
                         "*.JPE", "*.JFIF", "*.JIF", "*.png", "*.PNG", "*.gif", "*.GIF", "*.ico", "*.ICO", "*.bmp", "*.BMP"),
@@ -75,7 +75,7 @@ public class SingleFileIconSource implements IconSource<FileIconSourceModel>
                 new FileChooser.ExtensionFilter("BMP", "*.bmp", "*.BMP"));
         chooser.setTitle("Select an Icon");
         chooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        File file = chooser.showOpenDialog(parent.getScene().getWindow());
+        final File file = chooser.showOpenDialog(parent.getScene().getWindow());
         if (file != null)
         {
             myModel.fileProperty().set(file);
