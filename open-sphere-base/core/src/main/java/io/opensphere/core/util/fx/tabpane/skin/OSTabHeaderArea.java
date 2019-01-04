@@ -31,16 +31,16 @@ public class OSTabHeaderArea extends StackPane
     protected final OSTabPaneSkin myOsTabPaneSkin;
 
     /** The clip area of the header area. */
-    private Rectangle myHeaderClip;
+    private final Rectangle myHeaderClip;
 
     /**
      * The region in which the headers are actually displayed (the 'non-blank'
      * space)
      */
-    private StackPane myHeadersDisplayRegion;
+    private final StackPane myHeadersDisplayRegion;
 
     /** The background area (the 'blank' space). */
-    private StackPane myHeaderBackground;
+    private final StackPane myHeaderBackground;
 
     /**
      * The buttons used to control the tabs. This is protected to prevent
@@ -76,12 +76,12 @@ public class OSTabHeaderArea extends StackPane
     public final class HeaderRegionStackPane extends StackPane
     {
         @Override
-        protected double computePrefWidth(double height)
+        protected double computePrefWidth(final double height)
         {
             double width = 0.0F;
-            for (Node child : getChildren())
+            for (final Node child : getChildren())
             {
-                OSTabHeaderSkin tabHeaderSkin = (OSTabHeaderSkin)child;
+                final OSTabHeaderSkin tabHeaderSkin = (OSTabHeaderSkin)child;
                 if (tabHeaderSkin.isVisible() && (measureClosingTabs || !tabHeaderSkin.isClosing()))
                 {
                     width += tabHeaderSkin.prefWidth(height);
@@ -91,12 +91,12 @@ public class OSTabHeaderArea extends StackPane
         }
 
         @Override
-        protected double computePrefHeight(double width)
+        protected double computePrefHeight(final double width)
         {
             double height = 0.0F;
-            for (Node child : getChildren())
+            for (final Node child : getChildren())
             {
-                OSTabHeaderSkin tabHeaderSkin = (OSTabHeaderSkin)child;
+                final OSTabHeaderSkin tabHeaderSkin = (OSTabHeaderSkin)child;
                 height = Math.max(height, tabHeaderSkin.prefHeight(width));
             }
             return snapSizeY(height) + snappedTopInset() + snappedBottomInset();
@@ -114,13 +114,13 @@ public class OSTabHeaderArea extends StackPane
                 if (!myRemovedTabs.isEmpty())
                 {
                     double offset = 0;
-                    double w = myOsTabPaneSkin.myTabHeaderArea.getWidth() - snapSizeX(myAddButton.prefWidth(-1))
+                    final double w = myOsTabPaneSkin.myTabHeaderArea.getWidth() - snapSizeX(myAddButton.prefWidth(-1))
                             - firstTabIndent() - SPACER;
-                    Iterator<Node> i = getChildren().iterator();
+                    final Iterator<Node> i = getChildren().iterator();
                     while (i.hasNext())
                     {
-                        OSTabHeaderSkin tabHeader = (OSTabHeaderSkin)i.next();
-                        double tabHeaderPrefWidth = snapSizeX(tabHeader.prefWidth(-1));
+                        final OSTabHeaderSkin tabHeader = (OSTabHeaderSkin)i.next();
+                        final double tabHeaderPrefWidth = snapSizeX(tabHeader.prefWidth(-1));
                         if (myRemovedTabs.contains(tabHeader))
                         {
                             if (offset < w)
@@ -149,32 +149,33 @@ public class OSTabHeaderArea extends StackPane
                 validateScrollOffset();
             }
 
-            Side tabPosition = myOsTabPaneSkin.getSkinnable().getSide();
-            double tabBackgroundHeight = snapSizeY(prefHeight(-1));
-            double tabX = (tabPosition.equals(Side.LEFT) || tabPosition.equals(Side.BOTTOM))
+            final Side tabPosition = myOsTabPaneSkin.getSkinnable().getSide();
+            final double tabBackgroundHeight = snapSizeY(prefHeight(-1));
+            double tabX = tabPosition.equals(Side.LEFT) || tabPosition.equals(Side.BOTTOM)
                     ? snapSizeX(getWidth()) - getScrollOffset() : getScrollOffset();
 
             updateHeaderClip();
-            for (Node node : getChildren())
+            for (final Node node : getChildren())
             {
-                OSTabHeaderSkin tabHeader = (OSTabHeaderSkin)node;
+                final OSTabHeaderSkin tabHeader = (OSTabHeaderSkin)node;
 
                 // size and position the header relative to the other
                 // headers
-                double tabHeaderPrefWidth = snapSizeX(tabHeader.prefWidth(-1) * tabHeader.animationTransitionProperty().get());
-                double tabHeaderPrefHeight = snapSizeY(tabHeader.prefHeight(-1));
+                final double tabHeaderPrefWidth = snapSizeX(
+                        tabHeader.prefWidth(-1) * tabHeader.animationTransitionProperty().get());
+                final double tabHeaderPrefHeight = snapSizeY(tabHeader.prefHeight(-1));
                 tabHeader.resize(tabHeaderPrefWidth, tabHeaderPrefHeight);
 
                 // This ensures that the tabs are located in the correct
                 // position when there are tabs of differing heights.
-                double startY = tabPosition.equals(Side.BOTTOM) ? 0
+                final double startY = tabPosition.equals(Side.BOTTOM) ? 0
                         : tabBackgroundHeight - tabHeaderPrefHeight - snappedBottomInset();
                 if (tabPosition.equals(Side.LEFT) || tabPosition.equals(Side.BOTTOM))
                 {
                     // build from the right
                     tabX -= tabHeaderPrefWidth;
-                    if (myOsTabPaneSkin.myDragState != OSDragState.REORDER || (tabHeader != myOsTabPaneSkin.myDragTabHeader
-                            && tabHeader != myOsTabPaneSkin.myDropAnimationHeader))
+                    if (myOsTabPaneSkin.myDragState != OSDragState.REORDER
+                            || tabHeader != myOsTabPaneSkin.myDragTabHeader && tabHeader != myOsTabPaneSkin.myDropAnimationHeader)
                     {
                         tabHeader.relocate(tabX, startY);
                     }
@@ -182,8 +183,8 @@ public class OSTabHeaderArea extends StackPane
                 else
                 {
                     // build from the left
-                    if (myOsTabPaneSkin.myDragState != OSDragState.REORDER || (tabHeader != myOsTabPaneSkin.myDragTabHeader
-                            && tabHeader != myOsTabPaneSkin.myDropAnimationHeader))
+                    if (myOsTabPaneSkin.myDragState != OSDragState.REORDER
+                            || tabHeader != myOsTabPaneSkin.myDragTabHeader && tabHeader != myOsTabPaneSkin.myDropAnimationHeader)
                     {
                         tabHeader.relocate(tabX, startY);
                     }
@@ -198,7 +199,7 @@ public class OSTabHeaderArea extends StackPane
      *
      * @param osTabPaneSkin the skin to which the header area is bound.
      */
-    public OSTabHeaderArea(OSTabPaneSkin osTabPaneSkin)
+    public OSTabHeaderArea(final OSTabPaneSkin osTabPaneSkin)
     {
         myOsTabPaneSkin = osTabPaneSkin;
         getStyleClass().setAll("tab-header-area");
@@ -216,7 +217,7 @@ public class OSTabHeaderArea extends StackPane
         myHeaderBackground.getStyleClass().setAll("tab-header-background");
 
         int i = 0;
-        for (Tab tab : tabPane.getTabs())
+        for (final Tab tab : tabPane.getTabs())
         {
             addTab(tab, i++);
         }
@@ -233,7 +234,7 @@ public class OSTabHeaderArea extends StackPane
         // in the tabs scrolling left (i.e. exposing the right-most tabs)
         // Scrolling the mouse wheel upwards results in the tabs scrolling
         // right (i.e. exposing the left-most tabs)
-        addEventHandler(ScrollEvent.SCROLL, (ScrollEvent e) ->
+        addEventHandler(ScrollEvent.SCROLL, (final ScrollEvent e) ->
         {
             Side side = myOsTabPaneSkin.getSkinnable().getSide();
             side = side == null ? Side.TOP : side;
@@ -278,28 +279,28 @@ public class OSTabHeaderArea extends StackPane
      */
     protected void updateHeaderClip()
     {
-        Side tabPosition = myOsTabPaneSkin.getSkinnable().getSide();
+        final Side tabPosition = myOsTabPaneSkin.getSkinnable().getSide();
 
         double x = 0;
-        double y = 0;
+        final double y = 0;
         double clipWidth = 0;
         double clipHeight = 0;
         double maxWidth = 0;
         double shadowRadius = 0;
-        double clipOffset = firstTabIndent();
+        final double clipOffset = firstTabIndent();
         double menuButtonPreferredWidth = snapSizeX(myMenuButton.prefWidth(-1));
-        double addButtonPreferredWidth = snapSizeX(myAddButton.prefWidth(-1));
+        final double addButtonPreferredWidth = snapSizeX(myAddButton.prefWidth(-1));
 
         measureClosingTabs = true;
-        double headersPrefWidth = snapSizeX(myHeadersDisplayRegion.prefWidth(-1));
+        final double headersPrefWidth = snapSizeX(myHeadersDisplayRegion.prefWidth(-1));
         measureClosingTabs = false;
 
-        double headersPrefHeight = snapSizeY(myHeadersDisplayRegion.prefHeight(-1));
+        final double headersPrefHeight = snapSizeY(myHeadersDisplayRegion.prefHeight(-1));
         menuButtonPreferredWidth = menuButtonPreferredWidth + SPACER;
 
         if (myHeadersDisplayRegion.getEffect() instanceof DropShadow)
         {
-            DropShadow shadow = (DropShadow)myHeadersDisplayRegion.getEffect();
+            final DropShadow shadow = (DropShadow)myHeadersDisplayRegion.getEffect();
             shadowRadius = shadow.getRadius();
         }
 
@@ -337,9 +338,9 @@ public class OSTabHeaderArea extends StackPane
      * @param tab the tab to add to the region.
      * @param addToIndex the index at which to add the tab.
      */
-    protected void addTab(Tab tab, int addToIndex)
+    protected void addTab(final Tab tab, final int addToIndex)
     {
-        OSTabHeaderSkin tabHeaderSkin = new OSTabHeaderSkin(myOsTabPaneSkin, tab, myOsTabPaneSkin.myBehavior);
+        final OSTabHeaderSkin tabHeaderSkin = new OSTabHeaderSkin(myOsTabPaneSkin, tab, myOsTabPaneSkin.myBehavior);
         myHeadersDisplayRegion.getChildren().add(addToIndex, tabHeaderSkin);
     }
 
@@ -348,9 +349,9 @@ public class OSTabHeaderArea extends StackPane
      *
      * @param tab the tab to remove from the region.
      */
-    protected void removeTab(Tab tab)
+    protected void removeTab(final Tab tab)
     {
-        OSTabHeaderSkin tabHeaderSkin = getTabHeaderSkin(tab);
+        final OSTabHeaderSkin tabHeaderSkin = getTabHeaderSkin(tab);
         if (tabHeaderSkin != null)
         {
             if (tabsFit())
@@ -373,7 +374,7 @@ public class OSTabHeaderArea extends StackPane
      * @param tab the tab for which to get the skin.
      * @return the skin for the supplied tab, or null if none is assigned.
      */
-    protected OSTabHeaderSkin getTabHeaderSkin(Tab tab)
+    protected OSTabHeaderSkin getTabHeaderSkin(final Tab tab)
     {
         return myHeadersDisplayRegion.getChildren().stream().map(c -> (OSTabHeaderSkin)c).filter(s -> s.getTab().equals(tab))
                 .findFirst().orElse(null);
@@ -386,10 +387,10 @@ public class OSTabHeaderArea extends StackPane
      */
     protected boolean tabsFit()
     {
-        double headerPrefWidth = snapSizeX(myHeadersDisplayRegion.prefWidth(-1));
-        double controlTabWidth = snapSizeX(myAddButton.prefWidth(-1));
-        double controlTabWidth2 = snapSizeX(myMenuButton.prefWidth(-1));
-        double visibleWidth = headerPrefWidth + controlTabWidth + controlTabWidth2 + firstTabIndent() + SPACER;
+        final double headerPrefWidth = snapSizeX(myHeadersDisplayRegion.prefWidth(-1));
+        final double controlTabWidth = snapSizeX(myAddButton.prefWidth(-1));
+        final double controlTabWidth2 = snapSizeX(myMenuButton.prefWidth(-1));
+        final double visibleWidth = headerPrefWidth + controlTabWidth + controlTabWidth2 + firstTabIndent() + SPACER;
         return visibleWidth < getWidth();
     }
 
@@ -400,21 +401,21 @@ public class OSTabHeaderArea extends StackPane
     protected void ensureSelectedTabIsVisible()
     {
         // work out the visible width of the tab header
-        double tabPaneWidth = snapSizeX(myOsTabPaneSkin.isHorizontal() ? myOsTabPaneSkin.getSkinnable().getWidth()
+        final double tabPaneWidth = snapSizeX(myOsTabPaneSkin.isHorizontal() ? myOsTabPaneSkin.getSkinnable().getWidth()
                 : myOsTabPaneSkin.getSkinnable().getHeight());
-        double controlTabWidth = snapSizeX(myAddButton.getWidth());
-        double controlTabWidth2 = snapSizeX(myMenuButton.getWidth());
-        double visibleWidth = tabPaneWidth - controlTabWidth - controlTabWidth2 - firstTabIndent() - SPACER;
+        final double controlTabWidth = snapSizeX(myAddButton.getWidth());
+        final double controlTabWidth2 = snapSizeX(myMenuButton.getWidth());
+        final double visibleWidth = tabPaneWidth - controlTabWidth - controlTabWidth2 - firstTabIndent() - SPACER;
 
         // and get where the selected tab is in the header area
         double offset = 0.0;
         double selectedTabOffset = 0.0;
         double selectedTabWidth = 0.0;
-        for (Node node : myHeadersDisplayRegion.getChildren())
+        for (final Node node : myHeadersDisplayRegion.getChildren())
         {
-            OSTabHeaderSkin tabHeader = (OSTabHeaderSkin)node;
+            final OSTabHeaderSkin tabHeader = (OSTabHeaderSkin)node;
 
-            double tabHeaderPrefWidth = snapSizeX(tabHeader.prefWidth(-1));
+            final double tabHeaderPrefWidth = snapSizeX(tabHeader.prefWidth(-1));
 
             if (myOsTabPaneSkin.getSelectedTab() != null && myOsTabPaneSkin.getSelectedTab().equals(tabHeader.getTab()))
             {
@@ -434,7 +435,7 @@ public class OSTabHeaderArea extends StackPane
         {
             setScrollOffset(-selectedTabStartX);
         }
-        else if (selectedTabEndX > (visibleAreaEndX - scrollOffset))
+        else if (selectedTabEndX > visibleAreaEndX - scrollOffset)
         {
             setScrollOffset(visibleAreaEndX - selectedTabEndX);
         }
@@ -464,27 +465,27 @@ public class OSTabHeaderArea extends StackPane
      *
      * @param newScrollOffset the new offset from which to calculate.
      */
-    protected void setScrollOffset(double newScrollOffset)
+    protected void setScrollOffset(final double newScrollOffset)
     {
         // work out the visible width of the tab header
-        double tabPaneWidth = snapSizeX(myOsTabPaneSkin.isHorizontal() ? myOsTabPaneSkin.getSkinnable().getWidth()
+        final double tabPaneWidth = snapSizeX(myOsTabPaneSkin.isHorizontal() ? myOsTabPaneSkin.getSkinnable().getWidth()
                 : myOsTabPaneSkin.getSkinnable().getHeight());
-        double controlTabWidth = snapSizeX(myAddButton.getWidth());
-        double controlTabWidth2 = snapSizeX(myMenuButton.getWidth());
-        double visibleWidth = tabPaneWidth - controlTabWidth - controlTabWidth2 - firstTabIndent() - SPACER;
+        final double controlTabWidth = snapSizeX(myAddButton.getWidth());
+        final double controlTabWidth2 = snapSizeX(myMenuButton.getWidth());
+        final double visibleWidth = tabPaneWidth - controlTabWidth - controlTabWidth2 - firstTabIndent() - SPACER;
 
         // measure the width of all tabs
         double offset = 0.0;
-        for (Node node : myHeadersDisplayRegion.getChildren())
+        for (final Node node : myHeadersDisplayRegion.getChildren())
         {
-            OSTabHeaderSkin tabHeader = (OSTabHeaderSkin)node;
-            double tabHeaderPrefWidth = snapSizeX(tabHeader.prefWidth(-1));
+            final OSTabHeaderSkin tabHeader = (OSTabHeaderSkin)node;
+            final double tabHeaderPrefWidth = snapSizeX(tabHeader.prefWidth(-1));
             offset += tabHeaderPrefWidth;
         }
 
         double actualNewScrollOffset;
 
-        if ((visibleWidth - newScrollOffset) > offset && newScrollOffset < 0)
+        if (visibleWidth - newScrollOffset > offset && newScrollOffset < 0)
         {
             // need to make sure the right-most tab is attached to the
             // right-hand side of the tab header (e.g. if the tab header
@@ -531,18 +532,18 @@ public class OSTabHeaderArea extends StackPane
     }
 
     @Override
-    protected double computePrefWidth(double height)
+    protected double computePrefWidth(final double height)
     {
-        double padding = myOsTabPaneSkin.isHorizontal() ? snappedLeftInset() + snappedRightInset()
+        final double padding = myOsTabPaneSkin.isHorizontal() ? snappedLeftInset() + snappedRightInset()
                 : snappedTopInset() + snappedBottomInset();
         return snapSizeX(myHeadersDisplayRegion.prefWidth(height)) + myAddButton.prefWidth(height)
                 + myMenuButton.prefWidth(height) + firstTabIndent() + SPACER + padding;
     }
 
     @Override
-    protected double computePrefHeight(double width)
+    protected double computePrefHeight(final double width)
     {
-        double padding = myOsTabPaneSkin.isHorizontal() ? snappedTopInset() + snappedBottomInset()
+        final double padding = myOsTabPaneSkin.isHorizontal() ? snappedTopInset() + snappedBottomInset()
                 : snappedLeftInset() + snappedRightInset();
         return snapSizeY(myHeadersDisplayRegion.prefHeight(-1)) + padding;
     }
@@ -564,18 +565,20 @@ public class OSTabHeaderArea extends StackPane
         final double rightInset = snappedRightInset();
         final double topInset = snappedTopInset();
         final double bottomInset = snappedBottomInset();
-        double w = snapSizeX(getWidth()) - (myOsTabPaneSkin.isHorizontal() ? leftInset + rightInset : topInset + bottomInset);
-        double h = snapSizeY(getHeight()) - (myOsTabPaneSkin.isHorizontal() ? topInset + bottomInset : leftInset + rightInset);
-        double tabBackgroundHeight = snapSizeY(prefHeight(-1));
-        double headersPrefWidth = snapSizeX(myHeadersDisplayRegion.prefWidth(-1));
-        double headersPrefHeight = snapSizeY(myHeadersDisplayRegion.prefHeight(-1));
+        final double w = snapSizeX(getWidth())
+                - (myOsTabPaneSkin.isHorizontal() ? leftInset + rightInset : topInset + bottomInset);
+        final double h = snapSizeY(getHeight())
+                - (myOsTabPaneSkin.isHorizontal() ? topInset + bottomInset : leftInset + rightInset);
+        final double tabBackgroundHeight = snapSizeY(prefHeight(-1));
+        final double headersPrefWidth = snapSizeX(myHeadersDisplayRegion.prefWidth(-1));
+        final double headersPrefHeight = snapSizeY(myHeadersDisplayRegion.prefHeight(-1));
 
         updateHeaderClip();
         myHeadersDisplayRegion.requestLayout();
 
         // RESIZE CONTROL BUTTONS
-        double btnWidth = snapSizeX(myAddButton.prefWidth(-1));
-        double btnWidth2 = snapSizeX(myMenuButton.prefWidth(-1));
+        final double btnWidth = snapSizeX(myAddButton.prefWidth(-1));
+        final double btnWidth2 = snapSizeX(myMenuButton.prefWidth(-1));
         final double btnHeight = myAddButton.prefHeight(btnWidth);
         final double btnHeight2 = myMenuButton.prefHeight(btnWidth);
         myAddButton.resize(btnWidth, btnHeight);
@@ -600,7 +603,7 @@ public class OSTabHeaderArea extends StackPane
         double controlStartY = 0;
         double controlStart2X = 0;
         double controlStart2Y = 0;
-        Side tabPosition = myOsTabPaneSkin.getSkinnable().getSide();
+        final Side tabPosition = myOsTabPaneSkin.getSkinnable().getSide();
 
         if (tabPosition.equals(Side.TOP))
         {
