@@ -11,7 +11,7 @@ import javafx.collections.transformation.TransformationList;
 /**
  * A "mapped" observable list, in which a child list is wrapped, and each
  * element transformed to another type.
- * 
+ *
  * @param <SOURCE_TYPE> The source type of the child list.
  * @param <DESTINATION_TYPE> The destination type of the list (this list can be
  *            cast to an instance of ObservableList<DESTINATION_TYPE>).
@@ -25,30 +25,31 @@ public class MappedObservableList<SOURCE_TYPE, DESTINATION_TYPE> extends Transfo
      * Creates a new mapped observable list, in which this list will observe the
      * wrapped list, and apply the supplied function as a map to any elements
      * within the list.
-     * 
+     *
      * @param source the source list to wrap in this instance.
      * @param mapper the function to apply to the source list.
      */
-    public MappedObservableList(ObservableList<? extends DESTINATION_TYPE> source, Function<DESTINATION_TYPE, SOURCE_TYPE> mapper)
+    public MappedObservableList(final ObservableList<? extends DESTINATION_TYPE> source,
+            final Function<DESTINATION_TYPE, SOURCE_TYPE> mapper)
     {
         super(source);
         this.myMapper = mapper;
     }
 
     @Override
-    public int getSourceIndex(int index)
+    public int getSourceIndex(final int index)
     {
         return index;
     }
 
     @Override
-    public int getViewIndex(int index)
+    public int getViewIndex(final int index)
     {
         return index;
     }
 
     @Override
-    public SOURCE_TYPE get(int index)
+    public SOURCE_TYPE get(final int index)
     {
         return myMapper.apply(getSource().get(index));
     }
@@ -60,7 +61,7 @@ public class MappedObservableList<SOURCE_TYPE, DESTINATION_TYPE> extends Transfo
     }
 
     @Override
-    protected void sourceChanged(Change<? extends DESTINATION_TYPE> c)
+    protected void sourceChanged(final Change<? extends DESTINATION_TYPE> c)
     {
         fireChange(new Change<>(this)
         {
@@ -95,7 +96,7 @@ public class MappedObservableList<SOURCE_TYPE, DESTINATION_TYPE> extends Transfo
             }
 
             @Override
-            public int getPermutation(int i)
+            public int getPermutation(final int i)
             {
                 return c.getPermutation(i);
             }
@@ -113,8 +114,8 @@ public class MappedObservableList<SOURCE_TYPE, DESTINATION_TYPE> extends Transfo
             @Override
             public List<SOURCE_TYPE> getRemoved()
             {
-                ArrayList<SOURCE_TYPE> res = new ArrayList<>(c.getRemovedSize());
-                for (DESTINATION_TYPE e : c.getRemoved())
+                final ArrayList<SOURCE_TYPE> res = new ArrayList<>(c.getRemovedSize());
+                for (final DESTINATION_TYPE e : c.getRemoved())
                 {
                     res.add(myMapper.apply(e));
                 }
