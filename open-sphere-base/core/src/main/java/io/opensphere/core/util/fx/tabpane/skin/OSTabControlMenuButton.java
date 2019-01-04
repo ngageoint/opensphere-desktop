@@ -23,7 +23,7 @@ public class OSTabControlMenuButton extends StackPane
     private final OSTabPaneSkin myOsTabPaneSkin;
 
     /** The inner container in which controls are rendered. */
-    private StackPane myInnerContainer;
+    private final StackPane myInnerContainer;
 
     /**
      * The down arrow displayed within the button. This is protected to prevent
@@ -48,12 +48,12 @@ public class OSTabControlMenuButton extends StackPane
      *
      * @param osTabPaneSkin the skin to which to bind.
      */
-    public OSTabControlMenuButton(OSTabPaneSkin osTabPaneSkin)
+    public OSTabControlMenuButton(final OSTabPaneSkin osTabPaneSkin)
     {
         myOsTabPaneSkin = osTabPaneSkin;
         getStyleClass().setAll("os-control-buttons-tab");
 
-        TabPane tabPane = myOsTabPaneSkin.getSkinnable();
+        final TabPane tabPane = myOsTabPaneSkin.getSkinnable();
 
         myDownArrowButton = new Pane();
         myDownArrowButton.getStyleClass().setAll("tab-down-button");
@@ -70,13 +70,13 @@ public class OSTabControlMenuButton extends StackPane
         myInnerContainer = new StackPane()
         {
             @Override
-            protected double computePrefWidth(double height)
+            protected double computePrefWidth(final double height)
             {
                 return snapSizeX(myDownArrow.prefWidth(getHeight())) + snapSizeX(myDownArrowButton.prefWidth(getHeight()));
             }
 
             @Override
-            protected double computePrefHeight(double width)
+            protected double computePrefHeight(final double width)
             {
                 double height = Math.max(0.0F, snapSizeY(myDownArrowButton.prefHeight(width)));
                 if (height > 0)
@@ -89,20 +89,21 @@ public class OSTabControlMenuButton extends StackPane
             @Override
             protected void layoutChildren()
             {
-                double x = 0;
-                double y = snappedTopInset();
-                double w = snapSizeX(getWidth()) - x + snappedLeftInset();
-                double h = snapSizeY(getHeight()) - y + snappedBottomInset();
+                final double x = 0;
+                final double y = snappedTopInset();
+                final double w = snapSizeX(getWidth()) - x + snappedLeftInset();
+                final double h = snapSizeY(getHeight()) - y + snappedBottomInset();
                 positionArrow(myDownArrowButton, myDownArrow, x, y, w, h);
             }
 
-            private void positionArrow(Pane btn, StackPane arrow, double x, double y, double width, double height)
+            private void positionArrow(final Pane btn, final StackPane arrow, final double x, final double y, final double width,
+                    final double height)
             {
                 btn.resize(width, height);
                 positionInArea(btn, x, y, width, height, /* baseline ignored */0, HPos.CENTER, VPos.CENTER);
                 // center arrow region within arrow button
-                double arrowWidth = snapSizeX(arrow.prefWidth(-1));
-                double arrowHeight = snapSizeY(arrow.prefHeight(-1));
+                final double arrowWidth = snapSizeX(arrow.prefWidth(-1));
+                final double arrowHeight = snapSizeY(arrow.prefHeight(-1));
                 arrow.resize(arrowWidth, arrowHeight);
                 positionInArea(arrow, btn.snappedLeftInset(), btn.snappedTopInset(),
                         width - btn.snappedLeftInset() - btn.snappedRightInset(),
@@ -117,7 +118,7 @@ public class OSTabControlMenuButton extends StackPane
 
         tabPane.sideProperty().addListener(valueModel ->
         {
-            Side tabPosition = myOsTabPaneSkin.getSkinnable().getSide();
+            final Side tabPosition = myOsTabPaneSkin.getSkinnable().getSide();
             myDownArrow.setRotate(tabPosition.equals(Side.BOTTOM) ? 180.0F : 0.0F);
         });
         tabPane.getTabs().addListener((ListChangeListener<Tab>)c -> setupPopupMenu());
@@ -142,7 +143,7 @@ public class OSTabControlMenuButton extends StackPane
      * @see javafx.scene.layout.StackPane#computePrefWidth(double)
      */
     @Override
-    protected double computePrefWidth(double height)
+    protected double computePrefWidth(final double height)
     {
         double pw = snapSizeX(myInnerContainer.prefWidth(height));
         if (pw > 0)
@@ -158,7 +159,7 @@ public class OSTabControlMenuButton extends StackPane
      * @see javafx.scene.layout.StackPane#computePrefHeight(double)
      */
     @Override
-    protected double computePrefHeight(double width)
+    protected double computePrefHeight(final double width)
     {
         return Math.max(myOsTabPaneSkin.getSkinnable().getTabMinHeight(), snapSizeX(myInnerContainer.prefHeight(width)))
                 + snappedTopInset() + snappedBottomInset();
@@ -172,10 +173,10 @@ public class OSTabControlMenuButton extends StackPane
     @Override
     protected void layoutChildren()
     {
-        double x = snappedLeftInset();
-        double y = snappedTopInset();
-        double w = snapSizeX(getWidth()) - x + snappedRightInset();
-        double h = snapSizeY(getHeight()) - y + snappedBottomInset();
+        final double x = snappedLeftInset();
+        final double y = snappedTopInset();
+        final double w = snapSizeX(getWidth()) - x + snappedRightInset();
+        final double h = snapSizeY(getHeight()) - y + snappedBottomInset();
 
         if (myShowControlButtons)
         {
@@ -205,11 +206,11 @@ public class OSTabControlMenuButton extends StackPane
             myPopupMenu = new ContextMenu();
         }
         myPopupMenu.getItems().clear();
-        ToggleGroup group = new ToggleGroup();
-        ObservableList<RadioMenuItem> menuitems = FXCollections.<RadioMenuItem>observableArrayList();
+        final ToggleGroup group = new ToggleGroup();
+        final ObservableList<RadioMenuItem> menuitems = FXCollections.<RadioMenuItem>observableArrayList();
         for (final Tab tab : myOsTabPaneSkin.getSkinnable().getTabs())
         {
-            OSTabMenuItem item = new OSTabMenuItem(tab);
+            final OSTabMenuItem item = new OSTabMenuItem(tab);
             item.setToggleGroup(group);
             item.setOnAction(t -> myOsTabPaneSkin.getSkinnable().getSelectionModel().select(tab));
             menuitems.add(item);
@@ -220,9 +221,9 @@ public class OSTabControlMenuButton extends StackPane
     /** Displays the popup menu. */
     protected void showPopupMenu()
     {
-        for (MenuItem mi : myPopupMenu.getItems())
+        for (final MenuItem mi : myPopupMenu.getItems())
         {
-            OSTabMenuItem tmi = (OSTabMenuItem)mi;
+            final OSTabMenuItem tmi = (OSTabMenuItem)mi;
             if (myOsTabPaneSkin.getSelectedTab().equals(tmi.getTab()))
             {
                 tmi.setSelected(true);
