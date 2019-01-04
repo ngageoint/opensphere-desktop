@@ -8,7 +8,7 @@ import javafx.util.StringConverter;
 /**
  * A converter used to hide all decimal values from a spinner.
  */
-final class NoDecimalStringConverter extends StringConverter<Double>
+public final class NoDecimalStringConverter extends StringConverter<Double>
 {
     /** A formatter used to alter the presentation of a numeric value. */
     private static final DecimalFormat FORMAT = new DecimalFormat("#");
