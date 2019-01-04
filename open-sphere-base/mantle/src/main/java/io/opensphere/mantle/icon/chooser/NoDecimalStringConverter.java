@@ -14,7 +14,7 @@ final class NoDecimalStringConverter extends StringConverter<Double>
     private static final DecimalFormat FORMAT = new DecimalFormat("#");
 
     @Override
-    public String toString(Double value)
+    public String toString(final Double value)
     {
         if (value == null)
         {
@@ -24,7 +24,7 @@ final class NoDecimalStringConverter extends StringConverter<Double>
     }
 
     @Override
-    public Double fromString(String value)
+    public Double fromString(final String value)
     {
         try
         {
@@ -34,7 +34,7 @@ final class NoDecimalStringConverter extends StringConverter<Double>
                 return null;
             }
 
-            String localValue = value.trim();
+            final String localValue = value.trim();
             if (localValue.length() < 1)
             {
                 return null;
@@ -43,7 +43,7 @@ final class NoDecimalStringConverter extends StringConverter<Double>
             // Perform the requested parsing
             return FORMAT.parse(localValue).doubleValue();
         }
-        catch (ParseException ex)
+        catch (final ParseException ex)
         {
             throw new RuntimeException(ex);
         }
