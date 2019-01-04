@@ -16,17 +16,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPOutputStream;
 
+import org.apache.http.client.CookieStore;
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
-import org.easymock.IAnswer;
 import org.junit.Test;
 
 import com.bitsys.common.http.client.HttpClient;
+import com.bitsys.common.http.client.HttpClientOptions;
 import com.bitsys.common.http.entity.HttpEntity;
 import com.bitsys.common.http.message.HttpRequest;
 import com.bitsys.common.http.message.HttpResponse;
 import com.google.common.collect.ListMultimap;
 
+import io.opensphere.core.event.EventManager;
 import io.opensphere.core.server.ResponseValues;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.io.CancellableInputStream;
@@ -56,21 +58,22 @@ public class GetRequestorTest
     @Test
     public void testGetRequest() throws IOException, URISyntaxException
     {
-        EasyMockSupport support = new EasyMockSupport();
+        final EasyMockSupport support = new EasyMockSupport();
 
-        URL url = new URL("http://somehost/getStuff?param=stuff");
+        final URL url = new URL("http://somehost/getStuff?param=stuff");
 
-        ByteArrayInputStream stream = new ByteArrayInputStream(new byte[0]);
+        final ByteArrayInputStream stream = new ByteArrayInputStream(new byte[0]);
 
-        HttpResponse response = createResponse(support, stream, false, false);
-        HttpClient client = createClient(support, response, url.toURI(), false);
+        final HttpResponse response = createResponse(support, stream, false, false);
+        final HttpClient client = createClient(support, response, url.toURI(), false);
+        final EventManager eventManager = support.createNiceMock(EventManager.class);
 
         support.replayAll();
 
-        ResponseValues responseValues = new ResponseValues();
+        final ResponseValues responseValues = new ResponseValues();
 
-        GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock(), null);
-        CancellableInputStream actual = requestor.sendGet(url, responseValues);
+        final GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock(), eventManager);
+        final CancellableInputStream actual = requestor.sendGet(url, responseValues);
 
         assertEquals(stream, actual.getWrappedInputStream());
         assertEquals(HttpURLConnection.HTTP_OK, responseValues.getResponseCode());
@@ -89,26 +92,27 @@ public class GetRequestorTest
     @Test
     public void testGetRequestExtraHeaders() throws IOException, URISyntaxException
     {
-        EasyMockSupport support = new EasyMockSupport();
+        final EasyMockSupport support = new EasyMockSupport();
 
-        URL url = new URL("http://somehost/getStuff?param=stuff");
+        final URL url = new URL("http://somehost/getStuff?param=stuff");
 
-        ByteArrayInputStream stream = new ByteArrayInputStream(new byte[0]);
+        final ByteArrayInputStream stream = new ByteArrayInputStream(new byte[0]);
 
-        HttpResponse response = createResponse(support, stream, false, false);
-        HttpClient client = createClient(support, response, url.toURI(), true);
+        final HttpResponse response = createResponse(support, stream, false, false);
+        final HttpClient client = createClient(support, response, url.toURI(), true);
+        final EventManager eventManager = support.createNiceMock(EventManager.class);
 
         support.replayAll();
 
-        ResponseValues responseValues = new ResponseValues();
+        final ResponseValues responseValues = new ResponseValues();
 
-        GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock(), null);
+        final GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock(), eventManager);
 
-        Map<String, String> extraHeaderValues = New.map();
+        final Map<String, String> extraHeaderValues = New.map();
         extraHeaderValues.put("key1", "value1");
         extraHeaderValues.put("key2", "value2");
 
-        CancellableInputStream actual = requestor.sendGet(url, extraHeaderValues, responseValues);
+        final CancellableInputStream actual = requestor.sendGet(url, extraHeaderValues, responseValues);
 
         assertEquals(stream, actual.getWrappedInputStream());
         assertEquals(HttpURLConnection.HTTP_OK, responseValues.getResponseCode());
@@ -127,21 +131,22 @@ public class GetRequestorTest
     @Test
     public void testGetWithError() throws IOException, URISyntaxException
     {
-        EasyMockSupport support = new EasyMockSupport();
+        final EasyMockSupport support = new EasyMockSupport();
 
-        URL url = new URL("http://somehost/getStuff?param=stuff");
+        final URL url = new URL("http://somehost/getStuff?param=stuff");
 
-        ByteArrayInputStream stream = new ByteArrayInputStream(new byte[0]);
+        final ByteArrayInputStream stream = new ByteArrayInputStream(new byte[0]);
 
-        HttpResponse response = createResponse(support, stream, true, false);
-        HttpClient client = createClient(support, response, url.toURI(), false);
+        final HttpResponse response = createResponse(support, stream, true, false);
+        final HttpClient client = createClient(support, response, url.toURI(), false);
+        final EventManager eventManager = support.createNiceMock(EventManager.class);
 
         support.replayAll();
 
-        ResponseValues responseValues = new ResponseValues();
+        final ResponseValues responseValues = new ResponseValues();
 
-        GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock(), null);
-        CancellableInputStream actual = requestor.sendGet(url, responseValues);
+        final GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock(), eventManager);
+        final CancellableInputStream actual = requestor.sendGet(url, responseValues);
 
         assertEquals(stream, actual.getWrappedInputStream());
         assertEquals(HttpURLConnection.HTTP_FORBIDDEN, responseValues.getResponseCode());
@@ -161,31 +166,32 @@ public class GetRequestorTest
     @Test
     public void testZippedReturn() throws IOException, URISyntaxException
     {
-        EasyMockSupport support = new EasyMockSupport();
+        final EasyMockSupport support = new EasyMockSupport();
 
-        URL url = new URL("http://somehost/getStuff?param=stuff");
+        final URL url = new URL("http://somehost/getStuff?param=stuff");
 
-        String testData = "Some test data here";
+        final String testData = "Some test data here";
 
-        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-        GZIPOutputStream output = new GZIPOutputStream(byteOut);
+        final ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+        final GZIPOutputStream output = new GZIPOutputStream(byteOut);
         output.write(ByteString.getBytes(testData));
         output.flush();
         output.close();
 
-        ByteArrayInputStream stream = new ByteArrayInputStream(byteOut.toByteArray());
+        final ByteArrayInputStream stream = new ByteArrayInputStream(byteOut.toByteArray());
 
-        HttpResponse response = createResponse(support, stream, false, true);
-        HttpClient client = createClient(support, response, url.toURI(), false);
+        final HttpResponse response = createResponse(support, stream, false, true);
+        final HttpClient client = createClient(support, response, url.toURI(), false);
+        final EventManager eventManager = support.createNiceMock(EventManager.class);
 
         support.replayAll();
 
-        ResponseValues responseValues = new ResponseValues();
+        final ResponseValues responseValues = new ResponseValues();
 
-        GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock(), null);
-        InputStream actual = requestor.sendGet(url, responseValues);
+        final GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock(), eventManager);
+        final InputStream actual = requestor.sendGet(url, responseValues);
 
-        List<Byte> bytes = New.list();
+        final List<Byte> bytes = New.list();
         int read = actual.read();
         while (read >= 0)
         {
@@ -193,15 +199,15 @@ public class GetRequestorTest
             read = actual.read();
         }
 
-        byte[] byteArray = new byte[bytes.size()];
+        final byte[] byteArray = new byte[bytes.size()];
         int index = 0;
-        for (Byte aByte : bytes)
+        for (final Byte aByte : bytes)
         {
             byteArray[index] = aByte.byteValue();
             index++;
         }
 
-        String actualString = ByteString.getStringFromBytes(byteArray);
+        final String actualString = ByteString.getStringFromBytes(byteArray);
 
         assertEquals(testData, actualString);
         assertEquals(HttpURLConnection.HTTP_OK, responseValues.getResponseCode());
@@ -221,32 +227,34 @@ public class GetRequestorTest
      * @return The easy mocked HttpClient.
      * @throws IOException Bad io.
      */
-    private HttpClient createClient(EasyMockSupport support, final HttpResponse response, final URI expectedUri,
-            boolean expectExtraHeaders) throws IOException
+    private HttpClient createClient(final EasyMockSupport support, final HttpResponse response, final URI expectedUri,
+            final boolean expectExtraHeaders)
+        throws IOException
     {
-        HttpClient client = support.createMock(HttpClient.class);
+        final HttpClient client = support.createMock(HttpClient.class);
+        final HttpClientOptions options = new HttpClientOptions();
+        final CookieStore cookieStore = EasyMock.createNiceMock(CookieStore.class);
+
+        EasyMock.expect(client.getOptions()).andReturn(options);
+        EasyMock.expect(client.getCookieStore()).andReturn(cookieStore);
 
         client.execute(EasyMock.isA(HttpRequest.class));
-        EasyMock.expectLastCall().andAnswer(new IAnswer<HttpResponse>()
+        EasyMock.expectLastCall().andAnswer(() ->
         {
-            @Override
-            public HttpResponse answer()
+            final HttpRequest request = (HttpRequest)EasyMock.getCurrentArguments()[0];
+            assertEquals(HttpRequest.GET, request.getMethod());
+            assertTrue(request.getHeaders().asMap().get("Accept-Encoding").contains("gzip,default"));
+            assertTrue(request.getHeaders().asMap().get("User-Agent").contains(new HeaderConstantsMock().getUserAgent()));
+
+            if (expectExtraHeaders)
             {
-                HttpRequest request = (HttpRequest)EasyMock.getCurrentArguments()[0];
-                assertEquals(HttpRequest.GET, request.getMethod());
-                assertTrue(request.getHeaders().asMap().get("Accept-Encoding").contains("gzip,default"));
-                assertTrue(request.getHeaders().asMap().get("User-Agent").contains(new HeaderConstantsMock().getUserAgent()));
-
-                if (expectExtraHeaders)
-                {
-                    assertTrue(request.getHeaders().asMap().get("key1").contains("value1"));
-                    assertTrue(request.getHeaders().asMap().get("key2").contains("value2"));
-                }
-
-                assertEquals(expectedUri, request.getURI());
-
-                return response;
+                assertTrue(request.getHeaders().asMap().get("key1").contains("value1"));
+                assertTrue(request.getHeaders().asMap().get("key2").contains("value2"));
             }
+
+            assertEquals(expectedUri, request.getURI());
+
+            return response;
         });
 
         return client;
@@ -261,9 +269,10 @@ public class GetRequestorTest
      * @param isCompressed True if the response stream should be compressed.
      * @return The easy mocked support.
      */
-    private HttpResponse createResponse(EasyMockSupport support, InputStream returnStream, boolean isError, boolean isCompressed)
+    private HttpResponse createResponse(final EasyMockSupport support, final InputStream returnStream, final boolean isError,
+            final boolean isCompressed)
     {
-        HttpResponse response = support.createMock(HttpResponse.class);
+        final HttpResponse response = support.createMock(HttpResponse.class);
 
         response.getStatusCode();
 
@@ -288,12 +297,12 @@ public class GetRequestorTest
         }
 
         @SuppressWarnings("unchecked")
-        ListMultimap<String, String> headerValues = support.createMock(ListMultimap.class);
+        final ListMultimap<String, String> headerValues = support.createMock(ListMultimap.class);
         headerValues.asMap();
 
         if (isCompressed)
         {
-            Map<String, Collection<String>> headerMap = New.map();
+            final Map<String, Collection<String>> headerMap = New.map();
             headerMap.put("Content-Encoding", New.list("gzip"));
             EasyMock.expectLastCall().andReturn(headerMap);
         }
@@ -305,7 +314,7 @@ public class GetRequestorTest
         response.getHeaders();
         EasyMock.expectLastCall().andReturn(headerValues);
 
-        HttpEntity entity = support.createMock(HttpEntity.class);
+        final HttpEntity entity = support.createMock(HttpEntity.class);
         entity.getContent();
         EasyMock.expectLastCall().andReturn(returnStream);
         entity.getContentLength();
