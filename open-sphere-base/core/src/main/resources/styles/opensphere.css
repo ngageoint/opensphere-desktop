@@ -458,8 +458,6 @@
 }
 
 .tab-pane > .tab-header-area > .os-control-buttons-tab > .container > .tab-down-button {
-/*    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
-    -fx-background-insets: -1 0 5 0, 0 1 6 1, 1 2 7 2;*/
     -fx-padding: 4 4 9 4;
     -fx-background-radius: 10;
 }
@@ -480,8 +478,6 @@
 }
 
 .tab-pane > .tab-header-area > .os-control-buttons-tab > .container > .add-tab-button {
-/*    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
-    -fx-background-insets: -1 0 5 0, 0 1 6 1, 1 2 7 2;*/
     -fx-padding:  0em 0.0416665em .5em 0.0416665em;
     -fx-background-radius: 10;
 }
