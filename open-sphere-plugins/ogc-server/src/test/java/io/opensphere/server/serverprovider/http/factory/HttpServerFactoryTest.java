@@ -30,6 +30,7 @@ import io.opensphere.core.SystemToolbox;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.common.connection.ServerConfiguration;
 import io.opensphere.core.control.ui.UIRegistry;
+import io.opensphere.core.event.EventManager;
 import io.opensphere.core.geometry.GeometryRegistry;
 import io.opensphere.core.geometry.RenderingCapabilities;
 import io.opensphere.core.net.config.ConfigurationType;
@@ -100,50 +101,51 @@ public class HttpServerFactoryTest
     @Test
     public void testCreateServer() throws GeneralSecurityException, IOException
     {
-        EasyMockSupport support = new EasyMockSupport();
+        final EasyMockSupport support = new EasyMockSupport();
 
-        PreferencesRegistry prefsRegistry = createPrefsRegistry(support);
+        final PreferencesRegistry prefsRegistry = createPrefsRegistry(support);
         @SuppressWarnings("unchecked")
-        Supplier<? extends Component> parentProvider = support.createMock(Supplier.class);
-        SecurityManager securityManager = createSecurityManager(support);
-        Credentials hostCreds = support.createMock(Credentials.class);
-        Credentials proxyCreds = support.createMock(Credentials.class);
-        Toolbox toolbox = createToolbox(support, prefsRegistry, parentProvider, securityManager);
+        final Supplier<? extends Component> parentProvider = support.createMock(Supplier.class);
+        final SecurityManager securityManager = createSecurityManager(support);
+        final Credentials hostCreds = support.createMock(Credentials.class);
+        final Credentials proxyCreds = support.createMock(Credentials.class);
+        final Toolbox toolbox = createToolbox(support, prefsRegistry, parentProvider, securityManager);
 
-        SecurityComponentsProvider provider = createSecurityProvider(support, parentProvider, securityManager, prefsRegistry,
-                hostCreds, proxyCreds);
+        final SecurityComponentsProvider provider = createSecurityProvider(support, parentProvider, securityManager,
+                prefsRegistry, hostCreds, proxyCreds);
 
         support.replayAll();
 
-        HttpServerFactory factory = new HttpServerFactory();
-        HttpServerImpl server = (HttpServerImpl)factory.createServer(provider, ourProtocol, ourHost, ourPort, ourServerKey,
+        final HttpServerFactory factory = new HttpServerFactory();
+        final HttpServerImpl server = (HttpServerImpl)factory.createServer(provider, ourProtocol, ourHost, ourPort, ourServerKey,
                 toolbox);
 
         assertEquals(ourHost, server.getHost());
         assertEquals(ourProtocol, server.getProtocol());
 
-        RequestorProvider requestorProvider = server.getRequestProvider();
-        BaseRequestor baseRequestor = (BaseRequestor)requestorProvider.getFilePoster();
+        final RequestorProvider requestorProvider = server.getRequestProvider();
+        final BaseRequestor baseRequestor = (BaseRequestor)requestorProvider.getFilePoster();
 
-        HttpClient client = baseRequestor.getClient();
+        final HttpClient client = baseRequestor.getClient();
 
         assertEquals(client, ((BaseRequestor)requestorProvider.getPostRequestor()).getClient());
         assertEquals(client, ((BaseRequestor)requestorProvider.getRequestor()).getClient());
 
-        HttpClientOptions actualOptions = client.getOptions();
+        final HttpClientOptions actualOptions = client.getOptions();
 
         assertEquals(ourConnectTimeout, actualOptions.getConnectTimeout());
         assertEquals(ourReadTimeout, actualOptions.getReadTimeout());
 
-        CredentialsProvider credsProvider = actualOptions.getCredentialsProvider();
-        Credentials credentials = credsProvider.getCredentials(new AuthenticationScope(ourHost, ourPort));
+        final CredentialsProvider credsProvider = actualOptions.getCredentialsProvider();
+        final Credentials credentials = credsProvider.getCredentials(new AuthenticationScope(ourHost, ourPort));
         assertEquals(hostCreds, credentials);
 
         assertEquals(ConnectionPoolConfigurer.ourMaxConnections, actualOptions.getMaxConnections());
         assertEquals(ConnectionPoolConfigurer.ourConnectionsPerRoute, actualOptions.getMaxConnectionsPerRoute());
 
-        ProxyConfig proxyConfig = actualOptions.getProxyConfig();
-        List<ProxyHostConfig> servers = proxyConfig.getProxyResolver().getProxyServer(new URL(ourProtocol, ourHost, ourPort, ""));
+        final ProxyConfig proxyConfig = actualOptions.getProxyConfig();
+        final List<ProxyHostConfig> servers = proxyConfig.getProxyResolver()
+                .getProxyServer(new URL(ourProtocol, ourHost, ourPort, ""));
         assertEquals(1, servers.size());
         assertEquals(ourProxyHost, servers.get(0).getHost());
         assertEquals(ourProxyPort, servers.get(0).getPort());
@@ -166,11 +168,11 @@ public class HttpServerFactoryTest
      *            proxy.
      * @return The easy mocked SecurityComponentsProvider.
      */
-    private SecurityComponentsProvider createSecurityProvider(EasyMockSupport support,
-            Supplier<? extends Component> parentProvider, SecurityManager securityManager, PreferencesRegistry prefsRegistry,
-            Credentials creds, Credentials proxyCreds)
+    private SecurityComponentsProvider createSecurityProvider(final EasyMockSupport support,
+            final Supplier<? extends Component> parentProvider, final SecurityManager securityManager,
+            final PreferencesRegistry prefsRegistry, final Credentials creds, final Credentials proxyCreds)
     {
-        SecurityComponentsProvider provider = support.createMock(SecurityComponentsProvider.class);
+        final SecurityComponentsProvider provider = support.createMock(SecurityComponentsProvider.class);
 
         provider.getUserCredentials(EasyMock.cmpEq("proxy"), EasyMock.cmpEq("proxy"), EasyMock.eq(parentProvider),
                 EasyMock.eq(securityManager));
@@ -197,11 +199,11 @@ public class HttpServerFactoryTest
      * @param support The easy mock support object.
      * @return The PluginToolboxRegistry.
      */
-    private PluginToolboxRegistry createPluginToolboxRegistry(EasyMockSupport support)
+    private PluginToolboxRegistry createPluginToolboxRegistry(final EasyMockSupport support)
     {
-        ServerToolbox serverToolbox = createServerToolbox(support);
+        final ServerToolbox serverToolbox = createServerToolbox(support);
 
-        PluginToolboxRegistry toolboxRegistry = support.createMock(PluginToolboxRegistry.class);
+        final PluginToolboxRegistry toolboxRegistry = support.createMock(PluginToolboxRegistry.class);
         toolboxRegistry.getPluginToolbox(EasyMock.eq(ServerToolbox.class));
         EasyMock.expectLastCall().andReturn(serverToolbox);
 
@@ -214,9 +216,9 @@ public class HttpServerFactoryTest
      * @param support The easy mock support object.
      * @return The security manager.
      */
-    private SecurityManager createSecurityManager(EasyMockSupport support)
+    private SecurityManager createSecurityManager(final EasyMockSupport support)
     {
-        SecurityManager securityManager = support.createMock(SecurityManager.class);
+        final SecurityManager securityManager = support.createMock(SecurityManager.class);
 
         return securityManager;
     }
@@ -227,11 +229,11 @@ public class HttpServerFactoryTest
      * @param support The easy mock support object.
      * @return The system toolbox.
      */
-    private SystemToolbox createSystemToolbox(EasyMockSupport support)
+    private SystemToolbox createSystemToolbox(final EasyMockSupport support)
     {
-        NetworkConfigurationManager networkManager = createNetworkConfigurationManager(support);
+        final NetworkConfigurationManager networkManager = createNetworkConfigurationManager(support);
 
-        SystemToolbox systemToolbox = support.createMock(SystemToolbox.class);
+        final SystemToolbox systemToolbox = support.createMock(SystemToolbox.class);
         systemToolbox.getNetworkConfigurationManager();
         EasyMock.expectLastCall().andReturn(networkManager);
 
@@ -244,9 +246,9 @@ public class HttpServerFactoryTest
      * @param support The easy mock support object.
      * @return The preferences registry.
      */
-    private PreferencesRegistry createPrefsRegistry(EasyMockSupport support)
+    private PreferencesRegistry createPrefsRegistry(final EasyMockSupport support)
     {
-        PreferencesRegistry prefsRegistry = support.createMock(PreferencesRegistry.class);
+        final PreferencesRegistry prefsRegistry = support.createMock(PreferencesRegistry.class);
 
         return prefsRegistry;
     }
@@ -258,9 +260,9 @@ public class HttpServerFactoryTest
      * @param supplier The supplier to return.
      * @return The UI registry.
      */
-    private UIRegistry createUIRegistry(EasyMockSupport support, Supplier<? extends Component> supplier)
+    private UIRegistry createUIRegistry(final EasyMockSupport support, final Supplier<? extends Component> supplier)
     {
-        UIRegistry uiRegistry = support.createMock(UIRegistry.class);
+        final UIRegistry uiRegistry = support.createMock(UIRegistry.class);
         uiRegistry.getMainFrameProvider();
         EasyMock.expectLastCall().andReturn(supplier);
 
@@ -276,14 +278,14 @@ public class HttpServerFactoryTest
      * @param securityManager The security manager to return.
      * @return The toolbox.
      */
-    private Toolbox createToolbox(EasyMockSupport support, PreferencesRegistry prefsRegistry,
-            Supplier<? extends Component> parentProvider, SecurityManager securityManager)
+    private Toolbox createToolbox(final EasyMockSupport support, final PreferencesRegistry prefsRegistry,
+            final Supplier<? extends Component> parentProvider, final SecurityManager securityManager)
     {
-        UIRegistry uiRegistry = createUIRegistry(support, parentProvider);
-        SystemToolbox systemToolbox = createSystemToolbox(support);
-        PluginToolboxRegistry pluginToolbox = createPluginToolboxRegistry(support);
+        final UIRegistry uiRegistry = createUIRegistry(support, parentProvider);
+        final SystemToolbox systemToolbox = createSystemToolbox(support);
+        final PluginToolboxRegistry pluginToolbox = createPluginToolboxRegistry(support);
 
-        Toolbox toolbox = support.createMock(Toolbox.class);
+        final Toolbox toolbox = support.createMock(Toolbox.class);
         toolbox.getUIRegistry();
         EasyMock.expectLastCall().andReturn(uiRegistry);
 
@@ -299,16 +301,19 @@ public class HttpServerFactoryTest
         toolbox.getPluginToolboxRegistry();
         EasyMock.expectLastCall().andReturn(pluginToolbox).anyTimes();
 
-        RenderingCapabilities rendering = support.createMock(RenderingCapabilities.class);
+        final RenderingCapabilities rendering = support.createMock(RenderingCapabilities.class);
         rendering.getRendererIdentifier();
         EasyMock.expectLastCall().andReturn("videocard");
 
-        GeometryRegistry geometryRegistry = support.createMock(GeometryRegistry.class);
+        final GeometryRegistry geometryRegistry = support.createMock(GeometryRegistry.class);
         geometryRegistry.getRenderingCapabilities();
         EasyMock.expectLastCall().andReturn(rendering);
 
         toolbox.getGeometryRegistry();
         EasyMock.expectLastCall().andReturn(geometryRegistry);
+
+        final EventManager eventManager = support.createMock(EventManager.class);
+        EasyMock.expect(toolbox.getEventManager()).andReturn(eventManager);
 
         return toolbox;
     }
@@ -322,14 +327,15 @@ public class HttpServerFactoryTest
      * @param connectTimeout The connect timeout the params should return.
      * @return The ServerConnectionParams.
      */
-    private ServerConnectionParams createServer(EasyMockSupport support, String host, int readTimeout, int connectTimeout)
+    private ServerConnectionParams createServer(final EasyMockSupport support, final String host, final int readTimeout,
+            final int connectTimeout)
     {
-        ServerConfiguration randomConfig = new ServerConfiguration();
+        final ServerConfiguration randomConfig = new ServerConfiguration();
         randomConfig.setHost(host);
         randomConfig.setReadTimeout(readTimeout);
         randomConfig.setConnectTimeout(connectTimeout);
 
-        ServerConnectionParams randomServer = support.createMock(ServerConnectionParams.class);
+        final ServerConnectionParams randomServer = support.createMock(ServerConnectionParams.class);
         randomServer.getServerConfiguration();
         EasyMock.expectLastCall().andReturn(randomConfig);
 
@@ -342,20 +348,20 @@ public class HttpServerFactoryTest
      * @param support Used to create the mock.
      * @return The ServerToolbox.
      */
-    private ServerToolbox createServerToolbox(EasyMockSupport support)
+    private ServerToolbox createServerToolbox(final EasyMockSupport support)
     {
-        List<ServerConnectionParams> servers = New.list();
+        final List<ServerConnectionParams> servers = New.list();
 
         servers.add(createServer(support, "randomHost", 100, 100));
 
-        ServerConnectionParams server = createServer(support, ourHost, ourReadTimeout * 1000, ourConnectTimeout * 1000);
+        final ServerConnectionParams server = createServer(support, ourHost, ourReadTimeout * 1000, ourConnectTimeout * 1000);
         servers.add(server);
 
-        ServerListManager serverManager = support.createMock(ServerListManager.class);
+        final ServerListManager serverManager = support.createMock(ServerListManager.class);
         serverManager.getActiveServers();
         EasyMock.expectLastCall().andReturn(servers);
 
-        ServerToolbox serverToolbox = support.createMock(ServerToolbox.class);
+        final ServerToolbox serverToolbox = support.createMock(ServerToolbox.class);
         serverToolbox.getServerLayerListManager();
         EasyMock.expectLastCall().andReturn(serverManager);
 
@@ -368,11 +374,11 @@ public class HttpServerFactoryTest
      * @param support The support.
      * @return The easy mocked network configuration manager.
      */
-    private NetworkConfigurationManager createNetworkConfigurationManager(EasyMockSupport support)
+    private NetworkConfigurationManager createNetworkConfigurationManager(final EasyMockSupport support)
     {
-        NetworkConfigurationManager manager = support.createMock(NetworkConfigurationManager.class);
+        final NetworkConfigurationManager manager = support.createMock(NetworkConfigurationManager.class);
 
-        ProxyConfigurations configurations = new ProxyConfigurations();
+        final ProxyConfigurations configurations = new ProxyConfigurations();
         configurations.getManualProxyConfiguration().setHost(ourProxyHost);
         configurations.getManualProxyConfiguration().setPort(ourProxyPort);
 

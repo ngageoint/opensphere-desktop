@@ -34,7 +34,7 @@ public class StyleOptionsTest
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException
     {
-        StyleOptions options = new StyleOptions();
+        final StyleOptions options = new StyleOptions();
         assertEquals(Color.red, options.getColor());
         assertEquals(Styles.POINT, options.getStyle());
         assertEquals(5, options.getSize());
@@ -43,7 +43,7 @@ public class StyleOptionsTest
         options.setStyle(Styles.POINT);
         options.setIconId(22);
 
-        assertEquals(7, options.getStyles().size());
+        assertEquals(8, options.getStyles().size());
 
         assertEquals(Styles.NONE, options.getStyles().get(0));
         assertEquals(Styles.POINT, options.getStyles().get(1));
@@ -51,23 +51,24 @@ public class StyleOptionsTest
         assertEquals(Styles.TRIANGLE, options.getStyles().get(3));
         assertEquals(Styles.ICON, options.getStyles().get(4));
         assertEquals(Styles.ELLIPSE, options.getStyles().get(5));
-        assertEquals(Styles.ELLIPSE_WITH_CENTER, options.getStyles().get(6));
+        assertEquals(Styles.LINE_OF_BEARING, options.getStyles().get(6));
+        assertEquals(Styles.ELLIPSE_WITH_CENTER, options.getStyles().get(7));
 
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ObjectOutputStream objectOut = new ObjectOutputStream(out);
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final ObjectOutputStream objectOut = new ObjectOutputStream(out);
 
         objectOut.writeObject(options);
 
-        ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
-        ObjectInputStream objectIn = new ObjectInputStream(in);
-        StyleOptions actual = (StyleOptions)objectIn.readObject();
+        final ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
+        final ObjectInputStream objectIn = new ObjectInputStream(in);
+        final StyleOptions actual = (StyleOptions)objectIn.readObject();
 
         assertEquals(Color.red, actual.getColor());
         assertEquals(2, actual.getSize());
         assertEquals(Styles.POINT, actual.getStyle());
         assertEquals(22, actual.getIconId());
 
-        assertEquals(7, actual.getStyles().size());
+        assertEquals(8, actual.getStyles().size());
 
         assertEquals(Styles.NONE, actual.getStyles().get(0));
         assertEquals(Styles.POINT, actual.getStyles().get(1));
@@ -75,7 +76,8 @@ public class StyleOptionsTest
         assertEquals(Styles.TRIANGLE, actual.getStyles().get(3));
         assertEquals(Styles.ICON, actual.getStyles().get(4));
         assertEquals(Styles.ELLIPSE, actual.getStyles().get(5));
-        assertEquals(Styles.ELLIPSE_WITH_CENTER, actual.getStyles().get(6));
+        assertEquals(Styles.LINE_OF_BEARING, actual.getStyles().get(6));
+        assertEquals(Styles.ELLIPSE_WITH_CENTER, actual.getStyles().get(7));
     }
 
     /**
@@ -84,16 +86,16 @@ public class StyleOptionsTest
     @Test
     public void testUpdates()
     {
-        EasyMockSupport support = new EasyMockSupport();
+        final EasyMockSupport support = new EasyMockSupport();
 
-        Observer color = createObserver(support, StyleOptions.COLOR_PROP);
-        Observer size = createObserver(support, StyleOptions.SIZE_PROP);
-        Observer style = createObserver(support, StyleOptions.STYLE_PROP);
-        Observer icon = createObserver(support, StyleOptions.ICON_PROP);
+        final Observer color = createObserver(support, StyleOptions.COLOR_PROP);
+        final Observer size = createObserver(support, StyleOptions.SIZE_PROP);
+        final Observer style = createObserver(support, StyleOptions.STYLE_PROP);
+        final Observer icon = createObserver(support, StyleOptions.ICON_PROP);
 
         support.replayAll();
 
-        StyleOptions options = new StyleOptions();
+        final StyleOptions options = new StyleOptions();
 
         options.addObserver(color);
         options.setColor(Color.RED);
@@ -124,7 +126,7 @@ public class StyleOptionsTest
     @Test
     public void testXmlSerialization() throws IOException, ClassNotFoundException, JAXBException
     {
-        StyleOptions options = new StyleOptions();
+        final StyleOptions options = new StyleOptions();
         assertFalse(options.hasSizeBeenSet());
         assertEquals(Color.red, options.getColor());
         assertEquals(Styles.POINT, options.getStyle());
@@ -135,7 +137,7 @@ public class StyleOptionsTest
         options.setStyle(Styles.POINT);
         options.setIconId(22);
 
-        assertEquals(7, options.getStyles().size());
+        assertEquals(8, options.getStyles().size());
 
         assertEquals(Styles.NONE, options.getStyles().get(0));
         assertEquals(Styles.POINT, options.getStyles().get(1));
@@ -143,12 +145,14 @@ public class StyleOptionsTest
         assertEquals(Styles.TRIANGLE, options.getStyles().get(3));
         assertEquals(Styles.ICON, options.getStyles().get(4));
         assertEquals(Styles.ELLIPSE, options.getStyles().get(5));
-        assertEquals(Styles.ELLIPSE_WITH_CENTER, options.getStyles().get(6));
+        assertEquals(Styles.LINE_OF_BEARING, options.getStyles().get(6));
+        assertEquals(Styles.ELLIPSE_WITH_CENTER, options.getStyles().get(7));
 
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        final ByteArrayOutputStream output = new ByteArrayOutputStream();
         XMLUtilities.writeXMLObject(options, output);
 
-        StyleOptions actual = XMLUtilities.readXMLObject(new ByteArrayInputStream(output.toByteArray()), StyleOptions.class);
+        final StyleOptions actual = XMLUtilities.readXMLObject(new ByteArrayInputStream(output.toByteArray()),
+                StyleOptions.class);
 
         assertEquals(Color.red, actual.getColor());
         assertEquals(2, actual.getSize());
@@ -156,7 +160,7 @@ public class StyleOptionsTest
         assertEquals(Styles.POINT, actual.getStyle());
         assertEquals(22, actual.getIconId());
 
-        assertEquals(7, actual.getStyles().size());
+        assertEquals(8, actual.getStyles().size());
 
         assertEquals(Styles.NONE, actual.getStyles().get(0));
         assertEquals(Styles.POINT, actual.getStyles().get(1));
@@ -164,7 +168,8 @@ public class StyleOptionsTest
         assertEquals(Styles.TRIANGLE, actual.getStyles().get(3));
         assertEquals(Styles.ICON, actual.getStyles().get(4));
         assertEquals(Styles.ELLIPSE, actual.getStyles().get(5));
-        assertEquals(Styles.ELLIPSE_WITH_CENTER, actual.getStyles().get(6));
+        assertEquals(Styles.LINE_OF_BEARING, actual.getStyles().get(6));
+        assertEquals(Styles.ELLIPSE_WITH_CENTER, actual.getStyles().get(7));
     }
 
     /**
@@ -174,9 +179,9 @@ public class StyleOptionsTest
      * @param property The property expected to be updated.
      * @return The easy mocked observer.
      */
-    private Observer createObserver(EasyMockSupport support, String property)
+    private Observer createObserver(final EasyMockSupport support, final String property)
     {
-        Observer observer = support.createMock(Observer.class);
+        final Observer observer = support.createMock(Observer.class);
 
         observer.update(EasyMock.isA(StyleOptions.class), EasyMock.cmpEq(property));
 
