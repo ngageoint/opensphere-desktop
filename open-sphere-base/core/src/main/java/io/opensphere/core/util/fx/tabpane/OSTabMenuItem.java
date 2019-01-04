@@ -10,13 +10,13 @@ import javafx.scene.control.Tab;
 public class OSTabMenuItem extends RadioMenuItem
 {
     /** The tab for which the menu items are active. */
-    private Tab myTab;
+    private final Tab myTab;
 
     /** The listener used to disable the tab. */
-    private InvalidationListener myDisableListener = (o) -> setDisable(myTab.isDisable());
+    private final InvalidationListener myDisableListener = o -> setDisable(myTab.isDisable());
 
     /** The weak handle to the invalidation listener. */
-    private WeakInvalidationListener myWeakDisableListener = new WeakInvalidationListener(myDisableListener);
+    private final WeakInvalidationListener myWeakDisableListener = new WeakInvalidationListener(myDisableListener);
 
     /**
      * Creates a new menu item for the supplied tab.
@@ -26,7 +26,7 @@ public class OSTabMenuItem extends RadioMenuItem
     public OSTabMenuItem(final Tab tab)
     {
         super(tab.getText(), OSTabPaneSkin.clone(tab.getGraphic()));
-        this.myTab = tab;
+        myTab = tab;
         setDisable(tab.isDisable());
         tab.disableProperty().addListener(myWeakDisableListener);
         textProperty().bind(tab.textProperty());
