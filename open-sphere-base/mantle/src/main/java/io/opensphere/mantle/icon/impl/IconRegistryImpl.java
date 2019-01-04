@@ -538,10 +538,6 @@ public class IconRegistryImpl implements IconRegistry
                 saveLater();
             }
         }
-        if (changed)
-        {
-            // updateCollectionNames();
-        }
         return changed;
     }
 
@@ -683,8 +679,6 @@ public class IconRegistryImpl implements IconRegistry
         {
             final Pair<IconRecord, Boolean> pair = createRecord(rec, null);
             record = pair.getFirstObject();
-            // myCollectionNames.add(record.collectionNameProperty().get());
-            // updateCollectionNames();
             wasAdded = pair.getSecondObject().booleanValue();
         }
         finally
@@ -740,8 +734,6 @@ public class IconRegistryImpl implements IconRegistry
                     final IconProvider provider = providerList.get(i);
                     final Long overrideId = ids != null ? ids.get(i) : null;
                     final IconRecord record = createRecord(provider, overrideId).getFirstObject();
-                    // myCollectionNames.add(record.collectionNameProperty().get());
-                    // updateCollectionNames();
                     addedList.add(record);
                 }
             }
