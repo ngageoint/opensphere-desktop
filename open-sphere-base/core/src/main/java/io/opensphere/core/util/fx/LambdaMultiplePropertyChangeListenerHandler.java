@@ -9,74 +9,90 @@ import javafx.beans.value.ObservableValue;
 import javafx.beans.value.WeakChangeListener;
 
 /**
- *
+ * A listener handler used to add multiple property change listeners to a single
+ * lambda.
  */
 public class LambdaMultiplePropertyChangeListenerHandler
 {
-    private final Map<ObservableValue<?>, Consumer<ObservableValue<?>>> propertyReferenceMap;
+    /** A map of property references. */
+    private final Map<ObservableValue<?>, Consumer<ObservableValue<?>>> myPropertyReferenceMap;
 
-    private final ChangeListener<Object> propertyChangedListener;
+    /** The change listener registered for notifications. */
+    private final ChangeListener<Object> myPropertyChangedListener;
 
-    private final WeakChangeListener<Object> weakPropertyChangedListener;
+    /** A handle to the weak reference of the property change listener. */
+    private final WeakChangeListener<Object> myWeakPropertyChangedListener;
 
+    /** Default no-op consumer. */
     private static final Consumer<ObservableValue<?>> EMPTY_CONSUMER = e ->
     {
+        /* intentionally blank */
     };
 
+    /** Creates a new handler. */
     public LambdaMultiplePropertyChangeListenerHandler()
     {
-        this.propertyReferenceMap = new HashMap<>();
-        this.propertyChangedListener = (observable, oldValue, newValue) ->
+        myPropertyReferenceMap = new HashMap<>();
+        myPropertyChangedListener = (observable, oldValue, newValue) ->
         {
             // because all consumers are chained, this calls each consumer for
-            // the given property
-            // in turn.
-            propertyReferenceMap.getOrDefault(observable, EMPTY_CONSUMER).accept(observable);
+            // the given property in turn.
+            myPropertyReferenceMap.getOrDefault(observable, EMPTY_CONSUMER).accept(observable);
         };
-        this.weakPropertyChangedListener = new WeakChangeListener<>(propertyChangedListener);
+        myWeakPropertyChangedListener = new WeakChangeListener<>(myPropertyChangedListener);
     }
 
     /**
      * Subclasses can invoke this method to register that we want to listen to
      * property change events for the given property.
      *
-     * @param property
+     * @param property the property for which to register the listener.
+     * @param consumer the consumer to register as the listener.
      */
-    public final void registerChangeListener(ObservableValue<?> property, Consumer<ObservableValue<?>> consumer)
+    public final void registerChangeListener(final ObservableValue<?> property, final Consumer<ObservableValue<?>> consumer)
     {
         if (consumer == null)
         {
             return;
         }
 
-        // we only add a listener if the propertyReferenceMap does not contain
-        // the property
-        // (that is, we've added a consumer to this specific property for the
-        // first
-        // time).
-        if (!propertyReferenceMap.containsKey(property))
+        // we only add a listener if the myPropertyReferenceMap does not contain
+        // the property (that is, we've added a consumer to this specific
+        // property for the first time).
+        if (!myPropertyReferenceMap.containsKey(property))
         {
-            property.addListener(weakPropertyChangedListener);
+            property.addListener(myWeakPropertyChangedListener);
         }
 
-        propertyReferenceMap.merge(property, consumer, Consumer::andThen);
+        myPropertyReferenceMap.merge(property, consumer, Consumer::andThen);
     }
 
-    // need to be careful here - removing all listeners on the specific
-    // property!
-    public final Consumer<ObservableValue<?>> unregisterChangeListeners(ObservableValue<?> property)
+    /**
+     * Unregisters all listeners registered for notifications on the supplied
+     * property.
+     *
+     * @param property the property for which to unregister listeners.
+     * @return the listener unregistered from notifications of changes to the
+     *         supplied property.
+     */
+    public final Consumer<ObservableValue<?>> unregisterChangeListeners(final ObservableValue<?> property)
     {
-        property.removeListener(weakPropertyChangedListener);
-        return propertyReferenceMap.remove(property);
+        // need to be careful here - removing all listeners on the specific
+        // property!
+        property.removeListener(myWeakPropertyChangedListener);
+        return myPropertyReferenceMap.remove(property);
     }
 
+    /**
+     * Cleans up and prepares for garbage disposal.
+     */
     public void dispose()
     {
         // unhook listeners
-        for (ObservableValue<?> value : propertyReferenceMap.keySet())
+        for (final ObservableValue<?> value : myPropertyReferenceMap.keySet())
         {
-            value.removeListener(weakPropertyChangedListener);
+            value.removeListener(myWeakPropertyChangedListener);
         }
-        propertyReferenceMap.clear();
+        myPropertyReferenceMap.clear();
     }
 }
