@@ -81,7 +81,7 @@ public class IconSet
      *
      * @param Editable the value to store in the {@link #myEditableProperty}.
      */
-    public void setEditable(Boolean Editable)
+    public void setEditable(final Boolean Editable)
     {
         myEditableProperty.set(Editable);
     }
@@ -92,9 +92,8 @@ public class IconSet
      *
      * @param Name the value to store in the {@link #myNameProperty}.
      */
-    public void setName(String Name)
+    public void setName(final String Name)
     {
         myNameProperty.set(Name);
     }
-
 }
