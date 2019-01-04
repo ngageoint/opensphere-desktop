@@ -6,7 +6,7 @@ import javafx.beans.InvalidationListener;
 public class ElementsMapElement
 {
     /** The listener for the element. */
-    private InvalidationListener myListener;
+    private final InvalidationListener myListener;
 
     /** The counter for the element. */
     private int myCounter;
@@ -18,8 +18,8 @@ public class ElementsMapElement
      */
     public ElementsMapElement(InvalidationListener listener)
     {
-        this.myListener = listener;
-        this.myCounter = 1;
+        myListener = listener;
+        myCounter = 1;
     }
 
     /** Increments the counter. */
