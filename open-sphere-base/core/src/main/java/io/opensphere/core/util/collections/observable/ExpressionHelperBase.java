@@ -19,9 +19,9 @@ public abstract class ExpressionHelperBase
      * @param listeners the listeners to examine for obsolete references.
      * @return the new size, after removing obsolete references.
      */
-    protected static int trim(int size, Object[] listeners)
+    protected static int trim(int size, final Object[] listeners)
     {
-        Predicate<Object> p = t -> t instanceof WeakListener && ((WeakListener)t).wasGarbageCollected();
+        final Predicate<Object> p = t -> t instanceof WeakListener && ((WeakListener)t).wasGarbageCollected();
         int index = 0;
         for (; index < size; index++)
         {
@@ -39,7 +39,7 @@ public abstract class ExpressionHelperBase
                     listeners[index++] = listeners[src];
                 }
             }
-            int oldSize = size;
+            final int oldSize = size;
             size = index;
             for (; index < oldSize; index++)
             {
@@ -49,5 +49,4 @@ public abstract class ExpressionHelperBase
 
         return size;
     }
-
 }
