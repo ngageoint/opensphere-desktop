@@ -23,7 +23,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 
 /**
- *
+ * An implementation of the {@link OSBehaviorBase} for tab panes.
  */
 public class OSTabPaneBehavior extends OSBehaviorBase<TabPane>
 {
@@ -35,7 +35,7 @@ public class OSTabPaneBehavior extends OSBehaviorBase<TabPane>
      *
      * @param tabPane the pane for which to create a new behavior.
      */
-    public OSTabPaneBehavior(TabPane tabPane)
+    public OSTabPaneBehavior(final TabPane tabPane)
     {
         super(tabPane);
 
@@ -83,7 +83,7 @@ public class OSTabPaneBehavior extends OSBehaviorBase<TabPane>
      *
      * @param tab the tab to select in the selection model.
      */
-    public void selectTab(Tab tab)
+    public void selectTab(final Tab tab)
     {
         getNode().getSelectionModel().select(tab);
     }
@@ -95,9 +95,9 @@ public class OSTabPaneBehavior extends OSBehaviorBase<TabPane>
      * @return <code>true</code> if the tab can be closed, <code>false</code>
      *         otherwise.
      */
-    public boolean canCloseTab(Tab tab)
+    public boolean canCloseTab(final Tab tab)
     {
-        Event event = new Event(tab, tab, Tab.TAB_CLOSE_REQUEST_EVENT);
+        final Event event = new Event(tab, tab, Tab.TAB_CLOSE_REQUEST_EVENT);
         Event.fireEvent(tab, event);
         return !event.isConsumed();
     }
@@ -107,12 +107,12 @@ public class OSTabPaneBehavior extends OSBehaviorBase<TabPane>
      *
      * @param tab the tab to close.
      */
-    public void closeTab(Tab tab)
+    public void closeTab(final Tab tab)
     {
-        TabPane tabPane = getNode();
+        final TabPane tabPane = getNode();
         // only switch to another tab if the selected tab is the one we're
         // closing
-        int index = tabPane.getTabs().indexOf(tab);
+        final int index = tabPane.getTabs().indexOf(tab);
         if (index != -1)
         {
             tabPane.getTabs().remove(index);
@@ -144,7 +144,7 @@ public class OSTabPaneBehavior extends OSBehaviorBase<TabPane>
      *
      * @param delta the number of items to move.
      */
-    private void moveSelection(int delta)
+    private void moveSelection(final int delta)
     {
         moveSelection(getNode().getSelectionModel().getSelectedIndex(), delta);
     }
@@ -155,7 +155,7 @@ public class OSTabPaneBehavior extends OSBehaviorBase<TabPane>
      * @param startIndex the initial index from which to start searching.
      * @param delta the number of items to move the selection.
      */
-    private void moveSelection(int startIndex, int delta)
+    private void moveSelection(final int startIndex, final int delta)
     {
         final TabPane tabPane = getNode();
         if (tabPane.getTabs().isEmpty())
@@ -163,7 +163,7 @@ public class OSTabPaneBehavior extends OSBehaviorBase<TabPane>
             return;
         }
 
-        int tabIndex = findValidTab(startIndex, delta);
+        final int tabIndex = findValidTab(startIndex, delta);
         if (tabIndex > -1)
         {
             final SelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
@@ -180,7 +180,7 @@ public class OSTabPaneBehavior extends OSBehaviorBase<TabPane>
      * @param delta the initial number of positions to move before searching.
      * @return the index of the selected tab.
      */
-    private int findValidTab(int startIndex, int delta)
+    private int findValidTab(final int startIndex, final int delta)
     {
         final TabPane tabPane = getNode();
         final List<Tab> tabs = tabPane.getTabs();
@@ -190,7 +190,7 @@ public class OSTabPaneBehavior extends OSBehaviorBase<TabPane>
         do
         {
             index = nextIndex(index + delta, max);
-            Tab tab = tabs.get(index);
+            final Tab tab = tabs.get(index);
             if (tab != null && !tab.isDisable())
             {
                 return index;
@@ -209,7 +209,7 @@ public class OSTabPaneBehavior extends OSBehaviorBase<TabPane>
      * @param max the maximum number of movements to be performed.
      * @return the next available index.
      */
-    private int nextIndex(int value, int max)
+    private int nextIndex(final int value, final int max)
     {
         final int min = 0;
         int r = value % max;
