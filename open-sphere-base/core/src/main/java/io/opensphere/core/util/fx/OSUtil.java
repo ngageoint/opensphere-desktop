@@ -3,7 +3,7 @@ package io.opensphere.core.util.fx;
 import javafx.scene.input.KeyCode;
 
 /**
- *
+ * A utility class containing methods used at runtime for platform distinction.
  */
 public final class OSUtil
 {
