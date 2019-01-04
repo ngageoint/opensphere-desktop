@@ -9,7 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 
 /**
- *
+ * A simple model backing the tag field.
  */
 public class TagFieldModel
 {
