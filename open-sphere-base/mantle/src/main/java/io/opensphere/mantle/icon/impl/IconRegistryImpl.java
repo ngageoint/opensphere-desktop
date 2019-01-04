@@ -482,28 +482,9 @@ public class IconRegistryImpl implements IconRegistry
             myChangeSupport.notifyListeners(listener -> listener.iconsRemoved(Collections.singletonList(fRemoved), source),
                     EXECUTOR);
             saveLater();
-            // updateCollectionNames();
         }
         return removedRecord != null;
     }
-    //
-    // private void updateCollectionNames()
-    // {
-    // LOG.info("Updating collection names.");
-    // IconRecord[] values = myIconIdToIconRecordMap.values(new
-    // IconRecord[myIconIdToIconRecordMap.size()]);
-    // Set<String> set = Arrays.stream(values).map(r ->
-    // r.collectionNameProperty().get()).distinct().collect(Collectors.toSet());
-    //
-    // // ensure only the items in the set are present in the list:
-    // myCollectionNames.retainAll(set);
-    //
-    // // add any new items present in the set that were not previously in the
-    // // list:
-    // set.removeAll(myCollectionNames);
-    // myCollectionNames.addAll(set);
-    // LOG.info("Finished updating collection names.");
-    // }
 
     @Override
     public boolean removeIcons(final TLongList iconIdsToRemove, final Object source)
