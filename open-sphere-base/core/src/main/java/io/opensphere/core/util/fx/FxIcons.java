@@ -29,7 +29,7 @@ public final class FxIcons
      * @param pIcon the name of the icon to use as the content of the button.
      * @return a new button using the named icon.
      */
-    public static Button createIconButton(FontIconEnum pIcon)
+    public static Button createIconButton(final FontIconEnum pIcon)
     {
         return createIconButton(pIcon, "");
     }
@@ -42,7 +42,7 @@ public final class FxIcons
      *            icon.
      * @return a new button using the named icon.
      */
-    public static Button createIconButton(FontIconEnum pIcon, String pText)
+    public static Button createIconButton(final FontIconEnum pIcon, final String pText)
     {
         return createIconButton(pIcon, pText, 12);
     }
@@ -57,7 +57,7 @@ public final class FxIcons
      *            size.
      * @return a new button using the named icon.
      */
-    public static Button createIconButton(FontIconEnum pIcon, String pText, int pSize)
+    public static Button createIconButton(final FontIconEnum pIcon, final String pText, final int pSize)
     {
         return createIconButton(pIcon, pText, pSize, "icons", "icons-" + pIcon.getFont().getFontName());
     }
@@ -73,12 +73,13 @@ public final class FxIcons
      * @param pStyleNames the names of the styles to apply to the button.
      * @return a new button using the named icon.
      */
-    public static Button createIconButton(FontIconEnum pIcon, String pText, int pSize, String... pStyleNames)
+    public static Button createIconButton(final FontIconEnum pIcon, final String pText, final int pSize,
+            final String... pStyleNames)
     {
-        Label icon = createIconLabel(pIcon, 12);
+        final Label icon = createIconLabel(pIcon, 12);
         icon.setStyle("-fx-font-size: " + pSize + "px;");
 
-        Button button = new Button(pText);
+        final Button button = new Button(pText);
         button.setGraphic(icon);
         button.getStyleClass().addAll(pStyleNames);
 
@@ -92,7 +93,7 @@ public final class FxIcons
      * @param pIcon the name of the icon to render in the label.
      * @return a new {@link Label} containing the named icon.
      */
-    public static Label createIconLabel(FontIconEnum pIcon)
+    public static Label createIconLabel(final FontIconEnum pIcon)
     {
         return createIconLabel(pIcon, 12);
     }
@@ -105,9 +106,9 @@ public final class FxIcons
      * @param pSize the size of the icon in the Label, expressed as a font size.
      * @return a new {@link Label} containing the named icon.
      */
-    public static Label createIconLabel(FontIconEnum pIcon, int pSize)
+    public static Label createIconLabel(final FontIconEnum pIcon, final int pSize)
     {
-        Label label = new Label(pIcon.getFontCode());
+        final Label label = new Label(pIcon.getFontCode());
         label.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
         label.getStyleClass().addAll("icons", "icons-" + pIcon.getFont().getFontName());
         label.setStyle("-fx-font-size: " + pSize + "px;");
@@ -123,14 +124,14 @@ public final class FxIcons
      * @param size the size of the icon in the Label, expressed as a font size.
      * @return a new {@link Label} containing the named icon.
      */
-    public static Label createIconLabel(FontIconEnum icon, Color color, int size)
+    public static Label createIconLabel(final FontIconEnum icon, final Color color, final int size)
     {
-        Label label = new Label(icon.getFontCode());
+        final Label label = new Label(icon.getFontCode());
         label.setTextFill(color);
         label.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
-        String fontName = "icons-" + icon.getFont().getFontName().replaceAll("\\s", "-");
+        final String fontName = "icons-" + icon.getFont().getFontName().replaceAll("\\s", "-");
         label.getStyleClass().addAll("icons", fontName);
-        String style = "-fx-font-size: " + size + "px; -fx-text-fill: rgb(" + (int)(color.getRed() * 255) + ","
+        final String style = "-fx-font-size: " + size + "px; -fx-text-fill: rgb(" + (int)(color.getRed() * 255) + ","
                 + (int)(color.getGreen() * 255) + "," + (int)(color.getBlue() * 255) + ");";
         label.setStyle(style);
 
@@ -146,14 +147,14 @@ public final class FxIcons
      * @param size the size of the icon in the Label, expressed as a font size.
      * @return a new {@link Label} containing the named icon.
      */
-    public static Label createClearIcon(FontIconEnum icon, Color color, int size)
+    public static Label createClearIcon(final FontIconEnum icon, final Color color, final int size)
     {
-        Label label = new Label(icon.getFontCode());
+        final Label label = new Label(icon.getFontCode());
         label.setTextFill(color);
         label.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
-        String fontName = "icons-" + icon.getFont().getFontName().replaceAll("\\s", "-");
+        final String fontName = "icons-" + icon.getFont().getFontName().replaceAll("\\s", "-");
         label.getStyleClass().addAll(fontName);
-        String style = "-fx-font-size: " + size + "px; -fx-text-fill: rgb(" + (int)(color.getRed() * 255) + ","
+        final String style = "-fx-font-size: " + size + "px; -fx-text-fill: rgb(" + (int)(color.getRed() * 255) + ","
                 + (int)(color.getGreen() * 255) + "," + (int)(color.getBlue() * 255) + ");";
         label.setStyle(style);
 
@@ -164,12 +165,12 @@ public final class FxIcons
      * Creates a {@link Label} containing the named icon, at the supplied font
      * size using the supplied color.
      *
-     * @param icon the name of the icon to render in the label.
      * @param color the color with which to render the icon.
      * @param size the size of the icon in the Label, expressed as a font size.
+     * @param icons the icons to render in the label.
      * @return a new {@link Label} containing the named icon.
      */
-    public static Label createClearIcon(Color color, int size, FontIconEnum... icons)
+    public static Label createClearIcon(final Color color, final int size, final FontIconEnum... icons)
     {
         Label label;
         if (icons.length > 0)
@@ -177,9 +178,9 @@ public final class FxIcons
             label = new Label(Arrays.stream(icons).map(i -> i.getFontCode()).collect(Collectors.joining(" ")));
             label.setTextFill(color);
             label.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
-            String fontName = "icons-" + icons[0].getFont().getFontName().replaceAll("\\s", "-");
+            final String fontName = "icons-" + icons[0].getFont().getFontName().replaceAll("\\s", "-");
             label.getStyleClass().addAll(fontName);
-            String style = "-fx-font-size: " + size + "px; -fx-text-fill: rgb(" + (int)(color.getRed() * 255) + ","
+            final String style = "-fx-font-size: " + size + "px; -fx-text-fill: rgb(" + (int)(color.getRed() * 255) + ","
                     + (int)(color.getGreen() * 255) + "," + (int)(color.getBlue() * 255) + ");";
             label.setStyle(style);
         }
@@ -189,6 +190,5 @@ public final class FxIcons
         }
 
         return label;
-
     }
 }
