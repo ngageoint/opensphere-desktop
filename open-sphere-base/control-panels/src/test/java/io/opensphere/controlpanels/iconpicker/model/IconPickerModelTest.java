@@ -25,14 +25,14 @@ public class IconPickerModelTest
         LongProperty iconId = new SimpleLongProperty();
         IconPickerModel model = new IconPickerModel(iconId);
 
-        assertSame(iconId, model.icondIdProperty());
+        assertSame(iconId, model.iconIdProperty());
 
         Image image = SwingFXUtils.toFXImage(ImageUtil.BROKEN_IMAGE, null);
         model.setIconId(2);
         model.setImage(image);
 
         assertEquals(2, model.getIconId());
-        assertEquals(model.getIconId(), model.icondIdProperty().get());
+        assertEquals(model.getIconId(), model.iconIdProperty().get());
 
         assertEquals(image, model.getImage());
         assertEquals(model.getImage(), model.imageProperty().get());

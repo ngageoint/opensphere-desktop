@@ -37,7 +37,7 @@ public class IconPickerModel
      *
      * @return The icon id property.
      */
-    public LongProperty icondIdProperty()
+    public LongProperty iconIdProperty()
     {
         return myIconId;
     }
