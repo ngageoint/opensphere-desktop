@@ -22,7 +22,7 @@ public class OSTabControlAddButton extends StackPane
     private final OSTabPaneSkin myOsTabPaneSkin;
 
     /** The inner container in which controls are rendered. */
-    private StackPane myInnerContainer;
+    private final StackPane myInnerContainer;
 
     /**
      * The down arrow displayed within the button. This is protected to prevent
