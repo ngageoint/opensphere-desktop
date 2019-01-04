@@ -58,28 +58,28 @@ public class IconSelectionPanel extends BorderPane
     private transient boolean mySorting;
 
     /** The model to which the icon chooser is bound. */
-    private IconChooserModel myIconChooserModel;
+    private final IconChooserModel myIconChooserModel;
 
     /**
      * Creates a new component bound to the supplied model.
      *
      * @param panelModel the model through which state is maintained.
      */
-    public IconSelectionPanel(IconModel panelModel)
+    public IconSelectionPanel(final IconModel panelModel)
     {
         myPanelModel = panelModel;
         myIconChooserModel = myPanelModel.getModel();
         myDetailPane = new IconDetail(panelModel, this::refresh);
 
-        HBox box = new HBox(5);
-        Label iconScaleLabel = new Label("Icon Scale:");
+        final HBox box = new HBox(5);
+        final Label iconScaleLabel = new Label("Icon Scale:");
         box.getChildren().add(iconScaleLabel);
 
         myZoomControlPane = new Slider(20, 150, DEFAULT_ICON_SCALE);
         myZoomControlPane.setTooltip(new Tooltip("Adjust the size of the displayed icons"));
         box.getChildren().add(myZoomControlPane);
 
-        Label scaleReset = FxIcons.createClearIcon(AwesomeIconSolid.TIMES, Color.ORANGERED, 14);
+        final Label scaleReset = FxIcons.createClearIcon(AwesomeIconSolid.TIMES, Color.ORANGERED, 14);
         scaleReset.setOnMouseClicked(e -> myPanelModel.tileWidthProperty().set(DEFAULT_ICON_SCALE));
         scaleReset.setAlignment(Pos.CENTER);
         box.getChildren().add(scaleReset);
@@ -92,14 +92,14 @@ public class IconSelectionPanel extends BorderPane
 
         mySetControlPane = new SearchControlBar(panelModel);
 
-        SortedList<String> collectionNames = myIconChooserModel.getCollectionNames().sorted();
+        final SortedList<String> collectionNames = myIconChooserModel.getCollectionNames().sorted();
 
         myIconTabs = new OSTabPane();
         myIconTabs.tabDragPolicyProperty().set(TabDragPolicy.REORDER);
         myIconTabs.newTabAction().set(e -> createSet());
         myTabs = New.map();
 
-        for (String collection : collectionNames)
+        for (final String collection : collectionNames)
         {
             IconGridView content;
             if (StringUtils.equalsIgnoreCase(IconRecord.FAVORITES_COLLECTION, collection))
@@ -111,7 +111,7 @@ public class IconSelectionPanel extends BorderPane
                 content = new IconGridView(panelModel, r -> r.collectionNameProperty().get().equals(collection));
             }
 
-            Tab tab = new Tab(collection, content);
+            final Tab tab = new Tab(collection, content);
 
             content.displayProperty().addListener((obs, ov, nv) ->
             {
@@ -132,7 +132,7 @@ public class IconSelectionPanel extends BorderPane
             }
         }
 
-        myIconTabs.getTabs().addListener((ListChangeListener.Change<? extends Tab> c) ->
+        myIconTabs.getTabs().addListener((final ListChangeListener.Change<? extends Tab> c) ->
         {
             if (!mySorting)
             {
@@ -151,7 +151,7 @@ public class IconSelectionPanel extends BorderPane
             }
         });
 
-        AnchorPane anchorPane = new AnchorPane(mySetControlPane, myIconTabs, box);
+        final AnchorPane anchorPane = new AnchorPane(mySetControlPane, myIconTabs, box);
 
         AnchorPane.setRightAnchor(mySetControlPane, 0.0);
         AnchorPane.setLeftAnchor(mySetControlPane, 0.0);
@@ -178,7 +178,7 @@ public class IconSelectionPanel extends BorderPane
     /** An event handler used to create and add a new icon set. */
     private void createSet()
     {
-        OSTab tab = new OSTab("<New Icon Set>");
+        final OSTab tab = new OSTab("<New Icon Set>");
         myIconTabs.getTabs().add(myIconTabs.getTabs().size(), tab);
         myIconTabs.getSelectionModel().select(tab);
         tab.tabEditPhaseProperty().set(TabEditPhase.EDITING);
