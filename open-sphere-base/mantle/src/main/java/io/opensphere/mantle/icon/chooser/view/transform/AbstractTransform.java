@@ -21,9 +21,10 @@ public class AbstractTransform extends VBox
      * @param defaultValue the initial value of the spinner.
      * @return a spinner configured with the supplied parameters.
      */
-    protected Spinner<Double> createSpinner(DoubleProperty doubleProperty, double min, double max, double defaultValue)
+    protected Spinner<Double> createSpinner(final DoubleProperty doubleProperty, final double min, final double max,
+            final double defaultValue)
     {
-        Spinner<Double> spinner = new Spinner<>(min, max, defaultValue);
+        final Spinner<Double> spinner = new Spinner<>(min, max, defaultValue);
         spinner.setMaxWidth(75);
         spinner.setOnScroll(e ->
         {
@@ -36,10 +37,9 @@ public class AbstractTransform extends VBox
                 spinner.decrement();
             }
         });
-        SpinnerValueFactory<Double> factory = spinner.getValueFactory();
+        final SpinnerValueFactory<Double> factory = spinner.getValueFactory();
         factory.valueProperty().addListener((obs, ov, nv) -> doubleProperty.set(nv));
         doubleProperty.addListener((obs, ov, nv) -> factory.valueProperty().set(nv.doubleValue()));
-//        factory.setConverter(new NoDecimalStringConverter());
 
         return spinner;
     }
@@ -54,9 +54,9 @@ public class AbstractTransform extends VBox
      * @param initialValue the initial value of the slider
      * @return a slider configured with the supplied parameters.
      */
-    protected Slider createSlider(DoubleProperty property, double min, double max, double initialValue)
+    protected Slider createSlider(final DoubleProperty property, final double min, final double max, final double initialValue)
     {
-        Slider slider = new Slider(min, max, initialValue);
+        final Slider slider = new Slider(min, max, initialValue);
         slider.valueProperty().bindBidirectional(property);
         slider.setOnScroll(e ->
         {
