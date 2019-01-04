@@ -23,7 +23,7 @@ public class TagField extends HBox
     private final TextField myEditField;
 
     /** The box in which tags are placed. */
-    private HBox myTagBox;
+    private final HBox myTagBox;
 
     /** Creates a new tag field. */
     public TagField()
@@ -71,7 +71,7 @@ public class TagField extends HBox
      *
      * @param tag the tag to add.
      */
-    public void addTag(Tag tag)
+    public void addTag(final Tag tag)
     {
         tag.colorProperty().bind(myModel.tagColorProperty());
         tag.actionProperty().set(this::removeTag);
@@ -83,7 +83,7 @@ public class TagField extends HBox
      *
      * @param e the event describing the key action.
      */
-    private void processKey(KeyEvent e)
+    private void processKey(final KeyEvent e)
     {
         if (e.getCode() == KeyCode.ESCAPE)
         {
@@ -97,7 +97,7 @@ public class TagField extends HBox
      *
      * @param text the text with which to create the tag.
      */
-    private void createTag(String text)
+    private void createTag(final String text)
     {
         if (myModel.editableProperty().get())
         {
@@ -112,9 +112,9 @@ public class TagField extends HBox
      *
      * @param text the text with which to create the new tag.
      */
-    private void addNewTag(String text)
+    private void addNewTag(final String text)
     {
-        Tag tag = new Tag(text);
+        final Tag tag = new Tag(text);
         tag.actionProperty().set(this::removeTag);
         myModel.getTags().add(tag);
     }
@@ -124,11 +124,11 @@ public class TagField extends HBox
      *
      * @param e the mouse event that triggered the editor's invocation.
      */
-    private void invokeEditor(MouseEvent e)
+    private void invokeEditor(final MouseEvent e)
     {
         if (myModel.editableProperty().get())
         {
-            PickResult pickResult = e.getPickResult();
+            final PickResult pickResult = e.getPickResult();
             if (pickResult.getIntersectedNode().equals(this))
             {
                 // don't show the editor if the user is attempting to dismiss a
@@ -164,7 +164,7 @@ public class TagField extends HBox
      *
      * @param tag the tag to remove.
      */
-    public void removeTag(Tag tag)
+    public void removeTag(final Tag tag)
     {
         myModel.getTags().remove(tag);
     }
@@ -179,5 +179,4 @@ public class TagField extends HBox
     {
         return myModel.tagColorProperty();
     }
-
 }
