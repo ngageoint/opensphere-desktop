@@ -15,7 +15,6 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Predicate;
-// import java.util.stream.Collectors;
 
 import gnu.trove.iterator.TIntIterator;
 import gnu.trove.iterator.TLongIterator;
@@ -47,7 +46,6 @@ import io.opensphere.mantle.icon.config.v1.IconRecordConfig;
 import io.opensphere.mantle.icon.config.v1.IconRegistryConfig;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
-// import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
 /**
@@ -100,7 +98,7 @@ public class IconRegistryImpl implements IconRegistry
             new NamedThreadFactory("IconRegistry::IO"), SuppressableRejectedExecutionHandler.getInstance()), 1000);
 
     /** The model containing the preferences for the Icon Manager start up. */
-    private IconManagerPrefs myIconManagerPrefs = new IconManagerPrefs();
+    private final IconManagerPrefs myIconManagerPrefs = new IconManagerPrefs();
 
     /** An observable list of collection names. */
     private final ObservableList<String> myCollectionNames = FXCollections.observableArrayList();
@@ -111,7 +109,7 @@ public class IconRegistryImpl implements IconRegistry
      * @param toolbox the toolbox
      * @param iconCacheLocation the icon cache location
      */
-    public IconRegistryImpl(Toolbox toolbox, File iconCacheLocation)
+    public IconRegistryImpl(final Toolbox toolbox, final File iconCacheLocation)
     {
         myPrefs = toolbox.getPreferencesRegistry().getPreferences(IconRegistry.class);
         myDataElementIdLock = new ReentrantLock();
@@ -127,25 +125,26 @@ public class IconRegistryImpl implements IconRegistry
     }
 
     @Override
-    public IconRecord addIcon(IconProvider rec, final Object source)
+    public IconRecord addIcon(final IconProvider rec, final Object source)
     {
         return addIcon(rec, source, true);
     }
 
     @Override
-    public List<IconRecord> addIcons(List<? extends IconProvider> providerList, final Object source)
+    public List<IconRecord> addIcons(final List<? extends IconProvider> providerList, final Object source)
     {
         return addIcons(providerList, null, source, true);
     }
 
     @Override
-    public List<IconRecord> addIcons(List<? extends IconProvider> providerList, List<? extends Long> ids, Object source)
+    public List<IconRecord> addIcons(final List<? extends IconProvider> providerList, final List<? extends Long> ids,
+            final Object source)
     {
         return addIcons(providerList, ids, source, true);
     }
 
     @Override
-    public void addListener(IconRegistryListener listener)
+    public void addListener(final IconRegistryListener listener)
     {
         myChangeSupport.addListener(listener);
     }
@@ -172,7 +171,7 @@ public class IconRegistryImpl implements IconRegistry
         myDataElementIdLock.lock();
         try
         {
-            for (Long deId : deIds)
+            for (final Long deId : deIds)
             {
                 if (deId != null)
                 {
@@ -195,7 +194,7 @@ public class IconRegistryImpl implements IconRegistry
         myDataElementIdLock.lock();
         try
         {
-            long[] ids = myDataElementIdToIconIdMap.keys();
+            final long[] ids = myDataElementIdToIconIdMap.keys();
             if (ids != null && ids.length > 0)
             {
                 idList = CollectionUtilities.listView(ids);
@@ -267,15 +266,15 @@ public class IconRegistryImpl implements IconRegistry
     }
 
     @Override
-    public long getIconId(URL iconURL)
+    public long getIconId(final URL iconURL)
     {
         Utilities.checkNull(iconURL, "iconURL");
-        IconRecord rec = getIconRecord(iconURL);
+        final IconRecord rec = getIconRecord(iconURL);
         return rec == null ? -1 : rec.idProperty().get();
     }
 
     @Override
-    public long getIconIdForElement(long deId)
+    public long getIconIdForElement(final long deId)
     {
         long resultIconId = -1;
         myDataElementIdLock.lock();
@@ -330,7 +329,7 @@ public class IconRegistryImpl implements IconRegistry
     }
 
     @Override
-    public IconRecord getIconRecord(URL iconURL)
+    public IconRecord getIconRecord(final URL iconURL)
     {
         Utilities.checkNull(iconURL, "iconURL");
         final List<IconRecord> recList = New.list(1);
@@ -356,7 +355,7 @@ public class IconRegistryImpl implements IconRegistry
     }
 
     @Override
-    public IconRecord getIconRecordByIconId(long iconId)
+    public IconRecord getIconRecordByIconId(final long iconId)
     {
         IconRecord result = null;
         myIconRegistryLock.lock();
@@ -372,9 +371,9 @@ public class IconRegistryImpl implements IconRegistry
     }
 
     @Override
-    public IconRecord getIconRecordForElement(long deId)
+    public IconRecord getIconRecordForElement(final long deId)
     {
-        long iconId = getIconIdForElement(deId);
+        final long iconId = getIconIdForElement(deId);
         IconRecord result = null;
         if (iconId != -1)
         {
@@ -395,7 +394,7 @@ public class IconRegistryImpl implements IconRegistry
     }
 
     @Override
-    public List<IconRecord> getIconRecords(TIntList iconIds)
+    public List<IconRecord> getIconRecords(final TIntList iconIds)
     {
         final List<IconRecord> resultList = New.linkedList();
         if (iconIds != null && !iconIds.isEmpty())
@@ -403,9 +402,9 @@ public class IconRegistryImpl implements IconRegistry
             myIconRegistryLock.lock();
             try
             {
-                for (TIntIterator iter = iconIds.iterator(); iter.hasNext();)
+                for (final TIntIterator iter = iconIds.iterator(); iter.hasNext();)
                 {
-                    IconRecord rec = myIconIdToIconRecordMap.get(iter.next());
+                    final IconRecord rec = myIconIdToIconRecordMap.get(iter.next());
                     if (rec != null)
                     {
                         resultList.add(rec);
@@ -450,7 +449,7 @@ public class IconRegistryImpl implements IconRegistry
     }
 
     @Override
-    public boolean removeIcon(IconRecord rec, Object source)
+    public boolean removeIcon(final IconRecord rec, final Object source)
     {
         return rec != null && removeIcon(rec.idProperty().get(), source);
     }
@@ -507,7 +506,7 @@ public class IconRegistryImpl implements IconRegistry
     // }
 
     @Override
-    public boolean removeIcons(TLongList iconIdsToRemove, final Object source)
+    public boolean removeIcons(final TLongList iconIdsToRemove, final Object source)
     {
         Utilities.checkNull(iconIdsToRemove, "iconIdsToRemove");
         boolean changed = false;
@@ -520,7 +519,7 @@ public class IconRegistryImpl implements IconRegistry
             myIconRegistryLock.lock();
             try
             {
-                for (TLongIterator iter = iconIdsToRemove.iterator(); iter.hasNext();)
+                for (final TLongIterator iter = iconIdsToRemove.iterator(); iter.hasNext();)
                 {
                     removedRecord = myIconIdToIconRecordMap.remove(iter.next());
                     if (removedRecord != null)
@@ -542,10 +541,10 @@ public class IconRegistryImpl implements IconRegistry
                 final List<IconRecord> fRemoved = Collections.unmodifiableList(New.list(removedRecords));
 
                 // Clear the assigned icon ids for the removed records.
-                List<Long> elementIdList = New.list();
-                for (IconRecord rec : fRemoved)
+                final List<Long> elementIdList = New.list();
+                for (final IconRecord rec : fRemoved)
                 {
-                    List<Long> elIds = getElementIdsForIconId(rec.idProperty().get());
+                    final List<Long> elIds = getElementIdsForIconId(rec.idProperty().get());
                     if (elIds != null && elIds.isEmpty())
                     {
                         elementIdList.addAll(elIds);
@@ -566,13 +565,13 @@ public class IconRegistryImpl implements IconRegistry
     }
 
     @Override
-    public void removeListener(IconRegistryListener listener)
+    public void removeListener(final IconRegistryListener listener)
     {
         myChangeSupport.removeListener(listener);
     }
 
     @Override
-    public void setIconForElement(long deId, IconRecord rec, Object source)
+    public void setIconForElement(final long deId, final IconRecord rec, final Object source)
     {
         if (rec != null)
         {
@@ -601,7 +600,7 @@ public class IconRegistryImpl implements IconRegistry
     }
 
     @Override
-    public void setIconForElements(List<Long> deIds, IconRecord rec, Object source)
+    public void setIconForElements(final List<Long> deIds, final IconRecord rec, final Object source)
     {
         if (rec != null)
         {
@@ -620,7 +619,7 @@ public class IconRegistryImpl implements IconRegistry
         myDataElementIdLock.lock();
         try
         {
-            for (Long deId : deIds)
+            for (final Long deId : deIds)
             {
                 myDataElementIdToIconIdMap.put(deId.intValue(), iconId);
             }
@@ -637,7 +636,7 @@ public class IconRegistryImpl implements IconRegistry
     @Override
     public String toString()
     {
-        StringBuilder sb = new StringBuilder(64);
+        final StringBuilder sb = new StringBuilder(64);
 
         myIconRegistryLock.lock();
         try
@@ -645,9 +644,9 @@ public class IconRegistryImpl implements IconRegistry
             sb.append("IconRegistryImpl:\n  IconRecords: ").append(myIconIdToIconRecordMap.size()).append('\n');
             if (!myIconIdToIconRecordMap.isEmpty())
             {
-                long[] keys = myIconIdToIconRecordMap.keys();
+                final long[] keys = myIconIdToIconRecordMap.keys();
                 Arrays.sort(keys);
-                for (long key : keys)
+                for (final long key : keys)
                 {
                     sb.append("    ").append(myIconIdToIconRecordMap.get(key)).append('\n');
                 }
@@ -665,9 +664,9 @@ public class IconRegistryImpl implements IconRegistry
             if (!myDataElementIdToIconIdMap.isEmpty())
             {
                 sb.append(String.format("    %-20s %-20s%n", "EL_ID", "ICON_ID"));
-                long[] keys = myDataElementIdToIconIdMap.keys();
+                final long[] keys = myDataElementIdToIconIdMap.keys();
                 Arrays.sort(keys);
-                for (long key : keys)
+                for (final long key : keys)
                 {
                     sb.append(String.format("    %-20d %-20d%n", Long.valueOf(key),
                             Long.valueOf(myDataElementIdToIconIdMap.get(key))));
@@ -689,7 +688,7 @@ public class IconRegistryImpl implements IconRegistry
      * @param saveToConfig the save to config
      * @return the added {@link IconRecord}
      */
-    private IconRecord addIcon(IconProvider rec, final Object source, boolean saveToConfig)
+    private IconRecord addIcon(final IconProvider rec, final Object source, final boolean saveToConfig)
     {
         Utilities.checkNull(rec, "rec");
         if (rec.getIconURL() == null)
@@ -701,7 +700,7 @@ public class IconRegistryImpl implements IconRegistry
         boolean wasAdded = false;
         try
         {
-            Pair<IconRecord, Boolean> pair = createRecord(rec, null);
+            final Pair<IconRecord, Boolean> pair = createRecord(rec, null);
             record = pair.getFirstObject();
             // myCollectionNames.add(record.collectionNameProperty().get());
             // updateCollectionNames();
@@ -745,8 +744,8 @@ public class IconRegistryImpl implements IconRegistry
      * @param saveToConfig the save to config
      * @return the list
      */
-    private List<IconRecord> addIcons(List<? extends IconProvider> providerList, List<? extends Long> ids, final Object source,
-            boolean saveToConfig)
+    private List<IconRecord> addIcons(final List<? extends IconProvider> providerList, final List<? extends Long> ids,
+            final Object source, final boolean saveToConfig)
     {
         Utilities.checkNull(providerList, "providerList");
         final List<IconRecord> addedList = New.linkedList();
@@ -757,9 +756,9 @@ public class IconRegistryImpl implements IconRegistry
             {
                 for (int i = 0; i < providerList.size(); i++)
                 {
-                    IconProvider provider = providerList.get(i);
-                    Long overrideId = ids != null ? ids.get(i) : null;
-                    IconRecord record = createRecord(provider, overrideId).getFirstObject();
+                    final IconProvider provider = providerList.get(i);
+                    final Long overrideId = ids != null ? ids.get(i) : null;
+                    final IconRecord record = createRecord(provider, overrideId).getFirstObject();
                     // myCollectionNames.add(record.collectionNameProperty().get());
                     // updateCollectionNames();
                     addedList.add(record);
@@ -790,11 +789,11 @@ public class IconRegistryImpl implements IconRegistry
      * @param overrideId the ID to use, or null
      * @return the IconRecord and whether it was created anew
      */
-    private Pair<IconRecord, Boolean> createRecord(IconProvider provider, Long overrideId)
+    private Pair<IconRecord, Boolean> createRecord(final IconProvider provider, final Long overrideId)
     {
         IconRecord record = new DefaultIconRecord(0, provider);
         boolean wasAdded = false;
-        long id = myIconRecordToIconIdMap.get(record);
+        final long id = myIconRecordToIconIdMap.get(record);
         if (id == 0)
         {
             record = new DefaultIconRecord(getId(provider, overrideId), provider);
@@ -818,7 +817,7 @@ public class IconRegistryImpl implements IconRegistry
      * @param overrideId the ID to use, or null
      * @return the icon ID
      */
-    private long getId(IconProvider provider, Long overrideId)
+    private long getId(final IconProvider provider, final Long overrideId)
     {
         if (overrideId != null)
         {
@@ -848,7 +847,8 @@ public class IconRegistryImpl implements IconRegistry
     /** Loads the icons. */
     private void load()
     {
-        IconRegistryConfig config = myPrefs.getJAXBObject(IconRegistryConfig.class, PREFERENCE_KEY, new IconRegistryConfig());
+        final IconRegistryConfig config = myPrefs.getJAXBObject(IconRegistryConfig.class, PREFERENCE_KEY,
+                new IconRegistryConfig());
         if (config != null && config.getIconRecords() != null && !config.getIconRecords().isEmpty())
         {
             addIcons(New.list(config.getIconRecords()), null, this, false);
@@ -857,7 +857,7 @@ public class IconRegistryImpl implements IconRegistry
         addIcon(new DefaultIconProvider(DEFAULT_ICON_URL, IconRecord.DEFAULT_COLLECTION, null), null, false);
 
         // Clean up duplicates of the default icon
-        TLongList iconIds = getIconIds(r -> IconRecord.DEFAULT_COLLECTION.equals(r.collectionNameProperty().get())
+        final TLongList iconIds = getIconIds(r -> IconRecord.DEFAULT_COLLECTION.equals(r.collectionNameProperty().get())
                 && r.sourceKeyProperty() == null && !DEFAULT_ICON_URL.equals(r.imageURLProperty().get()));
         if (!iconIds.isEmpty())
         {
@@ -874,13 +874,13 @@ public class IconRegistryImpl implements IconRegistry
     /** Saves the icons. */
     private void save()
     {
-        IconRegistryConfig config = new IconRegistryConfig();
+        final IconRegistryConfig config = new IconRegistryConfig();
 
         myIconRegistryLock.lock();
         try
         {
-            List<IconRecordConfig> ircList = New.list(myIconIdToIconRecordMap.size());
-            for (IconRecord ir : myIconIdToIconRecordMap.valueCollection())
+            final List<IconRecordConfig> ircList = New.list(myIconIdToIconRecordMap.size());
+            for (final IconRecord ir : myIconIdToIconRecordMap.valueCollection())
             {
                 ircList.add(new IconRecordConfig(ir));
             }
@@ -901,7 +901,7 @@ public class IconRegistryImpl implements IconRegistry
      * @param thePanelModel the model to use for registry.
      */
     @Override
-    public void deleteIcon(IconRecord iconToDelete, IconModel thePanelModel)
+    public void deleteIcon(final IconRecord iconToDelete, final IconModel thePanelModel)
     {
         String filename = iconToDelete.imageURLProperty().get().toString();
         // This loop logic is to make sure it is removed from all the
@@ -909,18 +909,18 @@ public class IconRegistryImpl implements IconRegistry
         // icon # may change on computer to computer.
         for (int idx = 0; idx <= thePanelModel.getIconRegistry().getIconIds().max(); idx++)
         {
-            IconRecord iconRecord = thePanelModel.getIconRegistry().getIconRecordByIconId(idx);
+            final IconRecord iconRecord = thePanelModel.getIconRegistry().getIconRecordByIconId(idx);
             if (iconRecord != null)
             {
                 if (iconRecord.imageURLProperty().get().toString().equals(filename))
                 {
-                    thePanelModel.getIconRegistry().removeIcon(this.getIconRecordByIconId(idx), this);
+                    thePanelModel.getIconRegistry().removeIcon(getIconRecordByIconId(idx), this);
                 }
             }
         }
         filename = filename.replace("file:", "");
         filename = filename.replace("%20", " ");
-        File iconActual = new File(filename);
+        final File iconActual = new File(filename);
         iconActual.delete();
     }
 
