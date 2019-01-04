@@ -286,7 +286,7 @@ public class IconDetail extends AnchorPane
         else
         {
             myTagsField.getTags().clear();
-            // myTagsField.getTags().addAll(icon.getTags());
+            icon.getTags().stream().map(v -> new Tag(v)).forEach(myTagsField::addTag);
             final Image image = icon.imageProperty().get();
             final double xOrigin = myCanvas.getWidth() / 2;
             final double yOrigin = myCanvas.getHeight() / 2;
