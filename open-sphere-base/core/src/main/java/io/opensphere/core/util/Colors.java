@@ -43,7 +43,7 @@ public class Colors
     /** Color from opensphere.css: -fx-control-inner-background-alt. */
     public static final Color LF_INNER_BACKGROUND_ALT = Color.decode("#696969");
 
-    /** Look and feel white (58, 58, 71). */
+    /** Look and feel white (58, 58, 58). */
     public static final Color LF_WHITE = Color.decode("#3A3A3A");
 
     /** Look and feel black (255, 255, 255). */
@@ -76,5 +76,6 @@ public class Colors
     /** Constructor. */
     protected Colors()
     {
+        /* intentionally blank */
     }
 }
