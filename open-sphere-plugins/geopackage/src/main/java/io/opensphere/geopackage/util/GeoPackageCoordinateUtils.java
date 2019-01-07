@@ -43,7 +43,7 @@ public final class GeoPackageCoordinateUtils
      */
     private GeoPackageCoordinateUtils()
     {
-        Projection geoProjection = ProjectionFactory.getProjection(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
+        final Projection geoProjection = ProjectionFactory.getProjection(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
         myGeoToMercator = geoProjection.getTransformation(ProjectionConstants.EPSG_WEB_MERCATOR);
     }
 
@@ -55,22 +55,22 @@ public final class GeoPackageCoordinateUtils
      * @param projection The projection of the boundingBox.
      * @return The converted bounding box.
      */
-    public GeographicBoundingBox convertToGeodetic(BoundingBox boundingBox, Projection projection)
+    public GeographicBoundingBox convertToGeodetic(final BoundingBox boundingBox, final Projection projection)
     {
         BoundingBox box = boundingBox;
 
         if (!StringUtils.equals(String.valueOf(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM), projection.getCode()))
         {
-            ProjectionTransform layerToGeo = projection.getTransformation(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
-            GeometryEnvelope envelope = layerToGeo.transform(new GeometryEnvelope(box.getMinLongitude(), box.getMinLatitude(),
-                    box.getMaxLongitude(), box.getMaxLatitude()));
+            final ProjectionTransform layerToGeo = projection.getTransformation(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
+            final GeometryEnvelope envelope = layerToGeo.transform(new GeometryEnvelope(box.getMinLongitude(),
+                    box.getMinLatitude(), box.getMaxLongitude(), box.getMaxLatitude()));
             box = new BoundingBox(envelope);
             box = roundToNearest(box);
         }
 
-        GeographicPosition lowerLeftCorner = new GeographicPosition(
+        final GeographicPosition lowerLeftCorner = new GeographicPosition(
                 LatLonAlt.createFromDegrees(box.getMinLatitude(), box.getMinLongitude()));
-        GeographicPosition upperRightCorner = new GeographicPosition(
+        final GeographicPosition upperRightCorner = new GeographicPosition(
                 LatLonAlt.createFromDegrees(box.getMaxLatitude(), box.getMaxLongitude()));
 
         return new GeographicBoundingBox(lowerLeftCorner, upperRightCorner);
@@ -82,11 +82,11 @@ public final class GeoPackageCoordinateUtils
      * @param boundingBox The bounding box to convert.
      * @return A web mercator {@link BoundingBox}.
      */
-    public BoundingBox convertToWebMercator(GeographicBoundingBox boundingBox)
+    public BoundingBox convertToWebMercator(final GeographicBoundingBox boundingBox)
     {
         BoundingBox box = new BoundingBox(boundingBox.getMinLonD(), boundingBox.getMinLatD(), boundingBox.getMaxLonD(),
                 boundingBox.getMaxLatD());
-        GeometryEnvelope envelope = myGeoToMercator.transform(
+        final GeometryEnvelope envelope = myGeoToMercator.transform(
                 new GeometryEnvelope(box.getMinLongitude(), box.getMinLatitude(), box.getMaxLongitude(), box.getMaxLatitude()));
         box = new BoundingBox(envelope);
         return box;
@@ -99,7 +99,7 @@ public final class GeoPackageCoordinateUtils
      * @param boundingBox The bounding box to convert.
      * @return The geopackage {@link BoundingBox}.
      */
-    public BoundingBox getBoundingBox(GeographicBoundingBox boundingBox)
+    public BoundingBox getBoundingBox(final GeographicBoundingBox boundingBox)
     {
         return new BoundingBox(boundingBox.getMinLonD(), boundingBox.getMinLatD(), boundingBox.getMaxLonD(),
                 boundingBox.getMaxLatD());
@@ -111,11 +111,11 @@ public final class GeoPackageCoordinateUtils
      * @param box The box to convert.
      * @return The {@link GeographicBoundingBox}.
      */
-    public GeographicBoundingBox getGeographicBoundingBox(BoundingBox box)
+    public GeographicBoundingBox getGeographicBoundingBox(final BoundingBox box)
     {
-        GeographicPosition lowerLeftCorner = new GeographicPosition(
+        final GeographicPosition lowerLeftCorner = new GeographicPosition(
                 LatLonAlt.createFromDegrees(box.getMinLatitude(), box.getMinLongitude()));
-        GeographicPosition upperRightCorner = new GeographicPosition(
+        final GeographicPosition upperRightCorner = new GeographicPosition(
                 LatLonAlt.createFromDegrees(box.getMaxLatitude(), box.getMaxLongitude()));
 
         return new GeographicBoundingBox(lowerLeftCorner, upperRightCorner);
@@ -128,12 +128,12 @@ public final class GeoPackageCoordinateUtils
      * @param box The bounding box to round.
      * @return The bounding box.
      */
-    private BoundingBox roundToNearest(BoundingBox box)
+    private BoundingBox roundToNearest(final BoundingBox box)
     {
-        double roundedMinLat = MathUtil.roundDecimalPlace(box.getMinLatitude(), 10);
-        double roundedMaxLat = MathUtil.roundDecimalPlace(box.getMaxLatitude(), 10);
-        double roundedMinLon = MathUtil.roundDecimalPlace(box.getMinLongitude(), 10);
-        double roundedMaxLon = MathUtil.roundDecimalPlace(box.getMaxLongitude(), 10);
+        final double roundedMinLat = MathUtil.roundDecimalPlace(box.getMinLatitude(), 10);
+        final double roundedMaxLat = MathUtil.roundDecimalPlace(box.getMaxLatitude(), 10);
+        final double roundedMinLon = MathUtil.roundDecimalPlace(box.getMinLongitude(), 10);
+        final double roundedMaxLon = MathUtil.roundDecimalPlace(box.getMaxLongitude(), 10);
 
         return new BoundingBox(roundedMinLon, roundedMinLat, roundedMaxLon, roundedMaxLat);
     }
