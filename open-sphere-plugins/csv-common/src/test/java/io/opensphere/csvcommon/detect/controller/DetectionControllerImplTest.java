@@ -13,6 +13,7 @@ import io.opensphere.core.common.configuration.date.DateFormatsConfig;
 import io.opensphere.core.model.IntegerRange;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.util.collections.New;
 import io.opensphere.csvcommon.common.datetime.DateColumn;
 import io.opensphere.csvcommon.common.datetime.DateColumnResults;
 import io.opensphere.csvcommon.config.v2.CSVParseParameters;
@@ -44,14 +45,14 @@ public class DetectionControllerImplTest extends EasyMockSupport
     @Test
     public void testDetectParameters() throws FileNotFoundException
     {
-        DateFormatsConfig formatsConfig = new DateFormatsConfig();
-        DateFormat dateFormat = new DateFormat(Type.TIMESTAMP, "yyyy-MM-dd'T'HH:mm:ss'Z'",
+        final DateFormatsConfig formatsConfig = new DateFormatsConfig();
+        final DateFormat dateFormat = new DateFormat(Type.TIMESTAMP, "yyyy-MM-dd'T'HH:mm:ss'Z'",
                 "\\d{4}\\-\\d{2}\\-\\d{2}T\\d{2}\\:\\d{2}\\:\\d{2}Z");
         formatsConfig.addFormat(dateFormat);
 
-        PreferencesRegistry prefsRegistry = createMock(PreferencesRegistry.class);
-        Preferences prefs = createMock(Preferences.class);
-        Preferences oldPrefs = createNiceMock(Preferences.class);
+        final PreferencesRegistry prefsRegistry = createMock(PreferencesRegistry.class);
+        final Preferences prefs = createMock(Preferences.class);
+        final Preferences oldPrefs = createNiceMock(Preferences.class);
         EasyMock.expect(prefsRegistry.getPreferences(MantleConstants.USER_DATE_FORMAT_CONFIG_FILE_TOPIC)).andReturn(prefs)
                 .anyTimes();
         EasyMock.expect(prefsRegistry.getPreferences("DateFormatConfiguration")).andReturn(oldPrefs).anyTimes();
@@ -63,18 +64,19 @@ public class DetectionControllerImplTest extends EasyMockSupport
         LocationTestUtils.loadLocationColumnLists(prefs);
         EasyMock.expect(prefsRegistry.getPreferences(CSVColumnPrefsUtil.class)).andReturn(prefs).anyTimes();
 
-        ListLineSampler listLineSampler = new ListLineSampler(CsvTestUtils.createBasicDelimitedData(", "),
+        final ListLineSampler listLineSampler = new ListLineSampler(CsvTestUtils.createBasicDelimitedData(", "),
                 CsvTestUtils.createBasicDelimitedData(", "), 10);
 
-        LineSamplerFactory factory = createNiceMock(LineSamplerFactory.class);
+        final LineSamplerFactory factory = createNiceMock(LineSamplerFactory.class);
         factory.createSampler((char[])EasyMock.isNull());
         EasyMock.expectLastCall().andReturn(listLineSampler);
 
+        EasyMock.expect(prefs.getStringList("COLOR", null)).andReturn(New.list()).times(2);
         replayAll();
 
-        DetectionControllerImpl controller = new DetectionControllerImpl(prefsRegistry, null);
+        final DetectionControllerImpl controller = new DetectionControllerImpl(prefsRegistry, null);
 
-        DetectedParameters result = controller.detectParameters(new CSVParseParameters(), listLineSampler, factory, null);
+        final DetectedParameters result = controller.detectParameters(new CSVParseParameters(), listLineSampler, factory, null);
 
         Assert.assertEquals(new DelimitedColumnFormatParameters(Character.valueOf(','), null, 5),
                 result.getColumnFormatParameter().getBestValue());
@@ -82,9 +84,9 @@ public class DetectionControllerImplTest extends EasyMockSupport
         Assert.assertEquals(new IntegerRange(0, 210), result.getDataLinesParameter().getBestValue());
         Assert.assertEquals(Integer.valueOf(0), result.getHeaderLineParameter().getBestValue());
 
-        DateColumnResults dateColumn = result.getDateColumnParameter().getBestValue();
+        final DateColumnResults dateColumn = result.getDateColumnParameter().getBestValue();
         Assert.assertNull(dateColumn.getDownTimeColumn());
-        DateColumn upColumn = dateColumn.getUpTimeColumn();
+        final DateColumn upColumn = dateColumn.getUpTimeColumn();
         Assert.assertEquals(DateFormat.Type.TIMESTAMP, upColumn.getDateColumnType());
         Assert.assertEquals(0, upColumn.getPrimaryColumnIndex());
         Assert.assertEquals(dateFormat.getSdf(), upColumn.getPrimaryColumnFormat());
