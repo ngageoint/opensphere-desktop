@@ -47,8 +47,8 @@ node {
 	if(!"${env.BRANCH_NAME}".startsWith('feature')) {
 	    stage ('Site') {
 	        try {
-	            sh "${env.mvnHome}/bin/mvn --no-snapshot-updates -Dmaven.repo.local=${env.LOCAL_REPO} site"
-	            sh "${env.mvnHome}/bin/mvn --no-snapshot-updates -Dmaven.repo.local=${env.LOCAL_REPO} site:stage"
+	            sh "${env.mvnHome}/bin/mvn -T4.0C --no-snapshot-updates -Dmaven.repo.local=${env.LOCAL_REPO} site"
+	            sh "${env.mvnHome}/bin/mvn -T4.0C --no-snapshot-updates -Dmaven.repo.local=${env.LOCAL_REPO} site:stage"
 	        } catch (error) {
 	            notifyFailed();
 	            throw error;
