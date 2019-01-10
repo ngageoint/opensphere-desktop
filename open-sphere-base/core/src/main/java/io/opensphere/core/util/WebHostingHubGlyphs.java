@@ -4198,23 +4198,21 @@ public enum WebHostingHubGlyphs implements FontIconEnum
         return SwingUtilities.WEB_HOSTING_HUB_GLYPHS_FONT;
     }
 
-//    @Override
-//    public float getXDrawingOffset()
-//    {
-//        // TODO Auto-generated method stub
-//        return 0;
-//    }
-//
-//    @Override
-//    public float getYDrawingOffset()
-//    {
-//        // TODO Auto-generated method stub
-//        return 0;
-//    }
-//
-//    @Override
-//    public String getGlyphName()
-//    {
-//        return name();
-//    }
+    @Override
+    public float getXDrawingOffset()
+    {
+        return 0;
+    }
+
+    @Override
+    public float getYDrawingOffset()
+    {
+        return 0;
+    }
+
+    @Override
+    public String getGlyphName()
+    {
+        return name();
+    }
 }
