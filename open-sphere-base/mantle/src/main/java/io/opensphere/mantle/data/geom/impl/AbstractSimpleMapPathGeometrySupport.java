@@ -86,7 +86,6 @@ public abstract class AbstractSimpleMapPathGeometrySupport extends AbstractSimpl
     }
 
     /**
-     *
      * Secondary initialization constructor with initial location list and line
      * width.
      *
@@ -239,6 +238,5 @@ public abstract class AbstractSimpleMapPathGeometrySupport extends AbstractSimpl
                 myLocations.addAll(locations);
             }
         }
-        // fireChanged();
     }
 }

@@ -41,7 +41,7 @@ public abstract class AbstractLocationGeometrySupport extends AbstractDefaultMap
     }
 
     /**
-     * CTOR with {@link LatLonAlt}.
+     * Constructor with {@link LatLonAlt}.
      *
      * @param loc - the location
      */
@@ -99,6 +99,5 @@ public abstract class AbstractLocationGeometrySupport extends AbstractDefaultMap
         }
 
         putItemInDynamicStorage(loc);
-        // fireChanged();
     }
 }

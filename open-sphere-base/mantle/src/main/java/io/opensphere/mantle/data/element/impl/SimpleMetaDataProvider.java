@@ -26,7 +26,7 @@ public class SimpleMetaDataProvider implements MetaDataProvider, Serializable
     /** The key to value map. */
     private final Map<String, Serializable> myKeyToValueMap;
 
-    /** Default constructor */
+    /** Default constructor. */
     public SimpleMetaDataProvider()
     {
         myKeyToValueMap = Collections.synchronizedMap(new LinkedHashMap<String, Serializable>());
@@ -48,9 +48,9 @@ public class SimpleMetaDataProvider implements MetaDataProvider, Serializable
     }
 
     /**
-     * CTOR with initial map.
+     * Constructor with initial map.
      *
-     * @param initialMap - the initial map.
+     * @param initialMap the initial map.
      */
     public SimpleMetaDataProvider(Map<String, Serializable> initialMap)
     {

@@ -218,7 +218,6 @@ public class SimpleFeatureActionRow extends ListCell<SimpleFeatureAction> implem
     }
 
     /**
-     *
      * {@inheritDoc}
      *
      * @see javafx.scene.control.Cell#updateItem(java.lang.Object, boolean)

@@ -16,6 +16,8 @@ public class DefaultMapDataElement extends DefaultDataElement implements MapData
     private MapGeometrySupport myMapGeometrySupport;
 
     /**
+     * Copy constructor.
+     *
      * @param source the source from which to copy data.
      */
     public DefaultMapDataElement(DefaultMapDataElement source)
@@ -26,8 +28,8 @@ public class DefaultMapDataElement extends DefaultDataElement implements MapData
     }
 
     /**
-     * CTOR with id and {@link MapGeometrySupport}. Note: Displayable is true by
-     * default.
+     * Constructor with id and {@link MapGeometrySupport}.
+     * Note: Displayable is true by default.
      *
      * @param id - the ID
      * @param mgs - the {@link MapGeometrySupport}, can not be null
@@ -38,7 +40,7 @@ public class DefaultMapDataElement extends DefaultDataElement implements MapData
     }
 
     /**
-     * CTOR with id, {@link TimeSpan}, {@link DataTypeInfo}, and and
+     * Constructor with id, {@link TimeSpan}, {@link DataTypeInfo}, and
      * {@link MapGeometrySupport}. Note: Displayable is true by default.
      *
      * @param id - the ID
@@ -54,7 +56,7 @@ public class DefaultMapDataElement extends DefaultDataElement implements MapData
     }
 
     /**
-     * CTOR with all parameters. Note: Displayable is true by default.
+     * Constructor with all parameters. Note: Displayable is true by default.
      *
      * @param id - the ID
      * @param ts - the TimeSpan, note that if null will be set to
@@ -77,8 +79,8 @@ public class DefaultMapDataElement extends DefaultDataElement implements MapData
     }
 
     /**
-     * CTOR with id, {@link TimeSpan}, and {@link MapGeometrySupport}. Note:
-     * Displayable is true by default.
+     * Constructor with id, {@link TimeSpan}, and {@link MapGeometrySupport}.
+     * Note: Displayable is true by default.
      *
      * @param id - the ID
      * @param ts - the TimeSpan, note that if null will be set to

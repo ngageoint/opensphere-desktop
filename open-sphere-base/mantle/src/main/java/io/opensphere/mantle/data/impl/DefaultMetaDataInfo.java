@@ -194,7 +194,6 @@ public class DefaultMetaDataInfo implements MetaDataInfo
         mySpecialTypeToKeyMap = source.mySpecialTypeToKeyMap.entrySet().stream()
                 .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
         myUniqueIdentifierKeyProperty.set(source.myUniqueIdentifierKeyProperty.get());
-
     }
 
     /** Default Constructor. */
