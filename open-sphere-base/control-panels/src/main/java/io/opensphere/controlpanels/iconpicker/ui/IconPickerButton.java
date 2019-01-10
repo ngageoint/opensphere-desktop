@@ -1,13 +1,12 @@
 package io.opensphere.controlpanels.iconpicker.ui;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
-
 import io.opensphere.controlpanels.iconpicker.controller.IconChooserDisplayer;
 import io.opensphere.controlpanels.iconpicker.controller.IconPickerController;
 import io.opensphere.controlpanels.iconpicker.model.IconPickerModel;
 import io.opensphere.core.Toolbox;
+import javafx.beans.property.LongProperty;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 
 /**
  * A javafx button that allows the user to select system icons, and will display
@@ -37,7 +36,7 @@ public class IconPickerButton extends Button
      * @param iconIdProperty The property to set with an icon id, when the user
      *            selects one.
      */
-    public IconPickerButton(Toolbox toolbox, IntegerProperty iconIdProperty)
+    public IconPickerButton(Toolbox toolbox, LongProperty iconIdProperty)
     {
         this(toolbox, iconIdProperty, new IconChooserDisplayerImpl(toolbox.getUIRegistry().getMainFrameProvider()));
     }
@@ -51,7 +50,7 @@ public class IconPickerButton extends Button
      * @param displayer The class that knows how to show the Icon picking
      *            dialog.
      */
-    protected IconPickerButton(Toolbox toolbox, IntegerProperty iconIdProperty, IconChooserDisplayer displayer)
+    protected IconPickerButton(Toolbox toolbox, LongProperty iconIdProperty, IconChooserDisplayer displayer)
     {
         myModel = new IconPickerModel(iconIdProperty);
         myController = new IconPickerController(toolbox, displayer, myModel);

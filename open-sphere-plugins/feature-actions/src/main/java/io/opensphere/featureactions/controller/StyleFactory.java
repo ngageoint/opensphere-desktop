@@ -414,7 +414,7 @@ public class StyleFactory
     private static class IconStyle extends IconFeatureVisualizationStyle
     {
         /** The icon ID. */
-        private final int myIconId;
+        private final long myIconId;
 
         /**
          * Constructor.
@@ -423,7 +423,7 @@ public class StyleFactory
          * @param typeKey the data type key
          * @param iconId the icon ID
          */
-        public IconStyle(Toolbox toolbox, String typeKey, int iconId)
+        public IconStyle(Toolbox toolbox, String typeKey, long iconId)
         {
             super(toolbox, typeKey);
             myIconId = iconId;
@@ -443,7 +443,7 @@ public class StyleFactory
         }
 
         @Override
-        protected int getIconId(long elementId)
+        protected long getIconId(long elementId)
         {
             return myIconId;
         }

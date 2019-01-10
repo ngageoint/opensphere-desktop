@@ -1,9 +1,12 @@
 package io.opensphere.mantle.icon;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
 /**
- * The Interface IconProvider.
+ * The Interface IconProvider. Instances of this interface provide a single icon
+ * from either a local or remote source.
  */
 public interface IconProvider
 {
@@ -22,6 +25,16 @@ public interface IconProvider
     URL getIconURL();
 
     /**
+     * Gets the data comprising the icon image. Note that implementations should
+     * take care to not store icon data in member fields wherever possible, as
+     * this could seriously bloat runtime memory needs.
+     *
+     * @return the data comprising the icon image.
+     * @throws IOException if the data cannot be read.
+     */
+    InputStream getIconImageData() throws IOException;
+
+    /**
      * Gets the source key for the source.
      *
      * @return the source
@@ -29,9 +42,9 @@ public interface IconProvider
     String getSourceKey();
 
     /**
-     * Gets the sub category for the icon.
+     * Tests to determine if the icon is marked as a favorite.
      *
-     * @return the sub category
+     * @return true if the icon is marked as a favorite, false otherwise.
      */
-    String getSubCategory();
+    boolean isFavorite();
 }

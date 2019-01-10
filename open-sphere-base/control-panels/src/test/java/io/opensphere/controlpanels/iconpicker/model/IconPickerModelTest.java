@@ -3,14 +3,13 @@ package io.opensphere.controlpanels.iconpicker.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.image.Image;
-
 import org.junit.Test;
 
 import io.opensphere.core.util.image.ImageUtil;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
 
 /**
  * Unit test for the {@link IconPickerModel}.
@@ -23,17 +22,17 @@ public class IconPickerModelTest
     @Test
     public void test()
     {
-        IntegerProperty iconId = new SimpleIntegerProperty();
+        LongProperty iconId = new SimpleLongProperty();
         IconPickerModel model = new IconPickerModel(iconId);
 
-        assertSame(iconId, model.icondIdProperty());
+        assertSame(iconId, model.iconIdProperty());
 
         Image image = SwingFXUtils.toFXImage(ImageUtil.BROKEN_IMAGE, null);
         model.setIconId(2);
         model.setImage(image);
 
         assertEquals(2, model.getIconId());
-        assertEquals(model.getIconId(), model.icondIdProperty().get());
+        assertEquals(model.getIconId(), model.iconIdProperty().get());
 
         assertEquals(image, model.getImage());
         assertEquals(model.getImage(), model.imageProperty().get());

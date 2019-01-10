@@ -1,7 +1,10 @@
 package io.opensphere.mantle.icon.impl;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
+import io.opensphere.core.util.io.IOUtilities;
 import io.opensphere.mantle.icon.IconProvider;
 
 /**
@@ -18,23 +21,35 @@ public class DefaultIconProvider implements IconProvider
     /** The Source Key. */
     private final String mySourceKey;
 
-    /** The Sub category. */
-    private final String mySubCategory;
+    /** The flag used to track the favorite state of the icon. */
+    private final boolean myFavorite;
 
     /**
      * Instantiates a new default icon provider.
      *
      * @param imageURL the image url
      * @param collectionName the collection name
-     * @param subCategory the sub category
      * @param sourceKey the source key
      */
-    public DefaultIconProvider(URL imageURL, String collectionName, String subCategory, String sourceKey)
+    public DefaultIconProvider(URL imageURL, String collectionName, String sourceKey)
+    {
+        this(imageURL, collectionName, sourceKey, false);
+    }
+
+    /**
+     * Instantiates a new default icon provider.
+     *
+     * @param imageURL the image url
+     * @param collectionName the collection name
+     * @param sourceKey the source key
+     * @param favorite a flag used to mark the icon as a favorite.
+     */
+    public DefaultIconProvider(URL imageURL, String collectionName, String sourceKey, boolean favorite)
     {
         myImageURL = imageURL;
         myCollectionName = collectionName;
-        mySubCategory = subCategory;
         mySourceKey = sourceKey;
+        myFavorite = favorite;
     }
 
     @Override
@@ -49,6 +64,17 @@ public class DefaultIconProvider implements IconProvider
         return myImageURL;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.icon.IconProvider#getIconImageData()
+     */
+    @Override
+    public InputStream getIconImageData() throws IOException
+    {
+        return IOUtilities.getInputStream(myImageURL);
+    }
+
     @Override
     public String getSourceKey()
     {
@@ -56,18 +82,22 @@ public class DefaultIconProvider implements IconProvider
     }
 
     @Override
-    public String getSubCategory()
-    {
-        return mySubCategory;
-    }
-
-    @Override
     public String toString()
     {
         StringBuilder sb = new StringBuilder(64);
-        sb.append(getClass().getName()).append(" ColName:").append(myCollectionName).append(" SubCat:").append(mySubCategory)
-                .append(" URL:").append(myImageURL == null ? "NULL" : myImageURL.toString()).append(" SourceKey:")
-                .append(mySourceKey);
+        sb.append(getClass().getName()).append(" ColName:").append(myCollectionName).append(" URL:")
+                .append(myImageURL == null ? "NULL" : myImageURL.toString()).append(" SourceKey:").append(mySourceKey);
         return sb.toString();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.icon.IconProvider#isFavorite()
+     */
+    @Override
+    public boolean isFavorite()
+    {
+        return myFavorite;
     }
 }

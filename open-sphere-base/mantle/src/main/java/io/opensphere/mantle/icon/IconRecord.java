@@ -2,6 +2,14 @@ package io.opensphere.mantle.icon;
 
 import java.net.URL;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
+
 /**
  * The Interface IconRecord.
  */
@@ -17,58 +25,102 @@ public interface IconRecord
     String USER_ADDED_COLLECTION = "User Added";
 
     /**
+     * Gets the property in which the favorite state is maintained.
+     *
+     * @return the property in which the favorite state is maintained.
+     */
+    BooleanProperty favoriteProperty();
+
+    /**
+     * Gets the property in which the name is maintained.
+     *
+     * @return the property in which the name is maintained.
+     */
+    StringProperty nameProperty();
+
+    /**
+     * Gets the property in which the name is maintained.
+     *
+     * @return the property in which the name is maintained.
+     */
+    StringProperty fullNameProperty();
+
+    /**
+     * Gets the property in which the full name is maintained.
+     *
+     * @return the property in which the full name is maintained.
+     */
+    StringProperty extensionProperty();
+
+    /**
+     * Gets the property in which the size (in bytes) is maintained.
+     *
+     * @return the property in which the size (in bytes) is maintained.
+     */
+    LongProperty sizeProperty();
+
+    /**
+     * Gets the property in which the height (in pixels) is maintained.
+     *
+     * @return the property in which the height (in pixels) is maintained.
+     */
+    IntegerProperty heightProperty();
+
+    /**
+     * Gets the property in which the width (in pixels) is maintained.
+     *
+     * @return the property in which the width (in pixels) is maintained.
+     */
+    IntegerProperty widthProperty();
+
+    /**
+     * Gets the property in which the description is maintained.
+     *
+     * @return the property in which the description is maintained.
+     */
+    StringProperty descriptionProperty();
+
+    /**
      * Gets the collection name.
      *
      * @return the collection name
      */
-    String getCollectionName();
+    StringProperty collectionNameProperty();
+
+    /**
+     * Gets the list in which the collection of tags associated with the icon
+     * are maintained.
+     *
+     * @return the list in which the collection of tags associated with the icon
+     *         are maintained.
+     */
+    ObservableList<String> getTags();
 
     /**
      * Gets the id.
      *
      * @return the id
      */
-    int getId();
+    LongProperty idProperty();
 
     /**
      * Gets the image provider.
      *
      * @return the image provider
      */
-    URL getImageURL();
+    ObjectProperty<URL> imageURLProperty();
+
+    /**
+     * Gets the image in which the icon is rendered.
+     *
+     * @return the image in which the icon is rendered.
+     */
+    ObjectProperty<Image> imageProperty();
 
     /**
      * Gets the source key.
      *
      * @return the source key
      */
-    String getSourceKey();
-
-    /**
-     * Gets the sub category.
-     *
-     * @return the sub category
-     */
-    String getSubCategory();
-
-    /**
-     * Gets the name of the record (based on the URL).
-     *
-     * @return the name
-     */
-    default String getName()
-    {
-        String urlStr = getImageURL().toString();
-        String nameStr = urlStr;
-        int lastIndexOfSlash = urlStr.lastIndexOf('\\');
-        if (lastIndexOfSlash == -1)
-        {
-            lastIndexOfSlash = urlStr.lastIndexOf('/');
-        }
-        if (lastIndexOfSlash != -1)
-        {
-            nameStr = urlStr.substring(lastIndexOfSlash + 1);
-        }
-        return nameStr;
-    }
+    StringProperty sourceKeyProperty();
 }

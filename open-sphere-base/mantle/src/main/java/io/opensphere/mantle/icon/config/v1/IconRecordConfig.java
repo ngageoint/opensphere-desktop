@@ -1,5 +1,7 @@
 package io.opensphere.mantle.icon.config.v1;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -11,6 +13,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.log4j.Logger;
 
+import io.opensphere.core.util.io.IOUtilities;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
 
@@ -27,7 +30,7 @@ public class IconRecordConfig implements IconProvider
 
     /** The icon ID. */
     @XmlAttribute(name = "id")
-    private int myId;
+    private long myId;
 
     /** The Parameter value class. */
     @XmlAttribute(name = "collectionName")
@@ -41,15 +44,16 @@ public class IconRecordConfig implements IconProvider
     @XmlAttribute(name = "sourceKey")
     private String mySourceKey;
 
-    /** The Parameter value. */
-    @XmlAttribute(name = "subCategory")
-    private String mySubCategory;
+    /** The attribute used to mark the record as a favorite. */
+    @XmlAttribute(name = "favorite")
+    private boolean myFavorite;
 
     /**
      * Instantiates a new icon record config.
      */
     public IconRecordConfig()
     {
+        /* intentionally blank */
     }
 
     /**
@@ -59,11 +63,22 @@ public class IconRecordConfig implements IconProvider
      */
     public IconRecordConfig(IconRecord rec)
     {
-        myId = rec.getId();
-        myImageURLString = rec.getImageURL() == null ? null : rec.getImageURL().toString();
-        myCollectionName = rec.getCollectionName();
-        mySubCategory = rec.getSubCategory();
-        mySourceKey = rec.getSourceKey();
+        myId = rec.idProperty().get();
+        myImageURLString = rec.imageURLProperty().get() == null ? null : rec.imageURLProperty().get().toString();
+        myCollectionName = rec.collectionNameProperty().get();
+        mySourceKey = rec.sourceKeyProperty().get();
+        myFavorite = rec.favoriteProperty().get();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.icon.IconProvider#getIconImageData()
+     */
+    @Override
+    public InputStream getIconImageData() throws IOException
+    {
+        return IOUtilities.getInputStream(getIconURL());
     }
 
     /**
@@ -71,7 +86,7 @@ public class IconRecordConfig implements IconProvider
      *
      * @return the icon ID
      */
-    public int getId()
+    public long getId()
     {
         return myId;
     }
@@ -94,7 +109,7 @@ public class IconRecordConfig implements IconProvider
             }
             catch (MalformedURLException e)
             {
-                LOGGER.error("Failed to create URL from config value: [" + myImageURLString + "]");
+                LOGGER.error("Failed to create URL from config value: [" + myImageURLString + "]", e);
             }
         }
         return aURL;
@@ -114,12 +129,6 @@ public class IconRecordConfig implements IconProvider
     public String getSourceKey()
     {
         return mySourceKey;
-    }
-
-    @Override
-    public String getSubCategory()
-    {
-        return mySubCategory;
     }
 
     /**
@@ -163,12 +172,23 @@ public class IconRecordConfig implements IconProvider
     }
 
     /**
-     * Sets the sub category.
+     * Sets the value of the {@link #myFavorite} field.
      *
-     * @param subCategory the new sub category
+     * @param favorite the value to store in the {@link #myFavorite} field.
      */
-    public void setSubCategory(String subCategory)
+    public void setFavorite(boolean favorite)
     {
-        mySubCategory = subCategory;
+        myFavorite = favorite;
+    }
+
+    /**
+     * Gets the value of the {@link #myFavorite} field.
+     *
+     * @return the value stored in the {@link #myFavorite} field.
+     */
+    @Override
+    public boolean isFavorite()
+    {
+        return myFavorite;
     }
 }

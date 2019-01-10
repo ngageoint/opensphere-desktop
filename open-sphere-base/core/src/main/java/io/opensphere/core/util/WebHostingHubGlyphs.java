@@ -3941,7 +3941,7 @@ public enum WebHostingHubGlyphs implements FontIconEnum
     /** A constant used to reference the 'scriptalt' icon. */
     SCRIPTALT("\uf785"),
     /** A constant used to reference the 'splitthree' icon. */
-    SPLITTHREE("\uf786", 0F, -0.035714286F),
+    SPLITTHREE("\uf786"),
     /** A constant used to reference the 'mergethree' icon. */
     MERGETHREE("\uf787"),
     /** A constant used to reference the 'layersthree' icon. */
@@ -4172,18 +4172,6 @@ public enum WebHostingHubGlyphs implements FontIconEnum
     private String myFontCode;
 
     /**
-     * a drawing offset in the x direction. Positive values indicate a rightward
-     * direction, negative leftward.
-     */
-    private float myXOffset;
-
-    /**
-     * a drawing offset in the y direction. Positive values indicate a downward
-     * direction, negative up.
-     */
-    private float myYOffset;
-
-    /**
      * Creates a new font code enum instance.
      *
      * @param pFontCode the font code defining the icon.
@@ -4191,24 +4179,6 @@ public enum WebHostingHubGlyphs implements FontIconEnum
     private WebHostingHubGlyphs(String pFontCode)
     {
         myFontCode = pFontCode;
-        myXOffset = 0;
-        myYOffset = 0;
-    }
-
-    /**
-     * Creates a new font code enum instance.
-     *
-     * @param pFontCode the font code defining the icon.
-     * @param xOffset a drawing offset in the x direction. Positive values
-     *            indicate a rightward direction, negative leftward.
-     * @param yOffset a drawing offset in the y direction. Positive values
-     *            indicate a downward direction, negative up.
-     */
-    private WebHostingHubGlyphs(String pFontCode, float xOffset, float yOffset)
-    {
-        myFontCode = pFontCode;
-        myXOffset = xOffset;
-        myYOffset = yOffset;
     }
 
     /**
@@ -4228,36 +4198,23 @@ public enum WebHostingHubGlyphs implements FontIconEnum
         return SwingUtilities.WEB_HOSTING_HUB_GLYPHS_FONT;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @see io.opensphere.core.util.FontIconEnum#getXDrawingOffset()
-     */
-    @Override
-    public float getXDrawingOffset()
-    {
-        return myXOffset;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see io.opensphere.core.util.FontIconEnum#getYDrawingOffset()
-     */
-    @Override
-    public float getYDrawingOffset()
-    {
-        return myYOffset;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see io.opensphere.core.util.FontIconEnum#getGlyphName()
-     */
-    @Override
-    public String getGlyphName()
-    {
-        return name();
-    }
+//    @Override
+//    public float getXDrawingOffset()
+//    {
+//        // TODO Auto-generated method stub
+//        return 0;
+//    }
+//
+//    @Override
+//    public float getYDrawingOffset()
+//    {
+//        // TODO Auto-generated method stub
+//        return 0;
+//    }
+//
+//    @Override
+//    public String getGlyphName()
+//    {
+//        return name();
+//    }
 }

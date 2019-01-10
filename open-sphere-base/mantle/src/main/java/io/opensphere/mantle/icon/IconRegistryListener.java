@@ -4,7 +4,6 @@ import java.util.List;
 
 /**
  * Listener interface to the icon registry.
- *
  */
 public interface IconRegistryListener
 {

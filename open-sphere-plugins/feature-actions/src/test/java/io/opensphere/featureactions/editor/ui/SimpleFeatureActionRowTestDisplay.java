@@ -475,8 +475,8 @@ public class SimpleFeatureActionRowTestDisplay
             SimpleFeatureActionGroup group, SimpleFeatureAction action)
     {
         IconRecord record = support.createMock(IconRecord.class);
-        EasyMock.expect(Integer.valueOf(record.getId())).andReturn(Integer.valueOf(7)).anyTimes();
-        EasyMock.expect(record.getImageURL()).andReturn(IconRegistry.DEFAULT_ICON_URL).atLeastOnce();
+        EasyMock.expect(Long.valueOf(record.idProperty().get())).andReturn(Long.valueOf(7)).anyTimes();
+        EasyMock.expect(record.imageURLProperty().get()).andReturn(IconRegistry.DEFAULT_ICON_URL).atLeastOnce();
 
         IconRegistry iconRegistry = support.createMock(IconRegistry.class);
         EasyMock.expect(iconRegistry.getIconRecord(IconRegistry.DEFAULT_ICON_URL)).andReturn(record).atLeastOnce();

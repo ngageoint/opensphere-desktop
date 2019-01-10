@@ -23,9 +23,9 @@ import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import javafx.application.Platform;
-import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.LongProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.image.Image;
 
 /**
@@ -83,7 +83,7 @@ public class IconPickerControllerTestDisplay
 
         support.replayAll();
 
-        IntegerProperty iconIdProperty = new SimpleIntegerProperty();
+        LongProperty iconIdProperty = new SimpleLongProperty();
         IconPickerModel model = new IconPickerModel(iconIdProperty);
         IconPickerController controller = new IconPickerController(toolbox, displayer, model);
 
@@ -120,7 +120,7 @@ public class IconPickerControllerTestDisplay
 
         support.replayAll();
 
-        IntegerProperty iconIdProperty = new SimpleIntegerProperty();
+        LongProperty iconIdProperty = new SimpleLongProperty();
         IconPickerModel model = new IconPickerModel(iconIdProperty);
         CountDownLatch latch = new CountDownLatch(1);
         model.imageProperty().addListener((obs, old, newVal) ->
@@ -168,7 +168,7 @@ public class IconPickerControllerTestDisplay
 
         support.replayAll();
 
-        IntegerProperty iconIdProperty = new SimpleIntegerProperty(23);
+        LongProperty iconIdProperty = new SimpleLongProperty(23);
         IconPickerModel model = new IconPickerModel(iconIdProperty);
         CountDownLatch latch = new CountDownLatch(1);
         model.imageProperty().addListener((obs, old, newVal) ->
@@ -254,8 +254,8 @@ public class IconPickerControllerTestDisplay
     {
         IconRecord record = support.createMock(IconRecord.class);
 
-        EasyMock.expect(Integer.valueOf(record.getId())).andReturn(Integer.valueOf(imageId));
-        EasyMock.expect(record.getImageURL()).andReturn(new URL(imageUrl));
+        EasyMock.expect(Long.valueOf(record.idProperty().get())).andReturn(Long.valueOf(imageId));
+        EasyMock.expect(record.imageURLProperty().get()).andReturn(new URL(imageUrl));
 
         return record;
     }
@@ -282,7 +282,7 @@ public class IconPickerControllerTestDisplay
     private Toolbox createToolbox(EasyMockSupport support, int imageId, URL imageUrl)
     {
         IconRecord record = support.createMock(IconRecord.class);
-        EasyMock.expect(record.getImageURL()).andReturn(imageUrl);
+        EasyMock.expect(record.imageURLProperty().get()).andReturn(imageUrl);
 
         IconRegistry iconRegistry = support.createMock(IconRegistry.class);
         if (imageUrl.toString().equals(IconRegistry.DEFAULT_ICON_URL.toString()))
@@ -291,7 +291,7 @@ public class IconPickerControllerTestDisplay
         }
         else
         {
-            EasyMock.expect(Integer.valueOf(record.getId())).andReturn(Integer.valueOf(imageId));
+            EasyMock.expect(Long.valueOf(record.idProperty().get())).andReturn(Long.valueOf(imageId));
             EasyMock.expect(iconRegistry.getIconRecordByIconId(imageId)).andReturn(record);
         }
 

@@ -7,8 +7,10 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import gnu.trove.list.TIntList;
-import io.opensphere.mantle.iconproject.model.IconManagerPrefs;
-import io.opensphere.mantle.iconproject.model.PanelModel;
+import gnu.trove.list.TLongList;
+import io.opensphere.mantle.icon.chooser.model.IconManagerPrefs;
+import io.opensphere.mantle.icon.chooser.model.IconModel;
+import javafx.collections.ObservableList;
 
 /**
  * The Interface IconRegistry.
@@ -48,7 +50,7 @@ public interface IconRegistry
      * @return the {@link List} of {@link IconRecord} for the inserted
      *         providers.
      */
-    List<IconRecord> addIcons(List<? extends IconProvider> providerList, List<? extends Integer> ids, Object source);
+    List<IconRecord> addIcons(List<? extends IconProvider> providerList, List<? extends Long> ids, Object source);
 
     /**
      * Adds the listener to the registry.
@@ -83,6 +85,13 @@ public interface IconRegistry
     List<Long> getAllAssignedElementIds();
 
     /**
+     * Gets the observable list in which the collection names are defined.
+     *
+     * @return the observable list in which the collection names are defined.
+     */
+    ObservableList<String> getCollectionNameSet();
+
+    /**
      * Gets the set of all collection names in use in the registry.
      *
      * @return the collection names
@@ -95,7 +104,7 @@ public interface IconRegistry
      * @param iconId the icon id
      * @return the element ids for icon id
      */
-    List<Long> getElementIdsForIconId(int iconId);
+    List<Long> getElementIdsForIconId(long iconId);
 
     /**
      * Gets the icon cache.
@@ -110,7 +119,7 @@ public interface IconRegistry
      * @param iconURL the icon url
      * @return the icon id or -1 if not found.
      */
-    int getIconId(URL iconURL);
+    long getIconId(URL iconURL);
 
     /**
      * Gets the icon id for element id.
@@ -118,14 +127,14 @@ public interface IconRegistry
      * @param elementId the element id
      * @return the icon id for element or -1 if not found.
      */
-    int getIconIdForElement(long elementId);
+    long getIconIdForElement(long elementId);
 
     /**
      * Gets the icon ids for all the icons in the registry.
      *
      * @return the icon ids
      */
-    TIntList getIconIds();
+    TLongList getIconIds();
 
     /**
      * Gets the icon ids for the {@link IconRecord}s that match the
@@ -135,7 +144,7 @@ public interface IconRegistry
      *            filter is null.
      * @return the icon ids that match the filter criteria.
      */
-    TIntList getIconIds(Predicate<IconRecord> filter);
+    TLongList getIconIds(Predicate<IconRecord> filter);
 
     /**
      * Gets the first icon in the registry with the specified URL or returns
@@ -152,7 +161,7 @@ public interface IconRegistry
      * @param iconId the icon id
      * @return the {@link IconRecord} by icon id
      */
-    IconRecord getIconRecordByIconId(int iconId);
+    IconRecord getIconRecordByIconId(long iconId);
 
     /**
      * Gets the icon record for element.
@@ -174,6 +183,13 @@ public interface IconRegistry
     List<IconRecord> getIconRecords(TIntList iconIds);
 
     /**
+     * Gets complete collection of the {@link IconRecord}s from the registry.
+     *
+     * @return the icon records defined in the registry.
+     */
+    Collection<IconRecord> getIconRecords();
+
+    /**
      * Gets the {@link IconRecord}s from the registry that match the
      * {@link Predicate} criteria.
      *
@@ -191,14 +207,6 @@ public interface IconRegistry
     LoadedIconPool getLoadedIconPool();
 
     /**
-     * Gets the sub categories for a collection name.
-     *
-     * @param collection the collection name
-     * @return the set of sub categories for a collection.
-     */
-    Set<String> getSubCategoiresForCollection(String collection);
-
-    /**
      * Removes the icon.
      *
      * @param record the {@link IconRecord}
@@ -214,7 +222,7 @@ public interface IconRegistry
      * @param source the source of the remove
      * @return true, if successful
      */
-    boolean removeIcon(int iconId, Object source);
+    boolean removeIcon(long iconId, Object source);
 
     /**
      * Removes the icons.
@@ -223,7 +231,7 @@ public interface IconRegistry
      * @param source the source of the remove
      * @return true, if the registry changed as a result of this call.
      */
-    boolean removeIcons(TIntList iconIdsToRemove, Object source);
+    boolean removeIcons(TLongList iconIdsToRemove, Object source);
 
     /**
      * Deletes the icon file from the machine.
@@ -231,7 +239,7 @@ public interface IconRegistry
      * @param iconToDelete the IconRecord to delete.
      * @param panelModel used for registry.
      */
-    void deleteIcon(IconRecord iconToDelete, PanelModel panelModel);
+    void deleteIcon(IconRecord iconToDelete, IconModel panelModel);
 
     /**
      * Removes the listener.
@@ -264,7 +272,7 @@ public interface IconRegistry
      * @param iconId the icon id
      * @param source the source initiating the change
      */
-    void setIconForElement(long elementId, int iconId, Object source);
+    void setIconForElement(long elementId, long iconId, Object source);
 
     /**
      * Sets the icon for elements by id.
@@ -284,14 +292,17 @@ public interface IconRegistry
      * @param iconId the icon id
      * @param source the source initiating the change
      */
-    void setIconForElements(List<Long> elementIds, int iconId, Object source);
+    void setIconForElements(List<Long> elementIds, long iconId, Object source);
 
     /**
      * Sets up the preferences to be used when using the program. Are reset on
      * the start up of the program to their default values.
      *
-     * @return IconManagerPrefs the startup valeus for the tree selection, tile
+     * @return IconManagerPrefs the startup values for the tree selection, tile
      *         width, and view selection.
      */
     IconManagerPrefs getManagerPrefs();
+
+    /** Called when an icon's state changed. */
+    void iconStateChanged();
 }

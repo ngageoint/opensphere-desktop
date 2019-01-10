@@ -77,19 +77,10 @@ public class IconCacheImpl implements IconCache
     @Override
     public URL cacheIcon(File source, String destFileName, boolean overwriteExisting) throws IOException
     {
-        FileInputStream fis = null;
         URL result = null;
-        try
+        try (FileInputStream fis = new FileInputStream(source))
         {
-            fis = new FileInputStream(source);
             result = cacheIcon(fis, destFileName, overwriteExisting);
-        }
-        finally
-        {
-            if (fis != null)
-            {
-                fis.close();
-            }
         }
         return result;
     }
@@ -160,7 +151,7 @@ public class IconCacheImpl implements IconCache
                 success = aFile.delete();
             }
         }
-        catch (URISyntaxException e)
+        catch (@SuppressWarnings("unused") URISyntaxException e)
         {
             success = false;
         }

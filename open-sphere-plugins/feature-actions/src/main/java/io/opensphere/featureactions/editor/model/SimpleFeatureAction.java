@@ -1,16 +1,15 @@
 package io.opensphere.featureactions.editor.model;
 
-import javafx.beans.property.IntegerProperty;
+import io.opensphere.featureactions.model.FeatureAction;
+import javafx.beans.property.LongProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
-
-import io.opensphere.featureactions.model.FeatureAction;
 
 /**
  * Model class representing a single feature action within the feature action
@@ -41,7 +40,7 @@ public class SimpleFeatureAction
     /**
      * The id of the icon to use for the action.
      */
-    private final IntegerProperty myIconId = new SimpleIntegerProperty();
+    private final LongProperty myIconId = new SimpleLongProperty();
 
     /**
      * The maximum value if a range.
@@ -133,7 +132,7 @@ public class SimpleFeatureAction
      *
      * @return The icon id.
      */
-    public int getIconId()
+    public long getIconId()
     {
         return myIconId.get();
     }
@@ -193,7 +192,7 @@ public class SimpleFeatureAction
      *
      * @return The icon id property.
      */
-    public IntegerProperty iconIdProperty()
+    public LongProperty iconIdProperty()
     {
         return myIconId;
     }
@@ -209,11 +208,11 @@ public class SimpleFeatureAction
     }
 
     /**
-     * Sets the id of the icond to use for the action.
+     * Sets the id of the icon to use for the action.
      *
      * @param iconId The icon id.
      */
-    public void setIconId(int iconId)
+    public void setIconId(long iconId)
     {
         myIconId.set(iconId);
     }

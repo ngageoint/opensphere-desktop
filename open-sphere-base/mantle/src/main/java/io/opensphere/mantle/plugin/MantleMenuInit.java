@@ -14,7 +14,7 @@ import io.opensphere.core.hud.awt.HUDJInternalFrame;
 import io.opensphere.core.net.manager.view.NetworkManagerFrame;
 import io.opensphere.core.quantify.Quantify;
 import io.opensphere.mantle.data.geom.style.dialog.VisualizationStyleControlDialog;
-import io.opensphere.mantle.iconproject.view.IconProjDialog;
+import io.opensphere.mantle.icon.chooser.view.IconDialog;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.mantle.util.TextViewDialog;
 
@@ -86,9 +86,8 @@ class MantleMenuInit
         iconManagerMI.addActionListener(e ->
         {
             Quantify.collectMetric("mist3d.menu-bar.tools.icon-manager");
-            IconProjDialog internIconManager = new IconProjDialog(myToolbox.getUIRegistry().getMainFrameProvider().get(),
-                    myToolbox, false, true);
-            internIconManager.setVisible(true);
+            IconDialog iconManager = new IconDialog(myToolbox, myToolbox.getUIRegistry().getMainFrameProvider().get());
+            iconManager.setVisible(true);
         });
         myToolbox.getUIRegistry().getMenuBarRegistry().getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.TOOLS_MENU)
                 .add(iconManagerMI);

@@ -1,25 +1,19 @@
 /* Styles used by JavaFX for the custom look & feel. */
 .root {
-    -opensphere-base: #535366;
-    -opensphere-dark: #3A3A47;
-    -opensphere-purple: #8D84BD;
-    -opensphere-purple-hover: ladder(-opensphere-purple, derive(-opensphere-purple, 20%) 20%,
-        derive(-opensphere-purple, 30%) 35%, derive(-opensphere-purple, 40%) 50%);
-    -opensphere-purple-pressed: derive(-opensphere-purple, -6%);
-    -opensphere-border: #8080A2;
+    -opensphere-base: #535353; 
+    -opensphere-dark: #3A3A3A; 
+    -opensphere-background: #8D8D8D;
+    -opensphere-background-hover: ladder(-opensphere-background, derive(-opensphere-background, 20%) 20%,
+        derive(-opensphere-background, 30%) 35%, derive(-opensphere-background, 40%) 50%);
+    -opensphere-background-pressed: derive(-opensphere-background, -6%);
+    -opensphere-border: #808080; 
     -fx-base: -opensphere-base;
-    -fx-background: #505061;
+    -fx-background: #505050; 
     -fx-control-inner-background: derive(-fx-base, 18%);
     -fx-control-inner-background-alt: derive(-fx-base, 26.4%);
     -fx-default-button: -opensphere-base;
 }
 
-/* swing look-and-feel
-.button {
-	-fx-outer-border: -opensphere-border;
-	-fx-inner-border: -fx-body-color;
-}
-*/
 .icons {
     -fx-font-size: 12px;
     -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
@@ -38,6 +32,10 @@
     -fx-font-family: "Font Awesome 5 Brands Regular";
 }
 
+.icons-WebHostingHub-Glyphs { 
+	-fx-font-family: "WebHostingHub-Glyphs";
+}
+
 .icons-FontAwesome {
     -fx-font-family: FontAwesome;
 }
@@ -51,15 +49,15 @@
 }
 
 .scroll-bar>.thumb {
-    -fx-color: -opensphere-purple;
+    -fx-color: -opensphere-background;
 }
 
 .scroll-bar>.thumb:hover {
-    -fx-color: -opensphere-purple-hover;
+    -fx-color: -opensphere-background-hover;
 }
 
 .scroll-bar>.thumb:pressed {
-    -fx-color: -opensphere-purple-pressed;
+    -fx-color: -opensphere-background-pressed;
 }
 
 .scroll-pane>.viewport {
@@ -457,4 +455,47 @@
     -fx-background-insets: 0 1 0 -1, 0;
     -fx-padding: 0.333333em 0.333333em 0.333333em 0.333333em;
     -fx-effect: dropshadow(two-pass-box, -fx-shadow-highlight-color, 1, 0.0, 0, 1.4);
+}
+
+.tab-pane > .tab-header-area > .os-control-buttons-tab > .container > .tab-down-button {
+    -fx-padding: 4 4 9 4;
+    -fx-background-radius: 10;
+}
+.tab-pane:bottom > .tab-header-area > .os-control-buttons-tab > .container > .tab-down-button {
+    -fx-padding: -5 4 4 4; 
+}
+.tab-pane > .tab-header-area > .os-control-buttons-tab > .container > .tab-down-button:hover {
+    -fx-color: -fx-hover-base;
+}
+.tab-pane > .tab-header-area > .os-control-buttons-tab > .container > .tab-down-button:pressed {
+    -fx-color: -fx-pressed-base;
+}
+.tab-pane > .tab-header-area > .os-control-buttons-tab > .container > .tab-down-button > .arrow  {
+    -fx-background-color: -fx-mark-highlight-color, -fx-mark-color;
+    -fx-background-insets: 0 0 -1 0, 0;
+    -fx-padding: 0.166667em 0.333333em 0.166667em 0.333333em; /* 2 4 2 4 */
+    -fx-shape: "M 0 0 h 7 l -3.5 4 z";
+}
+
+.tab-pane > .tab-header-area > .os-control-buttons-tab > .container > .add-tab-button {
+    -fx-padding:  0em 0.0416665em .5em 0.0416665em;
+    -fx-background-radius: 10;
+}
+.tab-pane:bottom > .tab-header-area > .os-control-buttons-tab > .container > .add-tab-button {
+    -fx-padding: -5 2 4 4; 
+}
+.tab-pane > .tab-header-area > .os-control-buttons-tab > .container > .add-tab-button:hover {
+    -fx-color: -fx-hover-base;
+}
+.tab-pane > .tab-header-area > .os-control-buttons-tab > .container > .add-tab-button:pressed {
+    -fx-color: -fx-pressed-base;
+}
+.tab-pane > .tab-header-area > .os-control-buttons-tab > .container > .add-tab-button > .plus  {
+    -fx-padding: 0.166667em 0.083333em 0.166667em 0.083333em; /* 2 4 2 4 */
+}
+.tab-pane > .tab-header-area > .os-control-buttons-tab > .container > .add-tab-button > .plus > .plus-path  {
+    -fx-fill: lime; 
+}
+.tab-pane > .tab-header-area > .os-control-buttons-tab > .container > .add-tab-button > .plus > .plus-path:hover  {
+    -fx-effect: dropshadow(three-pass-box, white, 15,.25, 0, 0);
 }

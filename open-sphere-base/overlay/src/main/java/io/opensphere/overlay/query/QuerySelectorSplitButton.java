@@ -27,9 +27,7 @@ import javafx.collections.ObservableList;
  */
 public class QuerySelectorSplitButton extends SplitButton
 {
-    /**
-     * The unique identifier used for serialization operations.
-     */
+    /** The unique identifier used for serialization operations. */
     private static final long serialVersionUID = 6753950820522867830L;
 
     /** The property in which the current selection mode is defined. */
@@ -64,17 +62,18 @@ public class QuerySelectorSplitButton extends SplitButton
      * immediately removed. This allows for external plugins to contribute
      * additional query actions without introducing a direct external
      * dependency.
-     * 
+     *
      * @param toolbox the overlay toolbox from which the
      *            {@link QueryActionManager} is accessed.
      */
-    public QuerySelectorSplitButton(OverlayToolbox toolbox)
+    public QuerySelectorSplitButton(final OverlayToolbox toolbox)
     {
         super(null, new GenericFontIcon(AwesomeIconRegular.SQUARE, IconUtil.DEFAULT_ICON_FOREGROUND), true);
+        setRolloverIcon(new GenericFontIcon(AwesomeIconRegular.SQUARE, IconUtil.DEFAULT_ICON_ROLLOVER));
 
         myQueryActions = New.map();
-        QueryActionManager queryActionManager = toolbox.getQueryActionManager();
-        queryActionManager.getQueryActions().addListener((Change<? extends QueryActionDefinition> c) ->
+        final QueryActionManager queryActionManager = toolbox.getQueryActionManager();
+        queryActionManager.getQueryActions().addListener((final Change<? extends QueryActionDefinition> c) ->
         {
             while (c.next())
             {
@@ -88,6 +87,7 @@ public class QuerySelectorSplitButton extends SplitButton
 
         {
             setIcon(myModeIcons.get(nv).iconProperty().get());
+            setRolloverIcon(myModeIcons.get(nv).rolloverIconProperty().get());
         });
 
         myToggledProperty = new ConcurrentBooleanProperty(false);
@@ -97,10 +97,12 @@ public class QuerySelectorSplitButton extends SplitButton
             if (nv)
             {
                 setIcon(myModeIcons.get(myCurrentSelectionMode.get()).selectedIconProperty().get());
+                setRolloverIcon(myModeIcons.get(myCurrentSelectionMode.get()).rolloverIconProperty().get());
             }
             else
             {
                 setIcon(myModeIcons.get(myCurrentSelectionMode.get()).iconProperty().get());
+                setRolloverIcon(myModeIcons.get(myCurrentSelectionMode.get()).rolloverIconProperty().get());
             }
         });
 
@@ -133,17 +135,19 @@ public class QuerySelectorSplitButton extends SplitButton
     /**
      * Creates a new menu item that can modify the current selection mode
      * property.
-     * 
+     *
      * @param metadata the metadata defining the selection mode.
      */
-    private void createIconModifyingMenuItem(SelectionModeQueryActionDefinition metadata)
+    private void createIconModifyingMenuItem(final SelectionModeQueryActionDefinition metadata)
     {
-        JMenuItem item = new JMenuItem(metadata.labelProperty().get());
+        final JMenuItem item = new JMenuItem(metadata.labelProperty().get());
         item.setIcon(metadata.iconProperty().get());
         item.setSelectedIcon(metadata.selectedIconProperty().get());
+        item.setRolloverIcon(metadata.rolloverIconProperty().get());
         item.addActionListener(e ->
         {
             setIcon(metadata.selectedIconProperty().get());
+            setRolloverIcon(metadata.rolloverIconProperty().get());
             currentSelectionModeProperty().set(metadata.getMode());
             fireActionPerformed(e);
         });
@@ -157,21 +161,22 @@ public class QuerySelectorSplitButton extends SplitButton
      * the action taken must be defined in the supplied definition. This method
      * has a side-effect of adding a separator to the menu if this is the first
      * query action to be added.
-     * 
+     *
      * @param definition the definition of the query action to add.
      */
-    private void addQueryAction(QueryActionDefinition definition)
+    private void addQueryAction(final QueryActionDefinition definition)
     {
         if (myQueryActions.isEmpty())
         {
             addSeparator();
         }
 
-        JMenuItem item = new JMenuItem(definition.labelProperty().get(), definition.iconProperty().get());
+        final JMenuItem item = new JMenuItem(definition.labelProperty().get(), definition.iconProperty().get());
         if (definition.selectedIconProperty().get() != null)
         {
             item.setSelectedIcon(definition.selectedIconProperty().get());
         }
+        item.setRolloverIcon(definition.rolloverIconProperty().get());
 
         item.addActionListener(e -> definition.getEventListener().accept(new QueryEvent(item)));
         myQueryActions.put(definition, item);
@@ -180,10 +185,10 @@ public class QuerySelectorSplitButton extends SplitButton
 
     /**
      * Removes the supplied query action from the button.
-     * 
+     *
      * @param definition the definition of the action to remove.
      */
-    private void removeQueryAction(AbstractQueryActionDefinition definition)
+    private void removeQueryAction(final AbstractQueryActionDefinition definition)
     {
         if (myQueryActions.containsKey(definition))
         {
@@ -197,7 +202,7 @@ public class QuerySelectorSplitButton extends SplitButton
      * @see javax.swing.AbstractButton#setSelected(boolean)
      */
     @Override
-    public void setSelected(boolean b)
+    public void setSelected(final boolean b)
     {
         // intercepts the super implementation to bind behavior to the toggled
         // property.

@@ -19,11 +19,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import io.opensphere.core.util.image.ImageUtil;
+import io.opensphere.core.util.io.IOUtilities;
 import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.mantle.data.geom.style.MutableVisualizationStyle;
-import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.iconproject.view.IconProjDialog;
-import javafx.scene.control.ButtonBar.ButtonData;
+import io.opensphere.mantle.icon.chooser.view.IconDialog;
 
 /**
  * The Class IconChooserStyleParameterEditorPanel.
@@ -50,7 +49,7 @@ public class IconChooserStyleParameterEditorPanel extends AbstractStyleParameter
         BufferedImage icon = null;
         try
         {
-            icon = ImageIO.read(iconURL);
+            icon = ImageIO.read(IOUtilities.getInputStream(iconURL));
         }
         catch (IOException e)
         {
@@ -103,15 +102,18 @@ public class IconChooserStyleParameterEditorPanel extends AbstractStyleParameter
     {
         if (e.getSource() == myButton)
         {
-            IconProjDialog fileDialog = new IconProjDialog(myStyle.getToolbox().getUIRegistry().getMainFrameProvider().get(),
-                    myStyle.getToolbox(), true, false);
-            fileDialog.setVisible(true);
-
-            if (!(fileDialog.getResponse() == null || fileDialog.getResponse().equals(ButtonData.CANCEL_CLOSE)))
+            IconDialog dialog = new IconDialog(myStyle.getToolbox(),
+                    myStyle.getToolbox().getUIRegistry().getMainFrameProvider().get());
+            dialog.setInitialValueSupplier(this::getParameterValue);
+            dialog.setAcceptListener(r ->
             {
-                IconRecord rec = fileDialog.getPanelModel().getSelectedRecord().get();
-                setParamValue(rec.getImageURL().toString());
-            }
+                if (r != null)
+                {
+                    setParamValue(r.imageURLProperty().get().toString());
+                }
+            });
+
+            dialog.setVisible(true);
         }
     }
 

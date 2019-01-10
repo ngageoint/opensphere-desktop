@@ -64,7 +64,7 @@ public class StyleOptions extends Observable implements Serializable
      * The id of the icon to display in this style.
      */
     @XmlAttribute(name = "iconId")
-    private int myIconId;
+    private long myIconId;
 
     /**
      * The size of the bulls eye.
@@ -127,7 +127,7 @@ public class StyleOptions extends Observable implements Serializable
      *
      * @return the iconId.
      */
-    public int getIconId()
+    public long getIconId()
     {
         return myIconId;
     }
@@ -171,7 +171,7 @@ public class StyleOptions extends Observable implements Serializable
     @Override
     public int hashCode()
     {
-        return Objects.hash(myColor, Integer.valueOf(myIconId), Integer.valueOf(mySize), myStyle);
+        return Objects.hash(myColor, Long.valueOf(myIconId), Integer.valueOf(mySize), myStyle);
     }
 
     /**
@@ -201,7 +201,7 @@ public class StyleOptions extends Observable implements Serializable
      *
      * @param iconId the iconId to set.
      */
-    public void setIconId(int iconId)
+    public void setIconId(long iconId)
     {
         myIconId = iconId;
         setChanged();

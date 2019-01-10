@@ -16,6 +16,7 @@ import de.micromata.opengis.kml.v_2_2_0.Style;
 import de.micromata.opengis.kml.v_2_2_0.StyleSelector;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.ColorUtilities;
+import io.opensphere.core.util.Colors;
 import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.data.LoadsTo;
 import io.opensphere.mantle.data.MapVisualizationType;
@@ -33,7 +34,8 @@ import io.opensphere.myplaces.models.MyPlacesEditListener;
 public final class PlacemarkUtils
 {
     /** The default color. */
-    public static final Color DEFAULT_COLOR = new Color(84, 84, 107, 190);
+    public static final Color DEFAULT_COLOR = new Color(Colors.LF_PRIMARY2.getRed(), Colors.LF_PRIMARY2.getGreen(),
+            Colors.LF_PRIMARY2.getBlue(), 190);
 
     /** The default font. */
     public static final Font DEFAULT_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
