@@ -41,6 +41,11 @@ public final class WFSMetaDataInfo extends DefaultMetaDataInfo
      */
     private volatile boolean myIsDynamicTime;
 
+    /**
+     * Copy constructor.
+     *
+     * @param source the source object from which to copy data.
+     */
     protected WFSMetaDataInfo(WFSMetaDataInfo source)
     {
         super(source);

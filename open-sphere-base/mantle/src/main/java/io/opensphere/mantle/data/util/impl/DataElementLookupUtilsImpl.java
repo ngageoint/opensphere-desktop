@@ -872,6 +872,11 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
          */
         private long myCacheId;
 
+        /**
+         * Create a copy of a result data element.
+         *
+         * @param source the result data element to be copied from
+         */
         protected ResultDataElement(ResultDataElement source)
         {
             myDTI = source.myDTI;
@@ -1046,7 +1051,9 @@ public class DataElementLookupUtilsImpl implements DataElementLookupUtils
         private final MapGeometrySupport myMapGeometrySupport;
 
         /**
+         * Create a copy of a result map data element.
          *
+         * @param source the result map data element to be copied from
          */
         public ResultMapDataElement(ResultMapDataElement source)
         {

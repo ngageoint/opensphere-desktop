@@ -45,9 +45,6 @@ public class SimpleMetaDataProvider implements MetaDataProvider, Serializable
         {
             myKeyToValueMap.put(entry.getKey(), entry.getValue());
         }
-//
-//        myKeyToValueMap = source.myKeyToValueMap.entrySet().stream()
-//                .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
     }
 
     /**

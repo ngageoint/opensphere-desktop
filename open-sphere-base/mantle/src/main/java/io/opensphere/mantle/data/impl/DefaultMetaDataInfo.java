@@ -161,6 +161,8 @@ public class DefaultMetaDataInfo implements MetaDataInfo
     }
 
     /**
+     * Copy constructor.
+     *
      * @param source the object from which to copy data.
      */
     protected DefaultMetaDataInfo(DefaultMetaDataInfo source)
