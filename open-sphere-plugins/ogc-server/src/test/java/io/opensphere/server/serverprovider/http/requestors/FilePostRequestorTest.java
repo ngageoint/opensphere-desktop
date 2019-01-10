@@ -15,18 +15,20 @@ import java.nio.file.Files;
 import java.util.Collection;
 import java.util.Map;
 
+import org.apache.http.client.CookieStore;
 import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
-import org.easymock.IAnswer;
 import org.junit.Test;
 
 import com.bitsys.common.http.client.HttpClient;
+import com.bitsys.common.http.client.HttpClientOptions;
 import com.bitsys.common.http.entity.HttpEntity;
 import com.bitsys.common.http.entity.MultipartEntity;
 import com.bitsys.common.http.message.HttpRequest;
 import com.bitsys.common.http.message.HttpResponse;
 import com.google.common.collect.ListMultimap;
 
+import io.opensphere.core.event.EventManager;
 import io.opensphere.core.server.ResponseValues;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.io.CancellableInputStream;
@@ -59,28 +61,30 @@ public class FilePostRequestorTest
     @Test
     public void testPostFileToServer() throws IOException, URISyntaxException
     {
-        EasyMockSupport support = new EasyMockSupport();
+        final EasyMockSupport support = new EasyMockSupport();
 
-        String fileContents = "This is my file.";
-        String urlString = "http://somehost/fileUpload";
-        URL url = new URL(urlString);
+        final String fileContents = "This is my file.";
+        final String urlString = "http://somehost/fileUpload";
+        final URL url = new URL(urlString);
 
-        File tempFile = File.createTempFile("FilePostRequestor", "Test");
+        final File tempFile = File.createTempFile("FilePostRequestor", "Test");
         tempFile.deleteOnExit();
         Files.write(tempFile.toPath(), New.list(fileContents), StringUtilities.DEFAULT_CHARSET);
 
-        ByteArrayInputStream expectedReturn = new ByteArrayInputStream(new byte[0]);
+        final ByteArrayInputStream expectedReturn = new ByteArrayInputStream(new byte[0]);
 
-        HttpResponse response = createResponse(support, expectedReturn, false);
+        final HttpResponse response = createResponse(support, expectedReturn, false);
 
-        HttpClient client = createHttpClient(support, response, tempFile, fileContents);
+        final HttpClient client = createHttpClient(support, response, tempFile, fileContents);
+
+        final EventManager eventManager = support.createNiceMock(EventManager.class);
 
         support.replayAll();
 
-        FilePostRequestorImpl requestor = new FilePostRequestorImpl(client, new HeaderConstantsMock(), null);
+        final FilePostRequestorImpl requestor = new FilePostRequestorImpl(client, new HeaderConstantsMock(), eventManager);
 
-        ResponseValues responseValues = new ResponseValues();
-        CancellableInputStream actualReturn = requestor.postFileToServer(url, tempFile, responseValues);
+        final ResponseValues responseValues = new ResponseValues();
+        final CancellableInputStream actualReturn = requestor.postFileToServer(url, tempFile, responseValues);
 
         assertEquals(expectedReturn, actualReturn.getWrappedInputStream());
         assertEquals(HttpURLConnection.HTTP_OK, responseValues.getResponseCode());
@@ -99,28 +103,30 @@ public class FilePostRequestorTest
     @Test
     public void testPostFileWithError() throws IOException, URISyntaxException
     {
-        EasyMockSupport support = new EasyMockSupport();
+        final EasyMockSupport support = new EasyMockSupport();
 
-        String fileContents = "This is my file.";
-        String urlString = "http://somehost/fileUpload";
-        URL url = new URL(urlString);
+        final String fileContents = "This is my file.";
+        final String urlString = "http://somehost/fileUpload";
+        final URL url = new URL(urlString);
 
-        File tempFile = File.createTempFile("FilePostRequestor", "Test");
+        final File tempFile = File.createTempFile("FilePostRequestor", "Test");
         tempFile.deleteOnExit();
         Files.write(tempFile.toPath(), New.list(fileContents), StringUtilities.DEFAULT_CHARSET);
 
-        ByteArrayInputStream expectedReturn = new ByteArrayInputStream(new byte[0]);
+        final ByteArrayInputStream expectedReturn = new ByteArrayInputStream(new byte[0]);
 
-        HttpResponse response = createResponse(support, expectedReturn, true);
+        final HttpResponse response = createResponse(support, expectedReturn, true);
 
-        HttpClient client = createHttpClient(support, response, tempFile, fileContents);
+        final HttpClient client = createHttpClient(support, response, tempFile, fileContents);
+
+        final EventManager eventManager = support.createNiceMock(EventManager.class);
 
         support.replayAll();
 
-        FilePostRequestorImpl requestor = new FilePostRequestorImpl(client, new HeaderConstantsMock(), null);
+        final FilePostRequestorImpl requestor = new FilePostRequestorImpl(client, new HeaderConstantsMock(), eventManager);
 
-        ResponseValues responseValues = new ResponseValues();
-        CancellableInputStream actualReturn = requestor.postFileToServer(url, tempFile, responseValues);
+        final ResponseValues responseValues = new ResponseValues();
+        final CancellableInputStream actualReturn = requestor.postFileToServer(url, tempFile, responseValues);
 
         assertEquals(expectedReturn, actualReturn.getWrappedInputStream());
         assertEquals(HttpURLConnection.HTTP_FORBIDDEN, responseValues.getResponseCode());
@@ -142,33 +148,34 @@ public class FilePostRequestorTest
      * @return The expectedReturn.
      * @throws IOException Bad IO.
      */
-    private HttpClient createHttpClient(EasyMockSupport support, final HttpResponse expectedReturn, final File file,
+    private HttpClient createHttpClient(final EasyMockSupport support, final HttpResponse expectedReturn, final File file,
             final String fileContent)
         throws IOException
     {
-        HttpClient client = support.createMock(HttpClient.class);
+        final HttpClient client = support.createMock(HttpClient.class);
+        final HttpClientOptions options = new HttpClientOptions();
+        final CookieStore cookieStore = EasyMock.createNiceMock(CookieStore.class);
+
+        EasyMock.expect(client.getOptions()).andReturn(options);
+        EasyMock.expect(client.getCookieStore()).andReturn(cookieStore);
 
         client.execute(EasyMock.isA(HttpRequest.class));
-        EasyMock.expectLastCall().andAnswer(new IAnswer<HttpResponse>()
+        EasyMock.expectLastCall().andAnswer(() ->
         {
-            @Override
-            public HttpResponse answer() throws IOException
-            {
-                HttpRequest request = (HttpRequest)EasyMock.getCurrentArguments()[0];
-                MultipartEntity multiPart = (MultipartEntity)request.getEntity();
+            final HttpRequest request = (HttpRequest)EasyMock.getCurrentArguments()[0];
+            final MultipartEntity multiPart = (MultipartEntity)request.getEntity();
 
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                multiPart.writeTo(outputStream);
+            final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            multiPart.writeTo(outputStream);
 
-                byte[] bytes = outputStream.toByteArray();
+            final byte[] bytes = outputStream.toByteArray();
 
-                String requestString = ByteString.getStringFromBytes(bytes);
+            final String requestString = ByteString.getStringFromBytes(bytes);
 
-                assertTrue(requestString.contains(file.getName()));
-                assertTrue(requestString.contains(fileContent));
+            assertTrue(requestString.contains(file.getName()));
+            assertTrue(requestString.contains(fileContent));
 
-                return expectedReturn;
-            }
+            return expectedReturn;
         });
 
         return client;
@@ -182,9 +189,9 @@ public class FilePostRequestorTest
      * @param isError True if the response code should be an error.
      * @return The easy mocked support.
      */
-    private HttpResponse createResponse(EasyMockSupport support, InputStream returnStream, boolean isError)
+    private HttpResponse createResponse(final EasyMockSupport support, final InputStream returnStream, final boolean isError)
     {
-        HttpResponse response = support.createMock(HttpResponse.class);
+        final HttpResponse response = support.createMock(HttpResponse.class);
 
         response.getStatusCode();
 
@@ -209,14 +216,14 @@ public class FilePostRequestorTest
         }
 
         @SuppressWarnings("unchecked")
-        ListMultimap<String, String> headerValues = support.createMock(ListMultimap.class);
+        final ListMultimap<String, String> headerValues = support.createMock(ListMultimap.class);
         headerValues.asMap();
         EasyMock.expectLastCall().andReturn(ourHeaderValues);
 
         response.getHeaders();
         EasyMock.expectLastCall().andReturn(headerValues);
 
-        HttpEntity entity = support.createMock(HttpEntity.class);
+        final HttpEntity entity = support.createMock(HttpEntity.class);
         entity.getContent();
         EasyMock.expectLastCall().andReturn(returnStream);
         entity.getContentLength();

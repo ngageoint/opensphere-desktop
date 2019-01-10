@@ -83,17 +83,17 @@ public class TileRowImporterImplTest
     @Test
     public void test()
     {
-        EasyMockSupport support = new EasyMockSupport();
+        final EasyMockSupport support = new EasyMockSupport();
 
-        GeoPackageTileLayer layer = createLayer();
-        DataRegistry registry = createDataRegistry(support, layer.getId());
-        TileDao tileDao = createTileDao(support);
-        BoundingBox boundingBox = createBoundBox();
-        TileRow row = createTileRow(tileDao);
+        final GeoPackageTileLayer layer = createLayer();
+        final DataRegistry registry = createDataRegistry(support, layer.getId());
+        final TileDao tileDao = createTileDao(support);
+        final BoundingBox boundingBox = createBoundBox();
+        final TileRow row = createTileRow(tileDao);
 
         support.replayAll();
 
-        TileRowImporterImpl importer = new TileRowImporterImpl(registry);
+        final TileRowImporterImpl importer = new TileRowImporterImpl(registry);
         importer.importTile(layer, tileDao, boundingBox, row);
 
         support.verifyAll();
@@ -107,25 +107,26 @@ public class TileRowImporterImplTest
      * @throws IOException Bad IO.
      */
     @SuppressWarnings("unchecked")
-    private long[] assertImageDeposit(String layerId) throws IOException
+    private long[] assertImageDeposit(final String layerId) throws IOException
     {
-        DefaultCacheDeposit<InputStream> deposit = (DefaultCacheDeposit<InputStream>)EasyMock.getCurrentArguments()[0];
+        final DefaultCacheDeposit<InputStream> deposit = (DefaultCacheDeposit<InputStream>)EasyMock.getCurrentArguments()[0];
 
-        DataModelCategory category = deposit.getCategory();
+        final DataModelCategory category = deposit.getCategory();
         assertEquals(new DataModelCategory(ourPackageFile, ourLayerName, Image.class.getName()), category);
 
-        Collection<PropertyAccessor<InputStream, ?>> accessors = (Collection<PropertyAccessor<InputStream, ?>>)deposit
+        final Collection<PropertyAccessor<InputStream, ?>> accessors = (Collection<PropertyAccessor<InputStream, ?>>)deposit
                 .getAccessors();
         assertEquals(2, accessors.size());
 
-        Iterator<PropertyAccessor<InputStream, ?>> iterator = accessors.iterator();
+        final Iterator<PropertyAccessor<InputStream, ?>> iterator = accessors.iterator();
 
-        PropertyAccessor<InputStream, String> keyAccessor = (PropertyAccessor<InputStream, String>)iterator.next();
+        final PropertyAccessor<InputStream, String> keyAccessor = (PropertyAccessor<InputStream, String>)iterator.next();
         assertTrue(keyAccessor instanceof SerializableAccessor);
         assertEquals(GeoPackagePropertyDescriptors.KEY_PROPERTY_DESCRIPTOR, keyAccessor.getPropertyDescriptor());
         assertEquals(ourZoomLevel + "|" + ourTileBoundingBox.toSimpleString(), keyAccessor.access(null));
 
-        PropertyAccessor<InputStream, InputStream> tileAccessor = (PropertyAccessor<InputStream, InputStream>)iterator.next();
+        final PropertyAccessor<InputStream, InputStream> tileAccessor = (PropertyAccessor<InputStream, InputStream>)iterator
+                .next();
         assertTrue(tileAccessor instanceof InputStreamAccessor);
         assertEquals(GeoPackagePropertyDescriptors.IMAGE_PROPERTY_DESCRIPTOR, tileAccessor.getPropertyDescriptor());
 
@@ -134,10 +135,10 @@ public class TileRowImporterImplTest
         assertTrue(deposit.isNew());
         assertFalse(deposit.isCritical());
 
-        InputStream image = deposit.getInput().iterator().next();
+        final InputStream image = deposit.getInput().iterator().next();
 
         assertEquals(4, image.available());
-        byte[] imageData = new byte[4];
+        final byte[] imageData = new byte[4];
         image.read(imageData);
 
         assertEquals(1, imageData[0]);
@@ -155,30 +156,31 @@ public class TileRowImporterImplTest
      * @return The model id.
      */
     @SuppressWarnings("unchecked")
-    private long[] assertTileDeposit(String layerId)
+    private long[] assertTileDeposit(final String layerId)
     {
-        DefaultCacheDeposit<GeoPackageTile> deposit = (DefaultCacheDeposit<GeoPackageTile>)EasyMock.getCurrentArguments()[0];
+        final DefaultCacheDeposit<GeoPackageTile> deposit = (DefaultCacheDeposit<GeoPackageTile>)EasyMock
+                .getCurrentArguments()[0];
 
-        DataModelCategory category = deposit.getCategory();
+        final DataModelCategory category = deposit.getCategory();
         assertEquals(new DataModelCategory(ourPackageFile, ourLayerName, GeoPackageTile.class.getName()), category);
 
-        Collection<PropertyAccessor<GeoPackageTile, ?>> accessors = (Collection<PropertyAccessor<GeoPackageTile, ?>>)deposit
+        final Collection<PropertyAccessor<GeoPackageTile, ?>> accessors = (Collection<PropertyAccessor<GeoPackageTile, ?>>)deposit
                 .getAccessors();
         assertEquals(3, accessors.size());
 
-        Iterator<PropertyAccessor<GeoPackageTile, ?>> iterator = accessors.iterator();
+        final Iterator<PropertyAccessor<GeoPackageTile, ?>> iterator = accessors.iterator();
 
-        PropertyAccessor<GeoPackageTile, String> keyAccessor = (PropertyAccessor<GeoPackageTile, String>)iterator.next();
+        final PropertyAccessor<GeoPackageTile, String> keyAccessor = (PropertyAccessor<GeoPackageTile, String>)iterator.next();
         assertTrue(keyAccessor instanceof SerializableAccessor);
         assertEquals(GeoPackagePropertyDescriptors.KEY_PROPERTY_DESCRIPTOR, keyAccessor.getPropertyDescriptor());
         assertEquals(ourZoomLevel + "|" + ourTileBoundingBox.toSimpleString(), keyAccessor.access(null));
 
-        PropertyAccessor<GeoPackageTile, GeoPackageTile> tileAccessor = (PropertyAccessor<GeoPackageTile, GeoPackageTile>)iterator
+        final PropertyAccessor<GeoPackageTile, GeoPackageTile> tileAccessor = (PropertyAccessor<GeoPackageTile, GeoPackageTile>)iterator
                 .next();
         assertTrue(tileAccessor instanceof SerializableAccessor);
         assertEquals(GeoPackagePropertyDescriptors.GEOPACKAGE_TILE_PROPERTY_DESCRIPTOR, tileAccessor.getPropertyDescriptor());
 
-        PropertyAccessor<GeoPackageTile, Long> zoomLevelAccessor = (PropertyAccessor<GeoPackageTile, Long>)iterator.next();
+        final PropertyAccessor<GeoPackageTile, Long> zoomLevelAccessor = (PropertyAccessor<GeoPackageTile, Long>)iterator.next();
         assertTrue(zoomLevelAccessor instanceof SerializableAccessor);
         assertEquals(GeoPackagePropertyDescriptors.ZOOM_LEVEL_PROPERTY_DESCRIPTOR, zoomLevelAccessor.getPropertyDescriptor());
         assertEquals(ourZoomLevel, zoomLevelAccessor.access(null).longValue());
@@ -188,7 +190,7 @@ public class TileRowImporterImplTest
         assertTrue(deposit.isNew());
         assertFalse(deposit.isCritical());
 
-        GeoPackageTile tile = deposit.getInput().iterator().next();
+        final GeoPackageTile tile = deposit.getInput().iterator().next();
         assertEquals(ourTileBoundingBox, tile.getBoundingBox());
         assertEquals(layerId, tile.getLayerId());
         assertEquals(ourZoomLevel, tile.getZoomLevel());
@@ -203,10 +205,10 @@ public class TileRowImporterImplTest
      */
     private BoundingBox createBoundBox()
     {
-        GeometryEnvelope boundingBox = new GeometryEnvelope(10, 11, 10, 11);
+        GeometryEnvelope boundingBox = new GeometryEnvelope(10, 10, 11, 11);
 
-        Projection geodetic = ProjectionFactory.getProjection(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
-        ProjectionTransform transform = geodetic.getTransformation(ProjectionConstants.EPSG_WEB_MERCATOR);
+        final Projection geodetic = ProjectionFactory.getProjection(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
+        final ProjectionTransform transform = geodetic.getTransformation(ProjectionConstants.EPSG_WEB_MERCATOR);
         boundingBox = transform.transform(boundingBox);
 
         return new BoundingBox(boundingBox);
@@ -220,9 +222,9 @@ public class TileRowImporterImplTest
      * @return The mocked data registry.
      */
     @SuppressWarnings("unchecked")
-    private DataRegistry createDataRegistry(EasyMockSupport support, String layerId)
+    private DataRegistry createDataRegistry(final EasyMockSupport support, final String layerId)
     {
-        DataRegistry registry = support.createMock(DataRegistry.class);
+        final DataRegistry registry = support.createMock(DataRegistry.class);
 
         EasyMock.expect(registry.addModels(EasyMock.isA(DefaultCacheDeposit.class))).andAnswer(() -> assertTileDeposit(layerId));
         EasyMock.expect(registry.addModels(EasyMock.isA(DefaultCacheDeposit.class))).andAnswer(() -> assertImageDeposit(layerId));
@@ -237,7 +239,7 @@ public class TileRowImporterImplTest
      */
     private GeoPackageTileLayer createLayer()
     {
-        GeoPackageTileLayer tileLayer = new GeoPackageTileLayer(ourPackageName, ourPackageFile, ourLayerName, 1);
+        final GeoPackageTileLayer tileLayer = new GeoPackageTileLayer(ourPackageName, ourPackageFile, ourLayerName, 1);
 
         return tileLayer;
     }
@@ -248,11 +250,11 @@ public class TileRowImporterImplTest
      * @param support Used to create a mocked {@link Connection}.
      * @return The mocked tile dao.
      */
-    private TileDao createTileDao(EasyMockSupport support)
+    private TileDao createTileDao(final EasyMockSupport support)
     {
-        MockGeoPackageConnection db = new MockGeoPackageConnection(support.createMock(Connection.class));
-        TileMatrixSet matrixSet = new TileMatrixSet();
-        Contents contents = new Contents();
+        final MockGeoPackageConnection db = new MockGeoPackageConnection(support.createMock(Connection.class));
+        final TileMatrixSet matrixSet = new TileMatrixSet();
+        final Contents contents = new Contents();
         contents.setDataType(ContentsDataType.TILES);
 
         matrixSet.setContents(contents);
@@ -261,7 +263,7 @@ public class TileRowImporterImplTest
         matrixSet.getSrs().setOrganizationCoordsysId(ProjectionConstants.EPSG_WORLD_GEODETIC_SYSTEM);
         matrixSet.getSrs().setOrganizationCoordsysId(ProjectionConstants.EPSG_WEB_MERCATOR);
 
-        TileMatrix matrix = new TileMatrix();
+        final TileMatrix matrix = new TileMatrix();
         matrix.setZoomLevel(ourZoomLevel);
         matrix.setTileWidth(1);
         matrix.setTileHeight(1);
@@ -270,7 +272,7 @@ public class TileRowImporterImplTest
         matrix.setPixelXSize(100);
         matrix.setPixelYSize(100);
 
-        MockTileDao dao = new MockTileDao(db, matrixSet, New.list(matrix));
+        final MockTileDao dao = new MockTileDao(db, matrixSet, New.list(matrix));
 
         return dao;
     }
@@ -281,9 +283,9 @@ public class TileRowImporterImplTest
      * @param mockDao The mocked dao.
      * @return The tile row.
      */
-    private TileRow createTileRow(TileDao mockDao)
+    private TileRow createTileRow(final TileDao mockDao)
     {
-        TileRow row = mockDao.newRow();
+        final TileRow row = mockDao.newRow();
         row.setTileRow(0);
         row.setTileColumn(0);
         row.setZoomLevel(ourZoomLevel);

@@ -9,16 +9,21 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
+import org.easymock.EasyMock;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import gnu.trove.map.TLongObjectMap;
 import gnu.trove.map.hash.TLongObjectHashMap;
 import io.opensphere.analysis.table.model.MetaColumn;
+import io.opensphere.core.PluginToolboxRegistry;
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.collections.CollectionUtilities;
 import io.opensphere.core.util.collections.LazyMap;
 import io.opensphere.core.util.collections.New;
+import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.element.impl.DefaultDataElement;
@@ -26,7 +31,6 @@ import io.opensphere.mantle.data.element.impl.SimpleMetaDataProvider;
 import io.opensphere.mantle.data.impl.DefaultDataTypeInfo;
 import io.opensphere.mantle.data.impl.DefaultMetaDataInfo;
 import io.opensphere.test.SwingJunitTestRunner;
-import org.junit.Assert;
 
 /** Tests for {@link ListToolTableModel}. */
 @RunWith(SwingJunitTestRunner.class)
@@ -39,18 +43,28 @@ public class ListToolTableModelTest
     public void testIt()
     {
         // Create data type
-        DefaultMetaDataInfo metaData = new DefaultMetaDataInfo();
+        final DefaultMetaDataInfo metaData = new DefaultMetaDataInfo();
         metaData.addKey("Field1", String.class, this);
         metaData.addKey("Field2", String.class, this);
         metaData.copyKeysToOriginalKeys();
-        DataTypeInfo dataType = new DefaultDataTypeInfo(null, "sourcePrefix", "typeKey", "typeName", "displayName", true,
+        final DataTypeInfo dataType = new DefaultDataTypeInfo(null, "sourcePrefix", "typeKey", "typeName", "displayName", true,
                 metaData);
 
+        final Toolbox toolbox = EasyMock.createNiceMock(Toolbox.class);
+        final PluginToolboxRegistry pluginToolboxRegistry = EasyMock.createNiceMock(PluginToolboxRegistry.class);
+        final MantleToolbox mantleToolbox = EasyMock.createNiceMock(MantleToolbox.class);
+
+        EasyMock.expect(toolbox.getPluginToolboxRegistry()).andReturn(pluginToolboxRegistry).anyTimes();
+        EasyMock.expect(pluginToolboxRegistry.getPluginToolbox(MantleToolbox.class)).andReturn(mantleToolbox).anyTimes();
+
+        EasyMock.replay(toolbox, pluginToolboxRegistry, mantleToolbox);
+
         // Create table model
-        ListToolTableModel model = new ListToolTableModel(null, dataType);
-        TestDataElementProvider rowDataProvider = new TestDataElementProvider(model, dataType, model.getMetaColumns());
+        final ListToolTableModel model = new ListToolTableModel(toolbox, dataType);
+        final TestDataElementProvider rowDataProvider = new TestDataElementProvider(toolbox, model, dataType,
+                model.getMetaColumns());
         model.setRowDataProvider(rowDataProvider);
-        TestTableModelListener listener = new TestTableModelListener();
+        final TestTableModelListener listener = new TestTableModelListener();
         model.addTableModelListener(listener);
 
         // Seed "mantle" with data
@@ -70,7 +84,7 @@ public class ListToolTableModelTest
         // 6
         rowDataProvider.getMap().put(id, newDataElement(id++, dataType, "Who", "Is"));
 
-        int metaSize = model.getMetaColumns().size();
+        final int metaSize = model.getMetaColumns().size();
 
         // Test columns
         Assert.assertEquals(metaSize + 2, model.getColumnCount());
@@ -125,9 +139,9 @@ public class ListToolTableModelTest
      * @param values the values
      * @return the data element
      */
-    private static DataElement newDataElement(long id, DataTypeInfo dataType, String... values)
+    private static DataElement newDataElement(final long id, final DataTypeInfo dataType, final String... values)
     {
-        Map<String, Serializable> initialMap = New.insertionOrderMap();
+        final Map<String, Serializable> initialMap = New.insertionOrderMap();
         initialMap.put("Field1", values[0]);
         initialMap.put("Field2", values[1]);
         return new DefaultDataElement(id, TimeSpan.TIMELESS, dataType, new SimpleMetaDataProvider(initialMap));
@@ -143,7 +157,7 @@ public class ListToolTableModelTest
                 Integer.class, New.<Integer>listFactory());
 
         @Override
-        public void tableChanged(TableModelEvent e)
+        public void tableChanged(final TableModelEvent e)
         {
             for (int row = e.getFirstRow(); row <= e.getLastRow(); row++)
             {
@@ -177,13 +191,14 @@ public class ListToolTableModelTest
          * @param dataType the data type
          * @param metaColumns the meta columns
          */
-        public TestDataElementProvider(TableModel model, DataTypeInfo dataType, List<MetaColumn<?>> metaColumns)
+        public TestDataElementProvider(final Toolbox toolbox, final TableModel model, final DataTypeInfo dataType,
+                final List<MetaColumn<?>> metaColumns)
         {
-            super(model, null, dataType, metaColumns, -1);
+            super(model, toolbox, dataType, metaColumns, -1);
         }
 
         @Override
-        public DataElement lookupDataElement(long id)
+        public DataElement lookupDataElement(final long id)
         {
             return myMap.get(id);
         }

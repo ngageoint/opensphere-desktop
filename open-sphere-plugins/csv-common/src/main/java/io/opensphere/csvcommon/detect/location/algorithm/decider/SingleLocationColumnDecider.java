@@ -5,7 +5,6 @@ import java.util.List;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.csvcommon.common.CellSampler;
-import io.opensphere.csvcommon.detect.location.algorithm.decider.LocationDecider;
 import io.opensphere.csvcommon.detect.location.model.LocationResults;
 import io.opensphere.csvcommon.detect.location.model.PotentialLocationColumn;
 import io.opensphere.csvcommon.detect.util.CSVColumnPrefsUtil;
@@ -36,14 +35,19 @@ public abstract class SingleLocationColumnDecider implements LocationDecider
      * @param type the column type
      * @param prefsRegistry the prefs registry
      */
-    public SingleLocationColumnDecider(ColumnType type, PreferencesRegistry prefsRegistry)
+    public SingleLocationColumnDecider(final ColumnType type, final PreferencesRegistry prefsRegistry)
     {
-        myKnownNames = CSVColumnPrefsUtil.getSpecialKeys(prefsRegistry, type);
+        List<String> names = CSVColumnPrefsUtil.getSpecialKeys(prefsRegistry, type);
+        if (names == null)
+        {
+            names = New.list();
+        }
+        myKnownNames = names;
         myType = type;
     }
 
     @Override
-    public LocationResults determineLocationColumns(CellSampler sampler)
+    public LocationResults determineLocationColumns(final CellSampler sampler)
     {
         return determineLocationColumn(sampler);
     }
@@ -54,19 +58,19 @@ public abstract class SingleLocationColumnDecider implements LocationDecider
      * @param sampler the sampler
      * @return the location results
      */
-    public LocationResults determineLocationColumn(CellSampler sampler)
+    public LocationResults determineLocationColumn(final CellSampler sampler)
     {
         LocationResults results = null;
         if (sampler.getHeaderCells() != null)
         {
             results = new LocationResults();
             myHeaderCells = sampler.getHeaderCells();
-            List<String> cells = New.list(sampler.getHeaderCells());
+            final List<String> cells = New.list(sampler.getHeaderCells());
 
             for (int i = cells.size() - 1; i >= 0; i--)
             {
-                String colName = cells.get(i);
-                for (String knownName : myKnownNames)
+                final String colName = cells.get(i);
+                for (final String knownName : myKnownNames)
                 {
                     CompareType cType = null;
                     if (colName.equalsIgnoreCase(knownName))
@@ -88,7 +92,7 @@ public abstract class SingleLocationColumnDecider implements LocationDecider
 
                     if (cType != null)
                     {
-                        PotentialLocationColumn column = createPotentialColumn(cType, cells, colName, knownName);
+                        final PotentialLocationColumn column = createPotentialColumn(cType, cells, colName, knownName);
                         if (column != null && column.getConfidence() > 0)
                         {
                             results.addResult(column);
@@ -102,7 +106,8 @@ public abstract class SingleLocationColumnDecider implements LocationDecider
     }
 
     @Override
-    public PotentialLocationColumn createPotentialColumn(CompareType cType, List<String> cells, String colName, String knownName)
+    public PotentialLocationColumn createPotentialColumn(final CompareType cType, final List<String> cells, final String colName,
+            final String knownName)
     {
         cells.remove(colName);
         String[] tok = null;
@@ -153,7 +158,7 @@ public abstract class SingleLocationColumnDecider implements LocationDecider
      * @param name the name
      * @return the confidence scale factor
      */
-    private float checkLongName(String name)
+    private float checkLongName(final String name)
     {
         return isLongName(name) ? ourScaleFactor : 1.0f;
     }
@@ -165,9 +170,9 @@ public abstract class SingleLocationColumnDecider implements LocationDecider
      * @param columnName the column name
      * @return the index of the column
      */
-    private int indexForColumn(String columnName)
+    private int indexForColumn(final String columnName)
     {
-        for (String col : myHeaderCells)
+        for (final String col : myHeaderCells)
         {
             if (col.equalsIgnoreCase(columnName))
             {
