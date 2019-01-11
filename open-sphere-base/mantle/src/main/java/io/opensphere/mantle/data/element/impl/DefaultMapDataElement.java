@@ -2,6 +2,7 @@ package io.opensphere.mantle.data.element.impl;
 
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.mantle.data.DataTypeInfo;
+import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.element.MapDataElement;
 import io.opensphere.mantle.data.element.MetaDataProvider;
 import io.opensphere.mantle.data.geom.MapGeometrySupport;
@@ -15,8 +16,20 @@ public class DefaultMapDataElement extends DefaultDataElement implements MapData
     private MapGeometrySupport myMapGeometrySupport;
 
     /**
-     * CTOR with id and {@link MapGeometrySupport}. Note: Displayable is true by
-     * default.
+     * Copy constructor.
+     *
+     * @param source the source from which to copy data.
+     */
+    public DefaultMapDataElement(DefaultMapDataElement source)
+    {
+        super(source);
+
+        myMapGeometrySupport = source.myMapGeometrySupport.createCopy();
+    }
+
+    /**
+     * Constructor with id and {@link MapGeometrySupport}.
+     * Note: Displayable is true by default.
      *
      * @param id - the ID
      * @param mgs - the {@link MapGeometrySupport}, can not be null
@@ -27,7 +40,7 @@ public class DefaultMapDataElement extends DefaultDataElement implements MapData
     }
 
     /**
-     * CTOR with id, {@link TimeSpan}, {@link DataTypeInfo}, and and
+     * Constructor with id, {@link TimeSpan}, {@link DataTypeInfo}, and
      * {@link MapGeometrySupport}. Note: Displayable is true by default.
      *
      * @param id - the ID
@@ -43,7 +56,7 @@ public class DefaultMapDataElement extends DefaultDataElement implements MapData
     }
 
     /**
-     * CTOR with all parameters. Note: Displayable is true by default.
+     * Constructor with all parameters. Note: Displayable is true by default.
      *
      * @param id - the ID
      * @param ts - the TimeSpan, note that if null will be set to
@@ -66,8 +79,8 @@ public class DefaultMapDataElement extends DefaultDataElement implements MapData
     }
 
     /**
-     * CTOR with id, {@link TimeSpan}, and {@link MapGeometrySupport}. Note:
-     * Displayable is true by default.
+     * Constructor with id, {@link TimeSpan}, and {@link MapGeometrySupport}.
+     * Note: Displayable is true by default.
      *
      * @param id - the ID
      * @param ts - the TimeSpan, note that if null will be set to
@@ -113,5 +126,21 @@ public class DefaultMapDataElement extends DefaultDataElement implements MapData
             sb.append(myMapGeometrySupport.toString());
         }
         return sb.toString();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.element.impl.DefaultDataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo, long)
+     */
+    @Override
+    public DataElement cloneForDatatype(DataTypeInfo datatype, long newId)
+    {
+        DefaultMapDataElement clone = new DefaultMapDataElement(this);
+        clone.setId(newId);
+        clone.setDataTypeInfo(datatype);
+        clone.setMetaDataProvider(getMetaData().createCopy(datatype));
+
+        return clone;
     }
 }

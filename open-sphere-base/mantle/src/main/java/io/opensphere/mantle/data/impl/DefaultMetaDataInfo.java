@@ -1,6 +1,7 @@
 package io.opensphere.mantle.data.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -160,8 +161,42 @@ public class DefaultMetaDataInfo implements MetaDataInfo
     }
 
     /**
-     * Default CTOR.
+     * Copy constructor.
+     *
+     * @param source the object from which to copy data.
      */
+    protected DefaultMetaDataInfo(DefaultMetaDataInfo source)
+    {
+        myAutoDetectColumnTypes = source.myAutoDetectColumnTypes;
+        myDataTypeInfo = source.myDataTypeInfo;
+        myGeometryColumn = source.myGeometryColumn;
+        myKeyClassTypeMap = source.myKeyClassTypeMap.entrySet().stream()
+                .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+
+        myKeyNames = New.list(source.myKeyNames);
+        myNumericKeyMap = source.myNumericKeyMap.entrySet().stream()
+                .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+
+        myNumericKeyMapLock = new ReentrantReadWriteLock();
+        myOriginalKeyNames = New.list(source.myOriginalKeyNames);
+
+        myPropertyArrayDescriptor = new PropertyArrayDescriptor(source.myPropertyArrayDescriptor.getPropertyName(),
+                Arrays.copyOf(source.myPropertyArrayDescriptor.getColumnTypes(),
+                        source.myPropertyArrayDescriptor.getColumnTypes().length),
+                Arrays.copyOf(source.myPropertyArrayDescriptor.getActiveColumns(),
+                        source.myPropertyArrayDescriptor.getActiveColumns().length),
+                source.myPropertyArrayDescriptor.getOrderByColumn());
+
+        mySpecialKeyDetector = source.mySpecialKeyDetector.createCopy();
+        mySpecialKeyExaminationRequired = source.mySpecialKeyExaminationRequired;
+        mySpecialKeyToTypeMap = source.mySpecialKeyToTypeMap.entrySet().stream()
+                .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+        mySpecialTypeToKeyMap = source.mySpecialTypeToKeyMap.entrySet().stream()
+                .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+        myUniqueIdentifierKeyProperty.set(source.myUniqueIdentifierKeyProperty.get());
+    }
+
+    /** Default Constructor. */
     public DefaultMetaDataInfo()
     {
         myKeyNames = new ArrayList<>();
@@ -954,5 +989,16 @@ public class DefaultMetaDataInfo implements MetaDataInfo
     public StringProperty uniqueIdentifierKeyProperty()
     {
         return myUniqueIdentifierKeyProperty;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.MetaDataInfo#createCopy()
+     */
+    @Override
+    public MetaDataInfo createCopy()
+    {
+        return new DefaultMetaDataInfo(this);
     }
 }

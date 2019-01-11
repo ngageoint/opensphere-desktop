@@ -17,10 +17,10 @@ public class DefaultDataElement implements DataElement
     private long myCacheId;
 
     /** The DataTypeInfo. */
-    private final DataTypeInfo myDataTypeInfo;
+    private DataTypeInfo myDataTypeInfo;
 
     /** the ID for the DataElement. */
-    private final long myId;
+    private long myId;
 
     /** The MetaDataProvider. */
     private MetaDataProvider myMetaDataProvider;
@@ -29,7 +29,29 @@ public class DefaultDataElement implements DataElement
     private TimeSpan myTimeSpan = TimeSpan.TIMELESS;
 
     /** The visualization state. */
-    private final VisualizationState myVisualizationState;
+    private VisualizationState myVisualizationState;
+
+    /**
+     * Copy constructor.
+     *
+     * @param source the object from which to copy data.
+     */
+    protected DefaultDataElement(DefaultDataElement source)
+    {
+        myCacheId = source.myCacheId;
+        myDataTypeInfo = source.myDataTypeInfo;
+        myId = source.myId;
+        myMetaDataProvider = source.myMetaDataProvider.createCopy(null);
+        myTimeSpan = source.myTimeSpan;
+
+        myVisualizationState = new VisualizationState(source.myVisualizationState.isMapDataElement());
+        myVisualizationState.setColor(source.getVisualizationState().getColor());
+        myVisualizationState.setAltitudeAdjust(source.getVisualizationState().getAltitudeAdjust());
+        myVisualizationState.setHasAlternateGeometrySupport(getVisualizationState().hasAlternateGeometrySupport());
+        myVisualizationState.setLobVisible(getVisualizationState().isLobVisible());
+        myVisualizationState.setSelected(false);
+        myVisualizationState.setVisible(getVisualizationState().isVisible());
+    }
 
     /**
      * CTOR with id only. Note: Displayable is true by default.
@@ -104,6 +126,39 @@ public class DefaultDataElement implements DataElement
         myDataTypeInfo = dti;
         myMetaDataProvider = mdp;
         myVisualizationState = new VisualizationState(isMapDataElement);
+    }
+
+    /**
+     * Sets the value of the {@link #myVisualizationState} field.
+     *
+     * @param visualizationState the value to store in the
+     *            {@link #myVisualizationState} field.
+     */
+    protected void setVisualizationState(VisualizationState visualizationState)
+    {
+        myVisualizationState = visualizationState;
+    }
+
+    /**
+     * Sets the value of the {@link #myId} field.
+     *
+     * @param id the value to store in the {@link #myId} field.
+     */
+    protected void setId(long id)
+    {
+        myId = id;
+    }
+
+    /**
+     * Sets the value of the {@link #myDataTypeInfo} field.
+     *
+     * @param dataTypeInfo the value to store in the {@link #myDataTypeInfo}
+     *            field.
+     */
+    protected void setDataTypeInfo(DataTypeInfo dataTypeInfo)
+    {
+        myDataTypeInfo = dataTypeInfo;
+        myMetaDataProvider = myMetaDataProvider.createCopy(myDataTypeInfo);
     }
 
     @Override
@@ -205,5 +260,24 @@ public class DefaultDataElement implements DataElement
             sb.append(myMetaDataProvider.toString());
         }
         return sb.toString();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.element.DataElement#cloneForDatatype(io.opensphere.mantle.data.DataTypeInfo,
+     *      long)
+     */
+    @Override
+    public DataElement cloneForDatatype(DataTypeInfo datatype, long newId)
+    {
+        DefaultDataElement clone = new DefaultDataElement(this);
+        clone.setId(newId);
+        clone.setDataTypeInfo(datatype);
+
+        MetaDataProvider mdiClone = myMetaDataProvider.createCopy(datatype);
+        clone.setMetaDataProvider(mdiClone);
+
+        return clone;
     }
 }

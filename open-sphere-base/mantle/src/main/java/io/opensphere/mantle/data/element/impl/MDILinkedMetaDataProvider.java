@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 import io.opensphere.core.util.collections.New;
+import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.element.MetaDataProvider;
 
@@ -35,7 +36,19 @@ public class MDILinkedMetaDataProvider extends AbstractMDILinkedMetaDataProvider
     }
 
     /**
-     * CTOR.
+     * Copy constructor.
+     *
+     * @param source the source object from which to copy data.
+     */
+    protected MDILinkedMetaDataProvider(MDILinkedMetaDataProvider source)
+    {
+        super(source);
+        myValues = New.list(source.myValues);
+        myValuesMutable = source.myValuesMutable;
+    }
+
+    /**
+     * Primary constructor.
      *
      * @param mdi the MetaDataInfo to be linked to.
      */
@@ -144,5 +157,16 @@ public class MDILinkedMetaDataProvider extends AbstractMDILinkedMetaDataProvider
     public boolean valuesMutable()
     {
         return myValuesMutable;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.element.MetaDataProvider#createCopy(DataTypeInfo)
+     */
+    @Override
+    public MetaDataProvider createCopy(DataTypeInfo newDataType)
+    {
+        return new MDILinkedMetaDataProvider(newDataType.getMetaDataInfo(), New.list(myValues), this.myValuesMutable);
     }
 }

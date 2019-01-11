@@ -11,10 +11,6 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.event.EventHandler;
-
 import javax.naming.OperationNotSupportedException;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
@@ -25,12 +21,18 @@ import io.opensphere.core.model.Quadrilateral;
 import io.opensphere.core.util.ObservableValue;
 import io.opensphere.core.util.WeakChangeSupport;
 import io.opensphere.core.util.collections.New;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.event.EventHandler;
 
 /**
- * A grouping of associated DataTypeInfo, that can possibly form a node in a tree of associated groups of data.
+ * A grouping of associated DataTypeInfo, that can possibly form a node in a
+ * tree of associated groups of data.
  *
- * This is intended to be a pure model with no visualization or other properties associated with nodes or children. It only
- * details how data types and other groups are associated. The only exception at present is the DisplayName property.
+ * This is intended to be a pure model with no visualization or other properties
+ * associated with nodes or children. It only details how data types and other
+ * groups are associated. The only exception at present is the DisplayName
+ * property.
  */
 @SuppressWarnings("PMD.GodClass")
 public interface DataGroupInfo
@@ -42,7 +44,8 @@ public interface DataGroupInfo
     String AREA_CONTEXT = "AREA_CONTEXT";
 
     /**
-     * Comparator that orders {@link DataGroupInfo}s by their display names (case insensitive).
+     * Comparator that orders {@link DataGroupInfo}s by their display names
+     * (case insensitive).
      */
     Comparator<DataGroupInfo> CASE_INSENSITIVE_DISPLAY_NAME_COMPARATOR = (o1, o2) ->
     {
@@ -69,7 +72,8 @@ public interface DataGroupInfo
     Function<? super DataGroupInfo, ? extends String> DISPLAY_NAME_FUNCTION = input -> input.getDisplayName();
 
     /**
-     * Comparator that orders {@link DataGroupInfo}s by their long display names.
+     * Comparator that orders {@link DataGroupInfo}s by their long display
+     * names.
      */
     Comparator<DataGroupInfo> LONG_DISPLAY_NAME_COMPARATOR = (o1, o2) ->
     {
@@ -85,8 +89,8 @@ public interface DataGroupInfo
     String MANAGE_DATA_CONTEXT = "MANAGE_DATA_GROUP_CONTEXT";
 
     /**
-     * The Constant NO_EVENT_SOURCE. If provided as the source for one of the change events, it will cause the event not be be
-     * sent.
+     * The Constant NO_EVENT_SOURCE. If provided as the source for one of the
+     * change events, it will cause the event not be be sent.
      */
     Object NO_EVENT_SOURCE = new Object();
 
@@ -97,85 +101,102 @@ public interface DataGroupInfo
             DataGroupInfo.class);
 
     /**
-     * Sets the activationSupported flag to true, allowing the application to respond to activation events. If activation is not
-     * supported, then the {@link #activationProperty()} may be null.
+     * Sets the activationSupported flag to true, allowing the application to
+     * respond to activation events. If activation is not supported, then the
+     * {@link #activationProperty()} may be null.
      *
-     * @param pActivationSupported the state to set the activation supported flag. True enables activation support, false disables
-     *            it.
+     * @param pActivationSupported the state to set the activation supported
+     *            flag. True enables activation support, false disables it.
      */
     void setActivationSupported(boolean pActivationSupported);
 
     /**
-     * Tests to determine if activation is supported in the data group. Defaults to true.
+     * Tests to determine if activation is supported in the data group. Defaults
+     * to true.
      *
-     * @return true if activation is supported for the data group, false otherwise.
+     * @return true if activation is supported for the data group, false
+     *         otherwise.
      * @see #setActivationSupported(boolean)
      * @see #activationProperty()
      */
     boolean isActivationSupported();
 
     /**
-     * The property in which activation support is tracked. This property will emit events when activation support changed (note
-     * the distinction: this property is used to track the <i>support</i> of activation, not the activation itself).
+     * The property in which activation support is tracked. This property will
+     * emit events when activation support changed (note the distinction: this
+     * property is used to track the <i>support</i> of activation, not the
+     * activation itself).
      *
      * @return The property in which activation support is tracked.
      */
     BooleanProperty activationSupportProperty();
 
     /**
-     * Enables or disables the support of triggering within the data group. Typically (but not always), a data group supports
-     * either triggering or activation, but not both at the same time. When a user interacts with a data group that supports
-     * activation, the state can be set to activated or de-activated. When a user interacts with a data group that doesn't support
-     * activation, but does support triggering, the data group may be triggered one or more times, depending on the user's
-     * interaction.
+     * Enables or disables the support of triggering within the data group.
+     * Typically (but not always), a data group supports either triggering or
+     * activation, but not both at the same time. When a user interacts with a
+     * data group that supports activation, the state can be set to activated or
+     * de-activated. When a user interacts with a data group that doesn't
+     * support activation, but does support triggering, the data group may be
+     * triggered one or more times, depending on the user's interaction.
      *
-     * @param pTriggeringSupported true if triggering is supported for the data group, false otherwise.
+     * @param pTriggeringSupported true if triggering is supported for the data
+     *            group, false otherwise.
      */
     void setTriggeringSupported(boolean pTriggeringSupported);
 
     /**
-     * Tests to determine if triggering is supported for the data group. Typically (but not always), a data group supports either
-     * triggering or activation, but not both at the same time. When a user interacts with a data group that supports activation,
-     * the state can be set to activated or de-activated. When a user interacts with a data group that doesn't support activation,
-     * but does support triggering, the data group may be triggered one or more times, depending on the user's interaction.
+     * Tests to determine if triggering is supported for the data group.
+     * Typically (but not always), a data group supports either triggering or
+     * activation, but not both at the same time. When a user interacts with a
+     * data group that supports activation, the state can be set to activated or
+     * de-activated. When a user interacts with a data group that doesn't
+     * support activation, but does support triggering, the data group may be
+     * triggered one or more times, depending on the user's interaction.
      *
-     * @return true if triggering is supported for the data group, false otherwise.
+     * @return true if triggering is supported for the data group, false
+     *         otherwise.
      */
     boolean isTriggeringSupported();
 
     /**
-     * The property in which triggering support is tracked. This property will emit events when triggering support changed (note
-     * the distinction: this property is used to track the <i>support</i> of triggering, not if the data group was actually
-     * triggered).
+     * The property in which triggering support is tracked. This property will
+     * emit events when triggering support changed (note the distinction: this
+     * property is used to track the <i>support</i> of triggering, not if the
+     * data group was actually triggered).
      *
      * @return The property in which triggering support is tracked.
      */
     BooleanProperty triggerSupportProperty();
 
     /**
-     * The property through which data group triggering is propagated. When the data group is triggered, the event is sent through
-     * this property.
+     * The property through which data group triggering is propagated. When the
+     * data group is triggered, the event is sent through this property.
      *
      * @return the property through which triggered events are handled.
      */
     ObjectProperty<EventHandler<DataGroupEvent>> triggeredProperty();
 
     /**
-     * Sets the event handler to react to triggering events. When the data group is triggered, the event is sent to this handler.
+     * Sets the event handler to react to triggering events. When the data group
+     * is triggered, the event is sent to this handler.
      *
      * @param pHandler the handler used to process trigger events.
      */
     void setTriggerHandler(EventHandler<DataGroupEvent> pHandler);
 
     /**
-     * Executes the trigger logic on the data group. If no listeners are registered, nothing happens.
+     * Executes the trigger logic on the data group. If no listeners are
+     * registered, nothing happens.
      *
-     * @param pEvent the event to propagate out to registered listeners of the trigger property.
+     * @param pEvent the event to propagate out to registered listeners of the
+     *            trigger property.
      */
     void trigger(DataGroupEvent pEvent);
 
     /**
-     * Get the activation property, which can be used to listen for activation events.
+     * Get the activation property, which can be used to listen for activation
+     * events.
      *
      * @return The activation property.
      */
@@ -186,7 +207,8 @@ public interface DataGroupInfo
      *
      * @param dgi the dgi
      * @param source the source of the change
-     * @throws IllegalStateException if the dgi being added would become its own parent ancestor.
+     * @throws IllegalStateException if the dgi being added would become its own
+     *             parent ancestor.
      */
     void addChild(DataGroupInfo dgi, Object source);
 
@@ -215,35 +237,58 @@ public interface DataGroupInfo
     Set<DataGroupInfo> createGroupSet(Predicate<? super DataGroupInfo> nodeFilter);
 
     /**
-     * Creates a TreeNode that represents this DataGroupInfo and its children. Children are sorted in "natural" order. No filter
-     * is performed.
+     * Creates a TreeNode that represents this DataGroupInfo and its children.
+     * Children are sorted in "natural" order. No filter is performed.
      *
      * @return the {@link TreeNode}
      */
     MutableTreeNode createTreeNode();
 
     /**
-     * Creates a tree node that represents this DataGroupInfo and its children. child nodes will be sorted using the comparator or
-     * in natural order if no comparator is provided ( null ), nodes can be filtered using the supplied filter. Child nodes that
-     * do not pass the filter criteria will not be added to the tree ( including their children ). The filter will not apply to
-     * the node on which this function is called only on children.
+     * Creates a tree node that represents this DataGroupInfo and its children.
+     * child nodes will be sorted using the comparator or in natural order if no
+     * comparator is provided ( null ), nodes can be filtered using the supplied
+     * filter. Child nodes that do not pass the filter criteria will not be
+     * added to the tree ( including their children ). The filter will not apply
+     * to the node on which this function is called only on children.
      *
-     * @param comparator the comparator to use to ordert he child nodes ( recursive )
-     * @param nodeFilter a filter to filter down the children nodes ( and their children )
+     * @param comparator the comparator to use to ordert he child nodes (
+     *            recursive )
+     * @param nodeFilter a filter to filter down the children nodes ( and their
+     *            children )
      * @return the tree node the TreeNode.
      */
     MutableTreeNode createTreeNode(Comparator<? super DataGroupInfo> comparator, Predicate<? super DataGroupInfo> nodeFilter);
 
     /**
-     * Searches for members that matches the filter, optionally recursively searches the children to see if any child members
-     * match the filter.
+     * Searches for children that matches the filter, optionally recursively
+     * searches the children to see if any descendant-children match the filter.
      *
-     * @param dtiFilter the {@link DataTypeInfo} filter to use to select members.
+     * @param dgiFilter the {@link DataGroupInfo} filter to use to select
+     *            members.
      * @param recursive if true recurses into children to check
-     * @param stopOnFirstFound if true stops search on the first member to match the filter criteria, if false exhaustively
-     *            searches member set.
+     * @param stopOnFirstFound if true stops search on the first member to match
+     *            the filter criteria, if false exhaustively searches member
+     *            set.
      *
-     * @return the set of Members that matched the filter criteria or an empty set if none found.
+     * @return the set of Members that matched the filter criteria or an empty
+     *         set if none found.
+     */
+    Set<DataGroupInfo> findChildren(Predicate<? super DataGroupInfo> dgiFilter, boolean recursive, boolean stopOnFirstFound);
+
+    /**
+     * Searches for members that matches the filter, optionally recursively
+     * searches the children to see if any child members match the filter.
+     *
+     * @param dtiFilter the {@link DataTypeInfo} filter to use to select
+     *            members.
+     * @param recursive if true recurses into children to check
+     * @param stopOnFirstFound if true stops search on the first member to match
+     *            the filter criteria, if false exhaustively searches member
+     *            set.
+     *
+     * @return the set of Members that matched the filter criteria or an empty
+     *         set if none found.
      */
     Set<DataTypeInfo> findMembers(Predicate<? super DataTypeInfo> dtiFilter, boolean recursive, boolean stopOnFirstFound);
 
@@ -269,7 +314,8 @@ public interface DataGroupInfo
     WeakChangeSupport<Consumer<? super DataGroupInfo>> getChildAddedChangeSupport();
 
     /**
-     * Gets the {@link Set} of {@link DataGroupInfo} that represent the children of this node.
+     * Gets the {@link Set} of {@link DataGroupInfo} that represent the children
+     * of this node.
      *
      * @return the immutable list of children
      */
@@ -299,12 +345,14 @@ public interface DataGroupInfo
     /**
      * Gets whether the group should be expanded by default.
      *
-     * @return TRUE: expand by default, FALSE: collapse by default, null: caller's discretion
+     * @return TRUE: expand by default, FALSE: collapse by default, null:
+     *         caller's discretion
      */
     Boolean getExpandedByDefault();
 
     /**
-     * Recursively searches the node hierarchy to find and return the {@link DataGroupInfo} with the given id.
+     * Recursively searches the node hierarchy to find and return the
+     * {@link DataGroupInfo} with the given id.
      *
      * @param id - the id to search for
      * @return the DataGroupInfo or null if not found
@@ -326,7 +374,8 @@ public interface DataGroupInfo
     String getId();
 
     /**
-     * Gets the long display name which is the display name for the top parent prepended to the display name for the group.
+     * Gets the long display name which is the display name for the top parent
+     * prepended to the display name for the group.
      *
      * @return the long display name
      */
@@ -336,7 +385,8 @@ public interface DataGroupInfo
      * Gets the member by id.
      *
      * @param id the id
-     * @param recursive - true to search the entire tree from this node down to remove the type.
+     * @param recursive - true to search the entire tree from this node down to
+     *            remove the type.
      * @return the member by id
      */
     DataTypeInfo getMemberById(String id, boolean recursive);
@@ -382,7 +432,8 @@ public interface DataGroupInfo
     /**
      * Gets the region the data is contained in.
      *
-     * @param observableRegion Observable to contain the region the data is contained in.
+     * @param observableRegion Observable to contain the region the data is
+     *            contained in.
      * @return {@code true} if this data group supports regions.
      */
     boolean getRegion(ObservableValue<? super Quadrilateral<GeographicPosition>> observableRegion);
@@ -395,7 +446,8 @@ public interface DataGroupInfo
     String getSummaryDescription();
 
     /**
-     * Working up the chain through parents, searches until it finds the top most parent ( i.e. a DataGroupInfo without a parent).
+     * Working up the chain through parents, searches until it finds the top
+     * most parent ( i.e. a DataGroupInfo without a parent).
      *
      * @return the top parent or this if this DataGroupInfo has no parent.
      */
@@ -409,7 +461,8 @@ public interface DataGroupInfo
     String getTopParentDisplayName();
 
     /**
-     * Get a stream containing this data group as well as its children and its children's children, and so on.
+     * Get a stream containing this data group as well as its children and its
+     * children's children, and so on.
      *
      * @return The stream.
      */
@@ -423,15 +476,16 @@ public interface DataGroupInfo
     boolean hasChildren();
 
     /**
-     * Get if this group has settings that can be configured on a settings panel.
+     * Get if this group has settings that can be configured on a settings
+     * panel.
      *
      * @return If this group should have a settings panel.
      */
     boolean hasDetails();
 
     /**
-     * Checks to see if this group ( or optionally all child group recursive ) contains DataTypeInfo with a MapVisualizationType
-     * for feature data.
+     * Checks to see if this group ( or optionally all child group recursive )
+     * contains DataTypeInfo with a MapVisualizationType for feature data.
      *
      * @param recursive , if true recurses into children to check.
      * @return true, if found member or child member of feature type.
@@ -439,8 +493,8 @@ public interface DataGroupInfo
     boolean hasFeatureTypes(boolean recursive);
 
     /**
-     * Checks to see if this group ( or optionally all child group recursive ) contains DataTypeInfo with a MapVisualizationType
-     * for image tile data.
+     * Checks to see if this group ( or optionally all child group recursive )
+     * contains DataTypeInfo with a MapVisualizationType for image tile data.
      *
      * @param recursive , if true recurses into children to check.
      * @return true, if found member or child member of image tile type.
@@ -448,7 +502,8 @@ public interface DataGroupInfo
     boolean hasImageTileTypes(boolean recursive);
 
     /**
-     * Checks to see if this group ( or optionally all child group recursive ) contain the specified {@link DataTypeInfo}.
+     * Checks to see if this group ( or optionally all child group recursive )
+     * contain the specified {@link DataTypeInfo}.
      *
      * @param dti the {@link DataTypeInfo} to check for.
      * @param recursive , if true recurses into children to check.
@@ -457,7 +512,8 @@ public interface DataGroupInfo
     boolean hasMember(DataTypeInfo dti, boolean recursive);
 
     /**
-     * Checks to see if this node has any DataTypeInfo specified. But does not check children nodes.
+     * Checks to see if this node has any DataTypeInfo specified. But does not
+     * check children nodes.
      *
      * @param recursive , if true recurses into children to check.
      * @return true, if there are members
@@ -473,8 +529,8 @@ public interface DataGroupInfo
     boolean hasTimelineMember(boolean recursive);
 
     /**
-     * Checks to see if this group ( or optionally all child group recursive ) contains DataTypeInfo with visualization styles for
-     * feature data.
+     * Checks to see if this group ( or optionally all child group recursive )
+     * contains DataTypeInfo with visualization styles for feature data.
      *
      * @param recursive , if true recurses into children to check.
      * @return true, if found member or child member of feature type.
@@ -489,7 +545,8 @@ public interface DataGroupInfo
     boolean isDragAndDrop();
 
     /**
-     * Indicates if this data group can be flattened or if its heirarchical information must be intact.
+     * Indicates if this data group can be flattened or if its heirarchical
+     * information must be intact.
      *
      * @return True if it can be flattened false otherwise.
      */
@@ -503,7 +560,8 @@ public interface DataGroupInfo
     boolean isHidden();
 
     /**
-     * Checks if the DataGroupInfo specified a parent ancestor working up the tree.
+     * Checks if the DataGroupInfo specified a parent ancestor working up the
+     * tree.
      *
      * @param dgi the dgi to check.
      * @return true, if is above in hierarchy
@@ -511,8 +569,10 @@ public interface DataGroupInfo
     boolean isParentAncestor(DataGroupInfo dgi);
 
     /**
-     * Returns true if this {@link DataGroupInfo} is a root node ( i.e. it cannot have a parent.) If this returns true any attempt
-     * to set a parent on a root {@link DataGroupInfo} will throw {@link OperationNotSupportedException}.
+     * Returns true if this {@link DataGroupInfo} is a root node ( i.e. it
+     * cannot have a parent.) If this returns true any attempt to set a parent
+     * on a root {@link DataGroupInfo} will throw
+     * {@link OperationNotSupportedException}.
      *
      * @return true if root node, false if not
      */
@@ -526,7 +586,8 @@ public interface DataGroupInfo
     boolean isTaggable();
 
     /**
-     * Notify listeners on my ancestors and me that a child was added to me or one of my descendants.
+     * Notify listeners on my ancestors and me that a child was added to me or
+     * one of my descendants.
      *
      * @param child The child.
      */
@@ -540,8 +601,9 @@ public interface DataGroupInfo
     int numChildren();
 
     /**
-     * Returns the number of members in this DataTypeInfo. Count is only for this DataGroupInfo unless recursive, then counts all
-     * members for all children as well and includes them in total.
+     * Returns the number of members in this DataTypeInfo. Count is only for
+     * this DataGroupInfo unless recursive, then counts all members for all
+     * children as well and includes them in total.
      *
      * @param recursive , if true recurses into children to check.
      * @return the number of members
@@ -570,9 +632,11 @@ public interface DataGroupInfo
      * Removes the data type from this node.
      *
      * @param dti the dti to remove.
-     * @param recursive - true to search the entire tree from this node down to remove the type.
+     * @param recursive - true to search the entire tree from this node down to
+     *            remove the type.
      * @param source the source of the change
-     * @return true, if successful, false if not or it was not contained within this node.
+     * @return true, if successful, false if not or it was not contained within
+     *         this node.
      */
     boolean removeMember(DataTypeInfo dti, boolean recursive, Object source);
 
@@ -592,10 +656,12 @@ public interface DataGroupInfo
     void setExpandedByDefault(Boolean expandedByDefault);
 
     /**
-     * A macro function that sets the visibility state of all the members ( {@link DataTypeInfo}) that are part of this group, and
-     * if recursive, all the members of children of this group and their children etc.
+     * A macro function that sets the visibility state of all the members (
+     * {@link DataTypeInfo}) that are part of this group, and if recursive, all
+     * the members of children of this group and their children etc.
      *
-     * @param dtiFilter - the filter to select the DataTypeInfo members to adjust ( may be null if no filter is desired )
+     * @param dtiFilter - the filter to select the DataTypeInfo members to
+     *            adjust ( may be null if no filter is desired )
      * @param visible - true to set to visible, false to set to invisible
      * @param recursive - true to recurse into children etc.
      * @param source the source making the change
@@ -625,23 +691,24 @@ public interface DataGroupInfo
     void setParent(DataGroupInfo parent);
 
     /**
-     * True if the user is allowed to activate/de-activate this group through UI interfaces. False if it is programmatic
-     * activation only.
+     * True if the user is allowed to activate/de-activate this group through UI
+     * interfaces. False if it is programmatic activation only.
      *
      * @return true, user controlled, false if machine controlled.
      */
     boolean userActivationStateControl();
 
     /**
-     * True if the user is allowed to remove this group through UI interfaces. False if it is programmatic deletion only.
+     * True if the user is allowed to remove this group through UI interfaces.
+     * False if it is programmatic deletion only.
      *
      * @return true, user controlled, false if machine controlled.
      */
     boolean userDeleteControl();
 
     /**
-     * Checks to see if this group (or optionally all child groups recursive ) contains data type info with a MapVisualizaton that
-     * uses styles.
+     * Checks to see if this group (or optionally all child groups recursive )
+     * contains data type info with a MapVisualizaton that uses styles.
      *
      * @param recursive , if true recurses into children to check.
      * @return true if found member or child member that uses styles.
@@ -680,28 +747,6 @@ public interface DataGroupInfo
     default boolean hasMember(Predicate<? super DataTypeInfo> dtiFilter, boolean recursive)
     {
         return !findMembers(dtiFilter, recursive, true).isEmpty();
-    }
-
-    /**
-     * A marker interface to provide a common base for
-     * {@link DataGroupContextKey} and {@link MultiDataGroupContextKey} to
-     * implement.
-     */
-    public interface ContextKey
-    {
-        /**
-         * Get the dataGroups.
-         *
-         * @return the dataGroups
-         */
-        Collection<DataGroupInfo> getDataGroups();
-
-        /**
-         * Get the dataTypes.
-         *
-         * @return the dataTypes
-         */
-        Collection<DataTypeInfo> getDataTypes();
     }
 
     /** The context key for actions associated with a particular data group. */

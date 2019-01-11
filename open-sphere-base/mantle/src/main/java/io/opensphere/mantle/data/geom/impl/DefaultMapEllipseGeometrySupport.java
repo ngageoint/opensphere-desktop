@@ -26,12 +26,23 @@ public class DefaultMapEllipseGeometrySupport extends AbstractLocationGeometrySu
     /** The Semi-Minor Axis. */
     private float mySemiMinorAxis;
 
-    /**
-     * CTOR.
-     */
+    /** Default constructor. */
     public DefaultMapEllipseGeometrySupport()
     {
         super();
+    }
+
+    /**
+     * Default constructor.
+     *
+     * @param source the source object from which to copy data.
+     */
+    public DefaultMapEllipseGeometrySupport(DefaultMapEllipseGeometrySupport source)
+    {
+        super(source);
+        myOrientation = source.myOrientation;
+        mySemiMajorAxis = source.mySemiMajorAxis;
+        mySemiMinorAxis = source.mySemiMinorAxis;
     }
 
     /**
@@ -140,5 +151,16 @@ public class DefaultMapEllipseGeometrySupport extends AbstractLocationGeometrySu
     public void setSemiMinorAxis(float smi)
     {
         mySemiMinorAxis = smi;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.geom.MapGeometrySupport#createCopy()
+     */
+    @Override
+    public DefaultMapEllipseGeometrySupport createCopy()
+    {
+        return new DefaultMapEllipseGeometrySupport(this);
     }
 }

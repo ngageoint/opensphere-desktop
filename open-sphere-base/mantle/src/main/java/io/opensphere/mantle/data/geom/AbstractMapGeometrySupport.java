@@ -39,10 +39,25 @@ public abstract class AbstractMapGeometrySupport implements MapGeometrySupport
     private Object[] myDynamicStorage;
 
     /**
-     * CTOR.
+     * Default constructor.
      */
     public AbstractMapGeometrySupport()
     {
+        /* intentionally blank */
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param source the source object from which to copy data.
+     */
+    public AbstractMapGeometrySupport(AbstractMapGeometrySupport source)
+    {
+        myBitField1 = source.myBitField1;
+        if (source.myDynamicStorage != null)
+        {
+            myDynamicStorage = Arrays.copyOf(source.myDynamicStorage, source.myDynamicStorage.length);
+        }
     }
 
     /**

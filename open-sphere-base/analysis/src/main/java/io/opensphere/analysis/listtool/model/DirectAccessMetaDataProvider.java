@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import io.opensphere.core.util.collections.CollectionUtilities;
+import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.cache.DirectAccessRetriever;
 import io.opensphere.mantle.data.element.MetaDataProvider;
 
@@ -29,6 +30,17 @@ class DirectAccessMetaDataProvider implements MetaDataProvider
     {
         myCacheId = cacheId;
         myDirectAccessRetriever = directAccessRetriever;
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param source the source object from which to copy data.
+     */
+    public DirectAccessMetaDataProvider(DirectAccessMetaDataProvider source)
+    {
+        myCacheId = source.myCacheId;
+        myDirectAccessRetriever = source.myDirectAccessRetriever;
     }
 
     @Override
@@ -87,5 +99,16 @@ class DirectAccessMetaDataProvider implements MetaDataProvider
     public boolean valuesMutable()
     {
         throw new UnsupportedOperationException("valuesMutable() is not supported for DirectAccessMetaDataProvider");
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.element.MetaDataProvider#createCopy(DataTypeInfo)
+     */
+    @Override
+    public MetaDataProvider createCopy(DataTypeInfo newDataType)
+    {
+        return new DirectAccessMetaDataProvider(this);
     }
 }

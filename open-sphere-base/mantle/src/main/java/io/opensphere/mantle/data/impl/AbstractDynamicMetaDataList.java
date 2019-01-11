@@ -11,6 +11,7 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import io.opensphere.core.util.lang.ByteString;
+import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.element.DynamicMetaDataList;
 import io.opensphere.mantle.data.element.MetaDataProvider;
 import io.opensphere.mantle.util.dynenum.DynamicEnumerationRegistry;
@@ -253,5 +254,16 @@ public abstract class AbstractDynamicMetaDataList implements DynamicMetaDataList
         {
             throw new IndexOutOfBoundsException("Index must be 0 <= index < " + size());
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.element.MetaDataProvider#createCopy(DataTypeInfo)
+     */
+    @Override
+    public MetaDataProvider createCopy(DataTypeInfo newDataTypeInfo)
+    {
+        throw new UnsupportedOperationException();
     }
 }

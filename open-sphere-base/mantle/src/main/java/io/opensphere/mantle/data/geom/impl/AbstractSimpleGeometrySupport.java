@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.List;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
-
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.lang.BitArrays;
 import io.opensphere.mantle.data.geom.CallOutSupport;
@@ -45,12 +44,23 @@ public abstract class AbstractSimpleGeometrySupport implements MapGeometrySuppor
     /** The my start time. */
     private long myStartTime = TimeSpanUtility.TIMELESS_START;
 
-    /**
-     * CTOR.
-     */
+    /** Default constructor. */
     public AbstractSimpleGeometrySupport()
     {
         super();
+    }
+    
+    /**
+     * Copy constructor.
+     *
+     * @param source the source object from which to copy data.
+     */
+    public AbstractSimpleGeometrySupport(AbstractSimpleGeometrySupport source)
+    {
+        myColor = source.myColor;
+        myEndTime = source.myEndTime;
+        myFlagField1 = source.myFlagField1;
+        myStartTime = source.myStartTime;
     }
 
     @Override

@@ -19,24 +19,36 @@ public class SimpleMapEllipseGeometrySupport extends AbstractSimpleLocationGeome
     private static final long serialVersionUID = 1L;
 
     /** The orientation. */
-    private float myOrient;
+    private float myOrientation;
 
     /** The Semi-Major Axis. */
-    private float mySmaAxis;
+    private float mySemiMajorAxis;
 
     /** The Semi-Minor Axis. */
-    private float mySmnAxis;
+    private float mySemiMinorAxis;
 
-    /**
-     * CTOR.
-     */
+    /** Default constructor. */
     public SimpleMapEllipseGeometrySupport()
     {
         super();
     }
 
     /**
-     * CTOR with {@link LatLonAlt}.
+     * Default constructor.
+     *
+     * @param source the source object from which to copy data.
+     */
+    public SimpleMapEllipseGeometrySupport(SimpleMapEllipseGeometrySupport source)
+    {
+        super(source);
+
+        myOrientation = source.myOrientation;
+        mySemiMajorAxis = source.mySemiMajorAxis;
+        mySemiMinorAxis = source.mySemiMinorAxis;
+    }
+
+    /**
+     * constructor with {@link LatLonAlt}.
      *
      * @param loc - the location
      */
@@ -56,9 +68,9 @@ public class SimpleMapEllipseGeometrySupport extends AbstractSimpleLocationGeome
     public SimpleMapEllipseGeometrySupport(LatLonAlt loc, float semiMajor, float semiMinor, float orient)
     {
         super(loc);
-        mySmnAxis = semiMinor;
-        mySmaAxis = semiMajor;
-        myOrient = orient;
+        mySemiMinorAxis = semiMinor;
+        mySemiMajorAxis = semiMajor;
+        myOrientation = orient;
     }
 
     @Override
@@ -73,9 +85,9 @@ public class SimpleMapEllipseGeometrySupport extends AbstractSimpleLocationGeome
             return false;
         }
         SimpleMapEllipseGeometrySupport other = (SimpleMapEllipseGeometrySupport)obj;
-        return Float.floatToIntBits(myOrient) == Float.floatToIntBits(other.myOrient)
-                && Float.floatToIntBits(mySmaAxis) == Float.floatToIntBits(other.mySmaAxis)
-                && Float.floatToIntBits(mySmnAxis) == Float.floatToIntBits(other.mySmnAxis);
+        return Float.floatToIntBits(myOrientation) == Float.floatToIntBits(other.myOrientation)
+                && Float.floatToIntBits(mySemiMajorAxis) == Float.floatToIntBits(other.mySemiMajorAxis)
+                && Float.floatToIntBits(mySemiMinorAxis) == Float.floatToIntBits(other.mySemiMinorAxis);
     }
 
     @Override
@@ -93,19 +105,19 @@ public class SimpleMapEllipseGeometrySupport extends AbstractSimpleLocationGeome
     @Override
     public float getOrientation()
     {
-        return myOrient;
+        return myOrientation;
     }
 
     @Override
     public float getSemiMajorAxis()
     {
-        return mySmaAxis;
+        return mySemiMajorAxis;
     }
 
     @Override
     public float getSemiMinorAxis()
     {
-        return mySmnAxis;
+        return mySemiMinorAxis;
     }
 
     @Override
@@ -119,27 +131,38 @@ public class SimpleMapEllipseGeometrySupport extends AbstractSimpleLocationGeome
     {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + Float.floatToIntBits(myOrient);
-        result = prime * result + Float.floatToIntBits(mySmaAxis);
-        result = prime * result + Float.floatToIntBits(mySmnAxis);
+        result = prime * result + Float.floatToIntBits(myOrientation);
+        result = prime * result + Float.floatToIntBits(mySemiMajorAxis);
+        result = prime * result + Float.floatToIntBits(mySemiMinorAxis);
         return result;
     }
 
     @Override
     public void setOrientation(float orient)
     {
-        myOrient = orient;
+        myOrientation = orient;
     }
 
     @Override
     public void setSemiMajorAxis(float sma)
     {
-        mySmaAxis = sma;
+        mySemiMajorAxis = sma;
     }
 
     @Override
     public void setSemiMinorAxis(float smi)
     {
-        mySmnAxis = smi;
+        mySemiMinorAxis = smi;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.geom.MapGeometrySupport#createCopy()
+     */
+    @Override
+    public SimpleMapEllipseGeometrySupport createCopy()
+    {
+        return new SimpleMapEllipseGeometrySupport(this);
     }
 }

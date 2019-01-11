@@ -19,7 +19,7 @@ import io.opensphere.core.util.lang.ThreadUtilities;
 import io.opensphere.core.util.swing.SwingUtilities;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.crust.DataTypeChecker;
-import io.opensphere.mantle.data.DataGroupInfo.ContextKey;
+import io.opensphere.mantle.data.ContextKey;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.cache.DataElementCache;
 import io.opensphere.merge.controller.MergeController;

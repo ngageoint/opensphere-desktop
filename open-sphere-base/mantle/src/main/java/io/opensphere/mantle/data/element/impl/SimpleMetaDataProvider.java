@@ -6,7 +6,11 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
+import io.opensphere.core.util.collections.New;
+import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.element.MetaDataProvider;
 
 /**
@@ -22,18 +26,31 @@ public class SimpleMetaDataProvider implements MetaDataProvider, Serializable
     /** The key to value map. */
     private final Map<String, Serializable> myKeyToValueMap;
 
-    /**
-     * Basic CTOR.
-     */
+    /** Default constructor. */
     public SimpleMetaDataProvider()
     {
         myKeyToValueMap = Collections.synchronizedMap(new LinkedHashMap<String, Serializable>());
     }
 
     /**
-     * CTOR with initial map.
+     * Copy constructor.
      *
-     * @param initialMap - the initial map.
+     * @param source the source object from which to get data.
+     */
+    protected SimpleMetaDataProvider(SimpleMetaDataProvider source)
+    {
+        myKeyToValueMap = New.map(source.myKeyToValueMap.size());
+        Set<Entry<String, Serializable>> entrySet = source.myKeyToValueMap.entrySet();
+        for (Entry<String, Serializable> entry : entrySet)
+        {
+            myKeyToValueMap.put(entry.getKey(), entry.getValue());
+        }
+    }
+
+    /**
+     * Constructor with initial map.
+     *
+     * @param initialMap the initial map.
      */
     public SimpleMetaDataProvider(Map<String, Serializable> initialMap)
     {
@@ -106,5 +123,16 @@ public class SimpleMetaDataProvider implements MetaDataProvider, Serializable
     public boolean valuesMutable()
     {
         return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.element.MetaDataProvider#createCopy(DataTypeInfo)
+     */
+    @Override
+    public MetaDataProvider createCopy(DataTypeInfo newDataTypeInfo)
+    {
+        return new SimpleMetaDataProvider(this);
     }
 }

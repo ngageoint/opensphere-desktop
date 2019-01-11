@@ -32,12 +32,26 @@ public class DefaultMapIconGeometrySupport extends AbstractLocationGeometrySuppo
     /** Optional scaling function. */
     private transient Function<Kilometers, Float> myScaleFunction;
 
-    /**
-     * CTOR.
-     */
+    /** Default constructor. */
     public DefaultMapIconGeometrySupport()
     {
         super();
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param source the source from which to copy data.
+     */
+    public DefaultMapIconGeometrySupport(DefaultMapIconGeometrySupport source)
+    {
+        super(source);
+
+        myIconSize = source.myIconSize;
+        myIconHighlightSize = source.myIconHighlightSize;
+        myIconURL = source.myIconURL;
+        myImageProcessor = source.myImageProcessor;
+        myScaleFunction = source.myScaleFunction;
     }
 
     /**
@@ -164,5 +178,16 @@ public class DefaultMapIconGeometrySupport extends AbstractLocationGeometrySuppo
     public void setScaleFunction(Function<Kilometers, Float> scaleFunction)
     {
         myScaleFunction = scaleFunction;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.geom.MapGeometrySupport#createCopy()
+     */
+    @Override
+    public DefaultMapIconGeometrySupport createCopy()
+    {
+        return new DefaultMapIconGeometrySupport(this);
     }
 }

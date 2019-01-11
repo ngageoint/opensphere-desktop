@@ -20,10 +20,10 @@ public class SimpleMapIconGeometrySupport extends AbstractSimpleLocationGeometry
     private static final long serialVersionUID = 1L;
 
     /** The Icon size. */
-    private float myIcSize = DEFAULT_ICON_SIZE;
+    private float myIconSize = DEFAULT_ICON_SIZE;
 
     /** The Icon url. */
-    private String myIcURL;
+    private String myIconURL;
 
     /** The optional ImageProcessor. */
     private transient ImageProcessor myImageProcessor;
@@ -31,16 +31,29 @@ public class SimpleMapIconGeometrySupport extends AbstractSimpleLocationGeometry
     /** Optional scaling function. */
     private transient Function<Kilometers, Float> myScaleFunction;
 
-    /**
-     * CTOR.
-     */
+    /** Default constructor. */
     public SimpleMapIconGeometrySupport()
     {
         super();
     }
 
     /**
-     * CTOR with {@link LatLonAlt}.
+     * Copy constructor.
+     *
+     * @param source the object from which to copy data.
+     */
+    public SimpleMapIconGeometrySupport(SimpleMapIconGeometrySupport source)
+    {
+        super(source);
+
+        myIconSize = source.myIconSize;
+        myIconURL = source.myIconURL;
+        myImageProcessor = source.myImageProcessor;
+        myScaleFunction = source.myScaleFunction;
+    }
+
+    /**
+     * Constructor with {@link LatLonAlt}.
      *
      * @param loc - the location
      * @param iconURL the icon url
@@ -49,20 +62,20 @@ public class SimpleMapIconGeometrySupport extends AbstractSimpleLocationGeometry
     public SimpleMapIconGeometrySupport(LatLonAlt loc, String iconURL, float iconSize)
     {
         super(loc);
-        myIcSize = iconSize;
-        myIcURL = iconURL;
+        myIconSize = iconSize;
+        myIconURL = iconURL;
     }
 
     @Override
     public float getIconSize()
     {
-        return myIcSize;
+        return myIconSize;
     }
 
     @Override
     public String getIconURL()
     {
-        return myIcURL;
+        return myIconURL;
     }
 
     @Override
@@ -95,7 +108,7 @@ public class SimpleMapIconGeometrySupport extends AbstractSimpleLocationGeometry
             return false;
         }
         SimpleMapIconGeometrySupport other = (SimpleMapIconGeometrySupport)obj;
-        return Objects.equals(myIcURL, other.myIcURL);
+        return Objects.equals(myIconURL, other.myIconURL);
     }
 
     @Override
@@ -103,7 +116,7 @@ public class SimpleMapIconGeometrySupport extends AbstractSimpleLocationGeometry
     {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + (myIcURL == null ? 0 : myIcURL.hashCode());
+        result = prime * result + (myIconURL == null ? 0 : myIconURL.hashCode());
         return result;
     }
 
@@ -114,7 +127,7 @@ public class SimpleMapIconGeometrySupport extends AbstractSimpleLocationGeometry
      */
     public void setIconSize(float size)
     {
-        myIcSize = size;
+        myIconSize = size;
     }
 
     /**
@@ -124,7 +137,7 @@ public class SimpleMapIconGeometrySupport extends AbstractSimpleLocationGeometry
      */
     public void setIconURL(String iconURL)
     {
-        myIcURL = iconURL;
+        myIconURL = iconURL;
     }
 
     /**
@@ -150,6 +163,17 @@ public class SimpleMapIconGeometrySupport extends AbstractSimpleLocationGeometry
     @Override
     public float getIconHighlightSize()
     {
-        return myIcSize;
+        return myIconSize;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.geom.MapGeometrySupport#createCopy()
+     */
+    @Override
+    public SimpleMapIconGeometrySupport createCopy()
+    {
+        return new SimpleMapIconGeometrySupport(this);
     }
 }

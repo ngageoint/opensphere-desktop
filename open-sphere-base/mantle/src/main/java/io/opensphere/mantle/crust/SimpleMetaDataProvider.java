@@ -2,6 +2,11 @@ package io.opensphere.mantle.crust;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import io.opensphere.mantle.data.DataTypeInfo;
+import io.opensphere.mantle.data.MetaDataInfo;
+import io.opensphere.mantle.data.element.MetaDataProvider;
 
 /**
  * This class completes the process of reducing the MetaDataProvider interface
@@ -13,6 +18,17 @@ public class SimpleMetaDataProvider extends MetaDataProviderAdapter
 {
     /** A mapping of keys (String) to values (Object). */
     private final Map<String, Object> myValueMap;
+
+    /**
+     * Copy constructor.
+     *
+     * @param source the object from which data is read.
+     */
+    protected SimpleMetaDataProvider(SimpleMetaDataProvider source)
+    {
+        super(source);
+        myValueMap = source.myValueMap.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+    }
 
     /**
      * Create a new provider populated with the supplied values.
@@ -41,5 +57,16 @@ public class SimpleMetaDataProvider extends MetaDataProviderAdapter
     public Object getValue(String key)
     {
         return myValueMap.get(key);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.element.MetaDataProvider#createCopy(MetaDataInfo)
+     */
+    @Override
+    public MetaDataProvider createCopy(DataTypeInfo newDataTypeInfo)
+    {
+        return new SimpleMetaDataProvider(this);
     }
 }

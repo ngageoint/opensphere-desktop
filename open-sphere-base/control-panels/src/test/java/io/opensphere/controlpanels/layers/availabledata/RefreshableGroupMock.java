@@ -526,4 +526,17 @@ public class RefreshableGroupMock implements DataGroupInfo, RefreshableDataGroup
     public void setHidden(boolean hidden)
     {
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.DataGroupInfo#findChildren(java.util.function.Predicate,
+     *      boolean, boolean)
+     */
+    @Override
+    public Set<DataGroupInfo> findChildren(Predicate<? super DataGroupInfo> dgiFilter, boolean recursive,
+            boolean stopOnFirstFound)
+    {
+        return null;
+    }
 }

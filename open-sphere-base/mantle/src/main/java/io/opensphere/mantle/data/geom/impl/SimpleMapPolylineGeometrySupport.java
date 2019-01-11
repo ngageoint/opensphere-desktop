@@ -17,16 +17,25 @@ public class SimpleMapPolylineGeometrySupport extends AbstractSimpleMapPathGeome
      */
     private static final long serialVersionUID = 22L;
 
-    /**
-     * Basic Constructor.
-     */
+    /** Default Constructor. */
     public SimpleMapPolylineGeometrySupport()
     {
         super();
     }
 
     /**
-     * CTOR with location list.
+     * Copy Constructor.
+     *
+     * @param source the object from which to copy data.
+     */
+    public SimpleMapPolylineGeometrySupport(SimpleMapPolylineGeometrySupport source)
+    {
+        super(source);
+        // nothing to copy here.
+    }
+
+    /**
+     * Secondary initialization constructor with location list.
      *
      * @param locs - the locations
      */
@@ -59,5 +68,16 @@ public class SimpleMapPolylineGeometrySupport extends AbstractSimpleMapPathGeome
     public boolean isClosed()
     {
         return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.geom.MapGeometrySupport#createCopy()
+     */
+    @Override
+    public SimpleMapPolylineGeometrySupport createCopy()
+    {
+        return new SimpleMapPolylineGeometrySupport(this);
     }
 }

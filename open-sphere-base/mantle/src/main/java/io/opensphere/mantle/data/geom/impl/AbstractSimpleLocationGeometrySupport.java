@@ -23,12 +23,22 @@ public abstract class AbstractSimpleLocationGeometrySupport extends AbstractSimp
     /** The my location. */
     private LatLonAlt myLocation;
 
-    /**
-     * CTOR.
-     */
+    /** Default constructor. */
     public AbstractSimpleLocationGeometrySupport()
     {
         super();
+    }
+
+    /**
+     * Default constructor.
+     *
+     * @param source the source object from which to copy data.
+     */
+    public AbstractSimpleLocationGeometrySupport(AbstractSimpleLocationGeometrySupport source)
+    {
+        super(source);
+        // TODO make this a deep copy:
+        myLocation = source.myLocation;
     }
 
     /**

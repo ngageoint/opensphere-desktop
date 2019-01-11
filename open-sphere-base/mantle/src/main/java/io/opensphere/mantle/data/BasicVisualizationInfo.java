@@ -129,4 +129,6 @@ public interface BasicVisualizationInfo
      * @return the type color property
      */
     ObservableValue<Color> typeColorProperty();
+
+    BasicVisualizationInfo createDeepCopy();
 }

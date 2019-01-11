@@ -260,4 +260,37 @@ public enum MilitaryRankIcon implements FontIconEnum
     {
         return SwingUtilities.MILITARY_RANK_FONT;
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.util.FontIconEnum#getXDrawingOffset()
+     */
+    @Override
+    public float getXDrawingOffset()
+    {
+        return 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.util.FontIconEnum#getYDrawingOffset()
+     */
+    @Override
+    public float getYDrawingOffset()
+    {
+        return 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.util.FontIconEnum#getGlyphName()
+     */
+    @Override
+    public String getGlyphName()
+    {
+        return name();
+    }
 }

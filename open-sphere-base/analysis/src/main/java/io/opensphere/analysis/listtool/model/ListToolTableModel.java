@@ -87,13 +87,10 @@ public class ListToolTableModel extends AbstractColumnTableModel implements Meta
             // returning a valid row index here.
             return Integer.valueOf(rowIndex);
         }
-        else
+        List<?> values = myRowDataProvider.getData(rowIndex);
+        if (columnIndex < values.size())
         {
-            List<?> values = myRowDataProvider.getData(rowIndex);
-            if (columnIndex < values.size())
-            {
-                value = values.get(columnIndex);
-            }
+            value = values.get(columnIndex);
         }
         return value;
     }
@@ -360,7 +357,7 @@ public class ListToolTableModel extends AbstractColumnTableModel implements Meta
     private List<MetaColumn<?>> createMetaColumns()
     {
         List<MetaColumn<?>> metaColumns = New.list(6);
-        metaColumns.add(new MetaColumn<Integer>(MetaColumn.INDEX, Integer.class, true)
+        metaColumns.add(new MetaColumn<>(MetaColumn.INDEX, Integer.class, true)
         {
             @Override
             public Integer getValue(int rowIndex, DataElement dataElement)
@@ -368,7 +365,7 @@ public class ListToolTableModel extends AbstractColumnTableModel implements Meta
                 return Integer.valueOf(rowIndex);
             }
         });
-        metaColumns.add(new MetaColumn<Color>(MetaColumn.COLOR, Color.class, true)
+        metaColumns.add(new MetaColumn<>(MetaColumn.COLOR, Color.class, true)
         {
             @Override
             public Color getValue(int rowIndex, DataElement dataElement)
@@ -376,7 +373,7 @@ public class ListToolTableModel extends AbstractColumnTableModel implements Meta
                 return dataElement.getVisualizationState() == null ? Color.WHITE : dataElement.getVisualizationState().getColor();
             }
         });
-        metaColumns.add(new MetaColumn<Boolean>(MetaColumn.VISIBLE, Boolean.class, false)
+        metaColumns.add(new MetaColumn<>(MetaColumn.VISIBLE, Boolean.class, false)
         {
             @Override
             public Boolean getValue(int rowIndex, DataElement dataElement)
@@ -385,7 +382,7 @@ public class ListToolTableModel extends AbstractColumnTableModel implements Meta
                         : Boolean.valueOf(dataElement.getVisualizationState().isVisible());
             }
         });
-        metaColumns.add(new MetaColumn<Boolean>(MetaColumn.HILIGHT, Boolean.class, false)
+        metaColumns.add(new MetaColumn<>(MetaColumn.HILIGHT, Boolean.class, false)
         {
             @Override
             public Boolean getValue(int rowIndex, DataElement dataElement)
@@ -394,7 +391,7 @@ public class ListToolTableModel extends AbstractColumnTableModel implements Meta
                         : Boolean.valueOf(myHighlightedId.equals(myRowDataProvider.getDataElementId(rowIndex)));
             }
         });
-        metaColumns.add(new MetaColumn<Boolean>(MetaColumn.SELECTED, Boolean.class, false)
+        metaColumns.add(new MetaColumn<>(MetaColumn.SELECTED, Boolean.class, false)
         {
             @Override
             public Boolean getValue(int rowIndex, DataElement dataElement)
@@ -403,7 +400,7 @@ public class ListToolTableModel extends AbstractColumnTableModel implements Meta
                         : Boolean.valueOf(dataElement.getVisualizationState().isSelected());
             }
         });
-        metaColumns.add(new MetaColumn<Boolean>(MetaColumn.LOB_VISIBLE, Boolean.class, false)
+        metaColumns.add(new MetaColumn<>(MetaColumn.LOB_VISIBLE, Boolean.class, false)
         {
             @Override
             public Boolean getValue(int rowIndex, DataElement dataElement)

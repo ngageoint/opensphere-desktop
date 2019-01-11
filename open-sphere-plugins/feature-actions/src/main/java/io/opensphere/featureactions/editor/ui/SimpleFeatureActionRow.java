@@ -217,6 +217,11 @@ public class SimpleFeatureActionRow extends ListCell<SimpleFeatureAction> implem
         editEar = ear;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @see javafx.scene.control.Cell#updateItem(java.lang.Object, boolean)
+     */
     @Override
     protected void updateItem(SimpleFeatureAction item, boolean empty)
     {

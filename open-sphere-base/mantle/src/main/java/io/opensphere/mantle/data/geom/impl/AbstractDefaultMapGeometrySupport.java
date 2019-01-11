@@ -25,10 +25,23 @@ public abstract class AbstractDefaultMapGeometrySupport extends AbstractMapGeome
     private int myColor = java.awt.Color.WHITE.getRGB();
 
     /**
-     * CTOR.
+     * Default constructor.
      */
     public AbstractDefaultMapGeometrySupport()
     {
+        /* intentionally blank */
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param source the source object from which to copy data.
+     */
+    public AbstractDefaultMapGeometrySupport(AbstractDefaultMapGeometrySupport source)
+    {
+        super(source);
+
+        myColor = source.myColor;
     }
 
     @Override

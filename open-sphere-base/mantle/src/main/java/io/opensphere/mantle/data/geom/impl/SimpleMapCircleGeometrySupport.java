@@ -26,6 +26,18 @@ public class SimpleMapCircleGeometrySupport extends AbstractSimpleLocationGeomet
     }
 
     /**
+     * Copy Constructor.
+     *
+     * @param source the source object from which to copy data.
+     */
+    public SimpleMapCircleGeometrySupport(SimpleMapCircleGeometrySupport source)
+    {
+        super(source);
+
+        myRadius = source.myRadius;
+    }
+
+    /**
      * Constructor with {@link LatLonAlt}.
      *
      * @param loc the location
@@ -99,5 +111,16 @@ public class SimpleMapCircleGeometrySupport extends AbstractSimpleLocationGeomet
     public void setRadius(float radius)
     {
         myRadius = radius;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.mantle.data.geom.MapGeometrySupport#createCopy()
+     */
+    @Override
+    public SimpleMapCircleGeometrySupport createCopy()
+    {
+        return new SimpleMapCircleGeometrySupport(this);
     }
 }

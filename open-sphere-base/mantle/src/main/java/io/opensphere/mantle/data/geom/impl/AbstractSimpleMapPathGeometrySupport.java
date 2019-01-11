@@ -18,67 +18,79 @@ import io.opensphere.mantle.data.geom.util.MapGeometrySupportUtils;
  */
 public abstract class AbstractSimpleMapPathGeometrySupport extends AbstractSimpleGeometrySupport implements MapPathGeometrySupport
 {
-    /**
-     * Serial version UID.
-     */
+    /** Serial version UID. */
     private static final long serialVersionUID = 1L;
 
     /** The Line type. */
-    private LineType myLineTp = LineType.STRAIGHT_LINE;
+    private LineType myLineType = LineType.STRAIGHT_LINE;
 
     /** Line width. */
-    private int myLineW = 2;
+    private int myLineWidth = 2;
 
     /** Location list. */
-    private final List<LatLonAlt> myLocs;
+    private final List<LatLonAlt> myLocations;
 
-    /**
-     * Basic CTOR.
-     */
+    /** Default constructor. */
     public AbstractSimpleMapPathGeometrySupport()
     {
-        myLocs = new LinkedList<>();
+        myLocations = new LinkedList<>();
     }
 
     /**
-     * Basic CTOR.
+     * Copy constructor.
      *
-     * @param lineWidth - the line width
+     * @param source the source object from which to copy data.
+     */
+    public AbstractSimpleMapPathGeometrySupport(AbstractSimpleMapPathGeometrySupport source)
+    {
+        super(source);
+        myLineType = source.myLineType;
+        myLineWidth = source.myLineWidth;
+
+        // TODO make this a deep copy:
+        myLocations = new LinkedList<>(source.myLocations);
+    }
+
+    /**
+     * Secondary initialization constructor.
+     *
+     * @param lineWidth the line width
      */
     public AbstractSimpleMapPathGeometrySupport(int lineWidth)
     {
         this();
-        myLineW = lineWidth;
+        myLineWidth = lineWidth;
     }
 
     /**
-     * Basic CTOR.
+     * Secondary initialization constructor.
      *
-     * @param lineWidth - the line width
+     * @param lineWidth the line width
      * @param type the {@link LineType}
      */
     public AbstractSimpleMapPathGeometrySupport(int lineWidth, LineType type)
     {
         this();
-        myLineW = lineWidth;
-        myLineTp = type == null ? LineType.STRAIGHT_LINE : type;
+        myLineWidth = lineWidth;
+        myLineType = type == null ? LineType.STRAIGHT_LINE : type;
     }
 
     /**
-     * CTOR with initial location list.
+     * Secondary initialization constructor.
      *
-     * @param locations - the locations
+     * @param locations the locations
      */
     public AbstractSimpleMapPathGeometrySupport(List<? extends LatLonAlt> locations)
     {
-        myLocs = new LinkedList<>(locations);
+        myLocations = new LinkedList<>(locations);
     }
 
     /**
-     * CTOR with initial location list and line width.
+     * Secondary initialization constructor with initial location list and line
+     * width.
      *
-     * @param locations - initial locations
-     * @param lineWidth - initial line width
+     * @param locations initial locations
+     * @param lineWidth initial line width
      */
     public AbstractSimpleMapPathGeometrySupport(List<? extends LatLonAlt> locations, int lineWidth)
     {
@@ -94,18 +106,18 @@ public abstract class AbstractSimpleMapPathGeometrySupport extends AbstractSimpl
      */
     public AbstractSimpleMapPathGeometrySupport(List<? extends LatLonAlt> locations, int lineWidth, LineType type)
     {
-        myLocs = new LinkedList<>(locations);
-        myLineW = lineWidth;
-        myLineTp = type == null ? LineType.STRAIGHT_LINE : type;
+        myLocations = new LinkedList<>(locations);
+        myLineWidth = lineWidth;
+        myLineType = type == null ? LineType.STRAIGHT_LINE : type;
     }
 
     @Override
     public boolean addLocation(LatLonAlt loc)
     {
         boolean added = false;
-        synchronized (myLocs)
+        synchronized (myLocations)
         {
-            added = myLocs.add(loc);
+            added = myLocations.add(loc);
         }
         return added;
     }
@@ -113,9 +125,9 @@ public abstract class AbstractSimpleMapPathGeometrySupport extends AbstractSimpl
     @Override
     public void clearLocations()
     {
-        synchronized (myLocs)
+        synchronized (myLocations)
         {
-            myLocs.clear();
+            myLocations.clear();
         }
     }
 
@@ -131,11 +143,11 @@ public abstract class AbstractSimpleMapPathGeometrySupport extends AbstractSimpl
             return false;
         }
         AbstractSimpleMapPathGeometrySupport other = (AbstractSimpleMapPathGeometrySupport)obj;
-        if (myLineW != other.myLineW || !Objects.equals(myLineTp, other.myLineTp))
+        if (myLineWidth != other.myLineWidth || !Objects.equals(myLineType, other.myLineType))
         {
             return false;
         }
-        return Objects.equals(myLocs, other.myLocs);
+        return Objects.equals(myLocations, other.myLocations);
     }
 
     @Override
@@ -147,13 +159,13 @@ public abstract class AbstractSimpleMapPathGeometrySupport extends AbstractSimpl
     @Override
     public LineType getLineType()
     {
-        return myLineTp;
+        return myLineType;
     }
 
     @Override
     public int getLineWidth()
     {
-        return myLineW;
+        return myLineWidth;
     }
 
     /**
@@ -165,9 +177,9 @@ public abstract class AbstractSimpleMapPathGeometrySupport extends AbstractSimpl
     public List<LatLonAlt> getLocations()
     {
         List<LatLonAlt> returnList = null;
-        synchronized (myLocs)
+        synchronized (myLocations)
         {
-            returnList = Collections.unmodifiableList(myLocs);
+            returnList = Collections.unmodifiableList(myLocations);
         }
         return returnList;
     }
@@ -180,9 +192,9 @@ public abstract class AbstractSimpleMapPathGeometrySupport extends AbstractSimpl
     {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + myLineW;
-        result = prime * result + (myLineTp == null ? 0 : myLineTp.hashCode());
-        result = prime * result + (myLocs == null ? 0 : myLocs.hashCode());
+        result = prime * result + myLineWidth;
+        result = prime * result + (myLineType == null ? 0 : myLineType.hashCode());
+        result = prime * result + (myLocations == null ? 0 : myLocations.hashCode());
         return result;
     }
 
@@ -196,9 +208,9 @@ public abstract class AbstractSimpleMapPathGeometrySupport extends AbstractSimpl
     public boolean removeLocation(LatLonAlt loc)
     {
         boolean removed = false;
-        synchronized (myLocs)
+        synchronized (myLocations)
         {
-            removed = myLocs.remove(loc);
+            removed = myLocations.remove(loc);
         }
         return removed;
     }
@@ -206,26 +218,25 @@ public abstract class AbstractSimpleMapPathGeometrySupport extends AbstractSimpl
     @Override
     public void setLineType(LineType type)
     {
-        myLineTp = type == null ? LineType.STRAIGHT_LINE : type;
+        myLineType = type == null ? LineType.STRAIGHT_LINE : type;
     }
 
     @Override
     public void setLineWidth(int lineWidth)
     {
-        myLineW = lineWidth;
+        myLineWidth = lineWidth;
     }
 
     @Override
     public void setLocations(List<LatLonAlt> locations)
     {
-        synchronized (myLocs)
+        synchronized (myLocations)
         {
-            myLocs.clear();
+            myLocations.clear();
             if (locations != null)
             {
-                myLocs.addAll(locations);
+                myLocations.addAll(locations);
             }
         }
-        // fireChanged();
     }
 }

@@ -6,8 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import net.jcip.annotations.GuardedBy;
+import java.util.stream.Collectors;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.collections.New;
@@ -15,6 +14,7 @@ import io.opensphere.mantle.data.SpecialKey;
 import io.opensphere.mantle.data.impl.DefaultMetaDataInfo;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.wfs.layer.SingleLayerRequeryEvent.RequeryType;
+import net.jcip.annotations.GuardedBy;
 
 /**
  * This class will keep track of meta info associated with a layer and handles
@@ -40,6 +40,21 @@ public final class WFSMetaDataInfo extends DefaultMetaDataInfo
      * the time column gets populated in requests to certain servers.
      */
     private volatile boolean myIsDynamicTime;
+
+    /**
+     * Copy constructor.
+     *
+     * @param source the source object from which to copy data.
+     */
+    protected WFSMetaDataInfo(WFSMetaDataInfo source)
+    {
+        super(source);
+
+        myWFSLayerController = source.myWFSLayerController;
+        myToolbox = source.myToolbox;
+        myOriginalKeyInfo = (DefaultMetaDataInfo)source.myOriginalKeyInfo.createCopy();
+        myDateColumns = source.myDateColumns.stream().collect(Collectors.toSet());
+    }
 
     /**
      * Instantiates a new WFS meta data info.
