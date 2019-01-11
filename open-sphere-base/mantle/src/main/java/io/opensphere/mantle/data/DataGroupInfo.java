@@ -749,28 +749,6 @@ public interface DataGroupInfo
         return !findMembers(dtiFilter, recursive, true).isEmpty();
     }
 
-    /**
-     * A marker interface to provide a common base for
-     * {@link DataGroupContextKey} and {@link MultiDataGroupContextKey} to
-     * implement.
-     */
-    public interface ContextKey
-    {
-        /**
-         * Get the dataGroups.
-         *
-         * @return the dataGroups
-         */
-        Collection<DataGroupInfo> getDataGroups();
-
-        /**
-         * Get the dataTypes.
-         *
-         * @return the dataTypes
-         */
-        Collection<DataTypeInfo> getDataTypes();
-    }
-
     /** The context key for actions associated with a particular data group. */
     class DataGroupContextKey implements ContextKey
     {

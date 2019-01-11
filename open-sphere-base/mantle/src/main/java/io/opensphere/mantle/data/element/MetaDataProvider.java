@@ -51,7 +51,6 @@ public interface MetaDataProvider
      * and setValue(key,value) will return false for all adds for keys that are
      * not already in the key list.
      *
-     *
      * @return true if keys are mutable on the fly, false if not.
      */
     boolean keysMutable();
@@ -81,11 +80,16 @@ public interface MetaDataProvider
      * {@link UnsupportedOperationException}: and setValue(key,value) will
      * return false for all adds.
      *
-     *
-     *
      * @return true if keys are mutable on the fly, false if not.
      */
     boolean valuesMutable();
 
+    /**
+     * Returns a copy of this metadata provider using the given
+     * {@link DataTypeInfo}.
+     *
+     * @param datatype the DataTypeInfo
+     * @return the copy
+     */
     MetaDataProvider createCopy(DataTypeInfo datatype);
 }

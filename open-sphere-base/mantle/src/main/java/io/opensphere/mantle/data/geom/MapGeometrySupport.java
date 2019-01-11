@@ -21,9 +21,6 @@ public interface MapGeometrySupport extends Serializable, VisualizationSupport
     PropertyDescriptor<MapGeometrySupport> PROPERTY_DESCRIPTOR = new PropertyDescriptor<>("mapGeometrySupport",
             MapGeometrySupport.class);
 
-    // TODO remove this until surfaces is re-implemented
-    // SurfaceFeatureVisualizationStyle.class
-
     /**
      * True if this geometry should follow terrain.
      *
@@ -129,5 +126,10 @@ public interface MapGeometrySupport extends Serializable, VisualizationSupport
      */
     void setToolTip(String tip);
 
+    /**
+     * Returns a copy of this map geometry support.
+     *
+     * @return the copy
+     */
     MapGeometrySupport createCopy();
 }

@@ -345,5 +345,10 @@ public interface MetaDataInfo
      */
     StringProperty uniqueIdentifierKeyProperty();
 
+    /**
+     * Returns a copy of this metadata object.
+     *
+     * @return the copy
+     */
     MetaDataInfo createCopy();
 }

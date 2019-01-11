@@ -487,7 +487,7 @@ public class DefaultDataGroupInfo implements DataGroupInfo
     public Set<DataGroupInfo> findChildren(Predicate<? super DataGroupInfo> dgiFilter, boolean recursive,
             boolean stopOnFirstFound)
     {
-        Utilities.checkNull(dgiFilter, "dtiFilter");
+        Utilities.checkNull(dgiFilter, "dgiFilter");
         Set<DataGroupInfo> resultSet = new HashSet<>();
         myModificationLock.readLock().lock();
         try

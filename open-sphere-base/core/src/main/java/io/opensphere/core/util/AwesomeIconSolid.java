@@ -1648,7 +1648,10 @@ public enum AwesomeIconSolid implements FontIconEnum
     /** A constant used to reference the 'ticket_alt' icon. */
     TICKET_ALT("\uf3ff"),
 
-    /** A constant used to reference the 'times' icon. */
+    /**
+     * A constant used to reference the 'times' icon.
+     * X offset and Y offset are given, respectively, to center the icon.
+     */
     TIMES("\uf00d", -0.046875F, -0.09375F),
 
     /** A constant used to reference the 'times_circle' icon. */

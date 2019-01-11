@@ -1167,5 +1167,4 @@ public enum AwesomeIconBrands implements FontIconEnum
     {
         return name();
     }
-
 }
