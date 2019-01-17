@@ -15,7 +15,7 @@ import io.opensphere.mantle.data.dynmeta.DynamicMetadataController;
 import io.opensphere.mantle.data.dynmeta.DynamicMetadataDataTypeController;
 
 /**
- * The Class DynamicColumnDataTypeCoordinator.
+ * Handles dynamic metadata columns for a data type info.
  */
 @SuppressWarnings("PMD.GodClass")
 public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDataTypeController
@@ -23,8 +23,8 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
     /** The DTI. */
     private final DataTypeInfo myDTI;
 
-    /** The Dyn column name to value map. */
-    private final TIntObjectHashMap<DynamicMetadataController<?>> myDynColumnNameToValueMap;
+    /** The Dynamic column name to value map. */
+    private final TIntObjectHashMap<DynamicMetadataController<?>> myDynamicColumnNameToValueMap;
 
     /** The Original column count. */
     private final int myOriginalColumnCount;
@@ -95,17 +95,17 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
     private void reindex(int columnIndex)
     {
         TIntObjectHashMap<DynamicMetadataController<?>> tempStore = new TIntObjectHashMap<>();
-        for (int key : myDynColumnNameToValueMap.keys())
+        for (int key : myDynamicColumnNameToValueMap.keys())
         {
             if (key > columnIndex)
             {
-                tempStore.put(key - 1, myDynColumnNameToValueMap.remove(key));
+                tempStore.put(key - 1, myDynamicColumnNameToValueMap.remove(key));
             }
         }
 
         for (int key : tempStore.keys())
         {
-            myDynColumnNameToValueMap.put(key, tempStore.remove(key));
+            myDynamicColumnNameToValueMap.put(key, tempStore.remove(key));
         }
     }
 
@@ -132,7 +132,7 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
         myToolbox = tb;
         myDTI = dti;
         myOriginalColumnCount = myDTI.getMetaDataInfo().getOriginalKeyNames().size();
-        myDynColumnNameToValueMap = new TIntObjectHashMap<>();
+        myDynamicColumnNameToValueMap = new TIntObjectHashMap<>();
     }
 
     @Override
@@ -145,7 +145,7 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
             added = myDTI.getMetaDataInfo().addKey(columnName, columnClass, source);
             int columnIndex = myDTI.getMetaDataInfo().getKeyNames().indexOf(columnName);
             DynamicMetadataController<?> controller = createController(myToolbox, columnIndex, myDTI);
-            myDynColumnNameToValueMap.put(columnIndex + 1, controller);
+            myDynamicColumnNameToValueMap.put(columnIndex + 1, controller);
         }
 
         return added;
@@ -159,7 +159,7 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
             int columnIndex = myDTI.getMetaDataInfo().getKeyNames().indexOf(columnName);
             boolean removed = myDTI.getMetaDataInfo().removeKey(columnName, columnClass, source);
 
-            DynamicMetadataController<?> controller = myDynColumnNameToValueMap.remove(columnIndex);
+            DynamicMetadataController<?> controller = myDynamicColumnNameToValueMap.remove(columnIndex);
             controller.clear(source);
             controller.setColumnIndex(-1);
 
@@ -182,13 +182,13 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
             return;
         }
 
-        DynamicMetadataController<?> cController = myDynColumnNameToValueMap.get(columnIndex);
-        if (cController == null)
+        DynamicMetadataController<?> columnController = myDynamicColumnNameToValueMap.get(columnIndex);
+        if (columnController == null)
         {
-            cController = createController(myToolbox, columnIndex, myDTI);
-            myDynColumnNameToValueMap.put(columnIndex, cController);
+            columnController = createController(myToolbox, columnIndex, myDTI);
+            myDynamicColumnNameToValueMap.put(columnIndex, columnController);
         }
-        cController.appendValue(cacheIds, value, source);
+        columnController.appendValue(cacheIds, value, source);
     }
 
     @Override
@@ -203,13 +203,13 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
     public void appendValue(long elementCacheId, int columnIndex, Object value, Object source)
     {
         validateColumnSupportsAppending(columnIndex);
-        DynamicMetadataController<?> cController = myDynColumnNameToValueMap.get(columnIndex);
-        if (cController == null)
+        DynamicMetadataController<?> columnController = myDynamicColumnNameToValueMap.get(columnIndex);
+        if (columnController == null)
         {
-            cController = createController(myToolbox, columnIndex, myDTI);
-            myDynColumnNameToValueMap.put(columnIndex, cController);
+            columnController = createController(myToolbox, columnIndex, myDTI);
+            myDynamicColumnNameToValueMap.put(columnIndex, columnController);
         }
-        cController.appendValue(elementCacheId, value, source);
+        columnController.appendValue(elementCacheId, value, source);
     }
 
     @Override
@@ -227,7 +227,7 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
     public void clearValues(int columnIndex, Object source)
     {
         validateColumnIndexIsDynamic(columnIndex);
-        DynamicMetadataController<?> mapToAlter = myDynColumnNameToValueMap.get(columnIndex);
+        DynamicMetadataController<?> mapToAlter = myDynamicColumnNameToValueMap.get(columnIndex);
         if (mapToAlter != null)
         {
             mapToAlter.clear(source);
@@ -240,14 +240,14 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
         Utilities.checkNull(cacheIds, "cacheIds");
         if (!cacheIds.isEmpty())
         {
-            Set<String> dynColNames = getDynamicColumnNames();
-            for (String colName : dynColNames)
+            Set<String> dynamicColumnNames = getDynamicColumnNames();
+            for (String columnName : dynamicColumnNames)
             {
-                int colIndex = getDynamicColumnIndex(colName);
-                DynamicMetadataController<?> cController = myDynColumnNameToValueMap.get(colIndex);
-                if (cController != null)
+                int columnIndex = getDynamicColumnIndex(columnName);
+                DynamicMetadataController<?> columnController = myDynamicColumnNameToValueMap.get(columnIndex);
+                if (columnController != null)
                 {
-                    cController.clearValues(cacheIds, source);
+                    columnController.clearValues(cacheIds, source);
                 }
             }
         }
@@ -268,7 +268,7 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
     {
         if (isDynamicColumnIndex(columnIndex))
         {
-            DynamicMetadataController<?> columnController = myDynColumnNameToValueMap.get(columnIndex);
+            DynamicMetadataController<?> columnController = myDynamicColumnNameToValueMap.get(columnIndex);
             if (columnController != null)
             {
                 return columnController.supportsAppend();
@@ -297,7 +297,7 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
     @Override
     public int getDynamicColumnCount()
     {
-        return myDynColumnNameToValueMap == null ? 0 : myDynColumnNameToValueMap.size();
+        return myDynamicColumnNameToValueMap == null ? 0 : myDynamicColumnNameToValueMap.size();
     }
 
     @Override
@@ -324,28 +324,28 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
     @Override
     public Set<String> getDynamicColumnNames()
     {
-        Set<String> dynColumnNameSet = new HashSet<>();
+        Set<String> dynamicColumnNameSet = new HashSet<>();
         if (myDTI.getMetaDataInfo().getKeyCount() > myOriginalColumnCount)
         {
             List<String> keyNames = myDTI.getMetaDataInfo().getKeyNames();
-            dynColumnNameSet.addAll(keyNames.subList(myOriginalColumnCount, keyNames.size()));
+            dynamicColumnNameSet.addAll(keyNames.subList(myOriginalColumnCount, keyNames.size()));
         }
-        return dynColumnNameSet;
+        return dynamicColumnNameSet;
     }
 
     @Override
     public Set<String> getDynamicColumnNamesOfType(Class<?> type, boolean appendableOnly)
     {
         Utilities.checkNull(type, "type");
-        Set<String> dynColNames = getDynamicColumnNames();
-        if (!dynColNames.isEmpty())
+        Set<String> dynamicColumnNames = getDynamicColumnNames();
+        if (!dynamicColumnNames.isEmpty())
         {
-            Iterator<String> nameItr = dynColNames.iterator();
+            Iterator<String> nameItr = dynamicColumnNames.iterator();
             while (nameItr.hasNext())
             {
                 String name = nameItr.next();
-                Class<?> colClass = myDTI.getMetaDataInfo().getKeyClassTypeMap().get(name);
-                if (!type.getName().equals(colClass.getName()))
+                Class<?> columnClass = myDTI.getMetaDataInfo().getKeyClassTypeMap().get(name);
+                if (!type.getName().equals(columnClass.getName()))
                 {
                     nameItr.remove();
                 }
@@ -358,7 +358,7 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
                 }
             }
         }
-        return dynColNames;
+        return dynamicColumnNames;
     }
 
     @Override
@@ -371,7 +371,7 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
     public Object getValue(long elementCacheId, int columnIndex)
     {
         validateColumnIndexIsDynamic(columnIndex);
-        DynamicMetadataController<?> mapToRetrieveFrom = myDynColumnNameToValueMap.get(columnIndex);
+        DynamicMetadataController<?> mapToRetrieveFrom = myDynamicColumnNameToValueMap.get(columnIndex);
         if (mapToRetrieveFrom != null)
         {
             return mapToRetrieveFrom.getValue(elementCacheId);
@@ -413,11 +413,11 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
     public void setValue(long elementCacheId, int columnIndex, Object value, Object source)
     {
         validateColumnIndexIsDynamic(columnIndex);
-        DynamicMetadataController<?> mapToAlter = myDynColumnNameToValueMap.get(columnIndex);
+        DynamicMetadataController<?> mapToAlter = myDynamicColumnNameToValueMap.get(columnIndex);
         if (mapToAlter == null)
         {
             mapToAlter = createController(myToolbox, columnIndex, myDTI);
-            myDynColumnNameToValueMap.put(columnIndex, mapToAlter);
+            myDynamicColumnNameToValueMap.put(columnIndex, mapToAlter);
         }
         mapToAlter.setValue(elementCacheId, value, source);
     }
@@ -443,11 +443,11 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
             return;
         }
 
-        DynamicMetadataController<?> mapToAlter = myDynColumnNameToValueMap.get(columnIndex);
+        DynamicMetadataController<?> mapToAlter = myDynamicColumnNameToValueMap.get(columnIndex);
         if (mapToAlter == null)
         {
             mapToAlter = createController(myToolbox, columnIndex, myDTI);
-            myDynColumnNameToValueMap.put(columnIndex, mapToAlter);
+            myDynamicColumnNameToValueMap.put(columnIndex, mapToAlter);
         }
         mapToAlter.setValues(cacheIds, value, source);
     }
