@@ -54,7 +54,7 @@ public class NetworkTransaction
     private Date myTransactionEnd;
 
     /** The property in which the string form of the URL is stored. */
-    private StringProperty myUrl = new ConcurrentStringProperty();
+    private final StringProperty myUrl = new ConcurrentStringProperty();
 
     /** The protocol used in the transaction. */
     private String myProtocol;
@@ -111,7 +111,7 @@ public class NetworkTransaction
      *
      * @param transactionId the ID of the transaction.
      */
-    public NetworkTransaction(String transactionId)
+    public NetworkTransaction(final String transactionId)
     {
         myTransactionId = transactionId;
         mySendEventProperty.addListener((obs, ov, nv) -> updateValues(nv));
@@ -133,12 +133,12 @@ public class NetworkTransaction
      *
      * @param event the event to process.
      */
-    private void updateValues(NetworkTransmitEvent event)
+    private void updateValues(final NetworkTransmitEvent event)
     {
-        HttpRequest request = event.getRequest();
+        final HttpRequest request = event.getRequest();
         myTransactionStart = event.getEventTime();
 
-        CookieStore cookieStore = event.getCookieStore();
+        final CookieStore cookieStore = event.getCookieStore();
         if (cookieStore != null)
         {
             cookieStore.getCookies().stream().map(c -> new HttpKeyValuePair(c.getName(), c.getValue()))
@@ -149,32 +149,49 @@ public class NetworkTransaction
         {
             myRequestMethod = request.getMethod();
 
-            URI uri = request.getURI();
+            final URI uri = request.getURI();
             myUrl.set(uri.toASCIIString());
             myDomain = uri.getHost();
             try
             {
-                URL url = uri.toURL();
+                final URL url = uri.toURL();
                 myProtocol = url.getProtocol();
                 myFile = myUrl.get().replaceAll(myProtocol + "://" + myDomain, "");
 
                 String queryString = url.getQuery();
                 if (StringUtils.isNotBlank(queryString))
                 {
-                    String[] tokens = queryString.split("&");
-                    for (String parameterPair : tokens)
+                    final String[] tokens = queryString.split("&");
+                    for (final String parameterPair : tokens)
                     {
                         if (parameterPair.contains("="))
                         {
-                            String[] parameterTokens = parameterPair.split("=");
-                            myRequestParameters.add(new HttpKeyValuePair(parameterTokens[0], parameterTokens[1]));
+                            final String[] parameterTokens = parameterPair.split("=");
+                            String value = "";
+                            if (parameterTokens.length > 1)
+                            {
+                                value = parameterTokens[1];
+                            }
+                            myRequestParameters.add(new HttpKeyValuePair(parameterTokens[0], value));
                         }
                     }
                 }
+                else
+                {
+                    final HttpEntity entity = request.getEntity();
+                    if (entity != null)
+                    {
+                        queryString = IOUtils.toString(entity.getContent(), StringUtilities.DEFAULT_CHARSET);
+                    }
+                }
             }
-            catch (MalformedURLException e)
+            catch (final MalformedURLException e)
             {
                 LOG.debug("Malformed URL.", e);
+            }
+            catch (final IOException e)
+            {
+                LOG.error("Unable to read content body.", e);
             }
 
             request.getHeaders().forEach((k, v) -> myRequestHeaders.add(new HttpKeyValuePair(k, v)));
@@ -190,7 +207,7 @@ public class NetworkTransaction
                     {
                         myRequestBody = IOUtils.toString(bodyStream, StringUtilities.DEFAULT_CHARSET);
                     }
-                    catch (IOException e)
+                    catch (final IOException e)
                     {
                         LOG.debug("Malformed URL.", e);
                     }
@@ -204,9 +221,9 @@ public class NetworkTransaction
      *
      * @param event the event to process.
      */
-    private void updateValues(NetworkReceiveEvent event)
+    private void updateValues(final NetworkReceiveEvent event)
     {
-        HttpResponse response = event.getResponse();
+        final HttpResponse response = event.getResponse();
         myTransactionEnd = event.getEventTime();
         if (response != null)
         {
@@ -217,9 +234,16 @@ public class NetworkTransaction
 
             if (response.getEntity() != null)
             {
-                HttpEntity entity = response.getEntity();
+                final HttpEntity entity = response.getEntity();
                 myBytesReceived = entity.getContentLength();
-                myContentType = entity.getContentType().getMimeType();
+                if (entity.getContentType() != null)
+                {
+                    myContentType = entity.getContentType().getMimeType();
+                }
+                else
+                {
+                    myContentType = "UNKNOWN";
+                }
             }
         }
     }

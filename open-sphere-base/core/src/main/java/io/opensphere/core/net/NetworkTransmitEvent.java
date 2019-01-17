@@ -20,17 +20,20 @@ public class NetworkTransmitEvent extends NetworkEvent
     /** The HTTP request sent to the remote endpoint. */
     private final HttpRequest myRequest;
 
-    private HttpClientOptions myOptions;
+    /** The options provided by the HTTP Client. */
+    private final HttpClientOptions myOptions;
 
+    /** The store from which cookies are read. */
     private CookieStore myCookieStore;
 
     /**
      * Creates a new transmission event with the supplied information.
      *
      * @param request the HTTP request sent to the remote endpoint.
+     * @param options The options provided by the HTTP Client.
      * @param transactionId the unique identifier applied to the transaction.
      */
-    public NetworkTransmitEvent(HttpRequest request, HttpClientOptions options, String transactionId)
+    public NetworkTransmitEvent(final HttpRequest request, final HttpClientOptions options, final String transactionId)
     {
         this(request, options, transactionId, State.COMPLETED);
     }
@@ -39,10 +42,12 @@ public class NetworkTransmitEvent extends NetworkEvent
      * Creates a new transmission event with the supplied information.
      *
      * @param request the HTTP request sent to the remote endpoint.
+     * @param options The options provided by the HTTP Client.
      * @param transactionId the unique identifier applied to the transaction.
      * @param state the state of the event.
      */
-    public NetworkTransmitEvent(HttpRequest request, HttpClientOptions options, String transactionId, State state)
+    public NetworkTransmitEvent(final HttpRequest request, final HttpClientOptions options, final String transactionId,
+            final State state)
     {
         this(request, options, transactionId, state, false);
     }
@@ -51,14 +56,15 @@ public class NetworkTransmitEvent extends NetworkEvent
      * Creates a new transmission event with the supplied information.
      *
      * @param request the HTTP request sent to the remote endpoint.
+     * @param options The options provided by the HTTP Client.
      * @param transactionId the unique identifier applied to the transaction.
      * @param state the state of the event.
      * @param expectingResponse a flag used to indicate that a response is
      *            pending and that the event framework should adjust
      *            accordingly.
      */
-    public NetworkTransmitEvent(HttpRequest request, HttpClientOptions options, String transactionId, State state,
-            boolean expectingResponse)
+    public NetworkTransmitEvent(final HttpRequest request, final HttpClientOptions options, final String transactionId,
+            final State state, final boolean expectingResponse)
     {
         super(transactionId, state);
         myRequest = request;
@@ -102,7 +108,7 @@ public class NetworkTransmitEvent extends NetworkEvent
      * @param cookieStore the value to store in the {@link #myCookieStore}
      *            field.
      */
-    public void setCookieStore(CookieStore cookieStore)
+    public void setCookieStore(final CookieStore cookieStore)
     {
         myCookieStore = cookieStore;
     }

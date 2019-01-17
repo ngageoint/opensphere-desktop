@@ -35,7 +35,7 @@ public class ObservableBuffer<E> extends ObservableListBase<E> implements Queue<
      * @param capacity the number of elements that can be stored in the buffer
      *            before the oldest item is pushed out.
      */
-    public ObservableBuffer(int capacity)
+    public ObservableBuffer(final int capacity)
     {
         myCapacity = capacity;
         myQueue = new LinkedList<>();
@@ -47,7 +47,7 @@ public class ObservableBuffer<E> extends ObservableListBase<E> implements Queue<
      * @see java.util.Queue#offer(java.lang.Object)
      */
     @Override
-    public boolean offer(E element)
+    public boolean offer(final E element)
     {
         boolean changed = false;
         synchronized (myQueue)
@@ -55,7 +55,7 @@ public class ObservableBuffer<E> extends ObservableListBase<E> implements Queue<
             beginChange();
             while (remainingCapacity() < 1)
             {
-                E removedElement = myQueue.removeFirst();
+                final E removedElement = myQueue.removeFirst();
                 if (removedElement != null)
                 {
                     nextRemove(0, removedElement);
@@ -87,7 +87,7 @@ public class ObservableBuffer<E> extends ObservableListBase<E> implements Queue<
      * @see java.util.AbstractList#add(java.lang.Object)
      */
     @Override
-    public boolean add(E e)
+    public boolean add(final E e)
     {
         if (remainingCapacity() == 0)
         {
@@ -196,7 +196,7 @@ public class ObservableBuffer<E> extends ObservableListBase<E> implements Queue<
      * @see java.util.AbstractList#get(int)
      */
     @Override
-    public E get(int index)
+    public E get(final int index)
     {
         if (index < 0 || index >= myQueue.size())
         {
@@ -205,7 +205,7 @@ public class ObservableBuffer<E> extends ObservableListBase<E> implements Queue<
         E item = null;
         synchronized (myQueue)
         {
-            Iterator<E> iterator = myQueue.iterator();
+            final Iterator<E> iterator = myQueue.iterator();
             for (int i = 0; i < index; i++)
             {
                 iterator.next();
@@ -224,5 +224,26 @@ public class ObservableBuffer<E> extends ObservableListBase<E> implements Queue<
     public int size()
     {
         return myQueue.size();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see java.util.AbstractList#clear()
+     */
+    @Override
+    public void clear()
+    {
+        if (hasListeners())
+        {
+            beginChange();
+            nextRemove(0, this);
+        }
+        myQueue.clear();
+        ++modCount;
+        if (hasListeners())
+        {
+            endChange();
+        }
     }
 }

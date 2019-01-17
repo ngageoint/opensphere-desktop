@@ -5,6 +5,7 @@ import io.opensphere.core.net.config.ManualProxyConfiguration;
 import io.opensphere.core.net.config.NoProxyConfiguration;
 import io.opensphere.core.net.config.SystemProxyConfiguration;
 import io.opensphere.core.net.config.UrlProxyConfiguration;
+import javafx.beans.property.BooleanProperty;
 
 /** Facility that manages the network configuration. */
 public interface NetworkConfigurationManager
@@ -93,6 +94,37 @@ public interface NetworkConfigurationManager
      * Persists all proxy configuration information to preferences.
      */
     void persistConfiguration();
+
+    /**
+     * Tests to determine if the network monitor is enabled. If
+     * <code>true</code>, all network traffic will be captured through events
+     * for monitoring. This will significantly degrade performance, and as such,
+     * the network monitor is disabled by default.
+     *
+     * @return <code>true</code> if network monitoring is enabled,
+     *         <code>false</code> otherwise.
+     */
+    boolean isNetworkMonitorEnabled();
+
+    /**
+     * Enables or disabled network monitoring. If enabled, all network traffic
+     * will be captured through events for monitoring. This will significantly
+     * degrade performance, and as such, the network monitor is disabled by
+     * default.
+     *
+     * @param networkMonitorEnabled <code>true</code> if network monitoring
+     *            should be enabled, <code>false</code> otherwise.
+     */
+    void setNetworkMonitorEnabled(boolean networkMonitorEnabled);
+
+    /**
+     * Gets the property through which the enabled state of the network monitor
+     * is tracked.
+     *
+     * @return the property through which the enabled state of the network
+     *         monitor is tracked.
+     */
+    BooleanProperty networkMonitorEnabledProperty();
 
     /** Listener for changes to the network configuration. */
     @FunctionalInterface

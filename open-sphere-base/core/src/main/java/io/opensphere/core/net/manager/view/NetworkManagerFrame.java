@@ -25,7 +25,10 @@ public class NetworkManagerFrame extends AbstractInternalFrame
     private NetworkManagerPanel myNetworkPanel;
 
     /** The controller used to orchestrate the network manager. */
-    private NetworkManagerController myNetworkManagerController;
+    private final NetworkManagerController myNetworkManagerController;
+
+    /** The panel in which the network monitor is controlled. */
+    private ControlPanel myControlPanel;
 
     /**
      * Creates a new network manager frame with the supplied toolbox.
@@ -33,7 +36,7 @@ public class NetworkManagerFrame extends AbstractInternalFrame
      * @param toolbox The toolbox through which application state is accessed.
      * @param controller the controller used to orchestrate the network manager.
      */
-    public NetworkManagerFrame(Toolbox toolbox, NetworkManagerController controller)
+    public NetworkManagerFrame(final Toolbox toolbox, final NetworkManagerController controller)
     {
         myToolbox = toolbox;
         myNetworkManagerController = controller;
@@ -63,7 +66,10 @@ public class NetworkManagerFrame extends AbstractInternalFrame
 
         myPanel = new JFXPanel();
 
-        BorderPane borderPane = new BorderPane();
+        final BorderPane borderPane = new BorderPane();
+
+        myControlPanel = new ControlPanel(myToolbox, myNetworkManagerController);
+        borderPane.setTop(myControlPanel);
 
         myNetworkPanel = new NetworkManagerPanel(myToolbox, myNetworkManagerController);
         borderPane.setCenter(myNetworkPanel);
