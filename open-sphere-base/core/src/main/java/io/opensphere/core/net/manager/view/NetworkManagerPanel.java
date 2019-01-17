@@ -41,7 +41,7 @@ public class NetworkManagerPanel extends SplitPane
      * @param controller the controller through which the manager is
      *            orchestrated.
      */
-    public NetworkManagerPanel(Toolbox toolbox, NetworkManagerController controller)
+    public NetworkManagerPanel(final Toolbox toolbox, final NetworkManagerController controller)
     {
         orientationProperty().set(Orientation.VERTICAL);
         setDividerPositions(.1);
@@ -52,40 +52,40 @@ public class NetworkManagerPanel extends SplitPane
         myNetworkTableView = new TableView<>(myEvents);
         myNetworkTableView.setStyle("-fx-table-cell-border-color: transparent;");
 
-        DoubleBinding tableWidthProperty = myNetworkTableView.widthProperty().subtract(21);
+        final DoubleBinding tableWidthProperty = myNetworkTableView.widthProperty().subtract(21);
 
-        TableColumn<NetworkTransaction, Integer> statusColumn = new TableColumn<>("Status");
+        final TableColumn<NetworkTransaction, Integer> statusColumn = new TableColumn<>("Status");
         statusColumn.prefWidthProperty().bind(tableWidthProperty.multiply(.0544));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         myNetworkTableView.getColumns().add(statusColumn);
 
-        TableColumn<NetworkTransaction, String> methodColumn = new TableColumn<>("Method");
+        final TableColumn<NetworkTransaction, String> methodColumn = new TableColumn<>("Method");
         methodColumn.prefWidthProperty().bind(tableWidthProperty.multiply(.0628));
         methodColumn.setCellValueFactory(new PropertyValueFactory<>("requestMethod"));
         myNetworkTableView.getColumns().add(methodColumn);
 
-        TableColumn<NetworkTransaction, String> domainColumn = new TableColumn<>("Domain");
+        final TableColumn<NetworkTransaction, String> domainColumn = new TableColumn<>("Domain");
         domainColumn.prefWidthProperty().bind(tableWidthProperty.multiply(.3015));
         domainColumn.setCellValueFactory(new PropertyValueFactory<>("domain"));
         myNetworkTableView.getColumns().add(domainColumn);
 
-        TableColumn<NetworkTransaction, String> fileColumn = new TableColumn<>("File");
+        final TableColumn<NetworkTransaction, String> fileColumn = new TableColumn<>("File");
         fileColumn.prefWidthProperty().bind(tableWidthProperty.multiply(.4012));
         fileColumn.setCellValueFactory(new PropertyValueFactory<>("file"));
         myNetworkTableView.getColumns().add(fileColumn);
 
-        TableColumn<NetworkTransaction, String> typeColumn = new TableColumn<>("Type");
+        final TableColumn<NetworkTransaction, String> typeColumn = new TableColumn<>("Type");
         typeColumn.prefWidthProperty().bind(tableWidthProperty.multiply(.1089));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("contentType"));
         myNetworkTableView.getColumns().add(typeColumn);
 
-        TableColumn<NetworkTransaction, Long> receivedColumn = new TableColumn<>("Received");
+        final TableColumn<NetworkTransaction, Long> receivedColumn = new TableColumn<>("Received");
         receivedColumn.prefWidthProperty().bind(tableWidthProperty.multiply(.0712));
         receivedColumn.setCellValueFactory(new PropertyValueFactory<>("bytesReceived"));
         myNetworkTableView.getColumns().add(receivedColumn);
 
-        VBox.setVgrow(myNetworkTableView, Priority.ALWAYS);
         getItems().add(myNetworkTableView);
+        VBox.setVgrow(myNetworkTableView, Priority.ALWAYS);
 
         myDetailPanel = new TransactionDetailPanel();
         VBox.setVgrow(myDetailPanel, Priority.ALWAYS);

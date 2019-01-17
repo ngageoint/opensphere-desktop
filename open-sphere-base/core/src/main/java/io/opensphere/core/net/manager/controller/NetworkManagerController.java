@@ -23,17 +23,17 @@ public class NetworkManagerController
     private final Toolbox myToolbox;
 
     /** The event handler used to process transmission events. */
-    private EventListener<? super NetworkTransmitEvent> myTransmitSubscriber;
+    private final EventListener<? super NetworkTransmitEvent> myTransmitSubscriber;
 
     /** The event handler used to process receive events. */
-    private EventListener<? super NetworkReceiveEvent> myReceiveSubscriber;
+    private final EventListener<? super NetworkReceiveEvent> myReceiveSubscriber;
 
     /**
      * Creates a new network manager controller, bound to the supplied toolbox.
      *
      * @param toolbox the toolbox through which application state is accessed.
      */
-    public NetworkManagerController(Toolbox toolbox)
+    public NetworkManagerController(final Toolbox toolbox)
     {
         myToolbox = toolbox;
         myModel = new NetworkTransactionModel();
@@ -47,8 +47,19 @@ public class NetworkManagerController
      */
     public void open()
     {
-        myToolbox.getEventManager().subscribe(NetworkTransmitEvent.class, myTransmitSubscriber);
-        myToolbox.getEventManager().subscribe(NetworkReceiveEvent.class, myReceiveSubscriber);
+        myToolbox.getSystemToolbox().getNetworkConfigurationManager().networkMonitorEnabledProperty().addListener((obs, ov, nv) ->
+        {
+            if (nv)
+            {
+                myToolbox.getEventManager().subscribe(NetworkTransmitEvent.class, myTransmitSubscriber);
+                myToolbox.getEventManager().subscribe(NetworkReceiveEvent.class, myReceiveSubscriber);
+            }
+            else
+            {
+                myToolbox.getEventManager().unsubscribe(NetworkTransmitEvent.class, myTransmitSubscriber);
+                myToolbox.getEventManager().unsubscribe(NetworkReceiveEvent.class, myReceiveSubscriber);
+            }
+        });
     }
 
     /**
@@ -77,9 +88,9 @@ public class NetworkManagerController
      *
      * @param event the event to process.
      */
-    private void dataSent(NetworkTransmitEvent event)
+    private void dataSent(final NetworkTransmitEvent event)
     {
-        NetworkTransaction transaction = new NetworkTransaction(event.getTransactionId());
+        final NetworkTransaction transaction = new NetworkTransaction(event.getTransactionId());
         transaction.sendEventProperty().set(event);
         FXUtilities.runOnFXThread(() -> myModel.getTransactions().offer(transaction));
     }
@@ -90,9 +101,9 @@ public class NetworkManagerController
      *
      * @param event the event to process.
      */
-    private void dataReceived(NetworkReceiveEvent event)
+    private void dataReceived(final NetworkReceiveEvent event)
     {
-        NetworkTransaction transaction = myModel.getTransaction(event.getTransactionId());
+        final NetworkTransaction transaction = myModel.getTransaction(event.getTransactionId());
         if (transaction == null)
         {
             // this happens when the buffer has already aged off the send event
