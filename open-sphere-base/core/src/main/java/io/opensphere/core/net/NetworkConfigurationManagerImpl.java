@@ -17,7 +17,9 @@ import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.ChangeSupport;
 import io.opensphere.core.util.WeakChangeSupport;
+import io.opensphere.core.util.javafx.ConcurrentBooleanProperty;
 import io.opensphere.core.util.lang.StringUtilities;
+import javafx.beans.property.BooleanProperty;
 
 /** Implementation that manages the network configuration. */
 public class NetworkConfigurationManagerImpl implements NetworkConfigurationManager
@@ -40,12 +42,15 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
     /** The system preferences registry. */
     private final PreferencesRegistry myPrefsRegistry;
 
+    /** The property used to manage the enabled state of the network monitor. */
+    private final BooleanProperty myNetworkEnabledProperty = new ConcurrentBooleanProperty(false);
+
     /**
      * Construct the network configuration manager.
      *
      * @param prefsRegistry The system preferences registry.
      */
-    public NetworkConfigurationManagerImpl(PreferencesRegistry prefsRegistry)
+    public NetworkConfigurationManagerImpl(final PreferencesRegistry prefsRegistry)
     {
         myPrefsRegistry = prefsRegistry;
         myPreferences = prefsRegistry.getPreferences(NetworkConfigurationManagerImpl.class);
@@ -53,7 +58,7 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
     }
 
     @Override
-    public void addChangeListener(NetworkConfigurationChangeListener listener)
+    public void addChangeListener(final NetworkConfigurationChangeListener listener)
     {
         myChangeSupport.addListener(listener);
     }
@@ -107,7 +112,7 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
     }
 
     @Override
-    public void setSelectedProxyType(ConfigurationType configurationType)
+    public void setSelectedProxyType(final ConfigurationType configurationType)
     {
         getConfigurations().setSelectedConfigurationType(configurationType);
     }
@@ -137,7 +142,7 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
     }
 
     @Override
-    public boolean isExcludedFromProxy(String host)
+    public boolean isExcludedFromProxy(final String host)
     {
         Set<String> exclusionPatterns;
         if (getSelectedProxyType() == ConfigurationType.SYSTEM)
@@ -153,12 +158,12 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
             exclusionPatterns = Collections.emptySet();
         }
 
-        for (String exclusion : exclusionPatterns)
+        for (final String exclusion : exclusionPatterns)
         {
             // Generate a regular expression from the exclusion string.
             // Treat everything except '*' literally.
-            String[] splitOnStar = exclusion.split("\\*", -1);
-            String pattern = "\\Q" + StringUtilities.join("\\E.*\\Q", splitOnStar) + "\\E";
+            final String[] splitOnStar = exclusion.split("\\*", -1);
+            final String pattern = "\\Q" + StringUtilities.join("\\E.*\\Q", splitOnStar) + "\\E";
             if (Pattern.matches(pattern, host))
             {
                 if (LOGGER.isDebugEnabled())
@@ -173,7 +178,7 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
     }
 
     @Override
-    public void removeChangeListener(NetworkConfigurationChangeListener listener)
+    public void removeChangeListener(final NetworkConfigurationChangeListener listener)
     {
         myChangeSupport.removeListener(listener);
     }
@@ -190,5 +195,38 @@ public class NetworkConfigurationManagerImpl implements NetworkConfigurationMana
     private void notifyChanged()
     {
         myChangeSupport.notifyListeners(listener -> listener.networkConfigurationChanged());
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.NetworkConfigurationManager#isNetworkMonitorEnabled()
+     */
+    @Override
+    public boolean isNetworkMonitorEnabled()
+    {
+        return myNetworkEnabledProperty.get();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.NetworkConfigurationManager#setNetworkMonitorEnabled(boolean)
+     */
+    @Override
+    public void setNetworkMonitorEnabled(final boolean networkMonitorEnabled)
+    {
+        myNetworkEnabledProperty.set(networkMonitorEnabled);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see io.opensphere.core.NetworkConfigurationManager#networkMonitorEnabledProperty()
+     */
+    @Override
+    public BooleanProperty networkMonitorEnabledProperty()
+    {
+        return myNetworkEnabledProperty;
     }
 }

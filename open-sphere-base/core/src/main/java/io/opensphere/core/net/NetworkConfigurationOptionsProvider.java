@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -63,14 +64,17 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
     /** Button indicating if system proxies should be used. */
     private JRadioButton myUseSystemProxiesButton;
 
+    /** A checkbox to enable or disable the network monitor. */
+    private JCheckBox myNetworkMonitorEnabled;
+
     /**
      * Constructor.
      *
      * @param networkConfigurationManager The network configuration manager.
      * @param prefsRegistry the preferences registry
      */
-    public NetworkConfigurationOptionsProvider(NetworkConfigurationManager networkConfigurationManager,
-            PreferencesRegistry prefsRegistry)
+    public NetworkConfigurationOptionsProvider(final NetworkConfigurationManager networkConfigurationManager,
+            final PreferencesRegistry prefsRegistry)
     {
         super(prefsRegistry, "Network");
         myNetworkConfigurationManager = networkConfigurationManager;
@@ -100,26 +104,28 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
             myNetworkConfigurationManager.setSelectedProxyType(ConfigurationType.NONE);
         }
 
-        SystemProxyConfiguration systemConfiguration = myNetworkConfigurationManager.getSystemConfiguration();
+        final SystemProxyConfiguration systemConfiguration = myNetworkConfigurationManager.getSystemConfiguration();
         systemConfiguration.getExclusionPatterns().clear();
-        systemConfiguration.getExclusionPatterns().addAll(Arrays.asList(mySystemProxyExclusionsField.getText().split(",\\s*|\\s+")));
+        systemConfiguration.getExclusionPatterns()
+                .addAll(Arrays.asList(mySystemProxyExclusionsField.getText().split(",\\s*|\\s+")));
 
-        UrlProxyConfiguration urlConfiguration = myNetworkConfigurationManager.getUrlConfiguration();
+        final UrlProxyConfiguration urlConfiguration = myNetworkConfigurationManager.getUrlConfiguration();
         urlConfiguration.setProxyUrl(myAutoConfigProxyUrlField.getText());
 
         try
         {
             // parse the number BEFORE MAKING ANY CHANGES:
-            int port = Integer.parseInt(myManualProxyPortField.getText());
+            final int port = Integer.parseInt(myManualProxyPortField.getText());
 
-            ManualProxyConfiguration configuration = myNetworkConfigurationManager.getManualConfiguration();
+            final ManualProxyConfiguration configuration = myNetworkConfigurationManager.getManualConfiguration();
             configuration.setHost(myManualProxyHostField.getText());
             configuration.setPort(port);
 
             configuration.getExclusionPatterns().clear();
-            configuration.getExclusionPatterns().addAll(Arrays.asList(myManualProxyExclusionsField.getText().split(",\\s*|\\s+")));
+            configuration.getExclusionPatterns()
+                    .addAll(Arrays.asList(myManualProxyExclusionsField.getText().split(",\\s*|\\s+")));
         }
-        catch (@SuppressWarnings("unused") NumberFormatException e)
+        catch (@SuppressWarnings("unused") final NumberFormatException e)
         {
             JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(myManualProxyHostField),
                     "Could not parse port number.");
@@ -136,17 +142,17 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
             initializeComponents();
         }
 
-        ButtonGroup buttonGroup = new ButtonGroup();
+        final ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(myUseNoProxyButton);
         buttonGroup.add(myUseSystemProxiesButton);
         buttonGroup.add(myUseAutoProxyButton);
         buttonGroup.add(myUseManualProxyButton);
 
-        String buttonStyle = "button";
-        String labelStyle = "label";
-        String controlStyle = "control";
+        final String buttonStyle = "button";
+        final String labelStyle = "label";
+        final String controlStyle = "control";
 
-        GridBagPanel panel = new GridBagPanel();
+        final GridBagPanel panel = new GridBagPanel();
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panel.style(buttonStyle).anchorWest().setGridwidth(2);
         panel.style(labelStyle).anchorEast();
@@ -163,7 +169,11 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
 
         revertToSavedConfiguration();
 
-        return panel;
+        final GridBagPanel outerPanel = new GridBagPanel();
+        outerPanel.anchorWest().fillHorizontal().setWeightx(1).addRow(myNetworkMonitorEnabled);
+        outerPanel.anchorWest().fillBoth().setWeighty(1).setWeightx(1).addRow(panel);
+
+        return outerPanel;
     }
 
     @Override
@@ -176,12 +186,18 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
     /** Initializes components. */
     private void initializeComponents()
     {
+        myNetworkMonitorEnabled = new JCheckBox("Enable network monitoring");
+        myNetworkConfigurationManager.networkMonitorEnabledProperty()
+                .addListener((obs, ov, nv) -> myNetworkMonitorEnabled.setSelected(nv));
+        myNetworkMonitorEnabled.addActionListener(
+                e -> myNetworkConfigurationManager.setNetworkMonitorEnabled(myNetworkMonitorEnabled.isSelected()));
+
         myUseNoProxyButton = new JRadioButton("No proxy");
         myUseSystemProxiesButton = new JRadioButton("Use system proxy settings");
         myUseManualProxyButton = new JRadioButton("Manual proxy configuration");
         myUseAutoProxyButton = new JRadioButton("Automatic proxy configuration");
 
-        ButtonGroup group = new ButtonGroup();
+        final ButtonGroup group = new ButtonGroup();
         group.add(myUseNoProxyButton);
         group.add(myUseSystemProxiesButton);
         group.add(myUseAutoProxyButton);
@@ -189,10 +205,11 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
 
         myManualProxyHostField = new JTextField(20);
         myManualProxyPortField = new JTextField(5);
-        DocumentFilter filter = new DocumentFilter()
+        final DocumentFilter filter = new DocumentFilter()
         {
             @Override
-            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException
+            public void insertString(final FilterBypass fb, final int offset, final String string, final AttributeSet attr)
+                throws BadLocationException
             {
                 if (string.matches("\\d+"))
                 {
@@ -201,8 +218,9 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
             }
 
             @Override
-            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
-                    throws BadLocationException
+            public void replace(final FilterBypass fb, final int offset, final int length, final String text,
+                    final AttributeSet attrs)
+                throws BadLocationException
             {
                 if (text.matches("\\d+"))
                 {
@@ -212,8 +230,8 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
         };
         ((AbstractDocument)myManualProxyPortField.getDocument()).setDocumentFilter(filter);
         myAutoConfigProxyUrlField = new JTextField(20);
-        String exTxt = "e.g.: *.first.com *.second.com";
-        String helpTxt = "Space or comma separated hosts to exclude from the proxy. Use '*' to match any string.";
+        final String exTxt = "e.g.: *.first.com *.second.com";
+        final String helpTxt = "Space or comma separated hosts to exclude from the proxy. Use '*' to match any string.";
         myManualProxyExclusionsField = new GhostTextField(exTxt);
         myManualProxyExclusionsField.setColumns(20);
         myManualProxyExclusionsField.setToolTipText(helpTxt);
@@ -227,21 +245,23 @@ public class NetworkConfigurationOptionsProvider extends AbstractPreferencesOpti
      */
     private void revertToSavedConfiguration()
     {
-        // populate all proxy fields from configuration:
-        SystemProxyConfiguration systemConfiguration = myNetworkConfigurationManager.getSystemConfiguration();
-        mySystemProxyExclusionsField
-        .setText(systemConfiguration.getExclusionPatterns().stream().collect(Collectors.joining(" ")));
+        myNetworkConfigurationManager.setNetworkMonitorEnabled(false);
 
-        UrlProxyConfiguration urlConfiguration = myNetworkConfigurationManager.getUrlConfiguration();
+        // populate all proxy fields from configuration:
+        final SystemProxyConfiguration systemConfiguration = myNetworkConfigurationManager.getSystemConfiguration();
+        mySystemProxyExclusionsField
+                .setText(systemConfiguration.getExclusionPatterns().stream().collect(Collectors.joining(" ")));
+
+        final UrlProxyConfiguration urlConfiguration = myNetworkConfigurationManager.getUrlConfiguration();
         myAutoConfigProxyUrlField.setText(urlConfiguration.getProxyUrl());
 
-        ManualProxyConfiguration manualConfiguration = myNetworkConfigurationManager.getManualConfiguration();
+        final ManualProxyConfiguration manualConfiguration = myNetworkConfigurationManager.getManualConfiguration();
         myManualProxyHostField.setText(manualConfiguration.getHost());
         myManualProxyPortField.setText(Integer.toString(manualConfiguration.getPort()));
         myManualProxyExclusionsField
-        .setText(manualConfiguration.getExclusionPatterns().stream().collect(Collectors.joining(" ")));
+                .setText(manualConfiguration.getExclusionPatterns().stream().collect(Collectors.joining(" ")));
 
-        ConfigurationType selectedProxyType = myNetworkConfigurationManager.getSelectedProxyType();
+        final ConfigurationType selectedProxyType = myNetworkConfigurationManager.getSelectedProxyType();
         switch (selectedProxyType)
         {
             case NONE:

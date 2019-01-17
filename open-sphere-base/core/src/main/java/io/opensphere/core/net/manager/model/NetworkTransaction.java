@@ -158,7 +158,7 @@ public class NetworkTransaction
                 myProtocol = url.getProtocol();
                 myFile = myUrl.get().replaceAll(myProtocol + "://" + myDomain, "");
 
-                final String queryString = url.getQuery();
+                String queryString = url.getQuery();
                 if (StringUtils.isNotBlank(queryString))
                 {
                     final String[] tokens = queryString.split("&");
@@ -176,10 +176,22 @@ public class NetworkTransaction
                         }
                     }
                 }
+                else
+                {
+                    final HttpEntity entity = request.getEntity();
+                    if (entity != null)
+                    {
+                        queryString = IOUtils.toString(entity.getContent(), StringUtilities.DEFAULT_CHARSET);
+                    }
+                }
             }
             catch (final MalformedURLException e)
             {
                 LOG.debug("Malformed URL.", e);
+            }
+            catch (final IOException e)
+            {
+                LOG.error("Unable to read content body.", e);
             }
 
             request.getHeaders().forEach((k, v) -> myRequestHeaders.add(new HttpKeyValuePair(k, v)));
