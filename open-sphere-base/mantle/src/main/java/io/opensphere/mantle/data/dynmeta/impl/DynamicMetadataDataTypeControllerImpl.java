@@ -145,7 +145,7 @@ public class DynamicMetadataDataTypeControllerImpl implements DynamicMetadataDat
             added = myDTI.getMetaDataInfo().addKey(columnName, columnClass, source);
             int columnIndex = myDTI.getMetaDataInfo().getKeyNames().indexOf(columnName);
             DynamicMetadataController<?> controller = createController(myToolbox, columnIndex, myDTI);
-            myDynColumnNameToValueMap.put(columnIndex, controller);
+            myDynColumnNameToValueMap.put(columnIndex + 1, controller);
         }
 
         return added;
