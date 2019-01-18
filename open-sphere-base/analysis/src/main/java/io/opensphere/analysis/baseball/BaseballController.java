@@ -1,15 +1,17 @@
 package io.opensphere.analysis.baseball;
 
+import java.awt.Component;
 import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.Window;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Polygon;
 
-import io.opensphere.analysis.util.MGRSUtilities;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.event.EventListenerService;
 import io.opensphere.core.geometry.Geometry;
@@ -27,7 +29,6 @@ import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.core.viewer.impl.Viewer3D;
 import io.opensphere.mantle.controller.DataTypeController;
 import io.opensphere.mantle.data.element.DataElement;
-import io.opensphere.mantle.data.element.MapDataElement;
 import io.opensphere.mantle.data.element.event.DataElementDoubleClickedEvent;
 import io.opensphere.mantle.data.geom.MapGeometrySupport;
 import io.opensphere.mantle.data.util.DataElementLookupUtils;
@@ -77,11 +78,20 @@ public class BaseballController extends EventListenerService
                 LatLonAlt center = boundingBox.getCenter().getLatLonAlt();
                 GeographicPosition innerPosition = new GeographicPosition(center);
                 Vector2i innerVector = myToolbox.getMapManager().convertToPoint(innerPosition);
-                Vector2i outerVector = new Vector2i(innerVector.getX(), innerVector.getY() + 10);
-                GeographicPosition outerPosition = myToolbox.getMapManager().convertToPosition(outerVector, ReferenceLevel.TERRAIN);
-                double radius = GeographicBody3D.greatCircleDistanceM(center, outerPosition.getLatLonAlt(),
-                        WGS84EarthConstants.RADIUS_EQUATORIAL_M);
-                LatLonAlt edge = GeographicBody3D.greatCircleEndPosition(center, 0, WGS84EarthConstants.RADIUS_EQUATORIAL_M, radius);
+                double pathLength = generateDistance(center, innerVector);
+
+                if (pathLength == -1)
+                {
+                    EventQueueUtilities.runOnEDT(() ->
+                    {
+                        Component parent = myToolbox.getUIRegistry().getMainFrameProvider().get();
+                        JOptionPane.showMessageDialog(parent,"Could not open the feature info dialog: "
+                                + "world size too small.", "Information Dialog Error", JOptionPane.PLAIN_MESSAGE);
+                    });
+                    return;
+                }
+
+                LatLonAlt edge = GeographicBody3D.greatCircleEndPosition(center, 0, WGS84EarthConstants.RADIUS_EQUATORIAL_M, pathLength);
                 Polygon polygon = JTSUtilities.createCircle(center, edge, JTSUtilities.NUM_CIRCLE_SEGMENTS);
                 StyleTransformerGeometryProcessor processor = null;
 
@@ -117,6 +127,47 @@ public class BaseballController extends EventListenerService
                 EventQueueUtilities.runOnEDT(() -> showDialog(dataElements));
             }
         }
+    }
+
+    /**
+     * Generates a distance based on the given center point.
+     * Due to the fixed distance needed between the inner and outer points,
+     * if the world is too small, the distance returned will be -1.
+     *
+     * @param center the center point
+     * @param innerVector the center as a vector
+     * @return the distance generated, or -1 if process fails
+     */
+    private double generateDistance(LatLonAlt center, Vector2i innerVector)
+    {
+        int tries = 0;
+        Vector2i outerVector = null;
+        GeographicPosition outerPosition = null;
+
+        while (outerPosition == null)
+        {
+            switch (tries)
+            {
+                case 0:
+                    outerVector = new Vector2i(innerVector.getX(), innerVector.getY() + 10);
+                    break;
+                case 1:
+                    outerVector = new Vector2i(innerVector.getX(), innerVector.getY() - 10);
+                    break;
+                case 2:
+                    outerVector = new Vector2i(innerVector.getX() + 10, innerVector.getY());
+                    break;
+                case 3:
+                    outerVector = new Vector2i(innerVector.getX() - 10, innerVector.getY());
+                    break;
+                default:
+                    return -1;
+            }
+            outerPosition = myToolbox.getMapManager().convertToPosition(outerVector, ReferenceLevel.TERRAIN);
+            tries++;
+        }
+
+        return GeographicBody3D.greatCircleDistanceM(center, outerPosition.getLatLonAlt(), WGS84EarthConstants.RADIUS_EQUATORIAL_M);
     }
 
     /**
