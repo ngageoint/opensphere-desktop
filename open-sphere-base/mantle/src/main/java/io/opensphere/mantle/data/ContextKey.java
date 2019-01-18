@@ -6,9 +6,8 @@ import io.opensphere.mantle.data.DataGroupInfo.DataGroupContextKey;
 import io.opensphere.mantle.data.DataGroupInfo.MultiDataGroupContextKey;
 
 /**
- * A marker interface to provide a common base for
- * {@link DataGroupContextKey} and {@link MultiDataGroupContextKey} to
- * implement.
+ * A marker interface to provide a common base for {@link DataGroupContextKey}
+ * and {@link MultiDataGroupContextKey} to implement.
  */
 public interface ContextKey
 {
