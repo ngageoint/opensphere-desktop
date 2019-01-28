@@ -76,6 +76,9 @@ import io.opensphere.mantle.data.impl.specialkey.AltitudeKey;
 @SuppressWarnings("PMD.GodClass")
 public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualizationStyle implements FeatureVisualizationStyle
 {
+    /** The default value used when a new label is created. */
+    private static final int DEFAULT_LABEL_SIZE = 14;
+
     /** Label Z order. */
     private static final int LABEL_Z_ORDER = DefaultOrderCategory.FEATURE_CATEGORY.getOrderMax() + 1;
 
@@ -181,7 +184,7 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
 
     /** The Constant ourDefaultLabelSizeProperty. */
     private static final VisualizationStyleParameter DEFAULT_LABEL_SIZE_PROPERTY = new VisualizationStyleParameter(
-            LABEL_SIZE_PROPERTY_KEY, "Label Size", Integer.valueOf(8), Integer.class,
+            LABEL_SIZE_PROPERTY_KEY, "Label Size", Integer.valueOf(14), Integer.class,
             new VisualizationStyleParameterFlags(true, false), ParameterHint.hint(false, false));
 
     /**
@@ -195,7 +198,7 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      *
      * @param tb the {@link Toolbox}
      */
-    public AbstractFeatureVisualizationStyle(Toolbox tb)
+    public AbstractFeatureVisualizationStyle(final Toolbox tb)
     {
         super(tb);
     }
@@ -203,10 +206,10 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
     /**
      * Instantiates a new abstract feature visualization style.
      *
-     * @param tb the tb
+     * @param tb the toolbox through which application state is accessed.
      * @param dtiKey the dti key
      */
-    public AbstractFeatureVisualizationStyle(Toolbox tb, String dtiKey)
+    public AbstractFeatureVisualizationStyle(final Toolbox tb, final String dtiKey)
     {
         super(tb, dtiKey);
     }
@@ -244,14 +247,14 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      * @param pool the {@link RenderPropertyPool}
      * @return true if created false if not.
      */
-    protected boolean createLabelGeometry(Set<Geometry> setToAddTo, FeatureIndividualGeometryBuilderData builderData,
-            GeographicPosition position, Constraints c, RenderPropertyPool pool)
+    protected boolean createLabelGeometry(final Set<Geometry> setToAddTo, final FeatureIndividualGeometryBuilderData builderData,
+            final GeographicPosition position, final Constraints c, final RenderPropertyPool pool)
     {
         boolean added = false;
-        VisualizationStyleParameter labelParameter = getStyleParameter(LABEL_ENABLED_PROPERTY_KEY);
+        final VisualizationStyleParameter labelParameter = getStyleParameter(LABEL_ENABLED_PROPERTY_KEY);
         if (labelParameter != null && Boolean.TRUE.equals(labelParameter.getValue()))
         {
-            Object value = getLabelColumnValue(builderData.getElementId(), builderData.getDataType().getMetaDataInfo(),
+            final Object value = getLabelColumnValue(builderData.getElementId(), builderData.getDataType().getMetaDataInfo(),
                     builderData.getMDP(), builderData.getMGS().getTimeSpan());
             if (value != null)
             {
@@ -272,11 +275,12 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      * @param labValue the lab value
      * @return true, if successful
      */
-    private boolean createLabelGeometrySpecific(Set<Geometry> setToAddTo, FeatureIndividualGeometryBuilderData builderData,
-            GeographicPosition position, Constraints c, RenderPropertyPool pool, String labValue)
+    private boolean createLabelGeometrySpecific(final Set<Geometry> setToAddTo,
+            final FeatureIndividualGeometryBuilderData builderData, final GeographicPosition position, final Constraints c,
+            final RenderPropertyPool pool, final String labValue)
     {
         boolean added = false;
-        LabelGeometry.Builder<GeographicPosition> builder = new LabelGeometry.Builder<>();
+        final LabelGeometry.Builder<GeographicPosition> builder = new LabelGeometry.Builder<>();
         builder.setDataModelId(builderData.getGeomId());
 
         GeographicPosition gp = position;
@@ -287,7 +291,7 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
         }
         else if (gp == null && builderData.getMGS() != null)
         {
-            GeographicBoundingBox gbb = builderData.getMGS()
+            final GeographicBoundingBox gbb = builderData.getMGS()
                     .getBoundingBox(getToolbox().getMapManager().getProjection(Viewer3D.class).getSnapshot());
             gp = gbb.getCenter();
         }
@@ -319,33 +323,34 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      * @return the abstract renderable geometry
      * @throws IllegalArgumentException the illegal argument exception
      */
-    protected AbstractRenderableGeometry createPointGeometry(FeatureIndividualGeometryBuilderData builderData,
-            RenderPropertyPool renderPropertyPool, float stylePointSize, Constraints constraints, Set<Geometry> setToAddTo)
+    protected AbstractRenderableGeometry createPointGeometry(final FeatureIndividualGeometryBuilderData builderData,
+            final RenderPropertyPool renderPropertyPool, final float stylePointSize, final Constraints constraints,
+            final Set<Geometry> setToAddTo)
     {
         if (!(builderData.getMGS() instanceof MapLocationGeometrySupport))
         {
-            String msg = builderData.getMGS() == null ? "NULL" : builderData.getMGS().getClass().getName();
+            final String msg = builderData.getMGS() == null ? "NULL" : builderData.getMGS().getClass().getName();
             throw new IllegalArgumentException("Cannot create geometries from type " + msg);
         }
 
         // Add a time constraint if in time line mode.
-        Constraints timeConstraint = constraints != null || builderData.getDataType() == null ? constraints
+        final Constraints timeConstraint = constraints != null || builderData.getDataType() == null ? constraints
                 : StyleUtils.createTimeConstraintsIfApplicable(builderData.getDataType().getBasicVisualizationInfo(),
                         builderData.getDataType().getMapVisualizationInfo(), builderData.getMGS(),
                         StyleUtils.getDataGroupInfoFromDti(getToolbox(), builderData.getDataType()));
 
-        GeographicPosition position = createGeographicPosition((MapLocationGeometrySupport)builderData.getMGS(),
+        final GeographicPosition position = createGeographicPosition((MapLocationGeometrySupport)builderData.getMGS(),
                 builderData.getMDP(), builderData.getVS());
 
-        PointGeometryFactory factory = new PointGeometryFactory(renderPropertyPool);
+        final PointGeometryFactory factory = new PointGeometryFactory(renderPropertyPool);
         if (position.getLatLonAlt().getAltM() < 0)
         {
             setToAddTo.addAll(mySubsurfaceGeometryCreator.createSubsurfaceGeometry(builderData, renderPropertyPool,
                     stylePointSize, factory, constraints, getColor(), position));
         }
 
-        AbstractRenderableGeometry centerPoint = factory.createPointGeometry(builderData, position, stylePointSize, getColor(),
-                timeConstraint);
+        final AbstractRenderableGeometry centerPoint = factory.createPointGeometry(builderData, position, stylePointSize,
+                getColor(), timeConstraint);
         setToAddTo.add(centerPoint);
 
         return centerPoint;
@@ -364,9 +369,9 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      */
     @Override
     public AbstractRenderableGeometry deriveGeometryFromRenderPropertyChange(
-            Map<String, VisualizationStyleParameter> changedParameterKeyToParameterMap, RenderPropertyPool rpp,
-            AbstractRenderableGeometry geom, DataTypeInfo dti, VisualizationState vs, VisualizationState defaultVS,
-            MetaDataProvider mdp)
+            final Map<String, VisualizationStyleParameter> changedParameterKeyToParameterMap, final RenderPropertyPool rpp,
+            final AbstractRenderableGeometry geom, final DataTypeInfo dti, final VisualizationState vs,
+            final VisualizationState defaultVS, final MetaDataProvider mdp)
     {
         BaseRenderProperties prop = geom.getRenderProperties().clone();
         prop = getAlteredRenderProperty(changedParameterKeyToParameterMap, dti, vs, defaultVS, mdp, prop);
@@ -386,12 +391,13 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      */
     @Override
     public BaseRenderProperties getAlteredRenderProperty(
-            Map<String, VisualizationStyleParameter> changedParameterKeyToParameterMap, DataTypeInfo dti, VisualizationState vs,
-            VisualizationState defaultVS, MetaDataProvider mdp, BaseRenderProperties orig)
+            final Map<String, VisualizationStyleParameter> changedParameterKeyToParameterMap, final DataTypeInfo dti,
+            final VisualizationState vs, final VisualizationState defaultVS, final MetaDataProvider mdp,
+            final BaseRenderProperties orig)
     {
-        BaseRenderProperties alteredRP = orig;
-        VisualizationState useVS = vs == null ? defaultVS : vs;
-        boolean isSelected = useVS != null && useVS.isSelected();
+        final BaseRenderProperties alteredRP = orig;
+        final VisualizationState useVS = vs == null ? defaultVS : vs;
+        final boolean isSelected = useVS != null && useVS.isSelected();
 
         if (alteredRP instanceof PointRenderProperties)
         {
@@ -402,13 +408,13 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
             alterZOrderIfNecessary(isSelected, dti, alteredRP);
         }
 
-        VisualizationStyleParameter colorParameter = changedParameterKeyToParameterMap.get(COLOR_PROPERTY_KEY);
+        final VisualizationStyleParameter colorParameter = changedParameterKeyToParameterMap.get(COLOR_PROPERTY_KEY);
         if (colorParameter != null)
         {
             if (orig instanceof PointRenderProperties)
             {
-                PointRenderProperties dprp = (PointRenderProperties)orig;
-                Color color = StyleUtils.determineColor(dprp.getColor(), vs == null ? defaultVS : vs);
+                final PointRenderProperties dprp = (PointRenderProperties)orig;
+                final Color color = StyleUtils.determineColor(dprp.getColor(), vs == null ? defaultVS : vs);
                 if (!Utilities.sameInstance(color, dprp.getColor()))
                 {
                     dprp.setColor(color);
@@ -416,8 +422,8 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
             }
             else if (orig instanceof LabelRenderProperties)
             {
-                LabelRenderProperties dcrp = (LabelRenderProperties)orig;
-                Color color = getLabelColor();
+                final LabelRenderProperties dcrp = (LabelRenderProperties)orig;
+                final Color color = getLabelColor();
                 if (!Utilities.sameInstance(color, dcrp.getColor()))
                 {
                     dcrp.setColor(color);
@@ -425,8 +431,8 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
             }
             else if (orig instanceof ColorRenderProperties)
             {
-                ColorRenderProperties dcrp = (ColorRenderProperties)orig;
-                Color color = StyleUtils.determineColor(dcrp.getColor(), vs == null ? defaultVS : vs);
+                final ColorRenderProperties dcrp = (ColorRenderProperties)orig;
+                final Color color = StyleUtils.determineColor(dcrp.getColor(), vs == null ? defaultVS : vs);
                 if (!Utilities.sameInstance(color, dcrp.getColor()))
                 {
                     dcrp.setColor(color);
@@ -452,15 +458,15 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      * @param mdp the {@link MetaDataProvider}
      * @return the altitude column value in meters
      */
-    public Double getAltitudeColumnValueM(MetaDataProvider mdp)
+    public Double getAltitudeColumnValueM(final MetaDataProvider mdp)
     {
         Double result = null;
         if (mdp != null)
         {
-            String altColKey = getAltitudeColumnPropertyName();
+            final String altColKey = getAltitudeColumnPropertyName();
             if (altColKey != null)
             {
-                Class<? extends Length> altUnit = getAltitudeUnit();
+                final Class<? extends Length> altUnit = getAltitudeUnit();
                 try
                 {
                     double val = StyleUtils.getValueInMeters(StyleUtils.convertValueToDouble(mdp.getValue(altColKey)), altUnit);
@@ -470,7 +476,7 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
                     }
                     result = Double.valueOf(val);
                 }
-                catch (NumberFormatException e)
+                catch (final NumberFormatException e)
                 {
                     result = null;
                     if (LOGGER.isTraceEnabled())
@@ -492,7 +498,7 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      */
     protected StyleAltitudeReference getAltitudeReference()
     {
-        StyleAltitudeReference level = (StyleAltitudeReference)getStyleParameterValue(ALTITUDE_REFERENCE_PROPERTY_KEY);
+        final StyleAltitudeReference level = (StyleAltitudeReference)getStyleParameterValue(ALTITUDE_REFERENCE_PROPERTY_KEY);
         return level == null ? StyleAltitudeReference.AUTOMATIC : level;
     }
 
@@ -503,7 +509,7 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      */
     private Class<? extends Length> getAltitudeUnit()
     {
-        String label = (String)getStyleParameterValue(ALTITUDE_UNIT_PROPERTY_KEY);
+        final String label = (String)getStyleParameterValue(ALTITUDE_UNIT_PROPERTY_KEY);
         return getToolbox().getUnitsRegistry().getUnitsProvider(Length.class).getUnitsWithSelectionLabel(label);
     }
 
@@ -515,7 +521,7 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
     @Override
     public Set<VisualizationStyleParameter> getAlwaysSaveParameters()
     {
-        Set<VisualizationStyleParameter> set = super.getAlwaysSaveParameters();
+        final Set<VisualizationStyleParameter> set = super.getAlwaysSaveParameters();
         set.add(getStyleParameter(ALTITUDE_UNIT_PROPERTY_KEY));
         return set;
     }
@@ -558,8 +564,8 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      */
     public int getLabelSize()
     {
-        Integer val = (Integer)getStyleParameterValue(LABEL_SIZE_PROPERTY_KEY);
-        return val == null ? 8 : val.intValue();
+        final Integer val = (Integer)getStyleParameterValue(LABEL_SIZE_PROPERTY_KEY);
+        return val == null ? DEFAULT_LABEL_SIZE : val.intValue();
     }
 
     /**
@@ -569,7 +575,7 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      */
     public double getLift()
     {
-        Double dVal = (Double)getStyleParameterValue(LIFT_PROPERTY_KEY);
+        final Double dVal = (Double)getStyleParameterValue(LIFT_PROPERTY_KEY);
         return dVal == null ? 0.0 : dVal.doubleValue();
     }
 
@@ -582,36 +588,37 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
     @NonNull
     public GroupedMiniStyleEditorPanel getMiniUIPanel()
     {
-        GroupedMiniStyleEditorPanel panel = new GroupedMiniStyleEditorPanel(this);
-        List<AbstractStyleParameterEditorPanel> paramList = New.list();
-        MutableVisualizationStyle style = panel.getChangedStyle();
+        final GroupedMiniStyleEditorPanel panel = new GroupedMiniStyleEditorPanel(this);
+        final List<AbstractStyleParameterEditorPanel> paramList = New.list();
+        final MutableVisualizationStyle style = panel.getChangedStyle();
         if (getDTIKey() != null)
         {
-            DataTypeInfo dti = StyleUtils.getDataTypeInfoFromKey(getToolbox(), getDTIKey());
+            final DataTypeInfo dti = StyleUtils.getDataTypeInfoFromKey(getToolbox(), getDTIKey());
             if (dti != null && dti.getMetaDataInfo() != null && dti.getMetaDataInfo().getKeyCount() > 0)
             {
-                AbstractStyleParameterEditorPanel altitudeAndDepthPanel = new MultipleCheckBoxParameterEditorPanel(
+                final AbstractStyleParameterEditorPanel altitudeAndDepthPanel = new MultipleCheckBoxParameterEditorPanel(
                         PanelBuilder.get(null, 20, 0, 0, 0), style, USE_ALTITUDE_PROPERTY_KEY, IS_DEPTH_PROPERTY_KEY);
                 paramList.add(altitudeAndDepthPanel);
 
                 if (supportsLabels())
                 {
-                    CheckBoxStyleParameterEditorPanel labelEnabledPanel = new CheckBoxStyleParameterEditorPanel(
+                    final CheckBoxStyleParameterEditorPanel labelEnabledPanel = new CheckBoxStyleParameterEditorPanel(
                             StyleUtils.createSliderMiniPanelBuilder("Always Show Labels"), style, LABEL_ENABLED_PROPERTY_KEY,
                             false);
                     paramList.add(labelEnabledPanel);
 
-                    LabelComboEditor labelPanel = new LabelComboEditor(getToolbox().getEventManager(),
+                    final LabelComboEditor labelPanel = new LabelComboEditor(getToolbox().getEventManager(),
                             StyleUtils.createComboBoxMiniPanelBuilder("Labels:"), style, LABEL_COLUMN_KEY_PROPERTY_KEY, dti,
                             true);
                     paramList.add(labelPanel);
 
-                    ComboBoxAndColorChooserEditorPanel labelSizeColorPanel = new ComboBoxAndColorChooserEditorPanel(
+                    final ComboBoxAndColorChooserEditorPanel labelSizeColorPanel = new ComboBoxAndColorChooserEditorPanel(
                             StyleUtils.createComboBoxMiniPanelBuilder("Label Size & Color"), style, LABEL_SIZE_PROPERTY_KEY,
                             false, ourTextSizeChoices, true, false, LABEL_COLOR_PROPERTY_KEY, null);
                     paramList.add(labelSizeColorPanel);
 
-                    EditorPanelVisibilityDependency visDepend = new EditorPanelVisibilityDependency(panel, labelSizeColorPanel);
+                    final EditorPanelVisibilityDependency visDepend = new EditorPanelVisibilityDependency(panel,
+                            labelSizeColorPanel);
                     visDepend.addConstraint(new ParameterVisibilityConstraint(LABEL_COLUMN_KEY_PROPERTY_KEY, false, null));
                     visDepend.evaluateStyle();
                     panel.addVisibilityDependency(visDepend);
@@ -619,7 +626,7 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
             }
         }
 
-        StyleParameterEditorGroupPanel paramGrp = new StyleParameterEditorGroupPanel(null, paramList, false, 0);
+        final StyleParameterEditorGroupPanel paramGrp = new StyleParameterEditorGroupPanel(null, paramList, false, 0);
         panel.addGroup(paramGrp);
         return panel;
     }
@@ -644,21 +651,21 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
     @NonNull
     public GroupedStyleParameterEditorPanel getUIPanel()
     {
-        GroupedStyleParameterEditorPanel panel = new GroupedStyleParameterEditorPanel(this, true);
-        List<AbstractStyleParameterEditorPanel> paramList = New.list();
-        MutableVisualizationStyle style = panel.getChangedStyle();
-        Class<? extends Length> units = getToolbox().getUnitsRegistry().getPreferredFixedScaleUnits(Length.class, MAX_LIFT);
+        final GroupedStyleParameterEditorPanel panel = new GroupedStyleParameterEditorPanel(this, true);
+        final List<AbstractStyleParameterEditorPanel> paramList = New.list();
+        final MutableVisualizationStyle style = panel.getChangedStyle();
+        final Class<? extends Length> units = getToolbox().getUnitsRegistry().getPreferredFixedScaleUnits(Length.class, MAX_LIFT);
         paramList.add(new LengthSliderStyleParameterEditorPanel(PanelBuilder.get("Lift"), style, LIFT_PROPERTY_KEY, false, true,
                 Meters.ZERO, MAX_LIFT, units, Meters.class));
 
         if (getDTIKey() != null)
         {
-            DataTypeInfo dti = StyleUtils.getDataTypeInfoFromKey(getToolbox(), getDTIKey());
+            final DataTypeInfo dti = StyleUtils.getDataTypeInfoFromKey(getToolbox(), getDTIKey());
             if (dti != null && dti.getMetaDataInfo() != null && dti.getMetaDataInfo().getKeyCount() > 0)
             {
                 PanelBuilder lb = PanelBuilder.get("Altitude Reference");
                 lb.setOtherParameter(AbstractStyleParameterEditorPanel.PANEL_HEIGHT, Integer.valueOf(46));
-                ComboBoxStyleParameterEditorPanel altRefPanel = new ComboBoxStyleParameterEditorPanel(lb, style,
+                final ComboBoxStyleParameterEditorPanel altRefPanel = new ComboBoxStyleParameterEditorPanel(lb, style,
                         ALTITUDE_REFERENCE_PROPERTY_KEY, false, false, false, Arrays.asList(StyleAltitudeReference.values()));
                 altRefPanel.getValueToAlertMap().put(StyleAltitudeReference.ELLIPSOID,
                         "Warning: Some values may be drawn under terrain");
@@ -667,11 +674,11 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
                 paramList.add(altRefPanel);
 
                 lb = PanelBuilder.get(null, 5, 0, 0, 0);
-                AbstractStyleParameterEditorPanel isDepthPanel = new MultipleCheckBoxParameterEditorPanel(lb, style,
+                final AbstractStyleParameterEditorPanel isDepthPanel = new MultipleCheckBoxParameterEditorPanel(lb, style,
                         USE_ALTITUDE_PROPERTY_KEY, IS_DEPTH_PROPERTY_KEY);
                 paramList.add(isDepthPanel);
 
-                Collection<String> labels = Arrays
+                final Collection<String> labels = Arrays
                         .asList(getToolbox().getUnitsRegistry().getAvailableUnitsSelectionLabels(Length.class, false));
                 PanelBuilder pb = PanelBuilder.get("Altitude Column");
                 pb.setOtherParameter(AbstractStyleParameterEditorPanel.PANEL_HEIGHT, Integer.valueOf(36));
@@ -681,23 +688,25 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
 
                 if (supportsLabels())
                 {
-                    CheckBoxStyleParameterEditorPanel labelEnabledPanel = new CheckBoxStyleParameterEditorPanel(
+                    final CheckBoxStyleParameterEditorPanel labelEnabledPanel = new CheckBoxStyleParameterEditorPanel(
                             StyleUtils.createSliderMiniPanelBuilder("Always Show Labels"), style, LABEL_ENABLED_PROPERTY_KEY,
                             false);
                     paramList.add(labelEnabledPanel);
 
                     pb = PanelBuilder.get("Labels");
-                    LabelComboEditor labelPanel = new LabelComboEditor(getToolbox().getEventManager(), pb, style,
+                    final LabelComboEditor labelPanel = new LabelComboEditor(getToolbox().getEventManager(), pb, style,
                             LABEL_COLUMN_KEY_PROPERTY_KEY, dti, false);
                     paramList.add(labelPanel);
 
                     pb = PanelBuilder.get("Label Size & Color");
                     pb.setOtherParameter(AbstractStyleParameterEditorPanel.PANEL_HEIGHT, Integer.valueOf(36));
-                    ComboBoxAndColorChooserEditorPanel labelSizeColorPanel = new ComboBoxAndColorChooserEditorPanel(pb, style,
-                            LABEL_SIZE_PROPERTY_KEY, false, ourTextSizeChoices, true, false, LABEL_COLOR_PROPERTY_KEY, null);
+                    final ComboBoxAndColorChooserEditorPanel labelSizeColorPanel = new ComboBoxAndColorChooserEditorPanel(pb,
+                            style, LABEL_SIZE_PROPERTY_KEY, false, ourTextSizeChoices, true, false, LABEL_COLOR_PROPERTY_KEY,
+                            null);
                     paramList.add(labelSizeColorPanel);
 
-                    EditorPanelVisibilityDependency visDepend = new EditorPanelVisibilityDependency(panel, labelSizeColorPanel);
+                    final EditorPanelVisibilityDependency visDepend = new EditorPanelVisibilityDependency(panel,
+                            labelSizeColorPanel);
                     visDepend.addConstraint(new ParameterVisibilityConstraint(LABEL_COLUMN_KEY_PROPERTY_KEY, false, null));
                     visDepend.evaluateStyle();
                     panel.addVisibilityDependency(visDepend);
@@ -705,7 +714,7 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
             }
         }
 
-        StyleParameterEditorGroupPanel paramGrp = new StyleParameterEditorGroupPanel("Basic Feature Style", paramList);
+        final StyleParameterEditorGroupPanel paramGrp = new StyleParameterEditorGroupPanel("Basic Feature Style", paramList);
         panel.addGroup(paramGrp);
         return panel;
     }
@@ -737,7 +746,7 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      * @see io.opensphere.mantle.data.geom.style.VisualizationStyle#initialize(java.util.Set)
      */
     @Override
-    public void initialize(Set<VisualizationStyleParameter> paramSet)
+    public void initialize(final Set<VisualizationStyleParameter> paramSet)
     {
         paramSet.stream().filter(p -> p.getKey() != null && p.getKey().startsWith(PROPERTY_KEY_PREFIX))
                 .forEach(this::setParameter);
@@ -753,16 +762,16 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
     {
         if (getDTIKey() != null)
         {
-            DataTypeInfo dti = StyleUtils.getDataTypeInfoFromKey(getToolbox(), getDTIKey());
+            final DataTypeInfo dti = StyleUtils.getDataTypeInfoFromKey(getToolbox(), getDTIKey());
             if (dti != null)
             {
                 if (dti.getMetaDataInfo() != null)
                 {
-                    String altKey = dti.getMetaDataInfo().getKeyForSpecialType(AltitudeKey.DEFAULT);
+                    final String altKey = dti.getMetaDataInfo().getKeyForSpecialType(AltitudeKey.DEFAULT);
                     if (altKey != null)
                     {
                         setParameter(ALTITUDE_METADATA_COLUMN_KEY_PROPERTY_KEY, altKey, NO_EVENT_SOURCE);
-                        SpecialKey sk = dti.getMetaDataInfo().getSpecialTypeForKey(altKey);
+                        final SpecialKey sk = dti.getMetaDataInfo().getSpecialTypeForKey(altKey);
                         if (sk instanceof AltitudeKey)
                         {
                             setParameter(ALTITUDE_UNIT_PROPERTY_KEY,
@@ -797,7 +806,7 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      */
     public boolean isUseAltitude()
     {
-        Boolean val = (Boolean)getStyleParameterValue(USE_ALTITUDE_PROPERTY_KEY);
+        final Boolean val = (Boolean)getStyleParameterValue(USE_ALTITUDE_PROPERTY_KEY);
         return val != null && val.booleanValue();
     }
 
@@ -808,7 +817,7 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      */
     public boolean isLabelEnabled()
     {
-        Boolean val = (Boolean)getStyleParameterValue(LABEL_ENABLED_PROPERTY_KEY);
+        final Boolean val = (Boolean)getStyleParameterValue(LABEL_ENABLED_PROPERTY_KEY);
         return val != null && val.booleanValue();
     }
 
@@ -831,9 +840,10 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      * @param mdi the mdi
      * @return the double
      */
-    protected double determineAltitude(VisualizationState visState, MapLocationGeometrySupport mlgs, MetaDataProvider mdi)
+    protected double determineAltitude(final VisualizationState visState, final MapLocationGeometrySupport mlgs,
+            final MetaDataProvider mdi)
     {
-        Double altFromProperty = isUseAltitude() ? getAltitudeColumnValueM(mdi) : null;
+        final Double altFromProperty = isUseAltitude() ? getAltitudeColumnValueM(mdi) : null;
         return (altFromProperty == null ? mlgs.getLocation().getAltM() + visState.getAltitudeAdjust()
                 : altFromProperty.doubleValue()) + getLift();
     }
@@ -847,14 +857,15 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      * @param timeSpan the time span if there is one
      * @return the label value or null if not found.
      */
-    public Object getLabelColumnValue(long elementId, MetaDataInfo metaDataInfo, MetaDataProvider mdp, TimeSpan timeSpan)
+    public Object getLabelColumnValue(final long elementId, final MetaDataInfo metaDataInfo, final MetaDataProvider mdp,
+            final TimeSpan timeSpan)
     {
         if (mdp == null)
         {
             return null;
         }
 
-        Object lblCol = getLabelColumnPropertyName();
+        final Object lblCol = getLabelColumnPropertyName();
 
         // case of a simple String
         if (lblCol instanceof String)
@@ -865,7 +876,7 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
         // case of a List of (hopefully) Strings
         if (lblCol instanceof List)
         {
-            StringBuilder buf = new StringBuilder();
+            final StringBuilder buf = new StringBuilder();
             ((List<?>)lblCol).stream().filter(o -> o instanceof String)
                     .forEach(s -> StyleUtils.appendLine(buf, StyleUtils.labelString((String)s, metaDataInfo, mdp, timeSpan)));
             return buf.toString();
@@ -881,21 +892,21 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      * @param dti the dti
      * @param brp the brp
      */
-    private void alterZOrderIfNecessary(boolean isSelected, DataTypeInfo dti, BaseRenderProperties brp)
+    private void alterZOrderIfNecessary(final boolean isSelected, final DataTypeInfo dti, final BaseRenderProperties brp)
     {
         if (brp instanceof DefaultZOrderRenderProperties)
         {
-            MapVisualizationInfo vi = dti == null ? null : dti.getMapVisualizationInfo();
+            final MapVisualizationInfo vi = dti == null ? null : dti.getMapVisualizationInfo();
             int maxZOrder = ZOrderRenderProperties.TOP_Z;
             if (dti != null && dti.getOrderKey() != null)
             {
                 maxZOrder = getToolbox().getOrderManagerRegistry().getOrderManager(dti.getOrderKey()).getCategory()
                         .getOrderRange().getMaximum().intValue();
             }
-            int zOrder = isSelected ? maxZOrder : vi == null ? 0 : vi.getZOrder();
+            final int zOrder = isSelected ? maxZOrder : vi == null ? 0 : vi.getZOrder();
             if (zOrder != brp.getZOrder())
             {
-                DefaultZOrderRenderProperties drp = (DefaultZOrderRenderProperties)brp;
+                final DefaultZOrderRenderProperties drp = (DefaultZOrderRenderProperties)brp;
                 drp.setZOrder(zOrder);
                 drp.setRenderingOrder(isSelected ? 1 : 0);
             }
@@ -911,18 +922,18 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      * @param visState the vis state
      * @return the point geometry. builder
      */
-    private GeographicPosition createGeographicPosition(MapLocationGeometrySupport mlgs, MetaDataProvider mdp,
-            VisualizationState visState)
+    private GeographicPosition createGeographicPosition(final MapLocationGeometrySupport mlgs, final MetaDataProvider mdp,
+            final VisualizationState visState)
     {
-        StyleAltitudeReference altRef = getAltitudeReference();
-        Altitude.ReferenceLevel refLevel = altRef.isAutomatic()
+        final StyleAltitudeReference altRef = getAltitudeReference();
+        final Altitude.ReferenceLevel refLevel = altRef.isAutomatic()
                 ? mlgs.followTerrain() ? Altitude.ReferenceLevel.TERRAIN : mlgs.getLocation().getAltitudeReference()
                 : altRef.getReference();
-        double altM = determineAltitude(visState, mlgs, mdp);
-        boolean altEquals = mlgs.getLocation().getAltitudeReference() == refLevel
+        final double altM = determineAltitude(visState, mlgs, mdp);
+        final boolean altEquals = mlgs.getLocation().getAltitudeReference() == refLevel
                 && MathUtil.isZero(mlgs.getLocation().getAltM() - altM);
         // Attempt to reuse the LatLonAlt to save memory
-        LatLonAlt location = altEquals ? mlgs.getLocation()
+        final LatLonAlt location = altEquals ? mlgs.getLocation()
                 : LatLonAlt.createFromDegreesMeters(mlgs.getLocation().getLatD(), mlgs.getLocation().getLonD(), altM, refLevel);
         return new GeographicPosition(location);
     }
@@ -934,9 +945,9 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
      */
     private VisualizationStyleParameter getDefaultAltitudeUnitProperty()
     {
-        Class<? extends Length> preferredUnits = getToolbox().getUnitsRegistry().getUnitsProvider(Length.class)
+        final Class<? extends Length> preferredUnits = getToolbox().getUnitsRegistry().getUnitsProvider(Length.class)
                 .getPreferredFixedScaleUnits(Meters.ONE);
-        String label = Length.getSelectionLabel(preferredUnits);
+        final String label = Length.getSelectionLabel(preferredUnits);
         return new VisualizationStyleParameter(ALTITUDE_UNIT_PROPERTY_KEY, "Altitude Unit", label, String.class,
                 new VisualizationStyleParameterFlags(true, false), ParameterHint.hint(false, true));
     }
