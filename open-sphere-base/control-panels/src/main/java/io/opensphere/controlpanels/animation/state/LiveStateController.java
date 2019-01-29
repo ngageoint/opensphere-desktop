@@ -126,7 +126,7 @@ public class LiveStateController extends AbstractModuleStateController
     @Override
     public boolean isSaveStateByDefault()
     {
-        return true;
+        return false;
     }
 
     @Override

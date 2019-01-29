@@ -217,7 +217,7 @@ public class TimeManagerStateController extends AbstractModuleStateController
     @Override
     public boolean isSaveStateByDefault()
     {
-        return true;
+        return false;
     }
 
     @Override
