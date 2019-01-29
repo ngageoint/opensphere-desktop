@@ -76,18 +76,19 @@ public class MiniStyleTypePanelController implements FeatureVisualizationControl
     /**
      * Sets the items.
      *
-     * @param visualizationControlPanel the f vcp
+     * @param visualizationControlPanel the control panel through which
+     *            visualization styles are modified.
      * @param featureClass the feature class
-     * @param dgi the dgi
-     * @param dti the dti
+     * @param dataGroup the current data group.
+     * @param dataType the current data type.
      */
     public void setItems(FeatureVisualizationControlPanel visualizationControlPanel,
-            Class<? extends VisualizationSupport> featureClass, DataGroupInfo dgi, DataTypeInfo dti)
+            Class<? extends VisualizationSupport> featureClass, DataGroupInfo dataGroup, DataTypeInfo dataType)
     {
         myFeatureClass = featureClass;
         myVisualizationControlPanel = visualizationControlPanel;
-        myDataGroup = dgi;
-        myDataType = dti;
+        myDataGroup = dataGroup;
+        myDataType = dataType;
     }
 
     @Override

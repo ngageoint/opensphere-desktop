@@ -208,7 +208,6 @@ public class MiniStyleTypePanel extends JPanel
 
     /**
      * Sets the collapsed preference.
-     *
      */
     public void saveCollapsedPreference()
     {
@@ -430,7 +429,7 @@ public class MiniStyleTypePanel extends JPanel
     /**
      * Handle visualization style parameter change.
      *
-     * @param evt the evt
+     * @param evt the event to process.
      */
     private void handleVisualizationStyleParameterChange(VisualizationStyleParameterChangeEvent evt)
     {
