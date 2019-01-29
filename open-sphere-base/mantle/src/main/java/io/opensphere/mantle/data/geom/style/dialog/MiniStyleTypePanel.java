@@ -40,9 +40,7 @@ import io.opensphere.mantle.data.geom.style.impl.AbstractFeatureVisualizationSty
 import io.opensphere.mantle.data.geom.style.impl.VisualizationStyleRegistryChangeAdapter;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
-/**
- * The Class MiniStyleTypePanel.
- */
+/** A panel on which the style of a specific type may be adjusted. */
 public class MiniStyleTypePanel extends JPanel
 {
     /** The unique identifier used for serialization operations. */
@@ -60,7 +58,7 @@ public class MiniStyleTypePanel extends JPanel
     /** The Current fvcp. */
     private transient FeatureVisualizationControlPanel myCurrentFVCP;
 
-    /** The Destroyed. */
+    /** A flag used to track the destroyed state of the panel. */
     private boolean myDestroyed;
 
     /** The currently selected data group. */
@@ -72,11 +70,11 @@ public class MiniStyleTypePanel extends JPanel
     /** The Expand collapse button. */
     private JToggleButton myExpandCollapseButton;
 
-    /** The Feature class. */
+    /** The Feature class managed on this panel. */
     private final transient Class<? extends VisualizationSupport> myFeatureClass;
 
-    /** The Is first. */
-    private final boolean myIsFirst;
+    /** A flag used to determine if the panel is the first of a group. */
+    private final boolean myFirst;
 
     /** The Mini style panel controller. */
     private final transient MiniStyleTypePanelController myMiniStylePanelController;
@@ -93,7 +91,7 @@ public class MiniStyleTypePanel extends JPanel
     /** The Style select cb action listener. */
     private final transient ActionListener myStyleSelectCBActionListener;
 
-    /** The Toolbox. */
+    /** The toolbox through which application state is accessed. */
     private final transient Toolbox myToolbox;
 
     /** The Style parameter change listener. */
@@ -102,39 +100,44 @@ public class MiniStyleTypePanel extends JPanel
     /** The Registry change listener. */
     private transient VisualizationStyleRegistryChangeListener myVisStyleRegistryChangeListener;
 
+    /** The controller used to manage and access visualization styles. */
+    private final VisualizationStyleController myVisualizationStyleController;
+
     /**
      * Instantiates a new mini style type panel.
      *
-     * @param tb the tb
-     * @param featureClass the feature class
-     * @param dgi the dgi
-     * @param dti the dti
-     * @param isFirst the is first
+     * @param toolbox The toolbox through which application state is accessed.
+     * @param featureClass the feature class for which the panel is configured.
+     * @param dataGroup the selected data group.
+     * @param dataType the selected data type.
+     * @param first a flag used to determine if the panel is the first of a
+     *            group.
      */
     @SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
-    public MiniStyleTypePanel(Toolbox tb, Class<? extends VisualizationSupport> featureClass, DataGroupInfo dgi, DataTypeInfo dti,
-            boolean isFirst)
+    public MiniStyleTypePanel(Toolbox toolbox, Class<? extends VisualizationSupport> featureClass, DataGroupInfo dataGroup,
+            DataTypeInfo dataType, boolean first)
     {
         super();
-        myIsFirst = isFirst;
-        myToolbox = tb;
-        VisualizationStyleController vsc = MantleToolboxUtils.getMantleToolbox(tb).getVisualizationStyleController();
-        MantleToolboxUtils.getMantleToolbox(tb).getVisualizationStyleRegistry()
+        myFirst = first;
+        myToolbox = toolbox;
+        myVisualizationStyleController = MantleToolboxUtils.getMantleToolbox(toolbox).getVisualizationStyleController();
+        MantleToolboxUtils.getMantleToolbox(toolbox).getVisualizationStyleRegistry()
                 .addVisualizationStyleRegistryChangeListener(getStyleRegistryChangeListener());
         myFeatureClass = featureClass;
-        myDataGroup = dgi;
-        myDataType = dti;
-        myMiniStylePanelController = new MiniStyleTypePanelController(tb);
+        myDataGroup = dataGroup;
+        myDataType = dataType;
+        myMiniStylePanelController = new MiniStyleTypePanelController(toolbox);
 
         Class<? extends VisualizationStyle> baseStyleClass = StyleManagerUtils.getBaseStyleClassesForFeatureClass(myFeatureClass);
         if (baseStyleClass == null)
         {
-            baseStyleClass = vsc.getSelectedVisualizationStyleClass(featureClass, dgi, dti);
+            baseStyleClass = myVisualizationStyleController.getSelectedVisualizationStyleClass(featureClass, dataGroup, dataType);
         }
 
         List<StyleNodeUserObject> list = StyleManagerUtils.createStyleNodeList(myToolbox, baseStyleClass, myFeatureClass,
                 myDataGroup, myDataType);
-        Class<? extends VisualizationStyle> selStyle = vsc.getSelectedVisualizationStyleClass(featureClass, dgi, dti);
+        Class<? extends VisualizationStyle> selStyle = myVisualizationStyleController
+                .getSelectedVisualizationStyleClass(featureClass, dataGroup, dataType);
 
         StyleNodeUserObject selectedNode = list.stream().filter(n -> Objects.equals(n.getStyleClass(), selStyle)).findFirst()
                 .orElse(null);
@@ -166,9 +169,7 @@ public class MiniStyleTypePanel extends JPanel
         }
     }
 
-    /**
-     * Destroy.
-     */
+    /** Destroy the contents of the panel in preparation for disposal. */
     public void destroy()
     {
         myDestroyed = true;
@@ -202,7 +203,7 @@ public class MiniStyleTypePanel extends JPanel
     public boolean isCollapsedPreference()
     {
         return myToolbox.getPreferencesRegistry().getPreferences(MiniStylePanel.class).getBoolean(getCollapsedPreferenceKey(),
-                !myIsFirst);
+                !myFirst);
     }
 
     /**
@@ -219,7 +220,7 @@ public class MiniStyleTypePanel extends JPanel
          * it is opened, and remove the preference if it is closed. */
         String key = getCollapsedPreferenceKey();
         Preferences preferences = myToolbox.getPreferencesRegistry().getPreferences(MiniStylePanel.class);
-        if (myIsFirst)
+        if (myFirst)
         {
             if (myExpandCollapseButton.isSelected())
             {
@@ -337,9 +338,8 @@ public class MiniStyleTypePanel extends JPanel
     {
         EventQueueUtilities.runOnEDT(() ->
         {
-            VisualizationStyleController vsc = MantleToolboxUtils.getMantleToolbox(myToolbox).getVisualizationStyleController();
-            VisualizationStyle vs = vsc.getStyleForEditorWithConfigValues(selectedStyleClass, myFeatureClass, myDataGroup,
-                    myDataType);
+            VisualizationStyle vs = myVisualizationStyleController.getStyleForEditorWithConfigValues(selectedStyleClass,
+                    myFeatureClass, myDataGroup, myDataType);
             VisualizationStyle currentStyle = MantleToolboxUtils.getMantleToolbox(myToolbox).getVisualizationStyleRegistry()
                     .getStyle(myFeatureClass, myDataType.getTypeKey(), false);
 
@@ -400,10 +400,8 @@ public class MiniStyleTypePanel extends JPanel
         {
             EventQueueUtilities.runOnEDT(() ->
             {
-                VisualizationStyleController vsc = MantleToolboxUtils.getMantleToolbox(myToolbox)
-                        .getVisualizationStyleController();
-                Class<? extends VisualizationStyle> selStyle = vsc.getSelectedVisualizationStyleClass(myFeatureClass, myDataGroup,
-                        myDataType);
+                Class<? extends VisualizationStyle> selStyle = myVisualizationStyleController
+                        .getSelectedVisualizationStyleClass(myFeatureClass, myDataGroup, myDataType);
 
                 StyleNodeUserObject selectedNode = null;
                 if (myStyleSelectComboBox.getItemCount() > 1)
