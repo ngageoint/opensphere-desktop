@@ -2,8 +2,6 @@ package io.opensphere.overlay;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Collection;
 import java.util.Collections;
@@ -49,9 +47,6 @@ final class CursorPositionTransformer extends AbstractOverlayTransformer
 {
     /** The initial screen position for the time display label. */
     public static final ScreenPosition ourLocation = new ScreenPosition(40, 40);
-
-//    /** The Time overlay config. */
-//    private CanvasOverlayConfig myCursorOverlayConfig;
 
     /** An MGRS converter. */
     private static final MGRSConverter MGRS_CONVERTER = new MGRSConverter();
@@ -103,7 +98,8 @@ final class CursorPositionTransformer extends AbstractOverlayTransformer
 
         myToolbox = toolbox;
 
-        myCursorPositionPopupManager = new CursorPositionPopupManager(myToolbox.getUIRegistry().getMainFrameProvider());
+        myCursorPositionPopupManager = new CursorPositionPopupManager(myToolbox.getUIRegistry().getMainFrameProvider(),
+                toolbox.getUnitsRegistry());
         toolbox.getControlRegistry().getControlContext(ControlRegistry.GLOBE_CONTROL_CONTEXT)
                 .addListener(myCursorPositionPopupManager.getListener(), new DefaultKeyPressedBinding(KeyEvent.VK_PERIOD));
 
@@ -200,8 +196,9 @@ final class CursorPositionTransformer extends AbstractOverlayTransformer
         if (isOpen())
         {
             myCursorPositionPanel.setLabels(text1, latLonAlt, hasElevationProvider);
-            myCursorPositionPopupManager.setLabels(myCursorPositionPanel.getLatText(), myCursorPositionPanel.getLonText(),
-                    myCursorPositionPanel.getAltText(), myCursorPositionPanel.getMGRSText());
+            myCursorPositionPopupManager.setLocation(latLonAlt, hasElevationProvider);
+//            myCursorPositionPopupManager.setLabels(myCursorPositionPanel.getLatText(), myCursorPositionPanel.getLonText(),
+//                    myCursorPositionPanel.getAltText(), myCursorPositionPanel.getMGRSText());
 
             publishScreenPositionLabel();
         }
@@ -298,16 +295,12 @@ final class CursorPositionTransformer extends AbstractOverlayTransformer
     {
         JMenu menu = new JMenu("Cursor");
         final JMenuItem cursorItem = new JCheckBoxMenuItem("Show cursor screen position");
-        cursorItem.addActionListener(new ActionListener()
+        cursorItem.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            myShowCursorScreenPosition = cursorItem.isSelected();
+            if (!myShowCursorScreenPosition && myScreenPositionLabel != null)
             {
-                myShowCursorScreenPosition = cursorItem.isSelected();
-                if (!myShowCursorScreenPosition && myScreenPositionLabel != null)
-                {
-                    publishGeometries(Collections.<LabelGeometry>emptyList(), Collections.singletonList(myScreenPositionLabel));
-                }
+                publishGeometries(Collections.<LabelGeometry>emptyList(), Collections.singletonList(myScreenPositionLabel));
             }
         });
         menu.add(cursorItem);
@@ -328,7 +321,7 @@ final class CursorPositionTransformer extends AbstractOverlayTransformer
         Collection<LabelGeometry> removes = myScreenPositionLabel == null ? Collections.<LabelGeometry>emptyList()
                 : Collections.singletonList(myScreenPositionLabel);
 
-        LabelGeometry.Builder<ScreenPosition> builder = new LabelGeometry.Builder<ScreenPosition>();
+        LabelGeometry.Builder<ScreenPosition> builder = new LabelGeometry.Builder<>();
         builder.setPosition(new ScreenPosition(20, 20));
         builder.setText(labelText.toString());
         builder.setRapidUpdate(true);
