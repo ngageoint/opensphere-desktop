@@ -50,7 +50,7 @@ public class CursorPositionPopupManager
     final Supplier<? extends JFrame> myDialogParentSupplier;
 
     /**
-     * a flag to inform the popup that an elevation provider is present. Package
+     * A flag to inform the popup that an elevation provider is present. Package
      * visibility to prevent synthetic accessors.
      */
     boolean myHasElevationProvider;

@@ -197,9 +197,6 @@ final class CursorPositionTransformer extends AbstractOverlayTransformer
         {
             myCursorPositionPanel.setLabels(text1, latLonAlt, hasElevationProvider);
             myCursorPositionPopupManager.setLocation(latLonAlt, hasElevationProvider);
-//            myCursorPositionPopupManager.setLabels(myCursorPositionPanel.getLatText(), myCursorPositionPanel.getLonText(),
-//                    myCursorPositionPanel.getAltText(), myCursorPositionPanel.getMGRSText());
-
             publishScreenPositionLabel();
         }
     }
