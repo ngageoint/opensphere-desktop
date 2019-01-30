@@ -35,13 +35,15 @@ public class ViewPickerFrame extends AbstractInternalFrame
         setPreferredSize(getSize());
         setMinimumSize(getSize());
 
-        setTitle("Views");
+        setTitle("");
         setOpaque(false);
         setIconifiable(false);
         setClosable(false);
         setPopable(false);
         setResizable(false);
-
+        setRollable(false);
+        // use smaller borders on the hud window:
+        putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
     }
 

@@ -57,7 +57,8 @@ public class ViewPickerPlugin extends PluginAdapter
             int width = (int)jFrame.getSize().getWidth();
             int height = (int)jFrame.getSize().getHeight();
 
-            frame.setLocation(width - 30, (int)(height / 2 - frame.getSize().getHeight() / 2));
+            int frameHeight = frame.getHeight();
+            frame.setLocation(width - 30, height / 2 - (int)(frameHeight / 1.5));
 
             frame.setVisible(!frame.isVisible());
         });

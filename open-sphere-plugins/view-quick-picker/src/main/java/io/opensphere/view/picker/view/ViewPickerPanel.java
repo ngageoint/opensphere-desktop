@@ -8,6 +8,7 @@ import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.viewbookmark.ViewBookmark;
 import io.opensphere.view.picker.model.ViewPickerModel;
 import javafx.collections.ListChangeListener.Change;
+import javafx.geometry.Insets;
 import javafx.scene.layout.VBox;
 
 /** The base panel in which the view picker is rendered. */
@@ -28,6 +29,7 @@ public class ViewPickerPanel extends VBox
     public ViewPickerPanel(Toolbox toolbox, ViewPickerModel model)
     {
         super(10);
+        setPadding(new Insets(10, 0, 10, 0));
         myToolbox = toolbox;
         myModel = model;
 
