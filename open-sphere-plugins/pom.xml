@@ -48,5 +48,6 @@
         <module>wfs</module>
         <module>wms</module>
         <module>wps</module>
-    </modules>
+    <module>view-quick-picker</module>
+  </modules>
 </project>

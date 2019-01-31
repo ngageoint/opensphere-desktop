@@ -19,6 +19,18 @@ public class AbstractInternalFrame extends JInternalFrame implements PositionBou
     private static final long serialVersionUID = 1L;
 
     /**
+     * The constant in which the setting for controlling the poppable behavior
+     * is stored.
+     */
+    private static final String IS_POPPABLE_KEY = "AbstractInternalFrame.isPoppable";
+
+    /**
+     * The constant in which the setting for controlling the rollable behavior
+     * is stored.
+     */
+    private static final String IS_ROLLABLE_KEY = "AbstractInternalFrame.isRollable";
+
+    /**
      * The property name for the component's user property telling whether the
      * component has been rolled up.
      */
@@ -39,6 +51,9 @@ public class AbstractInternalFrame extends JInternalFrame implements PositionBou
     /** When true, the frame can be popped out onto the JIDE dock. */
     private boolean myPopable = true;
 
+    /** When true, the frame can be rolled up to just the title bar. */
+    private boolean myRollable = true;
+
     /**
      * Creates a non-resizable, non-closable, non-maximizable, non-iconifiable
      * <code>JInternalFrame</code> with no title.
@@ -46,6 +61,8 @@ public class AbstractInternalFrame extends JInternalFrame implements PositionBou
     public AbstractInternalFrame()
     {
         super();
+        putClientProperty(IS_POPPABLE_KEY, Boolean.valueOf(myPopable));
+        putClientProperty(IS_ROLLABLE_KEY, Boolean.valueOf(myRollable));
         setFrameIcon(null);
     }
 
@@ -60,6 +77,7 @@ public class AbstractInternalFrame extends JInternalFrame implements PositionBou
     public AbstractInternalFrame(String aTitle, boolean aResizable, boolean aClosable)
     {
         super(aTitle, aResizable, aClosable);
+        putClientProperty(IS_POPPABLE_KEY, Boolean.valueOf(myPopable));
         setFrameIcon(null);
         putClientProperty(ROLL_PROPERTY, Boolean.FALSE);
     }
@@ -77,6 +95,7 @@ public class AbstractInternalFrame extends JInternalFrame implements PositionBou
     public AbstractInternalFrame(String aTitle, boolean aResizable, boolean aClosable, boolean aMaximizable)
     {
         super(aTitle, aResizable, aClosable, aMaximizable);
+        putClientProperty(IS_POPPABLE_KEY, Boolean.valueOf(myPopable));
         setFrameIcon(null);
     }
 
@@ -108,6 +127,16 @@ public class AbstractInternalFrame extends JInternalFrame implements PositionBou
     public boolean isPopable()
     {
         return myPopable;
+    }
+
+    /**
+     * Gets the value of the {@link #myRollable} field.
+     *
+     * @return the value of the myRollable field.
+     */
+    public boolean isRollable()
+    {
+        return myRollable;
     }
 
     @Override
@@ -204,6 +233,16 @@ public class AbstractInternalFrame extends JInternalFrame implements PositionBou
     }
 
     /**
+     * Stores the supplied value in the {@link #myRollable} field.
+     *
+     * @param rollable the value to store in the rollable field.
+     */
+    public void setRollable(boolean rollable)
+    {
+        myRollable = rollable;
+    }
+
+    /**
      * Set the popable.
      *
      * @param popable the popable to set
@@ -211,5 +250,6 @@ public class AbstractInternalFrame extends JInternalFrame implements PositionBou
     public void setPopable(boolean popable)
     {
         myPopable = popable;
+        putClientProperty(IS_POPPABLE_KEY, Boolean.valueOf(myPopable));
     }
 }

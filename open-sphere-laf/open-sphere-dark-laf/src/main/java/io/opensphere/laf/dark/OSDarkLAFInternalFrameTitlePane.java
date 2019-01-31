@@ -44,6 +44,18 @@ public class OSDarkLAFInternalFrameTitlePane extends MetalInternalFrameTitlePane
      */
     private static final long serialVersionUID = -1543371220136198733L;
 
+    /**
+     * The constant in which the setting for controlling the poppable behavior
+     * is stored.
+     */
+    private static final String IS_POPPABLE_KEY = "AbstractInternalFrame.isPoppable";
+
+    /**
+     * The constant in which the setting for controlling the rollable behavior
+     * is stored.
+     */
+    private static final String IS_ROLLABLE_KEY = "AbstractInternalFrame.isRollable";
+
     private static final String ROLL_PROPERTY = "frameRolledUp";
 
     private static final String POPPED_PROPERTY = "framePopped";
@@ -249,8 +261,14 @@ public class OSDarkLAFInternalFrameTitlePane extends MetalInternalFrameTitlePane
     protected void addSubComponents()
     {
         super.addSubComponents();
-        add(myRollupButton);
-        add(myPopButton);
+        if (Boolean.TRUE.equals(frame.getClientProperty(IS_ROLLABLE_KEY)))
+        {
+            add(myRollupButton);
+        }
+        if (Boolean.TRUE.equals(frame.getClientProperty(IS_POPPABLE_KEY)))
+        {
+            add(myPopButton);
+        }
     }
 
     @Override

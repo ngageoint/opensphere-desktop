@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pluginLoaderCollection>
+	<pluginLoaderData>
+		<id>ViewPickerPlugin</id>
+		<class>io.opensphere.view.picker.ViewPickerPlugin</class>
+		<appVersion>1.0</appVersion>
+		<requiredPluginDependency>MantlePlugin</requiredPluginDependency>
+	</pluginLoaderData>
+</pluginLoaderCollection>
