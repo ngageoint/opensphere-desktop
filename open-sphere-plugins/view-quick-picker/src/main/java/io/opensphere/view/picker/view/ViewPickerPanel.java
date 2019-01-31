@@ -22,11 +22,11 @@ public class ViewPickerPanel extends VBox
 
     /**
      * Creates a new picker panel.
-     * 
+     *
      * @param toolbox the toolbox through which application state is accessed.
      * @param model the model in which data is stored.
      */
-    public ViewPickerPanel(Toolbox toolbox, ViewPickerModel model)
+    public ViewPickerPanel(final Toolbox toolbox, final ViewPickerModel model)
     {
         super(10);
         setPadding(new Insets(10, 0, 10, 0));
@@ -38,22 +38,22 @@ public class ViewPickerPanel extends VBox
 
     /**
      * An event handler used to react to changes in the underlying model.
-     * 
-     * @param c the change propagated from the underlying model.l
+     *
+     * @param change the change propagated from the underlying model.
      */
-    private void viewsChanged(Change<? extends ViewBookmark> c)
+    private void viewsChanged(final Change<? extends ViewBookmark> change)
     {
         FXUtilities.runOnFXThread(() ->
         {
-            while (c.next())
+            while (change.next())
             {
-                if (c.wasAdded())
+                if (change.wasAdded())
                 {
-                    c.getAddedSubList().stream().map(v -> new ViewPickerButton(myToolbox, v)).forEach(this.getChildren()::add);
+                    change.getAddedSubList().stream().map(v -> new ViewPickerButton(myToolbox, v)).forEach(getChildren()::add);
                 }
-                if (c.wasRemoved())
+                if (change.wasRemoved())
                 {
-                    List<? extends ViewBookmark> removedItems = c.getRemoved();
+                    final List<? extends ViewBookmark> removedItems = change.getRemoved();
                     getChildren().removeAll(getChildren().stream()
                             .filter(child -> child instanceof ViewPickerButton
                                     && removedItems.contains(((ViewPickerButton)child).getBookmark()))

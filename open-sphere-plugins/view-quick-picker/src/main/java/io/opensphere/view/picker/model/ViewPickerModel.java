@@ -4,7 +4,7 @@ import io.opensphere.core.viewbookmark.ViewBookmark;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-/**   */
+/** The model backing the view picker. */
 public class ViewPickerModel
 {
     /** The observable list in which views are stored. */
@@ -18,20 +18,20 @@ public class ViewPickerModel
 
     /**
      * Adds the supplied view bookmark to the model.
-     * 
+     *
      * @param view the view to add to the model.
      */
-    public void addView(ViewBookmark view)
+    public void addView(final ViewBookmark view)
     {
         myViews.add(view);
     }
 
     /**
      * Removes the supplied view bookmark from the model.
-     * 
+     *
      * @param view the view to remove from the model.
      */
-    public void removeView(ViewBookmark view)
+    public void removeView(final ViewBookmark view)
     {
         myViews.remove(view);
     }
