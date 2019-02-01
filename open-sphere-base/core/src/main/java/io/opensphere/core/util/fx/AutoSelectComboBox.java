@@ -1,5 +1,6 @@
 package io.opensphere.core.util.fx;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -47,7 +48,6 @@ public class AutoSelectComboBox<T> extends ComboBox<T>
     private void initialize()
     {
         setEditable(true);
-        setOnKeyTyped(evt -> handleKeyRelease(evt));
         setOnKeyReleased(evt -> handleKeyRelease(evt));
     }
 
@@ -85,17 +85,30 @@ public class AutoSelectComboBox<T> extends ComboBox<T>
                     moveCaret(editor, editorContents.length(), caretPosition);
                     return;
                 case ENTER:
-                    Set<? extends Object> matchingEntries = items.stream()
-                    .filter(item -> StringUtils.startsWithIgnoreCase(item.toString(), editorContents))
-                    .collect(Collectors.toSet());
-                    if (matchingEntries.size() == 1)
+                    String targetItem = null;
+                    if (getSelectionModel().getSelectedIndex() >= 0)
                     {
-                        String fullEntry = (String)matchingEntries.iterator().next();
-                        editor.setText(fullEntry);
-                        moveCaret(editor, fullEntry.length(), -1);
+                        targetItem = getSelectionModel().getSelectedItem().toString();
+                    }
+                    else
+                    {
+                        List<? extends Object> matchingEntries = items.stream()
+                                .filter(item -> StringUtils.startsWithIgnoreCase(item.toString(), editorContents))
+                                .collect(Collectors.toList());
+                        if (matchingEntries.size() >= 1)
+                        {
+                            targetItem = (String)matchingEntries.iterator().next();
+                        }
+                    }
+                    
+                    if(targetItem != null) 
+                    {
+                        editor.setText(targetItem);
+                        moveCaret(editor, targetItem.length(), -1);
                         hide();
                         return;
                     }
+                    break;
                 default:
                     // ignore all other cases:
                     break;
