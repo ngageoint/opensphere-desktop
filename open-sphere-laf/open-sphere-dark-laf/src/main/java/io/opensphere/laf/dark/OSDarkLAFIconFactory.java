@@ -30,7 +30,9 @@ public class OSDarkLAFIconFactory implements Serializable
     private static Icon checkBoxIcon;
 
     private static Icon checkBoxMenuItemIcon;
-
+    
+    private static Icon tristateCheckboxIcon;
+    
     private static Icon comboArrowIcon;
 
     private static Icon frameAltMaximizeIcon;

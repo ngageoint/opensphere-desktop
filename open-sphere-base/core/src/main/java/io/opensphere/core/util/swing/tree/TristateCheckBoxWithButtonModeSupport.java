@@ -1,6 +1,7 @@
 package io.opensphere.core.util.swing.tree;
 
 import javax.swing.Icon;
+import javax.swing.UIManager;
 
 import com.jidesoft.swing.TristateCheckBox;
 
@@ -38,7 +39,8 @@ public class TristateCheckBoxWithButtonModeSupport extends TristateCheckBox
     }
 
     /**
-     * Creates an initially unselected check box with the specified text and icon.
+     * Creates an initially unselected check box with the specified text and
+     * icon.
      *
      * @param pText the text of the check box.
      * @param pIcon the Icon image to display
@@ -48,10 +50,16 @@ public class TristateCheckBoxWithButtonModeSupport extends TristateCheckBox
         super(pText, pIcon);
     }
 
+    protected void adjustMixedIcon()
+    {
+        setIcon(UIManager.getIcon("OSTristateCheckBox.icon"));
+    }
+
     /**
      * Sets the value of the {@link #myButtonModeEnabled} field.
      *
-     * @param pButtonModeEnabled the value to store in the {@link #myButtonModeEnabled} field.
+     * @param pButtonModeEnabled the value to store in the
+     *            {@link #myButtonModeEnabled} field.
      */
     public void setButtonModeEnabled(boolean pButtonModeEnabled)
     {

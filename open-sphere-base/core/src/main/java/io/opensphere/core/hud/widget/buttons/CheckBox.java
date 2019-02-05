@@ -7,7 +7,13 @@ import io.opensphere.core.hud.widget.EmptyRenderable;
 import io.opensphere.core.model.ScreenBoundingBox;
 import io.opensphere.core.model.ScreenPosition;
 
-/** A check box toggle button. */
+/**
+ * A check box toggle button.
+ * 
+ * @deprecated use {@link javax.swing.JCheckBox} or
+ *             {@link javafx.scene.control.CheckBox} instead.
+ */
+@Deprecated
 public class CheckBox extends ToggleButton<GridLayoutConstraints, GridLayout>
 {
     /**
