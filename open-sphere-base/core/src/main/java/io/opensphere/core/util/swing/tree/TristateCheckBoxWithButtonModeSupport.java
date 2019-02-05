@@ -1,12 +1,7 @@
 package io.opensphere.core.util.swing.tree;
 
-import java.util.Enumeration;
-
 import javax.swing.Icon;
-import javax.swing.UIDefaults;
 import javax.swing.UIManager;
-
-import org.apache.log4j.Logger;
 
 import com.jidesoft.swing.TristateCheckBox;
 
@@ -15,9 +10,6 @@ import com.jidesoft.swing.TristateCheckBox;
  */
 public class TristateCheckBoxWithButtonModeSupport extends TristateCheckBox
 {
-    /** The logger used to capture output from this class. */
-    private static final Logger LOG = Logger.getLogger(TristateCheckBoxWithButtonModeSupport.class);
-
     /**
      * The unique identifier used for serialization.
      */
