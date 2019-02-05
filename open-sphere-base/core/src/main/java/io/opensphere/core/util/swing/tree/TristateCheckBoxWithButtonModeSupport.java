@@ -1,6 +1,12 @@
 package io.opensphere.core.util.swing.tree;
 
+import java.util.Enumeration;
+
 import javax.swing.Icon;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
+
+import org.apache.log4j.Logger;
 
 import com.jidesoft.swing.TristateCheckBox;
 
@@ -9,6 +15,9 @@ import com.jidesoft.swing.TristateCheckBox;
  */
 public class TristateCheckBoxWithButtonModeSupport extends TristateCheckBox
 {
+    /** The logger used to capture output from this class. */
+    private static final Logger LOG = Logger.getLogger(TristateCheckBoxWithButtonModeSupport.class);
+
     /**
      * The unique identifier used for serialization.
      */
@@ -38,7 +47,8 @@ public class TristateCheckBoxWithButtonModeSupport extends TristateCheckBox
     }
 
     /**
-     * Creates an initially unselected check box with the specified text and icon.
+     * Creates an initially unselected check box with the specified text and
+     * icon.
      *
      * @param pText the text of the check box.
      * @param pIcon the Icon image to display
@@ -48,10 +58,16 @@ public class TristateCheckBoxWithButtonModeSupport extends TristateCheckBox
         super(pText, pIcon);
     }
 
+    protected void adjustMixedIcon()
+    {
+        setIcon(UIManager.getIcon("OSTristateCheckBox.icon"));
+    }
+
     /**
      * Sets the value of the {@link #myButtonModeEnabled} field.
      *
-     * @param pButtonModeEnabled the value to store in the {@link #myButtonModeEnabled} field.
+     * @param pButtonModeEnabled the value to store in the
+     *            {@link #myButtonModeEnabled} field.
      */
     public void setButtonModeEnabled(boolean pButtonModeEnabled)
     {

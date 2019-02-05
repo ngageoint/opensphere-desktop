@@ -41,6 +41,7 @@ import io.opensphere.core.control.ui.impl.TopicOrSubTopicMatchesRegexOptionsProv
 import io.opensphere.core.options.OptionsProvider;
 import io.opensphere.core.options.OptionsProviderUserObject;
 import io.opensphere.core.quantify.Quantify;
+import io.opensphere.core.util.Colors;
 import io.opensphere.core.util.NonSuckingObservable;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.swing.AbstractHUDPanel;
@@ -382,7 +383,7 @@ class OptionsPanel extends AbstractHUDPanel
             myEditorTitlePanel.setBackground(getBackgroundColor());
             myEditorTitlePanel.add(Box.createHorizontalStrut(6));
             myEditorTitlePanel.add(getEditorTitleLabel());
-            myEditorTitlePanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+            myEditorTitlePanel.setBorder(BorderFactory.createLineBorder(Colors.LF_PRIMARY2));
             JPanel empty = new JPanel();
             empty.setBackground(getBackgroundColor());
             myEditorTitlePanel.add(empty);
@@ -429,7 +430,7 @@ class OptionsPanel extends AbstractHUDPanel
         {
             myOptionEditorPanel = new JPanel();
             myOptionEditorPanel.setBackground(getBackgroundColor());
-            myOptionEditorPanel.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+            myOptionEditorPanel.setBorder(BorderFactory.createLineBorder(Colors.LF_PRIMARY2));
             myOptionEditorPanel.setLayout(new BoxLayout(myOptionEditorPanel, BoxLayout.Y_AXIS));
             myOptionEditorPanel.add(getEditorTitlePanel());
             myOptionEditorPanel.add(getCurrentOptionEditorHeaderPanel());

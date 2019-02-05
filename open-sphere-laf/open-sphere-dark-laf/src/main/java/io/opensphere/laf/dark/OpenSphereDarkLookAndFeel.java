@@ -63,7 +63,8 @@ public class OpenSphereDarkLookAndFeel extends MetalLookAndFeel
     {
         try
         {
-            final LookAndFeel laf = (LookAndFeel)Class.forName(UIManager.getSystemLookAndFeelClassName()).getDeclaredConstructor().newInstance();
+            final LookAndFeel laf = (LookAndFeel)Class.forName(UIManager.getSystemLookAndFeelClassName()).getDeclaredConstructor()
+                    .newInstance();
             final UIDefaults def = laf.getDefaults();
             final Enumeration<Object> keys = def.keys();
             String key;
@@ -260,6 +261,8 @@ public class OpenSphereDarkLookAndFeel extends MetalLookAndFeel
         uiDefaults.put("MenuRadioButton.iconTick", OSDarkLAFUtils.loadImageResource("/icons/MenuRadioTick.png"));
         uiDefaults.put("CheckBox.iconBase", OSDarkLAFUtils.loadImageResource("/icons/CheckBoxBase.png"));
         uiDefaults.put("CheckBox.iconTick", OSDarkLAFUtils.loadImageResource("/icons/CheckBoxTick.png"));
+        uiDefaults.put("OSTristateCheckBox.icon", OSDarkLAFUtils.loadImageResource("/icons/TriStateCheckBox.png"));
+
         uiDefaults.put("RadioButton.iconBase", OSDarkLAFUtils.loadImageResource("/icons/RadioButtonBase.png"));
         uiDefaults.put("RadioButton.iconTick", OSDarkLAFUtils.loadImageResource("/icons/RadioButtonTick.png"));
 

@@ -18,33 +18,40 @@ public class Colors
     public static final Color OPENSPHERE_VERY_DARK = Color.decode("#2E2E2E");
 
     /** Selected HUD left edge, scroll bar border (128, 128, 128). */
-    public static final Color LF_PRIMARY1 = Color.decode("#808080");
+//    public static final Color LF_PRIMARY1 = Color.decode("#202328");
+    public static final Color LF_PRIMARY1 = Color.decode("#40484E");
 
     /**
      * Check-box background, general hover/focus, scroll bars (141, 141, 141).
      */
-    public static final Color LF_PRIMARY2 = Color.decode("#8D8D8D");
+//    public static final Color LF_PRIMARY2 = Color.decode("#353a42");
+    public static final Color LF_PRIMARY2 = Color.decode("#4A5258");
 
     /** Selected HUD right edge, selected tabs (204, 204, 204). */
-    public static final Color LF_PRIMARY3 = Color.decode("#CCCCCC");
+//    public static final Color LF_PRIMARY3 = Color.decode("#202328");
+    public static final Color LF_PRIMARY3 = Color.decode("#545C62");
 
     /** Edging color. */
-    public static final Color LF_SECONDARY1 = LF_PRIMARY1;
+//    public static final Color LF_SECONDARY1 = LF_PRIMARY1;
+    public static final Color LF_SECONDARY1 = Color.decode("#1A1E22");
 
     /** Other edging (tabs, tables), disabled text (128, 128, 128). */
-    public static final Color LF_SECONDARY2 = Color.GRAY;
+//    public static final Color LF_SECONDARY2 = Color.GRAY;
+    public static final Color LF_SECONDARY2 = Color.decode("#24282C");
 
     /** Background, menu bar (83, 83, 83). */
-    public static final Color LF_SECONDARY3 = Color.decode("#535353");
+//    public static final Color LF_SECONDARY3 = Color.decode("#2E3236");
+    public static final Color LF_SECONDARY3 = Color.decode("#2E3236");
 
     /** Color from opensphere.css: -fx-control-inner-background. */
-    public static final Color LF_INNER_BACKGROUND = Color.decode("#626262");
+    public static final Color LF_INNER_BACKGROUND = Color.decode("#202328");
 
     /** Color from opensphere.css: -fx-control-inner-background-alt. */
-    public static final Color LF_INNER_BACKGROUND_ALT = Color.decode("#696969");
+    public static final Color LF_INNER_BACKGROUND_ALT = Color.decode("#353a42");
 
     /** Look and feel white (58, 58, 58). */
-    public static final Color LF_WHITE = Color.decode("#3A3A3A");
+//    public static final Color LF_WHITE = Color.decode("#3A3A3A");
+    public static final Color LF_WHITE = Color.decode("#272B30");
 
     /** Look and feel black (255, 255, 255). */
     public static final Color LF_BLACK = Color.decode("#FFFFFF");
