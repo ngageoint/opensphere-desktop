@@ -17,6 +17,7 @@ import io.opensphere.csvcommon.common.Utilities;
 import io.opensphere.csvcommon.config.v1.CSVColumnInfo;
 import io.opensphere.importer.config.ColumnType;
 import io.opensphere.importer.config.SpecialColumn;
+import io.opensphere.importer.config.ColumnType.Category;
 import io.opensphere.mantle.data.LoadsTo;
 import io.opensphere.mantle.data.MapVisualizationType;
 import io.opensphere.mantle.data.impl.DefaultBasicVisualizationInfo;
@@ -321,6 +322,7 @@ public final class CSVTypeInfoGenerator
     private static MapVisualizationType getVisualizationType(CSVDataSource fileSource)
     {
         MapVisualizationType geomType;
+        System.out.println(fileSource);
         if (fileSource.getParseParameters().hasType(ColumnType.WKT_GEOMETRY))
         {
             geomType = MapVisualizationType.MIXED_ELEMENTS;
@@ -337,10 +339,15 @@ public final class CSVTypeInfoGenerator
         {
             geomType = MapVisualizationType.LOB_ELEMENTS;
         }
-        else
+        else if (fileSource.getParseParameters().hasCategory(Category.SPATIAL))
         {
             geomType = MapVisualizationType.POINT_ELEMENTS;
         }
+        else
+        {
+        	geomType = MapVisualizationType.UNKNOWN;
+        }
+        
         return geomType;
     }
 
