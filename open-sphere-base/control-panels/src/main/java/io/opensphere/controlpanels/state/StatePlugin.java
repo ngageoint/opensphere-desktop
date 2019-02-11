@@ -63,6 +63,8 @@ public class StatePlugin extends PluginAdapter
     @Override
     public void close()
     {
+        myImportController.getStateController().deactivateAllStates();
+
         myToolbox.getUIRegistry().getToolbarComponentRegistry().deregisterToolbarComponent(ToolbarLocation.NORTH, "State");
         myToolbox.getUIRegistry().getContextActionManager().deregisterContextMenuItemProvider(ContextIdentifiers.DELETE_CONTEXT,
                 Void.class, myDisableStatesMenuProvider);
@@ -73,7 +75,7 @@ public class StatePlugin extends PluginAdapter
      * Performs additional initialization after all the plugins have
      * initialized.
      */
-    void initializeAfterPlugins()
+    private void initializeAfterPlugins()
     {
         StateController controller = new StateControllerImpl(myToolbox);
         myStateView = new StateView(controller, myImportController, myToolbox);
