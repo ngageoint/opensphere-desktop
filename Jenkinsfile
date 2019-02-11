@@ -32,7 +32,7 @@ node {
             }
 /*			configFileProvider(
 				[configFile(fileId: '3d2775d8-f723-465f-829a-969d0ae5f40b', variable: 'MAVEN_SETTINGS')]) {*/
-	            sh "${env.mvnHome}/bin/mvn /*-s $MAVEN_SETTINGS*/ --no-snapshot-updates -Dmaven.repo.local=${env.LOCAL_REPO} clean install deploy -Pautomated ${env.REMOTE_REPO_ARGS}"
+	            sh "${env.mvnHome}/bin/mvn --no-snapshot-updates -Dmaven.repo.local=${env.LOCAL_REPO} clean install deploy -Pautomated ${env.REMOTE_REPO_ARGS}"
 	        /*}*/
         } catch (error) {
             notifyFailed();
