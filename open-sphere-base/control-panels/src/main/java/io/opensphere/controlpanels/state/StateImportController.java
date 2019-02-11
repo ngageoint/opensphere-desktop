@@ -246,6 +246,16 @@ public class StateImportController implements FileOrURLImporter
     }
 
     /**
+     * Gets the state controller.
+     *
+     * @return the state controller
+     */
+    public StateController getStateController()
+    {
+        return myStateController;
+    }
+
+    /**
      * Sets the state controller.
      *
      * @param controller The controller to be set.
@@ -254,6 +264,7 @@ public class StateImportController implements FileOrURLImporter
     {
         myStateController = controller;
     }
+
     /**
      * Determines if the input stream can be imported.
      *
@@ -439,7 +450,6 @@ public class StateImportController implements FileOrURLImporter
         {
             myModuleStateManager.registerState(id, desc, tags, sel, state);
             myStateController.hookState(id, state);
-            myStateController.toggleState(id);
         });
     }
 
