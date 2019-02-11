@@ -322,7 +322,6 @@ public final class CSVTypeInfoGenerator
     private static MapVisualizationType getVisualizationType(CSVDataSource fileSource)
     {
         MapVisualizationType geomType;
-        System.out.println(fileSource);
         if (fileSource.getParseParameters().hasType(ColumnType.WKT_GEOMETRY))
         {
             geomType = MapVisualizationType.MIXED_ELEMENTS;
