@@ -29,6 +29,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -44,6 +47,9 @@ public class BaseballPanel extends GridPane
 
     /** The currently displayed data element. */
     private DataElement myActiveDataElement;
+
+    /** The keystroke combination to copy a cell's contents to the clipboard. */
+    private final KeyCombination myCopyCombination = new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN);
 
     /** The decimal-degrees button. */
     private final Button myDDButton = new Button("DD");
@@ -102,6 +108,37 @@ public class BaseballPanel extends GridPane
     }
 
     /**
+     * Copies the currently selected cell data to the clipboard.
+     *
+     * @param displayMessage whether to display the message that a
+     *        copy has been performed
+     */
+    private void copyCellToClipboard(boolean displayMessage)
+    {
+        BaseballDataRow baseballData = myDataView.getFocusModel().getFocusedItem();
+        if (baseballData != null)
+        {
+            @SuppressWarnings("rawtypes")
+            TablePosition position = myDataView.getFocusModel().getFocusedCell();
+            ClipboardContent content = new ClipboardContent();
+            if (position.getColumn() == 0)
+            {
+                content.putString(baseballData.getField());
+            }
+            else
+            {
+                content.putString(baseballData.getValue());
+            }
+            Clipboard.getSystemClipboard().setContent(content);
+            if (displayMessage)
+            {
+                JOptionPane.showMessageDialog(null, "Copied value to clipboard: " + content.getString(), "Copy",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }
+
+    /**
      * Creates the DataElement list section of the panel.
      *
      * @return the DataElement node
@@ -150,24 +187,15 @@ public class BaseballPanel extends GridPane
         {
             if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
             {
-                BaseballDataRow baseballData = myDataView.getFocusModel().getFocusedItem();
-                if (baseballData != null)
-                {
-                    @SuppressWarnings("rawtypes")
-                    TablePosition position = myDataView.getFocusModel().getFocusedCell();
-                    ClipboardContent content = new ClipboardContent();
-                    if (position.getColumn() == 0)
-                    {
-                        content.putString(baseballData.getField());
-                    }
-                    else
-                    {
-                        content.putString(baseballData.getValue());
-                    }
-                    Clipboard.getSystemClipboard().setContent(content);
-                    JOptionPane.showMessageDialog(null, "Copied value to clipboard: " + content.getString(), "Copy",
-                            JOptionPane.INFORMATION_MESSAGE);
-                }
+                copyCellToClipboard(true);
+            }
+        });
+
+        myDataView.setOnKeyPressed(event ->
+        {
+            if (myCopyCombination.match(event))
+            {
+                copyCellToClipboard(false);
             }
         });
 
