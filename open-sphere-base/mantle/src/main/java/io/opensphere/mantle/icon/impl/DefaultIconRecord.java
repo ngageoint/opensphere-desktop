@@ -5,8 +5,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Objects;
 
-import org.apache.log4j.Logger;
-
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.javafx.ConcurrentBooleanProperty;
 import io.opensphere.core.util.javafx.ConcurrentIntegerProperty;
@@ -29,9 +27,6 @@ import javafx.scene.image.Image;
  */
 public class DefaultIconRecord implements IconRecord
 {
-    /** The logger used to capture output from instances of this class. */
-    private static final Logger LOG = Logger.getLogger(DefaultIconRecord.class);
-
     /** The list in which the tags are stored. */
     private final ObservableList<String> myTags = FXCollections.observableArrayList();
 
@@ -79,8 +74,9 @@ public class DefaultIconRecord implements IconRecord
      *
      * @param id the id
      * @param ip the ip
+     * @throws IOException if the icon image could not be read (probably not great to read it in the constructor)
      */
-    public DefaultIconRecord(long id, IconProvider ip)
+    public DefaultIconRecord(long id, IconProvider ip) throws IOException
     {
         Utilities.checkNull(ip, "ip");
         myIdProperty.set(id);
@@ -96,10 +92,6 @@ public class DefaultIconRecord implements IconRecord
             try (InputStream stream = ip.getIconImageData())
             {
                 myImage.set(new Image(stream));
-            }
-            catch (IOException e)
-            {
-                LOG.error("Unable to read image for icon from URL '" + myImageURLProperty.get() + "'", e);
             }
         }
     }

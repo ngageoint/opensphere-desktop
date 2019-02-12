@@ -1,6 +1,7 @@
 package io.opensphere.mantle.icon.impl;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
@@ -15,6 +16,8 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Predicate;
+
+import org.apache.log4j.Logger;
 
 import gnu.trove.iterator.TIntIterator;
 import gnu.trove.iterator.TLongIterator;
@@ -53,6 +56,9 @@ import javafx.collections.ObservableList;
  */
 public class IconRegistryImpl implements IconRegistry
 {
+    /** The logger used to capture output from instances of this class. */
+    private static final Logger LOG = Logger.getLogger(IconRegistryImpl.class);
+
     /** The key used to store the preferences. */
     private static final String PREFERENCE_KEY = "iconConfig";
 
@@ -677,9 +683,13 @@ public class IconRegistryImpl implements IconRegistry
         boolean wasAdded = false;
         try
         {
-            final Pair<IconRecord, Boolean> pair = createRecord(rec, null);
+            Pair<IconRecord, Boolean> pair = createRecord(rec, null);
             record = pair.getFirstObject();
             wasAdded = pair.getSecondObject().booleanValue();
+        }
+        catch (IOException e)
+        {
+            LOG.error("Unable to read image for icon from URL '" + rec.getIconURL() + "'");
         }
         finally
         {
@@ -733,8 +743,15 @@ public class IconRegistryImpl implements IconRegistry
                 {
                     final IconProvider provider = providerList.get(i);
                     final Long overrideId = ids != null ? ids.get(i) : null;
-                    final IconRecord record = createRecord(provider, overrideId).getFirstObject();
-                    addedList.add(record);
+                    try
+                    {
+                        final IconRecord record = createRecord(provider, overrideId).getFirstObject();
+                        addedList.add(record);
+                    }
+                    catch (IOException e)
+                    {
+                        LOG.error("Unable to read image for icon from URL '" + provider.getIconURL() + "'");
+                    }
                 }
             }
             finally
@@ -761,8 +778,9 @@ public class IconRegistryImpl implements IconRegistry
      * @param provider the icon provider
      * @param overrideId the ID to use, or null
      * @return the IconRecord and whether it was created anew
+     * @throws IOException if the icon image could not be read
      */
-    private Pair<IconRecord, Boolean> createRecord(final IconProvider provider, final Long overrideId)
+    private Pair<IconRecord, Boolean> createRecord(final IconProvider provider, final Long overrideId) throws IOException
     {
         IconRecord record = new DefaultIconRecord(0, provider);
         boolean wasAdded = false;
