@@ -36,21 +36,25 @@ public class DefaultDataElement implements DataElement
      *
      * @param source the object from which to copy data.
      */
-    protected DefaultDataElement(DefaultDataElement source)
+    protected DefaultDataElement(DataElement source)
     {
-        myCacheId = source.myCacheId;
-        myDataTypeInfo = source.myDataTypeInfo;
-        myId = source.myId;
-        myMetaDataProvider = source.myMetaDataProvider.createCopy(null);
-        myTimeSpan = source.myTimeSpan;
+        this(source, source.getMetaData().createCopy(null));
+    }
 
-        myVisualizationState = new VisualizationState(source.myVisualizationState.isMapDataElement());
-        myVisualizationState.setColor(source.getVisualizationState().getColor());
-        myVisualizationState.setAltitudeAdjust(source.getVisualizationState().getAltitudeAdjust());
-        myVisualizationState.setHasAlternateGeometrySupport(getVisualizationState().hasAlternateGeometrySupport());
-        myVisualizationState.setLobVisible(getVisualizationState().isLobVisible());
-        myVisualizationState.setSelected(false);
-        myVisualizationState.setVisible(getVisualizationState().isVisible());
+    /**
+     * Copy constructor with custom MetaDataProvider.
+     *
+     * @param source the object from which to copy data.
+     * @param mdp the {@link MetaDataProvider}, can be null if there is no provider.
+     */
+    protected DefaultDataElement(DataElement source, MetaDataProvider mdp)
+    {
+        myCacheId = source.getIdInCache();
+        myDataTypeInfo = source.getDataTypeInfo();
+        myId = source.getId();
+        myMetaDataProvider = mdp;
+        myTimeSpan = source.getTimeSpan();
+        myVisualizationState = new VisualizationState(source.getVisualizationState());
     }
 
     /**
