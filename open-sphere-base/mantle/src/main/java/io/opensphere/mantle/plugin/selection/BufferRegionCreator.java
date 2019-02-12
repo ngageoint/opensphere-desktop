@@ -183,7 +183,7 @@ public class BufferRegionCreator
     {
         if (myPreviewGeometry != null)
         {
-            if (myGeometry != null && myGeometry instanceof MultiPolygonGeometry)
+            if (myGeometry instanceof MultiPolygonGeometry)
             {
                 MultiPolygonGeometry geometry = (MultiPolygonGeometry)myGeometry;
                 Collection<PolygonGeometry> geometries = geometry.getGeometries();
@@ -191,7 +191,7 @@ public class BufferRegionCreator
 
                 geometry.receiveObjects(this, geometries, Collections.emptyList());
             }
-            else if (myGeometry != null && myGeometry instanceof GeometryGroupGeometry)
+            else if (myGeometry instanceof GeometryGroupGeometry)
             {
                 GeometryGroupGeometry geometry = (GeometryGroupGeometry)myGeometry;
                 Collection<Geometry> geometries = geometry.getGeometries();
