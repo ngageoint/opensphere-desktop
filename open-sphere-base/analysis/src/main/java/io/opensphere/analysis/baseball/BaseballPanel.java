@@ -112,9 +112,9 @@ public class BaseballPanel extends GridPane
 
         myActiveDataElement = myElements.get(0);
         myLinker = PreferencesLinkerFactory.getLinker(
-        		myActiveDataElement.getDataTypeInfo().getTypeKey(),
-    			myToolbox.getPreferencesRegistry()
-		);
+                myActiveDataElement.getDataTypeInfo().getTypeKey(),
+                myToolbox.getPreferencesRegistry()
+        );
         
         setDataView();
         add(myFeatureCount, 0, 1);
@@ -159,25 +159,25 @@ public class BaseballPanel extends GridPane
      */
     private void fireUrlClickEvent()
     {
-    	if (myLinker != null)
-		{
-    		BaseballDataRow baseballData = myDataView.getFocusModel().getFocusedItem();
-    		String text = baseballData.getValue().getText();
+        if (myLinker != null)
+        {
+            BaseballDataRow baseballData = myDataView.getFocusModel().getFocusedItem();
+            String text = baseballData.getValue().getText();
 
-			Map<String, URL> urls = myLinker.getURLs(text, text);
-			if (!urls.isEmpty())
+            Map<String, URL> urls = myLinker.getURLs(text, text);
+            if (!urls.isEmpty())
             {
-				for (URL url : urls.values())
-				{
-					if (url != null)
-					{
-						BrowserUtilities.browse(url, null);
-						return;
-					}
-				}
-				Notify.info("Could not open URL: " + text, Method.POPUP);
+                for (URL url : urls.values())
+                {
+                    if (url != null)
+                    {
+                        BrowserUtilities.browse(url, null);
+                        return;
+                    }
+                }
+                Notify.info("Could not open URL: " + text, Method.POPUP);
             }
-		}
+        }
     }
 
     /**
@@ -308,7 +308,7 @@ public class BaseballPanel extends GridPane
                 return;
             }
 
-        	List<DataElement> filteredDataList = searchFilterDataElements(search.getText());
+            List<DataElement> filteredDataList = searchFilterDataElements(search.getText());
             myElementsView.setItems(FXCollections.observableList(filteredDataList));
             if (filteredDataList.size() > 0)
             {
@@ -383,19 +383,19 @@ public class BaseballPanel extends GridPane
     
     private Text getValueAsTextObject(String value)
     {
-    	Text returnValue = new Text();
-    	returnValue.setText(value);
-    	returnValue.setFill(Color.WHITE);
-    	
-    	if (myLinker != null && myLinker.hasURLFor(value, value))
+        Text returnValue = new Text();
+        returnValue.setText(value);
+        returnValue.setFill(Color.WHITE);
+        
+        if (myLinker != null && myLinker.hasURLFor(value, value))
         {
-        	returnValue.setFill(Color.BLUE);
-        	returnValue.setUnderline(true);
-        	returnValue.setOnMouseMoved(event -> getScene().setCursor(Cursor.HAND));
-        	returnValue.setOnMouseExited(event -> getScene().setCursor(Cursor.DEFAULT));
+            returnValue.setFill(Color.BLUE);
+            returnValue.setUnderline(true);
+            returnValue.setOnMouseMoved(event -> getScene().setCursor(Cursor.HAND));
+            returnValue.setOnMouseExited(event -> getScene().setCursor(Cursor.DEFAULT));
         }
-    	
-    	return returnValue;
+        
+        return returnValue;
     }
 
     /**
