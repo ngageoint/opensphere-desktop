@@ -4,11 +4,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.swing.JOptionPane;
-
 import org.apache.commons.lang3.StringUtils;
 
 import io.opensphere.analysis.baseball.BaseballUtils.CoordType;
+import io.opensphere.core.Notify;
+import io.opensphere.core.Notify.Method;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.model.GeographicPositionFormat;
 import io.opensphere.core.model.time.TimeSpan;
@@ -132,8 +132,7 @@ public class BaseballPanel extends GridPane
             Clipboard.getSystemClipboard().setContent(content);
             if (displayMessage)
             {
-                JOptionPane.showMessageDialog(null, "Copied value to clipboard: " + content.getString(), "Copy",
-                        JOptionPane.INFORMATION_MESSAGE);
+                Notify.info("Copied value to clipboard: " + content.getString(), Method.POPUP);
             }
         }
     }
