@@ -1,62 +1,69 @@
 package io.opensphere.analysis.baseball;
 
-import io.opensphere.core.util.lang.Pair;
-import javafx.scene.Node;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
- * The row constructor for the data for the baseball card.
+ * The data to be displayed in a row of cells of the data panel in
+ * the baseball card.
  */
-public class BaseballDataRow extends ListCell<Pair<String, String>>
+public class BaseballDataRow
 {
-	/** The constant EMPTY_VALUE. */
-    private final static String EMPTY_VALUE = "";
+    /** The data displayed under the field heading. */
+    private final StringProperty myFieldProperty;
 
-    /** The constant BACKGROUND. */
-    private final static String BACKGROUND = "-fx-background-color: transparent";
+    /** The data displayed under the value heading. */
+    private final StringProperty myValueProperty;
 
-    @Override
-    protected void updateItem(Pair<String, String> item, boolean empty)
+    /**
+     * Creates a new set of values for the data panel.
+     *
+     * @param field the data for the field column
+     * @param value the data for the value column
+     */
+    public BaseballDataRow(String field, String value)
     {
-        super.updateItem(item, empty);
-
-        if (item == null)
-        {
-            setGraphic(null);
-        }
-        else
-        {
-            setGraphic(buildList(item));
-        }
+        myFieldProperty = new SimpleStringProperty(field);
+        myValueProperty = new SimpleStringProperty(value);
     }
 
     /**
-     * Build a row in the data list.
+     * Gets the property containing the field information.
      *
-     * @param item the pair of strings to be added to the row
-     * @return the new row
+     * @return the field property
      */
-    private Node buildList(Pair<String, String> item)
+    public StringProperty fieldProperty()
     {
-        GridPane box = new GridPane();
-        box.setHgap(5);
-        TextField field1 = new TextField(item.getFirstObject());
-        field1.setStyle(BACKGROUND);
-        field1.setEditable(false);
-        box.add(field1, 0, 0);
-        String secondLabel = item.getSecondObject() == null ? EMPTY_VALUE : item.getSecondObject().toString();
-        TextField field2 = new TextField(secondLabel);
-        field2.setStyle(BACKGROUND);
-        field2.setEditable(false);
-        box.add(field2, 1, 0);
-        ColumnConstraints column1 = new ColumnConstraints();
-        column1.setPercentWidth(50);
-        ColumnConstraints column2 = new ColumnConstraints();
-        column2.setPercentWidth(50);
-        box.getColumnConstraints().addAll(column1, column2);
-        return box;
+        return myFieldProperty;
+    }
+
+    /**
+     * Gets the data for the field column.
+     *
+     * @return the field data
+     */
+    public String getField()
+    {
+        return myFieldProperty.get();
+    }
+
+    /**
+     * Gets the property containing the value information.
+     *
+     * @return the value property
+     */
+    public StringProperty valueProperty()
+    {
+        return myValueProperty;
+    }
+
+    /**
+     * Gets the data for the value column.
+     *
+     * @return the value data
+     */
+    public String getValue()
+    {
+        return myValueProperty.get();
     }
 }

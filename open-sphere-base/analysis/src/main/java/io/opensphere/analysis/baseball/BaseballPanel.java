@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.swing.JOptionPane;
+
 import org.apache.commons.lang3.StringUtils;
 
 import io.opensphere.analysis.baseball.BaseballUtils.CoordType;
@@ -12,7 +14,6 @@ import io.opensphere.core.model.GeographicPositionFormat;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.preferences.ListToolPreferences;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.lang.Pair;
 import io.opensphere.mantle.data.SpecialKey;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.impl.specialkey.LatitudeKey;
@@ -22,7 +23,13 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -57,7 +64,7 @@ public class BaseballPanel extends GridPane
     private final ListView<DataElement> myElementsView = new ListView<>();
 
     /** The list of information being displayed about the active data element. */
-    private final ListView<Pair<String, String>> myDataView = new ListView<>();
+    private final TableView<BaseballDataRow> myDataView = new TableView<>();
 
     /** The label that displays the coordinate information about the active data element */
     private final Label myCoordinates = new Label();
@@ -128,11 +135,47 @@ public class BaseballPanel extends GridPane
      */
     private Node createDataArea()
     {
-        myDataView.setCellFactory((param) ->
+        TableColumn<BaseballDataRow, String> fieldColumn = new TableColumn<>("Field");
+        fieldColumn.setCellValueFactory(data -> data.getValue().fieldProperty());
+        myDataView.getColumns().add(fieldColumn);
+
+        TableColumn<BaseballDataRow, String> valueColumn = new TableColumn<>("Value");
+        valueColumn.setCellValueFactory(data -> data.getValue().valueProperty());
+        myDataView.getColumns().add(valueColumn);
+
+        myDataView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        myDataView.getSelectionModel().setCellSelectionEnabled(true);
+
+        myDataView.setOnMouseClicked(event ->
         {
-            BaseballDataRow row = new BaseballDataRow();
-            return row;
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2)
+            {
+                BaseballDataRow baseballData = myDataView.getFocusModel().getFocusedItem();
+                if (baseballData != null)
+                {
+                    @SuppressWarnings("rawtypes")
+                    TablePosition position = myDataView.getFocusModel().getFocusedCell();
+                    ClipboardContent content = new ClipboardContent();
+                    if (position.getColumn() == 0)
+                    {
+                        content.putString(baseballData.getField());
+                    }
+                    else
+                    {
+                        content.putString(baseballData.getValue());
+                    }
+                    Clipboard.getSystemClipboard().setContent(content);
+                    JOptionPane.showMessageDialog(null, "Copied value to clipboard: " + content.getString(), "Copy",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
         });
+
+        myDataView.setOnSort(event ->
+        {
+            myDataView.getSelectionModel().clearSelection();
+        });
+
         GridPane.setHgrow(myDataView, Priority.ALWAYS);
         GridPane.setVgrow(myDataView, Priority.ALWAYS);
         return myDataView;
@@ -321,15 +364,14 @@ public class BaseballPanel extends GridPane
         }
         else
         {
-            List<Pair<String, String>> data = New.list();
+            List<BaseballDataRow> data = New.list();
             GeographicPositionFormat tempFormat = myPositionFormat;
             myPositionFormat = GeographicPositionFormat.DECDEG;
-            data.add(new Pair<>("Field", "Value"));
             myActiveDataElement.getMetaData().getKeys().stream().forEach(key ->
             {
                 Object elementValue = myActiveDataElement.getMetaData().getValue(key);
                 String pairValue = getValueAsString(key, elementValue, myActiveDataElement);
-                data.add(new Pair<>(key, pairValue));
+                data.add(new BaseballDataRow(key, pairValue == null ? "" : pairValue));
             });
             myDataView.setItems(FXCollections.observableList(data));
             myPositionFormat = tempFormat;
