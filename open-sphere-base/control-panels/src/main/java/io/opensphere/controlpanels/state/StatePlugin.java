@@ -84,8 +84,7 @@ public class StatePlugin extends PluginAdapter
         SplitButton stateControlButton = myStateView.getStateControlButton();
         myToolbox.getUIRegistry().getToolbarComponentRegistry().registerToolbarComponent(ToolbarLocation.NORTH,
                 stateControlButton.getText(), stateControlButton, 470, SeparatorLocation.LEFT);
-        myToolbox.getUIRegistry().getIconLegendRegistry().addIconToLegend(stateControlButton.getIcon(),
-                stateControlButton.getText(),
+        myToolbox.getUIRegistry().getIconLegendRegistry().addIconToLegend(stateControlButton.getIcon(), "States",
                 "Shows state controls for activating/deactivating a state, importing a state (via file or url), saving a state, "
                         + "disabling states, and deleting states. Different parts of the current state can be saved including "
                         + "Filters, Time, Current View, Animation, Map Layers and Layers, Query Regions, and Styles. ");
