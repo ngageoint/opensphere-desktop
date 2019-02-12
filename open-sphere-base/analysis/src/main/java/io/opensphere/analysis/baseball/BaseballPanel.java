@@ -1,7 +1,9 @@
 package io.opensphere.analysis.baseball;
 
+import java.net.URL;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -13,12 +15,16 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.model.GeographicPositionFormat;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.preferences.ListToolPreferences;
+import io.opensphere.core.util.awt.BrowserUtilities;
 import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.net.Linker;
+import io.opensphere.core.util.net.PreferencesLinkerFactory;
 import io.opensphere.mantle.data.SpecialKey;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.impl.specialkey.LatitudeKey;
 import io.opensphere.mantle.data.impl.specialkey.LongitudeKey;
 import javafx.collections.FXCollections;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -36,6 +42,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 /**
  * The main panel for the baseball dialog.
@@ -77,6 +85,9 @@ public class BaseballPanel extends GridPane
 
     /** The label that displays the current number of features shown. */
     private final Label myFeatureCount = new Label();
+    
+    /** URL format matcher. */
+    private final Linker myLinker;
 
     /** Which format to display coordinates in. */
     private GeographicPositionFormat myPositionFormat = GeographicPositionFormat.DECDEG;
@@ -98,7 +109,13 @@ public class BaseballPanel extends GridPane
         add(createSearchBar(), 0, 0);
         add(createDataArea(), 1, 2);
         add(createCoordinateButtons(), 1, 0);
+
         myActiveDataElement = myElements.get(0);
+        myLinker = PreferencesLinkerFactory.getLinker(
+        		myActiveDataElement.getDataTypeInfo().getTypeKey(),
+    			myToolbox.getPreferencesRegistry()
+		);
+        
         setDataView();
         add(myFeatureCount, 0, 1);
         setFeatureCount(myElements.size());
@@ -127,7 +144,7 @@ public class BaseballPanel extends GridPane
             }
             else
             {
-                content.putString(baseballData.getValue());
+                content.putString(baseballData.getValue().getText());
             }
             Clipboard.getSystemClipboard().setContent(content);
             if (displayMessage)
@@ -135,6 +152,32 @@ public class BaseballPanel extends GridPane
                 Notify.info("Copied value to clipboard: " + content.getString(), Method.POPUP);
             }
         }
+    }
+    
+    /**
+     * Navigates to a URL when clicked.
+     */
+    private void fireUrlClickEvent()
+    {
+    	if (myLinker != null)
+		{
+    		BaseballDataRow baseballData = myDataView.getFocusModel().getFocusedItem();
+    		String text = baseballData.getValue().getText();
+
+			Map<String, URL> urls = myLinker.getURLs(text, text);
+			if (!urls.isEmpty())
+            {
+				for (URL url : urls.values())
+				{
+					if (url != null)
+					{
+						BrowserUtilities.browse(url, null);
+						return;
+					}
+				}
+				Notify.info("Could not open URL: " + text, Method.POPUP);
+            }
+		}
     }
 
     /**
@@ -174,7 +217,7 @@ public class BaseballPanel extends GridPane
         fieldColumn.setCellValueFactory(data -> data.getValue().fieldProperty());
         myDataView.getColumns().add(fieldColumn);
 
-        TableColumn<BaseballDataRow, String> valueColumn = new TableColumn<>("Value");
+        TableColumn<BaseballDataRow, Text> valueColumn = new TableColumn<>("Value");
         valueColumn.setCellValueFactory(data -> data.getValue().valueProperty());
         myDataView.getColumns().add(valueColumn);
 
@@ -187,8 +230,9 @@ public class BaseballPanel extends GridPane
             {
                 copyCellToClipboard(true);
             }
+            fireUrlClickEvent();
         });
-
+        
         myDataView.setOnKeyPressed(event ->
         {
             if (myCopyCombination.match(event))
@@ -336,6 +380,23 @@ public class BaseballPanel extends GridPane
         }
         return returnValue;
     }
+    
+    private Text getValueAsTextObject(String value)
+    {
+    	Text returnValue = new Text();
+    	returnValue.setText(value);
+    	returnValue.setFill(Color.WHITE);
+    	
+    	if (myLinker != null && myLinker.hasURLFor(value, value))
+        {
+        	returnValue.setFill(Color.BLUE);
+        	returnValue.setUnderline(true);
+        	returnValue.setOnMouseMoved(event -> getScene().setCursor(Cursor.HAND));
+        	returnValue.setOnMouseExited(event -> getScene().setCursor(Cursor.DEFAULT));
+        }
+    	
+    	return returnValue;
+    }
 
     /**
      * Clears the styles for the coordinate buttons, then sets the style for selected button.
@@ -397,7 +458,7 @@ public class BaseballPanel extends GridPane
             {
                 Object elementValue = myActiveDataElement.getMetaData().getValue(key);
                 String pairValue = getValueAsString(key, elementValue, myActiveDataElement);
-                data.add(new BaseballDataRow(key, pairValue == null ? "" : pairValue));
+                data.add(new BaseballDataRow(key, pairValue == null ? new Text() : getValueAsTextObject(pairValue)));
             });
             myDataView.setItems(FXCollections.observableList(data));
             myPositionFormat = tempFormat;
