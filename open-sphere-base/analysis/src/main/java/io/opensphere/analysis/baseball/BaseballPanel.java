@@ -164,7 +164,6 @@ public class BaseballPanel extends GridPane
         return myElementsView;
     }
 
-
     /**
      * Creates the data information section of the panel.
      *
