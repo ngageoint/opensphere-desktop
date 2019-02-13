@@ -128,15 +128,35 @@ public class FilterEditorPanel extends JPanel implements Validatable
         {
             return null;
         }
+
+        List<String> columns;
         List<String> keys = meta.getKeyNames();
         if (keys.size() > 0)
         {
-            return new ArrayList<>(keys);
+            columns = new ArrayList<>(keys);
         }
         else
         {
-            return new ArrayList<>(meta.getOriginalKeyNames());
+            columns = new ArrayList<>(meta.getOriginalKeyNames());
         }
+
+        // Remove fields that don't make sense in filter builder
+        String key;
+        if ((key = meta.getLatitudeKey()) != null)
+        {
+            columns.remove(key);
+        }
+        if ((key = meta.getLongitudeKey()) != null)
+        {
+            columns.remove(key);
+        }
+        if ((key = meta.getGeometryColumn()) != null)
+        {
+            columns.remove(key);
+        }
+        columns.remove(MetaDataInfo.MGRS_DERIVED);
+
+        return columns;
     }
 
     /** Construct with no other initializations. */

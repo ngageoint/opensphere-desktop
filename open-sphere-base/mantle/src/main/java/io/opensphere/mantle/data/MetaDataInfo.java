@@ -12,6 +12,9 @@ import javafx.beans.property.StringProperty;
  */
 public interface MetaDataInfo
 {
+    /** The MGRS derived column identifier. */
+    final String MGRS_DERIVED = "MGRS Derived";
+
     /** The Empty {@link PropertyArrayDescriptor}. */
     PropertyArrayDescriptor EMPTY_PROPERTY_ARRAY_DESCRIPTOR = new PropertyArrayDescriptor("propertyArray", new Class<?>[0]);
 
