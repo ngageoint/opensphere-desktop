@@ -1,7 +1,11 @@
 package io.opensphere.analysis.baseball;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.text.Text;
 
 /**
  * The data to be displayed in a row of cells of the data panel in
@@ -13,7 +17,7 @@ public class BaseballDataRow
     private final StringProperty myFieldProperty;
 
     /** The data displayed under the value heading. */
-    private final StringProperty myValueProperty;
+    private final ObjectProperty<Text> myValueProperty;
 
     /**
      * Creates a new set of values for the data panel.
@@ -21,10 +25,11 @@ public class BaseballDataRow
      * @param field the data for the field column
      * @param value the data for the value column
      */
-    public BaseballDataRow(String field, String value)
+    public BaseballDataRow(String field, Text value)
     {
         myFieldProperty = new SimpleStringProperty(field);
-        myValueProperty = new SimpleStringProperty(value);
+        myValueProperty = new SimpleObjectProperty<Text>();
+        myValueProperty.setValue(value);
     }
 
     /**
@@ -52,7 +57,7 @@ public class BaseballDataRow
      *
      * @return the value property
      */
-    public StringProperty valueProperty()
+    public ObjectProperty<Text> valueProperty()
     {
         return myValueProperty;
     }
@@ -62,7 +67,7 @@ public class BaseballDataRow
      *
      * @return the value data
      */
-    public String getValue()
+    public Text getValue()
     {
         return myValueProperty.get();
     }
