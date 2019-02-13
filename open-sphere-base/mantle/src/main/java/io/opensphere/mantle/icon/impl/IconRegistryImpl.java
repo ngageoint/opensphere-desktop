@@ -845,14 +845,12 @@ public class IconRegistryImpl implements IconRegistry
             addIcons(New.list(config.getIconRecords()), null, this, false);
         }
 
-        addIcon(new DefaultIconProvider(DEFAULT_ICON_URL, IconRecord.DEFAULT_COLLECTION, null), null, false);
-
-        // Clean up duplicates of the default icon
+        // Add default icon if it has been deleted.
         final TLongList iconIds = getIconIds(r -> IconRecord.DEFAULT_COLLECTION.equals(r.collectionNameProperty().get())
-                && r.sourceKeyProperty() == null && !DEFAULT_ICON_URL.equals(r.imageURLProperty().get()));
-        if (!iconIds.isEmpty())
+                && DEFAULT_ICON_URL.equals(r.imageURLProperty().get()));
+        if (iconIds.isEmpty())
         {
-            removeIcons(iconIds, this);
+            addIcon(new DefaultIconProvider(DEFAULT_ICON_URL, IconRecord.DEFAULT_COLLECTION, null), this);
         }
     }
 
