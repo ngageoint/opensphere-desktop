@@ -845,7 +845,7 @@ public class IconRegistryImpl implements IconRegistry
             addIcons(New.list(config.getIconRecords()), null, this, false);
         }
 
-        // Add default icon if it has been deleted.
+        // Add default icon
         final TLongList iconIds = getIconIds(r -> IconRecord.DEFAULT_COLLECTION.equals(r.collectionNameProperty().get())
                 && DEFAULT_ICON_URL.equals(r.imageURLProperty().get()));
         if (iconIds.isEmpty())
