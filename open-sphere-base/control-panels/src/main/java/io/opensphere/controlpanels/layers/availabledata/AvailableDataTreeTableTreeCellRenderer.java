@@ -22,7 +22,9 @@ import org.apache.log4j.Logger;
 import com.jidesoft.swing.CheckBoxTree;
 import com.jidesoft.swing.TristateCheckBox;
 
+import io.opensphere.controlpanels.layers.util.ClockAndOrColorLabel;
 import io.opensphere.controlpanels.layers.util.FeatureTypeLabel;
+import io.opensphere.controlpanels.layers.util.IconUtilities;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.image.IconUtil;
@@ -36,6 +38,7 @@ import io.opensphere.core.util.swing.tree.TreeTableTreeNode;
 import io.opensphere.core.util.swing.tree.TristateCheckBoxWithButtonModeSupport;
 import io.opensphere.mantle.data.ActivationState;
 import io.opensphere.mantle.data.DataGroupInfo;
+import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.MapVisualizationType;
 import io.opensphere.mantle.data.StreamingSupport;
 import io.opensphere.mantle.data.filter.DataLayerFilter;
@@ -64,9 +67,6 @@ public class AvailableDataTreeTableTreeCellRenderer extends TreeTableTreeCellRen
     /** The streaming icon. */
     private static ImageIcon ourStreamingIcon;
 
-    /** The white clock icon. */
-    private static ImageIcon ourWhiteClockIcon;
-
     /** The alert icon. */
     private static ImageIcon ourAlertIcon;
 
@@ -83,7 +83,7 @@ public class AvailableDataTreeTableTreeCellRenderer extends TreeTableTreeCellRen
     private final Toolbox myToolbox;
 
     /** The clock icon. */
-    private final JLabel myClockIcon;
+    private final ClockAndOrColorLabel myClockIcon;
 
     /** The feature label. */
     private final FeatureTypeLabel myFeatureLabel;
@@ -110,8 +110,6 @@ public class AvailableDataTreeTableTreeCellRenderer extends TreeTableTreeCellRen
     {
         try
         {
-            ourWhiteClockIcon = new ImageIcon(
-                    ImageIO.read(AvailableDataTreeTableTreeCellRenderer.class.getResource("/images/small_white_clock2.png")));
             ourSliderOffIcon = new ImageIcon(
                     ImageIO.read(AvailableDataTreeTableTreeCellRenderer.class.getResource("/images/slider-up.png")));
             ourSliderOnIcon = new ImageIcon(
@@ -140,7 +138,7 @@ public class AvailableDataTreeTableTreeCellRenderer extends TreeTableTreeCellRen
     {
         super(true);
         myToolbox = toolbox;
-        myClockIcon = new JLabel(ourWhiteClockIcon);
+        myClockIcon = new ClockAndOrColorLabel();
         myFeatureLabel = new FeatureTypeLabel();
         myFeatureLabel.setIconByType(Color.WHITE, MapVisualizationType.POINT_ELEMENTS);
         myTileLabel = new FeatureTypeLabel();
@@ -161,49 +159,55 @@ public class AvailableDataTreeTableTreeCellRenderer extends TreeTableTreeCellRen
     @Override
     public void addPrefixIcons(JTree tree, JPanel panel, TreeTableTreeNode node)
     {
-        DataGroupInfo dgi = getDataGroupInfoPayload(node.getPayload());
-        if (dgi != null)
+        DataGroupInfo dataGroup = getDataGroupInfoPayload(node.getPayload());
+        if (dataGroup != null)
         {
-            if (dgi.hasMember(t -> t.isAlert(), false))
+            if (dataGroup.hasMember(t -> t.isAlert(), false))
             {
                 addLabel(panel, myAlertLabel);
             }
-            if (dgi.hasMember(t -> t.getMapVisualizationInfo() != null && t.getMapVisualizationInfo().isMotionImageryType(),
+            if (dataGroup.hasMember(t -> t.getMapVisualizationInfo() != null && t.getMapVisualizationInfo().isMotionImageryType(),
                     false))
             {
+                colorFeatureTypeLabel(myMotionImageryLabel, dataGroup, MapVisualizationType.MOTION_IMAGERY);
                 addLabel(panel, myMotionImageryLabel);
             }
-            if (dgi.hasImageTileTypes(false))
+            if (dataGroup.hasImageTileTypes(false))
             {
+                colorFeatureTypeLabel(myTileLabel, dataGroup, MapVisualizationType.IMAGE_TILE);
                 addLabel(panel, myTileLabel);
             }
-            if (dgi.hasFeatureTypes(false))
+            if (dataGroup.hasFeatureTypes(false))
             {
+                colorFeatureTypeLabel(myFeatureLabel, dataGroup, MapVisualizationType.POINT_ELEMENTS);
                 addLabel(panel, myFeatureLabel);
             }
-            if (dgi.hasTimelineMember(false))
+            if (dataGroup.hasTimelineMember(false))
             {
+                colorClockLabel(dataGroup);
                 addLabel(panel, myClockIcon);
             }
-            if (dgi.hasMember(StreamingSupport.IS_STREAMING_ENABLED, false))
+            if (dataGroup.hasMember(StreamingSupport.IS_STREAMING_ENABLED, false))
             {
+                myStreamingLabel.setIcon(colorIcon(ourStreamingIcon, dataGroup));
                 addLabel(panel, myStreamingLabel);
             }
-            if (dgi.hasMember(
+            if (dataGroup.hasMember(
                     t -> t.getMapVisualizationInfo() != null
                             && t.getMapVisualizationInfo().getVisualizationType() == MapVisualizationType.PROCESS_RESULT_ELEMENTS,
                     false))
             {
+                myProcessLabel.setIcon(colorIcon(ourProcessIcon, dataGroup));
                 addLabel(panel, myProcessLabel);
             }
 
             // Add any custom icons for the layer
-            Collection<Icon> layerIcons = dgi.getMembers(false).stream()
+            Collection<Icon> layerIcons = dataGroup.getMembers(false).stream()
                     .filter(t -> t.getAssistant() != null && !t.getAssistant().getLayerIcons().isEmpty())
                     .flatMap(t -> t.getAssistant().getLayerIcons().stream()).collect(Collectors.toSet());
             for (Icon icon : layerIcons)
             {
-                addLabel(panel, new JLabel(icon));
+                addLabel(panel, new JLabel(colorIcon(icon, dataGroup)));
             }
         }
     }
@@ -355,6 +359,84 @@ public class AvailableDataTreeTableTreeCellRenderer extends TreeTableTreeCellRen
     }
 
     /**
+     * Colors the {@link myClockIcon} based off the given data group info.
+     *
+     * @param dataGroup the data group info to get the color from
+     */
+    private void colorClockLabel(DataGroupInfo dataGroup)
+    {
+        DataTypeInfo dataType = getDataTypeInfoWithTileRenderProperties(dataGroup);
+        if (dataGroup.numMembers(false) == 1)
+        {
+            dataType = dataGroup.getMembers(false).iterator().next();
+            myClockIcon.setType(dataType);
+        }
+        else if (dataType != null)
+        {
+            myClockIcon.setColor(dataType.getMapVisualizationInfo().getTileRenderProperties().getColor());
+        }
+        else
+        {
+            myClockIcon.setColor(Color.WHITE);
+        }
+    }
+
+    /**
+     * Colors the feature type label based off the given data group info.
+     *
+     * @param label the label to color
+     * @param dataGroup the data group to get the color from
+     * @param visualization the type of visualization the label represents
+     */
+    private void colorFeatureTypeLabel(FeatureTypeLabel label, DataGroupInfo dataGroup, MapVisualizationType visualization)
+    {
+        DataTypeInfo dataType = getDataTypeInfoWithTileRenderProperties(dataGroup);
+        if (dataGroup.numMembers(false) == 1)
+        {
+            dataType = dataGroup.getMembers(false).iterator().next();
+            label.setIconByType(dataType);
+        }
+        else if (dataType != null)
+        {
+            label.setIconByType(dataType.getMapVisualizationInfo().getTileRenderProperties().getColor(), 
+                    visualization);
+        }
+        else
+        {
+            label.setIconByType(Color.WHITE, visualization);
+        }
+    }
+
+    /**
+     * Colors the icon based off the given data group info.
+     *
+     * @param icon the icon to color
+     * @param dataGroup the data group to get the color from
+     * @return the colored icon
+     */
+    private Icon colorIcon(Icon icon, DataGroupInfo dataGroup)
+    {
+        DataTypeInfo dataType = getDataTypeInfoWithTileRenderProperties(dataGroup);
+        Icon coloredIcon;
+
+        if (dataGroup.numMembers(false) == 1)
+        {
+            coloredIcon = IconUtilities.getColorizedIcon(icon,
+                    dataGroup.getMembers(false).iterator().next().getBasicVisualizationInfo().getTypeColor());
+        }
+        else if (dataType != null)
+        {
+            coloredIcon = IconUtilities.getColorizedIcon(icon,dataType.getMapVisualizationInfo().getTileRenderProperties().getColor());
+        }
+        else
+        {
+            coloredIcon = IconUtilities.getColorizedIcon(icon, Color.WHITE);
+        }
+
+        return coloredIcon;
+    }
+
+    /**
      * Gets the data group info payload.
      *
      * @param payload the payload
@@ -368,5 +450,19 @@ public class AvailableDataTreeTableTreeCellRenderer extends TreeTableTreeCellRen
             dgi = ((GroupByNodeUserObject)payload.getPayloadData()).getDataGroupInfo();
         }
         return dgi;
+    }
+
+    /**
+     * Retrieves a data type info from the given data group info that has
+     * tile render properties.
+     *
+     * @param dataGroup the data group info to retrieve the data type info from
+     * @return a data type info that has tile render properties, or null if no
+     *         such data type info exists
+     */
+    private DataTypeInfo getDataTypeInfoWithTileRenderProperties(DataGroupInfo dataGroup)
+    {
+        return dataGroup.getMembers(false).stream().filter(e -> e.getMapVisualizationInfo() != null &&
+                e.getMapVisualizationInfo().getTileRenderProperties() != null).findFirst().orElse(null);
     }
 }
