@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.log4j.Logger;
@@ -168,11 +167,8 @@ public class IconChooserModel
     private void updateCollectionNames()
     {
         LOG.info("Updating collection names.");
-        Set<String> set = myIconRecords.stream().map(r -> r.collectionNameProperty().get()).distinct()
-                .collect(Collectors.toSet());
-
-        // ensure the default sets are present:
-        set.add(IconRecord.FAVORITES_COLLECTION);
+        
+        Set<String> set = myIconRegistry.getCollectionNames();
 
         // ensure only the items in the set are present in the list:
         myCollectionNames.retainAll(set);
