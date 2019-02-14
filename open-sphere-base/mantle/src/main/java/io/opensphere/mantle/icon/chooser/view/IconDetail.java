@@ -251,8 +251,7 @@ public class IconDetail extends AnchorPane
 
             final URL imageURL = myModel.getIconRegistry().getIconCache().cacheIcon(outputStream.toByteArray(),
                     myNameField.textProperty().get(), true);
-            final IconProvider provider = new DefaultIconProvider(imageURL, mySourceField.getSelectionModel().getSelectedItem(),
-                    "User");
+            final IconProvider provider = new DefaultIconProvider(imageURL, IconRecord.USER_ADDED_COLLECTION, "User");
             myModel.getIconRegistry().addIcon(provider, this);
         }
         catch (final IOException e)
