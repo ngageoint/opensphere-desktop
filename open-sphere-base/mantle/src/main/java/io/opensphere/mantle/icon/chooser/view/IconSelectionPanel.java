@@ -105,13 +105,13 @@ public class IconSelectionPanel extends BorderPane
         addTabs(collectionNames);
         myIconChooserModel.getCollectionNames().addListener((final ListChangeListener.Change<? extends String> c) ->
         {
-        	c.next();
-        	List<? extends String> added = c.getAddedSubList();
-        	
-        	if (myIconTabs.getTabs().filtered(tab -> added.contains(tab.getText())).isEmpty())
-        	{    		
-        		addTabs(added);
-        	}
+            c.next();
+            List<? extends String> added = c.getAddedSubList();
+            
+            if (myIconTabs.getTabs().filtered(tab -> added.contains(tab.getText())).isEmpty())
+            {            
+                addTabs(added);
+            }
         });
 
         myIconTabs.getTabs().addListener((final ListChangeListener.Change<? extends Tab> c) ->
@@ -159,7 +159,7 @@ public class IconSelectionPanel extends BorderPane
 
     private void addTabs(List<? extends String> collectionNames)
     {
-    	for (final String collection : collectionNames)
+        for (final String collection : collectionNames)
         {
             IconGridView content;
             if (StringUtils.equalsIgnoreCase(IconRecord.FAVORITES_COLLECTION, collection))
@@ -200,10 +200,10 @@ public class IconSelectionPanel extends BorderPane
         myIconTabs.getTabs().add(myIconTabs.getTabs().size(), tab);
         myIconTabs.getSelectionModel().select(tab);
         tab.textProperty().addListener((obs, oldV, newV) -> {
-			if (tab.getTabEditPhase().equals(TabEditPhase.PERSISTING))
-			{
-				myIconChooserModel.addCollectionName(newV);
-			}
+            if (tab.getTabEditPhase().equals(TabEditPhase.PERSISTING))
+            {
+                myIconChooserModel.addCollectionName(newV);
+            }
         });
         tab.tabEditPhaseProperty().set(TabEditPhase.EDITING);
     }

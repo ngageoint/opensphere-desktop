@@ -162,11 +162,11 @@ public class IconChooserModel
 
     public void addCollectionName(String collection)
     {
-    	if (!myCollectionNames.contains(collection))
-    	{
-    		myCollectionNames.add(collection);
-    		myIconRegistry.getCollectionNameSet().add(collection);
-    	}
+        if (!myCollectionNames.contains(collection))
+        {
+            myCollectionNames.add(collection);
+            myIconRegistry.getCollectionNameSet().add(collection);
+        }
     }
     
     /**

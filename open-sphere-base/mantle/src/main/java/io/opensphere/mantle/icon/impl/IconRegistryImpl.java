@@ -817,10 +817,10 @@ public class IconRegistryImpl implements IconRegistry
     /** Loads the icons. */
     private void load()
     {
-    	myCollectionNames.add(IconRecord.DEFAULT_COLLECTION);
-    	myCollectionNames.add(IconRecord.USER_ADDED_COLLECTION);
-    	myCollectionNames.add(IconRecord.FAVORITES_COLLECTION);
-    	
+        myCollectionNames.add(IconRecord.DEFAULT_COLLECTION);
+        myCollectionNames.add(IconRecord.USER_ADDED_COLLECTION);
+        myCollectionNames.add(IconRecord.FAVORITES_COLLECTION);
+        
         final IconRegistryConfig config = myPrefs.getJAXBObject(IconRegistryConfig.class, PREFERENCE_KEY,
                 new IconRegistryConfig());
         if (config != null && config.getIconRecords() != null && !config.getIconRecords().isEmpty())
