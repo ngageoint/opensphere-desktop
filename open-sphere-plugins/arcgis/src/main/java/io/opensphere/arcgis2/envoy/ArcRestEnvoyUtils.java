@@ -154,6 +154,14 @@ public final class ArcRestEnvoyUtils
 
         if (StringUtils.isNotEmpty(geomString))
         {
+            if (geomString.length() > 500)
+            {
+                // if the string is too long, it cannot be used in a GET query,
+                // as it will exceed the length allowed by a URI. In these
+                // cases, use a bounding box and down-select the results:
+                geomString = buildPolygonString(region.getEnvelope());
+            }
+
             StringBuilder buffer = new StringBuilder("{\"rings\":[");
             buffer.append(geomString);
             buffer.append("]}");
