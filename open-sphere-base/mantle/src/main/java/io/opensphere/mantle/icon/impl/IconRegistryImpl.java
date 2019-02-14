@@ -50,6 +50,7 @@ import io.opensphere.mantle.icon.config.v1.IconRegistryConfig;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 
 /**
  * The Class IconRegistryImpl.
@@ -107,7 +108,7 @@ public class IconRegistryImpl implements IconRegistry
     private final IconManagerPrefs myIconManagerPrefs = new IconManagerPrefs();
 
     /** An observable list of collection names. */
-    private final ObservableList<String> myCollectionNames = FXCollections.observableArrayList();
+    private final ObservableSet<String> myCollectionNames = FXCollections.observableSet();
 
     /**
      * Instantiates a new icon registry impl.
@@ -214,32 +215,9 @@ public class IconRegistryImpl implements IconRegistry
     }
 
     @Override
-    public ObservableList<String> getCollectionNameSet()
+    public ObservableSet<String> getCollectionNameSet()
     {
         return myCollectionNames;
-    }
-
-    @Override
-    public Set<String> getCollectionNames()
-    {
-        final Set<String> nameSet = New.set();
-        nameSet.add(IconRecord.DEFAULT_COLLECTION);
-        nameSet.add(IconRecord.USER_ADDED_COLLECTION);
-        nameSet.add(IconRecord.FAVORITES_COLLECTION);
-        myIconRegistryLock.lock();
-        try
-        {
-            myIconIdToIconRecordMap.forEachEntry((iconId, rec) ->
-            {
-                nameSet.add(rec.collectionNameProperty().get());
-                return true;
-            });
-        }
-        finally
-        {
-            myIconRegistryLock.unlock();
-        }
-        return nameSet;
     }
 
     @Override
@@ -789,6 +767,7 @@ public class IconRegistryImpl implements IconRegistry
         {
             record = new DefaultIconRecord(getId(provider, overrideId), provider);
             record.favoriteProperty().set(provider.isFavorite());
+            myCollectionNames.add(record.collectionNameProperty().get());
             myIconIdToIconRecordMap.put(record.idProperty().get(), record);
             myIconRecordToIconIdMap.put(record, record.idProperty().get());
             myIconRecords.add(record);
@@ -838,6 +817,10 @@ public class IconRegistryImpl implements IconRegistry
     /** Loads the icons. */
     private void load()
     {
+    	myCollectionNames.add(IconRecord.DEFAULT_COLLECTION);
+    	myCollectionNames.add(IconRecord.USER_ADDED_COLLECTION);
+    	myCollectionNames.add(IconRecord.FAVORITES_COLLECTION);
+    	
         final IconRegistryConfig config = myPrefs.getJAXBObject(IconRegistryConfig.class, PREFERENCE_KEY,
                 new IconRegistryConfig());
         if (config != null && config.getIconRecords() != null && !config.getIconRecords().isEmpty())
