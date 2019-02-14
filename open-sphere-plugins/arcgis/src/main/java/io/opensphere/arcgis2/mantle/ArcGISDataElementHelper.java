@@ -2,23 +2,28 @@ package io.opensphere.arcgis2.mantle;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import io.opensphere.arcgis2.esri.Feature;
 import io.opensphere.arcgis2.esri.Geometry;
 import io.opensphere.core.common.lobintersect.LatLon;
+import io.opensphere.core.common.time.DateUtils;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.lang.NumberUtilities;
 import io.opensphere.core.util.model.GeographicUtilities;
 import io.opensphere.core.util.model.GeographicUtilities.PolygonWinding;
 import io.opensphere.mantle.data.DataTypeInfo;
+import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.element.MapDataElement;
 import io.opensphere.mantle.data.element.MetaDataProvider;
 import io.opensphere.mantle.data.element.impl.DefaultMapDataElement;
@@ -60,7 +65,7 @@ public final class ArcGISDataElementHelper
                 geometry = createGeometry(feature.getAttributes());
             }
 
-            TimeSpan timeSpan = getTimeSpan(feature.getAttributes());
+            TimeSpan timeSpan = getTimeSpan(dataType, feature.getAttributes());
             if (timeSpan != TimeSpan.TIMELESS)
             {
                 geometry.setTimeSpan(timeSpan);
@@ -120,15 +125,51 @@ public final class ArcGISDataElementHelper
      * @param attributes the attributes
      * @return the TimeSpan
      */
-    static TimeSpan getTimeSpan(Map<String, Object> attributes)
+    static TimeSpan getTimeSpan(DataTypeInfo datatype, Map<String, Object> attributes)
     {
+        MetaDataInfo metadata = datatype.getMetaDataInfo();
         TimeSpan span = TimeSpan.TIMELESS;
-        // TODO someday we should either guess the time span or get the field(s) from the user
+        if (StringUtils.isNotBlank(metadata.getTimeKey()) && attributes.containsKey(metadata.getTimeKey()))
+        {
+            Object result = attributes.get(metadata.getTimeKey());
+            if (result instanceof String)
+            {
+                if (NumberUtilities.isNumber(result))
+                {
+                    span = TimeSpan.get(Long.parseLong((String)result));
+                }
+                else
+                {
+                    span = TimeSpan.get(DateUtils.parseISO8601date((String)result));
+                }
+            }
+            else if (result instanceof Long)
+            {
+                span = TimeSpan.get(((Long)result).longValue());
+            }
+            else if (result instanceof Date)
+            {
+                span = TimeSpan.get((Date)result);
+            }
+            else if (result instanceof TimeSpan)
+            {
+                span = (TimeSpan)result;
+            }
+            else
+            {
+                if (LOGGER.isDebugEnabled())
+                {
+                    LOGGER.debug("Unrecognized date field type: " + result.getClass().getName());
+                }
+            }
+        }
+
         return span;
     }
 
     /**
-     * Gets the attribute value for the first key that contains one of the column strings.
+     * Gets the attribute value for the first key that contains one of the
+     * column strings.
      *
      * @param attributes the attributes
      * @param columns the column strings
@@ -201,7 +242,8 @@ public final class ArcGISDataElementHelper
     /**
      * Converts a esriGeometryPolygon into a {@link MapGeometrySupport}.
      *
-     * @param pointListList the list of lists of lat/lon pairs for the individual polylines
+     * @param pointListList the list of lists of lat/lon pairs for the
+     *            individual polylines
      * @return a list of the polygons from the conversion.
      */
     private static MapPolygonGeometrySupport createPolygon(List<List<LatLonAlt>> pointListList)
@@ -229,7 +271,8 @@ public final class ArcGISDataElementHelper
     /**
      * Converts a esriGeometryPolygon into a {@link MapGeometrySupport}.
      *
-     * @param pointListList the list of lists of lat/lon pairs for the individual polylines
+     * @param pointListList the list of lists of lat/lon pairs for the
+     *            individual polylines
      * @return a list of the polygons from the conversion.
      */
     private static DefaultMapPolylineGeometrySupport createPolyine(List<List<LatLonAlt>> pointListList)

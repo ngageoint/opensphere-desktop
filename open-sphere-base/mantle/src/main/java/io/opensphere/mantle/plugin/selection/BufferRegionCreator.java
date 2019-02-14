@@ -3,6 +3,7 @@ package io.opensphere.mantle.plugin.selection;
 import java.awt.Frame;
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.util.Collection;
 import java.util.Collections;
 
 import javax.swing.JOptionPane;
@@ -15,6 +16,8 @@ import io.opensphere.core.control.action.ActionContext;
 import io.opensphere.core.control.action.context.ContextIdentifiers;
 import io.opensphere.core.control.action.context.GeometryContextKey;
 import io.opensphere.core.geometry.Geometry;
+import io.opensphere.core.geometry.GeometryGroupGeometry;
+import io.opensphere.core.geometry.MultiPolygonGeometry;
 import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.units.UnitsProvider;
 import io.opensphere.core.units.length.Kilometers;
@@ -180,7 +183,26 @@ public class BufferRegionCreator
     {
         if (myPreviewGeometry != null)
         {
-            unregisterGeometry(myPreviewGeometry);
+            if (myGeometry instanceof MultiPolygonGeometry)
+            {
+                MultiPolygonGeometry geometry = (MultiPolygonGeometry)myGeometry;
+                Collection<PolygonGeometry> geometries = geometry.getGeometries();
+                unregisterGeometry(myPreviewGeometry);
+
+                geometry.receiveObjects(this, geometries, Collections.emptyList());
+            }
+            else if (myGeometry instanceof GeometryGroupGeometry)
+            {
+                GeometryGroupGeometry geometry = (GeometryGroupGeometry)myGeometry;
+                Collection<Geometry> geometries = geometry.getGeometries();
+                unregisterGeometry(myPreviewGeometry);
+
+                geometry.receiveObjects(this, geometries, Collections.emptyList());
+            }
+            else
+            {
+                unregisterGeometry(myPreviewGeometry);
+            }
         }
         myPreviewGeometry = null;
     }

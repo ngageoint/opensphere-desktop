@@ -33,11 +33,9 @@ public class MGRSUtilities
      */
     public static DataElement getMGRSDataElement(MapDataElement element, int precision, Object source)
     {
-        DataTypeInfo dataTypeInfo = element.getDataTypeInfo();
-        MapGeometrySupport mapSupport = element.getMapGeometrySupport();
-        MetaDataProvider mgrsProvider = getMGRSMetaDataProvider(element.getMetaData(), dataTypeInfo, mapSupport, precision, source);
-
-        return new DefaultMapDataElement(element.getId(), element.getTimeSpan(), dataTypeInfo, mgrsProvider, mapSupport);
+        MetaDataProvider mgrsProvider = getMGRSMetaDataProvider(element.getMetaData(), element.getDataTypeInfo(),
+                element.getMapGeometrySupport(), precision, source);
+        return new DefaultMapDataElement(element, mgrsProvider);
     }
 
     /**
@@ -48,12 +46,14 @@ public class MGRSUtilities
      * @param mapSupport the {@link MapGeometrySupport} for calculating the MGRS value
      * @param precision the precision to use in calculating the MGRS value
      * @param source the calling object
-     * @return a new {@link MetaDataProvider} with the additional field 'MGRS Derived' or the original provider if a new one could not be created
+     * @return a new {@link MetaDataProvider} with the additional field 'MGRS Derived' or the original provider if a new one could
+     *         not be created
      */
-    public static MetaDataProvider getMGRSMetaDataProvider(MetaDataProvider provider, DataTypeInfo dataTypeInfo, MapGeometrySupport mapSupport, int precision, Object source)
+    public static MetaDataProvider getMGRSMetaDataProvider(MetaDataProvider provider, DataTypeInfo dataTypeInfo,
+            MapGeometrySupport mapSupport, int precision, Object source)
     {
         MetaDataInfo metaInfo;
-        if (provider != null && dataTypeInfo != null  && (metaInfo = dataTypeInfo.getMetaDataInfo()) != null)
+        if (provider != null && dataTypeInfo != null && (metaInfo = dataTypeInfo.getMetaDataInfo()) != null)
         {
             metaInfo.addKey(MGRS_DERIVED, String.class, source);
             MetaDataProvider newProvider = new MDILinkedMetaDataProvider(metaInfo, provider.getValues());

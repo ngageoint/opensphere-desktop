@@ -1,7 +1,6 @@
 package io.opensphere.core.util.fx;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -85,26 +84,28 @@ public class AutoSelectComboBox<T> extends ComboBox<T>
                     moveCaret(editor, editorContents.length(), caretPosition);
                     return;
                 case ENTER:
-                    String targetItem = null;
+                    T targetItem = null;
                     if (getSelectionModel().getSelectedIndex() >= 0)
                     {
-                        targetItem = getSelectionModel().getSelectedItem().toString();
+                        targetItem = getSelectionModel().getSelectedItem();
                     }
                     else
                     {
-                        List<? extends Object> matchingEntries = items.stream()
+                        List<T> matchingEntries = items.stream()
                                 .filter(item -> StringUtils.startsWithIgnoreCase(item.toString(), editorContents))
                                 .collect(Collectors.toList());
                         if (matchingEntries.size() >= 1)
                         {
-                            targetItem = (String)matchingEntries.iterator().next();
+                            targetItem = matchingEntries.iterator().next();
                         }
                     }
                     
                     if(targetItem != null) 
                     {
-                        editor.setText(targetItem);
-                        moveCaret(editor, targetItem.length(), -1);
+                        String targetString = targetItem.toString();
+                        editor.setText(targetString);
+                        getSelectionModel().select(targetItem);
+                        moveCaret(editor, targetString.length(), -1);
                         hide();
                         return;
                     }
