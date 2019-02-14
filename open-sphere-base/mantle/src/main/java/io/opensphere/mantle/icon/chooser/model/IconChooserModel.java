@@ -159,6 +159,16 @@ public class IconChooserModel
     {
         return myCollectionNames;
     }
+    
+    /**
+     * Gets the value of the {@link #myCollectionNames} field, excluding Favorites.
+     * 
+     * @return the values of the myCollectionNames field that can have added icons.
+     */
+    public ObservableList<String> getEditableCollectionNames()
+    {
+        return myCollectionNames.filtered(s -> !s.contentEquals(IconRecord.FAVORITES_COLLECTION));
+    }
 
     /**
      * Adds a new collection to the registry.
