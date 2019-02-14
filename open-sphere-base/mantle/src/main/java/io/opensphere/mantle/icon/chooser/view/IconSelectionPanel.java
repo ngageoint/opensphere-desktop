@@ -15,8 +15,6 @@ import io.opensphere.core.util.lang.Pair;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.chooser.model.IconChooserModel;
 import io.opensphere.mantle.icon.chooser.model.IconModel;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.SortedList;
@@ -157,6 +155,11 @@ public class IconSelectionPanel extends BorderPane
         });
     }
 
+    /**
+     * Helper to avoid code duplication. Adds tabs when collections are updated, or the window is initialized.
+     *
+     * @param collectionNames List of collections to create tabs for.
+     */
     private void addTabs(List<? extends String> collectionNames)
     {
         for (final String collection : collectionNames)

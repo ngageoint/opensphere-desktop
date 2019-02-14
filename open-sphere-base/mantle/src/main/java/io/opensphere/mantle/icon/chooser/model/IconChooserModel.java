@@ -160,6 +160,12 @@ public class IconChooserModel
         return myCollectionNames;
     }
 
+    /**
+     * Adds a new collection to the registry.
+     * Called when adding and saving new tabs.
+     *
+     * @param collection The collection to add.
+     */
     public void addCollectionName(String collection)
     {
         if (!myCollectionNames.contains(collection))
