@@ -141,18 +141,17 @@ public class FilterEditorPanel extends JPanel implements Validatable
         }
 
         // Remove fields that don't make sense in filter builder
-        String key;
-        if ((key = meta.getLatitudeKey()) != null)
+        if (meta.getLatitudeKey() != null)
         {
-            columns.remove(key);
+            columns.remove(meta.getLatitudeKey());
         }
-        if ((key = meta.getLongitudeKey()) != null)
+        if (meta.getLongitudeKey() != null)
         {
-            columns.remove(key);
+            columns.remove(meta.getLongitudeKey());
         }
-        if ((key = meta.getGeometryColumn()) != null)
+        if (meta.getGeometryColumn() != null)
         {
-            columns.remove(key);
+            columns.remove(meta.getGeometryColumn());
         }
         columns.remove(MetaDataInfo.MGRS_DERIVED);
 
