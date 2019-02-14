@@ -125,15 +125,14 @@ public class IconDetail extends AnchorPane
         mySourceField.valueProperty().bindBidirectional(myCustomizationModel.sourceProperty());
         myCustomizationModel.sourceProperty().addListener((obs, oldV, newV) ->
         {
-        	if (!newV.equals(oldV))
-        	{
-        		IconRecord myRecord = myModel.selectedRecordProperty().get();
-        		myRecord.collectionNameProperty().set(newV);
-        	}
+            if (!newV.equals(oldV))
+            {
+                IconRecord myRecord = myModel.selectedRecordProperty().get();
+                myRecord.collectionNameProperty().set(newV);
+            }
         });
 
         myTagsField = new TagField();
-        myTagsField.setBackground(myNameField.getBackground());
         myTagsField.tagColorProperty().set(FXUtilities.fromAwtColor(IconUtil.DEFAULT_ICON_FOREGROUND));
         myCustomizationModel.getTags().addListener((ListChangeListener<String>)c ->
         {

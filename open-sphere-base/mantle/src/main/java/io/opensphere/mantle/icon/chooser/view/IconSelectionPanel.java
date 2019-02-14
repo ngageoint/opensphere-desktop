@@ -124,10 +124,10 @@ public class IconSelectionPanel extends BorderPane
 
         myPanelModel.getCustomizationModel().sourceProperty().addListener((obs, ov, nv) ->
         {
-        	String source = myPanelModel.getCustomizationModel().sourceProperty().get();
+            String source = myPanelModel.getCustomizationModel().sourceProperty().get();
             if (StringUtils.isNotBlank(source))
             {
-            	Tab toSelect = myTabs.get(source).getFirstObject();
+                Tab toSelect = myTabs.get(source).getFirstObject();
                 myIconTabs.selectionModelProperty().get().select(toSelect);
             }
         });

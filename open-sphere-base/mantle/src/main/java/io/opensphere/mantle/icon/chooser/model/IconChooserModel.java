@@ -167,7 +167,7 @@ public class IconChooserModel
      */
     public ObservableList<String> getEditableCollectionNames()
     {
-    	return myCollectionNames.filtered(s -> !s.contentEquals(IconRecord.FAVORITES_COLLECTION));
+        return myCollectionNames.filtered(s -> !s.contentEquals(IconRecord.FAVORITES_COLLECTION));
     }
 
     /**
