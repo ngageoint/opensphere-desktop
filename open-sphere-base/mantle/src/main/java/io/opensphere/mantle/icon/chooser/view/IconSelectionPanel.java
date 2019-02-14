@@ -1,5 +1,6 @@
 package io.opensphere.mantle.icon.chooser.view;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -14,6 +15,8 @@ import io.opensphere.core.util.lang.Pair;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.chooser.model.IconChooserModel;
 import io.opensphere.mantle.icon.chooser.model.IconModel;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.SortedList;
@@ -99,38 +102,17 @@ public class IconSelectionPanel extends BorderPane
         myIconTabs.newTabAction().set(e -> createSet());
         myTabs = New.map();
 
-        for (final String collection : collectionNames)
+        addTabs(collectionNames);
+        myIconChooserModel.getCollectionNames().addListener((final ListChangeListener.Change<? extends String> c) ->
         {
-            IconGridView content;
-            if (StringUtils.equalsIgnoreCase(IconRecord.FAVORITES_COLLECTION, collection))
-            {
-                content = new IconGridView(panelModel, r -> r.favoriteProperty().get());
-            }
-            else
-            {
-                content = new IconGridView(panelModel, r -> r.collectionNameProperty().get().equals(collection));
-            }
-
-            final Tab tab = new Tab(collection, content);
-
-            content.displayProperty().addListener((obs, ov, nv) ->
-            {
-                if (nv)
-                {
-                    myIconTabs.getTabs().add(tab);
-                }
-                else
-                {
-                    myIconTabs.getTabs().remove(tab);
-                }
-            });
-
-            myTabs.put(collection, new Pair<>(tab, content));
-            if (content.displayProperty().get())
-            {
-                myIconTabs.getTabs().add(tab);
-            }
-        }
+        	c.next();
+        	List<? extends String> added = c.getAddedSubList();
+        	
+        	if (myIconTabs.getTabs().filtered(tab -> added.contains(tab.getText())).isEmpty())
+        	{    		
+        		addTabs(added);
+        	}
+        });
 
         myIconTabs.getTabs().addListener((final ListChangeListener.Change<? extends Tab> c) ->
         {
@@ -175,12 +157,54 @@ public class IconSelectionPanel extends BorderPane
         });
     }
 
+    private void addTabs(List<? extends String> collectionNames)
+    {
+    	for (final String collection : collectionNames)
+        {
+            IconGridView content;
+            if (StringUtils.equalsIgnoreCase(IconRecord.FAVORITES_COLLECTION, collection))
+            {
+                content = new IconGridView(myPanelModel, r -> r.favoriteProperty().get());
+            }
+            else
+            {
+                content = new IconGridView(myPanelModel, r -> r.collectionNameProperty().get().equals(collection));
+            }
+
+            final Tab tab = new Tab(collection, content);
+
+            content.displayProperty().addListener((obs, ov, nv) ->
+            {
+                if (nv)
+                {
+                    myIconTabs.getTabs().add(tab);
+                }
+                else
+                {
+                    myIconTabs.getTabs().remove(tab);
+                }
+            });
+
+            myTabs.put(collection, new Pair<>(tab, content));
+            if (content.displayProperty().get())
+            {
+                myIconTabs.getTabs().add(tab);
+            }
+        }
+    }
+    
     /** An event handler used to create and add a new icon set. */
     private void createSet()
     {
         final OSTab tab = new OSTab("<New Icon Set>");
         myIconTabs.getTabs().add(myIconTabs.getTabs().size(), tab);
         myIconTabs.getSelectionModel().select(tab);
+        tab.textProperty().addListener((obs, oldV, newV) -> {
+			if (tab.getTabEditPhase().equals(TabEditPhase.PERSISTING))
+			{
+				myIconChooserModel.addCollectionName(newV);
+			}
+        });
         tab.tabEditPhaseProperty().set(TabEditPhase.EDITING);
     }
 

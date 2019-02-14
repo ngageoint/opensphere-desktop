@@ -160,6 +160,15 @@ public class IconChooserModel
         return myCollectionNames;
     }
 
+    public void addCollectionName(String collection)
+    {
+    	if (!myCollectionNames.contains(collection))
+    	{
+    		myCollectionNames.add(collection);
+    		myIconRegistry.getCollectionNameSet().add(collection);
+    	}
+    }
+    
     /**
      * Updates the list of collection names to match the unique set defined
      * within the icon records.
@@ -168,7 +177,7 @@ public class IconChooserModel
     {
         LOG.info("Updating collection names.");
         
-        Set<String> set = myIconRegistry.getCollectionNames();
+        Set<String> set = myIconRegistry.getCollectionNameSet();
 
         // ensure only the items in the set are present in the list:
         myCollectionNames.retainAll(set);
