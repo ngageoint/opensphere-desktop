@@ -121,10 +121,19 @@ public class IconDetail extends AnchorPane
         myNameField = new TextField();
         myNameField.textProperty().bindBidirectional(myCustomizationModel.nameProperty());
 
-        mySourceField = new ComboBox<>(myModel.getModel().getCollectionNames());
+        mySourceField = new ComboBox<>(myModel.getModel().getEditableCollectionNames());
         mySourceField.valueProperty().bindBidirectional(myCustomizationModel.sourceProperty());
+        myCustomizationModel.sourceProperty().addListener((obs, oldV, newV) ->
+        {
+        	if (!newV.equals(oldV))
+        	{
+        		IconRecord myRecord = myModel.selectedRecordProperty().get();
+        		myRecord.collectionNameProperty().set(newV);
+        	}
+        });
 
         myTagsField = new TagField();
+        myTagsField.setBackground(myNameField.getBackground());
         myTagsField.tagColorProperty().set(FXUtilities.fromAwtColor(IconUtil.DEFAULT_ICON_FOREGROUND));
         myCustomizationModel.getTags().addListener((ListChangeListener<String>)c ->
         {
