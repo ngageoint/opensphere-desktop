@@ -22,6 +22,7 @@ import org.apache.commons.lang3.StringUtils;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.Quadrilateral;
+import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.util.ObservableValue;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.util.WeakChangeSupport;
@@ -787,6 +788,8 @@ public class DefaultDataGroupInfo implements DataGroupInfo
         Collection<String> tags = New.set();
         Collection<String> descriptions = New.insertionOrderSet();
         Collection<String> urls = New.set();
+        Collection<String> times = New.set();
+        //Collection<>
         myModificationLock.readLock().lock();
         try
         {
@@ -803,6 +806,14 @@ public class DefaultDataGroupInfo implements DataGroupInfo
                     if (member.getUrl() != null)
                     {
                         urls.add(member.getUrl());
+                    }
+                    if (member.getTimeExtents() != null)
+                    {
+                    	TimeSpan ts = member.getTimeExtents().getExtent();
+                    	if (ts != null)
+                    	{
+                    		times.add(ts.toDisplayString());
+                    	}
                     }
                 }
             }
@@ -828,6 +839,7 @@ public class DefaultDataGroupInfo implements DataGroupInfo
         addItems(sb, null, descriptions, "\n\n", "");
         addItems(sb, "Tags: ", tags, ", ", "Tags: (none)");
         addItems(sb, urls.size() == 1 ? "URL:\n" : "URLs:\n", urls, "\n", null);
+        addItems(sb, times.size() == 1 ? "Timespan:\n" : "Timespans:\n", times, "\n", null);
 
         return sb.toString();
     }
