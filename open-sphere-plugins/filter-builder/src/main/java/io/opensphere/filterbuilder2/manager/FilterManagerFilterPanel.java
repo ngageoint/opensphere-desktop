@@ -42,12 +42,12 @@ public class FilterManagerFilterPanel extends ScrollableGridBagPanel
     /**
      * Stack icon.
      */
-    private static final Icon stackIcon = IconUtil.getIcon(IconType.STACK);
+    private static final Icon stackIcon = IconUtil.getColorizedIcon(IconType.STACK, Color.WHITE);
     
     /**
      * Edit icon.
      */
-    private static final Icon editIcon = IconUtil.getIcon(IconType.EDIT);
+    private static final Icon editIcon = IconUtil.getColorizedIcon(IconType.EDIT, Color.WHITE);
     
     /**
      * Red close icon.
