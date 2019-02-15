@@ -16,7 +16,6 @@ import io.opensphere.mantle.datasources.IDataSourceCreator;
  */
 public class ImageryImportDataCreator implements IDataSourceCreator
 {
-
     /**
      * The wizard dialog.
      */
