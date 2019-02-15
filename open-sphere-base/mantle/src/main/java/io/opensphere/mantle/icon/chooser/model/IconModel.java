@@ -1,58 +1,19 @@
 package io.opensphere.mantle.icon.chooser.model;
 
-import java.util.List;
-import java.util.Set;
-
-import io.opensphere.core.Toolbox;
-import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.javafx.ConcurrentDoubleProperty;
-import io.opensphere.core.util.javafx.ConcurrentStringProperty;
-import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.icon.IconRegistry;
-import io.opensphere.mantle.icon.IconRegistryListener;
-import io.opensphere.mantle.icon.chooser.model.IconRegistryChangeListener.Change;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
 
+import io.opensphere.core.Toolbox;
+import io.opensphere.core.util.javafx.ConcurrentDoubleProperty;
+import io.opensphere.core.util.javafx.ConcurrentStringProperty;
+import io.opensphere.mantle.icon.IconRecord;
+import io.opensphere.mantle.icon.IconRegistry;
+
 /** The model for the IconManagerFrame. */
 public class IconModel
 {
-    /**
-     * A pass-through registry listener used to inform functional-interface type
-     * listeners of registry additions / removals. Not private to prevent
-     * generation of synthetic accessors.
-     */
-    final class PassThroughIconRegistryListener implements IconRegistryListener
-    {
-        @Override
-        public void iconsUnassigned(final List<Long> deIds, final Object source)
-        {
-            /* intentionally blank */
-        }
-
-        @Override
-        public void iconsRemoved(final List<IconRecord> removed, final Object source)
-        {
-            final Change change = new Change(null, removed);
-            myRegistryChangeListeners.forEach(c -> c.onChanged(change));
-        }
-
-        @Override
-        public void iconsAdded(final List<IconRecord> added, final Object source)
-        {
-            final Change change = new Change(added, null);
-            myRegistryChangeListeners.forEach(c -> c.onChanged(change));
-        }
-
-        @Override
-        public void iconAssigned(final long iconId, final List<Long> deIds, final Object source)
-        {
-            /* intentionally blank */
-        }
-    }
-
     /** The selected icon to be used for customization dialogs. */
     private final ObjectProperty<IconRecord> mySelectedRecord = new SimpleObjectProperty<>();
 
@@ -74,15 +35,6 @@ public class IconModel
      */
     private final DoubleProperty myCurrentTileWidth = new ConcurrentDoubleProperty(80);
 
-    /**
-     * The set of change listeners called when icons are added or removed. Not
-     * private to prevent generation of synthetic accessors.
-     */
-    final Set<IconRegistryChangeListener> myRegistryChangeListeners = New.set();
-
-    /** The registry listener used to react to additions and removals. */
-    private final IconRegistryListener myRegistryListener;
-
     /** The model in which customization state is maintained. */
     private final CustomizationModel myCustomizationModel;
 
@@ -98,7 +50,6 @@ public class IconModel
     {
         myToolbox = toolbox;
         myModel = new IconChooserModel();
-        myRegistryListener = new PassThroughIconRegistryListener();
         myCustomizationModel = new CustomizationModel();
     }
 
@@ -129,16 +80,8 @@ public class IconModel
      */
     public void setIconRegistry(final IconRegistry iconRegistry)
     {
-        if (iconRegistry == null && myIconRegistry != null)
-        {
-            myIconRegistry.removeListener(myRegistryListener);
-        }
         myIconRegistry = iconRegistry;
         myModel.setIconRegistry(iconRegistry);
-        if (myIconRegistry != null)
-        {
-            myIconRegistry.addListener(myRegistryListener);
-        }
     }
 
     /**
@@ -199,25 +142,5 @@ public class IconModel
     public ObjectProperty<IconRecord> previewRecordProperty()
     {
         return myPreviewRecordProperty;
-    }
-
-    /**
-     * Adds a new listener to be notified of registry adds and removes.
-     *
-     * @param listener the listener to add.
-     */
-    public void addRegistryChangeListener(final IconRegistryChangeListener listener)
-    {
-        myRegistryChangeListeners.add(listener);
-    }
-
-    /**
-     * Removes the listener from notification of registry adds and removes.
-     *
-     * @param listener the listener to remove.
-     */
-    public void removeRegistryChangeListener(final IconRegistryChangeListener listener)
-    {
-        myRegistryChangeListeners.remove(listener);
     }
 }
