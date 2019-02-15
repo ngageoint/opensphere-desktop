@@ -20,6 +20,7 @@ import javax.swing.UIManager;
 
 import io.opensphere.core.datafilter.DataFilterOperators.Logical;
 import io.opensphere.core.preferences.PreferencesRegistry;
+import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.image.IconUtil.IconType;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.core.util.swing.GridBagPanel;
@@ -37,6 +38,12 @@ public class FilterTreeCellPanel extends GridBagPanel
 {
     /** Serial version UID. */
     private static final long serialVersionUID = 1L;
+    
+    /** Edit icon. */
+    private static final Icon editIcon = IconUtil.getNormalIcon(IconType.EDIT);
+    
+    /** Red Delete icon. */
+    private static final Icon deleteIcon = IconUtil.getColorizedIcon(IconType.CLOSE, Color.RED);
 
     /** The edit button. */
     private final IconButton myButtonEdit;
@@ -214,7 +221,7 @@ public class FilterTreeCellPanel extends GridBagPanel
      */
     private IconButton buildEditButton()
     {
-        IconButton button = new IconButton(IconType.EDIT);
+        IconButton button = new IconButton(editIcon);
         button.setBorderPainted(false);
         button.setContentAreaFilled(false);
         button.setToolTipText("Edit the " + Constants.EXPRESSION.toLowerCase());
@@ -237,7 +244,7 @@ public class FilterTreeCellPanel extends GridBagPanel
      */
     private IconButton buildRemoveCriterionButton()
     {
-        IconButton button = new IconButton(IconType.CLOSE, Color.RED);
+        IconButton button = new IconButton(deleteIcon);
         button.setBorderPainted(false);
         button.setContentAreaFilled(false);
         button.setToolTipText("Remove the " + Constants.EXPRESSION.toLowerCase());
@@ -260,7 +267,7 @@ public class FilterTreeCellPanel extends GridBagPanel
      */
     private IconButton buildRemoveGroupButton()
     {
-        IconButton button = new IconButton(IconType.CLOSE, Color.RED);
+        IconButton button = new IconButton(deleteIcon);
         button.setBorderPainted(false);
         button.setContentAreaFilled(false);
         button.setToolTipText("Remove the group");
