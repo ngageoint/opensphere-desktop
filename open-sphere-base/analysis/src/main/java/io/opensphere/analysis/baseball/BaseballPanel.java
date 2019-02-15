@@ -450,7 +450,7 @@ public class BaseballPanel extends GridPane
             setCoordinateSelectionBorders(label);
         });
 
-        label.setOnMouseEntered(e -> 
+        label.setOnMouseEntered(e ->
         {
             if (!label.equals(mySelectedCoordinateLabel))
             {
