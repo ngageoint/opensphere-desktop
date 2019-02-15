@@ -789,7 +789,6 @@ public class DefaultDataGroupInfo implements DataGroupInfo
         Collection<String> descriptions = New.insertionOrderSet();
         Collection<String> urls = New.set();
         Collection<String> times = New.set();
-        //Collection<>
         myModificationLock.readLock().lock();
         try
         {
