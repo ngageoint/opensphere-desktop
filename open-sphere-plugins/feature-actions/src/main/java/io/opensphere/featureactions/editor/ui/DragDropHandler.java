@@ -3,7 +3,6 @@ package io.opensphere.featureactions.editor.ui;
 import java.util.List;
 
 import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -32,8 +31,6 @@ public class DragDropHandler
      * The group being dragged.
      */
     private SimpleFeatureActionGroup myDragGroup;
-
-    private ListCell<SimpleFeatureAction> myDropTarget;
     
     /**
      * The list the drag item is coming from.
@@ -83,7 +80,6 @@ public class DragDropHandler
             if (db.hasString())
             {
                 event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-                myDropTarget = cell;
             }
         });
 
@@ -99,20 +95,19 @@ public class DragDropHandler
                 
                 if (cellAction == null)
                 {
-                	group.getActions().add(action);
+                    group.getActions().add(action);
                 }
                 else
                 {
-                	int featureIndex = group.getActions().indexOf(cellAction);
-                	featureIndex += featureIndex < myDragIndex ? 0 : 1;
+                    int featureIndex = group.getActions().indexOf(cellAction);
+                    featureIndex += featureIndex < myDragIndex ? 0 : 1;
 
-	                group.getActions().add(featureIndex, action);
+                    group.getActions().add(featureIndex, action);
                 }
                 
                 event.setDropCompleted(true);
                 
                 myDragAction = null;
-                myDropTarget = null;
             }
             else
             {
@@ -120,34 +115,6 @@ public class DragDropHandler
             }
         });
     }
-    
-//    public void handleListView(SimpleFeatureActionGroup group, ListView<SimpleFeatureAction> view)
-//    {
-//    	view.setOnDragDropped(event ->
-//    	{
-//    		Dragboard db = event.getDragboard();
-//    		if (db.hasString() && myDragAction != null)
-//    		{
-//    			SimpleFeatureAction action = myDragAction;
-//                group.getActions().remove(myDragIndex);
-//                if (myDropTarget != null)
-//                {
-//                	group.getActions().add(myDropTarget.getIndex()+1, action);
-//                }
-//                else
-//                {                	
-//                	group.getActions().add(action);
-//                }
-//                event.setDropCompleted(true);
-//                myDragAction = null;
-//                myDropTarget = null;
-//    		}
-//    		else
-//    		{
-//    			event.setDropCompleted(false);
-//    		}
-//    	});
-//    }
 
     /**
      * Handles dragging and dropping actions to other groups.
@@ -189,7 +156,6 @@ public class DragDropHandler
                     group.getActions().add(action);
                     event.setDropCompleted(true);
                     myDragAction = null;
-                    myDropTarget = null;
                 }
                 else if (myDragGroup != null)
                 {
