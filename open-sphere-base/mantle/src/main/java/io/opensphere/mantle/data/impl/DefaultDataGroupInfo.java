@@ -809,11 +809,11 @@ public class DefaultDataGroupInfo implements DataGroupInfo
                     }
                     if (member.getTimeExtents() != null)
                     {
-                    	TimeSpan ts = member.getTimeExtents().getExtent();
-                    	if (ts != null)
-                    	{
-                    		times.add(ts.toDisplayString());
-                    	}
+                        TimeSpan ts = member.getTimeExtents().getExtent();
+                        if (ts != null)
+                        {
+                            times.add(ts.toDisplayString());
+                        }
                     }
                 }
             }
