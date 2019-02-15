@@ -8,16 +8,17 @@ import java.awt.event.WindowEvent;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
-import javax.swing.JDialog;
-
-import io.opensphere.core.util.ThreadConfined;
-import io.opensphere.core.util.ValidationStatus;
-import io.opensphere.core.util.ValidatorSupport;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonBar.ButtonData;
+
+import javax.swing.JDialog;
+
+import io.opensphere.core.util.ThreadConfined;
+import io.opensphere.core.util.ValidationStatus;
+import io.opensphere.core.util.ValidatorSupport;
 
 /** Swing dialog that contains a JavaFX component. */
 public class JFXDialog extends JDialog
@@ -58,6 +59,11 @@ public class JFXDialog extends JDialog
 
     /** Flag indicates whether to show the "Cancel" button. */
     private boolean showCancelButton = true;
+
+    /**
+     * The node supplier.
+     */
+    private Supplier<Node> myNodeSupplier;
 
     /**
      * Construct a JFXDialog capable of hosting a JavaFX Node as its main
@@ -118,11 +124,12 @@ public class JFXDialog extends JDialog
     public JFXDialog(Window owner, String title, Supplier<Node> nodeSupp, boolean showCancel)
     {
         this(owner, title, showCancel);
-        if (nodeSupp != null)
+        myNodeSupplier = nodeSupp;
+        if (myNodeSupplier != null)
         {
             Platform.runLater(() ->
             {
-                guiNode = nodeSupp.get();
+                guiNode = myNodeSupplier.get();
                 if (guiNode != null)
                 {
                     if (guiNode instanceof Editor)
@@ -133,6 +140,15 @@ public class JFXDialog extends JDialog
                 }
             });
         }
+    }
+
+    /**
+     * Gets the node supplier.
+     * @return The node supplier or null if there isn't one.
+     */
+    public Supplier<Node> getNodeSupplier()
+    {
+        return myNodeSupplier;
     }
 
     /**
