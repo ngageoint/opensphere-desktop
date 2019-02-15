@@ -119,10 +119,18 @@ public class IconDetail extends AnchorPane
         myCanvas.getGraphicsContext2D().drawImage(null, USE_COMPUTED_SIZE, BASELINE_OFFSET_SAME_AS_HEIGHT);
 
         myNameField = new TextField();
-        myNameField.textProperty().bind(myCustomizationModel.nameProperty());
+        myNameField.textProperty().bindBidirectional(myCustomizationModel.nameProperty());
 
-        mySourceField = new ComboBox<>(myModel.getModel().getCollectionNames());
-        mySourceField.valueProperty().bind(myCustomizationModel.sourceProperty());
+        mySourceField = new ComboBox<>(myModel.getModel().getEditableCollectionNames());
+        mySourceField.valueProperty().bindBidirectional(myCustomizationModel.sourceProperty());
+        myCustomizationModel.sourceProperty().addListener((obs, oldV, newV) ->
+        {
+            if (!newV.equals(oldV))
+            {
+                IconRecord myRecord = myModel.selectedRecordProperty().get();
+                myRecord.collectionNameProperty().set(newV);
+            }
+        });
 
         myTagsField = new TagField();
         myTagsField.tagColorProperty().set(FXUtilities.fromAwtColor(IconUtil.DEFAULT_ICON_FOREGROUND));
@@ -251,7 +259,7 @@ public class IconDetail extends AnchorPane
 
             final URL imageURL = myModel.getIconRegistry().getIconCache().cacheIcon(outputStream.toByteArray(),
                     myNameField.textProperty().get(), true);
-            final IconProvider provider = new DefaultIconProvider(imageURL, IconRecord.USER_ADDED_COLLECTION, "User");
+            final IconProvider provider = new DefaultIconProvider(imageURL, mySourceField.getSelectionModel().getSelectedItem(), "User");
             myModel.getIconRegistry().addIcon(provider, this);
         }
         catch (final IOException e)

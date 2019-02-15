@@ -17,9 +17,6 @@ import io.opensphere.mantle.data.geom.MapLocationGeometrySupport;
 /** Class that holds utility methods to add MGRS values to data elements. */
 public class MGRSUtilities
 {
-    /** The MGRS derived column identifier. */
-    public static final String MGRS_DERIVED = "MGRS Derived";
-
     /** The default MGRS derived precision. */
     public static final int DEFAULT_MGRS_PRECISION = 10;
 
@@ -55,9 +52,9 @@ public class MGRSUtilities
         MetaDataInfo metaInfo;
         if (provider != null && dataTypeInfo != null && (metaInfo = dataTypeInfo.getMetaDataInfo()) != null)
         {
-            metaInfo.addKey(MGRS_DERIVED, String.class, source);
+            metaInfo.addKey(MetaDataInfo.MGRS_DERIVED, String.class, source);
             MetaDataProvider newProvider = new MDILinkedMetaDataProvider(metaInfo, provider.getValues());
-            newProvider.setValue(MGRS_DERIVED, getMGRSValue(mapSupport, precision));
+            newProvider.setValue(MetaDataInfo.MGRS_DERIVED, getMGRSValue(mapSupport, precision));
             return newProvider;
         }
         return provider;

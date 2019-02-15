@@ -239,7 +239,7 @@ public class AnimationConfig
         }
         else
         {
-            Duration loopDuration = myLoopSpan != null ? myLoopSpan.getDuration() : new Days(7);
+            Duration loopDuration = myLoopSpan != null ? myLoopSpan.getDuration() : Days.ONE;
             model.getLoopSpan().set(getRecentSpan(loopDuration, model.getActiveSpanDuration().get()));
         }
     }

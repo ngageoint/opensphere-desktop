@@ -124,10 +124,11 @@ public class IconSelectionPanel extends BorderPane
 
         myPanelModel.getCustomizationModel().sourceProperty().addListener((obs, ov, nv) ->
         {
-            if (StringUtils.isNotBlank(myPanelModel.getCustomizationModel().sourceProperty().get()))
+            String source = myPanelModel.getCustomizationModel().sourceProperty().get();
+            if (StringUtils.isNotBlank(source))
             {
-                myIconTabs.selectionModelProperty().get()
-                        .select(myTabs.get(myPanelModel.getCustomizationModel().sourceProperty().get()).getFirstObject());
+                Tab toSelect = myTabs.get(source).getFirstObject();
+                myIconTabs.selectionModelProperty().get().select(toSelect);
             }
         });
 
@@ -205,6 +206,10 @@ public class IconSelectionPanel extends BorderPane
         tab.textProperty().addListener((obs, oldV, newV) -> {
             if (tab.getTabEditPhase().equals(TabEditPhase.PERSISTING))
             {
+                IconGridView content = new IconGridView(myPanelModel, r -> r.collectionNameProperty().get().equals(newV));
+                tab.setContent(content);
+                myTabs.put(newV, new Pair<>(tab, content));
+
                 myIconChooserModel.addCollectionName(newV);
             }
         });
