@@ -10,11 +10,11 @@ import org.apache.avro.generic.GenericRecord;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.io.WKTReader;
 
-import io.opensphere.core.model.Altitude;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.mantle.data.BasicVisualizationInfo;
@@ -51,14 +51,19 @@ public final class DataElementFactory
         try
         {
             Geometry geom = new WKTReader().read(getStr(rec, meta.getGeometryColumn()));
-            if (geom instanceof LineString || geom instanceof Polygon)
-            {
-                return pathGeom(geom, span, typeColor);
-            }
             if (geom instanceof Point)
             {
                 Point p = (Point)geom;
                 return pointGeom(p.getY(), p.getX(), span, typeColor);
+            }
+            if (geom instanceof LineString || geom instanceof Polygon)
+            {
+                return pathGeom(geom, span, typeColor);
+            }
+            if (geom instanceof MultiPoint)
+            {
+                MultiPoint p = (MultiPoint)geom;
+                return multiPointGeom(p, span, typeColor);
             }
         }
         catch (ClassCastException | com.vividsolutions.jts.io.ParseException eek)
@@ -124,7 +129,7 @@ public final class DataElementFactory
     private static MapGeometrySupport pathGeom(Geometry geom, TimeSpan span, Color c)
     {
         List<LatLonAlt> llaList = new LinkedList<>(Arrays.stream(geom.getCoordinates())
-                .map(loc -> LatLonAlt.createFromDegrees(loc.y, loc.x, Altitude.ReferenceLevel.ELLIPSOID))
+                .map(loc -> LatLonAlt.createFromDegrees(loc.y, loc.x))
                 .collect(Collectors.toList()));
 
         AbstractMapGeometrySupport pgs = null;
@@ -139,7 +144,7 @@ public final class DataElementFactory
 
         if (!span.isTimeless())
         {
-            llaList.stream().map(lla -> defPointGeom(lla, span, c)).forEach(pgs::addChild);
+            llaList.stream().map(lla -> pointGeom(lla, span, c)).forEach(pgs::addChild);
         }
 
         pgs.setColor(c, null);
@@ -163,7 +168,7 @@ public final class DataElementFactory
     public static MapGeometrySupport ellipseGeom(double lat, double lon, float semiMaj, float semiMin, float orient,
             TimeSpan span, Color c)
     {
-        LatLonAlt lla = LatLonAlt.createFromDegrees(lat, lon, Altitude.ReferenceLevel.TERRAIN);
+        LatLonAlt lla = LatLonAlt.createFromDegrees(lat, lon);
         MapGeometrySupport mgs = new SimpleMapEllipseGeometrySupport(lla, semiMaj, semiMin, orient);
         mgs.setColor(c, null);
         mgs.setTimeSpan(span);
@@ -182,30 +187,50 @@ public final class DataElementFactory
      */
     public static MapGeometrySupport pointGeom(double lat, double lon, TimeSpan t, Color c)
     {
-        MapGeometrySupport mgs = new SimpleMapPointGeometrySupport(
-                LatLonAlt.createFromDegrees(lat, lon, Altitude.ReferenceLevel.TERRAIN));
+        return pointGeom(LatLonAlt.createFromDegrees(lat, lon), t, c);
+    }
+
+    /**
+     * Create a MapGeometrySupport for the specified point parameters. The
+     * return value is an instance of SimpleMapPointGeometrySupport.
+     *
+     * @param lla LatLonAlt position of the point
+     * @param t TimeSpan
+     * @param c Color
+     * @return MapGeometrySupport
+     */
+    public static MapGeometrySupport pointGeom(LatLonAlt lla, TimeSpan t, Color c)
+    {
+        MapGeometrySupport mgs = new SimpleMapPointGeometrySupport(lla);
         mgs.setColor(c, null);
         mgs.setTimeSpan(t);
         return mgs;
     }
 
     /**
-     * Create a "default" MapGeometrySupport for the specified parameters. The
-     * return value is an instance of DefaultMapPointGeometrySupport (cf.
-     * pointGeom(double, double, TimeSpan, Color)). This author is at a loss to
-     * explain why we need two kinds of these and why both are used here.
+     * Create a MapGeometrySupport for the specified multi-point parameters.
      *
-     * @param lla LatLonAlt position of the point
-     * @param span TimeSpan
+     * @param geom the MultiPoint geometry
+     * @param t TimeSpan
      * @param c Color
      * @return MapGeometrySupport
      */
-    public static MapGeometrySupport defPointGeom(LatLonAlt lla, TimeSpan span, Color c)
+    public static MapGeometrySupport multiPointGeom(MultiPoint geom, TimeSpan t, Color c)
     {
-        DefaultMapPointGeometrySupport pt = new DefaultMapPointGeometrySupport(lla);
-        pt.setTimeSpan(span);
-        pt.setColor(c, null);
-        return pt;
+        Point point = (Point)geom.getGeometryN(0);
+        AbstractMapGeometrySupport mgs = new DefaultMapPointGeometrySupport(
+                LatLonAlt.createFromDegrees(point.getY(), point.getX()));
+        mgs.setColor(c, null);
+        mgs.setTimeSpan(t);
+
+        for (int n = 1, count = geom.getNumGeometries(); n < count; n++)
+        {
+            point = (Point)geom.getGeometryN(n);
+            MapGeometrySupport child = pointGeom(point.getY(), point.getX(), t, c);
+            mgs.addChild(child);
+        }
+
+        return mgs;
     }
 
     /**
