@@ -47,12 +47,18 @@ public class SearchControlBar extends HBox
     private final IconRemover myIconRemover;
 
     /**
+     * The icon model.
+     */
+    private final IconModel myModel;
+
+    /**
      * Creates the top menu bar of the icon manager UI.
      *
      * @param panelModel the current UI model.
      */
     public SearchControlBar(IconModel panelModel)
     {
+        myModel = panelModel;
         mySearchField = new TextField();
         mySearchField.setOnKeyTyped(e ->
         {
@@ -99,12 +105,42 @@ public class SearchControlBar extends HBox
         }
 
         myRemoveButton = FXUtilities.newIconButton(IconType.CLOSE, Color.RED);
-        myRemoveButton.setTooltip(new Tooltip("Remove selected icons."));
         myIconRemover = new IconRemover(panelModel);
-        myRemoveButton.setOnAction((e)->{myIconRemover.deleteIcons();});
+        myRemoveButton.setOnAction((e) ->
+        {
+            myIconRemover.deleteIcons();
+        });
+        enableDisableDelete();
+        myModel.selectedRecordProperty().addListener((e) ->
+        {
+            enableDisableDelete();
+        });
 
         getChildren().addAll(sp, myAddIconsButton, myRemoveButton);
 
         setAlignment(javafx.geometry.Pos.TOP_CENTER);
+    }
+
+    /**
+     * Enables or disables the remove button depending on if the icon selected
+     * is a user imported icon.
+     */
+    void enableDisableDelete()
+    {
+        if (myModel.selectedRecordProperty().get() == null
+                || myModel.selectedRecordProperty().get().imageURLProperty().get() == null
+                || myModel.selectedRecordProperty().get().imageURLProperty().get().toString().startsWith("jar:file:")
+                || myModel.selectedRecordProperty().get().imageURLProperty().get().toString().contains("/target/classes/images/"))
+        {
+            // This is not a user imported icon, it is a system provided icon do
+            // not delete.
+            myRemoveButton.setDisable(true);
+            myRemoveButton.setTooltip(new Tooltip("Only user imported icons can be removed."));
+        }
+        else
+        {
+            myRemoveButton.setDisable(false);
+            myRemoveButton.setTooltip(new Tooltip("Remove selected icons."));
+        }
     }
 }
