@@ -607,8 +607,10 @@ public abstract class AbstractFeatureVisualizationStyle extends AbstractVisualiz
                             false);
                     paramList.add(labelEnabledPanel);
 
+                    PanelBuilder labelBuilder = StyleUtils.createComboBoxMiniPanelBuilder("Labels:");
+                    labelBuilder.setOtherParameter(AbstractStyleParameterEditorPanel.PANEL_SCROLL, Boolean.TRUE);
                     final LabelComboEditor labelPanel = new LabelComboEditor(getToolbox().getEventManager(),
-                            StyleUtils.createComboBoxMiniPanelBuilder("Labels:"), style, LABEL_COLUMN_KEY_PROPERTY_KEY, dti,
+                            labelBuilder, style, LABEL_COLUMN_KEY_PROPERTY_KEY, dti,
                             true);
                     paramList.add(labelPanel);
 
