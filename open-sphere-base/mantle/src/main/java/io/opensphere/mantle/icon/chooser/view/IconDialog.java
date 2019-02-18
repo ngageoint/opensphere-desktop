@@ -7,9 +7,11 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import io.opensphere.core.Toolbox;
+import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.fx.JFXDialog;
 import io.opensphere.core.util.net.UrlUtilities;
 import io.opensphere.mantle.icon.IconRecord;
+import io.opensphere.mantle.icon.chooser.model.IconModel;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
 /** Main UI Frame. */
@@ -129,12 +131,17 @@ public class IconDialog extends JFXDialog
     {
         if (supplier != null)
         {
-            URL url = UrlUtilities.toURL(supplier.get());
-            if (url != null && ((IconDialogSupplier)getNodeSupplier()).getModel() != null)
+            FXUtilities.runOnFXThread(() ->
             {
-                ((IconDialogSupplier)getNodeSupplier()).getModel().selectedRecordProperty()
-                        .set(((IconDialogSupplier)getNodeSupplier()).getModel().getIconRegistry().getIconRecord(url));
-            }
+                URL url = UrlUtilities.toURL(supplier.get());
+                IconModel iconModel = ((IconDialogSupplier)getNodeSupplier()).getModel();
+                if (url != null && iconModel != null)
+                {
+                    IconRecord selected = MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getIconRecord(url);
+                    iconModel.selectedRecordProperty().set(selected);
+
+                }
+            });
         }
     }
 

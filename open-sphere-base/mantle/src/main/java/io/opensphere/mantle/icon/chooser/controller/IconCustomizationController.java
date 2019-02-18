@@ -1,5 +1,8 @@
 package io.opensphere.mantle.icon.chooser.controller;
 
+import javafx.beans.value.ObservableValue;
+
+import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.chooser.model.CustomizationModel;
 import io.opensphere.mantle.icon.chooser.model.IconModel;
 import io.opensphere.mantle.icon.chooser.view.IconDetail;
@@ -31,18 +34,31 @@ public class IconCustomizationController
         myDetailPanel = iconView.getDetailPanel();
         myCustomizationModel = model.getCustomizationModel();
 
-        myModel.selectedRecordProperty().addListener((obs, ov, nv) ->
+        myModel.selectedRecordProperty().addListener(this::applySelectedIcon);
+        if(myModel.selectedRecordProperty().get() != null)
         {
-            if (ov != null)
-            {
-                myCustomizationModel.nameProperty().unbindBidirectional(ov.nameProperty());
-                myCustomizationModel.sourceProperty().unbindBidirectional(ov.collectionNameProperty());
-            }
-            myCustomizationModel.nameProperty().bindBidirectional(nv.nameProperty());
-            myCustomizationModel.sourceProperty().bindBidirectional(nv.collectionNameProperty());
-            myCustomizationModel.getTags().setAll(nv.getTags());
-            myCustomizationModel.getTransformModel().resetAllToDefault();
-            myDetailPanel.redrawPreview(nv);
-        });
+            applySelectedIcon(null, null, myModel.selectedRecordProperty().get());
+        }
+    }
+
+    /**
+     * Applies the selected icon to the dialog.
+     * @param obs The observable value.
+     * @param ov The old value.
+     * @param nv The new value.
+     */
+    private void applySelectedIcon(ObservableValue<? extends IconRecord> obs, IconRecord ov, IconRecord nv)
+    {
+        System.out.println("Event setting selected icon record.");
+        if (ov != null)
+        {
+            myCustomizationModel.nameProperty().unbindBidirectional(ov.nameProperty());
+            myCustomizationModel.sourceProperty().unbindBidirectional(ov.collectionNameProperty());
+        }
+        myCustomizationModel.nameProperty().bindBidirectional(nv.nameProperty());
+        myCustomizationModel.sourceProperty().bindBidirectional(nv.collectionNameProperty());
+        myCustomizationModel.getTags().setAll(nv.getTags());
+        myCustomizationModel.getTransformModel().resetAllToDefault();
+        myDetailPanel.redrawPreview(nv);
     }
 }
