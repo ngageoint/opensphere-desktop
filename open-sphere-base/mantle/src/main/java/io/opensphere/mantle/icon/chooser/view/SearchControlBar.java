@@ -77,9 +77,6 @@ public class SearchControlBar extends HBox
         myAddIconsButton = new MenuButton("Add Icons", addIcon);
         myAddIconsButton.setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
 
-        myRemoveButton = FXUtilities.newIconButton(IconType.CLOSE, Color.RED);
-        myRemoveButton.setTooltip(new Tooltip("Remove selected icons."));
-
         for (var iconSource : IconSourceFactory.getInstance().getIconSources())
         {
             MenuItem item = new MenuItem("Add " + iconSource.getName(),
@@ -94,6 +91,9 @@ public class SearchControlBar extends HBox
             });
             myAddIconsButton.getItems().add(item);
         }
+
+        myRemoveButton = FXUtilities.newIconButton(IconType.CLOSE, Color.RED);
+        myRemoveButton.setTooltip(new Tooltip("Remove selected icons."));
 
         getChildren().addAll(sp, myAddIconsButton, myRemoveButton);
 
