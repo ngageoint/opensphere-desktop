@@ -15,8 +15,10 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.model.GeographicPositionFormat;
 import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.preferences.ListToolPreferences;
+import io.opensphere.core.util.Colors;
 import io.opensphere.core.util.awt.BrowserUtilities;
 import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.net.Linker;
 import io.opensphere.core.util.net.PreferencesLinkerFactory;
 import io.opensphere.mantle.data.SpecialKey;
@@ -24,9 +26,10 @@ import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.impl.specialkey.LatitudeKey;
 import io.opensphere.mantle.data.impl.specialkey.LongitudeKey;
 import javafx.collections.FXCollections;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
@@ -39,6 +42,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -50,26 +58,14 @@ import javafx.scene.text.Text;
  */
 public class BaseballPanel extends GridPane
 {
-    /** The background color for selected buttons. */
-    private static final String BUTTON_STYLE = "-fx-background-color: #0096C9";
-
     /** The currently displayed data element. */
     private DataElement myActiveDataElement;
 
     /** The keystroke combination to copy a cell's contents to the clipboard. */
     private final KeyCombination myCopyCombination = new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN);
 
-    /** The decimal-degrees button. */
-    private final Button myDDButton = new Button("DD");
-
-    /** The degrees-minutes-seconds button. */
-    private final Button myDMSButton = new Button("DMS");
-
-    /** The decimal-degrees-minutes button. */
-    private final Button myDDMButton = new Button("DDM");
-
-    /** The military grid reference system button. */
-    private final Button myMGRSButton = new Button("MGRS");
+    /** The currently selected label that describes the coordinate style. */
+    private Label mySelectedCoordinateLabel;
 
     /** The list of all DataElements that can be displayed. */
     private final List<DataElement> myElements;
@@ -80,12 +76,31 @@ public class BaseballPanel extends GridPane
     /** The list of information being displayed about the active data element. */
     private final TableView<BaseballDataRow> myDataView = new TableView<>();
 
-    /** The label that displays the coordinate information about the active data element */
+    /** The label that displays the coordinate information about the active data element. */
     private final Label myCoordinates = new Label();
+
+    /** The border for the currently selected coordinate label. */
+    private final Border myMainCoordinateBorder = new Border(new BorderStroke(FXUtilities.fromAwtColor(Colors.OPENSPHERE_LIGHT),
+            BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(3)));
+
+    /** The border for non-active, mouse-hovered coordinate labels. */
+    private final Border mySecondaryCoordinateBorder = new Border(new BorderStroke(FXUtilities.fromAwtColor(Colors.OPENSPHERE_LIGHT),
+            BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(1.5)));
+
+    /**
+     * The border for non-active, non-mouse-hovered coordinate labels.
+     * Matches the background color of the dialog.
+     * Used to prevent constant minor resizing of label space when hovering over them.
+     */
+    private final Border myInvisibleCoordinateBorder = new Border(new BorderStroke(FXUtilities.fromAwtColor(Colors.LF_SECONDARY3),
+            BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(1.5)));
+
+    /** The Label that displays which layer the currently selected feature is from. */
+    private final Label myLayer = new Label();
 
     /** The label that displays the current number of features shown. */
     private final Label myFeatureCount = new Label();
-    
+
     /** URL format matcher. */
     private final Linker myLinker;
 
@@ -108,7 +123,8 @@ public class BaseballPanel extends GridPane
         add(createDataElementList(), 0, 2);
         add(createSearchBar(), 0, 0);
         add(createDataArea(), 1, 2);
-        add(createCoordinateButtons(), 1, 0);
+        add(myLayer, 1, 0);
+        GridPane.setHalignment(myLayer, HPos.LEFT);
 
         myActiveDataElement = myElements.get(0);
         myLinker = PreferencesLinkerFactory.getLinker(
@@ -119,7 +135,7 @@ public class BaseballPanel extends GridPane
         setDataView();
         add(myFeatureCount, 0, 1);
         setFeatureCount(myElements.size());
-        add(myCoordinates, 1, 1);
+        add(createCoordinateArea(), 1, 1);
         setHgap(10);
         setVgap(10);
     }
@@ -153,7 +169,7 @@ public class BaseballPanel extends GridPane
             }
         }
     }
-    
+
     /**
      * Navigates to a URL when clicked.
      */
@@ -162,20 +178,23 @@ public class BaseballPanel extends GridPane
         if (myLinker != null)
         {
             BaseballDataRow baseballData = myDataView.getFocusModel().getFocusedItem();
-            String text = baseballData.getValue().getText();
-
-            Map<String, URL> urls = myLinker.getURLs(text, text);
-            if (!urls.isEmpty())
+            if (baseballData != null)
             {
-                for (URL url : urls.values())
+                String text = baseballData.getValue().getText();
+    
+                Map<String, URL> urls = myLinker.getURLs(text, text);
+                if (!urls.isEmpty())
                 {
-                    if (url != null)
+                    for (URL url : urls.values())
                     {
-                        BrowserUtilities.browse(url, null);
-                        return;
+                        if (url != null)
+                        {
+                            BrowserUtilities.browse(url, null);
+                            return;
+                        }
                     }
+                    Notify.info("Could not open URL: " + text, Method.POPUP);
                 }
-                Notify.info("Could not open URL: " + text, Method.POPUP);
             }
         }
     }
@@ -252,40 +271,38 @@ public class BaseballPanel extends GridPane
     }
 
     /**
-     * Creates the coordinate button section of the panel.
+     * Creates the coordinate area section of the panel.
      *
-     * @return the coordinate buttons node
+     * @return the coordinate area node
      */
-    private Node createCoordinateButtons()
+    private Node createCoordinateArea()
     {
-        HBox box = new HBox();
-        myDDButton.setOnAction(e ->
-        {
-            myPositionFormat = GeographicPositionFormat.DECDEG;
-            setCoordinates();
-            setButtonStyles(myDDButton);
-        });
-        myDDButton.setStyle(BUTTON_STYLE);
-        myDMSButton.setOnAction(e ->
-        {
-            myPositionFormat = GeographicPositionFormat.DMSDEG;
-            setCoordinates();
-            setButtonStyles(myDMSButton);
-        });
-        myDDMButton.setOnAction(e ->
-        {
-            myPositionFormat = GeographicPositionFormat.DEG_DMIN;
-            setCoordinates();
-            setButtonStyles(myDDMButton);
-        });
-        myMGRSButton.setOnAction(e ->
-        {
-            myPositionFormat = GeographicPositionFormat.MGRS;
-            setCoordinates();
-            setButtonStyles(myMGRSButton);
-        });
-        box.getChildren().addAll(myDDButton, myDMSButton, myDDMButton, myMGRSButton);
-        return box;
+        GridPane gridPane = new GridPane();
+        HBox buttonBox = new HBox(8);
+
+        Label ddLabel = new Label("DD");
+        mySelectedCoordinateLabel = ddLabel;
+        ddLabel.setBorder(myMainCoordinateBorder);
+        setupCoordinateLabelFunctions(ddLabel, GeographicPositionFormat.DECDEG);
+
+        Label dmsLabel = new Label("DMS");
+        dmsLabel.setBorder(myInvisibleCoordinateBorder);
+        setupCoordinateLabelFunctions(dmsLabel, GeographicPositionFormat.DMSDEG);
+
+        Label ddmLabel = new Label("DDM");
+        ddmLabel.setBorder(myInvisibleCoordinateBorder);
+        setupCoordinateLabelFunctions(ddmLabel, GeographicPositionFormat.DEG_DMIN);
+
+        Label mgrsLabel = new Label("MGRS");
+        mgrsLabel.setBorder(myInvisibleCoordinateBorder);
+        setupCoordinateLabelFunctions(mgrsLabel, GeographicPositionFormat.MGRS);
+
+        buttonBox.setAlignment(Pos.CENTER_RIGHT);
+        buttonBox.getChildren().addAll(ddLabel, dmsLabel, ddmLabel, mgrsLabel);
+        gridPane.add(myCoordinates, 0, 0);
+        gridPane.add(buttonBox, 1, 0);
+        GridPane.setHgrow(buttonBox, Priority.ALWAYS);
+        return gridPane;
     }
 
     /**
@@ -380,7 +397,14 @@ public class BaseballPanel extends GridPane
         }
         return returnValue;
     }
-    
+
+    /**
+     * Turns the given string into a javafx Text object, and attaches
+     * hyperlink functionality to it if applicable.
+     *
+     * @param value the string to turn into a Text
+     * @return the value as a Text object
+     */
     private Text getValueAsTextObject(String value)
     {
         Text returnValue = new Text();
@@ -391,7 +415,7 @@ public class BaseballPanel extends GridPane
         {
             returnValue.setFill(Color.BLUE);
             returnValue.setUnderline(true);
-            returnValue.setOnMouseMoved(event -> getScene().setCursor(Cursor.HAND));
+            returnValue.setOnMouseEntered(event -> getScene().setCursor(Cursor.HAND));
             returnValue.setOnMouseExited(event -> getScene().setCursor(Cursor.DEFAULT));
         }
         
@@ -399,17 +423,48 @@ public class BaseballPanel extends GridPane
     }
 
     /**
-     * Clears the styles for the coordinate buttons, then sets the style for selected button.
+     * Turns the old coordinate label border invisible, then sets the
+     * border for selected label to the main border.
      *
-     * @param button the button
+     * @param label the newly selected label
      */
-    private void setButtonStyles(Button button)
+    private void setCoordinateSelectionBorders(Label label)
     {
-        myDDButton.setStyle("");
-        myDMSButton.setStyle("");
-        myDDMButton.setStyle("");
-        myMGRSButton.setStyle("");
-        button.setStyle(BUTTON_STYLE);
+        mySelectedCoordinateLabel.setBorder(myInvisibleCoordinateBorder);
+        label.setBorder(myMainCoordinateBorder);
+        mySelectedCoordinateLabel = label;
+    }
+
+    /**
+     * Sets up several mouse functions for the given coordinate label.
+     *
+     * @param label the coordinate label to give functionality
+     * @param format the geographic position format associated with the label
+     */
+    private void setupCoordinateLabelFunctions(Label label, GeographicPositionFormat format)
+    {
+        label.setOnMouseClicked(e ->
+        {
+            myPositionFormat = format;
+            setCoordinates();
+            setCoordinateSelectionBorders(label);
+        });
+
+        label.setOnMouseEntered(e ->
+        {
+            if (!label.equals(mySelectedCoordinateLabel))
+            {
+                label.setBorder(mySecondaryCoordinateBorder);
+            }
+        });
+
+        label.setOnMouseExited(e ->
+        {
+            if (!label.equals(mySelectedCoordinateLabel))
+            {
+                label.setBorder(myInvisibleCoordinateBorder);
+            }
+        });
     }
 
     /**
@@ -448,6 +503,7 @@ public class BaseballPanel extends GridPane
         if (myActiveDataElement == null)
         {
             myDataView.setItems(null);
+            myLayer.setText("");
         }
         else
         {
@@ -461,6 +517,7 @@ public class BaseballPanel extends GridPane
                 data.add(new BaseballDataRow(key, pairValue == null ? new Text() : getValueAsTextObject(pairValue)));
             });
             myDataView.setItems(FXCollections.observableList(data));
+            myLayer.setText(myActiveDataElement.getDataTypeInfo().getDisplayName());
             myPositionFormat = tempFormat;
         }
         setCoordinates();
