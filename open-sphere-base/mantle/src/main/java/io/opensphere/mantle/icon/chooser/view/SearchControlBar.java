@@ -2,11 +2,6 @@ package io.opensphere.mantle.icon.chooser.view;
 
 import java.util.List;
 
-import io.opensphere.core.util.AwesomeIconSolid;
-import io.opensphere.core.util.fx.FxIcons;
-import io.opensphere.mantle.icon.IconProvider;
-import io.opensphere.mantle.icon.IconSourceFactory;
-import io.opensphere.mantle.icon.chooser.model.IconModel;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,11 +9,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+
+import io.opensphere.core.util.AwesomeIconSolid;
+import io.opensphere.core.util.fx.FxIcons;
+import io.opensphere.mantle.icon.IconProvider;
+import io.opensphere.mantle.icon.IconSourceFactory;
+import io.opensphere.mantle.icon.chooser.model.IconModel;
 
 /** An HBox containing display size controls, view style, and filter options. */
 public class SearchControlBar extends HBox
@@ -39,7 +41,7 @@ public class SearchControlBar extends HBox
         mySearchField = new TextField();
         mySearchField.setOnKeyTyped(e ->
         {
-            if (e.getCharacter().charAt(0) == 27)
+            if (e.getCharacter().charAt(0) == KeyCode.ESCAPE.getCode())
             {
                 panelModel.searchTextProperty().set("");
             }
