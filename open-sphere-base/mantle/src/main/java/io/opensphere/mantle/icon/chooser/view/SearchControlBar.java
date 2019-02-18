@@ -24,6 +24,7 @@ import io.opensphere.core.util.fx.FxIcons;
 import io.opensphere.core.util.image.IconUtil.IconType;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconSourceFactory;
+import io.opensphere.mantle.icon.chooser.controller.IconRemover;
 import io.opensphere.mantle.icon.chooser.model.IconModel;
 
 /** An HBox containing display size controls, view style, and filter options. */
@@ -39,6 +40,11 @@ public class SearchControlBar extends HBox
      * The remove icons button.
      */
     private final Button myRemoveButton;
+
+    /**
+     * Removes the selected icon from the icon manager.
+     */
+    private final IconRemover myIconRemover;
 
     /**
      * Creates the top menu bar of the icon manager UI.
@@ -94,6 +100,8 @@ public class SearchControlBar extends HBox
 
         myRemoveButton = FXUtilities.newIconButton(IconType.CLOSE, Color.RED);
         myRemoveButton.setTooltip(new Tooltip("Remove selected icons."));
+        myIconRemover = new IconRemover(panelModel);
+        myRemoveButton.setOnAction((e)->{myIconRemover.deleteIcons();});
 
         getChildren().addAll(sp, myAddIconsButton, myRemoveButton);
 
