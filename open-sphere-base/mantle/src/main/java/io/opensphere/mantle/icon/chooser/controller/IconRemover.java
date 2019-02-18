@@ -31,7 +31,6 @@ public class IconRemover
         IconRecord record = myModel.selectedRecordProperty().get();
         if(record != null)
         {
-            System.out.println(record.imageURLProperty().get());
             myModel.getModel().getIconRecords().remove(record);
             myModel.getIconRegistry().removeIcon(record, this);
         }
