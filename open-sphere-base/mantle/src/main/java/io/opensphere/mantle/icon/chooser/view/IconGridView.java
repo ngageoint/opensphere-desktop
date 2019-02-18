@@ -4,6 +4,8 @@ import java.util.function.Predicate;
 
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.AnchorPane;
 
@@ -37,6 +39,11 @@ public class IconGridView extends AnchorPane
     private final IconChooserModel myIconChooserModel;
 
     /**
+     * Keeps track of the previously selected cell for rendering purposes.
+     */
+    private final ObjectProperty<IconGridCell> myPreviousSelectedCellProperty;
+
+    /**
      * Creates a new grid view bound to the supplied model, and using the
      * supplied predicate to define the initial set of displayed icons.
      *
@@ -54,7 +61,8 @@ public class IconGridView extends AnchorPane
         myGrid.setVerticalCellSpacing(4);
         myGrid.cellWidthProperty().bind(myModel.tileWidthProperty());
         myGrid.cellHeightProperty().bind(myModel.tileWidthProperty());
-        myGrid.setCellFactory(param -> new IconGridCell(model));
+        myPreviousSelectedCellProperty = new SimpleObjectProperty<>();
+        myGrid.setCellFactory(param -> new IconGridCell(model, myPreviousSelectedCellProperty));
 
         myPredicate = predicate;
 
