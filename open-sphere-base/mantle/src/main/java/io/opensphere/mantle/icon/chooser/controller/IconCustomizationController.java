@@ -49,7 +49,6 @@ public class IconCustomizationController
      */
     private void applySelectedIcon(ObservableValue<? extends IconRecord> obs, IconRecord ov, IconRecord nv)
     {
-        System.out.println("Event setting selected icon record.");
         if (ov != null)
         {
             myCustomizationModel.nameProperty().unbindBidirectional(ov.nameProperty());

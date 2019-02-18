@@ -5,6 +5,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
+import javafx.util.Callback;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.log4j.Logger;
 
@@ -12,12 +19,6 @@ import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.IconRegistryListener;
-import javafx.beans.Observable;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
-import javafx.util.Callback;
 
 /**
  * The model which backs the icon chooser. This model is tied to mirror the
@@ -67,7 +68,7 @@ public class IconChooserModel
     private IconRegistry myIconRegistry;
 
     /** The listener used to react to registry changes. */
-    private IconRegistryListener myRegistryListener;
+    private final IconRegistryListener myRegistryListener;
 
     /**
      * Creates a new icon chooser model.
@@ -159,11 +160,13 @@ public class IconChooserModel
     {
         return myCollectionNames;
     }
-    
+
     /**
-     * Gets the value of the {@link #myCollectionNames} field, excluding Favorites.
-     * 
-     * @return the values of the myCollectionNames field that can have added icons.
+     * Gets the value of the {@link #myCollectionNames} field, excluding
+     * Favorites.
+     *
+     * @return the values of the myCollectionNames field that can have added
+     *         icons.
      */
     public ObservableList<String> getEditableCollectionNames()
     {
@@ -171,8 +174,8 @@ public class IconChooserModel
     }
 
     /**
-     * Adds a new collection to the registry.
-     * Called when adding and saving new tabs.
+     * Adds a new collection to the registry. Called when adding and saving new
+     * tabs.
      *
      * @param collection The collection to add.
      */
@@ -184,15 +187,18 @@ public class IconChooserModel
             myIconRegistry.getCollectionNameSet().add(collection);
         }
     }
-    
+
     /**
      * Updates the list of collection names to match the unique set defined
      * within the icon records.
      */
     private void updateCollectionNames()
     {
-        LOG.info("Updating collection names.");
-        
+        if (LOG.isDebugEnabled())
+        {
+            LOG.debug("Updating collection names.");
+        }
+
         Set<String> set = myIconRegistry.getCollectionNameSet();
 
         // ensure only the items in the set are present in the list:
@@ -209,7 +215,11 @@ public class IconChooserModel
                 return newIconSet;
             });
         }
-        LOG.info("Finished updating collection names.");
+
+        if (LOG.isDebugEnabled())
+        {
+            LOG.debug("Finished updating collection names.");
+        }
     }
 
     /**
