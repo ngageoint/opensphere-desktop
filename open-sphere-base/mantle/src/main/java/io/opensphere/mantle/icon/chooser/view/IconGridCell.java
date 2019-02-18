@@ -80,23 +80,37 @@ public class IconGridCell extends GridCell<IconRecord>
         }
         else
         {
-            setStyle(null);
+            updateStyle(item);
             myContainer.setOnMouseEntered(e -> setStyle("-fx-effect: dropshadow(three-pass-box, aqua, 15,.5, 0, 0);"));
             myContainer.setOnMouseExited(e ->
             {
-                if (myModel.selectedRecordProperty().get() == null || !myModel.selectedRecordProperty().get().equals(item))
-                {
-                    setStyle(null);
-                }
-                else
-                {
-                    setStyle("-fx-effect: dropshadow(three-pass-box, lime, 15,.5, 0, 0);");
-                }
+                updateStyle(item);
             });
             myContainer.setOnMouseClicked(e -> handleMouseClick(item, imageView));
 
             imageView.setImage(item.imageProperty().get());
             setGraphic(myContainer);
+        }
+    }
+
+    /**
+     * Updates the cell's style base on if its the selected icon.
+     *
+     * @param item This cell's {@link IconRecord}
+     */
+    private void updateStyle(IconRecord item)
+    {
+        if (myModel.selectedRecordProperty().get() != null && myModel.selectedRecordProperty().get().equals(item))
+        {
+            if(myPreviouslySelected.get() == null)
+            {
+                myPreviouslySelected.set(this);
+            }
+            setStyle("-fx-effect: dropshadow(three-pass-box, lime, 15,.5, 0, 0);");
+        }
+        else
+        {
+            setStyle(null);
         }
     }
 
@@ -113,7 +127,7 @@ public class IconGridCell extends GridCell<IconRecord>
             myPreviouslySelected.get().setStyle(null);
         }
         myPreviouslySelected.set(this);
-        setStyle("-fx-effect: dropshadow(three-pass-box, lime, 15,.5, 0, 0);");
         myModel.selectedRecordProperty().set(record);
+        updateStyle(record);
     }
 }

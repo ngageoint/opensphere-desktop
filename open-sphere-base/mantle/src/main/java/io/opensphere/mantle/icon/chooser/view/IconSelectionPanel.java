@@ -3,6 +3,8 @@ package io.opensphere.mantle.icon.chooser.view;
 import java.util.List;
 import java.util.Map;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
@@ -64,6 +66,11 @@ public class IconSelectionPanel extends BorderPane
     private final IconChooserModel myIconChooserModel;
 
     /**
+     * Keeps track of the previously selected cell for rendering purposes.
+     */
+    private final ObjectProperty<IconGridCell> myPreviousSelectedCellProperty;
+
+    /**
      * Creates a new component bound to the supplied model.
      *
      * @param panelModel the model through which state is maintained.
@@ -103,6 +110,7 @@ public class IconSelectionPanel extends BorderPane
         myIconTabs.newTabAction().set(e -> createSet());
         myTabs = New.map();
 
+        myPreviousSelectedCellProperty = new SimpleObjectProperty<>();
         addTabs(collectionNames);
         myIconChooserModel.getCollectionNames().addListener((final ListChangeListener.Change<? extends String> c) ->
         {
@@ -171,11 +179,11 @@ public class IconSelectionPanel extends BorderPane
             IconGridView content;
             if (StringUtils.equalsIgnoreCase(IconRecord.FAVORITES_COLLECTION, collection))
             {
-                content = new IconGridView(myPanelModel, r -> r.favoriteProperty().get());
+                content = new IconGridView(myPanelModel, r -> r.favoriteProperty().get(), myPreviousSelectedCellProperty);
             }
             else
             {
-                content = new IconGridView(myPanelModel, r -> r.collectionNameProperty().get().equals(collection));
+                content = new IconGridView(myPanelModel, r -> r.collectionNameProperty().get().equals(collection), myPreviousSelectedCellProperty);
             }
 
             final Tab tab = new Tab(collection, content);
@@ -209,7 +217,7 @@ public class IconSelectionPanel extends BorderPane
         tab.textProperty().addListener((obs, oldV, newV) -> {
             if (tab.getTabEditPhase().equals(TabEditPhase.PERSISTING))
             {
-                IconGridView content = new IconGridView(myPanelModel, r -> r.collectionNameProperty().get().equals(newV));
+                IconGridView content = new IconGridView(myPanelModel, r -> r.collectionNameProperty().get().equals(newV), myPreviousSelectedCellProperty);
                 tab.setContent(content);
                 myTabs.put(newV, new Pair<>(tab, content));
 
