@@ -263,6 +263,7 @@ public class IconSelectionPanel extends BorderPane
                     if(tabAndGrid != null)
                     {
                         myIconTabs.selectionModelProperty().get().select(tabAndGrid.getFirstObject());
+                        myPanelModel.selectedRecordProperty().set(added);
                     }
                 }
                 break;

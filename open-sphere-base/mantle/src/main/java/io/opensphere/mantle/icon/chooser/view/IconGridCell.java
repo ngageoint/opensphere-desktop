@@ -102,10 +102,11 @@ public class IconGridCell extends GridCell<IconRecord>
     {
         if (myModel.selectedRecordProperty().get() != null && myModel.selectedRecordProperty().get().equals(item))
         {
-            if(myPreviouslySelected.get() == null)
+            if(myPreviouslySelected.get() != null && myPreviouslySelected.get() != this)
             {
-                myPreviouslySelected.set(this);
+                myPreviouslySelected.get().setStyle(null);
             }
+            myPreviouslySelected.set(this);
             setStyle("-fx-effect: dropshadow(three-pass-box, lime, 15,.5, 0, 0);");
         }
         else
@@ -122,11 +123,6 @@ public class IconGridCell extends GridCell<IconRecord>
      */
     private void handleMouseClick(IconRecord record, Node source)
     {
-        if(myPreviouslySelected.get() != null)
-        {
-            myPreviouslySelected.get().setStyle(null);
-        }
-        myPreviouslySelected.set(this);
         myModel.selectedRecordProperty().set(record);
         updateStyle(record);
     }
