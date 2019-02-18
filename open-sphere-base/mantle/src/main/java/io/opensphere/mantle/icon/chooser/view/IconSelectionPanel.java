@@ -3,20 +3,9 @@ package io.opensphere.mantle.icon.chooser.view;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
-
-import io.opensphere.core.util.AwesomeIconSolid;
-import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.fx.FxIcons;
-import io.opensphere.core.util.fx.OSTab;
-import io.opensphere.core.util.fx.OSTabPane;
-import io.opensphere.core.util.fx.tabpane.skin.TabEditPhase;
-import io.opensphere.core.util.lang.Pair;
-import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.icon.chooser.model.IconChooserModel;
-import io.opensphere.mantle.icon.chooser.model.IconModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener.Change;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -30,6 +19,19 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
+
+import org.apache.commons.lang3.StringUtils;
+
+import io.opensphere.core.util.AwesomeIconSolid;
+import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.fx.FxIcons;
+import io.opensphere.core.util.fx.OSTab;
+import io.opensphere.core.util.fx.OSTabPane;
+import io.opensphere.core.util.fx.tabpane.skin.TabEditPhase;
+import io.opensphere.core.util.lang.Pair;
+import io.opensphere.mantle.icon.IconRecord;
+import io.opensphere.mantle.icon.chooser.model.IconChooserModel;
+import io.opensphere.mantle.icon.chooser.model.IconModel;
 
 /** An panel on which the icon may be selected by the user. */
 public class IconSelectionPanel extends BorderPane
@@ -70,6 +72,7 @@ public class IconSelectionPanel extends BorderPane
     {
         myPanelModel = panelModel;
         myIconChooserModel = myPanelModel.getModel();
+        myIconChooserModel.getIconRecords().addListener(this::onChanged);
         myDetailPane = new IconDetail(panelModel, this::refresh);
 
         final HBox box = new HBox(5);
@@ -105,9 +108,9 @@ public class IconSelectionPanel extends BorderPane
         {
             c.next();
             List<? extends String> added = c.getAddedSubList();
-            
+
             if (myIconTabs.getTabs().filtered(tab -> added.contains(tab.getText())).isEmpty())
-            {            
+            {
                 addTabs(added);
             }
         });
@@ -134,18 +137,18 @@ public class IconSelectionPanel extends BorderPane
 
         final AnchorPane anchorPane = new AnchorPane(mySetControlPane, myIconTabs, box);
 
-        AnchorPane.setRightAnchor(mySetControlPane, 0.0);
-        AnchorPane.setLeftAnchor(mySetControlPane, 0.0);
-        AnchorPane.setTopAnchor(mySetControlPane, 0.0);
+        AnchorPane.setRightAnchor(mySetControlPane, Double.valueOf(0.0));
+        AnchorPane.setLeftAnchor(mySetControlPane, Double.valueOf(0.0));
+        AnchorPane.setTopAnchor(mySetControlPane, Double.valueOf(0.0));
 
-        AnchorPane.setRightAnchor(myIconTabs, 0.0);
-        AnchorPane.setLeftAnchor(myIconTabs, 0.0);
-        AnchorPane.setTopAnchor(myIconTabs, 30.0);
-        AnchorPane.setBottomAnchor(myIconTabs, 15.0);
+        AnchorPane.setRightAnchor(myIconTabs, Double.valueOf(0.0));
+        AnchorPane.setLeftAnchor(myIconTabs, Double.valueOf(0.0));
+        AnchorPane.setTopAnchor(myIconTabs, Double.valueOf(30.0));
+        AnchorPane.setBottomAnchor(myIconTabs, Double.valueOf(15.0));
 
-        AnchorPane.setRightAnchor(box, 0.0);
-        AnchorPane.setLeftAnchor(box, 0.0);
-        AnchorPane.setBottomAnchor(box, 0.0);
+        AnchorPane.setRightAnchor(box, Double.valueOf(0.0));
+        AnchorPane.setLeftAnchor(box, Double.valueOf(0.0));
+        AnchorPane.setBottomAnchor(box, Double.valueOf(0.0));
 
         setCenter(anchorPane);
         setRight(myDetailPane);
@@ -179,7 +182,7 @@ public class IconSelectionPanel extends BorderPane
 
             content.displayProperty().addListener((obs, ov, nv) ->
             {
-                if (nv)
+                if (nv.booleanValue())
                 {
                     myIconTabs.getTabs().add(tab);
                 }
@@ -196,7 +199,7 @@ public class IconSelectionPanel extends BorderPane
             }
         }
     }
-    
+
     /** An event handler used to create and add a new icon set. */
     private void createSet()
     {
@@ -230,5 +233,32 @@ public class IconSelectionPanel extends BorderPane
     private void refresh()
     {
         myPanelModel.getIconRegistry().iconStateChanged();
+    }
+
+    /**
+     * Occurs when an icon is added.  Ensures the tab of the icon that was added
+     * is in focus.
+     * @param c The changed records.
+     */
+    private void onChanged(Change<? extends IconRecord> c)
+    {
+        while(c.next())
+        {
+            if(c.wasAdded())
+            {
+                List<? extends IconRecord> adds = c.getAddedSubList();
+                if(!adds.isEmpty())
+                {
+                    IconRecord added = adds.get(0);
+                    String collectionName = added.collectionNameProperty().get();
+                    Pair<Tab, IconGridView> tabAndGrid = myTabs.get(collectionName);
+                    if(tabAndGrid != null)
+                    {
+                        myIconTabs.selectionModelProperty().get().select(tabAndGrid.getFirstObject());
+                    }
+                }
+                break;
+            }
+        }
     }
 }
