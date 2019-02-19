@@ -44,7 +44,7 @@ public class StateDeactivatorTest
 
         EasyMock.replay(parent, controller, envoy, dataType, layer, layerEnvoy);
 
-        StateDeactivator deactivator = new StateDeactivator(groupActivator, controller);
+        StateDeactivator deactivator = new StateDeactivator(groupActivator);
         deactivator.deactivateState(group);
 
         EasyMock.verify(parent, controller, envoy, dataType, layer, layerEnvoy);
