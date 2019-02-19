@@ -3,20 +3,12 @@ package io.opensphere.mantle.icon.chooser.view;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
-
-import io.opensphere.core.util.AwesomeIconSolid;
-import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.fx.FxIcons;
-import io.opensphere.core.util.fx.OSTab;
-import io.opensphere.core.util.fx.OSTabPane;
-import io.opensphere.core.util.fx.tabpane.skin.TabEditPhase;
-import io.opensphere.core.util.lang.Pair;
-import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.icon.chooser.model.IconChooserModel;
-import io.opensphere.mantle.icon.chooser.model.IconModel;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener.Change;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -30,6 +22,19 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
+
+import org.apache.commons.lang3.StringUtils;
+
+import io.opensphere.core.util.AwesomeIconSolid;
+import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.fx.FxIcons;
+import io.opensphere.core.util.fx.OSTab;
+import io.opensphere.core.util.fx.OSTabPane;
+import io.opensphere.core.util.fx.tabpane.skin.TabEditPhase;
+import io.opensphere.core.util.lang.Pair;
+import io.opensphere.mantle.icon.IconRecord;
+import io.opensphere.mantle.icon.chooser.model.IconChooserModel;
+import io.opensphere.mantle.icon.chooser.model.IconModel;
 
 /** An panel on which the icon may be selected by the user. */
 public class IconSelectionPanel extends BorderPane
@@ -62,6 +67,16 @@ public class IconSelectionPanel extends BorderPane
     private final IconChooserModel myIconChooserModel;
 
     /**
+     * Keeps track of the previously selected cell for rendering purposes.
+     */
+    private final ObjectProperty<IconGridCell> myPreviousSelectedCellProperty;
+
+    /**
+     * The collection name for the default collection.
+     */
+    private final String myDefaultCollection;
+
+    /**
      * Creates a new component bound to the supplied model.
      *
      * @param panelModel the model through which state is maintained.
@@ -70,6 +85,7 @@ public class IconSelectionPanel extends BorderPane
     {
         myPanelModel = panelModel;
         myIconChooserModel = myPanelModel.getModel();
+        myIconChooserModel.getIconRecords().addListener(this::onChanged);
         myDetailPane = new IconDetail(panelModel, this::refresh);
 
         final HBox box = new HBox(5);
@@ -94,20 +110,22 @@ public class IconSelectionPanel extends BorderPane
         mySetControlPane = new SearchControlBar(panelModel);
 
         final SortedList<String> collectionNames = myIconChooserModel.getCollectionNames().sorted();
+        myDefaultCollection = collectionNames.get(0);
 
         myIconTabs = new OSTabPane();
         myIconTabs.tabDragPolicyProperty().set(TabDragPolicy.REORDER);
         myIconTabs.newTabAction().set(e -> createSet());
         myTabs = New.map();
 
+        myPreviousSelectedCellProperty = new SimpleObjectProperty<>();
         addTabs(collectionNames);
         myIconChooserModel.getCollectionNames().addListener((final ListChangeListener.Change<? extends String> c) ->
         {
             c.next();
             List<? extends String> added = c.getAddedSubList();
-            
+
             if (myIconTabs.getTabs().filtered(tab -> added.contains(tab.getText())).isEmpty())
-            {            
+            {
                 addTabs(added);
             }
         });
@@ -134,18 +152,18 @@ public class IconSelectionPanel extends BorderPane
 
         final AnchorPane anchorPane = new AnchorPane(mySetControlPane, myIconTabs, box);
 
-        AnchorPane.setRightAnchor(mySetControlPane, 0.0);
-        AnchorPane.setLeftAnchor(mySetControlPane, 0.0);
-        AnchorPane.setTopAnchor(mySetControlPane, 0.0);
+        AnchorPane.setRightAnchor(mySetControlPane, Double.valueOf(0.0));
+        AnchorPane.setLeftAnchor(mySetControlPane, Double.valueOf(0.0));
+        AnchorPane.setTopAnchor(mySetControlPane, Double.valueOf(0.0));
 
-        AnchorPane.setRightAnchor(myIconTabs, 0.0);
-        AnchorPane.setLeftAnchor(myIconTabs, 0.0);
-        AnchorPane.setTopAnchor(myIconTabs, 30.0);
-        AnchorPane.setBottomAnchor(myIconTabs, 15.0);
+        AnchorPane.setRightAnchor(myIconTabs, Double.valueOf(0.0));
+        AnchorPane.setLeftAnchor(myIconTabs, Double.valueOf(0.0));
+        AnchorPane.setTopAnchor(myIconTabs, Double.valueOf(30.0));
+        AnchorPane.setBottomAnchor(myIconTabs, Double.valueOf(15.0));
 
-        AnchorPane.setRightAnchor(box, 0.0);
-        AnchorPane.setLeftAnchor(box, 0.0);
-        AnchorPane.setBottomAnchor(box, 0.0);
+        AnchorPane.setRightAnchor(box, Double.valueOf(0.0));
+        AnchorPane.setLeftAnchor(box, Double.valueOf(0.0));
+        AnchorPane.setBottomAnchor(box, Double.valueOf(0.0));
 
         setCenter(anchorPane);
         setRight(myDetailPane);
@@ -157,7 +175,8 @@ public class IconSelectionPanel extends BorderPane
     }
 
     /**
-     * Helper to avoid code duplication. Adds tabs when collections are updated, or the window is initialized.
+     * Helper to avoid code duplication. Adds tabs when collections are updated,
+     * or the window is initialized.
      *
      * @param collectionNames List of collections to create tabs for.
      */
@@ -168,18 +187,19 @@ public class IconSelectionPanel extends BorderPane
             IconGridView content;
             if (StringUtils.equalsIgnoreCase(IconRecord.FAVORITES_COLLECTION, collection))
             {
-                content = new IconGridView(myPanelModel, r -> r.favoriteProperty().get());
+                content = new IconGridView(myPanelModel, r -> r.favoriteProperty().get(), myPreviousSelectedCellProperty);
             }
             else
             {
-                content = new IconGridView(myPanelModel, r -> r.collectionNameProperty().get().equals(collection));
+                content = new IconGridView(myPanelModel, r -> r.collectionNameProperty().get().equals(collection),
+                        myPreviousSelectedCellProperty);
             }
 
             final Tab tab = new Tab(collection, content);
 
             content.displayProperty().addListener((obs, ov, nv) ->
             {
-                if (nv)
+                if (nv.booleanValue())
                 {
                     myIconTabs.getTabs().add(tab);
                 }
@@ -196,17 +216,19 @@ public class IconSelectionPanel extends BorderPane
             }
         }
     }
-    
+
     /** An event handler used to create and add a new icon set. */
     private void createSet()
     {
         final OSTab tab = new OSTab("<New Icon Set>");
         myIconTabs.getTabs().add(myIconTabs.getTabs().size(), tab);
         myIconTabs.getSelectionModel().select(tab);
-        tab.textProperty().addListener((obs, oldV, newV) -> {
+        tab.textProperty().addListener((obs, oldV, newV) ->
+        {
             if (tab.getTabEditPhase().equals(TabEditPhase.PERSISTING))
             {
-                IconGridView content = new IconGridView(myPanelModel, r -> r.collectionNameProperty().get().equals(newV));
+                IconGridView content = new IconGridView(myPanelModel, r -> r.collectionNameProperty().get().equals(newV),
+                        myPreviousSelectedCellProperty);
                 tab.setContent(content);
                 myTabs.put(newV, new Pair<>(tab, content));
 
@@ -230,5 +252,52 @@ public class IconSelectionPanel extends BorderPane
     private void refresh()
     {
         myPanelModel.getIconRegistry().iconStateChanged();
+    }
+
+    /**
+     * Occurs when an icon is added. Ensures the tab of the icon that was added
+     * is in focus.
+     *
+     * @param c The changed records.
+     */
+    private void onChanged(Change<? extends IconRecord> c)
+    {
+        while (c.next())
+        {
+            if (c.wasAdded())
+            {
+                List<? extends IconRecord> adds = c.getAddedSubList();
+                if (!adds.isEmpty())
+                {
+                    IconRecord added = adds.get(0);
+                    String collectionName = added.collectionNameProperty().get();
+                    Pair<Tab, IconGridView> tabAndGrid = myTabs.get(collectionName);
+                    if (tabAndGrid != null)
+                    {
+                        myIconTabs.selectionModelProperty().get().select(tabAndGrid.getFirstObject());
+                        myPanelModel.selectedRecordProperty().set(added);
+                    }
+                }
+                break;
+            }
+            else if (!c.getRemoved().isEmpty())
+            {
+                IconRecord removed = c.getRemoved().get(0);
+                String collectionName = removed.collectionNameProperty().get();
+                IconGridView gridView = myTabs.get(collectionName).getSecondObject();
+                ObservableList<IconRecord> icons = myPanelModel.getModel().getIconRecords(gridView.getPredicate());
+                int size = icons.size();
+                if (size > 0)
+                {
+                    myPanelModel.selectedRecordProperty().set(icons.get(size - 1));
+                }
+                else
+                {
+                    IconGridView defautlGridView = myTabs.get(myDefaultCollection).getSecondObject();
+                    ObservableList<IconRecord> defaults = myPanelModel.getModel().getIconRecords(defautlGridView.getPredicate());
+                    myPanelModel.selectedRecordProperty().set(defaults.get(0));
+                }
+            }
+        }
     }
 }
