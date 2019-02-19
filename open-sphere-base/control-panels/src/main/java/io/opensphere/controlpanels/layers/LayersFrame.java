@@ -22,6 +22,7 @@ import io.opensphere.controlpanels.layers.activedata.ActiveDataPanel;
 import io.opensphere.controlpanels.layers.availabledata.AvailableDataPanel;
 import io.opensphere.controlpanels.layers.event.ShowAvailableDataEvent;
 import io.opensphere.controlpanels.layers.event.ShowLayerSetManagerEvent;
+import io.opensphere.controlpanels.layers.event.TabChangeListener;
 import io.opensphere.controlpanels.layers.layerdetail.LayerDetailsCoordinator;
 import io.opensphere.controlpanels.layers.layersets.LayerSetFrame;
 import io.opensphere.core.Toolbox;
@@ -158,19 +159,7 @@ public class LayersFrame extends AbstractInternalFrame
         myLayerManagerTabbedPane.setBackgroundAt(0, Colors.LF_PRIMARY2);
         myLayerManagerTabbedPane.setForeground(Color.WHITE);
 
-        myLayerManagerTabbedPane.addChangeListener(new ChangeListener()
-        {
-            int lastTab;
-
-            @Override
-            public void stateChanged(ChangeEvent e)
-            {
-                JideTabbedPane pane = (JideTabbedPane)e.getSource();
-                pane.setBackgroundAt(lastTab, new Color(0, 0, 0, 0));
-                lastTab = pane.getSelectedIndex();
-                pane.setBackgroundAt(lastTab, Colors.LF_PRIMARY2);
-            }
-        });
+        myLayerManagerTabbedPane.addChangeListener(new TabChangeListener());
 
         // Add this to the shared component registry.
         myToolbox.getUIRegistry().getSharedComponentRegistry().registerComponent("ControlPanels.LayerManager.tabbedPane",
