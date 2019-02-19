@@ -7,16 +7,12 @@ import java.util.List;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.api.Envoy;
 import io.opensphere.core.util.registry.GenericRegistry;
-import io.opensphere.mantle.MantleToolbox;
-import io.opensphere.mantle.controller.DataGroupController;
-import io.opensphere.mantle.controller.DataTypeController;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.impl.DataGroupActivator;
 import io.opensphere.mantle.data.impl.DefaultDataGroupActivator;
 import io.opensphere.wfs.envoy.AbstractWFSEnvoy;
 import io.opensphere.wfs.envoy.WFSEnvoy;
-import io.opensphere.wfs.layer.WFSDataType;
 import io.opensphere.wfs.state.model.WFSStateGroup;
 
 /**
@@ -25,12 +21,6 @@ import io.opensphere.wfs.state.model.WFSStateGroup;
  */
 public class WFSStateDeactivator
 {
-    /** The Data group controller. */
-    private final DataGroupController myDataGroupController;
-
-    /** The Data type controller. */
-    private final DataTypeController myDataTypeController;
-
     /** The Envoy registry. */
     private final GenericRegistry<Envoy> myEnvoyRegistry;
 
@@ -44,8 +34,6 @@ public class WFSStateDeactivator
      */
     public WFSStateDeactivator(Toolbox toolbox)
     {
-        myDataGroupController = toolbox.getPluginToolboxRegistry().getPluginToolbox(MantleToolbox.class).getDataGroupController();
-        myDataTypeController = toolbox.getPluginToolboxRegistry().getPluginToolbox(MantleToolbox.class).getDataTypeController();
         myEnvoyRegistry = toolbox.getEnvoyRegistry();
         myDataGroupActivator = new DefaultDataGroupActivator(toolbox.getEventManager());
     }
@@ -75,30 +63,22 @@ public class WFSStateDeactivator
      * Deactivate group.
      *
      * @param list the list of groups to check for deactivation.
-     * @param anEnvoy the an envoy
+     * @param envoy the envoy
      */
-    private void deactivateGroup(List<DataGroupInfo> list, AbstractWFSEnvoy anEnvoy)
+    private void deactivateGroup(List<DataGroupInfo> list, AbstractWFSEnvoy envoy)
     {
         for (DataGroupInfo dgi : list)
         {
             for (DataTypeInfo dti : dgi.getMembers(false))
             {
-                if (anEnvoy.getGetCapabilitiesURL().equals(dti.getUrl()))
+                if (envoy.getGetCapabilitiesURL().equals(dti.getUrl()))
                 {
-                    if (anEnvoy instanceof WFSEnvoy)
+                    if (envoy instanceof WFSEnvoy)
                     {
-                        ((WFSEnvoy)anEnvoy).deactivateState();
-                    }
-
-                    if (dti instanceof WFSDataType)
-                    {
-                        dgi.removeMember(dti, false, this);
-                        myDataTypeController.removeDataType(dti, this);
-                        dti = null;
+                        ((WFSEnvoy)envoy).deactivateState();
                     }
                 }
             }
-            myDataGroupController.removeDataGroupInfo(dgi, this);
         }
     }
 }
