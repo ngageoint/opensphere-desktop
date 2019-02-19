@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.Collection;
@@ -80,6 +81,7 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
     /** The root panel in which the components are rendered. */
     private final JPanel mainPanel = new JPanel();
     
+    /** The root panel's layout. */
     private final GroupLayout myLayout;
 
     /** A panel in which the additional combo boxes are displayed. */
@@ -168,30 +170,12 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
             myControlPanel.add(mainPanel);
         }
         
-        myControlPanel.addComponentListener(new ComponentListener()
+        myControlPanel.addComponentListener(new ComponentAdapter()
         {
             @Override
             public void componentResized(ComponentEvent e)
             {
                 resizeControl();
-            }
-
-            @Override
-            public void componentMoved(ComponentEvent e)
-            {
-                // do nothing
-            }
-
-            @Override
-            public void componentShown(ComponentEvent e)
-            {
-                // do nothing
-            }
-
-            @Override
-            public void componentHidden(ComponentEvent e)
-            {
-                // do nothing
             }
         });
         
@@ -294,6 +278,9 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
         resizeControl();
     }
     
+    /**
+     * Updates the control panel's minimum and preferred size, then repaints.
+     */
     private void resizeControl()
     {
         int addHeight = 5;

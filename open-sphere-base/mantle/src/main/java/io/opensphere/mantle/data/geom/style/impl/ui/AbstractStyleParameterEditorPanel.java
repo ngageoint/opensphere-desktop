@@ -34,6 +34,7 @@ public abstract class AbstractStyleParameterEditorPanel extends JPanel
     /** The Constant PANEL_HEIGHT. */
     public static final String PANEL_HEIGHT = "PANEL_HEIGHT";
     
+    /** The Constant PANEL_SCROLL. */
     public static final String PANEL_SCROLL = "PANEL_SCROLL";
 
     /** The Constant LOGGER. */
