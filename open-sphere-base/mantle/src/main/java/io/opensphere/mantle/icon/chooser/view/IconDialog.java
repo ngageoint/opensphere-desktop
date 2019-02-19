@@ -86,6 +86,7 @@ public class IconDialog extends JFXDialog
         setMinimumSize(new Dimension(800, 600));
         setSize(875, 600);
 
+        myAcceptListener = acceptListener;
         super.setAcceptListener(() ->
         {
             savePreferences();
