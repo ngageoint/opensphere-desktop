@@ -350,17 +350,28 @@ public class DefaultContinuousAnimationPlan extends DefaultAnimationPlan impleme
         TimeSpan parentSpan = getTimeSpanForState(new DefaultAnimationState(lastStep, state.getDirection()));
         TimeSpan limitedParentSpan = getLimitWindow().getIntersection(parentSpan);
         TimeSpan startSpan;
-        if (limitedParentSpan.contains(state.getActiveTimeSpan()))
+        long end, start;
+        if (limitedParentSpan != null)
         {
-            startSpan = state.getActiveTimeSpan();
+        	if (limitedParentSpan.contains(state.getActiveTimeSpan()))
+        	{
+        		startSpan = state.getActiveTimeSpan();
+        	}
+        	else
+        	{
+        		startSpan = forward ? TimeSpan.get(limitedParentSpan.getStart(), myActiveWindowDuration)
+        				: TimeSpan.get(myActiveWindowDuration, limitedParentSpan.getEnd());
+        	}
+        	end = limitedParentSpan.getEnd();
+        	start = limitedParentSpan.getStart();
         }
         else
         {
-            startSpan = forward ? TimeSpan.get(limitedParentSpan.getStart(), myActiveWindowDuration)
-                    : TimeSpan.get(myActiveWindowDuration, limitedParentSpan.getEnd());
+        	startSpan = state.getActiveTimeSpan();
+        	end = getLimitWindow().getEnd();
+        	start = getLimitWindow().getStart();
         }
-        long gap = forward ? limitedParentSpan.getEnd() - startSpan.getEnd()
-                : startSpan.getStart() - limitedParentSpan.getStart();
+        long gap = forward ? end - startSpan.getEnd() : startSpan.getStart() - start;
         long stepCount = gap / Milliseconds.get(getAdvanceDuration()).longValue();
         Duration adjustment = getAdvanceDuration().multiply(stepCount);
         TimeSpan lastSpan = forward ? startSpan.plus(adjustment) : startSpan.minus(adjustment);
