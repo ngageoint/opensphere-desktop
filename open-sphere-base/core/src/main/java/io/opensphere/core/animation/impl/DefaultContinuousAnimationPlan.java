@@ -353,23 +353,23 @@ public class DefaultContinuousAnimationPlan extends DefaultAnimationPlan impleme
         long end, start;
         if (limitedParentSpan != null)
         {
-        	if (limitedParentSpan.contains(state.getActiveTimeSpan()))
-        	{
-        		startSpan = state.getActiveTimeSpan();
-        	}
-        	else
-        	{
-        		startSpan = forward ? TimeSpan.get(limitedParentSpan.getStart(), myActiveWindowDuration)
-        				: TimeSpan.get(myActiveWindowDuration, limitedParentSpan.getEnd());
-        	}
-        	end = limitedParentSpan.getEnd();
-        	start = limitedParentSpan.getStart();
+            if (limitedParentSpan.contains(state.getActiveTimeSpan()))
+            {
+                startSpan = state.getActiveTimeSpan();
+            }
+            else
+            {
+                startSpan = forward ? TimeSpan.get(limitedParentSpan.getStart(), myActiveWindowDuration)
+                        : TimeSpan.get(myActiveWindowDuration, limitedParentSpan.getEnd());
+            }
+            end = limitedParentSpan.getEnd();
+            start = limitedParentSpan.getStart();
         }
         else
         {
-        	startSpan = state.getActiveTimeSpan();
-        	end = getLimitWindow().getEnd();
-        	start = getLimitWindow().getStart();
+            startSpan = state.getActiveTimeSpan();
+            end = getLimitWindow().getEnd();
+            start = getLimitWindow().getStart();
         }
         long gap = forward ? end - startSpan.getEnd() : startSpan.getStart() - start;
         long stepCount = gap / Milliseconds.get(getAdvanceDuration()).longValue();
