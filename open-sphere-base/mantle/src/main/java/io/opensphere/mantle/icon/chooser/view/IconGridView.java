@@ -97,4 +97,13 @@ public class IconGridView extends AnchorPane
     {
         return myDisplayProperty;
     }
+
+    /**
+     * Gets the predicate used to choose what icons are displayed in this view.
+     * @return The predicate used to choose what icons to display in this grid view.
+     */
+    public Predicate<IconRecord> getPredicate()
+    {
+        return myPredicate;
+    }
 }
