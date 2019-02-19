@@ -15,7 +15,7 @@ import io.opensphere.core.util.Colors;
  */
 public class TabChangeListener implements ChangeListener
 {
-	/** Previously-selected tab. */
+    /** Previously-selected tab. */
     private int lastTab;
 
     @Override
