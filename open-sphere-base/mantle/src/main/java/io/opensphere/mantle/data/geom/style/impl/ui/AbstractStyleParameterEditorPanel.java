@@ -13,9 +13,11 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import org.apache.log4j.Logger;
 
@@ -31,6 +33,9 @@ public abstract class AbstractStyleParameterEditorPanel extends JPanel
 {
     /** The Constant PANEL_HEIGHT. */
     public static final String PANEL_HEIGHT = "PANEL_HEIGHT";
+    
+    /** The Constant PANEL_SCROLL. */
+    public static final String PANEL_SCROLL = "PANEL_SCROLL";
 
     /** The Constant LOGGER. */
     private static final Logger LOGGER = Logger.getLogger(AbstractStyleParameterEditorPanel.class);
@@ -51,7 +56,7 @@ public abstract class AbstractStyleParameterEditorPanel extends JPanel
     private JButton myAlertButton;
 
     /** The Control panel. */
-    protected JPanel myControlPanel;
+    protected JComponent myControlPanel;
 
     /** The Label. */
     @SuppressWarnings("PMD.SingularField")
@@ -176,7 +181,7 @@ public abstract class AbstractStyleParameterEditorPanel extends JPanel
         }
 
         int panelHeight = getPanelHeightFromBuilder();
-        myControlPanel = new JPanel();
+        myControlPanel = Boolean.TRUE == myPanelBuilder.getOtherParameter(PANEL_SCROLL, Boolean.FALSE) ? new JScrollPane() : new JPanel();
         ComponentUtilities.setMinimumHeight(myControlPanel, panelHeight);
 
         if (nameAbove)
