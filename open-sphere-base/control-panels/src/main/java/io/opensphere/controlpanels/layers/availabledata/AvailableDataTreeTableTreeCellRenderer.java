@@ -359,7 +359,7 @@ public class AvailableDataTreeTableTreeCellRenderer extends TreeTableTreeCellRen
     }
 
     /**
-     * Colors the {@link myClockIcon} based off the given data group info.
+     * Colors the {@link #myClockIcon} based off the given data group info.
      *
      * @param dataGroup the data group info to get the color from
      */
@@ -369,11 +369,13 @@ public class AvailableDataTreeTableTreeCellRenderer extends TreeTableTreeCellRen
         if (dataGroup.numMembers(false) == 1)
         {
             dataType = dataGroup.getMembers(false).iterator().next();
-            myClockIcon.setType(dataType);
         }
-        else if (dataType != null)
+
+        // set it here even if null, as it'll reset it's time status if null:
+        myClockIcon.setType(dataType);
+        if (dataType != null)
         {
-            myClockIcon.setColor(dataType.getMapVisualizationInfo().getTileRenderProperties().getColor());
+            myClockIcon.setColor(dataType.getBasicVisualizationInfo().getTypeColor());
         }
         else
         {
@@ -398,8 +400,7 @@ public class AvailableDataTreeTableTreeCellRenderer extends TreeTableTreeCellRen
         }
         else if (dataType != null)
         {
-            label.setIconByType(dataType.getMapVisualizationInfo().getTileRenderProperties().getColor(), 
-                    visualization);
+            label.setIconByType(dataType.getBasicVisualizationInfo().getTypeColor(), visualization);
         }
         else
         {
@@ -426,7 +427,7 @@ public class AvailableDataTreeTableTreeCellRenderer extends TreeTableTreeCellRen
         }
         else if (dataType != null)
         {
-            coloredIcon = IconUtilities.getColorizedIcon(icon,dataType.getMapVisualizationInfo().getTileRenderProperties().getColor());
+            coloredIcon = IconUtilities.getColorizedIcon(icon, dataType.getBasicVisualizationInfo().getTypeColor());
         }
         else
         {
@@ -453,8 +454,8 @@ public class AvailableDataTreeTableTreeCellRenderer extends TreeTableTreeCellRen
     }
 
     /**
-     * Retrieves a data type info from the given data group info that has
-     * tile render properties.
+     * Retrieves a data type info from the given data group info that has tile
+     * render properties.
      *
      * @param dataGroup the data group info to retrieve the data type info from
      * @return a data type info that has tile render properties, or null if no
@@ -462,7 +463,8 @@ public class AvailableDataTreeTableTreeCellRenderer extends TreeTableTreeCellRen
      */
     private DataTypeInfo getDataTypeInfoWithTileRenderProperties(DataGroupInfo dataGroup)
     {
-        return dataGroup.getMembers(false).stream().filter(e -> e.getMapVisualizationInfo() != null &&
-                e.getMapVisualizationInfo().getTileRenderProperties() != null).findFirst().orElse(null);
+        return dataGroup.getMembers(false).stream()
+                .filter(e -> e.getMapVisualizationInfo() != null && e.getMapVisualizationInfo().getTileRenderProperties() != null)
+                .findFirst().orElse(null);
     }
 }
