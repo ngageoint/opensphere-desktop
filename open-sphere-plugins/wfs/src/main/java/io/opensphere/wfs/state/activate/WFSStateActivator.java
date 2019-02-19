@@ -125,10 +125,12 @@ public class WFSStateActivator
      */
     protected void activateGroups(List<DataGroupInfo> groups) throws InterruptedException
     {
-        if (groups.stream().anyMatch(e -> e.activationProperty().isInactiveOrDeactivation()))
+        for (DataGroupInfo dataGroup : groups)
         {
-            myActivator.setGroupsActive(groups, true);
-            myActivator.reactivateGroups(groups);
+            if (dataGroup.activationProperty().isInactiveOrDeactivation())
+            {
+                myActivator.setGroupActive(dataGroup, true);
+            }
         }
     }
 
