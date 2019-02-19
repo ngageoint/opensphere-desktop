@@ -9,9 +9,14 @@ import com.jidesoft.swing.JideTabbedPane;
 
 import io.opensphere.core.util.Colors;
 
+/**
+ * Listener for tab selection events.
+ * Changes background colors.
+ */
 public class TabChangeListener implements ChangeListener
 {
-    int lastTab;
+	/** Previously-selected tab. */
+    private int lastTab;
 
     @Override
     public void stateChanged(ChangeEvent e)
