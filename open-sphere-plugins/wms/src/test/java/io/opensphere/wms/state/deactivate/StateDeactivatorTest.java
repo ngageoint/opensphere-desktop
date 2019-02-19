@@ -4,7 +4,6 @@ import org.easymock.EasyMock;
 import org.junit.Test;
 
 import io.opensphere.core.util.collections.New;
-import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataTypeInfo;
 import io.opensphere.mantle.data.impl.DataGroupActivator;
@@ -35,33 +34,18 @@ public class StateDeactivatorTest
     {
         WMSEnvoy envoy = StateUtils.createEnvoy();
         DataGroupInfo parent = createParent();
-        DataGroupController controller = createDataController(parent);
         DataTypeInfo dataType = createDataType(parent);
         WMSLayerValueProvider layer = createLayer(dataType);
         WMSLayerEnvoy layerEnvoy = StateUtils.createLayerEnvoy(layer);
         StateGroup group = createStateGroup(parent);
         DataGroupActivator groupActivator = createDataGroupActivator(parent);
 
-        EasyMock.replay(parent, controller, envoy, dataType, layer, layerEnvoy);
+        EasyMock.replay(parent, envoy, dataType, layer, layerEnvoy);
 
         StateDeactivator deactivator = new StateDeactivator(groupActivator);
         deactivator.deactivateState(group);
 
-        EasyMock.verify(parent, controller, envoy, dataType, layer, layerEnvoy);
-    }
-
-    /**
-     * Creates the data group controller.
-     *
-     * @param expectedGroup The expected group.
-     * @return The data group controller.
-     */
-    private DataGroupController createDataController(final DataGroupInfo expectedGroup)
-    {
-        DataGroupController dataController = EasyMock.createMock(DataGroupController.class);
-        dataController.removeDataGroupInfo(EasyMock.eq(expectedGroup), EasyMock.isA(StateDeactivator.class));
-        EasyMock.expectLastCall().andReturn(Boolean.TRUE);
-        return dataController;
+        EasyMock.verify(parent, envoy, dataType, layer, layerEnvoy);
     }
 
     /**
