@@ -206,7 +206,9 @@ public class WFSStateActivator
      */
     protected List<DataGroupInfo> getGroupsFromStates(List<? extends WFSLayerState> states)
     {
-        return states.stream().map(e -> myController.findMemberById(e.getTypeKey()).getParent()).collect(Collectors.toList());
+        return states.stream().filter(layerState -> layerState.getTypeKey() != null)
+                .map(layerState -> myController.findMemberById(layerState.getTypeKey())).filter(dataType -> dataType != null)
+                .map(dataType -> dataType.getParent()).collect(Collectors.toList());
     }
 
     /**
