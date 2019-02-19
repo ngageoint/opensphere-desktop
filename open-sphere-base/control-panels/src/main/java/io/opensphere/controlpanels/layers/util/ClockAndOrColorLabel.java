@@ -95,7 +95,7 @@ public class ClockAndOrColorLabel extends JComponent
      */
     public void setType(DataTypeInfo dti)
     {
-        myColor = Color.white;
+        myColor = Color.WHITE;
         myLoadsTo = LoadsTo.BASE;
         if (dti != null && dti.getBasicVisualizationInfo() != null)
         {
