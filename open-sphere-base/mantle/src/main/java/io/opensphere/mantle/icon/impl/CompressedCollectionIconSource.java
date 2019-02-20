@@ -306,8 +306,7 @@ public class CompressedCollectionIconSource implements IconSource<FileIconSource
         {
             currentFragment = "";
         }
-        byte[] contents = new byte[stream.available()];
-        IOUtils.readFully(stream, contents);
+        byte[] contents = stream.readAllBytes();
 
         currentFragment += name;
         URI path;
