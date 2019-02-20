@@ -12,6 +12,7 @@ import io.opensphere.core.math.RectangularCylinder;
 import io.opensphere.core.math.Vector2i;
 import io.opensphere.core.math.Vector3d;
 import io.opensphere.core.model.ScreenPosition;
+import io.opensphere.core.pipeline.ScaleDetector;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.collections.WeakHashSet;
 import io.opensphere.core.viewer.TrajectoryGenerator;
@@ -50,6 +51,11 @@ public abstract class AbstractViewer implements Viewer
 
     /** Derived window to model transform for fast calculations. */
     private Matrix4d myWindowToModelTransform;
+
+    /**
+     * Used to calculate the dpi scaling on the current monitor.
+     */
+    private final ScaleDetector myDPIScale = new ScaleDetector();
 
     @Override
     public void addObserver(Observer obs)
@@ -163,9 +169,9 @@ public abstract class AbstractViewer implements Viewer
     {
         if (width != myViewportWidth || height != myViewportHeight)
         {
-            myViewportWidth = width;
-            myViewportHeight = height;
-            doReshape(width, height);
+            myViewportWidth = (int)(width / myDPIScale.getScale());
+            myViewportHeight = (int)(height / myDPIScale.getScale());
+            doReshape(myViewportWidth, myViewportHeight);
             clearModelToWindowTransform();
             notifyViewChanged(ViewChangeSupport.ViewChangeType.WINDOW_RESIZE);
         }
