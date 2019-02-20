@@ -23,7 +23,7 @@ public class DefaultMapDataElement extends DefaultDataElement implements MapData
     public DefaultMapDataElement(MapDataElement source)
     {
         super(source);
-        myMapGeometrySupport = source.getMapGeometrySupport().createCopy();
+        myMapGeometrySupport = source.getMapGeometrySupport() != null ? source.getMapGeometrySupport().createCopy() : null;
     }
 
     /**
@@ -35,7 +35,7 @@ public class DefaultMapDataElement extends DefaultDataElement implements MapData
     public DefaultMapDataElement(MapDataElement source, MetaDataProvider mdp)
     {
         super(source, mdp);
-        myMapGeometrySupport = source.getMapGeometrySupport().createCopy();
+        myMapGeometrySupport = source.getMapGeometrySupport() != null ? source.getMapGeometrySupport().createCopy() : null;
     }
 
     /**
