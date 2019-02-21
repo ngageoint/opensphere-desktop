@@ -19,6 +19,16 @@ public class ScreenViewer extends AbstractViewer
     /** The current projection matrix. */
     private float[] myProjectionMatrix;
 
+    /**
+     * Constructor.
+     * @param displayedViewer True if this user is used to display to the monitor, false if it is used
+     * to render somewhere else such as frame buffers/textures.
+     */
+    public ScreenViewer(boolean displayedViewer)
+    {
+        super(displayedViewer);
+    }
+
     @Override
     public float[] getAdjustedModelViewMatrix(Matrix4d adjustment)
     {

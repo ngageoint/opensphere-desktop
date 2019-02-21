@@ -138,7 +138,19 @@ public class Viewer3D extends AbstractDynamicViewer
      */
     public Viewer3D(Builder builder)
     {
-        super(builder);
+        this(builder, true);
+    }
+
+    /**
+     * Construct me.
+     *
+     * @param builder builder with construction parameters.
+     * @param displayedViewer True if this user is used to display to the monitor, false if it is used
+     * to render somewhere else such as frame buffers/textures.
+     */
+    public Viewer3D(Builder builder, boolean displayedViewer)
+    {
+        super(builder, displayedViewer);
         addTrajectoryGenerator(TrajectoryGeneratorType.ARC, new ArcTrajectoryGenerator3D(this));
         addTrajectoryGenerator(TrajectoryGeneratorType.ROTATION, new RotationTrajectoryGenerator3D());
         addTrajectoryGenerator(TrajectoryGeneratorType.FLAT, new FlatTrajectoryGenerator3D(this));

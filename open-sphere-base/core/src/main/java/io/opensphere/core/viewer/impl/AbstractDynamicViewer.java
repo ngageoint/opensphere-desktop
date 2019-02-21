@@ -51,9 +51,12 @@ public abstract class AbstractDynamicViewer extends AbstractViewer implements Dy
      * Construct a viewer.
      *
      * @param builder An object that describes how the viewer should be created.
+     * @param displayedViewer True if this user is used to display to the monitor, false if it is used
+     * to render somewhere else such as frame buffers/textures.
      */
-    public AbstractDynamicViewer(Builder builder)
+    public AbstractDynamicViewer(Builder builder, boolean displayedViewer)
     {
+        super(displayedViewer);
         myPreferences = builder.getPreferences();
     }
 

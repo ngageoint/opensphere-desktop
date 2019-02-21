@@ -12,6 +12,7 @@ import io.opensphere.core.math.RectangularCylinder;
 import io.opensphere.core.math.Vector2i;
 import io.opensphere.core.math.Vector3d;
 import io.opensphere.core.model.ScreenPosition;
+import io.opensphere.core.pipeline.NoScale;
 import io.opensphere.core.pipeline.ScaleDetector;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.collections.WeakHashSet;
@@ -55,7 +56,24 @@ public abstract class AbstractViewer implements Viewer
     /**
      * Used to calculate the dpi scaling on the current monitor.
      */
-    private final ScaleDetector myDPIScale = new ScaleDetector();
+    private final ScaleDetector myDPIScale;
+
+    /**
+     * Constructor.
+     * @param displayedViewer True if this user is used to display to the monitor, false if it is used
+     * to render somewhere else such as frame buffers/textures.
+     */
+    public AbstractViewer(boolean displayedViewer)
+    {
+        if(displayedViewer)
+        {
+            myDPIScale = new ScaleDetector();
+        }
+        else
+        {
+            myDPIScale = new NoScale();
+        }
+    }
 
     @Override
     public void addObserver(Observer obs)

@@ -61,9 +61,9 @@ public abstract class Window3D<S extends LayoutConstraints, T extends AbstractLa
     {
         ScreenBoundingBox frameBox = getAbsoluteLocation();
 
-        Viewer3D modelViewer = new Viewer3D(new Viewer3D.Builder());
+        Viewer3D modelViewer = new Viewer3D(new Viewer3D.Builder(), false);
 
-        MapContext<Viewer3D> mapContext = new SimpleMapContext<>(new ScreenViewer(), modelViewer);
+        MapContext<Viewer3D> mapContext = new SimpleMapContext<>(new ScreenViewer(false), modelViewer);
         mapContext.reshape((int)frameBox.getWidth(), (int)frameBox.getHeight());
         mapContext.getStandardViewer().setViewOffset(frameBox.getUpperLeft());
 

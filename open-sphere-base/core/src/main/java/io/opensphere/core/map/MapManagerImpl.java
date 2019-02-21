@@ -92,7 +92,7 @@ public class MapManagerImpl implements MapManager
     private final ProjectionManager myProjectionManager = new ProjectionManager();
 
     /** The viewer for screen position geometries. */
-    private final ScreenViewer myScreenViewer = new ScreenViewer();
+    private final ScreenViewer myScreenViewer = new ScreenViewer(true);
 
     /** The controller for saving and activating map manager states. */
     private MapManagerStateController myStateController;
