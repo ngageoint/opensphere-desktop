@@ -26,6 +26,7 @@ import io.opensphere.core.control.action.context.ContextIdentifiers;
 import io.opensphere.core.control.action.context.GeometryContextKey;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.GeometryGroupGeometry;
+import io.opensphere.core.geometry.MultiPolygonGeometry;
 import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.geometry.PolylineGeometry;
 import io.opensphere.core.model.Altitude;
@@ -138,7 +139,11 @@ public class RegionTypeController extends PlaceTypeController
      */
     public void createRegion(Geometry geometry)
     {
-        if (geometry instanceof PolygonGeometry)
+        if (geometry instanceof MultiPolygonGeometry)
+        {
+            createRegionFromMultiPolygonGeometry((MultiPolygonGeometry)geometry);
+        }
+        else if (geometry instanceof PolygonGeometry)
         {
             createRegionFromGeometry((PolygonGeometry)geometry);
         }
@@ -171,6 +176,19 @@ public class RegionTypeController extends PlaceTypeController
                 .forEach(g -> ((PolygonGeometry)g).getHoles().forEach(e -> holes.add(e)));
 
         Placemark placemark = RegionUtils.createRegionFromPositions(new Folder(), getDefaultName(), vertices, holes);
+        launchEditor(placemark, myPlacesModel.getDataGroups());
+    }
+
+    /**
+     * Creates the save roi from a multi polygon geometry.
+     *
+     * @param geometry the geometry
+     */
+    protected void createRegionFromMultiPolygonGeometry(MultiPolygonGeometry geometry)
+    {
+        assert EventQueue.isDispatchThread();
+
+        Placemark placemark = RegionUtils.multiPolygonPlacemark(getDefaultName(), geometry.getGeometries());
         launchEditor(placemark, myPlacesModel.getDataGroups());
     }
 

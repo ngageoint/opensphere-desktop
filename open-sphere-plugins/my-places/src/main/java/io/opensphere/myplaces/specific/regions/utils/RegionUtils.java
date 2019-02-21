@@ -20,6 +20,7 @@ import de.micromata.opengis.kml.v_2_2_0.PolyStyle;
 import de.micromata.opengis.kml.v_2_2_0.Polygon;
 import de.micromata.opengis.kml.v_2_2_0.Style;
 import de.micromata.opengis.kml.v_2_2_0.StyleSelector;
+import io.opensphere.core.geometry.MultiPolygonGeometry;
 import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.geometry.PolylineGeometry;
 import io.opensphere.core.geometry.constraint.Constraints;
@@ -54,7 +55,7 @@ import io.opensphere.myplaces.util.PlacemarkUtils;
 public final class RegionUtils
 {
     /**
-     * Create a {@link PolygonGeometry} from a {@link Polygon}.
+     * Create a {@link PolylineGeometry} from a {@link Polygon}.
      *
      * @param placemark The placemark containing the polygon.
      * @return A polygon geometry.
@@ -63,127 +64,171 @@ public final class RegionUtils
     {
         if (placemark.getGeometry() instanceof Polygon)
         {
-            PolygonGeometry.Builder<GeographicPosition> builder = new PolygonGeometry.Builder<>();
-            PolygonRenderProperties props = new DefaultPolygonRenderProperties(ZOrderRenderProperties.TOP_Z - 1000, true, true);
-
-            Style style = null;
-            for (StyleSelector selector : placemark.getStyleSelector())
-            {
-                if (selector instanceof Style)
-                {
-                    style = (Style)selector;
-
-                    if (ExtendedDataUtils.getBoolean(placemark.getExtendedData(), Constants.IS_POLYGON_FILLED_ID, false))
-                    {
-                        PolyStyle polyStyle = style.getPolyStyle();
-                        Color fillColor = ColorUtilities.convertFromHexString(polyStyle.getColor(), 3, 2, 1, 0);
-                        DefaultColorRenderProperties fillColorProps = new DefaultColorRenderProperties(
-                                ZOrderRenderProperties.TOP_Z - 1000, true, true, true);
-                        fillColorProps.setColor(fillColor);
-                        props = new DefaultPolygonRenderProperties(ZOrderRenderProperties.TOP_Z - 1000, true, true,
-                                fillColorProps);
-                        polyStyle.setFill(Boolean.valueOf(ExtendedDataUtils.getBoolean(placemark.getExtendedData(),
-                                Constants.IS_POLYGON_FILLED_ID, false)));
-                    }
-
-                    IconStyle iconStyle = style.getIconStyle();
-                    Color color = ColorUtilities.convertFromHexString(iconStyle.getColor(), 3, 2, 1, 0);
-                    props.setColor(color);
-
-                    break;
-                }
-            }
-
-            props.setWidth(4);
-
             Polygon polygon = (Polygon)placemark.getGeometry();
-            List<GeographicPosition> points = convertToPosition(polygon.getOuterBoundaryIs().getLinearRing());
-            builder.setVertices(points);
-
-            List<Boundary> inBnd = polygon.getInnerBoundaryIs();
-            if (inBnd != null && !inBnd.isEmpty())
-            {
-                Collection<List<? extends GeographicPosition>> innerRings = New.collection(inBnd.size());
-                for (Boundary ring : inBnd)
-                {
-                    innerRings.add(convertToPosition(ring.getLinearRing()));
-                }
-                builder.addHoles(innerRings);
-            }
-
-            builder.setDataModelId(DefaultMapAnnotationPoint.getNextId());
-
-            Constraints constraints = null;
-            if (placemark.getTimePrimitive() != null)
-            {
-                TimeConstraint contraint = TimeConstraint
-                        .getTimeConstraint(KMLSpatialTemporalUtils.timeSpanFromTimePrimitive(placemark.getTimePrimitive()));
-                constraints = new Constraints(contraint);
-            }
-
-            return new PolygonGeometry(builder, props, constraints);
+            return createPolygonGeometry(placemark, polygon);
         }
         else if (placemark.getGeometry() instanceof LineString)
         {
-            PolylineGeometry.Builder<GeographicPosition> builder = new PolylineGeometry.Builder<>();
-            PolylineRenderProperties props = new DefaultPolylineRenderProperties(ZOrderRenderProperties.TOP_Z - 1000, true, true);
-
-            Style style = null;
-            for (StyleSelector selector : placemark.getStyleSelector())
-            {
-                if (selector instanceof Style)
-                {
-                    style = (Style)selector;
-
-                    if (ExtendedDataUtils.getBoolean(placemark.getExtendedData(), Constants.IS_POLYGON_FILLED_ID, false))
-                    {
-                        PolyStyle polyStyle = style.getPolyStyle();
-                        Color fillColor = ColorUtilities.convertFromHexString(polyStyle.getColor(), 3, 2, 1, 0);
-                        DefaultColorRenderProperties fillColorProps = new DefaultColorRenderProperties(
-                                ZOrderRenderProperties.TOP_Z - 1000, true, true, true);
-                        fillColorProps.setColor(fillColor);
-                        props = new DefaultPolygonRenderProperties(ZOrderRenderProperties.TOP_Z - 1000, true, true,
-                                fillColorProps);
-                        polyStyle.setFill(Boolean.valueOf(ExtendedDataUtils.getBoolean(placemark.getExtendedData(),
-                                Constants.IS_POLYGON_FILLED_ID, false)));
-                    }
-
-                    IconStyle iconStyle = style.getIconStyle();
-                    Color color = ColorUtilities.convertFromHexString(iconStyle.getColor(), 3, 2, 1, 0);
-                    props.setColor(color);
-
-                    break;
-                }
-            }
-
-            props.setWidth(4);
-
             LineString lineString = (LineString)placemark.getGeometry();
-
-            List<Coordinate> coordinates = lineString.getCoordinates();
-            List<GeographicPosition> points = coordinates.stream()
-                    .map(c -> new GeographicPosition(LatLonAlt.createFromDegreesMeters(c.getLatitude(), c.getLongitude(),
-                            new Altitude(Length.create(Meters.class, c.getAltitude()), ReferenceLevel.TERRAIN))))
-                    .collect(Collectors.toList());
-            builder.setVertices(points);
-            builder.setDataModelId(DefaultMapAnnotationPoint.getNextId());
-
-            Constraints constraints = null;
-            if (placemark.getTimePrimitive() != null)
-            {
-                TimeConstraint contraint = TimeConstraint
-                        .getTimeConstraint(KMLSpatialTemporalUtils.timeSpanFromTimePrimitive(placemark.getTimePrimitive()));
-                constraints = new Constraints(contraint);
-            }
-
-            return new PolylineGeometry(builder, props, constraints);
+            return createPolylineGeometry(placemark, lineString);
+        }
+        else if (placemark.getGeometry() instanceof MultiGeometry)
+        {
+            MultiGeometry multiGeometry = (MultiGeometry)placemark.getGeometry();
+            return createMultiPolygonGeometry(placemark, multiGeometry);
         }
         return null;
     }
 
     /**
-     * Create a new {@link Placemark} that contains a polygon representing the
-     * given region and add it to the specified Folder.
+     * Create a {@link MultiPolygonGeometry} from a {@link MultiGeometry}.
+     *
+     * @param placemark The placemark containing the geometries.
+     * @param geometry The multi geometry.
+     * @return A multi polygon geometry.
+     */
+    private static MultiPolygonGeometry createMultiPolygonGeometry(Placemark placemark, MultiGeometry geometry)
+    {
+        // Builder
+        MultiPolygonGeometry.Builder<GeographicPosition> builder = new MultiPolygonGeometry.Builder<>(GeographicPosition.class);
+        builder.setDataModelId(DefaultMapAnnotationPoint.getNextId());
+        List<PolygonGeometry> polygons = geometry.getGeometry().stream().filter(g -> g instanceof Polygon)
+                .map(g -> createPolygonGeometry(placemark, (Polygon)g)).collect(Collectors.toList());
+        builder.setInitialGeometries(polygons);
+
+        // Props
+        PolygonRenderProperties props = new DefaultPolygonRenderProperties(ZOrderRenderProperties.TOP_Z - 1000, true, true);
+        props = (PolygonRenderProperties)populateProperties(placemark, props);
+
+        // Constraints
+        Constraints constraints = createConstraints(placemark);
+
+        return new MultiPolygonGeometry(builder, props, constraints);
+    }
+
+    /**
+     * Create a {@link PolygonGeometry} from a {@link Polygon}.
+     *
+     * @param placemark The placemark containing the polygon.
+     * @param polygon The polygon.
+     * @return A polygon geometry.
+     */
+    private static PolygonGeometry createPolygonGeometry(Placemark placemark, Polygon polygon)
+    {
+        // Builder
+        PolygonGeometry.Builder<GeographicPosition> builder = new PolygonGeometry.Builder<>();
+        builder.setDataModelId(DefaultMapAnnotationPoint.getNextId());
+        List<GeographicPosition> points = convertToPosition(polygon.getOuterBoundaryIs().getLinearRing());
+        builder.setVertices(points);
+        List<Boundary> inBnd = polygon.getInnerBoundaryIs();
+        if (inBnd != null && !inBnd.isEmpty())
+        {
+            Collection<List<? extends GeographicPosition>> innerRings = New.collection(inBnd.size());
+            for (Boundary ring : inBnd)
+            {
+                innerRings.add(convertToPosition(ring.getLinearRing()));
+            }
+            builder.addHoles(innerRings);
+        }
+
+        // Props
+        PolygonRenderProperties props = new DefaultPolygonRenderProperties(ZOrderRenderProperties.TOP_Z - 1000, true, true);
+        props = (PolygonRenderProperties)populateProperties(placemark, props);
+
+        // Constraints
+        Constraints constraints = createConstraints(placemark);
+
+        return new PolygonGeometry(builder, props, constraints);
+    }
+
+    /**
+     * Create a {@link PolygonGeometry} from a {@link LineString}.
+     *
+     * @param placemark The placemark containing the line string.
+     * @param lineString The line string.
+     * @return A polygon geometry.
+     */
+    private static PolylineGeometry createPolylineGeometry(Placemark placemark, LineString lineString)
+    {
+        // Builder
+        PolylineGeometry.Builder<GeographicPosition> builder = new PolylineGeometry.Builder<>();
+        builder.setDataModelId(DefaultMapAnnotationPoint.getNextId());
+        List<Coordinate> coordinates = lineString.getCoordinates();
+        List<GeographicPosition> points = coordinates.stream()
+                .map(c -> new GeographicPosition(LatLonAlt.createFromDegreesMeters(c.getLatitude(), c.getLongitude(),
+                        new Altitude(Length.create(Meters.class, c.getAltitude()), ReferenceLevel.TERRAIN))))
+                .collect(Collectors.toList());
+        builder.setVertices(points);
+
+        // Props
+        PolylineRenderProperties props = new DefaultPolylineRenderProperties(ZOrderRenderProperties.TOP_Z - 1000, true, true);
+        props = populateProperties(placemark, props);
+
+        // Constraints
+        Constraints constraints = createConstraints(placemark);
+
+        return new PolylineGeometry(builder, props, constraints);
+    }
+
+    /**
+     * Populates the render properties.
+     *
+     * @param placemark the placemark
+     * @param props the properties to populate
+     * @return the possibly new render properties
+     */
+    private static PolylineRenderProperties populateProperties(Placemark placemark, PolylineRenderProperties props)
+    {
+        Style style = null;
+        for (StyleSelector selector : placemark.getStyleSelector())
+        {
+            if (selector instanceof Style)
+            {
+                style = (Style)selector;
+
+                if (ExtendedDataUtils.getBoolean(placemark.getExtendedData(), Constants.IS_POLYGON_FILLED_ID, false))
+                {
+                    PolyStyle polyStyle = style.getPolyStyle();
+                    Color fillColor = ColorUtilities.convertFromHexString(polyStyle.getColor(), 3, 2, 1, 0);
+                    DefaultColorRenderProperties fillColorProps = new DefaultColorRenderProperties(
+                            ZOrderRenderProperties.TOP_Z - 1000, true, true, true);
+                    fillColorProps.setColor(fillColor);
+                    props = new DefaultPolygonRenderProperties(ZOrderRenderProperties.TOP_Z - 1000, true, true, fillColorProps);
+                    polyStyle.setFill(Boolean.valueOf(
+                            ExtendedDataUtils.getBoolean(placemark.getExtendedData(), Constants.IS_POLYGON_FILLED_ID, false)));
+                }
+
+                IconStyle iconStyle = style.getIconStyle();
+                Color color = ColorUtilities.convertFromHexString(iconStyle.getColor(), 3, 2, 1, 0);
+                props.setColor(color);
+
+                break;
+            }
+        }
+        props.setWidth(4);
+        return props;
+    }
+
+    /**
+     * Creates constraints for the placemark.
+     *
+     * @param placemark the placemark
+     * @return the constraints
+     */
+    private static Constraints createConstraints(Placemark placemark)
+    {
+        Constraints constraints = null;
+        if (placemark.getTimePrimitive() != null)
+        {
+            TimeConstraint contraint = TimeConstraint
+                    .getTimeConstraint(KMLSpatialTemporalUtils.timeSpanFromTimePrimitive(placemark.getTimePrimitive()));
+            constraints = new Constraints(contraint);
+        }
+        return constraints;
+    }
+
+    /**
+     * Create a new {@link Placemark} that contains a polygon representing the given region and add it to the specified Folder.
      *
      * @param folder The KML folder for the Placemark.
      * @param name The name for the polygon.
@@ -201,8 +246,7 @@ public final class RegionUtils
     }
 
     /**
-     * Create a new {@link Placemark} that contains a line representing the
-     * given region.
+     * Create a new {@link Placemark} that contains a line representing the given region.
      *
      * @param name The name for the line.
      * @param locations The coordinates of the line.
@@ -219,8 +263,7 @@ public final class RegionUtils
     }
 
     /**
-     * Create a new {@link Placemark} that contains a polygon representing the
-     * given region.
+     * Create a new {@link Placemark} that contains a polygon representing the given region.
      *
      * @param name The name for the polygon.
      * @param exteriorRing The exterior ring of the polygon.
@@ -248,9 +291,8 @@ public final class RegionUtils
     }
 
     /**
-     * Create a new {@link MyPlacesDataTypeInfo} that contains a KML line
-     * representing the given region. Add the new data type info to the given
-     * parent data group.
+     * Create a new {@link MyPlacesDataTypeInfo} that contains a KML line representing the given region. Add the new data type
+     * info to the given parent data group.
      *
      * @param folder The KML folder to contain the Placemark.
      * @param name The name for the line.
@@ -268,9 +310,8 @@ public final class RegionUtils
     }
 
     /**
-     * Create a new {@link MyPlacesDataTypeInfo} that contains a KML polygon
-     * representing the given region. Add the new data type info to the given
-     * parent data group.
+     * Create a new {@link MyPlacesDataTypeInfo} that contains a KML polygon representing the given region. Add the new data type
+     * info to the given parent data group.
      *
      * @param folder The KML folder to contain the Placemark.
      * @param name The name for the polygon.
@@ -326,14 +367,7 @@ public final class RegionUtils
                     .collect(Collectors.toList());
             poly.createAndSetOuterBoundaryIs().setLinearRing(convertToKML(exteriorRing));
 
-            // Add holes
-//            if (interiorRings != null)
-//            {
-//                for (List<? extends LatLonAlt> hole : interiorRings)
-//                {
-//                    poly.createAndAddInnerBoundaryIs().setLinearRing(convertToKML(hole));
-//                }
-//            }
+            // TODO Add holes
         }
 
         return p;
