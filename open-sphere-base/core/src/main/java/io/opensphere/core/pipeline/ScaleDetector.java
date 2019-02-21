@@ -1,8 +1,13 @@
 package io.opensphere.core.pipeline;
 
 import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.Toolkit;
+import java.awt.Point;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import javax.swing.JFrame;
+
+import org.apache.log4j.Logger;
 
 import io.opensphere.core.control.ui.UIRegistry;
 
@@ -13,21 +18,30 @@ import io.opensphere.core.control.ui.UIRegistry;
 public class ScaleDetector
 {
     /**
-     * The current dpi scale on the current monitor.
+     * Used to log messages.
      */
-    private float myDPIScale = -1;
+    private static final Logger LOG = Logger.getLogger(ScaleDetector.class);
 
     /**
-     * Used to figure out which monitor the main frame is located
-     *            on.
+     * The current dpi scale on the current monitor.
+     */
+    private float myDPIScale = 1.0f;
+
+    /**
+     * The previous location of the main window.
+     */
+    private Point myPreviousLocation;
+
+    /**
+     * Used to figure out which monitor the main frame is located on.
      */
     private final UIRegistry myRegistry;
 
     /**
      * Constructor.
      *
-     * @param uiRegistry Used to figure out which monitor the main frame is located
-     *            on.
+     * @param uiRegistry Used to figure out which monitor the main frame is
+     *            located on.
      */
     public ScaleDetector(UIRegistry uiRegistry)
     {
@@ -41,12 +55,31 @@ public class ScaleDetector
      */
     public float getScale()
     {
-        if (myDPIScale == -1)
+        JFrame mainFrame = myRegistry.getMainFrameProvider().get();
+        if (mainFrame.isShowing())
         {
-            double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-            int gdHeight = gd.getDisplayMode().getHeight();
-            myDPIScale = (float)(gdHeight / screenHeight);
+            Point currentLocation = mainFrame.getLocationOnScreen();
+            if (!currentLocation.equals(myPreviousLocation))
+            {
+                myPreviousLocation = currentLocation;
+                GraphicsDevice gd = mainFrame.getGraphicsConfiguration().getDevice();
+                try
+                {
+                    Method method = gd.getClass().getMethod("getDefaultScaleY");
+                    if (method != null)
+                    {
+                        Float yScale = (Float)method.invoke(gd);
+                        if (yScale != null)
+                        {
+                            myDPIScale = yScale.floatValue();
+                        }
+                    }
+                }
+                catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e)
+                {
+                    LOG.error(e, e);
+                }
+            }
         }
 
         return myDPIScale;
