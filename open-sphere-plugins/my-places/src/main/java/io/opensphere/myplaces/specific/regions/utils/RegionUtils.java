@@ -14,6 +14,7 @@ import de.micromata.opengis.kml.v_2_2_0.Folder;
 import de.micromata.opengis.kml.v_2_2_0.IconStyle;
 import de.micromata.opengis.kml.v_2_2_0.LineString;
 import de.micromata.opengis.kml.v_2_2_0.LinearRing;
+import de.micromata.opengis.kml.v_2_2_0.MultiGeometry;
 import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import de.micromata.opengis.kml.v_2_2_0.PolyStyle;
 import de.micromata.opengis.kml.v_2_2_0.Polygon;
@@ -209,28 +210,10 @@ public final class RegionUtils
      */
     public static Placemark linePlacemark(String name, List<? extends LatLonAlt> locations)
     {
-        Placemark p = new Placemark();
-        p.setId(UUID.randomUUID().toString());
-        p.setName(name);
-        p.setVisibility(Boolean.TRUE);
+        Placemark p = createPlacemark(name);
 
         LineString lineString = p.createAndSetLineString();
         locations.forEach(l -> lineString.addToCoordinates(l.getLonD(), l.getLatD(), l.getAltM()));
-        Style style = PlacemarkUtils.setPlacemarkColor(p, Color.GRAY);
-
-        BalloonStyle bSty = new BalloonStyle();
-        bSty.setColor(ColorUtilities.convertToHexString(Color.GRAY, 3, 2, 1, 0));
-        bSty.setTextColor(ColorUtilities.convertToHexString(Color.WHITE, 3, 2, 1, 0));
-
-        style.setBalloonStyle(bSty);
-
-        ExtendedData ed = new ExtendedData();
-        ExtendedDataUtils.putVisualizationType(ed, MapVisualizationType.ANNOTATION_REGIONS);
-        ExtendedDataUtils.putBoolean(ed, Constants.IS_ANNOHIDE_ID, false);
-        ExtendedDataUtils.putBoolean(ed, Constants.IS_FEATURE_ON_ID, true);
-        ExtendedDataUtils.putBoolean(ed, Constants.IS_TITLE, true);
-        ExtendedDataUtils.putBoolean(ed, Constants.IS_DESC_ID, true);
-        p.setExtendedData(ed);
 
         return p;
     }
@@ -248,10 +231,7 @@ public final class RegionUtils
     public static Placemark regionPlacemark(String name, List<? extends LatLonAlt> exteriorRing,
             Collection<? extends List<? extends LatLonAlt>> interiorRings)
     {
-        Placemark p = new Placemark();
-        p.setId(UUID.randomUUID().toString());
-        p.setName(name);
-        p.setVisibility(Boolean.TRUE);
+        Placemark p = createPlacemark(name);
 
         Polygon poly = p.createAndSetPolygon();
         poly.createAndSetOuterBoundaryIs().setLinearRing(convertToKML(exteriorRing));
@@ -263,22 +243,6 @@ public final class RegionUtils
                 poly.createAndAddInnerBoundaryIs().setLinearRing(convertToKML(hole));
             }
         }
-
-        Style style = PlacemarkUtils.setPlacemarkColor(p, Color.GRAY);
-
-        BalloonStyle bSty = new BalloonStyle();
-        bSty.setColor(ColorUtilities.convertToHexString(Color.GRAY, 3, 2, 1, 0));
-        bSty.setTextColor(ColorUtilities.convertToHexString(Color.WHITE, 3, 2, 1, 0));
-
-        style.setBalloonStyle(bSty);
-
-        ExtendedData ed = new ExtendedData();
-        ExtendedDataUtils.putVisualizationType(ed, MapVisualizationType.ANNOTATION_REGIONS);
-        ExtendedDataUtils.putBoolean(ed, Constants.IS_ANNOHIDE_ID, false);
-        ExtendedDataUtils.putBoolean(ed, Constants.IS_FEATURE_ON_ID, true);
-        ExtendedDataUtils.putBoolean(ed, Constants.IS_TITLE, true);
-        ExtendedDataUtils.putBoolean(ed, Constants.IS_DESC_ID, true);
-        p.setExtendedData(ed);
 
         return p;
     }
@@ -339,6 +303,72 @@ public final class RegionUtils
         }
 
         return createRegionFromLLAs(folder, name, llaExteriorRing, llaInteriorRings);
+    }
+
+    /**
+     * Create a new {@link Placemark} from a collection of {@link PolygonGeometry}.
+     *
+     * @param name The name for the line.
+     * @param geometries The geometries.
+     * @return The created placemark.
+     */
+    public static Placemark multiPolygonPlacemark(String name, Collection<? extends PolygonGeometry> geometries)
+    {
+        Placemark p = createPlacemark(name);
+
+        MultiGeometry multiGeometry = p.createAndSetMultiGeometry();
+        for (PolygonGeometry inputPolygon : geometries)
+        {
+            Polygon poly = multiGeometry.createAndAddPolygon();
+
+            // Add outer boundary
+            List<LatLonAlt> exteriorRing = inputPolygon.getVertices().stream().map(v -> ((GeographicPosition)v).getLatLonAlt())
+                    .collect(Collectors.toList());
+            poly.createAndSetOuterBoundaryIs().setLinearRing(convertToKML(exteriorRing));
+
+            // Add holes
+//            if (interiorRings != null)
+//            {
+//                for (List<? extends LatLonAlt> hole : interiorRings)
+//                {
+//                    poly.createAndAddInnerBoundaryIs().setLinearRing(convertToKML(hole));
+//                }
+//            }
+        }
+
+        return p;
+    }
+
+    /**
+     * Create a new {@link Placemark} without a geometry.
+     *
+     * @param name The name for the polygon.
+     * @return The created placemark.
+     */
+    private static Placemark createPlacemark(String name)
+    {
+        Placemark p = new Placemark();
+        p.setId(UUID.randomUUID().toString());
+        p.setName(name);
+        p.setVisibility(Boolean.TRUE);
+
+        Style style = PlacemarkUtils.setPlacemarkColor(p, Color.GRAY);
+
+        BalloonStyle bSty = new BalloonStyle();
+        bSty.setColor(ColorUtilities.convertToHexString(Color.GRAY, 3, 2, 1, 0));
+        bSty.setTextColor(ColorUtilities.convertToHexString(Color.WHITE, 3, 2, 1, 0));
+
+        style.setBalloonStyle(bSty);
+
+        ExtendedData ed = new ExtendedData();
+        ExtendedDataUtils.putVisualizationType(ed, MapVisualizationType.ANNOTATION_REGIONS);
+        ExtendedDataUtils.putBoolean(ed, Constants.IS_ANNOHIDE_ID, false);
+        ExtendedDataUtils.putBoolean(ed, Constants.IS_FEATURE_ON_ID, true);
+        ExtendedDataUtils.putBoolean(ed, Constants.IS_TITLE, true);
+        ExtendedDataUtils.putBoolean(ed, Constants.IS_DESC_ID, true);
+        p.setExtendedData(ed);
+
+        return p;
     }
 
     /**

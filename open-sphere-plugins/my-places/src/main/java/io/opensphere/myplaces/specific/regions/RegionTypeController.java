@@ -37,7 +37,6 @@ import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.mantle.data.MapVisualizationType;
-import io.opensphere.myplaces.models.MyPlacesDataGroupInfo;
 import io.opensphere.myplaces.models.MyPlacesDataTypeInfo;
 import io.opensphere.myplaces.models.MyPlacesModel;
 import io.opensphere.myplaces.specific.PlaceTypeController;
@@ -162,26 +161,17 @@ public class RegionTypeController extends PlaceTypeController
     protected void createRegionFromMultiGeometry(GeometryGroupGeometry geometries)
     {
         assert EventQueue.isDispatchThread();
-        Set<String> names = new TreeSet<>();
-        Function<Placemark, Void> func = input ->
-        {
-            if (input.getGeometry() instanceof Polygon && input.getName().startsWith("Region-"))
-            {
-                names.add(input.getName());
-            }
-            return null;
-        };
-        myPlacesModel.applyToEachPlacemark(func);
-        String roiName = StringUtilities.getUniqueName("Region-", names);
-        MyPlacesDataGroupInfo parentDataGroup = myPlacesModel.getDataGroups();
+
         List<Position> vertices = New.list();
         geometries.getGeometries().stream().filter(g -> g instanceof PolygonGeometry)
                 .forEach(g -> vertices.addAll(((PolygonGeometry)g).getVertices()));
+
         Collection<List<? extends Position>> holes = New.collection();
         geometries.getGeometries().stream().filter(g -> g instanceof PolygonGeometry)
-                .forEach(g -> (((PolygonGeometry)g).getHoles()).forEach(e -> holes.add(e)));
-        Placemark placemark = RegionUtils.createRegionFromPositions(new Folder(), roiName, vertices, holes);
-        launchEditor(placemark, parentDataGroup);
+                .forEach(g -> ((PolygonGeometry)g).getHoles().forEach(e -> holes.add(e)));
+
+        Placemark placemark = RegionUtils.createRegionFromPositions(new Folder(), getDefaultName(), vertices, holes);
+        launchEditor(placemark, myPlacesModel.getDataGroups());
     }
 
     /**
@@ -193,26 +183,9 @@ public class RegionTypeController extends PlaceTypeController
     {
         assert EventQueue.isDispatchThread();
 
-        Set<String> names = new TreeSet<>();
-        Function<Placemark, Void> func = input ->
-        {
-            if (input.getGeometry() instanceof Polygon && input.getName().startsWith("Region-"))
-            {
-                names.add(input.getName());
-            }
-            return null;
-        };
-
-        myPlacesModel.applyToEachPlacemark(func);
-
-        String roiName = StringUtilities.getUniqueName("Region-", names);
-
-        MyPlacesDataGroupInfo parentDataGroup = myPlacesModel.getDataGroups();
-
-        Placemark placemark = RegionUtils.createRegionFromPositions(new Folder(), roiName, geometry.getVertices(),
+        Placemark placemark = RegionUtils.createRegionFromPositions(new Folder(), getDefaultName(), geometry.getVertices(),
                 geometry.getHoles());
-
-        launchEditor(placemark, parentDataGroup);
+        launchEditor(placemark, myPlacesModel.getDataGroups());
     }
 
     /**
@@ -224,6 +197,17 @@ public class RegionTypeController extends PlaceTypeController
     {
         assert EventQueue.isDispatchThread();
 
+        Placemark placemark = RegionUtils.createLineFromPositions(new Folder(), getDefaultName(), geometry.getVertices());
+        launchEditor(placemark, myPlacesModel.getDataGroups());
+    }
+
+    /**
+     * Gets a default name for the next region.
+     *
+     * @return the name
+     */
+    private String getDefaultName()
+    {
         Set<String> names = new TreeSet<>();
         Function<Placemark, Void> func = input ->
         {
@@ -236,13 +220,7 @@ public class RegionTypeController extends PlaceTypeController
 
         myPlacesModel.applyToEachPlacemark(func);
 
-        String roiName = StringUtilities.getUniqueName("Region-", names);
-
-        MyPlacesDataGroupInfo parentDataGroup = myPlacesModel.getDataGroups();
-
-        Placemark placemark = RegionUtils.createLineFromPositions(new Folder(), roiName, geometry.getVertices());
-
-        launchEditor(placemark, parentDataGroup);
+        return StringUtilities.getUniqueName("Region-", names);
     }
 
     /**
