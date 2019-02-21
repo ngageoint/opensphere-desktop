@@ -256,14 +256,14 @@ public class FeatureActionImporter implements FileOrURLImporter
      */
     private void readV4Stream(InputStream in) throws JAXBException
     {
-        myModel.getFeatureGroups().clear();
+        FXUtilities.runOnFXThreadAndWait(() -> myModel.getFeatureGroups().clear());
         Object featureActionsArray = XMLUtilities.readXMLObject(in, FeatureActionArrayType.class,
                 Arrays.asList(ObjectFactory.class, oasis.names.tc.ciq.xsdschema.xal._2.ObjectFactory.class));
 
         SimpleFeatureActionGroup convertedFeatureActions = VersionConverter
                 .convert(((JAXBElement<FeatureActionArrayType>)featureActionsArray).getValue());
 
-        myModel.getFeatureGroups().add(convertedFeatureActions);
+        FXUtilities.runOnFXThreadAndWait(() -> myModel.getFeatureGroups().add(convertedFeatureActions));
     }
 
     /**
