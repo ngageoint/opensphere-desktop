@@ -105,7 +105,7 @@ public class PipelineImpl implements GLEventListener, Pipeline, GenericSubscribe
     /**
      * The scaling percentage.
      */
-    private final ScaleDetector myDPIScale = new ScaleDetector();
+    private ScaleDetector myDPIScale;
 
     /** My frame rate meter. */
     private final RateMeter myFrameRateMeter = new RateMeter(.7, (instant, average) ->
@@ -585,6 +585,7 @@ public class PipelineImpl implements GLEventListener, Pipeline, GenericSubscribe
         myRepaintTimer.start();
 
         myToolbox = toolbox;
+        myDPIScale = new ScaleDetector(myToolbox.getUIRegistry());
         myCanvasHelper.getCanvas().addMouseMotionListener(new MouseAdapter()
         {
             @Override

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.math.Matrix4d;
 import io.opensphere.core.math.Quaternion;
 import io.opensphere.core.math.RectangularCylinder;
@@ -62,12 +63,13 @@ public abstract class AbstractViewer implements Viewer
      * Constructor.
      * @param displayedViewer True if this user is used to display to the monitor, false if it is used
      * to render somewhere else such as frame buffers/textures.
+     * @param registry The {@link UIRegistry}.
      */
-    public AbstractViewer(boolean displayedViewer)
+    public AbstractViewer(boolean displayedViewer, UIRegistry registry)
     {
         if(displayedViewer)
         {
-            myDPIScale = new ScaleDetector();
+            myDPIScale = new ScaleDetector(registry);
         }
         else
         {

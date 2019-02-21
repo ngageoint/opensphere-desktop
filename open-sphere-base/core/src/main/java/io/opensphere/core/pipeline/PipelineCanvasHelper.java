@@ -68,7 +68,7 @@ public class PipelineCanvasHelper
         }
         else
         {
-            myCanvas = new PipelineGLCanvas(caps);
+            myCanvas = new PipelineGLCanvas(caps, toolbox.getUIRegistry());
             myDrawable = (GLAutoDrawable)myCanvas;
         }
 

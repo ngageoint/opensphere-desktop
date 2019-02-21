@@ -5,6 +5,14 @@ package io.opensphere.core.pipeline;
  */
 public class NoScale extends ScaleDetector
 {
+    /**
+     * Constructor.
+     */
+    public NoScale()
+    {
+        super(null);
+    }
+
     @Override
     public float getScale()
     {

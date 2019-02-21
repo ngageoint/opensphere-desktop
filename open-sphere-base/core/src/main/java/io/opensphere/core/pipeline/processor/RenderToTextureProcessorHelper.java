@@ -51,7 +51,7 @@ public final class RenderToTextureProcessorHelper
         rttgBuilder.setTileGeometry(tileGeometry);
 
         Viewer3D viewer = new Viewer3D(new Viewer3D.Builder(), false);
-        MapContext<?> mapContext = new SimpleMapContext<>(new ScreenViewer(false), viewer);
+        MapContext<?> mapContext = new SimpleMapContext<>(new ScreenViewer(), viewer);
         mapContext.reshape(100, 100);
         rttgBuilder.setMapContext(mapContext);
         rttgBuilder.setBackgroundColor(Color.RED);

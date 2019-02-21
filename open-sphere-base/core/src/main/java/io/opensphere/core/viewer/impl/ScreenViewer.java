@@ -2,6 +2,7 @@ package io.opensphere.core.viewer.impl;
 
 import java.util.Arrays;
 
+import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.math.Ellipsoid;
 import io.opensphere.core.math.Matrix4d;
 import io.opensphere.core.math.Vector3d;
@@ -21,12 +22,19 @@ public class ScreenViewer extends AbstractViewer
 
     /**
      * Constructor.
-     * @param displayedViewer True if this user is used to display to the monitor, false if it is used
-     * to render somewhere else such as frame buffers/textures.
      */
-    public ScreenViewer(boolean displayedViewer)
+    public ScreenViewer()
     {
-        super(displayedViewer);
+        super(false, null);
+    }
+
+    /**
+     * Constructor.
+     * @param uiRegistry The {@link UIRegistry}.
+     */
+    public ScreenViewer(UIRegistry uiRegistry)
+    {
+        super(true, uiRegistry);
     }
 
     @Override
