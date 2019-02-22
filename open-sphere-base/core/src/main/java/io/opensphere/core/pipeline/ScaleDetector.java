@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
 
@@ -55,34 +56,38 @@ public class ScaleDetector
      */
     public float getScale()
     {
-        JFrame mainFrame = myRegistry.getMainFrameProvider().get();
-        if (mainFrame.isShowing())
+        if (SwingUtilities.isEventDispatchThread())
         {
-            Point currentLocation = mainFrame.getLocationOnScreen();
-            if (!currentLocation.equals(myPreviousLocation))
+            JFrame mainFrame = myRegistry.getMainFrameProvider().get();
+            if (mainFrame.isShowing())
             {
-                myPreviousLocation = currentLocation;
-                GraphicsDevice gd = mainFrame.getGraphicsConfiguration().getDevice();
-                try
+                Point currentLocation = mainFrame.getLocationOnScreen();
+                if (!currentLocation.equals(myPreviousLocation))
                 {
-                    Method method = gd.getClass().getMethod("getDefaultScaleY");
-                    if (method != null)
+                    myPreviousLocation = currentLocation;
+                    GraphicsDevice gd = mainFrame.getGraphicsConfiguration().getDevice();
+                    try
                     {
-                        Float yScale = (Float)method.invoke(gd);
-                        if (yScale != null)
+                        Method method = gd.getClass().getMethod("getDefaultScaleY");
+                        if (method != null)
                         {
-                            myDPIScale = yScale.floatValue();
+                            Float yScale = (Float)method.invoke(gd);
+                            if (yScale != null)
+                            {
+                                myDPIScale = yScale.floatValue();
+                            }
                         }
                     }
-                }
-                catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
-                        | SecurityException e)
-                {
-                    // Since this will occur all the time on linux just keep it
-                    // at debug level
-                    if (LOG.isDebugEnabled())
+                    catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+                            | SecurityException e)
                     {
-                        LOG.error(e, e);
+                        // Since this will occur all the time on linux just keep
+                        // it
+                        // at debug level
+                        if (LOG.isDebugEnabled())
+                        {
+                            LOG.error(e, e);
+                        }
                     }
                 }
             }
