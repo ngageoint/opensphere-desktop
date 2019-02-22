@@ -145,6 +145,15 @@ public abstract class AbstractViewer implements Viewer
         return myTrajectoryGenerators;
     }
 
+    /**
+     * Gets the current display pixel scaling factor.
+     * @return The scale factor for current display.
+     */
+    public float getDisplayScale()
+    {
+        return myDPIScale.getScale();
+    }
+
     @Override
     public synchronized ScreenPosition getViewOffset()
     {

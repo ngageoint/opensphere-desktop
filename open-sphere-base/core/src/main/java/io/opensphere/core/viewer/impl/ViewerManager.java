@@ -164,7 +164,7 @@ public class ViewerManager
                 if (viewer.getViewportWidth() != myCurrentViewer.getViewportWidth()
                         || viewer.getViewportHeight() != myCurrentViewer.getViewportHeight())
                 {
-                    viewer.reshape(myCurrentViewer.getViewportWidth(), myCurrentViewer.getViewportHeight());
+                    viewer.reshape((int)(myCurrentViewer.getViewportWidth() * viewer.getDisplayScale()), (int)(myCurrentViewer.getViewportHeight() * viewer.getDisplayScale()));
                 }
             }
             viewer.addObserver(viewerObserver);
