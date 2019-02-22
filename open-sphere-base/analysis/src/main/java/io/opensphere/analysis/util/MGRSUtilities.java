@@ -52,10 +52,14 @@ public class MGRSUtilities
         MetaDataInfo metaInfo;
         if (provider != null && dataTypeInfo != null && (metaInfo = dataTypeInfo.getMetaDataInfo()) != null)
         {
-            metaInfo.addKey(MetaDataInfo.MGRS_DERIVED, String.class, source);
-            MetaDataProvider newProvider = new MDILinkedMetaDataProvider(metaInfo, provider.getValues());
-            newProvider.setValue(MetaDataInfo.MGRS_DERIVED, getMGRSValue(mapSupport, precision));
-            return newProvider;
+            String mgrsValue = getMGRSValue(mapSupport, precision);
+            if (mgrsValue != null)
+            {
+                metaInfo.addKey(MetaDataInfo.MGRS_DERIVED, String.class, source);
+                MetaDataProvider newProvider = new MDILinkedMetaDataProvider(metaInfo, provider.getValues());
+                newProvider.setValue(MetaDataInfo.MGRS_DERIVED, mgrsValue);
+                return newProvider;
+            }
         }
         return provider;
     }
