@@ -10,6 +10,7 @@ import java.util.concurrent.locks.Lock;
 import com.vividsolutions.jts.geom.Polygon;
 
 import io.opensphere.core.geometry.Geometry;
+import io.opensphere.core.geometry.MultiPolygonGeometry;
 import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.geometry.constraint.MultiTimeConstraint;
 import io.opensphere.core.geometry.renderproperties.ColorRenderProperties;
@@ -315,7 +316,7 @@ public class PolygonProcessor<E extends PolygonGeometry> extends AbstractProcess
      * @return The list of time spans, or {@code null} if there is no time
      *         constraint.
      */
-    private List<TimeSpan> getConstraintTimeSpans(int count, E geom)
+    private List<TimeSpan> getConstraintTimeSpans(int count, PolygonGeometry geom)
     {
         if (geom.getConstraints() != null && geom.getConstraints().getTimeConstraint() != null)
         {
@@ -348,23 +349,19 @@ public class PolygonProcessor<E extends PolygonGeometry> extends AbstractProcess
         List<PolygonMeshData> meshBlocks = New.list(1);
         if (drawLine || drawFill)
         {
-            @SuppressWarnings("unchecked")
-            List<? extends GeographicPosition> geoVertices = (List<? extends GeographicPosition>)geo.getVertices();
-
             if (drawLine)
             {
                 lineData = New.collection();
-                List<Vector3d> line = getPositionConverter().convertLinesToModel(geoVertices, GeographicPosition.class,
-                        geo.getLineType(), null, projection.getModelCenter());
-                lineData.add(new PolylineModelData(line, getConstraintTimeSpans(line.size(), geo)));
-
-                for (List<? extends Position> hole : geo.getHoles())
+                if (geo instanceof MultiPolygonGeometry)
                 {
-                    @SuppressWarnings("unchecked")
-                    List<? extends GeographicPosition> holeVerts = (List<? extends GeographicPosition>)hole;
-                    line = getPositionConverter().convertLinesToModel(holeVerts, GeographicPosition.class, geo.getLineType(),
-                            null, projection.getModelCenter());
-                    lineData.add(new PolylineModelData(line, getConstraintTimeSpans(line.size(), geo)));
+                    for (PolygonGeometry child : ((MultiPolygonGeometry)geo).getGeometries())
+                    {
+                        generateLineData(child, projection, lineData);
+                    }
+                }
+                else
+                {
+                    generateLineData(geo, projection, lineData);
                 }
             }
 
@@ -393,6 +390,32 @@ public class PolygonProcessor<E extends PolygonGeometry> extends AbstractProcess
         }
 
         return new PolygonModelData(lineData, meshBlocks.isEmpty() ? null : meshBlocks.get(0));
+    }
+
+    /**
+     * Generates line data for the geometry.
+     *
+     * @param geo the polygon geometry
+     * @param projection the projection
+     * @param lineData the line data collection to which to add
+     */
+    private void generateLineData(PolygonGeometry geo, Projection projection, Collection<? super PolylineModelData> lineData)
+    {
+        @SuppressWarnings("unchecked")
+        List<? extends GeographicPosition> geoVertices = (List<? extends GeographicPosition>)geo.getVertices();
+
+        List<Vector3d> line = getPositionConverter().convertLinesToModel(geoVertices, GeographicPosition.class, geo.getLineType(),
+                null, projection.getModelCenter());
+        lineData.add(new PolylineModelData(line, getConstraintTimeSpans(line.size(), geo)));
+
+        for (List<? extends Position> hole : geo.getHoles())
+        {
+            @SuppressWarnings("unchecked")
+            List<? extends GeographicPosition> holeVerts = (List<? extends GeographicPosition>)hole;
+            line = getPositionConverter().convertLinesToModel(holeVerts, GeographicPosition.class, geo.getLineType(), null,
+                    projection.getModelCenter());
+            lineData.add(new PolylineModelData(line, getConstraintTimeSpans(line.size(), geo)));
+        }
     }
 
     /**
