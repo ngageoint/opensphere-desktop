@@ -75,9 +75,15 @@ public class ScaleDetector
                         }
                     }
                 }
-                catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e)
+                catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+                        | SecurityException e)
                 {
-                    LOG.error(e, e);
+                    // Since this will occur all the time on linux just keep it
+                    // at debug level
+                    if (LOG.isDebugEnabled())
+                    {
+                        LOG.error(e, e);
+                    }
                 }
             }
         }
