@@ -73,10 +73,15 @@ public class BaseballPanel extends GridPane
     /** The list of DataElements that are currently shown. */
     private final ListView<DataElement> myElementsView = new ListView<>();
 
-    /** The list of information being displayed about the active data element. */
+    /**
+     * The list of information being displayed about the active data element.
+     */
     private final TableView<BaseballDataRow> myDataView = new TableView<>();
 
-    /** The label that displays the coordinate information about the active data element. */
+    /**
+     * The label that displays the coordinate information about the active data
+     * element.
+     */
     private final Label myCoordinates = new Label();
 
     /** The border for the currently selected coordinate label. */
@@ -84,18 +89,22 @@ public class BaseballPanel extends GridPane
             BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(3)));
 
     /** The border for non-active, mouse-hovered coordinate labels. */
-    private final Border mySecondaryCoordinateBorder = new Border(new BorderStroke(FXUtilities.fromAwtColor(Colors.OPENSPHERE_LIGHT),
-            BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(1.5)));
+    private final Border mySecondaryCoordinateBorder = new Border(
+            new BorderStroke(FXUtilities.fromAwtColor(Colors.OPENSPHERE_LIGHT), BorderStrokeStyle.SOLID, new CornerRadii(5),
+                    new BorderWidths(1.5)));
 
     /**
-     * The border for non-active, non-mouse-hovered coordinate labels.
-     * Matches the background color of the dialog.
-     * Used to prevent constant minor resizing of label space when hovering over them.
+     * The border for non-active, non-mouse-hovered coordinate labels. Matches
+     * the background color of the dialog. Used to prevent constant minor
+     * resizing of label space when hovering over them.
      */
     private final Border myInvisibleCoordinateBorder = new Border(new BorderStroke(FXUtilities.fromAwtColor(Colors.LF_SECONDARY3),
             BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(1.5)));
 
-    /** The Label that displays which layer the currently selected feature is from. */
+    /**
+     * The Label that displays which layer the currently selected feature is
+     * from.
+     */
     private final Label myLayer = new Label();
 
     /** The label that displays the current number of features shown. */
@@ -127,11 +136,9 @@ public class BaseballPanel extends GridPane
         GridPane.setHalignment(myLayer, HPos.LEFT);
 
         myActiveDataElement = myElements.get(0);
-        myLinker = PreferencesLinkerFactory.getLinker(
-                myActiveDataElement.getDataTypeInfo().getTypeKey(),
-                myToolbox.getPreferencesRegistry()
-        );
-        
+        myLinker = PreferencesLinkerFactory.getLinker(myActiveDataElement.getDataTypeInfo().getTypeKey(),
+                myToolbox.getPreferencesRegistry());
+
         setDataView();
         add(myFeatureCount, 0, 1);
         setFeatureCount(myElements.size());
@@ -143,8 +150,8 @@ public class BaseballPanel extends GridPane
     /**
      * Copies the currently selected cell data to the clipboard.
      *
-     * @param displayMessage whether to display the message that a
-     *        copy has been performed
+     * @param displayMessage whether to display the message that a copy has been
+     *            performed
      */
     private void copyCellToClipboard(boolean displayMessage)
     {
@@ -180,9 +187,10 @@ public class BaseballPanel extends GridPane
             BaseballDataRow baseballData = myDataView.getFocusModel().getFocusedItem();
             if (baseballData != null)
             {
+                String key = baseballData.getField();
                 String text = baseballData.getValue().getText();
-    
-                Map<String, URL> urls = myLinker.getURLs(text, text);
+
+                Map<String, URL> urls = myLinker.getURLs(key, text);
                 if (!urls.isEmpty())
                 {
                     for (URL url : urls.values())
@@ -219,7 +227,7 @@ public class BaseballPanel extends GridPane
             });
             return row;
         });
-        
+
         myElementsView.setItems(FXCollections.observableList(myElements));
         GridPane.setVgrow(myElementsView, Priority.ALWAYS);
         return myElementsView;
@@ -251,7 +259,7 @@ public class BaseballPanel extends GridPane
             }
             fireUrlClickEvent();
         });
-        
+
         myDataView.setOnKeyPressed(event ->
         {
             if (myCopyCombination.match(event))
@@ -325,7 +333,7 @@ public class BaseballPanel extends GridPane
     {
         TextField search = new TextField();
         search.setPromptText("search features");
-        search.setOnKeyTyped(e -> 
+        search.setOnKeyTyped(e ->
         {
             if (StringUtils.isEmpty(search.getText()))
             {
@@ -394,8 +402,8 @@ public class BaseballPanel extends GridPane
         }
         else if (value instanceof Date)
         {
-            returnValue = BaseballUtils.formatDate((Date)value, myToolbox.getPreferencesRegistry().getPreferences(ListToolPreferences.class)
-                    .getInt(ListToolPreferences.LIST_TOOL_TIME_PRECISION_DIGITS, 0));
+            returnValue = BaseballUtils.formatDate((Date)value, myToolbox.getPreferencesRegistry()
+                    .getPreferences(ListToolPreferences.class).getInt(ListToolPreferences.LIST_TOOL_TIME_PRECISION_DIGITS, 0));
         }
         else if (value instanceof TimeSpan)
         {
@@ -410,32 +418,33 @@ public class BaseballPanel extends GridPane
     }
 
     /**
-     * Turns the given string into a javafx Text object, and attaches
-     * hyperlink functionality to it if applicable.
+     * Turns the given string into a JavaFX Text object, and attaches hyperlink
+     * functionality to it if applicable.
      *
+     * @param key the name of the field with which the value is associated.
      * @param value the string to turn into a Text
      * @return the value as a Text object
      */
-    private Text getValueAsTextObject(String value)
+    private Text getValueAsTextObject(String key, String value)
     {
         Text returnValue = new Text();
         returnValue.setText(value);
         returnValue.setFill(Color.WHITE);
-        
-        if (myLinker != null && myLinker.hasURLFor(value, value))
+
+        if (myLinker != null && myLinker.hasURLFor(key, value))
         {
-            returnValue.setFill(Color.BLUE);
+            returnValue.setFill(Color.web("#FFFF33"));
             returnValue.setUnderline(true);
             returnValue.setOnMouseEntered(event -> getScene().setCursor(Cursor.HAND));
             returnValue.setOnMouseExited(event -> getScene().setCursor(Cursor.DEFAULT));
         }
-        
+
         return returnValue;
     }
 
     /**
-     * Turns the old coordinate label border invisible, then sets the
-     * border for selected label to the main border.
+     * Turns the old coordinate label border invisible, then sets the border for
+     * selected label to the main border.
      *
      * @param label the newly selected label
      */
@@ -479,8 +488,8 @@ public class BaseballPanel extends GridPane
     }
 
     /**
-     * Sets the coordinate label based off the currently active data element
-     * and the selected coordinate format.
+     * Sets the coordinate label based off the currently active data element and
+     * the selected coordinate format.
      */
     private void setCoordinates()
     {
@@ -525,7 +534,7 @@ public class BaseballPanel extends GridPane
             {
                 Object elementValue = myActiveDataElement.getMetaData().getValue(key);
                 String pairValue = getValueAsString(key, elementValue, myActiveDataElement);
-                data.add(new BaseballDataRow(key, pairValue == null ? new Text() : getValueAsTextObject(pairValue)));
+                data.add(new BaseballDataRow(key, pairValue == null ? new Text() : getValueAsTextObject(key, pairValue)));
             });
             myDataView.setItems(FXCollections.observableList(data));
             myLayer.setText(myActiveDataElement.getDataTypeInfo().getDisplayName());
@@ -545,7 +554,8 @@ public class BaseballPanel extends GridPane
     }
 
     /**
-     * Filters DataElements based on if any value in the DataElement contains the filter.
+     * Filters DataElements based on if any value in the DataElement contains
+     * the filter.
      *
      * @param filter the filter
      * @return the time-based sorted list of filtered DataElements
