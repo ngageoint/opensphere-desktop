@@ -29,7 +29,10 @@ public class LoggingQuantifySender implements QuantifySender
     {
         try
         {
-            LOG.info(OBJECT_MAPPER.writeValueAsString(metrics));
+            if (LOG.isDebugEnabled())
+            {
+                LOG.debug(OBJECT_MAPPER.writeValueAsString(metrics));
+            }
         }
         catch (JsonProcessingException e)
         {
