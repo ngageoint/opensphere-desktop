@@ -277,6 +277,17 @@ public class BaseballPanel extends GridPane
      */
     private Node createCoordinateArea()
     {
+        myCoordinates.setOnMouseClicked(e ->
+        {
+            if (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2)
+            {
+                ClipboardContent content = new ClipboardContent();
+                content.putString(myCoordinates.textProperty().get());
+                Clipboard.getSystemClipboard().setContent(content);
+                Notify.info("Copied value to clipboard: " + content.getString(), Method.POPUP);
+            }
+        });
+
         GridPane gridPane = new GridPane();
         HBox buttonBox = new HBox(8);
 
