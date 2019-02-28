@@ -4,8 +4,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.text.Text;
 
 /**
  * The data to be displayed in a row of cells of the data panel in
@@ -17,7 +15,7 @@ public class BaseballDataRow
     private final StringProperty myFieldProperty;
 
     /** The data displayed under the value heading. */
-    private final ObjectProperty<Text> myValueProperty;
+    private final ObjectProperty<Object> myValueProperty;
 
     /**
      * Creates a new set of values for the data panel.
@@ -25,10 +23,10 @@ public class BaseballDataRow
      * @param field the data for the field column
      * @param value the data for the value column
      */
-    public BaseballDataRow(String field, Text value)
+    public BaseballDataRow(String field, Object value)
     {
         myFieldProperty = new SimpleStringProperty(field);
-        myValueProperty = new SimpleObjectProperty<Text>();
+        myValueProperty = new SimpleObjectProperty<Object>();
         myValueProperty.setValue(value);
     }
 
@@ -57,7 +55,7 @@ public class BaseballDataRow
      *
      * @return the value property
      */
-    public ObjectProperty<Text> valueProperty()
+    public ObjectProperty<Object> valueProperty()
     {
         return myValueProperty;
     }
@@ -67,7 +65,7 @@ public class BaseballDataRow
      *
      * @return the value data
      */
-    public Text getValue()
+    public Object getValue()
     {
         return myValueProperty.get();
     }

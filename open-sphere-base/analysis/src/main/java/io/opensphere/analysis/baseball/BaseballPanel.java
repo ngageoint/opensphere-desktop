@@ -25,6 +25,8 @@ import io.opensphere.mantle.data.SpecialKey;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.impl.specialkey.LatitudeKey;
 import io.opensphere.mantle.data.impl.specialkey.LongitudeKey;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
@@ -36,6 +38,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
@@ -58,6 +62,12 @@ import javafx.scene.text.Text;
  */
 public class BaseballPanel extends GridPane
 {
+    /** The image tag prefix. */
+    private static final String IMAGE_PREFIX = "<img src=\"";
+
+    /** The image tag suffix. */
+    private static final String IMAGE_SUFFIX = "\"/>";
+
     /** The currently displayed data element. */
     private DataElement myActiveDataElement;
 
@@ -83,6 +93,9 @@ public class BaseballPanel extends GridPane
      * element.
      */
     private final Label myCoordinates = new Label();
+
+    /** The list of listeners for displaying images at the correct size. */
+    private final List<ImageListener> myListenerList = New.list();
 
     /** The border for the currently selected coordinate label. */
     private final Border myMainCoordinateBorder = new Border(new BorderStroke(FXUtilities.fromAwtColor(Colors.OPENSPHERE_LIGHT),
@@ -118,6 +131,9 @@ public class BaseballPanel extends GridPane
 
     /** The toolbox. */
     private final Toolbox myToolbox;
+
+    /** The TableColumn for the half of the table representing values. */
+    private final TableColumn<BaseballDataRow, Object> myValueColumn = new TableColumn<>("Value");
 
     /**
      * Constructs and initializes a new panel.
@@ -165,9 +181,13 @@ public class BaseballPanel extends GridPane
             {
                 content.putString(baseballData.getField());
             }
+            else if (baseballData.getValue() instanceof ImageView)
+            {
+                content.putString(((ImageView)baseballData.getValue()).getImage().getUrl());
+            }
             else
             {
-                content.putString(baseballData.getValue().getText());
+                content.putString(((Text)baseballData.getValue()).getText());
             }
             Clipboard.getSystemClipboard().setContent(content);
             if (displayMessage)
@@ -185,10 +205,10 @@ public class BaseballPanel extends GridPane
         if (myLinker != null)
         {
             BaseballDataRow baseballData = myDataView.getFocusModel().getFocusedItem();
-            if (baseballData != null)
+            if (baseballData != null && baseballData.getValue() instanceof Text)
             {
                 String key = baseballData.getField();
-                String text = baseballData.getValue().getText();
+                String text = ((Text)baseballData.getValue()).getText();
 
                 Map<String, URL> urls = myLinker.getURLs(key, text);
                 if (!urls.isEmpty())
@@ -242,11 +262,12 @@ public class BaseballPanel extends GridPane
     {
         TableColumn<BaseballDataRow, String> fieldColumn = new TableColumn<>("Field");
         fieldColumn.setCellValueFactory(data -> data.getValue().fieldProperty());
+        fieldColumn.setReorderable(false);
         myDataView.getColumns().add(fieldColumn);
 
-        TableColumn<BaseballDataRow, Text> valueColumn = new TableColumn<>("Value");
-        valueColumn.setCellValueFactory(data -> data.getValue().valueProperty());
-        myDataView.getColumns().add(valueColumn);
+        myValueColumn.setCellValueFactory(data -> data.getValue().valueProperty());
+        myValueColumn.setReorderable(false);
+        myDataView.getColumns().add(myValueColumn);
 
         myDataView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         myDataView.getSelectionModel().setCellSelectionEnabled(true);
@@ -530,11 +551,34 @@ public class BaseballPanel extends GridPane
             List<BaseballDataRow> data = New.list();
             GeographicPositionFormat tempFormat = myPositionFormat;
             myPositionFormat = GeographicPositionFormat.DECDEG;
+            myListenerList.forEach(e -> myValueColumn.widthProperty().removeListener(e));
+            myListenerList.clear();
             myActiveDataElement.getMetaData().getKeys().stream().forEach(key ->
             {
                 Object elementValue = myActiveDataElement.getMetaData().getValue(key);
                 String pairValue = getValueAsString(key, elementValue, myActiveDataElement);
-                data.add(new BaseballDataRow(key, pairValue == null ? new Text() : getValueAsTextObject(key, pairValue)));
+                if (pairValue != null && StringUtils.startsWith(pairValue, IMAGE_PREFIX))
+                {
+                    String imagePath = StringUtils.substringBetween(pairValue, IMAGE_PREFIX, IMAGE_SUFFIX);
+                    Image image = new Image(imagePath);
+                    ImageView imageView = new ImageView(image);
+                    imageView.setPreserveRatio(true);
+
+                    if (image.getWidth() > myValueColumn.getWidth() - 8)
+                    {
+                        imageView.setFitWidth(myValueColumn.getWidth() - 8);
+                    }
+
+                    ImageListener listener = new ImageListener(image, imageView);
+                    myListenerList.add(listener);
+                    myValueColumn.widthProperty().addListener(listener);
+
+                    data.add(new BaseballDataRow(key, imageView));
+                }
+                else
+                {
+                    data.add(new BaseballDataRow(key, pairValue == null ? new Text() : getValueAsTextObject(key, pairValue)));
+                }
             });
             myDataView.setItems(FXCollections.observableList(data));
             myLayer.setText(myActiveDataElement.getDataTypeInfo().getDisplayName());
@@ -583,5 +627,38 @@ public class BaseballPanel extends GridPane
     private List<DataElement> sortDataElementsByTime(List<DataElement> elements)
     {
         return elements.stream().sorted((f, s) -> s.getTimeSpan().compareTo(f.getTimeSpan())).collect(Collectors.toList());
+    }
+
+    /**
+     * The listener used for resizing images in the data fields.
+     */
+    private class ImageListener implements ChangeListener<Number>
+    {
+        /** The Image the listener is associated with. */
+        private final Image myImage;
+
+        /** The ImageView the listener is associated with. */
+        private final ImageView myImageView;
+
+        /**
+         * Constructs a new ImageListener with the given Image and ImageView
+         *
+         * @param image the image
+         * @param imageView the imageview
+         */
+        public ImageListener(Image image, ImageView imageView)
+        {
+            myImage = image;
+            myImageView = imageView;
+        }
+
+        @Override
+        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue)
+        {
+            if (myImage.getWidth() > newValue.doubleValue() - 8)
+            {
+                myImageView.setFitWidth(newValue.doubleValue() - 8);
+            }
+        }
     }
 }
