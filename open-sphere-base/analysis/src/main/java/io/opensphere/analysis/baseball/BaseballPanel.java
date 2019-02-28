@@ -265,7 +265,6 @@ public class BaseballPanel extends GridPane
         fieldColumn.setReorderable(false);
         myDataView.getColumns().add(fieldColumn);
 
-//        TableColumn<BaseballDataRow, Object> valueColumn = new TableColumn<>("Value");
         myValueColumn.setCellValueFactory(data -> data.getValue().valueProperty());
         myValueColumn.setReorderable(false);
         myDataView.getColumns().add(myValueColumn);
