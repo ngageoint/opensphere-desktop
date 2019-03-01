@@ -402,6 +402,19 @@ public class PolygonProcessor<E extends PolygonGeometry> extends AbstractProcess
         return new PolygonModelData(lineData, meshBlocks.isEmpty() ? null : meshBlocks.get(0));
     }
 
+    /**
+     * Recursively processes the supplied geometry, extracting all sub polygons
+     * and returning them in a list. If the supplied
+     * {@link com.vividsolutions.jts.geom.Geometry} is an instance of
+     * {@link MultiPolygon}, it's child polygons are extracted via a recursive
+     * call. If the parameter is an instance of {@link Polygon} it is simply
+     * returned in a single-element list. All other elements are ignored and an
+     * empty list returned.
+     * 
+     * @param geometry the geometry to process.
+     * @return a list of polygons extracted from the supplied geometry, which
+     *         may be empty but never null.
+     */
     protected List<Polygon> getPolygons(com.vividsolutions.jts.geom.Geometry geometry)
     {
         List<Polygon> returnValue;
