@@ -36,6 +36,7 @@ import io.opensphere.core.util.concurrent.ProcrastinatingExecutor;
 import io.opensphere.core.util.concurrent.SuppressableRejectedExecutionHandler;
 import io.opensphere.core.util.lang.NamedThreadFactory;
 import io.opensphere.core.util.lang.Pair;
+import io.opensphere.core.util.lang.ThreadUtilities;
 import io.opensphere.mantle.icon.IconCache;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
@@ -127,7 +128,7 @@ public class IconRegistryImpl implements IconRegistry
         myIconCache = new IconCacheImpl(iconCacheLocation);
         myChangeSupport = new WeakChangeSupport<>();
         myIconRecords = FXCollections.observableArrayList(param -> new Observable[] { param.collectionNameProperty() });
-        load();
+        ThreadUtilities.runBackground(() -> load());
     }
 
     @Override
@@ -666,7 +667,7 @@ public class IconRegistryImpl implements IconRegistry
         }
         catch (IOException e)
         {
-            LOG.error("Unable to read image for icon from URL '" + rec.getIconURL() + "'");
+            LOG.error("Unable to read image for icon from URL '" + rec.getIconURL() + "'", e);
         }
         finally
         {
@@ -727,7 +728,7 @@ public class IconRegistryImpl implements IconRegistry
                     }
                     catch (IOException e)
                     {
-                        LOG.error("Unable to read image for icon from URL '" + provider.getIconURL() + "'");
+                        LOG.error("Unable to read image for icon from URL '" + provider.getIconURL() + "'", e);
                     }
                 }
             }
