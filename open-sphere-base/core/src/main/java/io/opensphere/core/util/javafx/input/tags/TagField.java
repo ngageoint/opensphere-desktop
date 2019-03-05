@@ -10,11 +10,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.PickResult;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 /** A field of tags. Tags can be dismissed and added. */
-public class TagField extends HBox
+public class TagField extends VBox
 {
     /** The model in which the field's state is maintained. */
     private final TagFieldModel myModel = new TagFieldModel();
@@ -23,7 +23,7 @@ public class TagField extends HBox
     private final TextField myEditField;
 
     /** The box in which tags are placed. */
-    private final HBox myTagBox;
+    private final VBox myTagBox;
 
     /** Creates a new tag field. */
     public TagField()
@@ -33,12 +33,12 @@ public class TagField extends HBox
         myModel.tagColorProperty().set(Color.BLUEVIOLET);
 
         scaleShapeProperty().set(false);
-        myTagBox = new HBox();
+        myTagBox = new VBox();
         myTagBox.setPadding(Insets.EMPTY);
         myTagBox.scaleShapeProperty().set(false);
 
         myEditField = new TextField();
-        myEditField.visibleProperty().set(false);
+        myEditField.visibleProperty().set(true);
         myEditField.onActionProperty().set(e -> createTag(myEditField.getText()));
         myEditField.setOnKeyTyped(e -> processKey(e));
 
@@ -57,7 +57,7 @@ public class TagField extends HBox
             }
         });
 
-        HBox.setMargin(myEditField, new Insets(5, 0, 5, 5));
+        VBox.setMargin(myEditField, new Insets(5, 0, 5, 5));
 
         setOnMouseClicked(e -> invokeEditor(e));
 
@@ -104,7 +104,7 @@ public class TagField extends HBox
             addNewTag(text);
         }
         myEditField.setText("");
-        myEditField.setVisible(false);
+        myEditField.setVisible(true);
     }
 
     /**
