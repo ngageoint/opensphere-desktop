@@ -64,12 +64,13 @@ public class IconGridView extends AnchorPane
         {
             final ObservableList<IconRecord> filteredRecords = myIconChooserModel.getIconRecords(myPredicate).filtered(r ->
             {
-                if (StringUtils.isEmpty(myModel.searchTextProperty().get()))
+                String searchText = myModel.searchTextProperty().get();
+                if (StringUtils.isEmpty(searchText))
                 {
                     return true;
                 }
 
-                return r.nameProperty().get().contains(myModel.searchTextProperty().get());
+                return r.nameProperty().get().contains(searchText)|| r.getTags().contains(searchText);
             });
 
             myGrid.itemsProperty().set(filteredRecords);

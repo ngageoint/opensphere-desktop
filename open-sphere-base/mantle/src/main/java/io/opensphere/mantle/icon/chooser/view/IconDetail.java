@@ -2,33 +2,21 @@ package io.opensphere.mantle.icon.chooser.view;
 
 import java.awt.Graphics2D;
 import java.awt.Transparency;
-import java.awt.Window;
-import java.awt.Dialog.ModalityType;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-import java.util.Set;
-
 import javax.imageio.ImageIO;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import io.opensphere.core.Notify;
-import io.opensphere.core.Notify.Method;
 import io.opensphere.core.function.Procedure;
 import io.opensphere.core.util.AwesomeIconRegular;
 import io.opensphere.core.util.AwesomeIconSolid;
-import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.fx.FxIcons;
-import io.opensphere.core.util.fx.JFXDialog;
-import io.opensphere.core.util.image.IconUtil;
-import io.opensphere.core.util.javafx.input.tags.Tag;
-import io.opensphere.core.util.javafx.input.tags.TagField;
-import io.opensphere.core.util.swing.EventQueueUtilities;
+import io.opensphere.core.util.image.IconUtil.IconType;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.chooser.model.CustomizationModel;
@@ -36,7 +24,6 @@ import io.opensphere.mantle.icon.chooser.model.IconModel;
 import io.opensphere.mantle.icon.chooser.model.TransformModel;
 import io.opensphere.mantle.icon.chooser.view.transform.TransformPanel;
 import io.opensphere.mantle.icon.impl.DefaultIconProvider;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Insets;
@@ -47,9 +34,11 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
@@ -78,11 +67,6 @@ public class IconDetail extends AnchorPane
     /** The label in which the source collection of the icon is displayed. */
     private final ComboBox<String> mySourceField;
 
-    /** The label in which the tags applied to the icon are displayed. */
-    private final TagField myTagsField;
-
-    private final Button myTagsButton;
-
     /** The panel on which transformations occur. */
     private final TransformPanel myTransformPanel;
 
@@ -109,6 +93,9 @@ public class IconDetail extends AnchorPane
 
     /** The node to use when the icon is marked as a favorite. */
     private final Node myFavoriteIcon;
+
+    /** The menu button for creating, displaying, and removing tags. */
+    private final MenuButton myTagMenuButton;
 
     /**
      * Creates a new detail panel bound to the supplied model.
@@ -143,47 +130,7 @@ public class IconDetail extends AnchorPane
             }
         });
 
-        myTagsField = new TagField();
-        myTagsField.tagColorProperty().set(FXUtilities.fromAwtColor(IconUtil.DEFAULT_ICON_FOREGROUND));
-        myCustomizationModel.getTags().addListener((ListChangeListener<String>)c ->
-        {
-            while (c.next())
-            {
-                if (c.wasAdded())
-                {
-                    c.getAddedSubList().stream().map(v -> new Tag(v)).forEach(myTagsField::addTag);
-                }
-                if (c.wasRemoved())
-                {
-                    final List<? extends String> removedTags = c.getRemoved();
-                    final Set<Tag> tagsToRemove = New.set();
-                    for (final String removedTagName : removedTags)
-                    {
-                        myTagsField.getTags().stream().filter(t -> StringUtils.equals(t.textProperty().get(), removedTagName))
-                                .forEach(tagsToRemove::add);
-                    }
-                    myTagsField.getTags().removeAll(tagsToRemove);
-                }
-            }
-        });
-
-        myTagsButton = new Button("Open Tags");
-        myTagsButton.setOnAction(e ->
-        {
-            launchTags();
-        });
-        myModel.selectedRecordProperty().addListener((obs, o, n) -> 
-        {
-            if (n != null)
-            {
-                myTagsButton.setDisable(false);
-            }
-            else
-            {
-                myTagsButton.setDisable(true);
-            }
-        });
-        myTagsButton.setDisable(true);
+        myTagMenuButton = createTagMenuButton();
 
         final VBox box = new VBox(5);
         box.setAlignment(Pos.TOP_CENTER);
@@ -236,7 +183,7 @@ public class IconDetail extends AnchorPane
         final Label tagsLabel = new Label("Tags:");
         tagsLabel.setMinWidth(USE_PREF_SIZE);
         grid.add(tagsLabel, 0, 2);
-        grid.add(myTagsButton, 1, 2);
+        grid.add(myTagMenuButton, 1, 2);
 
         box.getChildren().add(grid);
 
@@ -266,66 +213,77 @@ public class IconDetail extends AnchorPane
         redrawPreview(model.selectedRecordProperty().get());
     }
 
-    private void launchTags()
+    /**
+     * Creates the menu button that handles icon tags.
+     *
+     * @return the new menu button
+     */
+    private MenuButton createTagMenuButton()
     {
-        EventQueueUtilities.runOnEDT(() ->
+        MenuButton menuButton = new MenuButton();
+
+        TextField textField = new TextField();
+        textField.setPromptText("Enter new tags");
+        textField.setOnMouseClicked(e -> menuButton.hide());
+        textField.setOnAction(e ->
         {
-            Window owner = myModel.getToolbox().getUIRegistry().getMainFrameProvider().get();
-            ListView<String> listView = new ListView<>();
-            listView.setCellFactory((param) ->
+            String text = textField.getText();
+            ObservableList<String> tagList = myModel.selectedRecordProperty().get().getTags();
+
+            if (StringUtils.isNotBlank(text) && !tagList.contains(text))
             {
-                IconTagCell cell = new IconTagCell();
-
-                return cell;
-            });
-            listView.setItems(myModel.selectedRecordProperty().get().getTags());
-
-            JFXDialog dialog = new JFXDialog(owner, "tags", false);
-//            dialog.setFxNode(myTagsField);
-
-            GridPane gridPane = new GridPane();
-            TextField textField = new TextField();
-            textField.setPromptText("enter new tag");
-            textField.setOnAction(a ->
-            {
-                String tagText = textField.getText();
-                ObservableList<String> tags = myModel.selectedRecordProperty().get().getTags();
-                if (tags.contains(tagText))
-                {
-                    Notify.info("Tag \"" + tagText + "\" is already in the list.", Method.POPUP);
-                    textField.clear();
-                }
-                else if (StringUtils.isNotEmpty(tagText))
-                {
-                    tags.add(textField.getText());
-                    textField.clear();
-                }
-                System.out.println(myModel.selectedRecordProperty().get().getTags());
-            });
-            gridPane.add(textField, 0, 0);
-            gridPane.add(listView, 0, 1);
-            gridPane.setVgap(5);
-            gridPane.setHgap(5);
-            GridPane.setHgrow(textField, Priority.ALWAYS);
-            GridPane.setHgrow(listView, Priority.ALWAYS);
-            GridPane.setVgrow(listView, Priority.ALWAYS);
-
-            dialog.setFxNode(gridPane);
-            dialog.setSize(400, 400);
-            dialog.setLocationRelativeTo(owner);
-            dialog.setModalityType(ModalityType.APPLICATION_MODAL);
-//            dialog.setRejectListener(() -> System.out.println("bye"));
-//            dialog.setAcceptListener(() ->
-//            {
-//                myModel.selectedRecordProperty().get().getTags().addAll(myTagsField.getTagValues());
-//                System.out.println(myModel.selectedRecordProperty().get().getTags());
-//            });
-//            System.out.println(myModel.selectedRecordProperty().get().nameProperty());
-            
-//            myModel.selectedRecordProperty().get().getTags();
-//            System.out.println(this.getParent().getParent());
-            dialog.setVisible(true);
+                createTagMenuItem(text, tagList);
+                tagList.add(text);
+            }
+            textField.setText("");
         });
+
+        myModel.selectedRecordProperty().addListener((observable, oldValue, newValue) ->
+        {
+            if (menuButton.isDisabled())
+            {
+                menuButton.setDisable(false);
+            }
+            if (oldValue == null || !oldValue.equals(newValue))
+            {
+                menuButton.getItems().clear();
+                newValue.getTags().forEach(tag -> createTagMenuItem(tag, newValue.getTags()));
+            }
+        });
+
+        menuButton.setGraphic(textField);
+        menuButton.setDisable(true);
+
+        return menuButton;
+    }
+
+    /**
+     * Creates a custom menu item with the tag name, and attaches it to the
+     * tags menu button.
+     *
+     * @param tagName the name of the tag
+     * @param tagList the list of tags the new tag is a part of
+     */
+    private void createTagMenuItem(String tagName, ObservableList<String> tagList)
+    {
+        CustomMenuItem customMenuItem = new CustomMenuItem();
+        customMenuItem.setHideOnClick(false);
+
+        Button deleteButton = FXUtilities.newIconButton(IconType.CLOSE, Color.RED);
+        deleteButton.setTooltip(new Tooltip("Delete this tag"));
+        deleteButton.setOnAction(e ->
+        {
+            myTagMenuButton.getItems().remove(customMenuItem);
+            tagList.remove(tagName);
+        });
+
+        HBox menuItemBox = new HBox(8);
+        Label tagLabel = new Label(tagName);
+        menuItemBox.getChildren().addAll(deleteButton, tagLabel);
+        menuItemBox.setAlignment(Pos.CENTER_LEFT);
+        customMenuItem.setContent(menuItemBox);
+
+        myTagMenuButton.getItems().add(customMenuItem);
     }
 
     /**
@@ -383,8 +341,6 @@ public class IconDetail extends AnchorPane
         }
         else
         {
-            myTagsField.getTags().clear();
-            icon.getTags().stream().map(v -> new Tag(v)).forEach(myTagsField::addTag);
             final Image image = icon.imageProperty().get();
             final double xOrigin = myCanvas.getWidth() / 2;
             final double yOrigin = myCanvas.getHeight() / 2;
