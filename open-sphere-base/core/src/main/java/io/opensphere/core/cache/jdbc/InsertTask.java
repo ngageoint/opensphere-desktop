@@ -962,15 +962,26 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
             ValueTranslator<? super S> translator, int columnIndex, S value)
                     throws CacheException, SQLException, NotSerializableException
     {
+        int nextColumnIndex = 0;
         try
         {
-            return translator.setValue(pstmt, columnIndex, value, true);
+            nextColumnIndex = translator.setValue(pstmt, columnIndex, value, true);
         }
         catch (final IllegalArgumentException e)
         {
-            throw new IllegalArgumentException("Value provided by property accessor [" + value
-                    + "] is illegal for property descriptor [" + propertyAccessor.getPropertyDescriptor() + "]:" + e, e);
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("Value provided by property accessor [" + value + "] is illegal for property descriptor ["
+                    + propertyAccessor.getPropertyDescriptor() + "]");
+            if (myCategory != null)
+            {
+                sb.append(" from data model " + myCategory.getSource());
+            }
+            sb.append(" : " + e);
+
+            LOGGER.error(sb, e);
         }
+        return nextColumnIndex;
     }
 
     /**
