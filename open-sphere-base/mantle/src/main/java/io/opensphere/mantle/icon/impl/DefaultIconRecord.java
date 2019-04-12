@@ -84,14 +84,15 @@ public class DefaultIconRecord implements IconRecord
     public DefaultIconRecord(long id, IconProvider ip)
     {
         Utilities.checkNull(ip, "ip");
+
         myIdProperty.set(id);
-        myImageURLProperty.set(ip.getIconURL());
-
-        imageURLProperty().addListener((obs, ov, nv) -> myNameProperty.set(getName(nv)));
-        myNameProperty.set(getName(myImageURLProperty.get()));
-
+        URL iconURL = ip.getIconURL();
+        myImageURLProperty.set(iconURL);
+        myNameProperty.set(getName(iconURL));
         myCollectionNameProperty.set(ip.getCollectionName() == null ? DEFAULT_COLLECTION : ip.getCollectionName());
         mySourceKeyProperty.set(ip.getSourceKey());
+
+        myImageURLProperty.addListener((obs, ov, nv) -> myNameProperty.set(getName(nv)));
     }
 
     /**

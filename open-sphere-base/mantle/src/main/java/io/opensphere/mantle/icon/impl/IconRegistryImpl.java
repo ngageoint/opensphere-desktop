@@ -36,7 +36,6 @@ import io.opensphere.core.util.concurrent.ProcrastinatingExecutor;
 import io.opensphere.core.util.concurrent.SuppressableRejectedExecutionHandler;
 import io.opensphere.core.util.lang.NamedThreadFactory;
 import io.opensphere.core.util.lang.Pair;
-import io.opensphere.core.util.lang.ThreadUtilities;
 import io.opensphere.mantle.icon.IconCache;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
@@ -47,9 +46,7 @@ import io.opensphere.mantle.icon.chooser.model.IconManagerPrefs;
 import io.opensphere.mantle.icon.chooser.model.IconModel;
 import io.opensphere.mantle.icon.config.v1.IconRecordConfig;
 import io.opensphere.mantle.icon.config.v1.IconRegistryConfig;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
 
 /**
@@ -81,9 +78,6 @@ public class IconRegistryImpl implements IconRegistry
 
     /** The Icon id counter. */
     private final AtomicLong myIconIdCounter = new AtomicLong(0);
-
-    /** An observable list of icon records. */
-    private final ObservableList<IconRecord> myIconRecords;
 
     /** The Icon id to icon record map. */
     private final TLongObjectHashMap<IconRecord> myIconIdToIconRecordMap;
@@ -127,8 +121,7 @@ public class IconRegistryImpl implements IconRegistry
         myLoadedIconPool = new LoadedIconPoolImpl(toolbox);
         myIconCache = new IconCacheImpl(iconCacheLocation);
         myChangeSupport = new WeakChangeSupport<>();
-        myIconRecords = FXCollections.observableArrayList(param -> new Observable[] { param.collectionNameProperty() });
-        ThreadUtilities.runBackground(() -> load());
+        load();
     }
 
     @Override
@@ -140,14 +133,14 @@ public class IconRegistryImpl implements IconRegistry
     @Override
     public List<IconRecord> addIcons(final List<? extends IconProvider> providerList, final Object source)
     {
-        return addIcons(providerList, null, source, true);
+        return New.list(addIcons(providerList, null, source, true));
     }
 
     @Override
     public List<IconRecord> addIcons(final List<? extends IconProvider> providerList, final List<? extends Long> ids,
             final Object source)
     {
-        return addIcons(providerList, ids, source, true);
+        return New.list(addIcons(providerList, ids, source, true));
     }
 
     @Override
@@ -446,7 +439,6 @@ public class IconRegistryImpl implements IconRegistry
         try
         {
             removedRecord = myIconIdToIconRecordMap.remove(iconId);
-            myIconRecords.remove(removedRecord);
             myIconRecordToIconIdMap.remove(removedRecord);
         }
         finally
@@ -490,7 +482,6 @@ public class IconRegistryImpl implements IconRegistry
                     if (removedRecord != null)
                     {
                         myIconRecordToIconIdMap.remove(removedRecord);
-                        myIconRecords.remove(removedRecord);
                         removedRecords.add(removedRecord);
                     }
                 }
@@ -711,7 +702,7 @@ public class IconRegistryImpl implements IconRegistry
             final Object source, final boolean saveToConfig)
     {
         Utilities.checkNull(providerList, "providerList");
-        final List<IconRecord> addedList = New.linkedList();
+        final List<IconRecord> addedList = New.list(providerList.size());
         if (!providerList.isEmpty())
         {
             myIconRegistryLock.lock();
@@ -741,13 +732,13 @@ public class IconRegistryImpl implements IconRegistry
         {
             return Collections.<IconRecord>emptyList();
         }
-        final List<IconRecord> fAdded = Collections.unmodifiableList(New.list(addedList));
+        final List<IconRecord> fAdded = Collections.unmodifiableList(addedList);
         myChangeSupport.notifyListeners(listener -> listener.iconsAdded(fAdded, source), EXECUTOR);
         if (saveToConfig)
         {
             saveLater();
         }
-        return New.list(fAdded);
+        return fAdded;
     }
 
     /**
@@ -765,12 +756,11 @@ public class IconRegistryImpl implements IconRegistry
         final long id = myIconRecordToIconIdMap.get(record);
         if (id == 0)
         {
-            record = new DefaultIconRecord(getId(provider, overrideId), provider);
+            record.idProperty().set(getId(provider, overrideId));
             record.favoriteProperty().set(provider.isFavorite());
             myCollectionNames.add(record.collectionNameProperty().get());
             myIconIdToIconRecordMap.put(record.idProperty().get(), record);
             myIconRecordToIconIdMap.put(record, record.idProperty().get());
-            myIconRecords.add(record);
             wasAdded = true;
         }
         else
@@ -820,7 +810,7 @@ public class IconRegistryImpl implements IconRegistry
         myCollectionNames.add(IconRecord.DEFAULT_COLLECTION);
         myCollectionNames.add(IconRecord.USER_ADDED_COLLECTION);
         myCollectionNames.add(IconRecord.FAVORITES_COLLECTION);
-        
+
         final IconRegistryConfig config = myPrefs.getJAXBObject(IconRegistryConfig.class, PREFERENCE_KEY,
                 new IconRegistryConfig());
         if (config != null && config.getIconRecords() != null && !config.getIconRecords().isEmpty())
