@@ -975,7 +975,7 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
                     + propertyAccessor.getPropertyDescriptor() + "]");
             if (myCategory != null)
             {
-                sb.append(" from data model " + myCategory.getSource());
+                sb.append(" from data model " + myCategory);
             }
             sb.append(" : " + e);
 
