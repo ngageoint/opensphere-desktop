@@ -968,8 +968,17 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
         }
         catch (final IllegalArgumentException e)
         {
-            throw new IllegalArgumentException("Value provided by property accessor [" + value
-                    + "] is illegal for property descriptor [" + propertyAccessor.getPropertyDescriptor() + "]:" + e, e);
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("Value provided by property accessor [" + value + "] is illegal for property descriptor ["
+                    + propertyAccessor.getPropertyDescriptor() + "]");
+            if (myCategory != null)
+            {
+                sb.append(" from data model " + myCategory);
+            }
+            sb.append(" : " + e);
+
+            throw new CacheException(sb.toString(), e);
         }
     }
 
