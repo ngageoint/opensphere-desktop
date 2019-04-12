@@ -962,10 +962,9 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
             ValueTranslator<? super S> translator, int columnIndex, S value)
                     throws CacheException, SQLException, NotSerializableException
     {
-        int nextColumnIndex = 0;
         try
         {
-            nextColumnIndex = translator.setValue(pstmt, columnIndex, value, true);
+            return translator.setValue(pstmt, columnIndex, value, true);
         }
         catch (final IllegalArgumentException e)
         {
@@ -979,9 +978,8 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
             }
             sb.append(" : " + e);
 
-            LOGGER.error(sb, e);
+            throw new CacheException(sb.toString(), e.getCause());
         }
-        return nextColumnIndex;
     }
 
     /**
