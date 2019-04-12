@@ -978,7 +978,7 @@ public class InsertTask<T> extends DatabaseTask implements ConnectionUser<long[]
             }
             sb.append(" : " + e);
 
-            throw new CacheException(sb.toString(), e.getCause());
+            throw new CacheException(sb.toString(), e);
         }
     }
 
