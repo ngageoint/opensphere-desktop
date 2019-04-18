@@ -7,10 +7,10 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import io.opensphere.core.Toolbox;
+import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.fx.JFXDialog;
 import io.opensphere.core.util.net.UrlUtilities;
 import io.opensphere.mantle.icon.IconRecord;
-import io.opensphere.mantle.icon.chooser.controller.IconCustomizationController;
 import io.opensphere.mantle.icon.chooser.model.IconModel;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
@@ -18,18 +18,11 @@ import io.opensphere.mantle.util.MantleToolboxUtils;
 @SuppressWarnings("serial")
 public class IconDialog extends JFXDialog
 {
-    /** The model to be shared between all the UI elements. */
-    private final IconModel myPanelModel;
-
     /** The Toolbox. */
     private final Toolbox myToolbox;
 
     /** The consumer called when the user presses the accept button. */
     private Consumer<IconRecord> myAcceptListener;
-
-    /** The controller used for managing customization operations. */
-    @SuppressWarnings("unused")
-    private IconCustomizationController myCustomizationController;
 
     /**
      * Creates a new dialog with the supplied toolbox and owner.
@@ -85,32 +78,21 @@ public class IconDialog extends JFXDialog
     public IconDialog(Toolbox toolbox, Window owner, Consumer<IconRecord> acceptListener, Runnable rejectListener,
             Supplier<String> initialValueSupplier)
     {
-        super(owner, "Icon Manager", true);
+        super(owner, "Icon Manager", new IconDialogSupplier(toolbox), true);
         myToolbox = toolbox;
-        myPanelModel = new IconModel(myToolbox);
-        myPanelModel.setIconRegistry(MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry());
-
-        IconView iconView = new IconView(myPanelModel);
-        myCustomizationController = new IconCustomizationController(myPanelModel, iconView);
 
         setInitialValueSupplier(initialValueSupplier);
 
         setMinimumSize(new Dimension(800, 600));
         setSize(875, 600);
-        setFxNode(iconView);
-
-        if (myPanelModel.getIconRegistry().getManagerPrefs().getIconWidth() != 0)
-        {
-            myPanelModel.tileWidthProperty().set(myPanelModel.getIconRegistry().getManagerPrefs().getIconWidth());
-        }
 
         myAcceptListener = acceptListener;
         super.setAcceptListener(() ->
         {
             savePreferences();
-            if (myAcceptListener != null)
+            if (myAcceptListener != null && ((IconDialogSupplier)getNodeSupplier()).getModel() != null)
             {
-                myAcceptListener.accept(myPanelModel.selectedRecordProperty().get());
+                myAcceptListener.accept(((IconDialogSupplier)getNodeSupplier()).getModel().selectedRecordProperty().get());
             }
         });
         setRejectListener(rejectListener);
@@ -150,11 +132,17 @@ public class IconDialog extends JFXDialog
     {
         if (supplier != null)
         {
-            URL url = UrlUtilities.toURL(supplier.get());
-            if (url != null)
+            FXUtilities.runOnFXThread(() ->
             {
-                myPanelModel.selectedRecordProperty().set(myPanelModel.getIconRegistry().getIconRecord(url));
-            }
+                URL url = UrlUtilities.toURL(supplier.get());
+                IconModel iconModel = ((IconDialogSupplier)getNodeSupplier()).getModel();
+                if (url != null && iconModel != null)
+                {
+                    IconRecord selected = MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getIconRecord(url);
+                    iconModel.selectedRecordProperty().set(selected);
+
+                }
+            });
         }
     }
 
@@ -164,17 +152,10 @@ public class IconDialog extends JFXDialog
      */
     private void savePreferences()
     {
-        MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getManagerPrefs()
-                .setIconWidth((int)myPanelModel.tileWidthProperty().get());
-    }
-
-    /**
-     * Gets the model.
-     *
-     * @return the model used for the UI.
-     */
-    public IconModel getPanelModel()
-    {
-        return myPanelModel;
+        if (((IconDialogSupplier)getNodeSupplier()).getModel() != null)
+        {
+            MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getManagerPrefs()
+                    .setIconWidth((int)((IconDialogSupplier)getNodeSupplier()).getModel().tileWidthProperty().get());
+        }
     }
 }

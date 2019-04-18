@@ -638,6 +638,9 @@ public class WFSEnvoyHelper
             {
                 columns.add(type.getMetaDataInfo().getGeometryColumn());
             }
+
+            // Remove any columns the server doesn't know about to prevent errors
+            columns.remove(MetaDataInfo.MGRS_DERIVED);
         }
         return columns;
     }

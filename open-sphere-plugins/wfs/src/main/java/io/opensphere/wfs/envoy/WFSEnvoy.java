@@ -39,7 +39,6 @@ import io.opensphere.core.util.XMLUtilities;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.collections.StreamUtilities;
 import io.opensphere.core.util.io.CancellableInputStream;
-import io.opensphere.core.util.io.StreamReader;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.core.util.lang.ThreadControl;
 import io.opensphere.core.util.taskactivity.TaskActivity;
@@ -493,7 +492,6 @@ public class WFSEnvoy extends AbstractWFSEnvoy
             // parse the WFS response
             FeatureConsumer consumer = getConsumerManager().requestConsumer(wfsType, true);
             GmlSaxFeatureResponseHandler handler = new GmlSaxFeatureResponseHandler(wfsType, consumer);
-            is = new StreamReader(is).copyStream(System.out);
             saxParser.parse(is, handler);
             // consumer.flush();
             count = handler.getProcessedCount();

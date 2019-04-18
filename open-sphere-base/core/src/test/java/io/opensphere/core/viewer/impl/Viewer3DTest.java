@@ -64,7 +64,7 @@ public class Viewer3DTest
     @Test
     public void testCameraToViewerToCamera()
     {
-        Viewer3D viewer = new Viewer3D(myBuilder);
+        Viewer3D viewer = new Viewer3D(myBuilder, false);
         viewer.setMapContext(myMapManager);
 
         LatLonAlt lla = LatLonAlt.createFromDegreesMeters(0., 0., 10000., ReferenceLevel.ELLIPSOID);
@@ -95,7 +95,7 @@ public class Viewer3DTest
     @Test
     public void testViewerToCameraToViewer()
     {
-        Viewer3D viewer = new Viewer3D(myBuilder);
+        Viewer3D viewer = new Viewer3D(myBuilder, false);
         viewer.setMapContext(myMapManager);
 
         ViewerPosition3D pos = viewer.getPosition();

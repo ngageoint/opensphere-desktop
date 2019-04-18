@@ -1,9 +1,9 @@
 package io.opensphere.analysis.table.model;
 
+import io.opensphere.mantle.data.MetaDataInfo;
+import io.opensphere.mantle.data.element.DataElement;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-
-import io.opensphere.mantle.data.element.DataElement;
 
 /**
  * Meta column for the list tool table model.
@@ -31,7 +31,7 @@ public abstract class MetaColumn<T>
     public static final String LOB_VISIBLE = "LOB Visible";
 
     /** The MGRS derived meta column identifier. */
-    public static final String MGRS_DERIVED = "MGRS Derived";
+    public static final String MGRS_DERIVED = MetaDataInfo.MGRS_DERIVED;
 
     /** The column identifier. */
     private final String myColumnIdentifier;

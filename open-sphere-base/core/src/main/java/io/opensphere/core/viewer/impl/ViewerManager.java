@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executor;
 
+import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.util.Utilities;
 import io.opensphere.core.viewer.ViewChangeSupport;
@@ -29,13 +30,20 @@ public class ViewerManager
     private final Preferences myPreferences;
 
     /**
+     * The {@link UIRegistry}.
+     */
+    private final UIRegistry myRegistry;
+
+    /**
      * Constructor.
      *
      * @param preferences The preferences for the viewer manager.
+     * @param uiRegistry The {@link UIRegistry}.
      */
-    public ViewerManager(Preferences preferences)
+    public ViewerManager(Preferences preferences, UIRegistry uiRegistry)
     {
         myPreferences = preferences;
+        myRegistry = uiRegistry;
         myViewers = new HashMap<>();
     }
 
@@ -66,6 +74,7 @@ public class ViewerManager
         builder.modelWidth(modelWidth);
         builder.modelHeight(modelHeight);
         builder.preferences(myPreferences);
+        builder.uiRegistry(myRegistry);
 
         AbstractDynamicViewer viewer = myViewers.get(viewerType);
         if (viewer == null)
@@ -155,7 +164,7 @@ public class ViewerManager
                 if (viewer.getViewportWidth() != myCurrentViewer.getViewportWidth()
                         || viewer.getViewportHeight() != myCurrentViewer.getViewportHeight())
                 {
-                    viewer.reshape(myCurrentViewer.getViewportWidth(), myCurrentViewer.getViewportHeight());
+                    viewer.reshape((int)(myCurrentViewer.getViewportWidth() * viewer.getDisplayScale()), (int)(myCurrentViewer.getViewportHeight() * viewer.getDisplayScale()));
                 }
             }
             viewer.addObserver(viewerObserver);

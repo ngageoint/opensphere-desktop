@@ -36,6 +36,7 @@ import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.io.StreamReader;
 import io.opensphere.core.util.lang.Pair;
 import io.opensphere.core.util.lang.StringUtilities;
+import io.opensphere.core.util.lang.ThreadUtilities;
 import io.opensphere.featureactions.model.FeatureAction;
 import io.opensphere.featureactions.model.FeatureActions;
 import io.opensphere.featureactions.model.FeatureActionsFactory;
@@ -255,14 +256,14 @@ public class FeatureActionImporter implements FileOrURLImporter
      */
     private void readV4Stream(InputStream in) throws JAXBException
     {
-        myModel.getFeatureGroups().clear();
+        FXUtilities.runOnFXThreadAndWait(() -> myModel.getFeatureGroups().clear());
         Object featureActionsArray = XMLUtilities.readXMLObject(in, FeatureActionArrayType.class,
                 Arrays.asList(ObjectFactory.class, oasis.names.tc.ciq.xsdschema.xal._2.ObjectFactory.class));
 
         SimpleFeatureActionGroup convertedFeatureActions = VersionConverter
                 .convert(((JAXBElement<FeatureActionArrayType>)featureActionsArray).getValue());
 
-        myModel.getFeatureGroups().add(convertedFeatureActions);
+        FXUtilities.runOnFXThreadAndWait(() -> myModel.getFeatureGroups().add(convertedFeatureActions));
     }
 
     /**
@@ -280,7 +281,7 @@ public class FeatureActionImporter implements FileOrURLImporter
 
         FeatureActions featureActions = ((JAXBElement<FeatureActions>)featureActionsElement).getValue();
 
-        myModel.getFeatureGroups().clear();
+        FXUtilities.runOnFXThreadAndWait(() -> myModel.getFeatureGroups().clear());
         List<FeatureAction> actions = featureActions.getActions();
         for (FeatureAction featureAction : actions)
         {
@@ -289,7 +290,7 @@ public class FeatureActionImporter implements FileOrURLImporter
             {
                 if (simpleGroup.getGroupName().equals(featureAction.getGroupName()))
                 {
-                    Platform.runLater(() -> simpleGroup.getActions().add(new SimpleFeatureAction(featureAction)));
+                    FXUtilities.runOnFXThreadAndWait(() -> simpleGroup.getActions().add(new SimpleFeatureAction(featureAction)));
                     foundGroup = true;
                 }
             }

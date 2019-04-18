@@ -185,7 +185,8 @@ public class GLSwingAWTEventListener implements AWTEventListener
         // coming from a component that is owned by an internal frame, do
         // not process it.
         String sourceClass = event.getSource().getClass().getCanonicalName();
-        if (!"javax.media.opengl.awt.GLCanvas".equals(sourceClass) && !"com.jogamp.newt.awt.NewtCanvasAWT".equals(sourceClass))
+        if (!"javax.media.opengl.awt.GLCanvas".equals(sourceClass) && !"com.jogamp.newt.awt.NewtCanvasAWT".equals(sourceClass)
+                && !"io.opensphere.core.pipeline.PipelineGLCanvas".equals(sourceClass))
         {
             ownSource = false;
             if (event.getID() != MouseEvent.MOUSE_WHEEL && event.getSource() instanceof Component)

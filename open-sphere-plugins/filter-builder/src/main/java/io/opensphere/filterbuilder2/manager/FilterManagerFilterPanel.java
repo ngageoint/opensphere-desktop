@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 
 import javafx.scene.control.ButtonBar.ButtonData;
 
+import javax.swing.Icon;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -19,6 +20,7 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.datafilter.columns.MutableColumnMappingController;
 import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.util.fx.JFXDialog;
+import io.opensphere.core.util.image.IconUtil;
 import io.opensphere.core.util.image.IconUtil.IconType;
 import io.opensphere.core.util.swing.IconButton;
 import io.opensphere.core.util.swing.ScrollableGridBagPanel;
@@ -36,6 +38,21 @@ public class FilterManagerFilterPanel extends ScrollableGridBagPanel
 {
     /** The serialVersionUID. */
     private static final long serialVersionUID = 1L;
+    
+    /**
+     * Stack icon.
+     */
+    private static final Icon stackIcon = IconUtil.getNormalIcon(IconType.STACK);
+    
+    /**
+     * Edit icon.
+     */
+    private static final Icon editIcon = IconUtil.getNormalIcon(IconType.EDIT);
+    
+    /**
+     * Red close icon.
+     */
+    private static final Icon deleteIcon = IconUtil.getColorizedIcon(IconType.CLOSE, Color.RED);
 
     /**
      * A constant in which the title of the panel is defined.
@@ -168,16 +185,16 @@ public class FilterManagerFilterPanel extends ScrollableGridBagPanel
             }
         });
 
-        IconButton chooseLayersButton = new IconButton(IconType.STACK);
+        IconButton chooseLayersButton = new IconButton(stackIcon);
         chooseLayersButton.setEnabled(myPersistMode);
         chooseLayersButton.setToolTipText("Choose layers for the filter");
         chooseLayersButton.addActionListener(e -> chooseLayers());
 
-        IconButton editButton = new IconButton(IconType.EDIT);
+        IconButton editButton = new IconButton(editIcon);
         editButton.setToolTipText("Edit the filter");
         editButton.addActionListener(e -> editFilter());
 
-        IconButton deleteButton = new IconButton(IconType.CLOSE, Color.RED);
+        IconButton deleteButton = new IconButton(deleteIcon);
         deleteButton.setToolTipText("Delete the filter (after confirmation)");
         deleteButton.addActionListener(e -> deleteFilter(deleteButton));
 

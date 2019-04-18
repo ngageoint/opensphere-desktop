@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.jcip.annotations.GuardedBy;
-import net.jcip.annotations.ThreadSafe;
 import javax.swing.JTabbedPane;
 
 import io.opensphere.core.PluginLoaderData;
@@ -30,6 +28,8 @@ import io.opensphere.kml.mantle.controller.KmlIcons;
 import io.opensphere.kml.settings.KMLOptionsProvider;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.datasources.IDataSource;
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * The main class for the KML plug-in.
@@ -56,6 +56,8 @@ public class KMLPlugin extends AbstractPanelPlugin
     @Override
     public void initialize(PluginLoaderData plugindata, Toolbox toolbox)
     {
+        super.initialize(plugindata, toolbox);
+
         Preferences preferences = toolbox.getPreferencesRegistry().getPreferences(KMLPlugin.class);
         myPluginToolbox = new KMLToolbox(preferences);
         toolbox.getPluginToolboxRegistry().registerPluginToolbox(myPluginToolbox);
@@ -77,8 +79,6 @@ public class KMLPlugin extends AbstractPanelPlugin
         KMLDataRegistryHelper.addDataSourceChangeListener(toolbox.getDataRegistry(), myDataRegistryListener);
 
         KmlIcons.getKmlIconMap(toolbox.getPluginToolboxRegistry().getPluginToolbox(MantleToolbox.class).getIconRegistry());
-
-        super.initialize(plugindata, toolbox);
     }
 
     @Override

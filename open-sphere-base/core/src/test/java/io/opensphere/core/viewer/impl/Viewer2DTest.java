@@ -48,7 +48,7 @@ public class Viewer2DTest
     @Test
     public void testGetAltitude()
     {
-        Viewer2D viewer = new Viewer2D(myBuilder);
+        Viewer2D viewer = new Viewer2D(myBuilder, false);
         viewer.setMapContext(myMapManager);
         ViewerPosition2D pos = new ViewerPosition2D(Vector3d.ORIGIN, 2.);
 
@@ -73,7 +73,7 @@ public class Viewer2DTest
     @Test
     public void testGetAltitudeReverseAspect()
     {
-        Viewer2D viewer = new Viewer2D(myBuilder);
+        Viewer2D viewer = new Viewer2D(myBuilder, false);
         viewer.setMapContext(myMapManager);
         ViewerPosition2D pos = new ViewerPosition2D(Vector3d.ORIGIN, 8.);
 
@@ -100,7 +100,7 @@ public class Viewer2DTest
     @Test
     public void testViewerConversion()
     {
-        Viewer2D viewer = new Viewer2D(myBuilder);
+        Viewer2D viewer = new Viewer2D(myBuilder, false);
         viewer.setMapContext(myMapManager);
 
         // This aspect ratio is more narrow than the model's aspect ratio.

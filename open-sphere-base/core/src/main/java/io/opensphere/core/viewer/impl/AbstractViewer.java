@@ -6,12 +6,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.math.Matrix4d;
 import io.opensphere.core.math.Quaternion;
 import io.opensphere.core.math.RectangularCylinder;
 import io.opensphere.core.math.Vector2i;
 import io.opensphere.core.math.Vector3d;
 import io.opensphere.core.model.ScreenPosition;
+import io.opensphere.core.pipeline.NoScale;
+import io.opensphere.core.pipeline.ScaleDetector;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.collections.WeakHashSet;
 import io.opensphere.core.viewer.TrajectoryGenerator;
@@ -50,6 +53,29 @@ public abstract class AbstractViewer implements Viewer
 
     /** Derived window to model transform for fast calculations. */
     private Matrix4d myWindowToModelTransform;
+
+    /**
+     * Used to calculate the dpi scaling on the current monitor.
+     */
+    private final ScaleDetector myDPIScale;
+
+    /**
+     * Constructor.
+     * @param displayedViewer True if this user is used to display to the monitor, false if it is used
+     * to render somewhere else such as frame buffers/textures.
+     * @param registry The {@link UIRegistry}.
+     */
+    public AbstractViewer(boolean displayedViewer, UIRegistry registry)
+    {
+        if(displayedViewer)
+        {
+            myDPIScale = new ScaleDetector(registry);
+        }
+        else
+        {
+            myDPIScale = new NoScale();
+        }
+    }
 
     @Override
     public void addObserver(Observer obs)
@@ -119,6 +145,15 @@ public abstract class AbstractViewer implements Viewer
         return myTrajectoryGenerators;
     }
 
+    /**
+     * Gets the current display pixel scaling factor.
+     * @return The scale factor for current display.
+     */
+    public float getDisplayScale()
+    {
+        return myDPIScale.getScale();
+    }
+
     @Override
     public synchronized ScreenPosition getViewOffset()
     {
@@ -163,9 +198,9 @@ public abstract class AbstractViewer implements Viewer
     {
         if (width != myViewportWidth || height != myViewportHeight)
         {
-            myViewportWidth = width;
-            myViewportHeight = height;
-            doReshape(width, height);
+            myViewportWidth = (int)(width / myDPIScale.getScale());
+            myViewportHeight = (int)(height / myDPIScale.getScale());
+            doReshape(myViewportWidth, myViewportHeight);
             clearModelToWindowTransform();
             notifyViewChanged(ViewChangeSupport.ViewChangeType.WINDOW_RESIZE);
         }

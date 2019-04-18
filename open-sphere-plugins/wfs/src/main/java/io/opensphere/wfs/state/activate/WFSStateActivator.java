@@ -1,6 +1,5 @@
 package io.opensphere.wfs.state.activate;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,16 +14,17 @@ import com.bitsys.fade.mist.state.v4.StateType;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.modulestate.StateXML;
-import io.opensphere.core.util.collections.New;
+import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.data.DataGroupInfo;
+import io.opensphere.mantle.data.impl.DataGroupActivator;
 import io.opensphere.mantle.data.impl.DefaultDataGroupActivator;
+import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.server.state.utilities.ServerStateUtilities;
 import io.opensphere.server.toolbox.LayerConfiguration;
 import io.opensphere.server.toolbox.ServerStateController;
 import io.opensphere.server.toolbox.ServerToolbox;
 import io.opensphere.server.toolbox.ServerToolboxUtils;
 import io.opensphere.server.toolbox.WFSLayerConfigurationManager;
-import io.opensphere.wfs.layer.WFSDataType;
 import io.opensphere.wfs.state.controllers.WFSNodeReader;
 import io.opensphere.wfs.state.model.WFSLayerState;
 import io.opensphere.wfs.state.model.WFSStateGroup;
@@ -38,8 +38,14 @@ public class WFSStateActivator
     /** The Constant LOGGER. */
     private static final Logger LOGGER = Logger.getLogger(WFSStateActivator.class);
 
+    /** The activator for layers. */
+    private final DataGroupActivator myActivator;
+
     /** The Builder. */
     private final WFSDataTypeBuilder myBuilder;
+
+    /** The data group controller. */
+    private final DataGroupController myController;
 
     /** The Node reader. */
     private final WFSNodeReader myNodeReader;
@@ -50,7 +56,7 @@ public class WFSStateActivator
     private final Toolbox myToolbox;
 
     /**
-     * Instantiates a new wFS state activator.
+     * Instantiates a new WFS state activator.
      *
      * @param toolbox the toolbox
      * @param builder The builder to use.
@@ -61,11 +67,13 @@ public class WFSStateActivator
         myBuilder = builder;
         myNodeReader = nodeReader;
         myToolbox = toolbox;
+        myActivator = new DefaultDataGroupActivator(myToolbox.getEventManager());
+        myController = MantleToolboxUtils.getMantleToolbox(myToolbox).getDataGroupController();
     }
 
     /**
      * Reads a state node and creates corresponding WFSLayerStates and then
-     * builds WFS types for each state.
+     * activates the data groups associated with those states.
      *
      * @param id the id
      * @param node the node
@@ -78,14 +86,16 @@ public class WFSStateActivator
         serverStateController.activateServers(node);
 
         List<WFSLayerState> states = getReader().readNode(node);
-        List<DataGroupInfo> stateGroups = createAndActivateGroups(id, states);
+        List<DataGroupInfo> stateGroups = getGroupsFromStates(states);
+
+        activateGroups(stateGroups);
 
         return new WFSStateGroup(id, stateGroups, states);
     }
 
     /**
      * Reads a state object and creates corresponding WFSLayerStates and then
-     * builds WFS types for each state.
+     * activates the data groups associated with those states.
      *
      * @param id the id
      * @param state the state object
@@ -100,9 +110,28 @@ public class WFSStateActivator
 
         List<WFSLayerState> states = ServerStateUtilities.getWfsLayers(serverToolbox.getLayerConfigurationManager(), state)
                 .stream().map(this::convertLayer).collect(Collectors.toList());
-        List<DataGroupInfo> stateGroups = createAndActivateGroups(id, states);
+        List<DataGroupInfo> stateGroups = getGroupsFromStates(states);
+
+        activateGroups(stateGroups);
 
         return new WFSStateGroup(id, stateGroups, states);
+    }
+
+    /**
+     * Activates the data groups if any of them are inactive.
+     *
+     * @param groups the data groups to activate
+     * @throws InterruptedException if activation is interrupted
+     */
+    protected void activateGroups(List<DataGroupInfo> groups) throws InterruptedException
+    {
+        for (DataGroupInfo dataGroup : groups)
+        {
+            if (dataGroup.activationProperty().isInactiveOrDeactivation())
+            {
+                myActivator.setGroupActive(dataGroup, true);
+            }
+        }
     }
 
     /**
@@ -114,46 +143,6 @@ public class WFSStateActivator
     protected WFSLayerState convertLayer(LayerType layerType)
     {
         return SaveStateV4ToV3Translator.toLayerState(layerType);
-    }
-
-    /**
-     * Creates and activates data groups for the given states.
-     *
-     * @param id the state ID
-     * @param states the states
-     * @return the data groups
-     * @throws InterruptedException if the thread was interrupted
-     */
-    protected List<DataGroupInfo> createAndActivateGroups(String id, Collection<? extends WFSLayerState> states)
-        throws InterruptedException
-    {
-        List<DataGroupInfo> stateGroups = New.list();
-        if (!states.isEmpty())
-        {
-            List<WFSDataType> types = getBuilder().createWFSTypes(id, states);
-            List<DataGroupInfo> toActivate = New.list();
-
-            for (WFSDataType type : types)
-            {
-                DataGroupInfo parent = type.getParent();
-
-                if (getBuilder().canActivate(type))
-                {
-                    toActivate.add(parent);
-                }
-
-                stateGroups.add(parent);
-            }
-
-            /* Reactivate the group so that listeners notice that new members
-             * have been added. */
-            if (!toActivate.isEmpty()
-                    && !new DefaultDataGroupActivator(myToolbox.getEventManager()).reactivateGroups(stateGroups))
-            {
-                throw new InterruptedException();
-            }
-        }
-        return stateGroups;
     }
 
     /**
@@ -207,6 +196,19 @@ public class WFSStateActivator
     protected WFSDataTypeBuilder getBuilder()
     {
         return myBuilder;
+    }
+
+    /**
+     * Gets all the data groups associated with the list of layer states.
+     *
+     * @param states the layer states
+     * @return the data groups
+     */
+    protected List<DataGroupInfo> getGroupsFromStates(List<? extends WFSLayerState> states)
+    {
+        return states.stream().filter(layerState -> layerState.getTypeKey() != null)
+                .map(layerState -> myController.findMemberById(layerState.getTypeKey())).filter(dataType -> dataType != null)
+                .map(dataType -> dataType.getParent()).collect(Collectors.toList());
     }
 
     /**

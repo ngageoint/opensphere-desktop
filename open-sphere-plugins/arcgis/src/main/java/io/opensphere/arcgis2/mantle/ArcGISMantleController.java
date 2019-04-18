@@ -101,8 +101,8 @@ public class ArcGISMantleController extends DynamicService<String, Service> impl
         Predicate<DataTypeInfo> actualFilter = filter.and(t -> t.isVisible());
         Collection<DataGroupInfo> groups = New.list();
         myMantleToolbox.getDataGroupController().findDataGroupInfo(
-            g -> g instanceof ArcGISDataGroupInfo && g.activationProperty().isActive() && g.hasMember(actualFilter, false),
-            groups, false);
+                g -> g instanceof ArcGISDataGroupInfo && g.activationProperty().isActive() && g.hasMember(actualFilter, false),
+                groups, false);
         return CollectionUtilities.filterDowncast(groups, ArcGISDataGroupInfo.class);
     }
 
@@ -116,17 +116,20 @@ public class ArcGISMantleController extends DynamicService<String, Service> impl
     public long[] addDataElements(DataTypeInfo dataType, Response response)
     {
         long[] ids = {};
-        Collection<MapDataElement> dataElements = response.getFeatures().stream()
-                .map(f -> ArcGISDataElementHelper.createDataElement(dataType, f)).filter(e -> e != null)
-                .collect(Collectors.toList());
-        if (!dataElements.isEmpty())
+        if (response != null && response.getFeatures() != null)
         {
-            if (dataType.getMetaDataInfo().getKeyCount() > 0)
+            Collection<MapDataElement> dataElements = response.getFeatures().stream()
+                    .map(f -> ArcGISDataElementHelper.createDataElement(dataType, f)).filter(e -> e != null)
+                    .collect(Collectors.toList());
+            if (!dataElements.isEmpty())
             {
-                myMantleToolbox.getDataTypeController().addDataType("Baba", "Ganoush", dataType, this);
-            }
+                if (dataType.getMetaDataInfo().getKeyCount() > 0)
+                {
+                    myMantleToolbox.getDataTypeController().addDataType("Baba", "Ganoush", dataType, this);
+                }
 
-            ids = myMantleToolbox.getDataTypeController().addMapDataElements(dataType, null, null, dataElements, this);
+                ids = myMantleToolbox.getDataTypeController().addMapDataElements(dataType, null, null, dataElements, this);
+            }
         }
         return ids;
     }
@@ -143,7 +146,8 @@ public class ArcGISMantleController extends DynamicService<String, Service> impl
     }
 
     /**
-     * Creates a service that manages the server data group and all its children.
+     * Creates a service that manages the server data group and all its
+     * children.
      *
      * @param serverName the server name
      * @param url the server URL

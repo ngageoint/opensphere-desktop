@@ -119,7 +119,7 @@ public final class StyleUtils
         {
             return TimeSpanUtility.formatTimeSpan(new SimpleDateFormat(DateTimeFormats.DATE_TIME_FORMAT), timeSpan);
         }
-        return Objects.toString(provider.getValue(colName));
+        return Objects.toString(provider.getValue(colName), "");
     }
 
     /**

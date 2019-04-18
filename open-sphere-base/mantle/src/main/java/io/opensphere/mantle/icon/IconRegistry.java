@@ -3,14 +3,13 @@ package io.opensphere.mantle.icon;
 import java.net.URL;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Predicate;
 
 import gnu.trove.list.TIntList;
 import gnu.trove.list.TLongList;
 import io.opensphere.mantle.icon.chooser.model.IconManagerPrefs;
 import io.opensphere.mantle.icon.chooser.model.IconModel;
-import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 
 /**
  * The Interface IconRegistry.
@@ -89,14 +88,7 @@ public interface IconRegistry
      *
      * @return the observable list in which the collection names are defined.
      */
-    ObservableList<String> getCollectionNameSet();
-
-    /**
-     * Gets the set of all collection names in use in the registry.
-     *
-     * @return the collection names
-     */
-    Set<String> getCollectionNames();
+    ObservableSet<String> getCollectionNameSet();
 
     /**
      * Gets the element ids for icon id.

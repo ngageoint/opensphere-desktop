@@ -10,7 +10,6 @@ import com.bitsys.fade.mist.state.v4.StateType;
 
 import io.opensphere.core.Plugin;
 import io.opensphere.core.Toolbox;
-import io.opensphere.core.util.collections.StreamUtilities;
 import io.opensphere.mantle.MantleToolbox;
 import io.opensphere.mantle.controller.DataGroupController;
 import io.opensphere.mantle.data.DataGroupInfo;
@@ -18,15 +17,11 @@ import io.opensphere.mantle.data.impl.DefaultDataGroupActivator;
 import io.opensphere.server.state.utilities.ServerStateUtilities;
 import io.opensphere.server.toolbox.ServerToolbox;
 import io.opensphere.server.toolbox.ServerToolboxUtils;
-import io.opensphere.wms.envoy.WMSLayerCreatorImpl;
 import io.opensphere.wms.state.activate.controllers.EnvoyCoupler;
 import io.opensphere.wms.state.activate.controllers.LayerActivator;
-import io.opensphere.wms.state.activate.controllers.LayerBuilder;
 import io.opensphere.wms.state.activate.controllers.NodeReader;
 import io.opensphere.wms.state.activate.controllers.SaveStateV4ToV3Translator;
-import io.opensphere.wms.state.activate.controllers.WMSDataTypeFactoryImpl;
 import io.opensphere.wms.state.model.StateGroup;
-import io.opensphere.wms.state.model.WMSEnvoyAndLayerEnvoy;
 import io.opensphere.wms.state.model.WMSEnvoyAndState;
 import io.opensphere.wms.state.model.WMSLayerState;
 
@@ -44,11 +39,6 @@ public class StateActivator
      * Couples existing layer envoys to saved layer states.
      */
     private final EnvoyCoupler myEnvoyCoupler;
-
-    /**
-     * Builds new layers from the saved states.
-     */
-    private final LayerBuilder myLayerBuilder;
 
     /**
      * Activates the new layers.
@@ -72,7 +62,6 @@ public class StateActivator
         DataGroupController dataGroupController = toolbox.getPluginToolboxRegistry().getPluginToolbox(MantleToolbox.class)
                 .getDataGroupController();
         myEnvoyCoupler = new EnvoyCoupler(wmsPlugin, toolbox.getEnvoyRegistry(), dataGroupController);
-        myLayerBuilder = new LayerBuilder(WMSLayerCreatorImpl.getInstance(), WMSDataTypeFactoryImpl.getInstance());
         myActivator = new LayerActivator(new DefaultDataGroupActivator(toolbox.getEventManager()));
         myToolbox = toolbox;
     }
@@ -139,11 +128,19 @@ public class StateActivator
         throws InterruptedException
     {
         List<WMSEnvoyAndState> envoyAndStates = myEnvoyCoupler.retrieveRelatedEnvoys(states);
-        List<WMSEnvoyAndLayerEnvoy> envoys = myLayerBuilder.buildLayers(envoyAndStates, stateId, tags);
-        List<DataGroupInfo> groups = StreamUtilities.map(envoys,
-            envoyAndLayer -> envoyAndLayer.getLayerEnvoy().getLayer().getTypeInfo().getParent());
+        List<DataGroupInfo> groups = envoyAndStates.stream().map(e -> e.getTypeInfo().getParent()).collect(Collectors.toList());
 
-        return myActivator.activateLayers(stateId, groups, activateDataLayer);
+        StateGroup stateGroup;
+        if (groups.stream().allMatch(e -> e.activationProperty().isActiveOrActivating()))
+        {
+            stateGroup = new StateGroup(stateId, groups);
+        }
+        else
+        {
+            stateGroup = myActivator.activateLayers(stateId, groups, activateDataLayer);
+        }
+
+        return stateGroup;
     }
 
     /**

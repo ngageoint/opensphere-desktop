@@ -102,7 +102,7 @@ public final class HeatmapGeometryUtilities
             }
             else if (style instanceof DynamicLOBFeatureVisualization)
             {
-                float orientation = NumberUtilities.toFloat(lobStyle.getLobOrientation(0, geom, provider), 0f);
+                float orientation = NumberUtilities.toFloat(lobStyle.getLobOrientation(0, geom, provider), Float.NaN);
                 convertedGeom = buildLine(geom, lobStyle, orientation, provider);
             }
         }
@@ -152,10 +152,20 @@ public final class HeatmapGeometryUtilities
     {
         LineOfBearingGeometry.Builder builder = new LineOfBearingGeometry.Builder();
         builder.setPosition(new GeographicPosition(geom.getLocation()));
-        builder.setLineOrientation(orientation);
 
         DefaultLOBRenderProperties props = new DefaultLOBRenderProperties(0, true, false);
-        props.setLineLength((float)style.getLobLength(provider).inMeters());
+        
+        if (Float.isNaN(orientation))
+        {
+            builder.setLineOrientation(0f);
+            props.setLineLength(0f);
+        }
+        else
+        {            
+            builder.setLineOrientation(orientation);
+            props.setLineLength((float)style.getLobLength(provider).inMeters());
+        }
+        
         LineOfBearingGeometry coreLOB = new LineOfBearingGeometry(builder, props, null);
         List<LatLonAlt> locations = coreLOB.getVertices().stream().map(v -> ((GeographicPosition)v).getLatLonAlt())
                 .collect(Collectors.toList());

@@ -107,7 +107,7 @@ public class DefaultQuantifyService implements QuantifyService
         {
             synchronized (myMetrics)
             {
-                LOG.info("Sending metrics.");
+                LOG.debug("Sending metrics.");
                 mySenders.forEach(s -> s.send(New.collection(myMetrics.values())));
                 myMetrics.clear();
             }

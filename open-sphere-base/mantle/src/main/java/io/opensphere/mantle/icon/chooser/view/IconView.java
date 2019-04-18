@@ -1,8 +1,8 @@
 package io.opensphere.mantle.icon.chooser.view;
 
-import io.opensphere.mantle.icon.chooser.model.IconModel;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+
+import io.opensphere.mantle.icon.chooser.model.IconModel;
 
 /** Packages UI elements into one pane. */
 public class IconView extends AnchorPane
@@ -24,38 +24,12 @@ public class IconView extends AnchorPane
 
         myMainPanel = new IconSelectionPanel(myPanelModel);
 
-        setTopAnchor(myMainPanel, 0.0);
-        setBottomAnchor(myMainPanel, 0.0);
-        setLeftAnchor(myMainPanel, 0.);
-        setRightAnchor(myMainPanel, 0.);
+        setTopAnchor(myMainPanel, Double.valueOf(0.0));
+        setBottomAnchor(myMainPanel, Double.valueOf(0.0));
+        setLeftAnchor(myMainPanel, Double.valueOf(0.0));
+        setRightAnchor(myMainPanel, Double.valueOf(0.0));
 
         getChildren().addAll(myMainPanel);
-
-        setOnKeyTyped(e ->
-        {
-            if (e.getCharacter().equals("\b"))
-            {
-                String current = myPanelModel.searchTextProperty().get();
-                if (current.length() > 0)
-                {
-                    current = current.substring(0, current.length() - 1);
-                }
-                myPanelModel.searchTextProperty().set(current);
-            }
-            else if (KeyCode.ESCAPE.equals(e.getCode()) || e.getCharacter().charAt(0) == 27)
-            {
-                myPanelModel.searchTextProperty().set("");
-            }
-            else
-            {
-                String current = myPanelModel.searchTextProperty().get();
-                if (current == null)
-                {
-                    current = "";
-                }
-                myPanelModel.searchTextProperty().set(current + e.getCharacter());
-            }
-        });
     }
 
     /**

@@ -1,10 +1,15 @@
 package io.opensphere.mantle.data.geom.style.impl.ui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,13 +18,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 
 import org.apache.log4j.Logger;
 
@@ -73,10 +80,9 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
 
     /** The root panel in which the components are rendered. */
     private final JPanel mainPanel = new JPanel();
-
-    {
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-    }
+    
+    /** The root panel's layout. */
+    private final GroupLayout myLayout;
 
     /** A panel in which the additional combo boxes are displayed. */
     private final JPanel addPanel = createAddPanel();
@@ -90,6 +96,11 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
      */
     public MultiComboEditor(PanelBuilder label, MutableVisualizationStyle style, String key)
     {
+        myLayout = new GroupLayout(mainPanel);
+        myLayout.setAutoCreateGaps(false);
+        myLayout.setAutoCreateContainerGaps(false);
+        mainPanel.setLayout(myLayout);
+
         setStuff(label, style, key);
 
         Object bg = myPanelBuilder.getOtherParameter(COMBOBOX_BACKGROUND);
@@ -133,23 +144,42 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
     public void setup(boolean num, Collection<String> opts)
     {
         setupAspep();
-
         setOptions(num, opts);
 
-        GridBagLayout layout = new GridBagLayout();
-
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.insets = new Insets(0, 15, 0, 0);
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        myControlPanel.setLayout(layout);
-
-        constraints.gridy++;
-        constraints.fill = GridBagConstraints.BOTH;
-        constraints.weightx = 1.0;
-        layout.setConstraints(mainPanel, constraints);
-        myControlPanel.add(mainPanel);
+        if (myControlPanel instanceof JScrollPane)
+        {
+            ((JScrollPane)myControlPanel).setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+            ((JScrollPane)myControlPanel).setViewportView(mainPanel);
+            myControlPanel.setBorder(null);
+        }
+        else
+        {        
+            GridBagLayout layout = new GridBagLayout();
+            
+            GridBagConstraints constraints = new GridBagConstraints();
+            constraints.insets = new Insets(0, 15, 0, 0);
+            constraints.anchor = GridBagConstraints.WEST;
+            constraints.gridx = 0;
+            constraints.gridy = 0;
+            myControlPanel.setLayout(layout);
+            
+            constraints.gridy++;
+            constraints.fill = GridBagConstraints.BOTH;
+            constraints.weightx = 1.0;
+            layout.setConstraints(mainPanel, constraints);
+            myControlPanel.add(mainPanel);
+        }
+        
+        myControlPanel.addComponentListener(new ComponentAdapter()
+        {
+            @Override
+            public void componentResized(ComponentEvent e)
+            {
+                resizeControl();
+            }
+        });
+        
+        add(addPanel, BorderLayout.SOUTH);
     }
 
     /**
@@ -204,31 +234,64 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
     /** Lays out the UI. */
     private void layoutGui()
     {
+        addPanel.setVisible(false);
         mainPanel.removeAll();
-        rowList.stream().forEach(r -> mainPanel.add(r.mainPanel));
-        // include a button and message to add another one, if less than the
-        // maximum
+        
+        GroupLayout.SequentialGroup hGroup = myLayout.createSequentialGroup();
+        GroupLayout.SequentialGroup vGroup = myLayout.createSequentialGroup();
+        
+        GroupLayout.ParallelGroup hName = myLayout.createParallelGroup();
+        GroupLayout.ParallelGroup hCombo = myLayout.createParallelGroup();
+        GroupLayout.ParallelGroup hUp = myLayout.createParallelGroup();
+        GroupLayout.ParallelGroup hDown = myLayout.createParallelGroup();
+        GroupLayout.ParallelGroup hDel = myLayout.createParallelGroup();
+        
+        rowList.stream().forEach(r -> 
+        {
+            vGroup.addGroup(myLayout.createParallelGroup(Alignment.BASELINE)
+                    .addComponent(r.nameCheck)
+                    .addComponent(r.combo)
+                    .addComponent(r.up)
+                    .addComponent(r.down)
+                    .addComponent(r.del));
+            
+            hName.addComponent(r.nameCheck);
+            hCombo.addComponent(r.combo);
+            hUp.addComponent(r.up);
+            hDown.addComponent(r.down);
+            hDel.addComponent(r.del);
+        });
+        
+        hGroup.addGroup(hName).addGroup(hCombo).addGroup(hUp).addGroup(hDown).addGroup(hDel);
+        
+        myLayout.setHorizontalGroup(hGroup);
+        myLayout.setVerticalGroup(vGroup);
+
         if (rowList.size() < maxBoxes)
         {
-            JTextArea label = new JTextArea();
-            label.setBorder(null);
-            label.setEditable(false);
-            label.setLineWrap(true);
-            label.setWrapStyleWord(true);
-            label.setFont(label.getFont().deriveFont(Font.ITALIC));
-            label.setText(String.format("Click the plus button to add labels to a maximum of %d.", Integer.valueOf(maxBoxes)));
-
-            JPanel p = new JPanel();
-            p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            p.add(Box.createHorizontalGlue());
-            p.add(label);
-            p.add(Box.createHorizontalGlue());
-
-            mainPanel.add(p);
-            mainPanel.add(addPanel);
+            addPanel.setVisible(true);
         }
-
+        
         revalidate();
+        repaint();
+        
+        resizeControl();
+    }
+    
+    /**
+     * Updates the control panel's minimum and preferred size, then repaints.
+     */
+    private void resizeControl()
+    {
+        int addHeight = 5;
+        if (myControlPanel instanceof JScrollPane)
+        {
+            addHeight += ((JScrollPane)myControlPanel).getHorizontalScrollBar().isVisible() ? 20 : 0;
+        }
+        Dimension size = new Dimension(myControlPanel.getPreferredSize().width, mainPanel.getPreferredSize().height + addHeight);
+        myControlPanel.setMinimumSize(size);
+        myControlPanel.setPreferredSize(size);
+        
         repaint();
     }
 
@@ -341,14 +404,37 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
      */
     private JPanel createAddPanel()
     {
+        JTextArea label = new JTextArea();
+        label.setBorder(null);
+        label.setEditable(false);
+        label.setLineWrap(true);
+        label.setWrapStyleWord(true);
+        label.setFont(label.getFont().deriveFont(Font.ITALIC));
+        label.setText(String.format("Click the plus button to add labels to a maximum of %d.", Integer.valueOf(maxBoxes)));
+        
         JButton button = new IconButton(IconType.PLUS, Color.GREEN);
         button.setToolTipText("Add a label");
         button.addActionListener(e -> addRow());
 
         JPanel p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-        p.add(Box.createHorizontalGlue());
+        GridBagLayout gb = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
+        p.setLayout(gb);
+
+        c.gridwidth = GridBagConstraints.RELATIVE;
+        c.gridheight = 2;
+        c.weightx = 1.0;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        gb.setConstraints(label, c);
+        p.add(label);
+        
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.gridheight = 1;
+        c.weightx = 0;
+        c.fill = GridBagConstraints.NONE;
+        gb.setConstraints(button, c);
         p.add(button);
+        
         return p;
     }
 
@@ -457,7 +543,7 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
     private class ComboRow
     {
         /** check box (current use: include column names). */
-        public JCheckBox nameCheck = new JCheckBox("Column");
+        public JCheckBox nameCheck = new JCheckBox();
 
         /** value selector. */
         public JComboBox<OptionProxy<String>> combo = new JComboBox<>();
@@ -470,47 +556,6 @@ public class MultiComboEditor extends AbstractStyleParameterEditorPanel
 
         /** delete button. */
         public JButton del = new IconButton(IconType.CLOSE, Color.RED);
-
-        /** root container for GUI components. */
-        @SuppressWarnings("hiding")
-        public JPanel mainPanel = new JPanel();
-
-        {
-            GridBagLayout layout = new GridBagLayout();
-            GridBagConstraints c = new GridBagConstraints();
-            c.anchor = GridBagConstraints.WEST;
-            c.fill = GridBagConstraints.NONE;
-            c.gridx = 0;
-            c.gridy = 0;
-
-            mainPanel.setLayout(layout);
-            nameCheck.setToolTipText("Display the column name in the label with the value");
-            layout.setConstraints(nameCheck, c);
-            mainPanel.add(nameCheck);
-
-            c.gridx++;
-            c.fill = GridBagConstraints.HORIZONTAL;
-            c.weightx = 1.0;
-            layout.setConstraints(combo, c);
-            mainPanel.add(combo);
-            up.setToolTipText("Move the label up");
-            c.gridx++;
-            c.insets = new Insets(0, 2, 0, 2);
-            c.fill = GridBagConstraints.NONE;
-            c.weightx = 0.0;
-            layout.setConstraints(up, c);
-            mainPanel.add(up);
-
-            c.gridx++;
-            layout.setConstraints(down, c);
-            down.setToolTipText("Move the label down");
-            mainPanel.add(down);
-            c.gridx++;
-            c.insets = new Insets(0, 2, 0, 0);
-            layout.setConstraints(del, c);
-            del.setToolTipText("Remove the label");
-            mainPanel.add(del);
-        }
 
         /**
          * Install the specified value for this row. The value should be a

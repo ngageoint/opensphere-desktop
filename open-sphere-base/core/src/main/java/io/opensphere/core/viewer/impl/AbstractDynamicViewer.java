@@ -9,6 +9,7 @@ import javax.swing.JMenuItem;
 
 import org.apache.log4j.Logger;
 
+import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.math.Vector3d;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.util.collections.New;
@@ -51,9 +52,12 @@ public abstract class AbstractDynamicViewer extends AbstractViewer implements Dy
      * Construct a viewer.
      *
      * @param builder An object that describes how the viewer should be created.
+     * @param displayedViewer True if this user is used to display to the monitor, false if it is used
+     * to render somewhere else such as frame buffers/textures.
      */
-    public AbstractDynamicViewer(Builder builder)
+    public AbstractDynamicViewer(Builder builder, boolean displayedViewer)
     {
+        super(displayedViewer, builder.getUIRegistry());
         myPreferences = builder.getPreferences();
     }
 
@@ -145,6 +149,11 @@ public abstract class AbstractDynamicViewer extends AbstractViewer implements Dy
         private Preferences myPreferences;
 
         /**
+         * The {@link UIRegistry}.
+         */
+        private UIRegistry myRegistry;
+
+        /**
          * Get the maximum zoom.
          *
          * @return The maximum zoom level.
@@ -192,6 +201,15 @@ public abstract class AbstractDynamicViewer extends AbstractViewer implements Dy
         public Preferences getPreferences()
         {
             return myPreferences;
+        }
+
+        /**
+         * Gets the {@link UIRegistry}.
+         * @return The {@link UIRegistry}.
+         */
+        public UIRegistry getUIRegistry()
+        {
+            return myRegistry;
         }
 
         /**
@@ -251,6 +269,17 @@ public abstract class AbstractDynamicViewer extends AbstractViewer implements Dy
         public Builder preferences(Preferences preferences)
         {
             myPreferences = preferences;
+            return this;
+        }
+
+        /**
+         * Set the system toolbox object for the viewer.
+         * @param registry The {@link UIRegistry}
+         * @return The builder for convenience.
+         */
+        public Builder uiRegistry(UIRegistry registry)
+        {
+            myRegistry = registry;
             return this;
         }
     }

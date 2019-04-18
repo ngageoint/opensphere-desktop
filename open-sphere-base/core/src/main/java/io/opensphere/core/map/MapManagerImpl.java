@@ -92,7 +92,7 @@ public class MapManagerImpl implements MapManager
     private final ProjectionManager myProjectionManager = new ProjectionManager();
 
     /** The viewer for screen position geometries. */
-    private final ScreenViewer myScreenViewer = new ScreenViewer();
+    private final ScreenViewer myScreenViewer;
 
     /** The controller for saving and activating map manager states. */
     private MapManagerStateController myStateController;
@@ -192,6 +192,7 @@ public class MapManagerImpl implements MapManager
     {
         initializeMappings(orderManager);
 
+        myScreenViewer = new ScreenViewer(uiRegistry);
         myUpdateExecutor = executor;
         myDrawEnableSupport = new DrawEnableSupportExtension(myUpdateExecutor);
         myViewerControlManager = new ViewerControlManager(myCurrentViewer.getReadOnly(), this)
@@ -214,7 +215,7 @@ public class MapManagerImpl implements MapManager
         };
         myProjectionManager.getProjectionChangeSupport().addProjectionChangeListener(myMapMenuControl);
         myPreferences = prefsRegistry.getPreferences(MapManager.class);
-        myViewerManager = new ViewerManager(myPreferences);
+        myViewerManager = new ViewerManager(myPreferences, uiRegistry);
         myViewBookmarkRegistry = new ViewBookmarkRegistryImpl(prefsRegistry);
 
         myPreferenceHelper = new MapManagerPreferenceHelperImpl(prefsRegistry, uiRegistry.getOptionsRegistry());
