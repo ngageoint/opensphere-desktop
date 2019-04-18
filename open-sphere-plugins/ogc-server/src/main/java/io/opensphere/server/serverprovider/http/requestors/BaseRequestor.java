@@ -16,6 +16,7 @@ import com.bitsys.common.http.entity.HttpEntity;
 import com.bitsys.common.http.message.HttpRequest;
 import com.bitsys.common.http.message.HttpResponse;
 
+import io.opensphere.core.NetworkConfigurationManager;
 import io.opensphere.core.common.connection.HttpHeaders.HttpResponseHeader;
 import io.opensphere.core.event.EventManager;
 import io.opensphere.core.net.NetworkReceiveEvent;
@@ -42,7 +43,10 @@ public abstract class BaseRequestor
     private final HeaderValues myHeaderValues;
 
     /** The manager through which events are sent. */
-    private EventManager myEventManager;
+    private final EventManager myEventManager;
+
+    /** The network configuration manager. */
+    private final NetworkConfigurationManager myNetworkConfigurationManager;
 
     /**
      * Constructs a base requestor.
@@ -51,12 +55,14 @@ public abstract class BaseRequestor
      *            server.
      * @param headerValues Contains the header values.
      * @param eventManager The manager through which events are sent.
+     * @param networkConfigurationManager The network configuration manager.
      */
-    public BaseRequestor(HttpClient client, HeaderValues headerValues, EventManager eventManager)
+    public BaseRequestor(HttpClient client, HeaderValues headerValues, EventManager eventManager, NetworkConfigurationManager networkConfigurationManager)
     {
         myClient = client;
         myHeaderValues = headerValues;
         myEventManager = eventManager;
+        myNetworkConfigurationManager = networkConfigurationManager;
     }
 
     /**
@@ -112,13 +118,17 @@ public abstract class BaseRequestor
             LOGGER.debug("Sending request: " + request);
         }
 
-        String transactionId = UUID.randomUUID().toString();
-        NetworkTransmitEvent transmitEvent = new NetworkTransmitEvent(request, myClient.getOptions(), transactionId);
-        transmitEvent.setCookieStore(getClient().getCookieStore());
-        myEventManager.publishEvent(transmitEvent);
-        HttpResponse response = myClient.execute(request);
+        String transactionId = null;
+        boolean networkMonitorEnabled = myNetworkConfigurationManager.isNetworkMonitorEnabled();
+        if (networkMonitorEnabled)
+        {
+            transactionId = UUID.randomUUID().toString();
+            NetworkTransmitEvent transmitEvent = new NetworkTransmitEvent(request, myClient.getOptions(), transactionId);
+            transmitEvent.setCookieStore(getClient().getCookieStore());
+            myEventManager.publishEvent(transmitEvent);
+        }
 
-        NetworkReceiveEvent receiveEvent = new NetworkReceiveEvent(response, transactionId);
+        HttpResponse response = myClient.execute(request);
 
         try
         {
@@ -167,7 +177,12 @@ public abstract class BaseRequestor
         }
         finally
         {
-            myEventManager.publishEvent(receiveEvent);
+            if (networkMonitorEnabled)
+            {
+                NetworkReceiveEvent receiveEvent = new NetworkReceiveEvent(response, transactionId);
+                myEventManager.publishEvent(receiveEvent);
+            }
+
             if (!success)
             {
                 Utilities.close(response);

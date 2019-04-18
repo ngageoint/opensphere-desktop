@@ -235,7 +235,7 @@ public class HttpServerFactoryTest
 
         final SystemToolbox systemToolbox = support.createMock(SystemToolbox.class);
         systemToolbox.getNetworkConfigurationManager();
-        EasyMock.expectLastCall().andReturn(networkManager);
+        EasyMock.expectLastCall().andReturn(networkManager).atLeastOnce();
 
         return systemToolbox;
     }
@@ -296,7 +296,7 @@ public class HttpServerFactoryTest
         EasyMock.expectLastCall().andReturn(prefsRegistry);
 
         toolbox.getSystemToolbox();
-        EasyMock.expectLastCall().andReturn(systemToolbox);
+        EasyMock.expectLastCall().andReturn(systemToolbox).atLeastOnce();
 
         toolbox.getPluginToolboxRegistry();
         EasyMock.expectLastCall().andReturn(pluginToolbox).anyTimes();
