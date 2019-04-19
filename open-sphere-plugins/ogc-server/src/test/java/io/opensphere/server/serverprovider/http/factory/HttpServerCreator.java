@@ -105,7 +105,7 @@ public final class HttpServerCreator
         String protocol = url.getProtocol();
 
         HttpClient httpClient = createHttpClient(host, port);
-        RequestorProviderImpl provider = new RequestorProviderImpl(httpClient, new HeaderValuesImpl("test"), null);
+        RequestorProviderImpl provider = new RequestorProviderImpl(httpClient, new HeaderValuesImpl("test"), null, null);
         return new HttpServerImpl(host, protocol, provider);
     }
 

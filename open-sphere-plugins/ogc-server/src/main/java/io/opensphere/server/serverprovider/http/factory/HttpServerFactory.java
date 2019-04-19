@@ -70,7 +70,7 @@ public class HttpServerFactory implements ServerFactory
 
         RequestorProviderImpl provider = new RequestorProviderImpl(httpClient,
                 new HeaderValuesImpl(toolbox.getGeometryRegistry().getRenderingCapabilities().getRendererIdentifier()),
-                toolbox.getEventManager());
+                toolbox.getEventManager(), toolbox.getSystemToolbox().getNetworkConfigurationManager());
         HttpServerImpl server = new HttpServerImpl(host, protocol, provider);
 
         return server;
