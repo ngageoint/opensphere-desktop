@@ -199,9 +199,7 @@ public class QueryRegionManagerImpl extends EventListenerService implements Quer
     {
         // remove old region(s) that are the same as the new region (have same geometries)
         // before adding in new region to prevent feature duplication
-        List<QueryRegion> regionsToRemove = New.list();
-        myQueryRegions.stream().filter(e -> e.getGeometries().equals(region.getGeometries())).forEach(e -> regionsToRemove.add(e));
-        regionsToRemove.forEach(e -> removeQueryRegion(e));
+        removeQueryRegion(region.getGeometries());
 
         synchronized (myQueryRegions)
         {
