@@ -640,7 +640,7 @@ public class WFSEnvoyHelper
             }
 
             // Remove any columns the server doesn't know about to prevent errors
-            columns.remove(MetaDataInfo.MGRS_DERIVED);
+            columns.removeAll(type.getMetaDataInfo().getUserKeys());
         }
         return columns;
     }

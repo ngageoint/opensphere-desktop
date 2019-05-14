@@ -111,6 +111,9 @@ public class DefaultMetaDataInfo implements MetaDataInfo
      */
     private final StringProperty myUniqueIdentifierKeyProperty = new ConcurrentStringProperty();
 
+    /** The list of keys added by the user. */
+    private final List<String> myUserAddedKeys = New.list();
+
     /**
      * Clear preferences registry entry for numeric cache.
      *
@@ -337,6 +340,12 @@ public class DefaultMetaDataInfo implements MetaDataInfo
             myDataTypeInfo.fireChangeEvent(new DataTypeInfoMetaDataKeyAddedChangeEvent(myDataTypeInfo, key, source));
         }
         return true;
+    }
+
+    @Override
+    public void addUserKey(String key)
+    {
+        myUserAddedKeys.add(key);
     }
 
     /**
@@ -599,6 +608,12 @@ public class DefaultMetaDataInfo implements MetaDataInfo
     }
 
     @Override
+    public List<String> getUserKeys()
+    {
+        return myUserAddedKeys;
+    }
+
+    @Override
     public boolean hasKey(String key)
     {
         return myKeyNames.contains(key);
@@ -753,6 +768,12 @@ public class DefaultMetaDataInfo implements MetaDataInfo
             myDataTypeInfo.fireChangeEvent(
                     new DataTypeInfoMetaDataSpecialKeyChangeEvent(myDataTypeInfo, null, null, key, specialType, source));
         }
+    }
+
+    @Override
+    public void removeUserKey(String key)
+    {
+        myUserAddedKeys.remove(key);
     }
 
     @Override

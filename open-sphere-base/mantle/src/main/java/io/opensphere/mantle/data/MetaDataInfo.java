@@ -29,6 +29,13 @@ public interface MetaDataInfo
     boolean addKey(String key, Class<?> keyClass, Object source);
 
     /**
+     * Adds a key to the list of user created keys.
+     *
+     * @param key the key to add
+     */
+    void addUserKey(String key);
+
+    /**
      * Removes a key from the key names.
      *
      * @param key - the key to add
@@ -196,6 +203,13 @@ public interface MetaDataInfo
     String getTimeKey();
 
     /**
+     * Gets the list of user created keys.
+     *
+     * @return the list of user created keys
+     */
+    List<String> getUserKeys();
+
+    /**
      * Returns true if the key name list contains the specified key.
      *
      * @param key - the key to check.
@@ -230,6 +244,13 @@ public interface MetaDataInfo
      * @param source - the object making the change.
      */
     void removeSpecialKey(SpecialKey specialType, Object source);
+
+    /**
+     * Removes the key from the list of user created keys.
+     *
+     * @param key the key to remove
+     */
+    void removeUserKey(String key);
 
     /**
      * Resets the internal map that tracks which keys represent numeric data and
