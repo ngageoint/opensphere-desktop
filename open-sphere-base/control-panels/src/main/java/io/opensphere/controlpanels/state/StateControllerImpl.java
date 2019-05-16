@@ -220,7 +220,6 @@ public class StateControllerImpl implements StateController
         myOrderManager.activateParticipant(dti);
         ddgi.activationProperty().addListener(myActivationListener);
         ddgi.addMember(dti, this);
-        ddgi.activationProperty().setActive(false);
         myRootGroupInfo.addChild(ddgi, this);
         DataModelCategory category = new DataModelCategory("state", StateType.class.getName(), id);
         myToolbox.getDataRegistry().addModels(new SimpleSessionOnlyCacheDeposit<>(category, STATE_DESCRIPTOR,

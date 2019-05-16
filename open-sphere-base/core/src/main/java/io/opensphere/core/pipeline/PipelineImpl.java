@@ -102,6 +102,11 @@ public class PipelineImpl implements GLEventListener, Pipeline, GenericSubscribe
      */
     private ExecutorService myExecutorService;
 
+    /**
+     * The scaling percentage.
+     */
+    private ScaleDetector myDPIScale;
+
     /** My frame rate meter. */
     private final RateMeter myFrameRateMeter = new RateMeter(.7, (instant, average) ->
     {
@@ -580,6 +585,7 @@ public class PipelineImpl implements GLEventListener, Pipeline, GenericSubscribe
         myRepaintTimer.start();
 
         myToolbox = toolbox;
+        myDPIScale = new ScaleDetector(myToolbox.getUIRegistry());
         myCanvasHelper.getCanvas().addMouseMotionListener(new MouseAdapter()
         {
             @Override
@@ -839,7 +845,7 @@ public class PipelineImpl implements GLEventListener, Pipeline, GenericSubscribe
             {
                 RenderContext renderContext = createRenderContext(gl, AbstractGeometry.RenderMode.PICK, timeBudget);
                 myGeometryDistributor.renderGeometries(renderContext);
-                getPickManager().determinePicks(gl, pickPoint.x, viewer.getViewportHeight() - pickPoint.y);
+                getPickManager().determinePicks(gl, (int)(pickPoint.x * myDPIScale.getScale()), (int)((viewer.getViewportHeight() - pickPoint.y) * myDPIScale.getScale()));
                 gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
             }
         }

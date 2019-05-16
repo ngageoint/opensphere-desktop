@@ -20,11 +20,22 @@ public class DefaultMapDataElement extends DefaultDataElement implements MapData
      *
      * @param source the source from which to copy data.
      */
-    public DefaultMapDataElement(DefaultMapDataElement source)
+    public DefaultMapDataElement(MapDataElement source)
     {
         super(source);
+        myMapGeometrySupport = source.getMapGeometrySupport() != null ? source.getMapGeometrySupport().createCopy() : null;
+    }
 
-        myMapGeometrySupport = source.myMapGeometrySupport.createCopy();
+    /**
+     * Copy constructor with custom MetaDataProvider.
+     *
+     * @param source the source from which to copy data.
+     * @param mdp the {@link MetaDataProvider}, can be null if there is no provider.
+     */
+    public DefaultMapDataElement(MapDataElement source, MetaDataProvider mdp)
+    {
+        super(source, mdp);
+        myMapGeometrySupport = source.getMapGeometrySupport() != null ? source.getMapGeometrySupport().createCopy() : null;
     }
 
     /**

@@ -92,7 +92,19 @@ public class Viewer2D extends AbstractDynamicViewer
      */
     public Viewer2D(AbstractDynamicViewer.Builder builder)
     {
-        super(builder);
+        this(builder, true);
+    }
+
+    /**
+     * Construct a viewer.
+     *
+     * @param builder An object that describes how the viewer should be created.
+     * @param displayedViewer True if this user is used to display to the monitor, false if it is used
+     * to render somewhere else such as frame buffers/textures.
+     */
+    public Viewer2D(AbstractDynamicViewer.Builder builder, boolean displayedViewer)
+    {
+        super(builder, displayedViewer);
         addTrajectoryGenerator(TrajectoryGeneratorType.ARC, new FlatTrajectoryGenerator2D(this));
         addTrajectoryGenerator(TrajectoryGeneratorType.FLAT, new FlatTrajectoryGenerator2D(this));
         reset(builder);

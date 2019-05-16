@@ -2,6 +2,7 @@ package io.opensphere.featureactions.editor.ui;
 
 import java.awt.Component;
 import java.awt.EventQueue;
+import java.util.Objects;
 import java.util.Set;
 
 import io.opensphere.controlpanels.layers.importdata.ImportDataController;
@@ -186,7 +187,7 @@ public class SimpleFeatureActionEditorBinder
         int indexOf = 0;
         for (TitledPane titled : myEditor.getAccordion().getPanes())
         {
-            if (((FeatureActionTitledPane)titled).getTitle().getText().equals(group.getGroupName()))
+            if (Objects.deepEquals(((FeatureActionTitledPane)titled).getTitle().getText(), group.getGroupName()))
             {
                 break;
             }

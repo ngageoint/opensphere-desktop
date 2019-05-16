@@ -65,7 +65,7 @@ public class IntervalPropertyValueSet
         }
         else if (value1 instanceof Geometry && value2 instanceof Geometry)
         {
-            return (T)((Geometry)value1).getEnvelope().union((Geometry)value2).getEnvelopeInternal();
+            return (T)((Geometry)value1).getEnvelope().union((Geometry)value2).getEnvelope();
         }
         else
         {

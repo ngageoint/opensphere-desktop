@@ -163,8 +163,8 @@ public class SearchExecutor
         {
             result.setSearchType(provider.getType());
         }
-        myModel.getAllResults().addAll(results);
         myModel.getResultCount().put(provider.getType(), Integer.valueOf(results.size()));
         myModel.getTotalResultCount().put(provider.getType(), Integer.valueOf(provider.getTotalResultCount()));
+        myModel.getAllResults().addAll(results);
     }
 }

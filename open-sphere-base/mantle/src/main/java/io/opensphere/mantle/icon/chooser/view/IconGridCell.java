@@ -1,12 +1,14 @@
 package io.opensphere.mantle.icon.chooser.view;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.scene.Node;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+
 import org.controlsfx.control.GridCell;
 
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.chooser.model.IconModel;
-import javafx.scene.Node;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 
 /**
  * A grid cell implementation used to render an {@link IconRecord}.
@@ -23,14 +25,21 @@ public class IconGridCell extends GridCell<IconRecord>
     private final IconModel myModel;
 
     /**
+     * The previously selected cell.
+     */
+    private final ObjectProperty<IconGridCell> myPreviouslySelected;
+
+    /**
      * Creates a default ImageGridCell instance, which will preserve image
      * properties.
      *
      * @param model The model in which state is maintained.
+     * @param previouslySelected A container for the previously selected cell.
      */
-    public IconGridCell(IconModel model)
+    public IconGridCell(IconModel model, ObjectProperty<IconGridCell> previouslySelected)
     {
         myModel = model;
+        myPreviouslySelected = previouslySelected;
         getStyleClass().add("image-grid-cell");
 
         imageView = new ImageView();
@@ -42,10 +51,10 @@ public class IconGridCell extends GridCell<IconRecord>
         myContainer = new AnchorPane();
         myContainer.getChildren().add(imageView);
 
-        AnchorPane.setRightAnchor(imageView, 0.0);
-        AnchorPane.setLeftAnchor(imageView, 0.0);
-        AnchorPane.setTopAnchor(imageView, 0.0);
-        AnchorPane.setBottomAnchor(imageView, 0.0);
+        AnchorPane.setRightAnchor(imageView, Double.valueOf(0.0));
+        AnchorPane.setLeftAnchor(imageView, Double.valueOf(0.0));
+        AnchorPane.setTopAnchor(imageView, Double.valueOf(0.0));
+        AnchorPane.setBottomAnchor(imageView, Double.valueOf(0.0));
     }
 
     /**
@@ -59,11 +68,6 @@ public class IconGridCell extends GridCell<IconRecord>
         super.updateItem(item, empty);
         setStyle(null);
 
-        if (myModel.selectedRecordProperty().get() != null && myModel.selectedRecordProperty().get().equals(item))
-        {
-            setStyle("-fx-effect: dropshadow(three-pass-box, lime, 15,.5, 0, 0);");
-        }
-
         if (empty)
         {
             imageView.onMouseEnteredProperty().set(null);
@@ -76,23 +80,38 @@ public class IconGridCell extends GridCell<IconRecord>
         }
         else
         {
-            setStyle(null);
+            updateStyle(item);
             myContainer.setOnMouseEntered(e -> setStyle("-fx-effect: dropshadow(three-pass-box, aqua, 15,.5, 0, 0);"));
             myContainer.setOnMouseExited(e ->
             {
-                if (myModel.selectedRecordProperty().get() != null && myModel.selectedRecordProperty().get().equals(item))
-                {
-                    setStyle("-fx-effect: dropshadow(three-pass-box, lime, 15,.5, 0, 0);");
-                }
-                else
-                {
-                    setStyle(null);
-                }
+                updateStyle(item);
             });
             myContainer.setOnMouseClicked(e -> handleMouseClick(item, imageView));
 
             imageView.setImage(item.imageProperty().get());
             setGraphic(myContainer);
+        }
+    }
+
+    /**
+     * Updates the cell's style base on if its the selected icon.
+     *
+     * @param item This cell's {@link IconRecord}
+     */
+    private void updateStyle(IconRecord item)
+    {
+        if (myModel.selectedRecordProperty().get() != null && myModel.selectedRecordProperty().get().equals(item))
+        {
+            if(myPreviouslySelected.get() != null && myPreviouslySelected.get() != this)
+            {
+                myPreviouslySelected.get().setStyle(null);
+            }
+            myPreviouslySelected.set(this);
+            setStyle("-fx-effect: dropshadow(three-pass-box, lime, 15,.5, 0, 0);");
+        }
+        else
+        {
+            setStyle(null);
         }
     }
 
@@ -105,5 +124,6 @@ public class IconGridCell extends GridCell<IconRecord>
     private void handleMouseClick(IconRecord record, Node source)
     {
         myModel.selectedRecordProperty().set(record);
+        updateStyle(record);
     }
 }

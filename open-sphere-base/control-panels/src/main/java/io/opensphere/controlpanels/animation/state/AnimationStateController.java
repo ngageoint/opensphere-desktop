@@ -44,7 +44,7 @@ public class AnimationStateController extends AbstractModuleStateController
     @Override
     public boolean canActivateState(StateType state)
     {
-        return state.getTime() != null;
+        return state.getTime() != null && state.getTime().getCurrent() != null;
     }
 
     @Override

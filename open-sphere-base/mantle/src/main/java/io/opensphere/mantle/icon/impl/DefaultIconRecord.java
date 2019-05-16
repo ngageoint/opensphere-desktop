@@ -8,6 +8,7 @@ import java.util.Objects;
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.util.Utilities;
+import io.opensphere.core.util.io.IOUtilities;
 import io.opensphere.core.util.javafx.ConcurrentBooleanProperty;
 import io.opensphere.core.util.javafx.ConcurrentIntegerProperty;
 import io.opensphere.core.util.javafx.ConcurrentLongProperty;
@@ -29,8 +30,8 @@ import javafx.scene.image.Image;
  */
 public class DefaultIconRecord implements IconRecord
 {
-    /** The logger used to capture output from instances of this class. */
-    private static final Logger LOG = Logger.getLogger(DefaultIconRecord.class);
+    /** Logger. */
+    private static final Logger LOGGER = Logger.getLogger(DefaultIconRecord.class);
 
     /** The list in which the tags are stored. */
     private final ObservableList<String> myTags = FXCollections.observableArrayList();
@@ -83,25 +84,15 @@ public class DefaultIconRecord implements IconRecord
     public DefaultIconRecord(long id, IconProvider ip)
     {
         Utilities.checkNull(ip, "ip");
+
         myIdProperty.set(id);
-        myImageURLProperty.set(ip.getIconURL());
-
-        imageURLProperty().addListener((obs, ov, nv) -> myNameProperty.set(getName(nv)));
-        myNameProperty.set(getName(myImageURLProperty.get()));
-
+        URL iconURL = ip.getIconURL();
+        myImageURLProperty.set(iconURL);
+        myNameProperty.set(getName(iconURL));
         myCollectionNameProperty.set(ip.getCollectionName() == null ? DEFAULT_COLLECTION : ip.getCollectionName());
         mySourceKeyProperty.set(ip.getSourceKey());
-        if (myImageURLProperty.get() != null)
-        {
-            try (InputStream stream = ip.getIconImageData())
-            {
-                myImage.set(new Image(stream));
-            }
-            catch (IOException e)
-            {
-                LOG.error("Unable to read image for icon from URL '" + myImageURLProperty.get() + "'", e);
-            }
-        }
+
+        myImageURLProperty.addListener((obs, ov, nv) -> myNameProperty.set(getName(nv)));
     }
 
     /**
@@ -177,6 +168,17 @@ public class DefaultIconRecord implements IconRecord
     @Override
     public ObjectProperty<Image> imageProperty()
     {
+        if (myImage.get() == null && myImageURLProperty.get() != null)
+        {
+            try (InputStream stream = IOUtilities.getInputStream(myImageURLProperty.get()))
+            {
+                myImage.set(new Image(stream));
+            }
+            catch (IOException e)
+            {
+                LOGGER.error(e, e);
+            }
+        }
         return myImage;
     }
 

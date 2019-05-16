@@ -683,7 +683,9 @@ class DataGroupActivationController implements DataGroupActivationManager
         for (DataGroupInfoActiveSet set : oldSetSet)
         {
             totalSet.addAll(
-                    set.getGroupEntries().stream().filter(e -> isUserActivationStateControl(e)).collect(Collectors.toSet()));
+                    set.getGroupEntries().stream().filter(e -> isUserActivationStateControl(e))
+                    .map(e -> new DefaultActiveGroupEntry(e)).collect(Collectors.toSet())
+                    );
         }
         if (add)
         {

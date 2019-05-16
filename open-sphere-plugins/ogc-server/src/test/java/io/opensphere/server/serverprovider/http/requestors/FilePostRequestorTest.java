@@ -28,6 +28,7 @@ import com.bitsys.common.http.message.HttpRequest;
 import com.bitsys.common.http.message.HttpResponse;
 import com.google.common.collect.ListMultimap;
 
+import io.opensphere.core.NetworkConfigurationManager;
 import io.opensphere.core.event.EventManager;
 import io.opensphere.core.server.ResponseValues;
 import io.opensphere.core.util.collections.New;
@@ -78,10 +79,11 @@ public class FilePostRequestorTest
         final HttpClient client = createHttpClient(support, response, tempFile, fileContents);
 
         final EventManager eventManager = support.createNiceMock(EventManager.class);
+        final NetworkConfigurationManager networkConfigurationManager = support.createNiceMock(NetworkConfigurationManager.class);
 
         support.replayAll();
 
-        final FilePostRequestorImpl requestor = new FilePostRequestorImpl(client, new HeaderConstantsMock(), eventManager);
+        final FilePostRequestorImpl requestor = new FilePostRequestorImpl(client, new HeaderConstantsMock(), eventManager, networkConfigurationManager);
 
         final ResponseValues responseValues = new ResponseValues();
         final CancellableInputStream actualReturn = requestor.postFileToServer(url, tempFile, responseValues);
@@ -120,10 +122,11 @@ public class FilePostRequestorTest
         final HttpClient client = createHttpClient(support, response, tempFile, fileContents);
 
         final EventManager eventManager = support.createNiceMock(EventManager.class);
+        final NetworkConfigurationManager networkConfigurationManager = support.createNiceMock(NetworkConfigurationManager.class);
 
         support.replayAll();
 
-        final FilePostRequestorImpl requestor = new FilePostRequestorImpl(client, new HeaderConstantsMock(), eventManager);
+        final FilePostRequestorImpl requestor = new FilePostRequestorImpl(client, new HeaderConstantsMock(), eventManager, networkConfigurationManager);
 
         final ResponseValues responseValues = new ResponseValues();
         final CancellableInputStream actualReturn = requestor.postFileToServer(url, tempFile, responseValues);
@@ -156,8 +159,8 @@ public class FilePostRequestorTest
         final HttpClientOptions options = new HttpClientOptions();
         final CookieStore cookieStore = EasyMock.createNiceMock(CookieStore.class);
 
-        EasyMock.expect(client.getOptions()).andReturn(options);
-        EasyMock.expect(client.getCookieStore()).andReturn(cookieStore);
+        EasyMock.expect(client.getOptions()).andReturn(options).anyTimes();
+        EasyMock.expect(client.getCookieStore()).andReturn(cookieStore).anyTimes();
 
         client.execute(EasyMock.isA(HttpRequest.class));
         EasyMock.expectLastCall().andAnswer(() ->

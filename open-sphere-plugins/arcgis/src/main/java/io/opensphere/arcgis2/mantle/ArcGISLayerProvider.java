@@ -24,6 +24,7 @@ import io.opensphere.core.data.QueryException;
 import io.opensphere.core.data.util.DataModelCategory;
 import io.opensphere.core.data.util.QueryTracker;
 import io.opensphere.core.data.util.SimpleQuery;
+import io.opensphere.core.model.time.TimeSpan;
 import io.opensphere.core.order.OrderManager;
 import io.opensphere.core.order.impl.DefaultOrderCategory;
 import io.opensphere.core.order.impl.DefaultOrderParticipantKey;
@@ -43,6 +44,7 @@ import io.opensphere.mantle.data.impl.DefaultDataGroupInfo;
 import io.opensphere.mantle.data.impl.DefaultDataTypeInfo;
 import io.opensphere.mantle.data.impl.DefaultMapFeatureVisualizationInfo;
 import io.opensphere.mantle.data.impl.DefaultMetaDataInfo;
+import io.opensphere.mantle.data.impl.DefaultTimeExtents;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.xyztile.model.Projection;
 import io.opensphere.xyztile.model.XYZServerInfo;
@@ -340,7 +342,7 @@ public class ArcGISLayerProvider
 
             DefaultDataTypeInfo dataType = new DefaultDataTypeInfo(myToolbox, Constants.PROVIDER, typeKey, Constants.PROVIDER,
                     layer.getLayerName(), true);
-//            dataType.setTimeExtents(new DefaultTimeExtents(), this);
+            dataType.setTimeExtents(new DefaultTimeExtents(TimeSpan.TIMELESS), this);
             dataType.setUrl(layerUrl);
             dataType.setDescription(layer.getDescription());
             dataType.setBasicVisualizationInfo(new DefaultBasicVisualizationInfo(LoadsTo.STATIC,

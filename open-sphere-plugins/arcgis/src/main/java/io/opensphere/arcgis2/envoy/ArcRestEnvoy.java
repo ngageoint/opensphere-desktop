@@ -6,9 +6,15 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.impl.CoordinateArraySequence;
 
+import io.opensphere.arcgis2.esri.Feature;
 import io.opensphere.arcgis2.esri.ObjectIdsResponse;
 import io.opensphere.arcgis2.esri.Response;
 import io.opensphere.arcgis2.util.ArcGISRegistryUtils;
@@ -89,7 +95,7 @@ public class ArcRestEnvoy extends AbstractEnvoy implements DataRegistryDataProvi
     public void query(DataModelCategory category, Collection<? extends Satisfaction> satisfactions,
             List<? extends PropertyMatcher<?>> parameters, List<? extends OrderSpecifier> orderSpecifiers, int limit,
             Collection<? extends PropertyDescriptor<?>> propertyDescriptors, CacheDepositReceiver queryReceiver)
-                throws QueryException
+        throws QueryException
     {
         DataFilter filter = null;
         @SuppressWarnings("unchecked")
@@ -135,7 +141,8 @@ public class ArcRestEnvoy extends AbstractEnvoy implements DataRegistryDataProvi
      * @throws QueryException If there is a problem with the query.
      */
     void query(DataModelCategory category, Geometry geometry, TimeSpan timeSpan, DataFilter filter,
-            CacheDepositReceiver queryReceiver) throws QueryException
+            CacheDepositReceiver queryReceiver)
+        throws QueryException
     {
         String baseUrl = ArcGISRegistryUtils.getLayerUrl(category);
         final int batchSize = 200;
@@ -150,6 +157,16 @@ public class ArcRestEnvoy extends AbstractEnvoy implements DataRegistryDataProvi
                 for (int startId = 0; startId < objectIds.length; startId += batchSize)
                 {
                     Response response = queryFeatures(baseUrl, objectIds, startId, batchSize);
+
+                    // remove any features that fall outside of the query
+                    // geometry (for complex polygons, a bounding box is used
+                    // to avoid length issues on URIs, so a down-select is
+                    // necessary here to remove anything that falls outside
+                    // of the actual query box):
+
+                    response.getFeatures().removeAll(response.getFeatures().stream()
+                            .filter(f -> !geometry.contains(toPosition(f))).collect(Collectors.toSet()));
+
                     results.add(response);
                 }
 
@@ -170,6 +187,21 @@ public class ArcRestEnvoy extends AbstractEnvoy implements DataRegistryDataProvi
         {
             throw new QueryException(e);
         }
+    }
+
+    /**
+     * Converts the location from the supplied feature to a JTS geometry.
+     * 
+     * @param feature the feature to convert to a JTS Geometry.
+     * @return a JTS geometry generated from the location of the supplied
+     *         feature.
+     */
+    private Geometry toPosition(Feature feature)
+    {
+        return new Point(
+                new CoordinateArraySequence(
+                        new Coordinate[] { new Coordinate(feature.getGeometry().getX(), feature.getGeometry().getY()) }),
+                new GeometryFactory());
     }
 
     /**

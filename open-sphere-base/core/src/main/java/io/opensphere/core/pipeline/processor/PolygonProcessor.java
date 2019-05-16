@@ -7,9 +7,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 
+import org.apache.log4j.Logger;
+
+import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
+import com.vividsolutions.jts.geom.PrecisionModel;
+import com.vividsolutions.jts.precision.GeometryPrecisionReducer;
 
 import io.opensphere.core.geometry.Geometry;
+import io.opensphere.core.geometry.MultiPolygonGeometry;
 import io.opensphere.core.geometry.PolygonGeometry;
 import io.opensphere.core.geometry.constraint.MultiTimeConstraint;
 import io.opensphere.core.geometry.renderproperties.ColorRenderProperties;
@@ -60,6 +66,9 @@ import io.opensphere.core.viewer.impl.PositionConverter;
 @SuppressWarnings("PMD.GodClass")
 public class PolygonProcessor<E extends PolygonGeometry> extends AbstractProcessor<E>
 {
+    /** The logger used to capture output from this class. */
+    private static final Logger LOG = Logger.getLogger(PolygonProcessor.class);
+
     /**
      * Construct a polyline processor.
      *
@@ -276,8 +285,7 @@ public class PolygonProcessor<E extends PolygonGeometry> extends AbstractProcess
 
                 if (!triBuilder.getBlockVertices().isEmpty())
                 {
-                    TesseraBlock<SimpleProjectedTesseraVertex<ScreenPosition>> block = new TesseraBlock<>(
-                            triBuilder, false);
+                    TesseraBlock<SimpleProjectedTesseraVertex<ScreenPosition>> block = new TesseraBlock<>(triBuilder, false);
 
                     List<? extends SimpleProjectedTesseraVertex<ScreenPosition>> blockVerts = block.getVertices();
                     List<Vector3d> modelCoords = New.list(blockVerts.size());
@@ -315,7 +323,7 @@ public class PolygonProcessor<E extends PolygonGeometry> extends AbstractProcess
      * @return The list of time spans, or {@code null} if there is no time
      *         constraint.
      */
-    private List<TimeSpan> getConstraintTimeSpans(int count, E geom)
+    private List<TimeSpan> getConstraintTimeSpans(int count, PolygonGeometry geom)
     {
         if (geom.getConstraints() != null && geom.getConstraints().getTimeConstraint() != null)
         {
@@ -348,51 +356,114 @@ public class PolygonProcessor<E extends PolygonGeometry> extends AbstractProcess
         List<PolygonMeshData> meshBlocks = New.list(1);
         if (drawLine || drawFill)
         {
-            @SuppressWarnings("unchecked")
-            List<? extends GeographicPosition> geoVertices = (List<? extends GeographicPosition>)geo.getVertices();
-
             if (drawLine)
             {
                 lineData = New.collection();
-                List<Vector3d> line = getPositionConverter().convertLinesToModel(geoVertices, GeographicPosition.class,
-                        geo.getLineType(), null, projection.getModelCenter());
-                lineData.add(new PolylineModelData(line, getConstraintTimeSpans(line.size(), geo)));
-
-                for (List<? extends Position> hole : geo.getHoles())
+                if (geo instanceof MultiPolygonGeometry)
                 {
-                    @SuppressWarnings("unchecked")
-                    List<? extends GeographicPosition> holeVerts = (List<? extends GeographicPosition>)hole;
-                    line = getPositionConverter().convertLinesToModel(holeVerts, GeographicPosition.class, geo.getLineType(),
-                            null, projection.getModelCenter());
-                    lineData.add(new PolylineModelData(line, getConstraintTimeSpans(line.size(), geo)));
+                    for (PolygonGeometry child : ((MultiPolygonGeometry)geo).getGeometries())
+                    {
+                        generateLineData(child, projection, lineData);
+                    }
+                }
+                else
+                {
+                    generateLineData(geo, projection, lineData);
                 }
             }
 
             if (drawFill)
             {
-                Polygon poly = JTSCoreGeometryUtilities.convertToJTSPolygon(geo);
-                TesseraList<? extends GeographicProjectedTesseraVertex> mesh = projection.convertPolygonToModelMesh(poly,
-                        projection.getModelCenter());
-
-                if (mesh != null)
+                GeometryPrecisionReducer reducer = new GeometryPrecisionReducer(new PrecisionModel(100000));
+                for (Polygon polygon : getPolygons(reducer.reduce(JTSCoreGeometryUtilities.convertToJTSPolygon(geo))))
                 {
-                    for (TesseraList.TesseraBlock<? extends GeographicProjectedTesseraVertex> block : mesh.getTesseraBlocks())
-                    {
-                        List<? extends GeographicProjectedTesseraVertex> vertices = block.getVertices();
-                        List<Vector3d> modelCoords = New.list(vertices.size());
-                        for (GeographicProjectedTesseraVertex vertex : vertices)
-                        {
-                            modelCoords.add(vertex.getModelCoordinates());
-                        }
+                    TesseraList<? extends GeographicProjectedTesseraVertex> mesh = projection.convertPolygonToModelMesh(polygon,
+                            projection.getModelCenter());
 
-                        meshBlocks.add(new PolygonMeshData(modelCoords, null, block.getIndices(), null, null,
-                                block.getTesseraVertexCount(), false));
+                    if (mesh != null)
+                    {
+                        for (TesseraList.TesseraBlock<? extends GeographicProjectedTesseraVertex> block : mesh.getTesseraBlocks())
+                        {
+                            List<? extends GeographicProjectedTesseraVertex> vertices = block.getVertices();
+                            List<Vector3d> modelCoords = New.list(vertices.size());
+                            for (GeographicProjectedTesseraVertex vertex : vertices)
+                            {
+                                modelCoords.add(vertex.getModelCoordinates());
+                            }
+
+                            meshBlocks.add(new PolygonMeshData(modelCoords, null, block.getIndices(), null, null,
+                                    block.getTesseraVertexCount(), false));
+                        }
                     }
                 }
             }
         }
 
         return new PolygonModelData(lineData, meshBlocks.isEmpty() ? null : meshBlocks.get(0));
+    }
+
+    /**
+     * Recursively processes the supplied geometry, extracting all sub polygons
+     * and returning them in a list. If the supplied
+     * {@link com.vividsolutions.jts.geom.Geometry} is an instance of
+     * {@link MultiPolygon}, it's child polygons are extracted via a recursive
+     * call. If the parameter is an instance of {@link Polygon} it is simply
+     * returned in a single-element list. All other elements are ignored and an
+     * empty list returned.
+     * 
+     * @param geometry the geometry to process.
+     * @return a list of polygons extracted from the supplied geometry, which
+     *         may be empty but never null.
+     */
+    protected List<Polygon> getPolygons(com.vividsolutions.jts.geom.Geometry geometry)
+    {
+        List<Polygon> returnValue;
+        if (geometry instanceof MultiPolygon)
+        {
+            returnValue = New.list();
+            int count = ((MultiPolygon)geometry).getNumGeometries();
+            for (int i = 0; i < count; i++)
+            {
+                com.vividsolutions.jts.geom.Geometry geometryN = ((MultiPolygon)geometry).getGeometryN(i);
+                returnValue.addAll(getPolygons(geometryN));
+            }
+        }
+        else if (geometry instanceof Polygon)
+        {
+            returnValue = Collections.singletonList((Polygon)geometry);
+        }
+        else
+        {
+            LOG.warn("Unable to convert '" + geometry.getClass().getName() + "' to a list of polygons");
+            returnValue = Collections.emptyList();
+        }
+        return returnValue;
+    }
+
+    /**
+     * Generates line data for the geometry.
+     *
+     * @param geo the polygon geometry
+     * @param projection the projection
+     * @param lineData the line data collection to which to add
+     */
+    private void generateLineData(PolygonGeometry geo, Projection projection, Collection<? super PolylineModelData> lineData)
+    {
+        @SuppressWarnings("unchecked")
+        List<? extends GeographicPosition> geoVertices = (List<? extends GeographicPosition>)geo.getVertices();
+
+        List<Vector3d> line = getPositionConverter().convertLinesToModel(geoVertices, GeographicPosition.class, geo.getLineType(),
+                null, projection.getModelCenter());
+        lineData.add(new PolylineModelData(line, getConstraintTimeSpans(line.size(), geo)));
+
+        for (List<? extends Position> hole : geo.getHoles())
+        {
+            @SuppressWarnings("unchecked")
+            List<? extends GeographicPosition> holeVerts = (List<? extends GeographicPosition>)hole;
+            line = getPositionConverter().convertLinesToModel(holeVerts, GeographicPosition.class, geo.getLineType(), null,
+                    projection.getModelCenter());
+            lineData.add(new PolylineModelData(line, getConstraintTimeSpans(line.size(), geo)));
+        }
     }
 
     /**
@@ -419,8 +490,8 @@ public class PolygonProcessor<E extends PolygonGeometry> extends AbstractProcess
 
             if (drawFill)
             {
-                SimpleTesseraBlockBuilder<SimpleModelTesseraVertex> triBuilder = new SimpleTesseraBlockBuilder<>(
-                        3, Vector3d.ORIGIN);
+                SimpleTesseraBlockBuilder<SimpleModelTesseraVertex> triBuilder = new SimpleTesseraBlockBuilder<>(3,
+                        Vector3d.ORIGIN);
 
                 Polygon jtsPoly = JTSCoreGeometryUtilities.convertToJTSPolygon(geo);
 
@@ -440,8 +511,8 @@ public class PolygonProcessor<E extends PolygonGeometry> extends AbstractProcess
                         modelCoords.add(vertex.getCoordinates().asVector3d());
                     }
 
-                    meshData = new PolygonMeshData(modelCoords, null, block.getIndices(), null, null, block.getTesseraVertexCount(),
-                            false);
+                    meshData = new PolygonMeshData(modelCoords, null, block.getIndices(), null, null,
+                            block.getTesseraVertexCount(), false);
                 }
             }
         }
@@ -564,7 +635,7 @@ public class PolygonProcessor<E extends PolygonGeometry> extends AbstractProcess
 
     /** A simple generator for creating screen vertices. */
     protected static class ScreenVertexGenerator
-    extends AbstractSimpleVertexGenerator<SimpleProjectedTesseraVertex<ScreenPosition>>
+            extends AbstractSimpleVertexGenerator<SimpleProjectedTesseraVertex<ScreenPosition>>
     {
         /**
          * The converter used to generate model positions for the projected

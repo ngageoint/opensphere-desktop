@@ -53,8 +53,9 @@ public class LabelComboEditor extends MultiComboEditor
      */
     private void handleEvent(AbstractDataTypeInfoChangeEvent event)
     {
-        if (event.getDataTypeKey().equals(myDataType.getTypeKey()) && (event instanceof DataTypeInfoMetaDataKeyAddedChangeEvent
-                || event instanceof DataTypeInfoMetaDataKeyRemovedChangeEvent))
+        if (event.getDataTypeInfo() != null && event.getDataTypeKey().equals(myDataType.getTypeKey())
+                && (event instanceof DataTypeInfoMetaDataKeyAddedChangeEvent
+                        || event instanceof DataTypeInfoMetaDataKeyRemovedChangeEvent))
         {
             final List<String> keyNames = myDataType.getMetaDataInfo().getKeyNames();
             EventQueue.invokeLater(() -> setOptions(false, keyNames));
