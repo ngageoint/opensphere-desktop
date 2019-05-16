@@ -29,6 +29,7 @@ import io.opensphere.mantle.data.analysis.ColumnAnalysis.Determination;
 import io.opensphere.mantle.data.impl.DefaultBasicVisualizationInfo;
 import io.opensphere.mantle.data.impl.DefaultDataTypeInfo;
 import io.opensphere.mantle.data.impl.DefaultMetaDataInfo;
+import io.opensphere.mantle.data.impl.specialkey.EndTimeKey;
 import io.opensphere.mantle.data.impl.specialkey.TimeKey;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.mantle.util.dynenum.DynamicEnumerationKey;
@@ -126,8 +127,7 @@ public class ArcGISLayerInfoProvider
                 }
                 if (name.equals(endTimeField))
                 {
-                    LOGGER.debug("Found end key");
-//                    metaDataInfo.setSpecialKey(name, EndTimeKey.DEFAULT, this);
+                    metaDataInfo.setSpecialKey(name, EndTimeKey.DEFAULT, this);
                 }
             }
             metaDataInfo.copyKeysToOriginalKeys();

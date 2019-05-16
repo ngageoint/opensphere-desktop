@@ -293,6 +293,7 @@ public class OpenSphereDarkLookAndFeel extends MetalLookAndFeel
         final ColorUIResource col2 = OSDarkLAFUtils.getThirdColor(OpenSphereDarkLookAndFeel.getFocusColor(),
                 (Color)uiDefaults.get("TextField.inactiveBackground"));
         uiDefaults.put("ToolTip.background", col2);
+        uiDefaults.put("ToolTip.foregroundInactive", OpenSphereDarkLookAndFeel.getBlack());
         uiDefaults.put("ToolTip.font", uiDefaults.get("Menu.font"));
 
         // Spinners

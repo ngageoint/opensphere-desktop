@@ -197,10 +197,15 @@ public class QueryRegionManagerImpl extends EventListenerService implements Quer
     @Override
     public void addQueryRegion(QueryRegion region)
     {
+        // remove old region(s) that are the same as the new region (have same geometries)
+        // before adding in new region to prevent feature duplication
+        removeQueryRegion(region.getGeometries());
+
         synchronized (myQueryRegions)
         {
             myQueryRegions.add(region);
         }
+
         Collection<PolygonGeometry> geometries = New.collection(region.getGeometries().size());
         for (PolygonGeometry polygon : region.getGeometries())
         {

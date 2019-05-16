@@ -50,7 +50,7 @@ public final class RenderToTextureProcessorHelper
         TileGeometry tileGeometry = new TileGeometry(tileBuilder, new DefaultTileRenderProperties(0, true, true), null);
         rttgBuilder.setTileGeometry(tileGeometry);
 
-        Viewer3D viewer = new Viewer3D(new Viewer3D.Builder());
+        Viewer3D viewer = new Viewer3D(new Viewer3D.Builder(), false);
         MapContext<?> mapContext = new SimpleMapContext<>(new ScreenViewer(), viewer);
         mapContext.reshape(100, 100);
         rttgBuilder.setMapContext(mapContext);

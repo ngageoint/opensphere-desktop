@@ -27,6 +27,7 @@ import io.opensphere.core.control.action.context.ContextIdentifiers;
 import io.opensphere.core.control.action.context.GeometryContextKey;
 import io.opensphere.core.control.action.context.MultiGeometryContextKey;
 import io.opensphere.core.control.action.context.ScreenPositionContextKey;
+import io.opensphere.core.geometry.AbstractGeometryGroup;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.geometry.GeometryGroupGeometry;
 import io.opensphere.core.geometry.MultiPolygonGeometry;
@@ -504,12 +505,21 @@ public class SelectionHandler
             Quantify.collectMetric("mist3d.tracks.create-buffer-for-selected-segment");
             myBufferRegionCreator.createBuffer(myLastGeometry);
         }
-        else if (myLastGeometry instanceof PolygonGeometry || (myLastGeometry instanceof GeometryGroupGeometry
-                && ((GeometryGroupGeometry)myLastGeometry).getGeometries().iterator().next() instanceof PolygonGeometry))
+        else if (myLastGeometry instanceof PolygonGeometry)
         {
             Set<PolygonGeometry> geom = Collections.singleton((PolygonGeometry)myLastGeometry);
             myLastGeometry = null;
             doPurgeCheck(cmd, geom);
+        }
+        else if (myLastGeometry instanceof AbstractGeometryGroup)
+        {
+            if (((AbstractGeometryGroup)myLastGeometry).getGeometries().iterator().next() instanceof PolygonGeometry)
+            {
+                Set<PolygonGeometry> childGeometries = ((AbstractGeometryGroup)myLastGeometry).getGeometries().stream()
+                        .map(g -> (PolygonGeometry)g).collect(Collectors.toSet());
+                myLastGeometry = null;
+                doPurgeCheck(cmd, childGeometries);
+            }
         }
         else if (myLastGeometry instanceof PolylineGeometry || myLastGeometry instanceof PointGeometry)
         {

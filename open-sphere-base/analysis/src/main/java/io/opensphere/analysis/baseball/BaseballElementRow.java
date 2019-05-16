@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
+import javafx.scene.web.WebView;
 
 /**
  * The row constructor for DataElements for the baseball card.

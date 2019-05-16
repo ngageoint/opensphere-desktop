@@ -18,10 +18,7 @@ import javax.swing.TransferHandler.DropLocation;
 import io.opensphere.core.importer.FileOrURLImporter;
 import io.opensphere.core.importer.ImportCallback;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.mantle.data.DataGroupImportCallbackResponse;
-import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.datasources.IDataSource;
-import io.opensphere.mantle.datasources.IDataSourceCreator;
 
 /**
  * The Class ImageryFileImporter.
@@ -138,41 +135,7 @@ public class ImageryFileImporter implements FileOrURLImporter
 
             @SuppressWarnings("unused")
             ImagerySourceWizardPanel panel = new ImagerySourceWizardPanel(wizardDialog.getContentPane(),
-                    myController.getToolbox(), fileList, sourcesInUse, new IDataSourceCreator()
-                    {
-                        @Override
-                        public void sourceCreated(boolean successful, final IDataSource source)
-                        {
-                            try
-                            {
-                                if (successful)
-                                {
-                                    myController.addSource(source);
-                                }
-                                if (callback != null)
-                                {
-                                    callback.fileGroupImportComplete(successful, fileList, new DataGroupImportCallbackResponse()
-                                    {
-                                        @Override
-                                        public DataGroupInfo getNewOrChangedGroup()
-                                        {
-                                            return ((ImagerySourceGroup)source).getDataGroupInfo();
-                                        }
-                                    });
-                                }
-                            }
-                            finally
-                            {
-                                wizardDialog.setVisible(false);
-                            }
-                        }
-
-                        @Override
-                        public void sourcesCreated(boolean successful, List<IDataSource> sources)
-                        {
-                            // Do nothing we won't get here.
-                        }
-                    });
+                    myController.getToolbox(), fileList, sourcesInUse, new ImageryImportDataCreator(wizardDialog, myController, callback, fileList));
             wizardDialog.setLocationRelativeTo(myController.getToolbox().getUIRegistry().getMainFrameProvider().get());
             wizardDialog.setVisible(true);
         });
@@ -233,40 +196,7 @@ public class ImageryFileImporter implements FileOrURLImporter
 
         @SuppressWarnings("unused")
         ImagerySourceWizardPanel panel = new ImagerySourceWizardPanel(wiz.getContentPane(), myController.getToolbox(), group,
-                sourcesInUse, new IDataSourceCreator()
-                {
-                    @Override
-                    public void sourceCreated(boolean successful, final IDataSource source)
-                    {
-                        try
-                        {
-                            myController.addSource(successful ? source : backupGroup);
-                            if (callback != null)
-                            {
-                                final ImagerySourceGroup resultGroup = successful ? (ImagerySourceGroup)source : backupGroup;
-                                DataGroupImportCallbackResponse responseObject = new DataGroupImportCallbackResponse()
-                                {
-                                    @Override
-                                    public DataGroupInfo getNewOrChangedGroup()
-                                    {
-                                        return resultGroup.getDataGroupInfo();
-                                    }
-                                };
-                                callback.fileGroupImportComplete(successful, resultGroup.getFileList(), responseObject);
-                            }
-                        }
-                        finally
-                        {
-                            wiz.setVisible(false);
-                        }
-                    }
-
-                    @Override
-                    public void sourcesCreated(boolean successful, List<IDataSource> sources)
-                    {
-                        // Do nothing we won't get here.
-                    }
-                });
+                sourcesInUse, new ImageryReimportDataCreator(wiz, myController, callback, backupGroup));
         wiz.setLocationRelativeTo(myController.getToolbox().getUIRegistry().getMainFrameProvider().get());
         wiz.setVisible(true);
     }

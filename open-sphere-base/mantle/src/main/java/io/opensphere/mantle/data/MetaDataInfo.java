@@ -12,6 +12,9 @@ import javafx.beans.property.StringProperty;
  */
 public interface MetaDataInfo
 {
+    /** The MGRS derived column identifier. */
+    final String MGRS_DERIVED = "MGRS Derived";
+
     /** The Empty {@link PropertyArrayDescriptor}. */
     PropertyArrayDescriptor EMPTY_PROPERTY_ARRAY_DESCRIPTOR = new PropertyArrayDescriptor("propertyArray", new Class<?>[0]);
 
@@ -24,6 +27,13 @@ public interface MetaDataInfo
      * @return true if added, false if already in set.
      */
     boolean addKey(String key, Class<?> keyClass, Object source);
+
+    /**
+     * Adds a key to the list of user created keys.
+     *
+     * @param key the key to add
+     */
+    void addUserKey(String key);
 
     /**
      * Removes a key from the key names.
@@ -193,6 +203,13 @@ public interface MetaDataInfo
     String getTimeKey();
 
     /**
+     * Gets the list of user created keys.
+     *
+     * @return the list of user created keys
+     */
+    List<String> getUserKeys();
+
+    /**
      * Returns true if the key name list contains the specified key.
      *
      * @param key - the key to check.
@@ -227,6 +244,13 @@ public interface MetaDataInfo
      * @param source - the object making the change.
      */
     void removeSpecialKey(SpecialKey specialType, Object source);
+
+    /**
+     * Removes the key from the list of user created keys.
+     *
+     * @param key the key to remove
+     */
+    void removeUserKey(String key);
 
     /**
      * Resets the internal map that tracks which keys represent numeric data and

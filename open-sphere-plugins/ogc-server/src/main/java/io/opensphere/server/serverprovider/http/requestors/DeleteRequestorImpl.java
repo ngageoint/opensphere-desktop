@@ -12,6 +12,7 @@ import com.bitsys.common.http.client.HttpClient;
 import com.bitsys.common.http.message.HttpRequest;
 import com.bitsys.common.http.message.HttpRequestFactory;
 
+import io.opensphere.core.NetworkConfigurationManager;
 import io.opensphere.core.event.EventManager;
 import io.opensphere.core.server.ResponseValues;
 import io.opensphere.core.util.io.CancellableInputStream;
@@ -30,10 +31,11 @@ public class DeleteRequestorImpl extends BaseRequestor implements DeleteRequesto
      *            server.
      * @param headerValues Contains the header values.
      * @param eventManager The manager through which events are sent.
+     * @param networkConfigurationManager The network configuration manager.
      */
-    public DeleteRequestorImpl(HttpClient client, HeaderValues headerValues, EventManager eventManager)
+    public DeleteRequestorImpl(HttpClient client, HeaderValues headerValues, EventManager eventManager, NetworkConfigurationManager networkConfigurationManager)
     {
-        super(client, headerValues, eventManager);
+        super(client, headerValues, eventManager, networkConfigurationManager);
     }
 
     /**

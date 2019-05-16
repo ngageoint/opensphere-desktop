@@ -56,84 +56,78 @@ public final class IOUtilities
      *
      * @param url The URL for which to get the input stream.
      * @return an input stream through which the requested resource may be read.
+     * @throws IOException if the URL stream could not be opened
      */
-    public static InputStream getInputStream(URL url)
+    public static InputStream getInputStream(URL url) throws IOException
     {
         InputStream stream = null;
 
-        try
+        if (UrlUtilities.isFragmentPresent(url))
         {
-            if (UrlUtilities.isFragmentPresent(url))
-            {
-                // a fragment on a file URL indicates that the URL is probably
-                // pointing to a file within a local archive:
-                URLConnection connection = url.openConnection();
-                connection.connect();
-                String path = url.getPath();
-                String contentType = MIME_TYPE_RESOLVER.getContentType(path);
-                String fragment = UrlUtilities.getFragment(url);
+            // a fragment on a file URL indicates that the URL is probably
+            // pointing to a file within a local archive:
+            URLConnection connection = url.openConnection();
+            connection.connect();
+            String path = url.getPath();
+            String contentType = MIME_TYPE_RESOLVER.getContentType(path);
+            String fragment = UrlUtilities.getFragment(url);
 
-                switch (contentType)
-                {
-                    case "application/zip":
-                        try (ZipFile zipFile = new ZipFile(
-                                new SeekableInMemoryByteChannel(IOUtils.toByteArray(connection.getInputStream()))))
-                        {
-                            ZipArchiveEntry entry = zipFile.getEntry(fragment);
-                            if (entry != null)
-                            {
-                                // copy the stream to a new byte array input
-                                // stream, to avoid holding open the zip file:
-                                stream = new ByteArrayInputStream(IOUtils.toByteArray(zipFile.getInputStream(entry)));
-                            }
-                        }
-                        break;
-                    case "application/gzip":
-                        try (InputStream source = new GzipCompressorInputStream(connection.getInputStream()))
-                        {
-                            String innerContentType = MIME_TYPE_RESOLVER.getContentType(path.substring(0, path.lastIndexOf('.')));
-                            stream = getArchiveComponentInputStream(innerContentType, source, fragment);
-                        }
-                        break;
-                    case "application/x-bzip2":
-                        try (InputStream source = new BZip2CompressorInputStream(connection.getInputStream()))
-                        {
-                            String innerContentType = MIME_TYPE_RESOLVER.getContentType(path.substring(0, path.lastIndexOf('.')));
-                            stream = getArchiveComponentInputStream(innerContentType, source, fragment);
-                        }
-                        break;
-                    case "application/x-compress":
-                        try (InputStream source = new ZCompressorInputStream(connection.getInputStream()))
-                        {
-                            String innerContentType = MIME_TYPE_RESOLVER.getContentType(path.substring(0, path.lastIndexOf('.')));
-                            stream = getArchiveComponentInputStream(innerContentType, source, fragment);
-                        }
-                        break;
-                    case "application/x-lzma":
-                        try (InputStream source = new LZMACompressorInputStream(connection.getInputStream()))
-                        {
-                            String innerContentType = MIME_TYPE_RESOLVER.getContentType(path.substring(0, path.lastIndexOf('.')));
-                            stream = getArchiveComponentInputStream(innerContentType, source, fragment);
-                        }
-                        break;
-                    case "application/x-xz":
-                        try (InputStream source = new XZCompressorInputStream(connection.getInputStream()))
-                        {
-                            String innerContentType = MIME_TYPE_RESOLVER.getContentType(path.substring(0, path.lastIndexOf('.')));
-                            stream = getArchiveComponentInputStream(innerContentType, source, fragment);
-                        }
-                        break;
-                    default:
-                }
-            }
-            else
+            switch (contentType)
             {
-                stream = url.openStream();
+                case "application/zip":
+                    try (ZipFile zipFile = new ZipFile(
+                            new SeekableInMemoryByteChannel(IOUtils.toByteArray(connection.getInputStream()))))
+                    {
+                        ZipArchiveEntry entry = zipFile.getEntry(fragment);
+                        if (entry != null)
+                        {
+                            // copy the stream to a new byte array input
+                            // stream, to avoid holding open the zip file:
+                            stream = new ByteArrayInputStream(IOUtils.toByteArray(zipFile.getInputStream(entry)));
+                        }
+                    }
+                    break;
+                case "application/gzip":
+                    try (InputStream source = new GzipCompressorInputStream(connection.getInputStream()))
+                    {
+                        String innerContentType = MIME_TYPE_RESOLVER.getContentType(path.substring(0, path.lastIndexOf('.')));
+                        stream = getArchiveComponentInputStream(innerContentType, source, fragment);
+                    }
+                    break;
+                case "application/x-bzip2":
+                    try (InputStream source = new BZip2CompressorInputStream(connection.getInputStream()))
+                    {
+                        String innerContentType = MIME_TYPE_RESOLVER.getContentType(path.substring(0, path.lastIndexOf('.')));
+                        stream = getArchiveComponentInputStream(innerContentType, source, fragment);
+                    }
+                    break;
+                case "application/x-compress":
+                    try (InputStream source = new ZCompressorInputStream(connection.getInputStream()))
+                    {
+                        String innerContentType = MIME_TYPE_RESOLVER.getContentType(path.substring(0, path.lastIndexOf('.')));
+                        stream = getArchiveComponentInputStream(innerContentType, source, fragment);
+                    }
+                    break;
+                case "application/x-lzma":
+                    try (InputStream source = new LZMACompressorInputStream(connection.getInputStream()))
+                    {
+                        String innerContentType = MIME_TYPE_RESOLVER.getContentType(path.substring(0, path.lastIndexOf('.')));
+                        stream = getArchiveComponentInputStream(innerContentType, source, fragment);
+                    }
+                    break;
+                case "application/x-xz":
+                    try (InputStream source = new XZCompressorInputStream(connection.getInputStream()))
+                    {
+                        String innerContentType = MIME_TYPE_RESOLVER.getContentType(path.substring(0, path.lastIndexOf('.')));
+                        stream = getArchiveComponentInputStream(innerContentType, source, fragment);
+                    }
+                    break;
+                default:
             }
         }
-        catch (IOException e)
+        else
         {
-            LOG.warn("Unable to read data from url '" + url.toString() + "'", e);
+            stream = url.openStream();
         }
 
         return stream;

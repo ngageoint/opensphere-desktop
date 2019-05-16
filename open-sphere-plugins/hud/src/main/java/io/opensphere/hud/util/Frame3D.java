@@ -38,7 +38,7 @@ public class Frame3D extends Frame<GridLayoutConstraints, GridLayout>
     {
         ScreenBoundingBox frameBox = getAbsoluteLocation();
 
-        myMapContext = new SimpleMapContext<>(new ScreenViewer(), new Viewer3D(new Viewer3D.Builder()));
+        myMapContext = new SimpleMapContext<>(new ScreenViewer(), new Viewer3D(new Viewer3D.Builder(), false));
         myMapContext.reshape((int)frameBox.getWidth(), (int)frameBox.getHeight());
         myMapContext.getStandardViewer().setViewOffset(frameBox.getUpperLeft());
 

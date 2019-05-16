@@ -47,6 +47,7 @@ public class QuantifyPlugin extends PluginAdapter
     @Override
     public void initialize(PluginLoaderData plugindata, Toolbox toolbox)
     {
+        LOG.info("Initializing Quantify Plugin");
         myToolbox = toolbox;
         myPreferences = toolbox.getPreferencesRegistry().getPreferences(QuantifyPlugin.class);
 
@@ -64,7 +65,9 @@ public class QuantifyPlugin extends PluginAdapter
         }
         else
         {
-            LOG.info("Unable to find preference 'quantify.url'. Writing metrics to log.");
+            LOG.info(
+                    "Unable to find preference 'quantify.url'. Configuring for logged output, and disabling metrics collection.");
+            settingsModel.enabledProperty().set(false);
             settingsModel.captureToLogProperty().set(true);
         }
 
@@ -72,13 +75,21 @@ public class QuantifyPlugin extends PluginAdapter
         {
             senders.add(new LoggingQuantifySender());
         }
+
+        // disable the service until the entire plugin's initialization routine
+        // is completed:
+        boolean enableUponCompletedInitialization = settingsModel.enabledProperty().get();
+        settingsModel.enabledProperty().set(false);
+
         myService = new DefaultQuantifyService(senders, settingsModel.enabledProperty());
 
         settingsModel.captureToLogProperty()
-        .addListener((obs, ov, nv) -> updateCaptureToLog(ov.booleanValue(), nv.booleanValue()));
+                .addListener((obs, ov, nv) -> updateCaptureToLog(ov.booleanValue(), nv.booleanValue()));
 
         QuantifyToolbox quantifyToolbox = new QuantifyToolboxImpl(settingsModel, myService);
         toolbox.getPluginToolboxRegistry().registerPluginToolbox(quantifyToolbox);
+        LOG.info("Quantify Plugin Initialization Complete, restoring enabled state.");
+        settingsModel.enabledProperty().set(enableUponCompletedInitialization);
     }
 
     /**

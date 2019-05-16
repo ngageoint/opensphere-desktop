@@ -78,13 +78,24 @@ public class ClockAndOrColorLabel extends JComponent
     }
 
     /**
+     * Colors the icon.
+     *
+     * @param color the new color
+     */
+    public void setColor(Color color)
+    {
+        myColor = color;
+        mixColorIntoIcon(myColor);
+    }
+
+    /**
      * Sets the type.
      *
      * @param dti the new type
      */
     public void setType(DataTypeInfo dti)
     {
-        myColor = Color.white;
+        myColor = Color.WHITE;
         myLoadsTo = LoadsTo.BASE;
         if (dti != null && dti.getBasicVisualizationInfo() != null)
         {

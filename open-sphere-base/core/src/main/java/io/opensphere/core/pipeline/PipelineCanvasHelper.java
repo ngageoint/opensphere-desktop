@@ -7,7 +7,6 @@ import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLProfile;
-import javax.media.opengl.awt.GLCanvas;
 
 import org.apache.log4j.Logger;
 
@@ -69,7 +68,7 @@ public class PipelineCanvasHelper
         }
         else
         {
-            myCanvas = new GLCanvas(caps);
+            myCanvas = new PipelineGLCanvas(caps, toolbox.getUIRegistry());
             myDrawable = (GLAutoDrawable)myCanvas;
         }
 

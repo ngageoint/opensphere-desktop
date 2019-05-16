@@ -96,7 +96,7 @@ public abstract class Frame<S extends LayoutConstraints, T extends AbstractLayou
      */
     public MapContext<Viewer3D> createMapContext()
     {
-        MapContext<Viewer3D> mapContext = new SimpleMapContext<>(new ScreenViewer(), new Viewer3D(new Viewer3D.Builder()));
+        MapContext<Viewer3D> mapContext = new SimpleMapContext<>(new ScreenViewer(), new Viewer3D(new Viewer3D.Builder(), false));
         mapContext.reshape((int)myFrameBounds.getLowerRight().getX(), (int)myFrameBounds.getLowerRight().getY());
 
         return mapContext;

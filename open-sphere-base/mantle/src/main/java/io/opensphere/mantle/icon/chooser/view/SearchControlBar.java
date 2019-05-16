@@ -2,23 +2,30 @@ package io.opensphere.mantle.icon.chooser.view;
 
 import java.util.List;
 
-import io.opensphere.core.util.AwesomeIconSolid;
-import io.opensphere.core.util.fx.FxIcons;
-import io.opensphere.mantle.icon.IconProvider;
-import io.opensphere.mantle.icon.IconSourceFactory;
-import io.opensphere.mantle.icon.chooser.model.IconModel;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+
+import io.opensphere.core.util.AwesomeIconSolid;
+import io.opensphere.core.util.fx.FXUtilities;
+import io.opensphere.core.util.fx.FxIcons;
+import io.opensphere.core.util.image.IconUtil.IconType;
+import io.opensphere.mantle.icon.IconProvider;
+import io.opensphere.mantle.icon.IconSourceFactory;
+import io.opensphere.mantle.icon.chooser.controller.IconRemover;
+import io.opensphere.mantle.icon.chooser.model.IconModel;
 
 /** An HBox containing display size controls, view style, and filter options. */
 public class SearchControlBar extends HBox
@@ -30,16 +37,32 @@ public class SearchControlBar extends HBox
     private final MenuButton myAddIconsButton;
 
     /**
+     * The remove icons button.
+     */
+    private final Button myRemoveButton;
+
+    /**
+     * Removes the selected icon from the icon manager.
+     */
+    private final IconRemover myIconRemover;
+
+    /**
+     * The icon model.
+     */
+    private final IconModel myModel;
+
+    /**
      * Creates the top menu bar of the icon manager UI.
      *
      * @param panelModel the current UI model.
      */
     public SearchControlBar(IconModel panelModel)
     {
+        myModel = panelModel;
         mySearchField = new TextField();
         mySearchField.setOnKeyTyped(e ->
         {
-            if (e.getCharacter().charAt(0) == 27)
+            if (e.getCharacter().charAt(0) == KeyCode.ESCAPE.getCode())
             {
                 panelModel.searchTextProperty().set("");
             }
@@ -81,8 +104,43 @@ public class SearchControlBar extends HBox
             myAddIconsButton.getItems().add(item);
         }
 
-        getChildren().addAll(sp, myAddIconsButton);
+        myRemoveButton = FXUtilities.newIconButton(IconType.CLOSE, Color.RED);
+        myIconRemover = new IconRemover(panelModel);
+        myRemoveButton.setOnAction((e) ->
+        {
+            myIconRemover.deleteIcons();
+        });
+        enableDisableDelete();
+        myModel.selectedRecordProperty().addListener((e) ->
+        {
+            enableDisableDelete();
+        });
+
+        getChildren().addAll(sp, myAddIconsButton, myRemoveButton);
 
         setAlignment(javafx.geometry.Pos.TOP_CENTER);
+    }
+
+    /**
+     * Enables or disables the remove button depending on if the icon selected
+     * is a user imported icon.
+     */
+    void enableDisableDelete()
+    {
+        if (myModel.selectedRecordProperty().get() == null
+                || myModel.selectedRecordProperty().get().imageURLProperty().get() == null
+                || myModel.selectedRecordProperty().get().imageURLProperty().get().toString().startsWith("jar:file:")
+                || myModel.selectedRecordProperty().get().imageURLProperty().get().toString().contains("/target/classes/images/"))
+        {
+            // This is not a user imported icon, it is a system provided icon do
+            // not delete.
+            myRemoveButton.setDisable(true);
+            myRemoveButton.setTooltip(new Tooltip("Only user imported icons can be removed."));
+        }
+        else
+        {
+            myRemoveButton.setDisable(false);
+            myRemoveButton.setTooltip(new Tooltip("Remove selected icons."));
+        }
     }
 }

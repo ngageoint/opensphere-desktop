@@ -63,6 +63,8 @@ public class StatePlugin extends PluginAdapter
     @Override
     public void close()
     {
+        myImportController.getStateController().deactivateAllStates();
+
         myToolbox.getUIRegistry().getToolbarComponentRegistry().deregisterToolbarComponent(ToolbarLocation.NORTH, "State");
         myToolbox.getUIRegistry().getContextActionManager().deregisterContextMenuItemProvider(ContextIdentifiers.DELETE_CONTEXT,
                 Void.class, myDisableStatesMenuProvider);
@@ -73,7 +75,7 @@ public class StatePlugin extends PluginAdapter
      * Performs additional initialization after all the plugins have
      * initialized.
      */
-    void initializeAfterPlugins()
+    private void initializeAfterPlugins()
     {
         StateController controller = new StateControllerImpl(myToolbox);
         myStateView = new StateView(controller, myImportController, myToolbox);
@@ -82,8 +84,7 @@ public class StatePlugin extends PluginAdapter
         SplitButton stateControlButton = myStateView.getStateControlButton();
         myToolbox.getUIRegistry().getToolbarComponentRegistry().registerToolbarComponent(ToolbarLocation.NORTH,
                 stateControlButton.getText(), stateControlButton, 470, SeparatorLocation.LEFT);
-        myToolbox.getUIRegistry().getIconLegendRegistry().addIconToLegend(stateControlButton.getIcon(),
-                stateControlButton.getText(),
+        myToolbox.getUIRegistry().getIconLegendRegistry().addIconToLegend(stateControlButton.getIcon(), "States",
                 "Shows state controls for activating/deactivating a state, importing a state (via file or url), saving a state, "
                         + "disabling states, and deleting states. Different parts of the current state can be saved including "
                         + "Filters, Time, Current View, Animation, Map Layers and Layers, Query Regions, and Styles. ");

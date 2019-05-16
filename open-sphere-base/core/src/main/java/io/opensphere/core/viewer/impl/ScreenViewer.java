@@ -2,6 +2,7 @@ package io.opensphere.core.viewer.impl;
 
 import java.util.Arrays;
 
+import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.math.Ellipsoid;
 import io.opensphere.core.math.Matrix4d;
 import io.opensphere.core.math.Vector3d;
@@ -18,6 +19,23 @@ public class ScreenViewer extends AbstractViewer
 
     /** The current projection matrix. */
     private float[] myProjectionMatrix;
+
+    /**
+     * Constructor.
+     */
+    public ScreenViewer()
+    {
+        super(false, null);
+    }
+
+    /**
+     * Constructor.
+     * @param uiRegistry The {@link UIRegistry}.
+     */
+    public ScreenViewer(UIRegistry uiRegistry)
+    {
+        super(true, uiRegistry);
+    }
 
     @Override
     public float[] getAdjustedModelViewMatrix(Matrix4d adjustment)

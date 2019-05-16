@@ -251,8 +251,8 @@ public class FeatureActionStateController extends AbstractLayerStateController<P
     private Set<DataTypeInfo> getFeatureLayers()
     {
         Set<DataTypeInfo> layerList = myDataGroupController.getActiveMembers(false);
-        layerList.removeIf(e -> !(e.getSourcePrefix().equals("CSV") || e.getSourcePrefix().equals("Merged")
-                    || e.getSourcePrefix().equals("Joined")));
+        layerList.removeIf(e -> e.getSourcePrefix() == null || !(e.getSourcePrefix().equals("CSV")
+                || e.getSourcePrefix().equals("Merged") || e.getSourcePrefix().equals("Joined")));
         return layerList;
     }
 }
