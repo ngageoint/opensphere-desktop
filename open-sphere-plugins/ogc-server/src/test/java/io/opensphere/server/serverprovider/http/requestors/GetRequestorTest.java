@@ -28,6 +28,7 @@ import com.bitsys.common.http.message.HttpRequest;
 import com.bitsys.common.http.message.HttpResponse;
 import com.google.common.collect.ListMultimap;
 
+import io.opensphere.core.NetworkConfigurationManager;
 import io.opensphere.core.event.EventManager;
 import io.opensphere.core.server.ResponseValues;
 import io.opensphere.core.util.collections.New;
@@ -67,12 +68,13 @@ public class GetRequestorTest
         final HttpResponse response = createResponse(support, stream, false, false);
         final HttpClient client = createClient(support, response, url.toURI(), false);
         final EventManager eventManager = support.createNiceMock(EventManager.class);
+        final NetworkConfigurationManager networkConfigurationManager = support.createNiceMock(NetworkConfigurationManager.class);
 
         support.replayAll();
 
         final ResponseValues responseValues = new ResponseValues();
 
-        final GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock(), eventManager);
+        final GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock(), eventManager, networkConfigurationManager);
         final CancellableInputStream actual = requestor.sendGet(url, responseValues);
 
         assertEquals(stream, actual.getWrappedInputStream());
@@ -101,12 +103,13 @@ public class GetRequestorTest
         final HttpResponse response = createResponse(support, stream, false, false);
         final HttpClient client = createClient(support, response, url.toURI(), true);
         final EventManager eventManager = support.createNiceMock(EventManager.class);
+        final NetworkConfigurationManager networkConfigurationManager = support.createNiceMock(NetworkConfigurationManager.class);
 
         support.replayAll();
 
         final ResponseValues responseValues = new ResponseValues();
 
-        final GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock(), eventManager);
+        final GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock(), eventManager, networkConfigurationManager);
 
         final Map<String, String> extraHeaderValues = New.map();
         extraHeaderValues.put("key1", "value1");
@@ -140,12 +143,13 @@ public class GetRequestorTest
         final HttpResponse response = createResponse(support, stream, true, false);
         final HttpClient client = createClient(support, response, url.toURI(), false);
         final EventManager eventManager = support.createNiceMock(EventManager.class);
+        final NetworkConfigurationManager networkConfigurationManager = support.createNiceMock(NetworkConfigurationManager.class);
 
         support.replayAll();
 
         final ResponseValues responseValues = new ResponseValues();
 
-        final GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock(), eventManager);
+        final GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock(), eventManager, networkConfigurationManager);
         final CancellableInputStream actual = requestor.sendGet(url, responseValues);
 
         assertEquals(stream, actual.getWrappedInputStream());
@@ -183,12 +187,13 @@ public class GetRequestorTest
         final HttpResponse response = createResponse(support, stream, false, true);
         final HttpClient client = createClient(support, response, url.toURI(), false);
         final EventManager eventManager = support.createNiceMock(EventManager.class);
+        final NetworkConfigurationManager networkConfigurationManager = support.createNiceMock(NetworkConfigurationManager.class);
 
         support.replayAll();
 
         final ResponseValues responseValues = new ResponseValues();
 
-        final GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock(), eventManager);
+        final GetRequestorImpl requestor = new GetRequestorImpl(client, new HeaderConstantsMock(), eventManager, networkConfigurationManager);
         final InputStream actual = requestor.sendGet(url, responseValues);
 
         final List<Byte> bytes = New.list();
@@ -235,8 +240,8 @@ public class GetRequestorTest
         final HttpClientOptions options = new HttpClientOptions();
         final CookieStore cookieStore = EasyMock.createNiceMock(CookieStore.class);
 
-        EasyMock.expect(client.getOptions()).andReturn(options);
-        EasyMock.expect(client.getCookieStore()).andReturn(cookieStore);
+        EasyMock.expect(client.getOptions()).andReturn(options).anyTimes();
+        EasyMock.expect(client.getCookieStore()).andReturn(cookieStore).anyTimes();
 
         client.execute(EasyMock.isA(HttpRequest.class));
         EasyMock.expectLastCall().andAnswer(() ->

@@ -235,6 +235,17 @@ public final class KMLSpatialTemporalUtils
                     LOGGER.warn("Unable to convert KML color. " + e.getMessage());
                 }
             }
+            else if (trimmedColor.length() >= 6)
+            {
+                try
+                {
+                    color = ColorUtilities.convertFromHexString(trimmedColor.substring(trimmedColor.length() - 6), 3, 2, 1);
+                }
+                catch (NumberFormatException e)
+                {
+                    LOGGER.warn("Unable to convert KML color. " + e.getMessage());
+                }
+            }
             else
             {
                 LOGGER.warn("Unable to convert KML color: " + trimmedColor);

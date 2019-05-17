@@ -18,9 +18,9 @@ import io.opensphere.featureactions.editor.model.SimpleFeatureActions;
 public class DragDropHandler
 {
     /**
-     * The index to be deleted when drag and drop is done.
+     * The index of the item being dragged.
      */
-    private static int myToBeDeleted = -1;
+    private static int myDragIndex = -1;
 
     /**
      * The row being dragged.
@@ -31,7 +31,7 @@ public class DragDropHandler
      * The group being dragged.
      */
     private SimpleFeatureActionGroup myDragGroup;
-
+    
     /**
      * The list the drag item is coming from.
      */
@@ -68,7 +68,7 @@ public class DragDropHandler
                 ClipboardContent cc = new ClipboardContent();
                 cc.putString(cell.getItem().toString());
                 db.setContent(cc);
-                myToBeDeleted = cell.getIndex();
+                myDragIndex = cell.getIndex();
                 myListSource = group.getActions();
                 myDragAction = cell.getItem();
             }
@@ -89,9 +89,24 @@ public class DragDropHandler
             if (db.hasString() && myDragAction != null)
             {
                 SimpleFeatureAction action = myDragAction;
-                group.getActions().remove(myToBeDeleted);
-                group.getActions().add(cell.getIndex(), action);
+                SimpleFeatureAction cellAction = cell.getItem();
+                
+                group.getActions().remove(myDragIndex);
+                
+                if (cellAction == null)
+                {
+                    group.getActions().add(action);
+                }
+                else
+                {
+                    int featureIndex = group.getActions().indexOf(cellAction);
+                    featureIndex += featureIndex < myDragIndex ? 0 : 1;
+
+                    group.getActions().add(featureIndex, action);
+                }
+                
                 event.setDropCompleted(true);
+                
                 myDragAction = null;
             }
             else
@@ -115,7 +130,7 @@ public class DragDropHandler
             ClipboardContent cc = new ClipboardContent();
             cc.putString(pane.toString());
             db.setContent(cc);
-            myToBeDeleted = myMainModel.getFeatureGroups().indexOf(group);
+            myDragIndex = myMainModel.getFeatureGroups().indexOf(group);
             myListSource = group.getActions();
             myDragGroup = group;
         });
@@ -137,7 +152,7 @@ public class DragDropHandler
                 if (myDragAction != null)
                 {
                     SimpleFeatureAction action = myDragAction;
-                    myListSource.remove(myToBeDeleted);
+                    myListSource.remove(myDragIndex);
                     group.getActions().add(action);
                     event.setDropCompleted(true);
                     myDragAction = null;
@@ -145,7 +160,7 @@ public class DragDropHandler
                 else if (myDragGroup != null)
                 {
                     int newIndex = myMainModel.getFeatureGroups().indexOf(group);
-                    myMainModel.getFeatureGroups().remove(myToBeDeleted);
+                    myMainModel.getFeatureGroups().remove(myDragIndex);
                     myMainModel.getFeatureGroups().add(newIndex, myDragGroup);
                     event.setDropCompleted(true);
                     myDragGroup = null;

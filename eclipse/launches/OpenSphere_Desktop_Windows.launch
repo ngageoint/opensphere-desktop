@@ -134,8 +134,7 @@
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
 <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="io.opensphere.core.appl.OpenSphere"/>
-<listAttribute key="org.eclipse.jdt.launching.MODULEPATH"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="core"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dopensphere.productionMode=false -Djava.security.policy=&quot;${workspace_loc:/core/java.policy}&quot; -Djava.library.path=&quot;${workspace_loc:/core/lib/win32/x86_64}&quot; -Xmx3000m -ea -XX:+AggressiveOpts -XX:+UseG1GC -XX:G1ReservePercent=40 -Dopensphere.version=5.2.4-SNAPSHOT -Dopensphere.useragent=&quot;OpenSphere Desktop&quot; -Dmionline.login.disabled=true"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dopensphere.productionMode=false -Djava.security.policy=&quot;${workspace_loc:/core/java.policy}&quot; -Djava.library.path=&quot;${workspace_loc:/core/lib/win32/x86_64}&quot; -Xmx3000m -ea -XX:+AggressiveOpts -XX:+UseG1GC -XX:G1ReservePercent=40 -Dopensphere.version=5.2.4-SNAPSHOT -Dopensphere.useragent=&quot;OpenSphere Desktop&quot; -Dmionline.login.disabled=true --add-opens javafx.controls/javafx.scene.control.skin=ALL-UNNAMED"/>
 </launchConfiguration>

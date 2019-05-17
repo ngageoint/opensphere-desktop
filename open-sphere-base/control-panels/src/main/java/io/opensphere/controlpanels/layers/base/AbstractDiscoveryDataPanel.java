@@ -688,7 +688,7 @@ public abstract class AbstractDiscoveryDataPanel extends AbstractHUDPanel
      */
     protected final TreeTableTreeNode getRootNode()
     {
-        return (TreeTableTreeNode)myTree.getModel().getRoot();
+        return myTree == null || myTree.getModel() == null ? null : (TreeTableTreeNode)myTree.getModel().getRoot();
     }
 
     /**

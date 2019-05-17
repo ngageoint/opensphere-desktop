@@ -54,8 +54,7 @@ public abstract class BaseWmsStateController extends AbstractModuleStateControll
     {
         mySaver = new StateSaver(toolbox);
         myActivator = new StateActivator(wmsPlugin, toolbox);
-        myDeactivator = new StateDeactivator(new DefaultDataGroupActivator(toolbox.getEventManager()),
-                MantleToolboxUtils.getMantleToolbox(toolbox).getDataGroupController());
+        myDeactivator = new StateDeactivator(new DefaultDataGroupActivator(toolbox.getEventManager()));
     }
 
     @Override

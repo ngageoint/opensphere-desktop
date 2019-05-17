@@ -159,6 +159,40 @@ public final class ColorUtilities
      * Convert a string to a {@link Color}, getting the color components from
      * the string at the locations specified. The color indices are zero-based,
      * increasing left-to-right, two characters per color. For example, if the
+     * input string is "bb00cc", "bb" is index 0, "00" is index 1, etc. This
+     * method assumes a fully opaque response.
+     *
+     * @param color The input color string (e.g., "bb00cc").
+     * @param redIndex The position of the red channel in the input string.
+     * @param greenIndex The position of the green channel in the input string.
+     * @param blueIndex The position of the blue channel in the input string.
+     * @return The {@link Color}.
+     * @throws NumberFormatException If the color string does not contain a
+     *             parse-able int.
+     */
+    public static Color convertFromHexString(String color, int redIndex, int greenIndex, int blueIndex)
+        throws NumberFormatException
+    {
+        if (color == null || color.length() == 0 || color.length() > 6)
+        {
+            throw new NumberFormatException("For input string: \"" + color + "\"");
+        }
+
+        long inputVal = Long.parseLong(color, 16);
+        int outputVal = 0;
+
+        outputVal |= 0xff0000 & MathUtil.byteShift(inputVal, redIndex - 1);
+        outputVal |= 0xff00 & MathUtil.byteShift(inputVal, greenIndex - 2);
+        outputVal |= 0xff & MathUtil.byteShift(inputVal, blueIndex - 3);
+        outputVal |= 0xff000000;
+
+        return new Color(outputVal, true);
+    }
+
+    /**
+     * Convert a string to a {@link Color}, getting the color components from
+     * the string at the locations specified. The color indices are zero-based,
+     * increasing left-to-right, two characters per color. For example, if the
      * input string is "ffbb00cc", "ff" is index 0, "bb" is index 1, etc.
      *
      * @param color The input color string (e.g., "ffbb00cc").
@@ -171,7 +205,7 @@ public final class ColorUtilities
      *             parse-able int.
      */
     public static Color convertFromHexString(String color, int redIndex, int greenIndex, int blueIndex, int alphaIndex)
-            throws NumberFormatException
+        throws NumberFormatException
     {
         if (color == null || color.length() == 0 || color.length() > 8)
         {
@@ -253,7 +287,7 @@ public final class ColorUtilities
         }
         StringBuilder sb = new StringBuilder();
         sb.append(aColor.getRed()).append('-').append(aColor.getGreen()).append('-').append(aColor.getBlue()).append('-')
-        .append(aColor.getAlpha());
+                .append(aColor.getAlpha());
         return sb.toString();
     }
 

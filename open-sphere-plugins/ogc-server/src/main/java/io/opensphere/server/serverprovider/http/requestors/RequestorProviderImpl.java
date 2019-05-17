@@ -13,6 +13,7 @@ import com.bitsys.common.http.client.ProxyConfig;
 import com.bitsys.common.http.proxy.ProxyHostConfig;
 import com.bitsys.common.http.proxy.ProxyResolver;
 
+import io.opensphere.core.NetworkConfigurationManager;
 import io.opensphere.core.event.EventManager;
 import io.opensphere.core.util.lang.Pair;
 import io.opensphere.server.serverprovider.http.header.HeaderValues;
@@ -48,7 +49,7 @@ public class RequestorProviderImpl implements RequestorProvider
     private GetRequestorImpl myGetter;
 
     /** The requestor that makes HEAD requests to the server. */
-    private HeadRequestorImpl myHeadRequestor;
+    private final HeadRequestorImpl myHeadRequestor;
 
     /**
      * Contains the header values.
@@ -61,7 +62,10 @@ public class RequestorProviderImpl implements RequestorProvider
     private PostRequestorImpl myPoster;
 
     /** The manager through which events are sent. */
-    private EventManager myEventManager;
+    private final EventManager myEventManager;
+
+    /** The network configuration manager. */
+    private final NetworkConfigurationManager myNetworkConfigurationManager;
 
     /**
      * Constructs a new requestor provider.
@@ -69,17 +73,19 @@ public class RequestorProviderImpl implements RequestorProvider
      * @param client The client the requestors should use.
      * @param headerValues Contains the header values.
      * @param eventManager The manager through which events are sent.
+     * @param networkConfigurationManager The network configuration manager.
      */
-    public RequestorProviderImpl(HttpClient client, HeaderValues headerValues, EventManager eventManager)
+    public RequestorProviderImpl(HttpClient client, HeaderValues headerValues, EventManager eventManager, NetworkConfigurationManager networkConfigurationManager)
     {
         myClient = client;
         myHeaderValues = headerValues;
         myEventManager = eventManager;
-        myFilePoster = new FilePostRequestorImpl(client, headerValues, eventManager);
-        myPoster = new PostRequestorImpl(client, headerValues, eventManager);
-        myGetter = new GetRequestorImpl(client, headerValues, eventManager);
-        myHeadRequestor = new HeadRequestorImpl(client, headerValues, eventManager);
-        myDeleter = new DeleteRequestorImpl(client, headerValues, eventManager);
+        myNetworkConfigurationManager = networkConfigurationManager;
+        myFilePoster = new FilePostRequestorImpl(client, headerValues, eventManager, networkConfigurationManager);
+        myPoster = new PostRequestorImpl(client, headerValues, eventManager, networkConfigurationManager);
+        myGetter = new GetRequestorImpl(client, headerValues, eventManager, networkConfigurationManager);
+        myHeadRequestor = new HeadRequestorImpl(client, headerValues, eventManager, networkConfigurationManager);
+        myDeleter = new DeleteRequestorImpl(client, headerValues, eventManager, networkConfigurationManager);
     }
 
     @Override
@@ -209,8 +215,8 @@ public class RequestorProviderImpl implements RequestorProvider
      */
     private void createNewRequestors()
     {
-        myFilePoster = new FilePostRequestorImpl(myClient, myHeaderValues, myEventManager);
-        myPoster = new PostRequestorImpl(myClient, myHeaderValues, myEventManager);
-        myGetter = new GetRequestorImpl(myClient, myHeaderValues, myEventManager);
+        myFilePoster = new FilePostRequestorImpl(myClient, myHeaderValues, myEventManager, myNetworkConfigurationManager);
+        myPoster = new PostRequestorImpl(myClient, myHeaderValues, myEventManager, myNetworkConfigurationManager);
+        myGetter = new GetRequestorImpl(myClient, myHeaderValues, myEventManager, myNetworkConfigurationManager);
     }
 }

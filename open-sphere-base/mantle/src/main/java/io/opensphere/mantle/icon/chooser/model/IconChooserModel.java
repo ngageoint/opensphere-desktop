@@ -4,7 +4,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
+
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
+import javafx.util.Callback;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.log4j.Logger;
@@ -13,12 +19,6 @@ import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.mantle.icon.IconRecord;
 import io.opensphere.mantle.icon.IconRegistry;
 import io.opensphere.mantle.icon.IconRegistryListener;
-import javafx.beans.Observable;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
-import javafx.util.Callback;
 
 /**
  * The model which backs the icon chooser. This model is tied to mirror the
@@ -68,7 +68,7 @@ public class IconChooserModel
     private IconRegistry myIconRegistry;
 
     /** The listener used to react to registry changes. */
-    private IconRegistryListener myRegistryListener;
+    private final IconRegistryListener myRegistryListener;
 
     /**
      * Creates a new icon chooser model.
@@ -162,17 +162,44 @@ public class IconChooserModel
     }
 
     /**
+     * Gets the value of the {@link #myCollectionNames} field, excluding
+     * Favorites.
+     *
+     * @return the values of the myCollectionNames field that can have added
+     *         icons.
+     */
+    public ObservableList<String> getEditableCollectionNames()
+    {
+        return myCollectionNames.filtered(s -> !s.contentEquals(IconRecord.FAVORITES_COLLECTION));
+    }
+
+    /**
+     * Adds a new collection to the registry. Called when adding and saving new
+     * tabs.
+     *
+     * @param collection The collection to add.
+     */
+    public void addCollectionName(String collection)
+    {
+        if (!myCollectionNames.contains(collection))
+        {
+            myCollectionNames.add(collection);
+            myIconRegistry.getCollectionNameSet().add(collection);
+        }
+    }
+
+    /**
      * Updates the list of collection names to match the unique set defined
      * within the icon records.
      */
     private void updateCollectionNames()
     {
-        LOG.info("Updating collection names.");
-        Set<String> set = myIconRecords.stream().map(r -> r.collectionNameProperty().get()).distinct()
-                .collect(Collectors.toSet());
+        if (LOG.isDebugEnabled())
+        {
+            LOG.debug("Updating collection names.");
+        }
 
-        // ensure the default sets are present:
-        set.add(IconRecord.FAVORITES_COLLECTION);
+        Set<String> set = myIconRegistry.getCollectionNameSet();
 
         // ensure only the items in the set are present in the list:
         myCollectionNames.retainAll(set);
@@ -188,7 +215,11 @@ public class IconChooserModel
                 return newIconSet;
             });
         }
-        LOG.info("Finished updating collection names.");
+
+        if (LOG.isDebugEnabled())
+        {
+            LOG.debug("Finished updating collection names.");
+        }
     }
 
     /**

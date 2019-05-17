@@ -55,8 +55,10 @@ public class FilterHandlerTest
 
         String xml = new StreamReader(stream).readStreamIntoString(StringUtilities.DEFAULT_CHARSET);
 
-        // NOTE: Do not change the format of the expected XML. It is not valid XML, as it does not contain the namespace
-        // mappings. The order namespace mappings is not consistent from execution to execution, so the test will remove the
+        // NOTE: Do not change the format of the expected XML. It is not valid
+        // XML, as it does not contain the namespace
+        // mappings. The order namespace mappings is not consistent from
+        // execution to execution, so the test will remove the
         // mappings from the returned string before comparison.
         String expectedXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><ns2:Execute>\n" + "   <ns2:DataInputs>\n"
                 + "      <ns2:Input>\n" + "         <ns1:Identifier>layerFilter</ns1:Identifier>\n" + "         <ns2:Data>\n"
@@ -69,8 +71,10 @@ public class FilterHandlerTest
                 + "                  </ns5:And>\n" + "               </ns5:Filter>\n" + "            </ns2:ComplexData>\n"
                 + "         </ns2:Data>\n" + "      </ns2:Input>\n" + "   </ns2:DataInputs>\n" + "</ns2:Execute>\n";
 
-        // this is a really weird way to test the results, but the JAXB Namespace support doesn't always add the namespaces in
-        // the same order to the 'Execute' tag. Instead, we'll replace known sequences of text, and then check to determine if the
+        // this is a really weird way to test the results, but the JAXB
+        // Namespace support doesn't always add the namespaces in
+        // the same order to the 'Execute' tag. Instead, we'll replace known
+        // sequences of text, and then check to determine if the
         // results are matching with a known modified sequence.
 
         xml = xml.replace("xmlns:ns1=\"http://www.opengis.net/ows/1.1\"", "");
@@ -81,6 +85,10 @@ public class FilterHandlerTest
         xml = xml.replace("xmlns:ns7=\"http://www.w3.org/2001/SMIL20/\"", "");
         xml = xml.replace("xmlns:ns8=\"http://www.w3.org/2001/SMIL20/Language\"", "");
         xml = xml.replaceAll("\\<ns2:Execute\\s+\\>", "<ns2:Execute>");
+        // sometimes when this is run on windows, the windows newlines screws
+        // everything up, so just get rid of them:
+        xml = xml.replaceAll("\r?\n", "");
+        expectedXml = expectedXml.replaceAll("\n", "");
 
         assertEquals(expectedXml, xml);
     }

@@ -25,9 +25,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import com.jidesoft.swing.JideTabbedPane;
 
+import io.opensphere.controlpanels.layers.event.TabChangeListener;
 import io.opensphere.controlpanels.layers.util.FeatureTypeLabel;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.ControlContext;
@@ -36,6 +40,7 @@ import io.opensphere.core.control.DefaultKeyPressedBinding;
 import io.opensphere.core.control.DiscreteEventAdapter;
 import io.opensphere.core.event.EventListener;
 import io.opensphere.core.model.time.TimeSpan;
+import io.opensphere.core.util.Colors;
 import io.opensphere.core.util.DateTimeFormats;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.collections.StreamUtilities;
@@ -475,8 +480,20 @@ public class LayerDetailPanel extends JPanel
         if (myTabPane == null)
         {
             myTabPane = new JideTabbedPane();
-            myTabPane.addTab(SETTINGS_TAB, getSettingsPanel());
+
+            myTabPane.setOpaque(false);
+            myTabPane.setBackground(new Color(0, 0, 0, 0));
+            ((JideTabbedPane)myTabPane).setTabShape(JideTabbedPane.SHAPE_ROUNDED_VSNET);
+            myTabPane.setTabPlacement(SwingConstants.TOP);
+
             myTabPane.addTab(DETAILS_TAB, getDetailsPanel());
+            myTabPane.setSelectedIndex(0);
+            myTabPane.setBackgroundAt(0, Colors.LF_PRIMARY2);
+            myTabPane.setForeground(Color.WHITE);
+
+            myTabPane.addChangeListener(new TabChangeListener());
+
+            myTabPane.addTab(SETTINGS_TAB, getSettingsPanel());
             if (!Boolean.getBoolean("opensphere.productionMode"))
             {
                 myTabPane.addTab(DEBUG_TAB, getDebugPanel());
@@ -569,8 +586,7 @@ public class LayerDetailPanel extends JPanel
      * Update ui details.
      */
     private void updateUIDetails()
-    {
-        getTabPane().remove(getSettingsPanel());
+    { 
         if (!Boolean.getBoolean("opensphere.productionMode"))
         {
             getTabPane().remove(getDebugPanel());
@@ -590,11 +606,14 @@ public class LayerDetailPanel extends JPanel
                         timeSpan);
             }
             getLayerTimeLabel().setText(layerTimeString);
-            getSettingsPanel().removeAll();
             final Component settingsComponent = myDGI.getAssistant().getSettingsUIComponent(getSettingsPanel().getSize(), myDGI);
             if (settingsComponent != null)
             {
-                myTabPane.addTab(SETTINGS_TAB, getSettingsPanel());
+                if (myTabPane.indexOfTab(SETTINGS_TAB) == -1)
+                {
+                    myTabPane.addTab(SETTINGS_TAB, getSettingsPanel());
+                }
+                getSettingsPanel().removeAll();
                 getSettingsPanel().add(settingsComponent, BorderLayout.CENTER);
                 getSettingsPanel().invalidate();
                 getSettingsPanel().revalidate();
