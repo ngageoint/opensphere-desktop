@@ -121,22 +121,10 @@
 		<dependency>
 			<groupId>com.vividsolutions</groupId>
 			<artifactId>jts-core</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>xerces</groupId>
-					<artifactId>xercesImpl</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.vividsolutions</groupId>
 			<artifactId>jts-io</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>xerces</groupId>
-					<artifactId>xercesImpl</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.trove4j</groupId>
@@ -227,10 +215,6 @@
 		<dependency>
 			<groupId>io.open-sphere.dev</groupId>
 			<artifactId>colorchooser</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.open-sphere.hatbox</groupId>
-			<artifactId>hatbox</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.open-sphere</groupId>

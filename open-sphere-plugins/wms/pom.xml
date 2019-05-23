@@ -46,6 +46,12 @@
 		<dependency>
 			<groupId>io.open-sphere.plugins</groupId>
 			<artifactId>ogc-server</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>xml-apis</groupId>
+					<artifactId>xml-apis</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 </project>
