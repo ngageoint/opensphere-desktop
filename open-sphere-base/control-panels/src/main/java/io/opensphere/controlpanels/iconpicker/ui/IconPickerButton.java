@@ -68,7 +68,7 @@ public class IconPickerButton extends Button
             
             //WEB TESTING MANUAL IMPLEMENTATION
             System.out.println("It set");
-            
+            mySender.ConnectToServer(true);
 
         });
     }
