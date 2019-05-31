@@ -46,12 +46,6 @@
 		<dependency>
 			<groupId>io.open-sphere.plugins</groupId>
 			<artifactId>ogc-server</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>xerces</groupId>
-					<artifactId>xercesImpl</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		
 		<dependency>

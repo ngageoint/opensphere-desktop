@@ -423,11 +423,11 @@
 						<configuration>
 							<groupId>io.open-sphere.hatbox</groupId>
 							<artifactId>hatbox</artifactId>
-							<version>1.0.b9.1</version>
+							<version>1.0.b9.2</version>
 							<packaging>jar</packaging>
 							<generatePom>true</generatePom>
-							<file>${project.basedir}/lib/io/open-sphere/hatbox/hatbox/1.0.b9.1/hatbox-1.0.b9.1.jar</file>
-							<sources>${project.basedir}/lib/io/open-sphere/hatbox/hatbox/1.0.b9.1/hatbox-1.0.b9.1-sources.jar</sources>
+							<file>${project.basedir}/lib/io/open-sphere/hatbox/hatbox/1.0.b9.2/hatbox-1.0.b9.2.jar</file>
+							<sources>${project.basedir}/lib/io/open-sphere/hatbox/hatbox/1.0.b9.2/hatbox-1.0.b9.2-sources.jar</sources>
 						</configuration>
 					</execution>
 					<execution>
@@ -1009,6 +1009,16 @@
 				<groupId>net.sourceforge.htmlunit</groupId>
 				<artifactId>htmlunit</artifactId>
 				<version>2.30</version>
+				<exclusions>
+					<exclusion>
+						<groupId>xml-apis</groupId>
+						<artifactId>xml-apis</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>xerces</groupId>
+						<artifactId>xercesImpl</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>net.sourceforge.htmlunit</groupId>
@@ -1033,7 +1043,7 @@
 			<dependency>
 				<groupId>io.open-sphere.hatbox</groupId>
 				<artifactId>hatbox</artifactId>
-				<version>1.0.b9.1</version>
+				<version>1.0.b9.2</version>
 			</dependency>
 			<dependency>
 				<groupId>org.controlsfx</groupId>
