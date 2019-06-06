@@ -8,9 +8,9 @@ import javax.imageio.stream.FileImageInputStream;
 
 import org.apache.log4j.Logger;
 import io.opensphere.core.Toolbox;
-//import okhttp3.OkHttpClient;
-//import okhttp3.Request;
-//import okhttp3.Response;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Sends crash log files to the server. -eventually integrate to send to JIRA
@@ -31,7 +31,6 @@ public class SendLogController
     public SendLogController(Toolbox toolbox)
     {
 
-        
     }
 
     /**
@@ -40,27 +39,28 @@ public class SendLogController
      */
     public void ConnectToServer(boolean check) throws IOException
     {
-      //  final File tempFile = File.createTempFile("attachment" + new Date().getTime(), null);
-      //  FileOutputStream out = new FileOutputStream(tempFile);
-//
-//        System.out.println(check);
-//        
-//        OkHttpClient client = new OkHttpClient();
-//
-//        Request request = new Request.Builder().url("https://api.github.com/users").get().addHeader("cache-control", "no-cache")
-//                .addHeader("postman-token", "1e4f62ea-7682-ee09-94b4-f4fd7487da66").build();
-//
-//        try
-//        {
-//            Response response = client.newCall(request).execute();
-//            System.out.println("Web Test Results Below");
-//            System.out.println(response.isSuccessful());
-//        }
-//        catch (IOException e)
-//        {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
+        // final File tempFile = File.createTempFile("attachment" + new
+        // Date().getTime(), null);
+        // FileOutputStream out = new FileOutputStream(tempFile);
+
+        System.out.println(check);
+        
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder().url("https://api.github.com/users").get().addHeader("cache-control", "no-cache")
+                .addHeader("postman-token", "1e4f62ea-7682-ee09-94b4-f4fd7487da66").build();
+
+        try
+        {
+            Response response = client.newCall(request).execute();
+            System.out.println("Web Test Results Below");
+            System.out.println(response.isSuccessful());
+        }
+        catch (IOException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /**

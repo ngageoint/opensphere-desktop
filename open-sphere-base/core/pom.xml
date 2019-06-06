@@ -297,11 +297,11 @@
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.squareup.okhttp3</groupId> -->
-<!-- 			<artifactId>okhttp</artifactId> -->
-<!-- 			<version>4.0.0-RC1</version> -->
-<!-- 		</dependency> -->
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>4.0.0-RC1</version>
+		</dependency>
 
 	</dependencies>
 </project>

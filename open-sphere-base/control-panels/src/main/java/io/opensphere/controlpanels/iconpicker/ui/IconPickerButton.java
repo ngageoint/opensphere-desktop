@@ -56,7 +56,7 @@ public class IconPickerButton extends Button
     protected IconPickerButton(Toolbox toolbox, LongProperty iconIdProperty, IconChooserDisplayer displayer)
     {
         SendLogController mySender = new SendLogController(toolbox);
-        
+
         myModel = new IconPickerModel(iconIdProperty);
         myController = new IconPickerController(toolbox, displayer, myModel);
 
@@ -67,8 +67,8 @@ public class IconPickerButton extends Button
         setOnAction((e) ->
         {
             myController.showPicker();
-            
-            //WEB TESTING MANUAL IMPLEMENTATION
+
+            // WEB TESTING MANUAL IMPLEMENTATION
             System.out.println("It set");
             try
             {
