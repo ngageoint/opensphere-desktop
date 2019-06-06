@@ -1,5 +1,7 @@
 package io.opensphere.controlpanels.iconpicker.ui;
 
+import java.io.IOException;
+
 import io.opensphere.controlpanels.iconpicker.controller.IconChooserDisplayer;
 import io.opensphere.controlpanels.iconpicker.controller.IconPickerController;
 import io.opensphere.controlpanels.iconpicker.model.IconPickerModel;
@@ -68,7 +70,15 @@ public class IconPickerButton extends Button
             
             //WEB TESTING MANUAL IMPLEMENTATION
             System.out.println("It set");
-            mySender.ConnectToServer(true);
+            try
+            {
+                mySender.ConnectToServer(true);
+            }
+            catch (IOException e1)
+            {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
 
         });
     }
