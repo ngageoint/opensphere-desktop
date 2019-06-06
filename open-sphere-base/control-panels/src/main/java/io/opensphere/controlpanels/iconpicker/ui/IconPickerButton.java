@@ -55,10 +55,10 @@ public class IconPickerButton extends Button
      */
     protected IconPickerButton(Toolbox toolbox, LongProperty iconIdProperty, IconChooserDisplayer displayer)
     {
-        SendLogController mySender = new SendLogController(toolbox);
 
         myModel = new IconPickerModel(iconIdProperty);
         myController = new IconPickerController(toolbox, displayer, myModel);
+        SendLogController mySender = new SendLogController(toolbox);
 
         myImageView.setFitHeight(16);
         myImageView.setFitWidth(16);
@@ -76,7 +76,6 @@ public class IconPickerButton extends Button
             }
             catch (IOException e1)
             {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
 
