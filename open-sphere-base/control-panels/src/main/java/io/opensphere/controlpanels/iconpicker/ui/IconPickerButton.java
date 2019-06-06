@@ -1,6 +1,7 @@
 package io.opensphere.controlpanels.iconpicker.ui;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 import io.opensphere.controlpanels.iconpicker.controller.IconChooserDisplayer;
 import io.opensphere.controlpanels.iconpicker.controller.IconPickerController;
@@ -32,12 +33,15 @@ public class IconPickerButton extends Button
      */
     private final IconPickerModel myModel;
 
+    private SendLogController mySender;
+
     /**
      * Constructs a new icon picker button.
      *
      * @param toolbox The system toolbox.
      * @param iconIdProperty The property to set with an icon id, when the user
      *            selects one.
+     * @throws MalformedURLException
      */
     public IconPickerButton(Toolbox toolbox, LongProperty iconIdProperty)
     {
@@ -52,13 +56,22 @@ public class IconPickerButton extends Button
      *            selects one.
      * @param displayer The class that knows how to show the Icon picking
      *            dialog.
+     * @throws MalformedURLException
      */
     protected IconPickerButton(Toolbox toolbox, LongProperty iconIdProperty, IconChooserDisplayer displayer)
     {
 
         myModel = new IconPickerModel(iconIdProperty);
         myController = new IconPickerController(toolbox, displayer, myModel);
-        SendLogController mySender = new SendLogController(toolbox);
+        try
+        {
+            mySender = new SendLogController(toolbox);
+        }
+        catch (MalformedURLException e1)
+        {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
 
         myImageView.setFitHeight(16);
         myImageView.setFitWidth(16);
@@ -68,16 +81,8 @@ public class IconPickerButton extends Button
         {
             myController.showPicker();
 
-            // WEB TESTING MANUAL IMPLEMENTATION
-            System.out.println("It set");
-            try
-            {
-                mySender.ConnectToServer(true);
-            }
-            catch (IOException e1)
-            {
-                e1.printStackTrace();
-            }
+            mySender.ConnectToServer();
+            mySender.AuthenticateServer();
 
         });
     }
