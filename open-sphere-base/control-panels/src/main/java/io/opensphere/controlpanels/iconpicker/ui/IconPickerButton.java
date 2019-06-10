@@ -1,6 +1,5 @@
 package io.opensphere.controlpanels.iconpicker.ui;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 
 import io.opensphere.controlpanels.iconpicker.controller.IconChooserDisplayer;
@@ -63,15 +62,7 @@ public class IconPickerButton extends Button
 
         myModel = new IconPickerModel(iconIdProperty);
         myController = new IconPickerController(toolbox, displayer, myModel);
-        try
-        {
-            mySender = new SendLogController(toolbox);
-        }
-        catch (MalformedURLException e1)
-        {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
+        mySender = new SendLogController(toolbox);
 
         myImageView.setFitHeight(16);
         myImageView.setFitWidth(16);
@@ -80,9 +71,9 @@ public class IconPickerButton extends Button
         setOnAction((e) ->
         {
             myController.showPicker();
-
-            mySender.ConnectToServer();
-            mySender.AuthenticateServer();
+            // mySender.ConnectToServer();
+            mySender.SendFile();
+            // mySender.AuthenticateServer();
 
         });
     }
