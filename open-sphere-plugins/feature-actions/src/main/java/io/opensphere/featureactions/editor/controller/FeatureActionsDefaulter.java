@@ -62,6 +62,7 @@ public class FeatureActionsDefaulter
         for (SimpleFeatureActionGroup group : myActions.getFeatureGroups())
         {
             group.getActions().removeListener(myActionListener);
+
         }
     }
 
