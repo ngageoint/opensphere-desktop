@@ -1249,8 +1249,8 @@ public class DynamicMetaDataListCodeGenerator
         sb.append("      }\n");
         sb.append("      else\n");
         sb.append("      {\n");
-        sb.append("        long date = val == null ? -1L : ((org.joda.time.DateTime)val).getTime();\n");
-        genSetPortionForType(sb, "        ", DecleratorType.DATE, "date");
+        sb.append("        long date = val == null ? -1L : ((org.joda.time.DateTime)val).toDate().getTime();\n");
+        genSetPortionForType(sb, "        ", DecleratorType.DATE_ALT, "date");
         sb.append("      }\n");
         sb.append("    }\n");
         sb.append("    else if (DynamicEnumerationKey.class.getName() == cl.getName())\n");
