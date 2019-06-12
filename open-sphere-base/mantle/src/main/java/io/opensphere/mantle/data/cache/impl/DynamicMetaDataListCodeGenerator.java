@@ -172,6 +172,11 @@ public class DynamicMetaDataListCodeGenerator
                     .append("].equals(key))");
             if (decl == DecleratorType.DATE)
             {
+                sb.append("{ result = ").append(fieldName).append(" == -1L ? null : new java.sql.Date(").append(fieldName)
+                        .append("); }\n");
+            }
+            else if (decl == DecleratorType.DATE_ALT)
+            {
                 sb.append("{ result = ").append(fieldName).append(" == -1L ? null : new Date(").append(fieldName)
                         .append("); }\n");
             }
@@ -503,6 +508,7 @@ public class DynamicMetaDataListCodeGenerator
                     sb.append("    ").append(fieldName).append(" = ois.readInt();\n");
                     break;
                 case DATE:
+                case DATE_ALT:
                 case LONG:
                     sb.append("    ").append(fieldName).append(" = ois.readLong();\n");
                     break;
@@ -580,6 +586,7 @@ public class DynamicMetaDataListCodeGenerator
                     sb.append("    oos.writeInt(").append(fieldName).append(");\n");
                     break;
                 case DATE:
+                case DATE_ALT:
                 case LONG:
                     sb.append("    oos.writeLong(").append(fieldName).append(");\n");
                     break;
@@ -729,9 +736,14 @@ public class DynamicMetaDataListCodeGenerator
                 declerator = DecleratorType.LONG;
                 defaultValue = "Long.MIN_VALUE";
             }
-            else if (Date.class.getName().equals(fieldClass.getName()))
+            else if (java.sql.Date.class.getName().equals(fieldClass.getName()))
             {
                 declerator = DecleratorType.DATE;
+                defaultValue = "-1L";
+            }
+            else if (Date.class.getName().equals(fieldClass.getName()))
+            {
+                declerator = DecleratorType.DATE_ALT;
                 defaultValue = "-1L";
             }
             else if (Boolean.class.getName().equals(fieldClass.getName()))
@@ -866,7 +878,13 @@ public class DynamicMetaDataListCodeGenerator
 
             if (decl == DecleratorType.DATE)
             {
-                sb.append("{  return ").append(fieldName).append(" == -1L ? null : new Date(").append(fieldName).append("); }\n");
+                sb.append("{  return ").append(fieldName).append(" == -1L ? null : new java.sql.Date(").append(fieldName)
+                        .append("); }\n");
+            }
+            else if (decl == DecleratorType.DATE_ALT)
+            {
+                sb.append("{  return ").append(fieldName).append(" == -1L ? null : new Date(").append(fieldName)
+                        .append("); }\n");
             }
             else if (decl == DecleratorType.BYTE_STRING)
             {
@@ -1060,7 +1078,7 @@ public class DynamicMetaDataListCodeGenerator
             {
                 sb.append("    result = prime * result + Float.floatToIntBits(").append(fieldName).append(");\n");
             }
-            else if (decl == DecleratorType.LONG || decl == DecleratorType.DATE)
+            else if (decl == DecleratorType.LONG || decl == DecleratorType.DATE || decl == DecleratorType.DATE_ALT)
             {
                 sb.append("    result = prime * result + (int)(").append(fieldName).append(" ^ (").append(fieldName)
                         .append(" >>> 32));\n");
@@ -1210,17 +1228,29 @@ public class DynamicMetaDataListCodeGenerator
         genSetPortionForType(sb, "         ", DecleratorType.BOOLEAN, "bVal");
         sb.append("      }\n");
         sb.append("    }\n");
-        sb.append("    else if (Date.class.getName() == cl.getName())\n");
+        sb.append("    else if (java.sql.Date.class.getName() == cl.getName())\n");
         sb.append("    {\n");
-        sb.append("      if (val != null && !Date.class.isAssignableFrom(val.getClass()))\n");
+        sb.append("      if (val != null && !java.sql.Date.class.isAssignableFrom(val.getClass()))\n");
         sb.append("      {\n");
         sb.append("        throw new IllegalArgumentException(\"Index \" + index + \" cannot be assigned to with");
         sb.append(" a non date value. Used \" + val.getClass().getName());\n");
         sb.append("      }\n");
         sb.append("      else\n");
         sb.append("      {\n");
-        sb.append("        long date = val == null ? -1L : ((Date)val).getTime();\n");
+        sb.append("        long date = val == null ? -1L : ((java.sql.Date)val).getTime();\n");
         genSetPortionForType(sb, "        ", DecleratorType.DATE, "date");
+        sb.append("      }\n");
+        sb.append("    else if (Date.class.getName() == cl.getName())\n");
+        sb.append("    {\n");
+        sb.append("      if (val != null && !org.joda.time.DateTime.class.isAssignableFrom(val.getClass()))\n");
+        sb.append("      {\n");
+        sb.append("        throw new IllegalArgumentException(\"Index \" + index + \" cannot be assigned to with");
+        sb.append(" a non date value. Used \" + val.getClass().getName());\n");
+        sb.append("      }\n");
+        sb.append("      else\n");
+        sb.append("      {\n");
+        sb.append("        long date = val == null ? -1L : ((org.joda.time.DateTime)val).toDate().getTime();\n");
+        genSetPortionForType(sb, "        ", DecleratorType.DATE_ALT, "date");
         sb.append("      }\n");
         sb.append("    }\n");
         sb.append("    else if (DynamicEnumerationKey.class.getName() == cl.getName())\n");
@@ -1317,6 +1347,11 @@ public class DynamicMetaDataListCodeGenerator
             fieldName = myFieldNameList.get(i);
             decl = myFieldNameToFieldDecleratorMap.get(fieldName);
             if (decl == DecleratorType.DATE)
+            {
+                sb.append("    result[").append(i).append("] = ").append(fieldName).append(" == -1L ? null : new java.sql.Date(")
+                        .append(fieldName).append(");\n");
+            }
+            else if (decl == DecleratorType.DATE_ALT)
             {
                 sb.append("    result[").append(i).append("] = ").append(fieldName).append(" == -1L ? null : new Date(")
                         .append(fieldName).append(");\n");
@@ -1531,6 +1566,9 @@ public class DynamicMetaDataListCodeGenerator
         /** The DATE. */
         DATE,
 
+        /** The DATE_ALT. */
+        DATE_ALT,
+
         /** The Types. */
         DOUBLE,
 
@@ -1573,6 +1611,7 @@ public class DynamicMetaDataListCodeGenerator
                     break;
                 case LONG:
                 case DATE:
+                case DATE_ALT:
                     decVal = "long";
                     break;
                 case INTEGER:
