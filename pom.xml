@@ -57,6 +57,28 @@
 				</plugins>
 			</build>
 		</profile>
+		<profile>
+			<id>Windows</id>
+			<activation>
+			<os>
+				<family>Windows</family>
+			</os>
+			</activation>
+			<properties>
+			<script.extension>.bat</script.extension>
+			</properties>
+		</profile>
+		<profile>
+			<id>unix</id>
+			<activation>
+			<os>
+				<family>unix</family>
+			</os>
+			</activation>
+			<properties>
+			<script.extension>.sh</script.extension>
+			</properties>
+		</profile>
 	</profiles>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -85,6 +107,7 @@
 		<izpack.version>5.1.3</izpack.version>
 		<jackson.core.version>2.9.7</jackson.core.version>
 		<jackson.base.version>1.9.13</jackson.base.version>
+		<javafx.version>11.0.2</javafx.version>
 	</properties>
 	<build>
 		<pluginManagement>
@@ -127,7 +150,7 @@
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>jaxb2-maven-plugin</artifactId>
-					<version>2.3.1</version>
+					<version>2.4</version>
 				</plugin>
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
@@ -215,14 +238,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.7.0</version>
-					<dependencies>
-						<dependency>
-							<groupId>org.ow2.asm</groupId>
-							<artifactId>asm</artifactId>
-							<version>6.2</version> <!-- Use newer version of ASM -->
-						</dependency>
-					</dependencies>
+					<version>3.8.0</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -247,7 +263,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-plugin-plugin</artifactId>
-					<version>3.5.2</version>
+					<version>3.6.0</version>
 					<!-- <type>maven-plugin</type> -->
 					<configuration>
 						<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
@@ -305,7 +321,7 @@
 						<dependency>
 							<groupId>com.github.spotbugs</groupId>
 							<artifactId>spotbugs</artifactId>
-							<version>3.1.4</version>
+							<version>3.1.12</version>
 						</dependency>
 					</dependencies>
 				</plugin>
@@ -333,8 +349,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>10</source>
-					<target>10</target>
+					<release>11</release>
 					<fork>true</fork>
 				</configuration>
 			</plugin>
@@ -408,11 +423,11 @@
 						<configuration>
 							<groupId>io.open-sphere.hatbox</groupId>
 							<artifactId>hatbox</artifactId>
-							<version>1.0.b9.1</version>
+							<version>1.0.b9.2</version>
 							<packaging>jar</packaging>
 							<generatePom>true</generatePom>
-							<file>${project.basedir}/lib/io/open-sphere/hatbox/hatbox/1.0.b9.1/hatbox-1.0.b9.1.jar</file>
-							<sources>${project.basedir}/lib/io/open-sphere/hatbox/hatbox/1.0.b9.1/hatbox-1.0.b9.1-sources.jar</sources>
+							<file>${project.basedir}/lib/io/open-sphere/hatbox/hatbox/1.0.b9.2/hatbox-1.0.b9.2.jar</file>
+							<sources>${project.basedir}/lib/io/open-sphere/hatbox/hatbox/1.0.b9.2/hatbox-1.0.b9.2-sources.jar</sources>
 						</configuration>
 					</execution>
 					<execution>
@@ -513,6 +528,43 @@
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>4.12</version>
+			</dependency>
+			
+			<!-- JAVAFX -->
+			<dependency>
+			    <groupId>org.openjfx</groupId>
+			    <artifactId>javafx-media</artifactId>
+			    <version>${javafx.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.openjfx</groupId>
+			    <artifactId>javafx-web</artifactId>
+			    <version>${javafx.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.openjfx</groupId>
+			    <artifactId>javafx-fxml</artifactId>
+			    <version>${javafx.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.openjfx</groupId>
+			    <artifactId>javafx-base</artifactId>
+			    <version>${javafx.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.openjfx</groupId>
+			    <artifactId>javafx-graphics</artifactId>
+			    <version>${javafx.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.openjfx</groupId>
+			    <artifactId>javafx-controls</artifactId>
+			    <version>${javafx.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.openjfx</groupId>
+			    <artifactId>javafx-swing</artifactId>
+			    <version>${javafx.version}</version>
 			</dependency>
 
 			<dependency>
@@ -699,12 +751,12 @@
 			<dependency>
 				<groupId>com.github.spotbugs</groupId>
 				<artifactId>spotbugs</artifactId>
-				<version>3.1.4</version>
+				<version>3.1.12</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.spotbugs</groupId>
 				<artifactId>spotbugs-annotations</artifactId>
-				<version>3.1.4</version>
+				<version>3.1.12</version>
 			</dependency>
 			<dependency>
 				<groupId>com.google.guava</groupId>
@@ -957,6 +1009,16 @@
 				<groupId>net.sourceforge.htmlunit</groupId>
 				<artifactId>htmlunit</artifactId>
 				<version>2.30</version>
+				<exclusions>
+					<exclusion>
+						<groupId>xml-apis</groupId>
+						<artifactId>xml-apis</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>xerces</groupId>
+						<artifactId>xercesImpl</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>net.sourceforge.htmlunit</groupId>
@@ -981,7 +1043,7 @@
 			<dependency>
 				<groupId>io.open-sphere.hatbox</groupId>
 				<artifactId>hatbox</artifactId>
-				<version>1.0.b9.1</version>
+				<version>1.0.b9.2</version>
 			</dependency>
 			<dependency>
 				<groupId>org.controlsfx</groupId>

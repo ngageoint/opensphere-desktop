@@ -39,12 +39,6 @@
 		<dependency>
 			<groupId>io.open-sphere</groupId>
 			<artifactId>mantle</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>xerces</groupId>
-					<artifactId>xercesImpl</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 	</dependencies>
 </project>
