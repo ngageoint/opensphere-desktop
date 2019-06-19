@@ -177,7 +177,7 @@ public class DynamicMetaDataListCodeGenerator
             }
             else if (decl == DecleratorType.DATE_ALT)
             {
-                sb.append("{ result = ").append(fieldName).append(" == -1L ? null : new Date(").append(fieldName)
+                sb.append("{ result = ").append(fieldName).append(" == -1L ? null : new java.util.Date(").append(fieldName)
                         .append("); }\n");
             }
             else if (decl == DecleratorType.BYTE_STRING)
@@ -883,7 +883,7 @@ public class DynamicMetaDataListCodeGenerator
             }
             else if (decl == DecleratorType.DATE_ALT)
             {
-                sb.append("{  return ").append(fieldName).append(" == -1L ? null : new Date(").append(fieldName)
+                sb.append("{  return ").append(fieldName).append(" == -1L ? null : new java.util.Date(").append(fieldName)
                         .append("); }\n");
             }
             else if (decl == DecleratorType.BYTE_STRING)
@@ -1240,16 +1240,26 @@ public class DynamicMetaDataListCodeGenerator
         sb.append("        long date = val == null ? -1L : ((java.sql.Date)val).getTime();\n");
         genSetPortionForType(sb, "        ", DecleratorType.DATE, "date");
         sb.append("      }\n");
-        sb.append("    else if (Date.class.getName() == cl.getName())\n");
+        sb.append("    }\n");
+        sb.append("    else if (java.util.Date.class.getName() == cl.getName())\n");
         sb.append("    {\n");
-        sb.append("      if (val != null && !org.joda.time.DateTime.class.isAssignableFrom(val.getClass()))\n");
+        sb.append("      if (val != null && !org.joda.time.DateTime.class.isAssignableFrom(val.getClass())"
+                + " && !java.util.Date.class.isAssignableFrom(val.getClass()))\n");
         sb.append("      {\n");
         sb.append("        throw new IllegalArgumentException(\"Index \" + index + \" cannot be assigned to with");
         sb.append(" a non date value. Used \" + val.getClass().getName());\n");
         sb.append("      }\n");
         sb.append("      else\n");
         sb.append("      {\n");
-        sb.append("        long date = val == null ? -1L : ((org.joda.time.DateTime)val).toDate().getTime();\n");
+        sb.append("        long date;\n");
+        sb.append("        if (java.util.Date.class.isAssignableFrom(val.getClass()))\n");
+        sb.append("        {\n");
+        sb.append("          date = val == null ? -1L : ((java.util.Date)val).getTime();\n");
+        sb.append("        }\n");
+        sb.append("        else\n");
+        sb.append("        {\n");
+        sb.append("          date = val == null ? -1L : ((org.joda.time.DateTime)val).toDate().getTime();\n");
+        sb.append("        }\n");
         genSetPortionForType(sb, "        ", DecleratorType.DATE_ALT, "date");
         sb.append("      }\n");
         sb.append("    }\n");
@@ -1353,7 +1363,7 @@ public class DynamicMetaDataListCodeGenerator
             }
             else if (decl == DecleratorType.DATE_ALT)
             {
-                sb.append("    result[").append(i).append("] = ").append(fieldName).append(" == -1L ? null : new Date(")
+                sb.append("    result[").append(i).append("] = ").append(fieldName).append(" == -1L ? null : new java.util.Date(")
                         .append(fieldName).append(");\n");
             }
             else if (decl == DecleratorType.BYTE_STRING)
