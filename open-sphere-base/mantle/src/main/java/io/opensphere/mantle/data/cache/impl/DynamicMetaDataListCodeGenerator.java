@@ -306,6 +306,7 @@ public class DynamicMetaDataListCodeGenerator
         sb.append("import ").append(ColumnAndValueIntKeyUtility.class.getName()).append(";\n");
         sb.append("import ").append(DynamicEnumerationIntKeyUtility.class.getName()).append(";\n");
         sb.append("import ").append(org.apache.log4j.Logger.class.getName()).append(";\n");
+        sb.append("import ").append(org.joda.time.DateTime.class.getName()).append(";\n");
         sb.append("public class ").append(myClassName).append(" extends ").append(AbstractDynamicMetaDataList.class.getSimpleName())
                 .append("\n");
         sb.append(OPEN_BRACKET_NEWLINE);
@@ -1243,7 +1244,7 @@ public class DynamicMetaDataListCodeGenerator
         sb.append("    }\n");
         sb.append("    else if (java.util.Date.class.getName() == cl.getName())\n");
         sb.append("    {\n");
-        sb.append("      if (val != null && !org.joda.time.DateTime.class.isAssignableFrom(val.getClass())"
+        sb.append("      if (val != null && !DateTime.class.isAssignableFrom(val.getClass())"
                 + " && !java.util.Date.class.isAssignableFrom(val.getClass()))\n");
         sb.append("      {\n");
         sb.append("        throw new IllegalArgumentException(\"Index \" + index + \" cannot be assigned to with");
@@ -1258,7 +1259,7 @@ public class DynamicMetaDataListCodeGenerator
         sb.append("        }\n");
         sb.append("        else\n");
         sb.append("        {\n");
-        sb.append("          date = val == null ? -1L : ((org.joda.time.DateTime)val).toDate().getTime();\n");
+        sb.append("          date = val == null ? -1L : ((DateTime)val).toDate().getTime();\n");
         sb.append("        }\n");
         genSetPortionForType(sb, "        ", DecleratorType.DATE_ALT, "date");
         sb.append("      }\n");
