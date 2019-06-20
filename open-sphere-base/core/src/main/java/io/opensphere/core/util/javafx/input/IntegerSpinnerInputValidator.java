@@ -4,7 +4,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import javafx.application.Platform;
 import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
@@ -85,7 +84,7 @@ public class IntegerSpinnerInputValidator extends StringConverter<Integer>
      */
     public static void setupValidator(Spinner<Integer> spinner, int min, int max)
     {
-        SpinnerValueFactory.IntegerSpinnerValueFactory factory = (IntegerSpinnerValueFactory) spinner.getValueFactory();
+        IntegerSpinnerValueFactory factory = (IntegerSpinnerValueFactory) spinner.getValueFactory();
         IntegerSpinnerInputValidator validator = new IntegerSpinnerInputValidator(spinner.getEditor(), min, max);
         factory.setConverter(validator);
     }
