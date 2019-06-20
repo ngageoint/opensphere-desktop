@@ -101,7 +101,7 @@ public class IntegerSpinnerInputValidator extends StringConverter<Integer>
     {
         if (StringUtils.isBlank(string))
         {
-            return Integer.valueOf(1);
+            return Integer.valueOf(myMinimum);
         }
         return Integer.parseInt(string);
     }
