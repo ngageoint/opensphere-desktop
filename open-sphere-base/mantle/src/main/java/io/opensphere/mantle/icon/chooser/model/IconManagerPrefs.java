@@ -1,5 +1,6 @@
 package io.opensphere.mantle.icon.chooser.model;
 
+import io.opensphere.mantle.icon.IconRecord;
 import javafx.scene.control.TreeItem;
 
 /**
@@ -10,6 +11,9 @@ public class IconManagerPrefs
 {
     /** The value used for the icon width. */
     private int myIconWidth = 0;
+
+    /** The icon last selected in the icon manager. */
+    private IconRecord myLastSelectedIcon = null;
 
     /** The tree which will be selected on start up. */
     private TreeItem<String> myTreeSelection = new TreeItem<>("temp");
@@ -32,6 +36,26 @@ public class IconManagerPrefs
     public void setIconWidth(int width)
     {
         myIconWidth = width;
+    }
+
+    /**
+     * Gets the icon that was last selected in the icon dialog.
+     *
+     * @return the last selected icon
+     */
+    public IconRecord getLastSelectedIcon()
+    {
+        return myLastSelectedIcon;
+    }
+
+    /**
+     * Sets the icon that was last selected in the icon dialog.
+     *
+     * @param iconRecord the last selected icon
+     */
+    public void setLastSelectedIcon(IconRecord iconRecord)
+    {
+        myLastSelectedIcon = iconRecord;
     }
 
     /**
