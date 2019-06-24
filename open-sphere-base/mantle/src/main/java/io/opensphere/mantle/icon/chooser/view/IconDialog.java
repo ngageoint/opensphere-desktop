@@ -11,6 +11,7 @@ import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.fx.JFXDialog;
 import io.opensphere.core.util.net.UrlUtilities;
 import io.opensphere.mantle.icon.IconRecord;
+import io.opensphere.mantle.icon.chooser.model.IconManagerPrefs;
 import io.opensphere.mantle.icon.chooser.model.IconModel;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
@@ -96,6 +97,7 @@ public class IconDialog extends JFXDialog
             }
         });
         setRejectListener(rejectListener);
+        super.setRejectListener(() -> savePreferences());
         setLocationRelativeTo(owner);
     }
 
@@ -140,7 +142,6 @@ public class IconDialog extends JFXDialog
                 {
                     IconRecord selected = MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getIconRecord(url);
                     iconModel.selectedRecordProperty().set(selected);
-
                 }
             });
         }
@@ -154,8 +155,10 @@ public class IconDialog extends JFXDialog
     {
         if (((IconDialogSupplier)getNodeSupplier()).getModel() != null)
         {
-            MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getManagerPrefs()
-                    .setIconWidth((int)((IconDialogSupplier)getNodeSupplier()).getModel().tileWidthProperty().get());
+            IconManagerPrefs iconManagerPrefs = MantleToolboxUtils.getMantleToolbox(myToolbox).getIconRegistry().getManagerPrefs();
+            IconModel iconModel = ((IconDialogSupplier)getNodeSupplier()).getModel();
+            iconManagerPrefs.setLastSelectedIcon(iconModel.selectedRecordProperty().get());
+            iconManagerPrefs.setIconWidth((int)(iconModel.tileWidthProperty().get()));
         }
     }
 }

@@ -6,6 +6,7 @@ import javafx.scene.Node;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.mantle.icon.chooser.controller.IconCustomizationController;
+import io.opensphere.mantle.icon.chooser.model.IconManagerPrefs;
 import io.opensphere.mantle.icon.chooser.model.IconModel;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
@@ -45,9 +46,14 @@ public class IconDialogSupplier implements Supplier<Node>
         IconView iconView = new IconView(myPanelModel);
         myCustomizationController = new IconCustomizationController(myPanelModel, iconView);
 
-        if (myPanelModel.getIconRegistry().getManagerPrefs().getIconWidth() != 0)
+        IconManagerPrefs iconManagerPrefs = myPanelModel.getIconRegistry().getManagerPrefs();
+        if (iconManagerPrefs.getIconWidth() != 0)
         {
-            myPanelModel.tileWidthProperty().set(myPanelModel.getIconRegistry().getManagerPrefs().getIconWidth());
+            myPanelModel.tileWidthProperty().set(iconManagerPrefs.getIconWidth());
+        }
+        if (iconManagerPrefs.getLastSelectedIcon() != null)
+        {
+            myPanelModel.selectedRecordProperty().set(iconManagerPrefs.getLastSelectedIcon());
         }
 
         return iconView;
