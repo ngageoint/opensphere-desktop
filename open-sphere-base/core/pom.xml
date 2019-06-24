@@ -72,26 +72,26 @@
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-core</artifactId>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>org.openjfx</groupId>
-		    <artifactId>javafx-web</artifactId>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-web</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>org.openjfx</groupId>
-		    <artifactId>javafx-swing</artifactId>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-swing</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>org.openjfx</groupId>
-		    <artifactId>javafx-base</artifactId>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-base</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>org.openjfx</groupId>
-		    <artifactId>javafx-graphics</artifactId>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-graphics</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>org.openjfx</groupId>
-		    <artifactId>javafx-controls</artifactId>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-controls</artifactId>
 		</dependency>
 
 		<dependency>
@@ -301,12 +301,6 @@
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
-		</dependency>
-		<!-- Added by me -->
-		<dependency>
-			<groupId>com.squareup.okhttp3</groupId>
-			<artifactId>okhttp</artifactId>
-			<version>4.0.0-RC1</version>
 		</dependency>
 
 	</dependencies>
