@@ -754,8 +754,7 @@ public class FilterManagerStateController extends AbstractModuleStateController
         {
             for (DataTypeInfo dti : dgi.getMembers(false))
             {
-                if (dti.getTypeKey().startsWith(layerId)
-                        && (!dti.getTypeKey().startsWith("http") || dti.getTypeKey().endsWith(stateId)))
+                if (dti.getTypeKey().startsWith(layerId))
                 {
                     filterDti = dti;
                     break;
