@@ -1,6 +1,9 @@
 package io.opensphere.overlay;
 
 import java.awt.BorderLayout;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.InputEvent;
 import java.util.function.Supplier;
 
@@ -11,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
+import io.opensphere.core.Toolbox;
 import io.opensphere.core.UnitsRegistry;
 import io.opensphere.core.control.DiscreteEventAdapter;
 import io.opensphere.core.mgrs.MGRSConverter;
@@ -120,6 +124,60 @@ public class CursorPositionPopupManager
         }
     };
 
+    /** The key listener that displays a popup with the cursor position. */
+    private final DiscreteEventAdapter myAltListener = new DiscreteEventAdapter("Cursor Position", "Display Cursor Position",
+            "Show a popup with the current mouse cursor position")
+    {
+
+        @Override
+        public void eventOccurred(InputEvent event)
+        {
+            if (myLocation != null)
+            {
+                EventQueueUtilities.invokeLater(() ->
+                {
+                    DecimalDegrees latitudeDD = Angle.create(DecimalDegrees.class, myLocation.getLatD());
+                    DecimalDegrees longitudeDD = Angle.create(DecimalDegrees.class, myLocation.getLonD());
+
+                    DegDecimalMin latitudeDDM = Angle.create(DegDecimalMin.class, myLocation.getLatD());
+                    DegDecimalMin longitudeDDM = Angle.create(DegDecimalMin.class, myLocation.getLonD());
+
+                    DegreesMinutesSeconds latitudeDMS = Angle.create(DegreesMinutesSeconds.class, myLocation.getLatD());
+                    DegreesMinutesSeconds longitudeDMS = Angle.create(DegreesMinutesSeconds.class, myLocation.getLonD());
+
+                    StringBuilder builder = new StringBuilder("");
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    switch (myUnitsRegistry.getPreferredUnits(Angle.class).getSimpleName())
+                    {
+                        case "DegreesMinutesSeconds":
+                            builder.append(latitudeDMS.toShortLabelString(14, 6, 'N', 'S').trim()).append("\t");
+                            builder.append(longitudeDMS.toShortLabelString(14, 6, 'E', 'W').trim()).append("\n");
+                            clipboard.setContents(new StringSelection(builder.toString()), null);
+                            break;
+
+                        case "DegDecimalMin":
+                            builder.append(latitudeDDM.toShortLabelString(14, 6, 'N', 'S').trim()).append("\t");
+                            builder.append(longitudeDDM.toShortLabelString(14, 6, 'E', 'W').trim()).append("\n");
+                            clipboard.setContents(new StringSelection(builder.toString()), null);
+                            break;
+
+                        case "DecimalDegrees":
+                            builder.append(latitudeDD.toShortLabelString(14, 6, 'N', 'S').trim()).append("\t");
+                            builder.append(longitudeDD.toShortLabelString(14, 6, 'E', 'W').trim()).append("\n");
+                            clipboard.setContents(new StringSelection(builder.toString()), null);
+                            break;
+
+                        case "MGRS":
+                            builder.append(MGRS_CONVERTER.createString(new UTM(new GeographicPosition(myLocation))));
+                            clipboard.setContents(new StringSelection(builder.toString()), null);
+                            break;
+                    }
+
+                });
+            }
+        }
+    };
+
     /**
      * Constructor.
      *
@@ -155,4 +213,15 @@ public class CursorPositionPopupManager
         myLocation = location;
         myHasElevationProvider = hasElevationProvider;
     }
+
+    /**
+     * Gets the value of the {@link #myAltListener} field.
+     *
+     * @return the value stored in the {@link #myAltListener} field.
+     */
+    public DiscreteEventAdapter getAltListener()
+    {
+        return myAltListener;
+    }
+
 }

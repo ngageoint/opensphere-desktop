@@ -28,6 +28,7 @@ public final class AngleUnitsProvider extends AbstractUnitsProvider<Angle>
         units.add(DegreesMinutesSeconds.class);
         units.add(DegDecimalMin.class);
         units.add(DecimalDegrees.class);
+        units.add(MGRS.class);
         setPreferredUnits(units.get(0));
     }
 

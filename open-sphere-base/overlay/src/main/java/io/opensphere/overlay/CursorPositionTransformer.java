@@ -3,6 +3,7 @@ package io.opensphere.overlay;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -100,8 +101,12 @@ final class CursorPositionTransformer extends AbstractOverlayTransformer
 
         myCursorPositionPopupManager = new CursorPositionPopupManager(myToolbox.getUIRegistry().getMainFrameProvider(),
                 toolbox.getUnitsRegistry());
+
         toolbox.getControlRegistry().getControlContext(ControlRegistry.GLOBE_CONTROL_CONTEXT)
                 .addListener(myCursorPositionPopupManager.getListener(), new DefaultKeyPressedBinding(KeyEvent.VK_PERIOD));
+        
+        toolbox.getControlRegistry().getControlContext(ControlRegistry.GLOBE_CONTROL_CONTEXT)
+                .addListener(myCursorPositionPopupManager.getAltListener(), new DefaultKeyPressedBinding(KeyEvent.VK_SLASH));
 
         myToolbox.getUIRegistry().getToolbarComponentRegistry().registerToolbarComponent(ToolbarLocation.SOUTH, "CursorPosition",
                 myCursorPositionPanel, 10000, SeparatorLocation.NONE);
