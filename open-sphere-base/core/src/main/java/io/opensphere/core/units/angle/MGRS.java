@@ -2,7 +2,7 @@ package io.opensphere.core.units.angle;
 
 import io.opensphere.core.mgrs.MGRSConverter;
 
-public class MGRS extends Angle
+public class MGRS extends Coordinates
 
 {
 

@@ -10,7 +10,7 @@ import io.opensphere.core.util.lang.ImpossibleException;
 /**
  * A units provider for angle units.
  */
-public final class AngleUnitsProvider extends AbstractUnitsProvider<Angle>
+public final class AngleUnitsProvider extends AbstractUnitsProvider<Coordinates>
 {
     /**
      * Constructor. This initializes the units provider with the following
@@ -24,7 +24,7 @@ public final class AngleUnitsProvider extends AbstractUnitsProvider<Angle>
      */
     public AngleUnitsProvider()
     {
-        List<Class<? extends Angle>> units = getAvailableUnitsUnsync();
+        List<Class<? extends Coordinates>> units = getAvailableUnitsUnsync();
         units.add(DegreesMinutesSeconds.class);
         units.add(DegDecimalMin.class);
         units.add(DecimalDegrees.class);
@@ -33,59 +33,59 @@ public final class AngleUnitsProvider extends AbstractUnitsProvider<Angle>
     }
 
     @Override
-    public <T extends Angle> T convert(Class<T> desiredType, Angle source) throws InvalidUnitsException
+    public <T extends Coordinates> T convert(Class<T> desiredType, Coordinates source) throws InvalidUnitsException
     {
-        return Angle.create(desiredType, source);
+        return Coordinates.create(desiredType, source);
     }
 
     @Override
-    public <T extends Angle> T fromUnitsAndMagnitude(Class<T> type, Number magnitude) throws InvalidUnitsException
+    public <T extends Coordinates> T fromUnitsAndMagnitude(Class<T> type, Number magnitude) throws InvalidUnitsException
     {
-        return Angle.create(type, magnitude.doubleValue());
+        return Coordinates.create(type, magnitude.doubleValue());
     }
 
     @Override
-    public Class<? extends Angle> getDisplayClass(Angle value)
+    public Class<? extends Coordinates> getDisplayClass(Coordinates value)
     {
         return value.getClass();
     }
 
     @Override
-    public String getLongLabel(Class<? extends Angle> type, boolean plural) throws InvalidUnitsException
+    public String getLongLabel(Class<? extends Coordinates> type, boolean plural) throws InvalidUnitsException
     {
-        return Angle.getLongLabel(type);
+        return Coordinates.getLongLabel(type);
     }
 
     @Override
-    public String getSelectionLabel(Class<? extends Angle> type) throws InvalidUnitsException
+    public String getSelectionLabel(Class<? extends Coordinates> type) throws InvalidUnitsException
     {
-        return Angle.getSelectionLabel(type);
+        return Coordinates.getSelectionLabel(type);
     }
 
     @Override
-    public String getShortLabel(Class<? extends Angle> type, boolean plural) throws InvalidUnitsException
+    public String getShortLabel(Class<? extends Coordinates> type, boolean plural) throws InvalidUnitsException
     {
-        return Angle.getShortLabel(type);
+        return Coordinates.getShortLabel(type);
     }
 
     @Override
-    public Class<Angle> getSuperType()
+    public Class<Coordinates> getSuperType()
     {
-        return Angle.class;
+        return Coordinates.class;
     }
 
     @Override
-    public Class<? extends Angle> getUnitsWithLongLabel(String label)
+    public Class<? extends Coordinates> getUnitsWithLongLabel(String label)
     {
         Lock lock = getLock();
         lock.lock();
         try
         {
-            for (Class<? extends Angle> type : getAvailableUnitsUnsync())
+            for (Class<? extends Coordinates> type : getAvailableUnitsUnsync())
             {
                 try
                 {
-                    if (Angle.getLongLabel(type).equalsIgnoreCase(label) || Angle.getLongLabel(type).equalsIgnoreCase(label))
+                    if (Coordinates.getLongLabel(type).equalsIgnoreCase(label) || Coordinates.getLongLabel(type).equalsIgnoreCase(label))
                     {
                         return type;
                     }
@@ -104,7 +104,7 @@ public final class AngleUnitsProvider extends AbstractUnitsProvider<Angle>
     }
 
     @Override
-    public String toShortLabelString(Angle obj)
+    public String toShortLabelString(Coordinates obj)
     {
         return obj.toShortLabelString();
     }
@@ -112,12 +112,12 @@ public final class AngleUnitsProvider extends AbstractUnitsProvider<Angle>
     @Override
     protected Class<? extends Number> getValueType()
     {
-        return Angle.VALUE_TYPE;
+        return Coordinates.VALUE_TYPE;
     }
 
     @Override
-    protected void testUnits(Class<? extends Angle> type) throws InvalidUnitsException
+    protected void testUnits(Class<? extends Coordinates> type) throws InvalidUnitsException
     {
-        Angle.create(type, 0.);
+        Coordinates.create(type, 0.);
     }
 }

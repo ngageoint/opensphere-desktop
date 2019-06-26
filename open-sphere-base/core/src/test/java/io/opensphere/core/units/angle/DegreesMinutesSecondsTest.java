@@ -15,17 +15,17 @@ public class DegreesMinutesSecondsTest
     @Test
     public void testClone()
     {
-        Angle ang = new DegreesMinutesSeconds(34.54512);
+        Coordinates ang = new DegreesMinutesSeconds(34.54512);
         Assert.assertEquals(ang.getMagnitude(), ang.clone().getMagnitude(), 0.);
     }
 
     /**
-     * Test {@link Angle#compareTo(Angle)}.
+     * Test {@link Coordinates#compareTo(Coordinates)}.
      */
     @Test
     public void testCompareTo()
     {
-        Angle ang = new DegreesMinutesSeconds(34.54512);
+        Coordinates ang = new DegreesMinutesSeconds(34.54512);
         Assert.assertEquals(0, ang.compareTo(new DegreesMinutesSeconds(34.54512)));
         Assert.assertTrue(ang.compareTo(new DegreesMinutesSeconds(34.54513)) < 0);
         Assert.assertTrue(ang.compareTo(new DegreesMinutesSeconds(34.54511)) > 0);
@@ -46,7 +46,7 @@ public class DegreesMinutesSecondsTest
     @Test
     public void testHashCode()
     {
-        Angle ang = new DegreesMinutesSeconds(34.54512);
+        Coordinates ang = new DegreesMinutesSeconds(34.54512);
         Assert.assertEquals(ang.hashCode(), new DegreesMinutesSeconds(34.54512).hashCode());
         Assert.assertFalse(ang.hashCode() == new DegreesMinutesSeconds(34.545125).hashCode());
     }
@@ -57,14 +57,14 @@ public class DegreesMinutesSecondsTest
     @Test
     public void testLabels()
     {
-        Angle ang = new DegreesMinutesSeconds(34.54512);
+        Coordinates ang = new DegreesMinutesSeconds(34.54512);
         Assert.assertTrue(ang.getLongLabel().length() > 0);
         Assert.assertTrue(ang.getShortLabel().length() > 0);
         Assert.assertTrue(ang.toString().length() > 0);
     }
 
     /**
-     * Test {@link Angle#toShortLabelString()}.
+     * Test {@link Coordinates#toShortLabelString()}.
      */
     @Test
     public void testToShortLabelString()
@@ -98,7 +98,7 @@ public class DegreesMinutesSecondsTest
     }
 
     /**
-     * Test {@link Angle#toShortLabelString(char, char)}.
+     * Test {@link Coordinates#toShortLabelString(char, char)}.
      */
     @Test
     public void testToShortLabelStringCharChar()
@@ -132,7 +132,7 @@ public class DegreesMinutesSecondsTest
     }
 
     /**
-     * Test {@link Angle#toShortLabelString(int, int)}.
+     * Test {@link Coordinates#toShortLabelString(int, int)}.
      */
     @Test
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")

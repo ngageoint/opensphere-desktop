@@ -3,10 +3,10 @@ package io.opensphere.core.units.angle;
 /**
  * An angle represented as decimal degrees.
  */
-public final class DecimalDegrees extends Angle
+public final class DecimalDegrees extends Coordinates
 {
     /** Long label. */
-    public static final String DEGREES_LONG_LABEL = "decimal degrees";
+    public static final String DEGREES_LONG_LABEL = "Decimal Degrees";
 
     /** Short label. */
     public static final String DEGREES_SHORT_LABEL = "\u00B0";
@@ -19,7 +19,7 @@ public final class DecimalDegrees extends Angle
      *
      * @param ang The other angle.
      */
-    public DecimalDegrees(Angle ang)
+    public DecimalDegrees(Coordinates ang)
     {
         super(ang.getMagnitude());
     }

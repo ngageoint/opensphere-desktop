@@ -13,7 +13,7 @@ import io.opensphere.core.UnitsRegistry;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.units.UnitsProvider;
 import io.opensphere.core.units.UnitsProvider.UnitsChangeListener;
-import io.opensphere.core.units.angle.Angle;
+import io.opensphere.core.units.angle.Coordinates;
 import io.opensphere.core.units.length.Length;
 
 /** Panel that displays the cursor position. */
@@ -26,15 +26,15 @@ public class CursorPositionPanel extends JPanel
     private final JLabel myAltLabel = new JLabel();
 
     /** A listener for changes to the preferred angle units. */
-    private final transient UnitsChangeListener<Angle> myAngleUnitsChangeListener = new UnitsChangeListener<Angle>()
+    private final transient UnitsChangeListener<Coordinates> myAngleUnitsChangeListener = new UnitsChangeListener<Coordinates>()
     {
         @Override
-        public void availableUnitsChanged(Class<Angle> superType, Collection<Class<? extends Angle>> newTypes)
+        public void availableUnitsChanged(Class<Coordinates> superType, Collection<Class<? extends Coordinates>> newTypes)
         {
         }
 
         @Override
-        public void preferredUnitsChanged(Class<? extends Angle> type)
+        public void preferredUnitsChanged(Class<? extends Coordinates> type)
         {
             myPreferredAngleUnits = type;
         }
@@ -65,7 +65,7 @@ public class CursorPositionPanel extends JPanel
     private final JLabel myMGRSLabel = new JLabel();
 
     /** The currently preferred angle units. */
-    private volatile Class<? extends Angle> myPreferredAngleUnits;
+    private volatile Class<? extends Coordinates> myPreferredAngleUnits;
 
     /** The currently preferred length units. */
     private volatile Class<? extends Length> myPreferredLengthUnits;
@@ -83,7 +83,7 @@ public class CursorPositionPanel extends JPanel
         UnitsProvider<Length> lengthProvider = unitsRegistry.getUnitsProvider(Length.class);
         lengthProvider.addListener(myLengthUnitsChangeListener);
         myPreferredLengthUnits = lengthProvider.getPreferredUnits();
-        UnitsProvider<Angle> angleProvider = unitsRegistry.getUnitsProvider(Angle.class);
+        UnitsProvider<Coordinates> angleProvider = unitsRegistry.getUnitsProvider(Coordinates.class);
         angleProvider.addListener(myAngleUnitsChangeListener);
         myPreferredAngleUnits = angleProvider.getPreferredUnits();
 
@@ -179,8 +179,8 @@ public class CursorPositionPanel extends JPanel
         {
             if (myPreferredAngleUnits != null)
             {
-                Angle lat = Angle.create(myPreferredAngleUnits, latLonAlt.getLatD());
-                Angle lon = Angle.create(myPreferredAngleUnits, latLonAlt.getLonD());
+                Coordinates lat = Coordinates.create(myPreferredAngleUnits, latLonAlt.getLatD());
+                Coordinates lon = Coordinates.create(myPreferredAngleUnits, latLonAlt.getLonD());
 
                 myLatLabel.setText(lat.toShortLabelString(15, 6, 'N', 'S'));
                 myLonLabel.setText(lon.toShortLabelString(15, 6, 'E', 'W'));

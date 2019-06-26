@@ -11,7 +11,7 @@ import io.opensphere.core.util.lang.ExpectedCloneableException;
 /**
  * A formatting-aware representation of an angle.
  */
-public abstract class Angle implements Cloneable, Serializable, Comparable<Angle>, JAXBable<JAXBAngle>
+public abstract class Coordinates implements Cloneable, Serializable, Comparable<Coordinates>, JAXBable<JAXBAngle>
 {
     /** Serial version UID. */
     private static final long serialVersionUID = 1L;
@@ -34,13 +34,13 @@ public abstract class Angle implements Cloneable, Serializable, Comparable<Angle
      * @throws InvalidUnitsException If the type is invalid.
      */
     @SuppressWarnings("unchecked")
-    public static <T extends Angle> T create(Class<T> type, Angle from) throws InvalidUnitsException
+    public static <T extends Coordinates> T create(Class<T> type, Coordinates from) throws InvalidUnitsException
     {
         if (type.isInstance(from))
         {
             return (T)from;
         }
-        return UnitsUtilities.create(type, Angle.class, from);
+        return UnitsUtilities.create(type, Coordinates.class, from);
     }
 
     /**
@@ -52,7 +52,7 @@ public abstract class Angle implements Cloneable, Serializable, Comparable<Angle
      * @return The new angle object.
      * @throws InvalidUnitsException If the type is invalid.
      */
-    public static <T extends Angle> T create(Class<T> type, double magnitude) throws InvalidUnitsException
+    public static <T extends Coordinates> T create(Class<T> type, double magnitude) throws InvalidUnitsException
     {
         return UnitsUtilities.create(type, VALUE_TYPE, Double.valueOf(magnitude));
     }
@@ -65,7 +65,7 @@ public abstract class Angle implements Cloneable, Serializable, Comparable<Angle
      *         instantiated.
      * @throws InvalidUnitsException If the angle type is invalid.
      */
-    public static String getLongLabel(Class<? extends Angle> type) throws InvalidUnitsException
+    public static String getLongLabel(Class<? extends Coordinates> type) throws InvalidUnitsException
     {
         return create(type, 0.).getLongLabel();
     }
@@ -78,7 +78,7 @@ public abstract class Angle implements Cloneable, Serializable, Comparable<Angle
      * @return The label.
      * @throws InvalidUnitsException If the type is invalid.
      */
-    public static String getSelectionLabel(Class<? extends Angle> type) throws InvalidUnitsException
+    public static String getSelectionLabel(Class<? extends Coordinates> type) throws InvalidUnitsException
     {
         return create(type, 0.).getSelectionLabel();
     }
@@ -91,7 +91,7 @@ public abstract class Angle implements Cloneable, Serializable, Comparable<Angle
      *         instantiated.
      * @throws InvalidUnitsException If the angle type is invalid.
      */
-    public static String getShortLabel(Class<? extends Angle> type) throws InvalidUnitsException
+    public static String getShortLabel(Class<? extends Coordinates> type) throws InvalidUnitsException
     {
         return create(type, 0.).getShortLabel();
     }
@@ -101,17 +101,17 @@ public abstract class Angle implements Cloneable, Serializable, Comparable<Angle
      *
      * @param magnitude The magnitude of the angle in degrees.
      */
-    protected Angle(double magnitude)
+    protected Coordinates(double magnitude)
     {
         myMagnitude = magnitude % 360.;
     }
 
     @Override
-    public Angle clone()
+    public Coordinates clone()
     {
         try
         {
-            return (Angle)super.clone();
+            return (Coordinates)super.clone();
         }
         catch (CloneNotSupportedException e)
         {
@@ -120,7 +120,7 @@ public abstract class Angle implements Cloneable, Serializable, Comparable<Angle
     }
 
     @Override
-    public int compareTo(Angle o)
+    public int compareTo(Coordinates o)
     {
         double delta = getMagnitude() - o.getMagnitude();
         return delta < -MathUtil.DBL_EPSILON ? -1 : delta > MathUtil.DBL_EPSILON ? 1 : 0;
@@ -137,7 +137,7 @@ public abstract class Angle implements Cloneable, Serializable, Comparable<Angle
         {
             return false;
         }
-        Angle other = (Angle)obj;
+        Coordinates other = (Coordinates)obj;
         return Math.abs(getMagnitude() - other.getMagnitude()) <= MathUtil.DBL_EPSILON;
     }
 

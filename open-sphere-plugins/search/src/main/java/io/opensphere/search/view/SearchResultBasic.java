@@ -7,8 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.search.SearchResult;
-import io.opensphere.core.units.angle.Angle;
 import io.opensphere.core.units.angle.DecimalDegrees;
+import io.opensphere.core.units.angle.Coordinates;
 import io.opensphere.core.units.length.Length;
 import io.opensphere.core.units.length.Meters;
 import io.opensphere.core.util.Utilities;
@@ -197,8 +197,8 @@ public class SearchResultBasic extends GridPane implements Closeable
     private String toString(LatLonAlt location)
     {
         StringBuilder builder = new StringBuilder();
-        Angle lat = Angle.create(DecimalDegrees.class, location.getLatD());
-        Angle lon = Angle.create(DecimalDegrees.class, location.getLonD());
+        Coordinates lat = Coordinates.create(DecimalDegrees.class, location.getLatD());
+        Coordinates lon = Coordinates.create(DecimalDegrees.class, location.getLonD());
         Length alt = Length.create(Meters.class, location.getAltitude().getMagnitude());
         builder.append(lat.toShortLabelString(12, 6, 'N', 'S')).append(' ');
         builder.append(lon.toShortLabelString(12, 6, 'E', 'W'));
