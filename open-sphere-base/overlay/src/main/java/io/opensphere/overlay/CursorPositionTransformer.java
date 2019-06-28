@@ -102,6 +102,9 @@ final class CursorPositionTransformer extends AbstractOverlayTransformer
                 toolbox.getUnitsRegistry());
         toolbox.getControlRegistry().getControlContext(ControlRegistry.GLOBE_CONTROL_CONTEXT)
                 .addListener(myCursorPositionPopupManager.getListener(), new DefaultKeyPressedBinding(KeyEvent.VK_PERIOD));
+        
+        toolbox.getControlRegistry().getControlContext(ControlRegistry.GLOBE_CONTROL_CONTEXT)
+        .addListener(myCursorPositionPopupManager.getAltListener(), new DefaultKeyPressedBinding(KeyEvent.VK_CAPS_LOCK));
 
         myToolbox.getUIRegistry().getToolbarComponentRegistry().registerToolbarComponent(ToolbarLocation.SOUTH, "CursorPosition",
                 myCursorPositionPanel, 10000, SeparatorLocation.NONE);

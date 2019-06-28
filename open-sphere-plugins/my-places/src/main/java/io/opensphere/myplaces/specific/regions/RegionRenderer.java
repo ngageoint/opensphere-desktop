@@ -30,7 +30,7 @@ import io.opensphere.core.model.BoundingBoxes;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.Position;
-import io.opensphere.core.units.angle.Angle;
+import io.opensphere.core.units.angle.Coordinates;
 import io.opensphere.core.units.angle.DecimalDegrees;
 import io.opensphere.core.units.angle.DegreesMinutesSeconds;
 import io.opensphere.core.util.Utilities;
@@ -207,13 +207,13 @@ public class RegionRenderer extends DefaultTransformer implements Renderer
      * @param units The units to display.
      * @param text The output list of text.
      */
-    protected void addCoordinates(LatLonAlt southwest, LatLonAlt northeast, Class<? extends Angle> units,
+    protected void addCoordinates(LatLonAlt southwest, LatLonAlt northeast, Class<? extends Coordinates> units,
             List<? super String> text)
     {
-        text.add(StringUtilities.concat("SW: ", Angle.create(units, southwest.getLatD()).toShortLabelString('N', 'S'), " ",
-                Angle.create(units, southwest.getLonD()).toShortLabelString('E', 'W')));
-        text.add(StringUtilities.concat("NE: ", Angle.create(units, northeast.getLatD()).toShortLabelString('N', 'S'), " ",
-                Angle.create(units, northeast.getLonD()).toShortLabelString('E', 'W')));
+        text.add(StringUtilities.concat("SW: ", Coordinates.create(units, southwest.getLatD()).toShortLabelString('N', 'S'), " ",
+                Coordinates.create(units, southwest.getLonD()).toShortLabelString('E', 'W')));
+        text.add(StringUtilities.concat("NE: ", Coordinates.create(units, northeast.getLatD()).toShortLabelString('N', 'S'), " ",
+                Coordinates.create(units, northeast.getLonD()).toShortLabelString('E', 'W')));
     }
 
     /**

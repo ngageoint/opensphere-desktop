@@ -24,7 +24,7 @@ import io.opensphere.core.model.ScreenPosition;
 import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.units.UnitsProvider;
 import io.opensphere.core.units.UnitsProvider.UnitsChangeListener;
-import io.opensphere.core.units.angle.Angle;
+import io.opensphere.core.units.angle.Coordinates;
 import io.opensphere.core.units.angle.DecimalDegrees;
 import io.opensphere.core.units.length.Length;
 import io.opensphere.core.util.swing.EventQueueUtilities;
@@ -204,7 +204,7 @@ final class ViewerPositionTransformer extends AbstractOverlayTransformer
 
                 double pitch = Math.toDegrees(myToolbox.getMapManager().getStandardViewer().getPitch());
                 pitch = Math.round(pitch * precision) / precision;
-                Angle pitchAngle = Angle.create(DecimalDegrees.class, pitch);
+                Coordinates pitchAngle = Coordinates.create(DecimalDegrees.class, pitch);
                 final String pitchText = pitchAngle.toShortLabelString(10, 3);
 
                 Length elevation = Length.create(myPreferredLengthUnits,
@@ -213,7 +213,7 @@ final class ViewerPositionTransformer extends AbstractOverlayTransformer
 
                 double heading = Math.toDegrees(myToolbox.getMapManager().getStandardViewer().getHeading());
                 heading = Math.round(heading * precision) / precision;
-                Angle headingAngle = Angle.create(DecimalDegrees.class, heading);
+                Coordinates headingAngle = Coordinates.create(DecimalDegrees.class, heading);
                 final String headingText = headingAngle.toShortLabelString(9, 3);
 
                 EventQueueUtilities.invokeLater(new Runnable()

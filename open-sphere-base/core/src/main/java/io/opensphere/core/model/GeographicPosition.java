@@ -6,7 +6,7 @@ import java.util.List;
 import io.opensphere.core.math.Vector2d;
 import io.opensphere.core.math.Vector3d;
 import io.opensphere.core.model.Altitude.ReferenceLevel;
-import io.opensphere.core.units.angle.Angle;
+import io.opensphere.core.units.angle.Coordinates;
 import io.opensphere.core.units.angle.DecimalDegrees;
 import io.opensphere.core.units.length.Length;
 
@@ -265,13 +265,13 @@ public class GeographicPosition implements Position, Serializable
      * @param lengthUnits The length units.
      * @return The display string.
      */
-    public String toDisplayString(Class<? extends Angle> angleUnits, Class<? extends Length> lengthUnits)
+    public String toDisplayString(Class<? extends Coordinates> angleUnits, Class<? extends Length> lengthUnits)
     {
         StringBuilder sb = new StringBuilder();
         if (angleUnits != null)
         {
-            Angle lat = Angle.create(angleUnits, getLat());
-            Angle lon = Angle.create(angleUnits, getLon());
+            Coordinates lat = Coordinates.create(angleUnits, getLat());
+            Coordinates lon = Coordinates.create(angleUnits, getLon());
             sb.append(lat.toShortLabelString(15, 6, 'N', 'S')).append(' ').append(lon.toShortLabelString(15, 6, 'E', 'W'));
         }
         if (lengthUnits != null)

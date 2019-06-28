@@ -25,7 +25,7 @@ import io.opensphere.core.mgrs.UTM;
 import io.opensphere.core.model.Altitude.ReferenceLevel;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.Position;
-import io.opensphere.core.units.angle.Angle;
+import io.opensphere.core.units.angle.Coordinates;
 import io.opensphere.core.units.length.Length;
 import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.collections.New;
@@ -70,7 +70,7 @@ public class MapManagerMenuProvider
                 {
                     if (myUnitsRegistry != null)
                     {
-                        Class<? extends Angle> angleUnits = myUnitsRegistry.getPreferredUnits(Angle.class);
+                        Class<? extends Coordinates> angleUnits = myUnitsRegistry.getPreferredUnits(Coordinates.class);
                         String label = pos.toDisplayString(angleUnits, (Class<? extends Length>)null);
 
                         try
