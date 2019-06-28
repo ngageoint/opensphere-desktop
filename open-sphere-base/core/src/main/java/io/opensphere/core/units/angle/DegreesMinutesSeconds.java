@@ -186,7 +186,7 @@ public final class DegreesMinutesSeconds extends Coordinates
     }
 
     /**
-     * Construct this angle from another angle.
+     * Construct this Coordinate from another Coordinate.
      *
      * @param ang The other angle.
      */
@@ -198,7 +198,7 @@ public final class DegreesMinutesSeconds extends Coordinates
     /**
      * Constructor.
      *
-     * @param degrees The magnitude of the angle in degrees.
+     * @param degrees The magnitude of the Coordinate in degrees.
      */
     public DegreesMinutesSeconds(double degrees)
     {
@@ -248,7 +248,7 @@ public final class DegreesMinutesSeconds extends Coordinates
     }
 
     /**
-     * Get the integer degrees portion of the angle.
+     * Get the integer degrees portion of the Coordinate.
      *
      * @return The degrees.
      */
@@ -258,7 +258,7 @@ public final class DegreesMinutesSeconds extends Coordinates
     }
 
     /**
-     * Get the integer minutes portion of the angle.
+     * Get the integer minutes portion of the Coordinate.
      *
      * @return The minutes.
      */
@@ -269,7 +269,7 @@ public final class DegreesMinutesSeconds extends Coordinates
     }
 
     /**
-     * Get the seconds portion of the angle.
+     * Get the seconds portion of the Coordinate.
      *
      * @return The seconds.
      */
