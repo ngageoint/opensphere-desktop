@@ -58,7 +58,10 @@ public class CursorPositionPopupManager
      */
     boolean myHasElevationProvider;
 
-    /** The key listener that displays a popup with the cursor position. */
+    /**
+     * The key listener that displays a popup with the cursor position and
+     * copies all to clipboard.
+     */
     private final DiscreteEventAdapter myPopupListener = new DiscreteEventAdapter("Cursor Position", "Display Cursor Position",
             "Show a popup with the current mouse cursor position")
     {
@@ -118,6 +121,9 @@ public class CursorPositionPopupManager
                     dialog.setLocationRelativeTo(dialog.getParent());
                     dialog.pack();
                     dialog.setVisible(true);
+
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    clipboard.setContents(new StringSelection(builder.toString()), null);
                 });
             }
         }

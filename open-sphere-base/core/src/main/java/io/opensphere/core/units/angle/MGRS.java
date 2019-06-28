@@ -1,18 +1,13 @@
 package io.opensphere.core.units.angle;
 
-import io.opensphere.core.mgrs.MGRSConverter;
-
 public class MGRS extends Coordinates
 
 {
 
     /**
-     * 
+     * The serial ID.
      */
     private static final long serialVersionUID = 8396025878700604825L;
-
-    /** An MGRS converter. */
-    static final MGRSConverter MGRS_CONVERTER = new MGRSConverter();
 
     /**
      * Construct with a specified value in degrees.

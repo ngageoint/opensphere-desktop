@@ -27,10 +27,10 @@ public abstract class Coordinates implements Cloneable, Serializable, Comparable
      * the input angle is already in the requested units, it will be returned
      * as-is.
      *
-     * @param <T> The type of the angle object.
-     * @param type The type of the angle object.
-     * @param from The source angle object.
-     * @return The new angle object.
+     * @param <T> The type of the Coordinates object.
+     * @param type The type of the Coordinates object.
+     * @param from The source Coordinates object.
+     * @return The new Coordinates object.
      * @throws InvalidUnitsException If the type is invalid.
      */
     @SuppressWarnings("unchecked")
@@ -44,7 +44,7 @@ public abstract class Coordinates implements Cloneable, Serializable, Comparable
     }
 
     /**
-     * Create a new angle object.
+     * Create a new Coordinates object.
      *
      * @param <T> The type of the angle object.
      * @param type The type of the angle object.

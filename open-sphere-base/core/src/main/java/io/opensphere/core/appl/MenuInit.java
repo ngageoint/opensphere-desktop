@@ -367,21 +367,21 @@ public class MenuInit
         {
             toolbox.getMapManager().getStandardViewer().resetView();
             Quantify.collectMetric("mist3d.menu-bar.edit.units.reset-to-default");
-        },
-        KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK)));
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK)));
 
-        //        // Add toolbar item
-        //        final JCheckBoxMenuItem toolbarItem = new JCheckBoxMenuItem("Toolbar");
-        //        toolbarItem.setSelected(toolbox.getUIRegistry().getToolbarComponentRegistry().getToolbarManager().isVisible());
-        //        toolbarItem.addActionListener(new ActionListener()
-        //        {
-        //            @Override
-        //            public void actionPerformed(ActionEvent arg0)
-        //            {
-        //                toolbox.getUIRegistry().getToolbarComponentRegistry().getToolbarManager().setVisible(toolbarItem.isSelected());
-        //            }
-        //        });
-        //        viewMenu.add(toolbarItem);
+        // // Add toolbar item
+        // final JCheckBoxMenuItem toolbarItem = new
+        // JCheckBoxMenuItem("Toolbar");
+        // toolbarItem.setSelected(toolbox.getUIRegistry().getToolbarComponentRegistry().getToolbarManager().isVisible());
+        // toolbarItem.addActionListener(new ActionListener()
+        // {
+        // @Override
+        // public void actionPerformed(ActionEvent arg0)
+        // {
+        // toolbox.getUIRegistry().getToolbarComponentRegistry().getToolbarManager().setVisible(toolbarItem.isSelected());
+        // }
+        // });
+        // viewMenu.add(toolbarItem);
 
         // Add Projection
         mbr.getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.VIEW_MENU, MenuBarRegistry.PROJECTION_MENU);
@@ -455,8 +455,7 @@ public class MenuInit
         final JCheckBoxMenuItem terrainLock = new JCheckBoxMenuItem("Lock Terrain");
         terrainLock.addActionListener(e ->
         {
-            Quantify.collectEnableDisableMetric("mist3d.menu-bar.tools.lock-terrain",
-                    terrainLock.isSelected());
+            Quantify.collectEnableDisableMetric("mist3d.menu-bar.tools.lock-terrain", terrainLock.isSelected());
             AbstractProjection.setTerrainLocked(terrainLock.isSelected());
         });
         return terrainLock;

@@ -15,6 +15,7 @@ import javax.swing.JMenuItem;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.ControlRegistry;
 import io.opensphere.core.control.DefaultKeyPressedBinding;
+import io.opensphere.core.control.DefaultMouseBinding;
 import io.opensphere.core.control.ui.MenuBarRegistry;
 import io.opensphere.core.control.ui.ToolbarManager.SeparatorLocation;
 import io.opensphere.core.control.ui.ToolbarManager.ToolbarLocation;
@@ -104,10 +105,10 @@ final class CursorPositionTransformer extends AbstractOverlayTransformer
 
         toolbox.getControlRegistry().getControlContext(ControlRegistry.GLOBE_CONTROL_CONTEXT)
                 .addListener(myCursorPositionPopupManager.getListener(), new DefaultKeyPressedBinding(KeyEvent.VK_PERIOD));
-        
-        toolbox.getControlRegistry().getControlContext(ControlRegistry.GLOBE_CONTROL_CONTEXT)
-                .addListener(myCursorPositionPopupManager.getAltListener(), new DefaultKeyPressedBinding(KeyEvent.VK_SLASH));
 
+        toolbox.getControlRegistry().getControlContext(ControlRegistry.GLOBE_CONTROL_CONTEXT)
+                .addListener(myCursorPositionPopupManager.getAltListener(), new DefaultKeyPressedBinding(KeyEvent.VK_CAPS_LOCK));
+        
         myToolbox.getUIRegistry().getToolbarComponentRegistry().registerToolbarComponent(ToolbarLocation.SOUTH, "CursorPosition",
                 myCursorPositionPanel, 10000, SeparatorLocation.NONE);
 
