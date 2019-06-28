@@ -223,9 +223,9 @@ public class CursorPositionPopupManager
     }
 
     /**
-     * Gets the value of the {@link #myAltListener} field.
+     * Gets the alternatve more selective coordinate copy listener.
      *
-     * @return the value stored in the {@link #myAltListener} field.
+     * @return  the listener {@link #myAltListener}.
      */
     public DiscreteEventAdapter getAltListener()
     {
