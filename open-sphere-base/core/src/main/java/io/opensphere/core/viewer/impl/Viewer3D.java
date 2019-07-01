@@ -1188,7 +1188,8 @@ public class Viewer3D extends AbstractDynamicViewer
         }
 
         if (!myMapContext.getProjection().isOutsideModel(location.add(location.multiply(terrainTolerance)))
-                || Math.abs(location.getX()) > ourMaxOriginDistance || Math.abs(location.getY()) > ourMaxOriginDistance
+                || Math.abs(location.getX()) > ourMaxOriginDistance
+                || Math.abs(location.getY()) > ourMaxOriginDistance
                 || Math.abs(location.getZ()) > ourMaxOriginDistance)
         {
             return true;
