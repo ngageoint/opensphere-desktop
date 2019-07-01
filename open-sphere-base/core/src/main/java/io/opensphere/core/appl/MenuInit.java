@@ -21,10 +21,15 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.capture.CaptureMenuInit;
@@ -241,6 +246,7 @@ public class MenuInit
 
         // Add Units
         final JMenu unitsMenu = new JMenu("Units");
+
         for (UnitsProvider<?> unitsProvider : toolbox.getUnitsRegistry().getUnitsProviders())
         {
             JMenu subMenu = new JMenu(unitsProvider.getSuperType().getSimpleName());
@@ -252,6 +258,7 @@ public class MenuInit
             Quantify.collectMetric("mist3d.menu-bar.edit.units.reset-to-default");
             toolbox.getUnitsRegistry().resetAllPreferredUnits(e.getSource());
         }));
+
         editMenu.add(unitsMenu);
     }
 
@@ -402,7 +409,10 @@ public class MenuInit
             unitsItem.addActionListener(e ->
             {
                 Quantify.collectMetric("mist3d.menu-bar.edit.units.set-units-to-" + units.getSimpleName());
+                
+                unitsProvider.setPrevPreferredUnits(unitsProvider.getPreferredUnits());
                 unitsProvider.setPreferredUnits(units);
+                System.out.println("setPreferredUnits to:" + units.getSimpleName());
             });
             subMenu.add(unitsItem);
         }

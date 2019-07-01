@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.util.Collection;
 
 import javax.swing.JLabel;
@@ -31,12 +32,13 @@ public class CursorPositionPanel extends JPanel
         @Override
         public void availableUnitsChanged(Class<Coordinates> superType, Collection<Class<? extends Coordinates>> newTypes)
         {
+
         }
 
         @Override
         public void preferredUnitsChanged(Class<? extends Coordinates> type)
         {
-            myPreferredAngleUnits = type;
+            myPreferredCoordUnits = type;
         }
     };
 
@@ -65,7 +67,10 @@ public class CursorPositionPanel extends JPanel
     private final JLabel myMGRSLabel = new JLabel();
 
     /** The currently preferred angle units. */
-    private volatile Class<? extends Coordinates> myPreferredAngleUnits;
+    private volatile Class<? extends Coordinates> myPreferredCoordUnits;
+
+    /** The previously preferred angle units. */
+    private volatile Class<? extends Coordinates> myPrevPreferredCoordUnits;
 
     /** The currently preferred length units. */
     private volatile Class<? extends Length> myPreferredLengthUnits;
@@ -83,24 +88,31 @@ public class CursorPositionPanel extends JPanel
         UnitsProvider<Length> lengthProvider = unitsRegistry.getUnitsProvider(Length.class);
         lengthProvider.addListener(myLengthUnitsChangeListener);
         myPreferredLengthUnits = lengthProvider.getPreferredUnits();
-        UnitsProvider<Coordinates> angleProvider = unitsRegistry.getUnitsProvider(Coordinates.class);
-        angleProvider.addListener(myAngleUnitsChangeListener);
-        myPreferredAngleUnits = angleProvider.getPreferredUnits();
+
+        UnitsProvider<Coordinates> coordProvider = unitsRegistry.getUnitsProvider(Coordinates.class);
+        coordProvider.addListener(myAngleUnitsChangeListener);
+
+        myPreferredCoordUnits = coordProvider.getPreferredUnits();
+        myPrevPreferredCoordUnits = coordProvider.getPrevPreferredUnits();
 
         setName("ViewerPosition");
         setOpaque(false);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
+        gbc.insets = new Insets(0, 10, 0, 0);
         this.add(createPanel(125, myMGRSLabel), gbc);
 
         gbc.gridx = 1;
+        gbc.insets = new Insets(0, 10, 0, 0);
         this.add(createPanel(100, myLatLabel), gbc);
 
         gbc.gridx = 2;
+        gbc.insets = new Insets(0, 10, 0, 0);
         this.add(createPanel(100, myLonLabel), gbc);
 
         gbc.gridx = 3;
+        gbc.insets = new Insets(0, 10, 0, 0);
         this.add(createPanel(75, myAltLabel), gbc);
 
         this.setSize(400, 20);
@@ -177,13 +189,24 @@ public class CursorPositionPanel extends JPanel
         myMGRSLabel.setText(mgrsText);
         if (latLonAlt != null)
         {
-            if (myPreferredAngleUnits != null)
+            if (myPreferredCoordUnits.getSimpleName() != "MGRS")
             {
-                Coordinates lat = Coordinates.create(myPreferredAngleUnits, latLonAlt.getLatD());
-                Coordinates lon = Coordinates.create(myPreferredAngleUnits, latLonAlt.getLonD());
+                Coordinates lat = Coordinates.create(myPreferredCoordUnits, latLonAlt.getLatD());
+                Coordinates lon = Coordinates.create(myPreferredCoordUnits, latLonAlt.getLonD());
 
                 myLatLabel.setText(lat.toShortLabelString(15, 6, 'N', 'S'));
                 myLonLabel.setText(lon.toShortLabelString(15, 6, 'E', 'W'));
+            }
+
+            if (myPreferredCoordUnits.getSimpleName() == "MGRS")
+            {
+                System.out.println("it is in the equals");
+                Coordinates lat = Coordinates.create(myPrevPreferredCoordUnits, latLonAlt.getLatD());
+                Coordinates lon = Coordinates.create(myPrevPreferredCoordUnits, latLonAlt.getLonD());
+
+                myLatLabel.setText(lat.toShortLabelString(15, 6, 'N', 'S'));
+                myLonLabel.setText(lon.toShortLabelString(15, 6, 'E', 'W'));
+
             }
             if (hasElevationProvider)
             {
@@ -197,6 +220,7 @@ public class CursorPositionPanel extends JPanel
             {
                 myAltLabel.setText("");
             }
+
         }
     }
 

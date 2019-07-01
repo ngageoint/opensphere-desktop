@@ -169,6 +169,13 @@ public interface UnitsProvider<T>
      * @return The preferred units.
      */
     Class<? extends T> getPreferredUnits();
+    
+    /**
+     * Get the preferred units from this unit provider.
+     *
+     * @return The preferred units.
+     */
+    Class<? extends T> getPrevPreferredUnits();
 
     /**
      * Get a selection label for a type. This is a label that could be used to
@@ -286,5 +293,13 @@ public interface UnitsProvider<T>
          * @param type The new preferred unit type.
          */
         void preferredUnitsChanged(Class<? extends T> type);
+
     }
+    
+    /**
+     * Method called when the preferred units change in this unit provider.
+     *
+     * @param type The previous preferred unit type.
+     */
+    void setPrevPreferredUnits(Class<? extends T> units);
 }

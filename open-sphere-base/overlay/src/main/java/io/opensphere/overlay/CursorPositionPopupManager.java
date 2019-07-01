@@ -10,10 +10,12 @@ import java.util.function.Supplier;
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
+import io.opensphere.core.Notify;
 import io.opensphere.core.UnitsRegistry;
 import io.opensphere.core.control.DiscreteEventAdapter;
 import io.opensphere.core.mgrs.MGRSConverter;
@@ -119,8 +121,6 @@ public class CursorPositionPopupManager
                     dialog.pack();
                     dialog.setVisible(true);
 
-                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                    clipboard.setContents(new StringSelection(builder.toString()), null);
                 });
             }
         }
@@ -133,6 +133,8 @@ public class CursorPositionPopupManager
     private final DiscreteEventAdapter myAltListener = new DiscreteEventAdapter("Cursor Position", "Display Cursor Position",
             "Show a popup with the current mouse cursor position")
     {
+
+        private String myCoordLabel;
 
         @Override
         public void eventOccurred(InputEvent event)
@@ -152,33 +154,52 @@ public class CursorPositionPopupManager
 
                     StringBuilder builder = new StringBuilder("");
                     Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    System.out.println("current Preferred: " + myUnitsRegistry.getPreferredUnits(Coordinates.class));
+                    System.out.println("current previous Preferred: " + myUnitsRegistry.getPrevPreferredUnits(Coordinates.class));
+
                     switch (myUnitsRegistry.getPreferredUnits(Coordinates.class).getSimpleName())
                     {
                         case "DegreesMinutesSeconds":
                             builder.append(latitudeDMS.toShortLabelString(14, 6, 'N', 'S').trim()).append("\t");
                             builder.append(longitudeDMS.toShortLabelString(14, 6, 'E', 'W').trim()).append("\n");
-                            clipboard.setContents(new StringSelection(builder.toString()), null);
+                            myCoordLabel = builder.toString();
+                            clipboard.setContents(new StringSelection(myCoordLabel), null);
                             break;
 
                         case "DegDecimalMin":
                             builder.append(latitudeDDM.toShortLabelString(14, 6, 'N', 'S').trim()).append("\t");
                             builder.append(longitudeDDM.toShortLabelString(14, 6, 'E', 'W').trim()).append("\n");
-                            clipboard.setContents(new StringSelection(builder.toString()), null);
+                            myCoordLabel = builder.toString();
+                            clipboard.setContents(new StringSelection(myCoordLabel), null);
                             break;
 
                         case "DecimalDegrees":
                             builder.append(latitudeDD.toShortLabelString(14, 6, 'N', 'S').trim()).append("\t");
                             builder.append(longitudeDD.toShortLabelString(14, 6, 'E', 'W').trim()).append("\n");
-                            clipboard.setContents(new StringSelection(builder.toString()), null);
+                            myCoordLabel = builder.toString();
+                            clipboard.setContents(new StringSelection(myCoordLabel), null);
+
                             break;
 
                         case "MGRS":
                             builder.append(MGRS_CONVERTER.createString(new UTM(new GeographicPosition(myLocation))));
-                            clipboard.setContents(new StringSelection(builder.toString()), null);
+                            myCoordLabel = builder.toString();
+                            clipboard.setContents(new StringSelection(myCoordLabel), null);
                             break;
                     }
-
+                    if (myUnitsRegistry != null)
+                    {
+                        try
+                        {
+                            Notify.info("Copied " + myCoordLabel + " to clipboard");
+                        }
+                        catch (IllegalStateException ex)
+                        {
+                            JOptionPane.showMessageDialog(null, "Failed to copy to clipboard.");
+                        }
+                    }
                 });
+
             }
         }
     };

@@ -1,13 +1,19 @@
 package io.opensphere.core.map;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.util.Collection;
 import java.util.List;
 
+import javax.swing.BorderFactory;
+import javax.swing.JDialog;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.WindowConstants;
 
 import io.opensphere.core.MapManager;
 import io.opensphere.core.Notify;
@@ -24,8 +30,13 @@ import io.opensphere.core.mgrs.MGRSConverter;
 import io.opensphere.core.mgrs.UTM;
 import io.opensphere.core.model.Altitude.ReferenceLevel;
 import io.opensphere.core.model.GeographicPosition;
+import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.model.Position;
+import io.opensphere.core.units.UnitsProvider;
 import io.opensphere.core.units.angle.Coordinates;
+import io.opensphere.core.units.angle.DecimalDegrees;
+import io.opensphere.core.units.angle.DegDecimalMin;
+import io.opensphere.core.units.angle.DegreesMinutesSeconds;
 import io.opensphere.core.units.length.Length;
 import io.opensphere.core.util.AwesomeIconSolid;
 import io.opensphere.core.util.collections.New;
@@ -47,6 +58,18 @@ public class MapManagerMenuProvider
     private final boolean myShowToast = true;
 
     /**
+     * The location to be displayed by the popup manager. Package visibility to
+     * prevent synthetic accessors.
+     */
+    LatLonAlt myLocation;
+
+    /**
+     * A flag to inform the popup that an elevation provider is present. Package
+     * visibility to prevent synthetic accessors.
+     */
+    boolean myHasElevationProvider;
+
+    /**
      * The menu provider for events which occur with no associated geometries.
      */
     private final ContextMenuProvider<ScreenPositionContextKey> myDefaultContextMenuProvider = new ContextMenuProvider<>()
@@ -64,46 +87,14 @@ public class MapManagerMenuProvider
                 center.addActionListener(arg0 -> new ViewerAnimator(myMapManager.getStandardViewer(), pos).start());
                 menuItems.add(center);
 
-                JMenuItem copyToClipboard = new JMenuItem("Copy coordinates to clipboard",
-                        new GenericFontIcon(AwesomeIconSolid.COPY, Color.WHITE));
-                copyToClipboard.addActionListener(arg0 ->
-                {
-                    if (myUnitsRegistry != null)
-                    {
-                        Class<? extends Coordinates> angleUnits = myUnitsRegistry.getPreferredUnits(Coordinates.class);
-                        String label = pos.toDisplayString(angleUnits, (Class<? extends Length>)null);
+                JMenuItem copyToClipboard = new JMenuItem("Open Coordinate Viewer",
+                        new GenericFontIcon(AwesomeIconSolid.MAP_MARKER, Color.WHITE));
 
-                        try
-                        {
-                            Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(label), null);
-                            Notify.info("Copied " + label + " to clipboard");
-                        }
-                        catch (IllegalStateException ex)
-                        {
-                            JOptionPane.showMessageDialog(null, "Failed to copy to clipboard.");
-                        }
-                    }
-                });
+                JDialog theCordMenu = CordMenu(pos);
+                copyToClipboard.addActionListener(arg0 -> theCordMenu.setVisible(true));
                 menuItems.add(copyToClipboard);
 
-                JMenuItem copyMGRSToClipboard = new JMenuItem("Copy MGRS to clipboard",
-                        new GenericFontIcon(AwesomeIconSolid.COPY, Color.WHITE));
-                copyMGRSToClipboard.addActionListener(arg0 ->
-                {
-                    String label = new MGRSConverter().createString(new UTM(pos));
-
-                    try
-                    {
-                        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(label), null);
-                    }
-                    catch (IllegalStateException ex)
-                    {
-                        JOptionPane.showMessageDialog(null, "Failed to copy to clipboard.");
-                    }
-                });
-                menuItems.add(copyMGRSToClipboard);
             }
-
             return menuItems;
         }
 
@@ -113,6 +104,64 @@ public class MapManagerMenuProvider
             return 11500;
         }
     };
+
+    /**
+     * The popup menu for coordinate information.
+     * 
+     * @param pos the geographic position on the globe.
+     * @return dialog the popup window.
+     */
+    private final JDialog CordMenu(GeographicPosition pos)
+    {
+
+        JDialog dialog = new JDialog();
+        dialog.setTitle("Coordinate Menu");
+        JPanel detailsPanel = new JPanel(new BorderLayout());
+        detailsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        DecimalDegrees latitudeDD = Coordinates.create(DecimalDegrees.class, pos.getLat().getMagnitude());
+        DecimalDegrees longitudeDD = Coordinates.create(DecimalDegrees.class, pos.getLon().getMagnitude());
+
+        DegDecimalMin latitudeDDM = Coordinates.create(DegDecimalMin.class, pos.getLat().getMagnitude());
+        DegDecimalMin longitudeDDM = Coordinates.create(DegDecimalMin.class, pos.getLon().getMagnitude());
+
+        DegreesMinutesSeconds latitudeDMS = Coordinates.create(DegreesMinutesSeconds.class, pos.getLat().getMagnitude());
+        DegreesMinutesSeconds longitudeDMS = Coordinates.create(DegreesMinutesSeconds.class, pos.getLon().getMagnitude());
+
+        StringBuilder builder = new StringBuilder("DD:\t");
+        builder.append(latitudeDD.toShortLabelString(14, 6, 'N', 'S').trim()).append("\t");
+        builder.append(longitudeDD.toShortLabelString(14, 6, 'E', 'W').trim()).append("\n");
+
+        builder.append("DMS:\t");
+        builder.append(latitudeDMS.toShortLabelString(14, 6, 'N', 'S').trim()).append("\t");
+        builder.append(longitudeDMS.toShortLabelString(14, 6, 'E', 'W').trim()).append("\n");
+
+        builder.append("DDM:\t");
+        builder.append(latitudeDDM.toShortLabelString(14, 6, 'N', 'S').trim()).append("\t");
+        builder.append(longitudeDDM.toShortLabelString(14, 6, 'E', 'W').trim()).append("\n");
+
+        builder.append("MGRS:\t");
+        MGRSConverter test = new MGRSConverter();
+        builder.append(test.createString(new UTM(pos)));
+
+        if (myHasElevationProvider)
+        {
+            UnitsProvider<Length> lengthProvider = myUnitsRegistry.getUnitsProvider(Length.class);
+            Length alt = Length.create(lengthProvider.getPreferredUnits(), myLocation.getAltitude().getMagnitude());
+            builder.append("\nAlt:\t").append(alt.toShortLabelString(10, 0).trim());
+        }
+        JTextArea area = new JTextArea(builder.toString());
+        area.setEditable(false);
+        area.setBorder(BorderFactory.createEmptyBorder());
+        area.setBackground(detailsPanel.getBackground());
+        detailsPanel.add(area);
+
+        dialog.getContentPane().add(detailsPanel, BorderLayout.CENTER);
+        dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        dialog.setLocationRelativeTo(dialog.getParent());
+        dialog.pack();
+        return dialog;
+    }
 
     /** The map manager this menu provider serves. */
     private final MapManager myMapManager;

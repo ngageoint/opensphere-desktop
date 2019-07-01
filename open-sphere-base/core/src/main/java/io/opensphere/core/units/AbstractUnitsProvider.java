@@ -57,6 +57,10 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
     /** The key for the preferences. */
     private final String myPrefsKey = getClass().getSimpleName() + ".preferredUnits";
 
+    /** The previously preferred units. */
+    private final AtomicReference<Class<? extends T>> myPrevPreferredUnits = new AtomicReference<>();
+
+
     @Override
     public void addListener(UnitsChangeListener<T> listener)
     {
@@ -116,7 +120,7 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
 
     @Override
     public T fromMagnitudeAndSelectionLabel(Number magnitude, String selectionLabel)
-            throws InvalidUnitsException, UnitsParseException
+        throws InvalidUnitsException, UnitsParseException
     {
         Class<? extends T> type = getUnitsWithSelectionLabel(selectionLabel);
         if (type == null)
@@ -198,6 +202,12 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
     {
         return myPreferredUnits.get();
     }
+    
+    public Class<? extends T> getPrevPreferredUnits()
+    {
+        return myPrevPreferredUnits.get();
+    }
+    
 
     @Override
     public Class<? extends T> getUnitsWithLongLabel(String label)
@@ -333,7 +343,7 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
 
         @SuppressWarnings("rawtypes")
         AtomicReferenceFieldUpdater<AbstractUnitsProvider, Preferences> updater = AtomicReferenceFieldUpdater
-        .newUpdater(AbstractUnitsProvider.class, Preferences.class, "myPreferences");
+                .newUpdater(AbstractUnitsProvider.class, Preferences.class, "myPreferences");
         if (!updater.compareAndSet(this, null, preferences))
         {
             throw new IllegalStateException("Cannot set preferences more than once.");
@@ -431,4 +441,24 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
             setPreferredUnits(units);
         }
     }
+
+    /**
+     * Set the preferred units using the selection label.
+     *
+     * @param selectionLabel The long label.
+     */
+    public void setPrevPreferredUnits(Class<? extends T> units)
+    {
+        if (!Utilities.sameInstance(myPrevPreferredUnits.getAndSet(units), units))
+        {
+            if (myPreferences != null)
+            {
+                System.out.println("settings the old");
+                System.out.println(units.getSimpleName());
+                myPreferences.putString(myPrefsKey, getSelectionLabel(units), this);
+            }
+        }
+        notifyChanges(units);
+    }
+
 }

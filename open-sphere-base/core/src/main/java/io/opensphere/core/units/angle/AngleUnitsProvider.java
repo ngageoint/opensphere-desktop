@@ -30,6 +30,7 @@ public final class AngleUnitsProvider extends AbstractUnitsProvider<Coordinates>
         units.add(DecimalDegrees.class);
         units.add(MGRS.class);
         setPreferredUnits(units.get(0));
+        //setPrevPreferredUnits(units.get(0));
     }
 
     @Override
