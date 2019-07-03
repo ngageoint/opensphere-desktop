@@ -141,8 +141,8 @@ public class MapManagerMenuProvider
         builder.append(longitudeDDM.toShortLabelString(14, 6, 'E', 'W').trim()).append("\n");
 
         builder.append("MGRS:\t");
-        MGRSConverter test = new MGRSConverter();
-        builder.append(test.createString(new UTM(pos)));
+        MGRSConverter converter = new MGRSConverter();
+        builder.append(converter.createString(new UTM(pos)));
 
         if (myHasElevationProvider)
         {
