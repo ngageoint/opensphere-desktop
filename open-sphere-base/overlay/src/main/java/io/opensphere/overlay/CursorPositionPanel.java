@@ -30,12 +30,6 @@ public class CursorPositionPanel extends JPanel
     private final transient UnitsChangeListener<Coordinates> myAngleUnitsChangeListener = new UnitsChangeListener<Coordinates>()
     {
         @Override
-        public void availableUnitsChanged(Class<Coordinates> superType, Collection<Class<? extends Coordinates>> newTypes)
-        {
-
-        }
-
-        @Override
         public void preferredUnitsChanged(Class<? extends Coordinates> type)
         {
             myPreferredCoordUnits = type;
@@ -55,22 +49,10 @@ public class CursorPositionPanel extends JPanel
     private final transient UnitsChangeListener<Length> myLengthUnitsChangeListener = new UnitsChangeListener<Length>()
     {
         @Override
-        public void availableUnitsChanged(Class<Length> superType, Collection<Class<? extends Length>> newTypes)
-        {
-        }
-
-        @Override
         public void preferredUnitsChanged(Class<? extends Length> type)
         {
             myPreferredLengthUnits = type;
         }
-
-        @Override
-        public void prevpreferredUnitsChanged(Class<? extends Length> preferredType)
-        {
-            
-        }
-     
     };
 
     /** The Lon label. */
