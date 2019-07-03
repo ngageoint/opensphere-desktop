@@ -40,7 +40,7 @@ public class MGRS extends Coordinates
     @Override
     public String toShortLabelString(char pos, char neg)throws UnsupportedOperationException
     {
-        throw new UnsupportedOperationException("\"MGRS only has one format for display");
+        throw new UnsupportedOperationException("MGRS only has one format for display");
     }
 
     @Override
