@@ -140,8 +140,6 @@ public class CursorPositionPopupManager
         {
             if (myLocation != null)
             {
-                EventQueueUtilities.invokeLater(() ->
-                {
                     DecimalDegrees latitudeDD = Coordinates.create(DecimalDegrees.class, myLocation.getLatD());
                     DecimalDegrees longitudeDD = Coordinates.create(DecimalDegrees.class, myLocation.getLonD());
 
@@ -184,19 +182,7 @@ public class CursorPositionPopupManager
                             clipboard.setContents(new StringSelection(myCoordLabel), null);
                             break;
                     }
-                    if (myUnitsRegistry != null)
-                    {
-                        try
-                        {
                             Notify.info("Copied " + myCoordLabel + " to clipboard");
-                        }
-                        catch (IllegalStateException ex)
-                        {
-                            JOptionPane.showMessageDialog(null, "Failed to copy to clipboard.");
-                        }
-                    }
-                });
-
             }
         }
     };
