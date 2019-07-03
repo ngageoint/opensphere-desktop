@@ -120,7 +120,6 @@ public class CursorPositionPopupManager
                     dialog.setLocationRelativeTo(dialog.getParent());
                     dialog.pack();
                     dialog.setVisible(true);
-
                 });
             }
         }
