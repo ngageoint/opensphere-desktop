@@ -435,14 +435,6 @@ public class MenuInit
                     ((AbstractButton)component).setSelected(((AbstractButton)component).getText().equals(selectionLabel));
                 }
             }
-
-            @Override
-            public void prevpreferredUnitsChanged(Class<? extends T> preferredType)
-            {
-                
-            }
-
- 
         };
         listener.preferredUnitsChanged(unitsProvider.getPreferredUnits());
         listener.prevpreferredUnitsChanged(unitsProvider.getPrevPreferredUnits());
