@@ -45,7 +45,7 @@ class CursorPositionWindow extends InfoOverlayWindow
     public void addLabels()
     {
         TextLabel.Builder builder = new TextLabel.Builder();
-        builder.setText("hi");
+        builder.setText("");
         builder.setColor(Color.GREEN);
         builder.setFont(Font.SANS_SERIF + " PLAIN 12");
         GridLayoutConstraints constr = null;
