@@ -22,7 +22,7 @@ public class MGRS extends Coordinates
     @Override
     public String getLongLabel()
     {
-        return "MGRS";
+        return "Military Grid Reference System";
     }
 
     @Override
