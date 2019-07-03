@@ -214,7 +214,6 @@ public class CursorPositionPanel extends JPanel
             {
                 myAltLabel.setText("");
             }
-
         }
     }
 
