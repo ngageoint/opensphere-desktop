@@ -40,6 +40,12 @@ public class CursorPositionPanel extends JPanel
         {
             myPreferredCoordUnits = type;
         }
+        
+        @Override
+        public void prevpreferredUnitsChanged(Class<? extends Coordinates> preferredType)
+        {
+            myPrevPreferredCoordUnits = preferredType;
+        }
     };
 
     /** The Lat label. */
@@ -58,6 +64,13 @@ public class CursorPositionPanel extends JPanel
         {
             myPreferredLengthUnits = type;
         }
+
+        @Override
+        public void prevpreferredUnitsChanged(Class<? extends Length> preferredType)
+        {
+            
+        }
+     
     };
 
     /** The Lon label. */
@@ -75,6 +88,8 @@ public class CursorPositionPanel extends JPanel
     /** The currently preferred length units. */
     private volatile Class<? extends Length> myPreferredLengthUnits;
 
+    private UnitsRegistry myUnitsRegistry;
+
     /**
      * Constructor.
      *
@@ -84,7 +99,7 @@ public class CursorPositionPanel extends JPanel
     public CursorPositionPanel(Font font, UnitsRegistry unitsRegistry)
     {
         super(new GridBagLayout());
-
+        myUnitsRegistry = unitsRegistry;
         UnitsProvider<Length> lengthProvider = unitsRegistry.getUnitsProvider(Length.class);
         lengthProvider.addListener(myLengthUnitsChangeListener);
         myPreferredLengthUnits = lengthProvider.getPreferredUnits();
@@ -198,9 +213,8 @@ public class CursorPositionPanel extends JPanel
                 myLonLabel.setText(lon.toShortLabelString(15, 6, 'E', 'W'));
             }
 
-            if (myPreferredCoordUnits.getSimpleName() == "MGRS")
+            if (myPreferredCoordUnits.getSimpleName().equals("MGRS"))
             {
-                System.out.println("it is in the equals");
                 Coordinates lat = Coordinates.create(myPrevPreferredCoordUnits, latLonAlt.getLatD());
                 Coordinates lon = Coordinates.create(myPrevPreferredCoordUnits, latLonAlt.getLonD());
 

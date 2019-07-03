@@ -409,7 +409,17 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
     {
         myChangeSupport.notifyListeners(listener -> listener.preferredUnitsChanged(preferredType), null);
     }
-
+    
+    /**
+     * Notify listeners of changes.
+     *
+     * @param preferredType The new preferred units.
+     */
+    protected void notifyPrevChanges(final Class<? extends T> preferredType)
+    {
+        myChangeSupport.notifyListeners(listener -> listener.prevpreferredUnitsChanged(preferredType), null);
+    }
+    
     /**
      * Notify listeners of changes.
      *
@@ -453,12 +463,10 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
         {
             if (myPreferences != null)
             {
-                System.out.println("settings the old");
-                System.out.println(units.getSimpleName());
                 myPreferences.putString(myPrefsKey, getSelectionLabel(units), this);
             }
         }
-        notifyChanges(units);
+        notifyPrevChanges(units);
     }
 
 }

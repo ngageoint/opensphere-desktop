@@ -47,6 +47,8 @@ import io.opensphere.core.projection.AbstractProjection;
 import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.units.UnitsProvider;
 import io.opensphere.core.units.UnitsProvider.UnitsChangeListener;
+import io.opensphere.core.units.angle.Coordinates;
+import io.opensphere.core.units.length.Length;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.SwingUtilities;
 
@@ -412,7 +414,6 @@ public class MenuInit
                 
                 unitsProvider.setPrevPreferredUnits(unitsProvider.getPreferredUnits());
                 unitsProvider.setPreferredUnits(units);
-                System.out.println("setPreferredUnits to:" + units.getSimpleName());
             });
             subMenu.add(unitsItem);
         }
@@ -434,8 +435,18 @@ public class MenuInit
                     ((AbstractButton)component).setSelected(((AbstractButton)component).getText().equals(selectionLabel));
                 }
             }
+
+            @Override
+            public void prevpreferredUnitsChanged(Class<? extends T> preferredType)
+            {
+                
+            }
+
+ 
         };
         listener.preferredUnitsChanged(unitsProvider.getPreferredUnits());
+        listener.prevpreferredUnitsChanged(unitsProvider.getPrevPreferredUnits());
+        
         myUnitsChangeListeners.add(listener);
         unitsProvider.addListener(listener);
     }

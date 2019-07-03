@@ -62,6 +62,12 @@ final class ViewerPositionTransformer extends AbstractOverlayTransformer
             myPreferredLengthUnits = type;
             createViewPositionLabels();
         }
+
+        @Override
+        public void prevpreferredUnitsChanged(Class<? extends Length> preferredType)
+        {
+            
+        }
     };
 
     /** The Pitch label. */

@@ -3,12 +3,14 @@ package io.opensphere.core.units;
 import java.util.Collection;
 
 import io.opensphere.core.preferences.Preferences;
+import io.opensphere.core.units.angle.Coordinates;
+import io.opensphere.core.units.length.Length;
 
 /**
  * Interface for facilities that provide units.
  *
  * @param <T> The supertype of the unit types in this provider.
- */
+ */ 
 public interface UnitsProvider<T>
 {
     /**
@@ -285,7 +287,10 @@ public interface UnitsProvider<T>
          * @param superType The supertype of the unit types that changed.
          * @param newTypes The types after the change.
          */
-        void availableUnitsChanged(Class<T> superType, Collection<Class<? extends T>> newTypes);
+        default void availableUnitsChanged(Class<T> superType, Collection<Class<? extends T>> newTypes)
+        {
+            
+        };
 
         /**
          * Method called when the preferred units change in this unit provider.
@@ -293,6 +298,15 @@ public interface UnitsProvider<T>
          * @param type The new preferred unit type.
          */
         void preferredUnitsChanged(Class<? extends T> type);
+
+        /**
+         * Method called when the preferred units change in this unit provider.
+         *
+         * @param Coordinates The new preferred unit type.
+         */
+        default void prevpreferredUnitsChanged(Class<? extends T> preferredType) {
+            
+        };
 
     }
     

@@ -154,9 +154,7 @@ public class CursorPositionPopupManager
 
                     StringBuilder builder = new StringBuilder("");
                     Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                    System.out.println("current Preferred: " + myUnitsRegistry.getPreferredUnits(Coordinates.class));
-                    System.out.println("current previous Preferred: " + myUnitsRegistry.getPrevPreferredUnits(Coordinates.class));
-
+                    
                     switch (myUnitsRegistry.getPreferredUnits(Coordinates.class).getSimpleName())
                     {
                         case "DegreesMinutesSeconds":
