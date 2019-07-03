@@ -90,8 +90,8 @@ public class MapManagerMenuProvider
                 JMenuItem copyToClipboard = new JMenuItem("Open Coordinate Viewer",
                         new GenericFontIcon(AwesomeIconSolid.MAP_MARKER, Color.WHITE));
 
-                JDialog theCordMenu = CordMenu(pos);
-                copyToClipboard.addActionListener(arg0 -> theCordMenu.setVisible(true));
+                JDialog cordMenu = cordMenu(pos);
+                copyToClipboard.addActionListener(e -> cordMenu.setVisible(true));
                 menuItems.add(copyToClipboard);
 
             }
