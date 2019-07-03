@@ -70,8 +70,6 @@ public class CursorPositionPanel extends JPanel
     /** The currently preferred length units. */
     private volatile Class<? extends Length> myPreferredLengthUnits;
 
-    private UnitsRegistry myUnitsRegistry;
-
     /**
      * Constructor.
      *
