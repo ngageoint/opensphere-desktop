@@ -60,7 +60,6 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
     /** The previously preferred units. */
     private final AtomicReference<Class<? extends T>> myPrevPreferredUnits = new AtomicReference<>();
 
-
     @Override
     public void addListener(UnitsChangeListener<T> listener)
     {
