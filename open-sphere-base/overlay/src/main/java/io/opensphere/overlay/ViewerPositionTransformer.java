@@ -52,21 +52,10 @@ final class ViewerPositionTransformer extends AbstractOverlayTransformer
     private final UnitsChangeListener<Length> myLengthUnitsChangeListener = new UnitsChangeListener<Length>()
     {
         @Override
-        public void availableUnitsChanged(Class<Length> superType, Collection<Class<? extends Length>> newTypes)
-        {
-        }
-
-        @Override
         public void preferredUnitsChanged(Class<? extends Length> type)
         {
             myPreferredLengthUnits = type;
             createViewPositionLabels();
-        }
-
-        @Override
-        public void prevpreferredUnitsChanged(Class<? extends Length> preferredType)
-        {
-            
         }
     };
 
