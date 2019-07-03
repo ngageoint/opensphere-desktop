@@ -6,9 +6,11 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Supplier;
 
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -74,6 +76,8 @@ public class MapManagerMenuProvider
      */
     private final ContextMenuProvider<ScreenPositionContextKey> myDefaultContextMenuProvider = new ContextMenuProvider<>()
     {
+        private int counter;
+
         @Override
         public List<JMenuItem> getMenuItems(String contextId, ScreenPositionContextKey key)
         {
@@ -90,10 +94,12 @@ public class MapManagerMenuProvider
                 JMenuItem copyToClipboard = new JMenuItem("Open Coordinate Viewer",
                         new GenericFontIcon(AwesomeIconSolid.MAP_MARKER, Color.WHITE));
 
-                JDialog cordMenu = cordMenu(pos);
-                copyToClipboard.addActionListener(e -> cordMenu.setVisible(true));
+                copyToClipboard.addActionListener(e ->
+                {
+                    JDialog cordMenu = CordMenu(pos,++counter);
+                    cordMenu.setVisible(true);
+                });
                 menuItems.add(copyToClipboard);
-
             }
             return menuItems;
         }
@@ -109,13 +115,14 @@ public class MapManagerMenuProvider
      * The popup menu for coordinate information.
      * 
      * @param pos the geographic position on the globe.
+     * @param counter 
      * @return dialog the popup window.
      */
-    private final JDialog CordMenu(GeographicPosition pos)
+    private final JDialog CordMenu(GeographicPosition pos, int counter)
     {
 
         JDialog dialog = new JDialog();
-        dialog.setTitle("Coordinate Menu");
+        dialog.setTitle("Mouse Position " + counter);
         JPanel detailsPanel = new JPanel(new BorderLayout());
         detailsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -160,6 +167,7 @@ public class MapManagerMenuProvider
         dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         dialog.setLocationRelativeTo(dialog.getParent());
         dialog.pack();
+        dialog.setAlwaysOnTop(true);
         return dialog;
     }
 

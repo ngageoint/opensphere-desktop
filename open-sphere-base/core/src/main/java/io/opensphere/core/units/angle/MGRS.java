@@ -32,27 +32,27 @@ public class MGRS extends Coordinates
     }
 
     @Override
-    public String toShortLabelString()
+    public String toShortLabelString()throws UnsupportedOperationException
     {
-        return "";
+        throw new UnsupportedOperationException("MGRS only has one format for display");
     }
 
     @Override
-    public String toShortLabelString(char pos, char neg)
+    public String toShortLabelString(char pos, char neg)throws UnsupportedOperationException
     {
-        return "";
+        throw new UnsupportedOperationException("\"MGRS only has one format for display");
     }
 
     @Override
-    public String toShortLabelString(int width, int precision)
+    public String toShortLabelString(int width, int precision) throws UnsupportedOperationException
     {
-        return "";
+        throw new UnsupportedOperationException("MGRS only has one format for display");
     }
 
     @Override
-    public String toShortLabelString(int width, int precision, char positive, char negative)
+    public String toShortLabelString(int width, int precision, char positive, char negative)throws UnsupportedOperationException
     {
-        return "";
+        throw new UnsupportedOperationException("MGRS only has one format for display");
     }
 
 }
