@@ -10,7 +10,7 @@ import io.opensphere.core.units.length.Length;
  * Interface for facilities that provide units.
  *
  * @param <T> The supertype of the unit types in this provider.
- */ 
+ */
 public interface UnitsProvider<T>
 {
     /**
