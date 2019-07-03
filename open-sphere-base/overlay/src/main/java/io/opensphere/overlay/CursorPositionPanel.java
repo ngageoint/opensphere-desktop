@@ -34,7 +34,7 @@ public class CursorPositionPanel extends JPanel
         {
             myPreferredCoordUnits = type;
         }
-        
+
         @Override
         public void prevpreferredUnitsChanged(Class<? extends Coordinates> preferredType)
         {
