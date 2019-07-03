@@ -79,7 +79,7 @@ public class CursorPositionPanel extends JPanel
     public CursorPositionPanel(Font font, UnitsRegistry unitsRegistry)
     {
         super(new GridBagLayout());
-        myUnitsRegistry = unitsRegistry;
+        
         UnitsProvider<Length> lengthProvider = unitsRegistry.getUnitsProvider(Length.class);
         lengthProvider.addListener(myLengthUnitsChangeListener);
         myPreferredLengthUnits = lengthProvider.getPreferredUnits();
