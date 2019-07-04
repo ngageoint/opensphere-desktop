@@ -2,7 +2,6 @@ package io.opensphere.core.units.angle;
 
 /** A Coordinate represented in the military grid reference system. */
 public class MGRS extends Coordinates
-
 {
     /**
      * The serial ID.

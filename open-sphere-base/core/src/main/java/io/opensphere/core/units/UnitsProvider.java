@@ -171,9 +171,9 @@ public interface UnitsProvider<T>
      * @return The preferred units.
      */
     Class<? extends T> getPreferredUnits();
-    
+
     /**
-     * Get the preferred units from this unit provider.
+     * Get the previous preferred units from this unit provider.
      *
      * @return The preferred units.
      */
@@ -289,7 +289,7 @@ public interface UnitsProvider<T>
          */
         default void availableUnitsChanged(Class<T> superType, Collection<Class<? extends T>> newTypes)
         {
-            
+
         };
 
         /**
@@ -302,16 +302,17 @@ public interface UnitsProvider<T>
         /**
          * Method called when the preferred units change in this unit provider.
          *
-         * @param Coordinates The new preferred unit type.
+         * @param Coordinates The previous preferred unit type.
          */
-        default void prevpreferredUnitsChanged(Class<? extends T> preferredType) {
-            
+        default void prevpreferredUnitsChanged(Class<? extends T> preferredType)
+        {
+
         };
 
     }
-    
+
     /**
-     * Method called when the preferred units change in this unit provider.
+     * Set the previous preferred units for this unit provider.
      *
      * @param type The previous preferred unit type.
      */

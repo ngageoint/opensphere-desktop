@@ -172,7 +172,6 @@ public class CompletedArcManager
     /** The listener to system units changes. */
     private final UnitsChangeListener<Length> myUnitsChangeListener = new UnitsChangeListener<Length>()
     {
-
         @Override
         public void preferredUnitsChanged(final Class<? extends Length> units)
         {

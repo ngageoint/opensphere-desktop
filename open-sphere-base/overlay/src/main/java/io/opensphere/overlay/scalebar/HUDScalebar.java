@@ -65,7 +65,6 @@ public class HUDScalebar extends AbstractOverlayWindow
     /** Listener for units changes. */
     private final UnitsChangeListener<Length> myUnitsChangeListener = new UnitsChangeListener<Length>()
     {
-      
         @Override
         public void preferredUnitsChanged(Class<? extends Length> type)
         {

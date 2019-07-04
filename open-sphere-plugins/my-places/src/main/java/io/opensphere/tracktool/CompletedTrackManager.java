@@ -170,7 +170,6 @@ public class CompletedTrackManager
     /** The listener to system distance unit changes. */
     private final UnitsChangeListener<Length> myDistanceUnitChangeListener = new UnitsChangeListener<Length>()
     {
-
         @Override
         public void preferredUnitsChanged(final Class<? extends Length> distanceUnits)
         {

@@ -37,7 +37,6 @@ public class AnnotationsHelper
     /** A listener for changes to the preferred units. */
     private final UnitsChangeListener<Length> myUnitsChangeListener = new UnitsChangeListener<Length>()
     {
-
         @Override
         public void preferredUnitsChanged(Class<? extends Length> type)
         {

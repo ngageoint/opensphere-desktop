@@ -467,5 +467,4 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
         }
         notifyPrevChanges(units);
     }
-
 }
