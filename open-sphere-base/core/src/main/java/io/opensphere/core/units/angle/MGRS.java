@@ -1,9 +1,9 @@
 package io.opensphere.core.units.angle;
 
+/** A Coordinate represented in the military grid reference system. */
 public class MGRS extends Coordinates
 
 {
-
     /**
      * The serial ID.
      */
@@ -32,13 +32,13 @@ public class MGRS extends Coordinates
     }
 
     @Override
-    public String toShortLabelString()throws UnsupportedOperationException
+    public String toShortLabelString() throws UnsupportedOperationException
     {
         throw new UnsupportedOperationException("MGRS only has one format for display");
     }
 
     @Override
-    public String toShortLabelString(char pos, char neg)throws UnsupportedOperationException
+    public String toShortLabelString(char pos, char neg) throws UnsupportedOperationException
     {
         throw new UnsupportedOperationException("MGRS only has one format for display");
     }
@@ -50,9 +50,8 @@ public class MGRS extends Coordinates
     }
 
     @Override
-    public String toShortLabelString(int width, int precision, char positive, char negative)throws UnsupportedOperationException
+    public String toShortLabelString(int width, int precision, char positive, char negative) throws UnsupportedOperationException
     {
         throw new UnsupportedOperationException("MGRS only has one format for display");
     }
-
 }

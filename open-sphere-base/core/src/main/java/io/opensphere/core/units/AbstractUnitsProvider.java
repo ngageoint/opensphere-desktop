@@ -452,7 +452,7 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
     }
 
     /**
-     * Set the preferred units using the selection label.
+     * Set the previous preferred units using the selection label.
      *
      * @param selectionLabel The long label.
      */
