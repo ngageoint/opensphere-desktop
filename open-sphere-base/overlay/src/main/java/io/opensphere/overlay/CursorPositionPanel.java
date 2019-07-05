@@ -184,7 +184,7 @@ public class CursorPositionPanel extends JPanel
         myMGRSLabel.setText(mgrsText);
         if (latLonAlt != null)
         {
-            if (myPreferredCoordUnits.getSimpleName() != "MGRS")
+            if (!myPreferredCoordUnits.getSimpleName().equals("MGRS"))
             {
                 Coordinates lat = Coordinates.create(myPreferredCoordUnits, latLonAlt.getLatD());
                 Coordinates lon = Coordinates.create(myPreferredCoordUnits, latLonAlt.getLonD());
@@ -192,8 +192,7 @@ public class CursorPositionPanel extends JPanel
                 myLatLabel.setText(lat.toShortLabelString(15, 6, 'N', 'S'));
                 myLonLabel.setText(lon.toShortLabelString(15, 6, 'E', 'W'));
             }
-
-            if (myPreferredCoordUnits.getSimpleName().equals("MGRS"))
+            else 
             {
                 Coordinates lat = Coordinates.create(myPrevPreferredCoordUnits, latLonAlt.getLatD());
                 Coordinates lon = Coordinates.create(myPrevPreferredCoordUnits, latLonAlt.getLonD());

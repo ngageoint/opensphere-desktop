@@ -464,7 +464,7 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
             {
                 myPreferences.putString(myPrefsKey, getSelectionLabel(units), this);
             }
+            notifyPrevChanges(units);
         }
-        notifyPrevChanges(units);
     }
 }
