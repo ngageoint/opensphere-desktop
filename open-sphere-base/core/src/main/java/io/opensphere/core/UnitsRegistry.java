@@ -241,6 +241,17 @@ public interface UnitsRegistry
     <T> Class<? extends T> getPreferredUnits(Class<T> unitsSupertype) throws UnitsProviderNotFoundException;
 
     /**
+     * Get the preferred units from this unit provider.
+     *
+     * @param <T> The type of units.
+     * @param unitsSupertype The type of units.
+     * @return The preferred units.
+     * @throws UnitsProviderNotFoundException If the units provider has not been
+     *             installed.
+     */
+    <T> Class<? extends T> getPrevPreferredUnits(Class<T> unitsSupertype) throws UnitsProviderNotFoundException;
+
+    /**
      * Get the units provider for a category of units.
      *
      * @param <T> The type of units.

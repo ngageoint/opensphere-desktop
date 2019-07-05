@@ -15,7 +15,7 @@ import io.opensphere.core.util.XMLUtilities;
 public class JAXBAngleTest
 {
     /**
-     * Test marshalling and unmarshalling a {@link Angle} using
+     * Test marshalling and unmarshalling a {@link Coordinates} using
      * {@link JAXBAngle}.
      *
      * @throws JAXBException If there is a JAXB error.
@@ -24,10 +24,10 @@ public class JAXBAngleTest
     @Test
     public void test() throws JAXBException, ClassNotFoundException
     {
-        Angle result;
+        Coordinates result;
         Element el;
 
-        Angle testDD = new DecimalDegrees(24.352);
+        Coordinates testDD = new DecimalDegrees(24.352);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         XMLUtilities.writeXMLObject(new JAXBAngle(testDD), baos);
 
@@ -36,10 +36,10 @@ public class JAXBAngleTest
 
         baos.reset();
         el = XMLUtilities.marshalJAXBableToElement(testDD);
-        result = XMLUtilities.readJAXBableObject(el, Angle.class);
+        result = XMLUtilities.readJAXBableObject(el, Coordinates.class);
         Assert.assertEquals(result, testDD);
 
-        Angle testDMS = new DegreesMinutesSeconds(24.352);
+        Coordinates testDMS = new DegreesMinutesSeconds(24.352);
         baos.reset();
         XMLUtilities.writeXMLObject(new JAXBAngle(testDMS), baos);
 
@@ -48,7 +48,7 @@ public class JAXBAngleTest
 
         baos.reset();
         el = XMLUtilities.marshalJAXBableToElement(testDMS);
-        result = XMLUtilities.readJAXBableObject(el, Angle.class);
+        result = XMLUtilities.readJAXBableObject(el, Coordinates.class);
         Assert.assertEquals(result, testDMS);
     }
 }

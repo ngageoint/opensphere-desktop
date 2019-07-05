@@ -1,16 +1,21 @@
 package io.opensphere.overlay;
 
 import java.awt.BorderLayout;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.InputEvent;
 import java.util.function.Supplier;
 
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
+import io.opensphere.core.Notify;
 import io.opensphere.core.UnitsRegistry;
 import io.opensphere.core.control.DiscreteEventAdapter;
 import io.opensphere.core.mgrs.MGRSConverter;
@@ -18,7 +23,7 @@ import io.opensphere.core.mgrs.UTM;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
 import io.opensphere.core.units.UnitsProvider;
-import io.opensphere.core.units.angle.Angle;
+import io.opensphere.core.units.angle.Coordinates;
 import io.opensphere.core.units.angle.DecimalDegrees;
 import io.opensphere.core.units.angle.DegDecimalMin;
 import io.opensphere.core.units.angle.DegreesMinutesSeconds;
@@ -74,14 +79,14 @@ public class CursorPositionPopupManager
                     JPanel detailsPanel = new JPanel(new BorderLayout());
                     detailsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-                    DecimalDegrees latitudeDD = Angle.create(DecimalDegrees.class, myLocation.getLatD());
-                    DecimalDegrees longitudeDD = Angle.create(DecimalDegrees.class, myLocation.getLonD());
+                    DecimalDegrees latitudeDD = Coordinates.create(DecimalDegrees.class, myLocation.getLatD());
+                    DecimalDegrees longitudeDD = Coordinates.create(DecimalDegrees.class, myLocation.getLonD());
 
-                    DegDecimalMin latitudeDDM = Angle.create(DegDecimalMin.class, myLocation.getLatD());
-                    DegDecimalMin longitudeDDM = Angle.create(DegDecimalMin.class, myLocation.getLonD());
+                    DegDecimalMin latitudeDDM = Coordinates.create(DegDecimalMin.class, myLocation.getLatD());
+                    DegDecimalMin longitudeDDM = Coordinates.create(DegDecimalMin.class, myLocation.getLonD());
 
-                    DegreesMinutesSeconds latitudeDMS = Angle.create(DegreesMinutesSeconds.class, myLocation.getLatD());
-                    DegreesMinutesSeconds longitudeDMS = Angle.create(DegreesMinutesSeconds.class, myLocation.getLonD());
+                    DegreesMinutesSeconds latitudeDMS = Coordinates.create(DegreesMinutesSeconds.class, myLocation.getLatD());
+                    DegreesMinutesSeconds longitudeDMS = Coordinates.create(DegreesMinutesSeconds.class, myLocation.getLonD());
 
                     StringBuilder builder = new StringBuilder("DD:\t");
                     builder.append(latitudeDD.toShortLabelString(14, 6, 'N', 'S').trim()).append("\t");
@@ -121,6 +126,68 @@ public class CursorPositionPopupManager
     };
 
     /**
+     * The key listener that will copy the coordinates to the clipboard in
+     * preferred format.
+     */
+    private final DiscreteEventAdapter myAltListener = new DiscreteEventAdapter("Cursor Position", "Display Cursor Position",
+            "Show a popup with the current mouse cursor position")
+    {
+
+        private String myCoordLabel;
+
+        @Override
+        public void eventOccurred(InputEvent event)
+        {
+            if (myLocation != null)
+            {
+                    DecimalDegrees latitudeDD = Coordinates.create(DecimalDegrees.class, myLocation.getLatD());
+                    DecimalDegrees longitudeDD = Coordinates.create(DecimalDegrees.class, myLocation.getLonD());
+
+                    DegDecimalMin latitudeDDM = Coordinates.create(DegDecimalMin.class, myLocation.getLatD());
+                    DegDecimalMin longitudeDDM = Coordinates.create(DegDecimalMin.class, myLocation.getLonD());
+
+                    DegreesMinutesSeconds latitudeDMS = Coordinates.create(DegreesMinutesSeconds.class, myLocation.getLatD());
+                    DegreesMinutesSeconds longitudeDMS = Coordinates.create(DegreesMinutesSeconds.class, myLocation.getLonD());
+
+                    StringBuilder builder = new StringBuilder("");
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    
+                    switch (myUnitsRegistry.getPreferredUnits(Coordinates.class).getSimpleName())
+                    {
+                        case "DegreesMinutesSeconds":
+                            builder.append(latitudeDMS.toShortLabelString(14, 6, 'N', 'S').trim()).append("\t");
+                            builder.append(longitudeDMS.toShortLabelString(14, 6, 'E', 'W').trim()).append("\n");
+                            myCoordLabel = builder.toString();
+                            clipboard.setContents(new StringSelection(myCoordLabel), null);
+                            break;
+
+                        case "DegDecimalMin":
+                            builder.append(latitudeDDM.toShortLabelString(14, 6, 'N', 'S').trim()).append("\t");
+                            builder.append(longitudeDDM.toShortLabelString(14, 6, 'E', 'W').trim()).append("\n");
+                            myCoordLabel = builder.toString();
+                            clipboard.setContents(new StringSelection(myCoordLabel), null);
+                            break;
+
+                        case "DecimalDegrees":
+                            builder.append(latitudeDD.toShortLabelString(14, 6, 'N', 'S').trim()).append("\t");
+                            builder.append(longitudeDD.toShortLabelString(14, 6, 'E', 'W').trim()).append("\n");
+                            myCoordLabel = builder.toString();
+                            clipboard.setContents(new StringSelection(myCoordLabel), null);
+
+                            break;
+
+                        case "MGRS":
+                            builder.append(MGRS_CONVERTER.createString(new UTM(new GeographicPosition(myLocation))));
+                            myCoordLabel = builder.toString();
+                            clipboard.setContents(new StringSelection(myCoordLabel), null);
+                            break;
+                    }
+                            Notify.info("Copied " + myCoordLabel + " to clipboard");
+            }
+        }
+    };
+
+    /**
      * Constructor.
      *
      * @param dialogParentSupplier The dialog parent provider.
@@ -141,6 +208,16 @@ public class CursorPositionPopupManager
     public DiscreteEventAdapter getListener()
     {
         return myPopupListener;
+    }
+
+    /**
+     * Gets the alternate more selective coordinate copy listener.
+     *
+     * @return the listener {@link #myAltListener}.
+     */
+    public DiscreteEventAdapter getAltListener()
+    {
+        return myAltListener;
     }
 
     /**
