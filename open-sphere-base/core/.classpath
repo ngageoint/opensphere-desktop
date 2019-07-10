@@ -44,5 +44,14 @@
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/home/crombiek/.m2/repository/org/apache/httpcomponents/httpcore/4.4.9/httpcore-4.4.9.jar" sourcepath="/home/crombiek/.m2/repository/org/apache/httpcomponents/httpcore/4.4.9/httpcore-4.4.9-sources.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="org.apache.httpcomponents"/>
+			<attribute name="maven.artifactId" value="httpcore"/>
+			<attribute name="maven.version" value="4.4.9"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
