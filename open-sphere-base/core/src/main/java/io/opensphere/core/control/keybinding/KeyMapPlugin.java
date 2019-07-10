@@ -17,9 +17,9 @@ public class KeyMapPlugin extends AbstractHUDFrameMenuItemPlugin
     }
 
     @Override
-    protected KeyMapFrame createInternalFrame(Toolbox toolbox)
+    protected NewKeyMapFrame createInternalFrame(Toolbox toolbox)
     {
-        KeyMapFrame keyMapOptions = new KeyMapFrame(toolbox);
+        NewKeyMapFrame keyMapOptions = new NewKeyMapFrame(toolbox);
         keyMapOptions.setVisible(false);
         keyMapOptions.setLocation(200, 100);
         return keyMapOptions;
