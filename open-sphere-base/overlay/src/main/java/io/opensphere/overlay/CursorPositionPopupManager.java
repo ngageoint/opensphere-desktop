@@ -129,8 +129,8 @@ public class CursorPositionPopupManager
      * The key listener that will copy the coordinates to the clipboard in
      * preferred format.
      */
-    private final DiscreteEventAdapter myAltListener = new DiscreteEventAdapter("Cursor Position", "Display Cursor Position",
-            "Show a popup with the current mouse cursor position")
+    private final DiscreteEventAdapter myAltListener = new DiscreteEventAdapter("Cursor Position", "Copy Current Coordinates",
+            "Copies the current coordinates using the preference set in the settings -> coordinates menu.")
     {
 
         private String myCoordLabel;
