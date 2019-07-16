@@ -8,6 +8,7 @@ import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.GridBagPanel;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,6 +16,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 
 /**
  * The Class KeyMapFrame. This class will show the control and shortcut keys.
@@ -63,7 +65,7 @@ public class NewKeyMapFrame extends AbstractInternalFrame
         myButtonBindings = New.map();
         final JFXPanel fxPanel = new JFXPanel();
 
-        setSize(600, 410);
+        setSize(800, 600);
         setPreferredSize(getSize());
         setMinimumSize(getSize());
         setTitle(TITLE);
@@ -106,32 +108,10 @@ public class NewKeyMapFrame extends AbstractInternalFrame
         Map.setContent(new ControlUI(fxPanel.getWidth(), fxPanel.getHeight()));
         Tab Menu = new Tab("Menu Shortcuts");
         Menu.setContent(new MenuShortCutsUI(fxPanel.getWidth(), fxPanel.getHeight()));
-
+        
         theTaps.getTabs().addAll(Map, Menu);
         root.getChildren().addAll(theTaps);
         return (scene);
     }
 
-    private static GridPane createMap()
-    {
-
-        GridPane gridPane = new GridPane();
-        Button b1 = new Button("1");
-        b1.setGraphic(new ImageView("images/airplane.png"));
-
-        b1.setPrefSize(100, 100);
-        Button b2 = new Button("2");
-        Button b3 = new Button("3");
-        Button b4 = new Button("4");
-        gridPane.add(b1, 0, 0);
-
-        gridPane.add(b3, 1, 1);
-        gridPane.add(b4, 2, 0);
-        // gridPane.add(b5, 1, 1);
-
-        gridPane.setStyle("-fx-background-color: transparent");
-        // Set rowIndex and colIndex with add method.
-
-        return gridPane;
-    }
 }
