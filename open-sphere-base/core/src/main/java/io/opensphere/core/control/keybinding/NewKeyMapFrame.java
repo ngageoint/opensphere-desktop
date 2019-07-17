@@ -1,7 +1,13 @@
 package io.opensphere.core.control.keybinding;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import io.opensphere.core.Toolbox;
+import io.opensphere.core.control.BindingsToListener;
+import io.opensphere.core.control.BoundEventListener;
+import io.opensphere.core.control.ControlContext;
 import io.opensphere.core.control.ControlRegistry;
 import io.opensphere.core.hud.awt.AbstractInternalFrame;
 import io.opensphere.core.util.collections.New;
@@ -71,6 +77,7 @@ public class NewKeyMapFrame extends AbstractInternalFrame
         setTitle(TITLE);
         setOpaque(false);
 
+        
         setIconifiable(false);
         setClosable(true);
         setResizable(false);
@@ -79,6 +86,50 @@ public class NewKeyMapFrame extends AbstractInternalFrame
         initAndShowGUI(fxPanel);
     }
 
+    public void crap() {
+        
+    	int rowCounter = 0;
+        String previousCategory = "";
+        
+    	
+        ControlContext controlContext = myControlRegistry.getControlContext(ControlRegistry.GLOBE_CONTROL_CONTEXT);
+        Map<String, List<BindingsToListener>> eventListeners = controlContext.getEventListenersByCategory();
+        List<String> bindingKeys = New.list(eventListeners.keySet());
+        Collections.sort(bindingKeys);
+        
+    	 for (String category : bindingKeys)
+         {
+             for (BindingsToListener btl : eventListeners.get(category))
+             {
+                 BoundEventListener listener = btl.getListener();
+                 // Don't list things that can't be reassigned. This should be
+                 // limited to such things as
+                 // overlay readouts that are triggered by Mouse Moved events,
+                 // and other similarly "not specifically user invoked"
+                 // controls.
+                 if (listener.isReassignable())
+                 {
+                     if (category.equals(previousCategory))
+                     {
+                     	System.out.println("The listener is: " + listener);
+                       //  addListenerTitle(listener, rowCounter);
+                       //  addBindingButton(btl, rowCounter);
+                     }
+                     else
+                     {
+                      //   addCategoryLabel(category, rowCounter);
+                         rowCounter++;
+                         System.out.println("Thie category is: ");
+                       //  addListenerTitle(listener, rowCounter);
+                      //   addBindingButton(btl, rowCounter);
+                         previousCategory = category;
+                     }
+                     rowCounter++;
+                 }
+             }
+         }
+    }
+    
     private static void initAndShowGUI(JFXPanel fxPanel)
     {
         Platform.runLater(new Runnable()
@@ -87,6 +138,7 @@ public class NewKeyMapFrame extends AbstractInternalFrame
             public void run()
             {
                 initFX(fxPanel);
+                
             }
         });
     }
@@ -103,6 +155,7 @@ public class NewKeyMapFrame extends AbstractInternalFrame
         Scene scene = new Scene(root);
         scene.getStylesheets().add("styles/opensphere.css");
         TabPane theTaps = new TabPane();
+        theTaps.setOnContextMenuRequested(e->crap());
 
         Tab Map = new Tab("Map Controls");
         Map.setContent(new ControlUI(fxPanel.getWidth(), fxPanel.getHeight()));
