@@ -1,7 +1,5 @@
 package io.opensphere.core.control.keybinding;
 
-import io.opensphere.core.Toolbox;
-import io.opensphere.core.control.ControlRegistry;
 import io.opensphere.core.hud.awt.AbstractInternalFrame;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -27,32 +25,16 @@ public class NewKeyMapFrame extends AbstractInternalFrame
     /**
      * 
      * The Container panel. Since this JInternalFrame can be 'torn off' and uses
-     * the JInternalFrame's content pane, set the content pane to a JPanel
-     * created in this class.
-     * 
+     * the JInternalFrame's content pane, set the content pane to a JavaFX Panel
+     * through a JFX Dialog.
      */
 
-    /** A reference to the control registry. */
-    private final ControlRegistry myControlRegistry;
-
-    /** The Toolbox. */
-    private final Toolbox myToolbox;
-
-    /**
-     * 
-     * Instantiates a new key map frame.
-     * 
-     * @param toolbox the toolbox
-     */
-
-    public NewKeyMapFrame(Toolbox toolbox)
+    public NewKeyMapFrame()
     {
         super();
-        myToolbox = toolbox;
-        myControlRegistry = toolbox.getControlRegistry();
         final JFXPanel fxPanel = new JFXPanel();
 
-        setSize(800, 600);
+        setSize(748, 610);
         setPreferredSize(getSize());
         setMinimumSize(getSize());
         setTitle(TITLE);
@@ -68,7 +50,8 @@ public class NewKeyMapFrame extends AbstractInternalFrame
 
     /**
      * Takes the JAVA FX panel and puts it onto an FX thread for display.
-     * @param fxPanel
+     * 
+     * @param fxPanel the panel to initialize.
      */
     private static void initAndShowGUI(JFXPanel fxPanel)
     {
@@ -83,7 +66,8 @@ public class NewKeyMapFrame extends AbstractInternalFrame
     }
 
     /**
-     * Sets the content to the scene. 
+     * Sets the content to the scene.
+     * 
      * @param fxPanel the panel needing to be set.
      */
     private static void initFX(JFXPanel fxPanel)
@@ -105,7 +89,7 @@ public class NewKeyMapFrame extends AbstractInternalFrame
         theTaps.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
         theTaps.setStyle("-fx-focus-color: #0066cc");
 
-        Tab Map = new Tab("Map Controls");
+        Tab Map = new Tab("Globe Shortcuts");
         Map.setContent(new ControlUI(fxPanel.getWidth(), fxPanel.getHeight()));
         Tab Menu = new Tab("Menu Shortcuts");
         Menu.setContent(new MenuShortCutsUI(fxPanel.getWidth(), fxPanel.getHeight()));
@@ -114,5 +98,4 @@ public class NewKeyMapFrame extends AbstractInternalFrame
         root.getChildren().addAll(theTaps);
         return scene;
     }
-
 }

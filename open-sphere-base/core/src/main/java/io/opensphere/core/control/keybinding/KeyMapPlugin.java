@@ -13,13 +13,13 @@ public class KeyMapPlugin extends AbstractHUDFrameMenuItemPlugin
      */
     public KeyMapPlugin()
     {
-        super(KeyMapFrame.TITLE, false, false);
+        super(NewKeyMapFrame.TITLE, false, false);
     }
 
     @Override
     protected NewKeyMapFrame createInternalFrame(Toolbox toolbox)
     {
-        NewKeyMapFrame keyMapOptions = new NewKeyMapFrame(toolbox);
+        NewKeyMapFrame keyMapOptions = new NewKeyMapFrame();
         keyMapOptions.setVisible(false);
         keyMapOptions.setLocation(200, 100);
         return keyMapOptions;
