@@ -9,6 +9,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TabPane.TabClosingPolicy;
 
 /**
  * The Class KeyMapFrame. This class will show the control and shortcut keys.
@@ -65,6 +66,10 @@ public class NewKeyMapFrame extends AbstractInternalFrame
         initAndShowGUI(fxPanel);
     }
 
+    /**
+     * Takes the JAVA FX panel and puts it onto an FX thread for display.
+     * @param fxPanel
+     */
     private static void initAndShowGUI(JFXPanel fxPanel)
     {
         Platform.runLater(new Runnable()
@@ -77,18 +82,27 @@ public class NewKeyMapFrame extends AbstractInternalFrame
         });
     }
 
+    /**
+     * Sets the content to the scene. 
+     * @param fxPanel the panel needing to be set.
+     */
     private static void initFX(JFXPanel fxPanel)
     {
         Scene scene = createMainWindow(fxPanel);
         fxPanel.setScene(scene);
     }
 
+    /**
+     * @param fxPanel the panel to add onto.
+     * @return scene the JavaFX Scene to be displayed.
+     */
     private static Scene createMainWindow(JFXPanel fxPanel)
     {
         Group root = new Group();
         Scene scene = new Scene(root);
         scene.getStylesheets().add("styles/opensphere.css");
         TabPane theTaps = new TabPane();
+        theTaps.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
         theTaps.setStyle("-fx-focus-color: #0066cc");
 
         Tab Map = new Tab("Map Controls");
@@ -98,7 +112,7 @@ public class NewKeyMapFrame extends AbstractInternalFrame
 
         theTaps.getTabs().addAll(Map, Menu);
         root.getChildren().addAll(theTaps);
-        return (scene);
+        return scene;
     }
 
 }

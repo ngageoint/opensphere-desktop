@@ -9,12 +9,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 /**
- * Contains all the methods used for generating the panels and custom objects within the "Key Map" sub tab named "Controls"
+ * Contains all the methods used for generating the panels and custom objects
+ * within the "Key Map" sub tab named "Controls"
  *
  */
 public class ControlTab
@@ -76,6 +78,30 @@ public class ControlTab
 
     }
 
+    public GridPane createBlankPane(String header)
+    {
+        GridPane thePane = new GridPane();
+        thePane.setStyle(
+                "-fx-background-color : #363636;-fx-border-color: #004080;-fx-border-width: 4;-fx-background-radius: 8 8 8 8;"
+                        + "    -fx-border-radius: 8 8 8 8;");
+
+        myDisplayArea = new GridPane();
+        ColumnConstraints col1Constraints = new ColumnConstraints();
+        col1Constraints.setPercentWidth(47);
+        ColumnConstraints col2Constraints = new ColumnConstraints();
+        col2Constraints.setPercentWidth(6);
+        ColumnConstraints col3Constraints = new ColumnConstraints();
+        col3Constraints.setPercentWidth(47);
+        myDisplayArea.getColumnConstraints().addAll(col1Constraints, col2Constraints, col3Constraints);
+        myDisplayArea.setVgap(5);
+        myDisplayArea.setPadding(new Insets(0, 10, 10, 10));
+        thePane.add(createHeader(header), 0, 0);
+        thePane.add(myDisplayArea, 0, 1);
+
+        return thePane;
+
+    }
+
     public GridPane getDisplayArea()
     {
         return myDisplayArea;
@@ -86,15 +112,16 @@ public class ControlTab
         this.myDisplayArea = myDisplayArea;
     }
 
-    public VBox createHeader(String theLabel)
+    public HBox createHeader(String theLabel)
     {
-        VBox mainHeader = new VBox();
+        HBox mainHeader = new HBox();
         mainHeader.setStyle("-fx-background-color : #181a1c");
         Label header = new Label(theLabel);
         header.setFont(Font.font(16));
-        // header.setFont(new Font("Arial Black", 16));
+      //  header.setStyle("-fx-font-weight: bold;");
         mainHeader.getChildren().add(header);
         mainHeader.setAlignment(Pos.CENTER_LEFT);
+        HBox.setHgrow(header, Priority.ALWAYS);
         return mainHeader;
     }
 
