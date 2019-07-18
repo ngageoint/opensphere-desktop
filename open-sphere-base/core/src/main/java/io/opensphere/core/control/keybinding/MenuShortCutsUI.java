@@ -14,6 +14,7 @@ import javafx.scene.layout.HBox;
 public class MenuShortCutsUI extends HBox
 {
     /**
+     * Creates the region containing the UI. 
      * @param width the horizontal size desired.
      * @param height the vertical size desired.
      */
@@ -25,6 +26,7 @@ public class MenuShortCutsUI extends HBox
     }
 
     /**
+     * Creates a JavaFX TableView for the "Menu ShortCuts" tab.
      * @param width the int to specify the total table width.
      * @param height the int to specify the total table height.
      * @return theTable a JavaFX TableView containing the Menu Shortcuts.
@@ -49,6 +51,9 @@ public class MenuShortCutsUI extends HBox
     }
 
     /**
+     * creates a column with custom width, styling, and ability to handle
+     * MenuShortCut items as elements.
+     * 
      * @param name the text to be placed inside the column.
      * @param propname the text to reference this element by.
      * @param width the integer to specicy the width of each column.
@@ -66,6 +71,8 @@ public class MenuShortCutsUI extends HBox
     }
 
     /**
+     * Fills in the table with all the remaining shortcuts.
+     * 
      * @param data the existing observable list to append to.
      * @return final_data the finalized list.
      */
