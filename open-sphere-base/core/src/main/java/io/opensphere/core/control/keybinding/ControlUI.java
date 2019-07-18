@@ -1,241 +1,236 @@
 package io.opensphere.core.control.keybinding;
 
 import io.opensphere.core.util.AwesomeIconSolid;
-import io.opensphere.core.util.FontIconEnum;
-import io.opensphere.core.util.fx.FxIcons;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 /**
- * @author crombiek Creates a table/legend of the current Opensphere shortcut
- *         keys which pertain to General and Map controls.
+ * Creates a table/legend of the current Opensphere shortcut keys which pertain
+ * to General and Map controls.
  */
-public class ControlUI extends HBox {
+public class ControlUI extends FlowPane
+{
 
-	private String myPlusDir = "images/plus.png";
+    /**
+     * The directory of the "plus" icon.
+     */
+    private String myPlusDir = "images/keys/plus.png";
 
-	/**
-	 * @param width  the horizontal size desired.
-	 * @param height the vertical size desired.
-	 */
-	public ControlUI(int width, int height) {
-		setMinSize(width, height);
-		setStyle("-fx-background-color : derive(-fx-base, 18%)");
-		getChildren().add(createGeneral(width / 3, height / 3));
-		getChildren().add(createGeneralMap(width / 3, height / 3));
-	}
+    /**
+     * The directory of the "mouse left button clicked" icon.
+     */
+    private String mouseLeft = "images/keys/MouseLeft.png";
 
-	/**
-	 * @param width  the desired horizontal size for the sub window.
-	 * @param height the desired vertical size for the sub window.
-	 * @return theHbox an HBox containing controls.
-	 */
-	private GridPane createGeneral(int width, int height) {
-		GridPane theHbox = createBlankPane(width, height);
+    /**
+     * The directory of the "mouse middle button clicked" icon.
+     */
+    private String mouseMiddle = "images/keys/MouseMiddle.png";
 
-		VBox mainHeader = createHeader(" General Controls");
-		VBox l1 = leftLabel("Save State");
-		HBox r1 = customText("Ctrl");
-		r1.getChildren().addAll(new ImageView(myPlusDir), customText("S"));
+    /**
+     * The directory of the "mouse right button clicked" icon.
+     */
+    private String mouseRight = "images/keys/MouseRight.png";
 
-		VBox l2 = leftLabel("Undo");
-		HBox r2 = customText("Ctrl");
-		r2.getChildren().addAll(new ImageView(myPlusDir), customText("Z"));
+    /**
+     * @param width the horizontal size desired.
+     * @param height the vertical size desired.
+     */
+    public ControlUI(int width, int height)
+    {
+        setMinSize(width, height);
+        setStyle("-fx-background-color : derive(-fx-base, 18%)");
+        setHgap(10);
+        setVgap(10);
+        getChildren().add(createGeneral(width / 3, height / 3));
+        getChildren().add(createGeneralMap(width / 3, height / 3));
+        getChildren().add(createMapZoom(width / 3, height / 3));
+        getChildren().add(createMapTools(width / 3, height / 3));
+    }
 
-		VBox l3 = leftLabel("Redo");
-		HBox r3 = customText("Ctrl");
-		r3.getChildren().addAll(new ImageView(myPlusDir), customText("Y"));
+    /**
+     * @param width the desired horizontal size for the sub window.
+     * @param height the desired vertical size for the sub window.
+     * @return theHbox an HBox containing controls.
+     */
+    private GridPane createMapTools(int width, int height)
+    {
+        ControlTab thecontrols = new ControlTab();
+        GridPane mainBox = thecontrols.createBlankPane(width - 20, height, " Map Tools");
+        GridPane dispArea = thecontrols.getDisplayArea();
 
-		theHbox.add(mainHeader, 0, 0, 3, 1);
-		theHbox.add(l1, 0, 1);
-		theHbox.add(r1, 2, 1);
-		theHbox.add(l2, 0, 2);
-		theHbox.add(r2, 2, 2);
-		theHbox.add(l3, 0, 3);
-		theHbox.add(r3, 2, 3);
+        VBox l1 = thecontrols.createLeftLabel("Bullseye Vector");
+        HBox r1 = thecontrols.createCustomText(",");
 
-		return theHbox;
-	}
-	
-	private GridPane createMapZoom(int width, int height) {
-		GridPane theHbox = createBlankPane(width, height);
-		VBox mainHeader = createHeader(" Map Zoom Controls");
+        VBox l2 = thecontrols.createLeftLabel("Arc Length");
+        HBox r2 = thecontrols.createCustomText("m");
 
-		VBox l1 = leftLabel("Zoom to Box");
-		HBox r1 = customText("Shift");
-		r1.getChildren().addAll(new ImageView(myPlusDir), customImageView("images/keys/MouseLeft.png"),
-				new ImageView(myPlusDir), customIco(AwesomeIconSolid.ARROW_UP));
-		
-		VBox l2 = leftLabel("Smooth Zoom");
-		HBox r2 = new HBox();
-		r2.getChildren().add(new ImageView("images/keys/MouseRight.png"));
+        VBox l3 = thecontrols.createLeftLabel("Cancel Query");
+        HBox r3 = thecontrols.createCustomText("Esc");
 
-//		VBox l3 = leftLabel("Zoom In/Out");
-//		HBox r3 = customText("Mouse Wheel");
+        VBox l4 = thecontrols.createLeftLabel("Collect Garbage ");
+        HBox r4 = thecontrols.createCustomText("g");
 
-		VBox l4 = leftLabel("Zoom In");
-		HBox r4 = customText("R");
+        dispArea.add(l1, 0, 1);
+        dispArea.add(r1, 2, 1);
+        dispArea.add(l2, 0, 2);
+        dispArea.add(r2, 2, 2);
+        dispArea.add(l3, 0, 3);
+        dispArea.add(r3, 2, 3);
+        dispArea.add(l4, 0, 4);
+        dispArea.add(r4, 2, 4);
+//        dispArea.add(l5, 0, 5);
+//        dispArea.add(r5, 2, 5);
+//        dispArea.add(l6, 0, 6);
+//        dispArea.add(r6, 2, 6);
 
-		VBox l5 = leftLabel("Zoom Out");
-		HBox r5 = customText("C");
-		
-		VBox l6 = leftLabel("Zoom Way In/Out");
-		HBox r6 = customText("C");
-		
-		VBox l7 = leftLabel("Zoom In/Out");
-		HBox r7 = customText("C");
+        return mainBox;
+    }
 
-		theHbox.add(mainHeader, 0, 0, 3, 1);
-		theHbox.add(l1, 0, 1);
-		theHbox.add(r1, 2, 1);
-		theHbox.add(l2, 0, 2);
-		theHbox.add(r2, 2, 2);
-//		theHbox.add(l3, 0, 3);
-//		theHbox.add(r3, 2, 3);
-		theHbox.add(l4, 0, 4);
-		theHbox.add(r4, 2, 4);
-		theHbox.add(l5, 0, 5);
-		theHbox.add(r5, 2, 5);
-		theHbox.add(l6, 0, 6);
-		theHbox.add(r6, 2, 6);
-		theHbox.add(l7, 0, 7);
-		theHbox.add(r7, 2, 7);
-		return theHbox;
-	}
+    /**
+     * @param width the desired horizontal size for the sub window.
+     * @param height the desired vertical size for the sub window.
+     * @return theHbox an HBox containing controls.
+     */
+    private GridPane createGeneral(int width, int height)
+    {
+        ControlTab thecontrols = new ControlTab();
+        GridPane mainBox = thecontrols.createBlankPane(width, height, " General Controls");
+        GridPane dispArea = thecontrols.getDisplayArea();
 
-	private GridPane createGeneralMap(int width, int height) {
-		GridPane theHbox = createBlankPane(width, height);
-		VBox mainHeader = createHeader(" General Map Controls");
+        VBox l1 = thecontrols.createLeftLabel("Save State");
+        HBox r1 = thecontrols.createCustomText("Ctrl");
+        r1.getChildren().addAll(new ImageView(myPlusDir), thecontrols.createCustomText("S"));
 
-		VBox l1 = leftLabel("Draw Geometry");
-		HBox r1 = customText("Shift");
-		r1.getChildren().addAll(new ImageView(myPlusDir), customImageView("images/keys/MouseLeft.png"),
-				new ImageView(myPlusDir), customIco(AwesomeIconSolid.ARROW_UP));
-		VBox l2 = leftLabel("Context Menu");
-		HBox r2 = new HBox();
-		r2.getChildren().add(new ImageView("images/keys/MouseRight.png"));
+        VBox l2 = thecontrols.createLeftLabel("Undo");
+        HBox r2 = thecontrols.createCustomText("Ctrl");
+        r2.getChildren().addAll(new ImageView(myPlusDir), thecontrols.createCustomText("Z"));
 
-		VBox l3 = leftLabel("Reset View");
-		HBox r3 = customText("V");
+        VBox l3 = thecontrols.createLeftLabel("Redo");
+        HBox r3 = thecontrols.createCustomText("Ctrl");
+        r3.getChildren().addAll(new ImageView(myPlusDir), thecontrols.createCustomText("Y"));
 
-		VBox l4 = leftLabel("Reset Coordinates");
-		HBox r4 = customText("R");
+        VBox l4 = thecontrols.createLeftLabel("Pan View");
+        HBox r4 = thecontrols.createCustomText("");
+        r4.getChildren().addAll(thecontrols.customImageView(mouseLeft), new ImageView(myPlusDir),
+                thecontrols.customIco(AwesomeIconSolid.ARROWS_ALT));
 
-		VBox l5 = leftLabel("Copy Coordinates");
-		HBox r5 = customText("C");
+        VBox l5 = thecontrols.createLeftLabel("");
+        HBox r5 = thecontrols.createCustomText("");
+        r5.getChildren().addAll(thecontrols.customIco(AwesomeIconSolid.ARROW_LEFT),
+                thecontrols.customIco(AwesomeIconSolid.ARROW_RIGHT), thecontrols.customIco(AwesomeIconSolid.ARROW_UP),
+                thecontrols.customIco(AwesomeIconSolid.ARROW_DOWN));
 
-		theHbox.add(mainHeader, 0, 0, 3, 1);
-		theHbox.add(l1, 0, 1);
-		theHbox.add(r1, 2, 1);
-		theHbox.add(l2, 0, 2);
-		theHbox.add(r2, 2, 2);
-		theHbox.add(l3, 0, 3);
-		theHbox.add(r3, 2, 3);
-		theHbox.add(l4, 0, 4);
-		theHbox.add(r4, 2, 4);
-		theHbox.add(l5, 0, 5);
-		theHbox.add(r5, 2, 5);
-		return theHbox;
-	}
+        VBox l6 = thecontrols.createLeftLabel("Fine Pan");
+        HBox r6 = thecontrols.createCustomText("");
+        r6.getChildren().addAll(thecontrols.createCustomText("Alt"), new ImageView(myPlusDir),
+                thecontrols.customIco(AwesomeIconSolid.ARROWS_ALT));
 
-	private Button customIco(FontIconEnum text) {
+        dispArea.add(l1, 0, 1);
+        dispArea.add(r1, 2, 1);
+        dispArea.add(l2, 0, 2);
+        dispArea.add(r2, 2, 2);
+        dispArea.add(l3, 0, 3);
+        dispArea.add(r3, 2, 3);
+        dispArea.add(l4, 0, 4);
+        dispArea.add(r4, 2, 4);
+        dispArea.add(l5, 0, 5);
+        dispArea.add(r5, 2, 5);
+        dispArea.add(l6, 0, 6);
+        dispArea.add(r6, 2, 6);
 
-		Button theButton = new Button();
+        return mainBox;
+    }
 
-		final Label label = new Label(text.getFontCode());
-		Color color = Color.WHITE;
-		label.setTextFill(color);
-		label.setOpacity(75);
+    private GridPane createMapZoom(int width, int height)
+    {
+        ControlTab thecontrols = new ControlTab();
+        GridPane mainBox = thecontrols.createBlankPane(width, height, " Map Movement Controls");
+        GridPane dispArea = thecontrols.getDisplayArea();
 
-		final String fontName = "icons-" + text.getFont().getFontName().replaceAll("\\s", "-");
-		label.getStyleClass().addAll(fontName);
-		label.setStyle("-fx-font-size: 20 px;");
+        VBox l1 = thecontrols.createLeftLabel("Zoom In / Out");
+        HBox r1 = thecontrols.createCustomText("Mouse Wheel");
 
-		theButton.setGraphic(label);
-		theButton.setStyle("-fx-background-color:#0066cc;-fx-opacity: 1;");
-		theButton.setDisable(true);
-		theButton.setMaxSize(22, 22);
-		return theButton;
-	}
+        VBox l2 = thecontrols.createLeftLabel("");
+        HBox r2 = thecontrols.createCustomText("Shift");
+        r2.getChildren().addAll(new ImageView(myPlusDir), thecontrols.customIco(AwesomeIconSolid.ARROW_UP),
+                thecontrols.customIco(AwesomeIconSolid.ARROW_DOWN));
 
-	private GridPane createBlankPane(int width, int height) {
-		GridPane thePane = new GridPane();
-		ColumnConstraints col1Constraints = new ColumnConstraints();
-		col1Constraints.setPercentWidth(47);
-		ColumnConstraints col2Constraints = new ColumnConstraints();
-		col2Constraints.setPercentWidth(6);
-		ColumnConstraints col3Constraints = new ColumnConstraints();
-		col3Constraints.setPercentWidth(47);
-		thePane.getColumnConstraints().addAll(col1Constraints, col2Constraints, col3Constraints);
+        VBox l3 = thecontrols.createLeftLabel("Zoom Fast");
+        HBox r3 = thecontrols.createCustomText("");
+        r3.getChildren().addAll(thecontrols.customImageView(mouseMiddle), new ImageView(myPlusDir),
+                thecontrols.customIco(AwesomeIconSolid.ARROWS_ALT_V));
 
-		thePane.setMinWidth(width);
-		thePane.setMaxHeight(height);
-		thePane.setStyle(
-				"-fx-background-color : #363636;-fx-border-color: #004080;-fx-border-width: 2;-fx-background-radius: 5 5 5 5;"
-						+ "    -fx-border-radius: 5 5 5 5;");
-		return thePane;
-	}
+        VBox l4 = thecontrols.createLeftLabel("Zoom Way In / Out");
+        HBox r4 = thecontrols.createCustomText("");
+        r4.getChildren().addAll(thecontrols.customImageView(mouseLeft), new ImageView(myPlusDir),
+                thecontrols.customImageView(mouseRight), new ImageView(myPlusDir),
+                thecontrols.customIco(AwesomeIconSolid.ARROWS_ALT_V));
+        VBox l5 = thecontrols.createLeftLabel("Roll Earth");
+        HBox r5 = thecontrols.createCustomText("Shift");
+        r5.getChildren().addAll(new ImageView(myPlusDir), thecontrols.customIco(AwesomeIconSolid.ARROW_UP),
+                thecontrols.customIco(AwesomeIconSolid.ARROW_DOWN));
 
-	private VBox createHeader(String theLabel) {
-		VBox mainHeader = new VBox();
-		mainHeader.setStyle("-fx-background-color : #181a1c");
-		Label header = new Label(theLabel);
-		// header.setFont(new Font("Arial Black", 16));
-		mainHeader.getChildren().add(header);
-		mainHeader.setAlignment(Pos.CENTER_LEFT);
-		return mainHeader;
-	}
+        dispArea.add(l1, 0, 1);
+        dispArea.add(r1, 2, 1);
+        dispArea.add(l2, 0, 2);
+        dispArea.add(r2, 2, 2);
+        dispArea.add(l3, 0, 3);
+        dispArea.add(r3, 2, 3);
+        dispArea.add(l4, 0, 4);
+        dispArea.add(r4, 2, 4);
+        dispArea.add(l5, 0, 5);
+        dispArea.add(r5, 2, 5);
+//        dispArea.add(l6, 0, 6);
+//        dispArea.add(r6, 2, 6);
+//        dispArea.add(l7, 0, 7);
+//        dispArea.add(r7, 2, 7);
+        return mainBox;
+    }
 
-	public HBox customText(String b1) {
-		HBox comboText = new HBox();
-		comboText.setMinHeight(30);
-		comboText.setSpacing(8);
-		comboText.setAlignment(Pos.CENTER_LEFT);
-		comboText.getChildren().add(new IconDispButton(b1, false));
-		return comboText;
+    private GridPane createGeneralMap(int width, int height)
+    {
+        ControlTab thecontrols = new ControlTab();
+        GridPane mainBox = thecontrols.createBlankPane(width, height, " General Map Controls");
+        GridPane dispArea = thecontrols.getDisplayArea();
 
-	}
+        VBox l1 = thecontrols.createLeftLabel("Draw Geometry");
+        HBox r1 = thecontrols.createCustomText("Shift");
+        r1.getChildren().addAll(new ImageView(myPlusDir), thecontrols.customImageView(mouseLeft), new ImageView(myPlusDir),
+                thecontrols.customIco(AwesomeIconSolid.ARROW_UP));
 
-	private ImageView customImageView(String string) {
-		ImageView customView = new ImageView(string);
-		customView.setFitHeight(30);
-		customView.setFitWidth(30);
-		customView.setPreserveRatio(true);
-		return customView;
-	}
+        VBox l2 = thecontrols.createLeftLabel("Draw Zoom Box");
+        HBox r2 = thecontrols.createCustomText("Ctrl");
+        r2.getChildren().addAll(new ImageView(myPlusDir), thecontrols.customImageView(mouseLeft));
 
-	public VBox leftLabel(String label) {
-		VBox theLabelBox = new VBox();
-		Label text2 = new Label(label);
-		// text2.setFont(new Font("Arial Black", 14));
-		theLabelBox.getChildren().add(text2);
-		theLabelBox.setAlignment(Pos.CENTER_RIGHT);
-		return theLabelBox;
-	}
+        VBox l3 = thecontrols.createLeftLabel("Context Menu");
+        HBox r3 = thecontrols.createCustomText("");
+        r3.getChildren().add(thecontrols.customImageView(mouseRight));
 
-	/**
-	 * A custom button for putting text or images into buttons.
-	 */
-	public class IconDispButton extends Button {
-		public IconDispButton(String key, boolean image) {
-			setDisable(true);
-			setStyle("-fx-background-color:#0066cc;-fx-opacity: 1;");
-			if (image == false) {
-				// setFont(Font.font("Arial Black", FontWeight.MEDIUM, 12));
-				setTextFill(Color.web("white"));
-				setText(key);
-			} else if (image == true) {
-				setMaxSize(30, 30);
-				setGraphic(customImageView(key));
-			}
-		}
-	}
+        VBox l4 = thecontrols.createLeftLabel("Reset View");
+        HBox r4 = thecontrols.createCustomText("R");
+
+        VBox l5 = thecontrols.createLeftLabel("Copy Coordinates");
+        HBox r5 = thecontrols.createCustomText("C");
+
+        VBox l6 = thecontrols.createLeftLabel("Display All Coordinates");
+        HBox r6 = thecontrols.createCustomText(".");
+
+        dispArea.add(l1, 0, 1);
+        dispArea.add(r1, 2, 1);
+        dispArea.add(l2, 0, 2);
+        dispArea.add(r2, 2, 2);
+        dispArea.add(l3, 0, 3);
+        dispArea.add(r3, 2, 3);
+        dispArea.add(l4, 0, 4);
+        dispArea.add(r4, 2, 4);
+        dispArea.add(l5, 0, 5);
+        dispArea.add(r5, 2, 5);
+        dispArea.add(l6, 0, 6);
+        dispArea.add(r6, 2, 6);
+        return mainBox;
+    }
+
 }
