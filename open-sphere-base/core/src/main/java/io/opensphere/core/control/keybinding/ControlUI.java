@@ -53,7 +53,6 @@ public class ControlUI extends GridPane
 
     /**
      * Creates a sub-window containing Map Tool Controls.
-     * 
      * @return mainBox the sub-window contained in a GridPane.
      */
     private GridPane createMapTools()
@@ -93,15 +92,11 @@ public class ControlUI extends GridPane
         dispArea.add(r5, 2, 5);
         dispArea.add(l6, 0, 6);
         dispArea.add(r6, 2, 6);
-
-        dispArea.add(new HBox(), 3, 5);
-        dispArea.add(new HBox(), 4, 5);
         return mainBox;
     }
 
     /**
      * Creates a sub-window containing the General Controls.
-     * 
      * @return mainBox the sub-window contained in a GridPane.
      */
     private GridPane createGeneral()
