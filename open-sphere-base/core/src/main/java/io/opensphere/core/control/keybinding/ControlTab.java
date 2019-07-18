@@ -81,7 +81,7 @@ public class ControlTab
     }
 
     /**
-     * @return myDisplayArea the sub-child of the main styledPane.
+     * @return the sub-child of the main styledPane.
      */
     public GridPane getDisplayArea()
     {
