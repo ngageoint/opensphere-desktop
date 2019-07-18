@@ -37,7 +37,7 @@ public class MenuShortCut
     }
 
     /**
-     * @return myMenu gets the category of the shortcut.
+     * @return gets the category of the shortcut.
      */
     public String getMenu()
     {
@@ -45,7 +45,8 @@ public class MenuShortCut
     }
 
     /**
-     * @param menu sets the category of the shortcut.
+     * Sets the menu property. 
+     * @param sets the category of the shortcut.
      */
     public void setMenuName(String menu)
     {
@@ -53,7 +54,7 @@ public class MenuShortCut
     }
 
     /**
-     * @return myItem gets the action performed.
+     * @return gets the action performed.
      */
     public String getItem()
     {
@@ -61,6 +62,7 @@ public class MenuShortCut
     }
 
     /**
+     *  Sets the item property. 
      * @param Item sets the action performed.
      */
     public void setItem(String item)
@@ -77,6 +79,7 @@ public class MenuShortCut
     }
 
     /**
+     * Sets the shortcut key property. 
      * @param Shortcut sets the physical key mapped.
      */
     public void setShortcut(String shortcut)

@@ -16,17 +16,17 @@ public class ControlUI extends GridPane
     /**
      * The directory of the "plus" icon.
      */
-    private String myPlusDir = "images/keys/plus.png";
+    private static final String myPlusDir = "images/keys/plus.png";
 
     /**
      * The directory of the "mouse left button clicked" icon.
      */
-    private String mouseLeft = "images/keys/MouseLeft.png";
+    private static final String mouseLeft = "images/keys/MouseLeft.png";
 
     /**
      * The directory of the "mouse middle button clicked" icon.
      */
-    private String mouseMiddle = "images/keys/MouseMiddle.png";
+    private static final String mouseMiddle = "images/keys/MouseMiddle.png";
 
     /**
      * The directory of the "mouse right button clicked" icon.
@@ -34,6 +34,8 @@ public class ControlUI extends GridPane
     private String mouseRight = "images/keys/MouseRight.png";
 
     /**
+     * Creates the main pannel for the "Globe Controls" tab.
+     * 
      * @param width the horizontal size desired.
      * @param height the vertical size desired.
      */
@@ -53,32 +55,33 @@ public class ControlUI extends GridPane
 
     /**
      * Creates a sub-window containing Map Tool Controls.
-     * @return mainBox the sub-window contained in a GridPane.
+     * 
+     * @return the sub-window contained in a GridPane.
      */
     private GridPane createMapTools()
     {
-        ControlTab thecontrols = new ControlTab();
-        GridPane mainBox = thecontrols.createBlankPane(" Map Tools");
-        GridPane dispArea = thecontrols.getDisplayArea();
+        ControlTab controlT = new ControlTab();
+        GridPane mainBox = controlT.createBlankPane(" Map Tools");
+        GridPane dispArea = controlT.getDisplayArea();
 
-        VBox l1 = thecontrols.createLeftLabel("Draw Geometry");
-        HBox r1 = thecontrols.createCustomText("Shift");
-        r1.getChildren().addAll(new ImageView(myPlusDir), thecontrols.customImageView(mouseLeft));
+        VBox l1 = controlT.createLeftLabel("Draw Geometry");
+        HBox r1 = controlT.createCustomText("Shift");
+        r1.getChildren().addAll(new ImageView(myPlusDir), controlT.customImageView(mouseLeft));
 
-        VBox l2 = thecontrols.createLeftLabel("Toggle Arc Length");
-        HBox r2 = thecontrols.createCustomText("m");
+        VBox l2 = controlT.createLeftLabel("Toggle Arc Length");
+        HBox r2 = controlT.createCustomText("m");
 
-        VBox l3 = thecontrols.createLeftLabel("Live Track Mode");
-        HBox r3 = thecontrols.createCustomText("Ctrl [hold]");
+        VBox l3 = controlT.createLeftLabel("Live Track Mode");
+        HBox r3 = controlT.createCustomText("Ctrl [hold]");
 
-        VBox l4 = thecontrols.createLeftLabel("Bullseye Vector");
-        HBox r4 = thecontrols.createCustomText(",");
+        VBox l4 = controlT.createLeftLabel("Bullseye Vector");
+        HBox r4 = controlT.createCustomText(",");
 
-        VBox l5 = thecontrols.createLeftLabel("Copy Coordinates");
-        HBox r5 = thecontrols.createCustomText("C");
+        VBox l5 = controlT.createLeftLabel("Copy Coordinates");
+        HBox r5 = controlT.createCustomText("C");
 
-        VBox l6 = thecontrols.createLeftLabel("Display All Coordinates");
-        HBox r6 = thecontrols.createCustomText(".");
+        VBox l6 = controlT.createLeftLabel("Display All Coordinates");
+        HBox r6 = controlT.createCustomText(".");
 
         dispArea.add(l1, 0, 1);
         dispArea.add(r1, 2, 1);
@@ -97,7 +100,8 @@ public class ControlUI extends GridPane
 
     /**
      * Creates a sub-window containing the General Controls.
-     * @return mainBox the sub-window contained in a GridPane.
+     * 
+     * @return the sub-window contained in a GridPane.
      */
     private GridPane createGeneral()
     {
@@ -139,36 +143,36 @@ public class ControlUI extends GridPane
     /**
      * Creates a sub-window containing Map Zoom Controls.
      * 
-     * @return mainBox the sub-window contained in a GridPane.
+     * @return the sub-window contained in a GridPane.
      */
     private GridPane createMapZoom()
     {
-        ControlTab thecontrols = new ControlTab();
-        GridPane mainBox = thecontrols.createBlankPane(" Zoom Controls");
-        GridPane dispArea = thecontrols.getDisplayArea();
+        ControlTab controlT = new ControlTab();
+        GridPane mainBox = controlT.createBlankPane(" Zoom Controls");
+        GridPane dispArea = controlT.getDisplayArea();
 
-        VBox l1 = thecontrols.createLeftLabel("Zoom In / Out");
-        HBox r1 = thecontrols.createCustomText("Mouse Wheel");
+        VBox l1 = controlT.createLeftLabel("Zoom In / Out");
+        HBox r1 = controlT.createCustomText("Mouse Wheel");
 
-        VBox l2 = thecontrols.createLeftLabel("");
-        HBox r2 = thecontrols.createCustomText("Shift");
-        r2.getChildren().addAll(new ImageView(myPlusDir), thecontrols.customIco(AwesomeIconSolid.ARROW_UP),
-                thecontrols.customIco(AwesomeIconSolid.ARROW_DOWN));
+        VBox l2 = controlT.createLeftLabel("");
+        HBox r2 = controlT.createCustomText("Shift");
+        r2.getChildren().addAll(new ImageView(myPlusDir), controlT.createIconButton(AwesomeIconSolid.ARROW_UP),
+                controlT.createIconButton(AwesomeIconSolid.ARROW_DOWN));
 
-        VBox l3 = thecontrols.createLeftLabel("Zoom Fast");
-        HBox r3 = thecontrols.createCustomText("");
-        r3.getChildren().addAll(thecontrols.customImageView(mouseMiddle), new ImageView(myPlusDir),
-                thecontrols.customIco(AwesomeIconSolid.ARROWS_ALT_V));
+        VBox l3 = controlT.createLeftLabel("Zoom Fast");
+        HBox r3 = controlT.createCustomText("");
+        r3.getChildren().addAll(controlT.customImageView(mouseMiddle), new ImageView(myPlusDir),
+                controlT.createIconButton(AwesomeIconSolid.ARROWS_ALT_V));
 
-        VBox l4 = thecontrols.createLeftLabel("Zoom Way In / Out");
-        HBox r4 = thecontrols.createCustomText("");
-        r4.getChildren().addAll(thecontrols.customImageView(mouseLeft), new ImageView(myPlusDir),
-                thecontrols.customImageView(mouseRight), new ImageView(myPlusDir),
-                thecontrols.customIco(AwesomeIconSolid.ARROWS_ALT_V));
+        VBox l4 = controlT.createLeftLabel("Zoom Way In / Out");
+        HBox r4 = controlT.createCustomText("");
+        r4.getChildren().addAll(controlT.customImageView(mouseLeft), new ImageView(myPlusDir),
+                controlT.customImageView(mouseRight), new ImageView(myPlusDir),
+                controlT.createIconButton(AwesomeIconSolid.ARROWS_ALT_V));
 
-        VBox l5 = thecontrols.createLeftLabel("Draw Zoom Box");
-        HBox r5 = thecontrols.createCustomText("Ctrl");
-        r5.getChildren().addAll(new ImageView(myPlusDir), thecontrols.customImageView(mouseLeft));
+        VBox l5 = controlT.createLeftLabel("Draw Zoom Box");
+        HBox r5 = controlT.createCustomText("Ctrl");
+        r5.getChildren().addAll(new ImageView(myPlusDir), controlT.customImageView(mouseLeft));
 
         dispArea.add(l1, 0, 1);
         dispArea.add(r1, 2, 1);
@@ -186,46 +190,47 @@ public class ControlUI extends GridPane
     /**
      * Creates a sub-window containing Map Movement Controls.
      * 
-     * @return mainBox the sub-window contained in a GridPane.
+     * @return the sub-window contained in a GridPane.
      */
     private GridPane createGeneralMap()
     {
-        ControlTab thecontrols = new ControlTab();
-        GridPane mainBox = thecontrols.createBlankPane(" Map Movement");
-        GridPane dispArea = thecontrols.getDisplayArea();
+        ControlTab controlT = new ControlTab();
+        GridPane mainBox = controlT.createBlankPane(" Map Movement");
+        GridPane dispArea = controlT.getDisplayArea();
 
-        VBox l1 = thecontrols.createLeftLabel("Pan View");
-        HBox r1 = thecontrols.createCustomText("");
-        r1.getChildren().addAll(thecontrols.customImageView(mouseLeft), new ImageView(myPlusDir),
-                thecontrols.customIco(AwesomeIconSolid.ARROWS_ALT));
+        VBox l1 = controlT.createLeftLabel("Pan View");
+        HBox r1 = controlT.createCustomText("");
+        r1.getChildren().addAll(controlT.customImageView(mouseLeft), new ImageView(myPlusDir),
+                controlT.createIconButton(AwesomeIconSolid.ARROWS_ALT));
 
-        VBox l2 = thecontrols.createLeftLabel("");
-        HBox r2 = thecontrols.createCustomText("");
-        r2.getChildren().addAll(thecontrols.customIco(AwesomeIconSolid.ARROW_LEFT),
-                thecontrols.customIco(AwesomeIconSolid.ARROW_RIGHT), thecontrols.customIco(AwesomeIconSolid.ARROW_UP),
-                thecontrols.customIco(AwesomeIconSolid.ARROW_DOWN));
+        VBox l2 = controlT.createLeftLabel("");
+        HBox r2 = controlT.createCustomText("");
+        r2.getChildren().addAll(controlT.createIconButton(AwesomeIconSolid.ARROW_LEFT),
+                controlT.createIconButton(AwesomeIconSolid.ARROW_RIGHT),
+                controlT.createIconButton(AwesomeIconSolid.ARROW_UP),
+                controlT.createIconButton(AwesomeIconSolid.ARROW_DOWN));
 
-        VBox l3 = thecontrols.createLeftLabel("Fine Pan");
-        HBox r3 = thecontrols.createCustomText("");
-        r3.getChildren().addAll(thecontrols.createCustomText("Alt"), new ImageView(myPlusDir),
-                thecontrols.customIco(AwesomeIconSolid.ARROWS_ALT));
+        VBox l3 = controlT.createLeftLabel("Fine Pan");
+        HBox r3 = controlT.createCustomText("");
+        r3.getChildren().addAll(controlT.createCustomText("Alt"), new ImageView(myPlusDir),
+                controlT.createIconButton(AwesomeIconSolid.ARROWS_ALT));
 
-        VBox l4 = thecontrols.createLeftLabel("Context Menu");
-        HBox r4 = thecontrols.createCustomText("");
-        r4.getChildren().add(thecontrols.customImageView(mouseRight));
+        VBox l4 = controlT.createLeftLabel("Context Menu");
+        HBox r4 = controlT.createCustomText("");
+        r4.getChildren().add(controlT.customImageView(mouseRight));
 
-        VBox l5 = thecontrols.createLeftLabel("Reset View");
-        HBox r5 = thecontrols.createCustomText("R");
+        VBox l5 = controlT.createLeftLabel("Reset View");
+        HBox r5 = controlT.createCustomText("R");
 
-        VBox l6 = thecontrols.createLeftLabel("Pitch Camera");
-        HBox r6 = thecontrols.createCustomText("");
-        r6.getChildren().addAll(thecontrols.customImageView(mouseRight), new ImageView(myPlusDir),
-                thecontrols.customIco(AwesomeIconSolid.ARROWS_ALT_V));
+        VBox l6 = controlT.createLeftLabel("Pitch Camera");
+        HBox r6 = controlT.createCustomText("");
+        r6.getChildren().addAll(controlT.customImageView(mouseRight), new ImageView(myPlusDir),
+                controlT.createIconButton(AwesomeIconSolid.ARROWS_ALT_V));
 
-        VBox l7 = thecontrols.createLeftLabel("Roll Camera");
-        HBox r7 = thecontrols.createCustomText("Shift");
-        r7.getChildren().addAll(new ImageView(myPlusDir), thecontrols.customIco(AwesomeIconSolid.ARROW_LEFT),
-                thecontrols.customIco(AwesomeIconSolid.ARROW_RIGHT));
+        VBox l7 = controlT.createLeftLabel("Roll Camera");
+        HBox r7 = controlT.createCustomText("Shift");
+        r7.getChildren().addAll(new ImageView(myPlusDir), controlT.createIconButton(AwesomeIconSolid.ARROW_LEFT),
+                controlT.createIconButton(AwesomeIconSolid.ARROW_RIGHT));
 
         dispArea.add(l1, 0, 1);
         dispArea.add(r1, 2, 1);

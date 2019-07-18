@@ -12,9 +12,7 @@ import javafx.scene.control.TabPane.TabClosingPolicy;
 /**
  * The Class KeyMapFrame. This class will show the control and shortcut keys.
  */
-
 public class NewKeyMapFrame extends AbstractInternalFrame
-
 {
     /** Serial. */
     private static final long serialVersionUID = 1L;
@@ -23,12 +21,10 @@ public class NewKeyMapFrame extends AbstractInternalFrame
     public static final String TITLE = "Key Map";
 
     /**
-     * 
      * The Container panel. Since this JInternalFrame can be 'torn off' and uses
      * the JInternalFrame's content pane, set the content pane to a JavaFX Panel
      * through a JFX Dialog.
      */
-
     public NewKeyMapFrame()
     {
         super();
@@ -55,14 +51,7 @@ public class NewKeyMapFrame extends AbstractInternalFrame
      */
     private static void initAndShowGUI(JFXPanel fxPanel)
     {
-        Platform.runLater(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                initFX(fxPanel);
-            }
-        });
+        Platform.runLater(() -> initFX(fxPanel));
     }
 
     /**
@@ -72,30 +61,31 @@ public class NewKeyMapFrame extends AbstractInternalFrame
      */
     private static void initFX(JFXPanel fxPanel)
     {
-        Scene scene = createMainWindow(fxPanel);
-        fxPanel.setScene(scene);
+        fxPanel.setScene(createMainWindow(fxPanel));
     }
 
     /**
+     * Makes the overall container with two sub-tabs, and populates the tabs.
+     * 
      * @param fxPanel the panel to add onto.
-     * @return scene the JavaFX Scene to be displayed.
+     * @return JavaFX Scene to be displayed.
      */
     private static Scene createMainWindow(JFXPanel fxPanel)
     {
         Group root = new Group();
         Scene scene = new Scene(root);
         scene.getStylesheets().add("styles/opensphere.css");
-        TabPane theTaps = new TabPane();
-        theTaps.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
-        theTaps.setStyle("-fx-focus-color: #0066cc");
+        TabPane tabBar = new TabPane();
+        tabBar.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
+        tabBar.setStyle("-fx-focus-color: #0066cc");
 
         Tab Map = new Tab("Globe Shortcuts");
         Map.setContent(new ControlUI(fxPanel.getWidth(), fxPanel.getHeight()));
         Tab Menu = new Tab("Menu Shortcuts");
         Menu.setContent(new MenuShortCutsUI(fxPanel.getWidth(), fxPanel.getHeight()));
 
-        theTaps.getTabs().addAll(Map, Menu);
-        root.getChildren().addAll(theTaps);
+        tabBar.getTabs().addAll(Map, Menu);
+        root.getChildren().addAll(tabBar);
         return scene;
     }
 }

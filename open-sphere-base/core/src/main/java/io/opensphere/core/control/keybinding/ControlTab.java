@@ -6,7 +6,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -29,57 +28,37 @@ public class ControlTab
      */
     private GridPane myDisplayArea;
 
-    @SuppressWarnings("unused")
-    public Button customIco(FontIconEnum text)
+    /**
+     * @param text the icon to be set.
+     * @return a custom styled Button with various FontIconEnums inside.
+     */
+    public Button createIconButton(FontIconEnum text)
     {
-        Button theButton = new Button();
+        Button customIcon = new Button();
 
         final Label label = new Label(text.getFontCode());
-        Color color = Color.WHITE;
-        label.setTextFill(color);
+        label.setTextFill(Color.WHITE);
         label.setOpacity(75);
 
         final String fontName = "icons-" + text.getFont().getFontName().replaceAll("\\s", "-");
         label.getStyleClass().addAll(fontName);
         label.setStyle("-fx-font-size: 16 px;");
 
-        theButton.setGraphic(label);
-        theButton.setStyle("-fx-background-color:#0066cc;-fx-opacity: 1;");
-        theButton.setDisable(true);
-        theButton.setMaxSize(22, 22);
-        return theButton;
+        customIcon.setGraphic(label);
+        customIcon.setStyle("-fx-background-color:#0066cc;-fx-opacity: 1;");
+        customIcon.setDisable(true);
+        customIcon.setMaxSize(22, 22);
+        return customIcon;
     }
 
-    @SuppressWarnings("unused")
-    public GridPane createBlankPane(int width, int height, String header)
-    {
-        GridPane thePane = new GridPane();
-        thePane.setMinWidth(width);
-        thePane.setMinHeight(height);
-        thePane.setStyle(
-                "-fx-background-color : #363636;-fx-border-color: #004080;-fx-border-width: 4;-fx-background-radius: 8 8 8 8;"
-                        + "    -fx-border-radius: 8 8 8 8;");
-
-        myDisplayArea = new GridPane();
-        ColumnConstraints col1Constraints = new ColumnConstraints();
-        col1Constraints.setPercentWidth(47);
-        ColumnConstraints col2Constraints = new ColumnConstraints();
-        col2Constraints.setPercentWidth(6);
-        ColumnConstraints col3Constraints = new ColumnConstraints();
-        col3Constraints.setPercentWidth(47);
-        myDisplayArea.getColumnConstraints().addAll(col1Constraints, col2Constraints, col3Constraints);
-        myDisplayArea.setVgap(5);
-        myDisplayArea.setPadding(new Insets(0, 10, 10, 10));
-        thePane.add(createHeader(header), 0, 0);
-        thePane.add(myDisplayArea, 0, 1);
-
-        return thePane;
-    }
-
+    /**
+     * 
+     * @return a blank Grid Pane with opensphere styling.
+     */
     public GridPane createBlankPane(String header)
     {
-        GridPane thePane = new GridPane();
-        thePane.setStyle(
+        GridPane styledPane = new GridPane();
+        styledPane.setStyle(
                 "-fx-background-color : #363636;-fx-border-color: #004080;-fx-border-width: 4;-fx-background-radius: 8 8 8 8;"
                         + "    -fx-border-radius: 8 8 8 8;");
 
@@ -95,25 +74,31 @@ public class ControlTab
         myDisplayArea.setPadding(new Insets(0, 10, 10, 10));
         HBox topheader = createHeader(header);
         GridPane.setHgrow(topheader, Priority.ALWAYS);
-        thePane.add(topheader, 0, 0);
-        thePane.add(myDisplayArea, 0, 1);
+        styledPane.add(topheader, 0, 0);
+        styledPane.add(myDisplayArea, 0, 1);
 
-        return thePane;
+        return styledPane;
     }
 
+    /**
+     * @return myDisplayArea the sub-child of the main styledPane.
+     */
     public GridPane getDisplayArea()
     {
         return myDisplayArea;
     }
 
-    public void setDisplayArea(GridPane myDisplayArea)
+    /**
+     * @param displayArea sets the child of the main styledPane.
+     */
+    public void setDisplayArea(GridPane displayArea)
     {
-        this.myDisplayArea = myDisplayArea;
+        this.myDisplayArea = displayArea;
     }
 
     /**
      * @param theLabel the text to set.
-     * @return mainHeader the HBox containing the sub window title.
+     * @return HBox containing the sub window title.
      */
     public HBox createHeader(String theLabel)
     {
@@ -128,25 +113,25 @@ public class ControlTab
     }
 
     /**
-     * @param b1 the text to be set.
-     * @return comboText styled HBox containing text or a styled button.
+     * @param buttonText the text to be set.
+     * @return styled HBox containing text or a styled button.
      */
-    public HBox createCustomText(String b1)
+    public HBox createCustomText(String buttonText)
     {
         HBox comboText = new HBox();
         comboText.setMinHeight(30);
         comboText.setSpacing(8);
         comboText.setAlignment(Pos.CENTER_LEFT);
-        if (!b1.equals(""))
+        if (!buttonText.equals(""))
         {
-            comboText.getChildren().add(new IconDispButton(b1, false));
+            comboText.getChildren().add(new IconDispButton(buttonText));
         }
         return comboText;
     }
 
     /**
      * @param string the image to load.
-     * @return customView an Image display with a locked size and ratio.
+     * @return an Image display with a locked size and ratio.
      */
     public ImageView customImageView(String string)
     {
@@ -158,37 +143,28 @@ public class ControlTab
     }
 
     /**
-     * @param label the text to be set.
-     * @return theLabelBox a VBox containing the text, right justified.
+     * @param displayText the text to be set.
+     * @return a VBox containing the text, right justified.
      */
-    public VBox createLeftLabel(String label)
+    public VBox createLeftLabel(String displayText)
     {
-        VBox theLabelBox = new VBox();
-        Label text2 = new Label(label);
-        theLabelBox.getChildren().add(text2);
-        theLabelBox.setAlignment(Pos.CENTER_RIGHT);
-        return theLabelBox;
+        VBox labelBox = new VBox();
+        labelBox.getChildren().add(new Label(displayText));
+        labelBox.setAlignment(Pos.CENTER_RIGHT);
+        return labelBox;
     }
 
     /**
      * A custom button for putting text or images into buttons.
      */
-    public class IconDispButton extends Button
+    private class IconDispButton extends Button
     {
-        public IconDispButton(String key, boolean image)
+        private IconDispButton(String key)
         {
             setDisable(true);
             setStyle("-fx-background-color:#0066cc;-fx-opacity: 1;");
-            if (image == false)
-            {
-                setTextFill(Color.web("white"));
-                setText(key);
-            }
-            else if (image == true)
-            {
-                setMaxSize(30, 30);
-                setGraphic(customImageView(key));
-            }
+            setTextFill(Color.web("white"));
+            setText(key);
         }
     }
 }
