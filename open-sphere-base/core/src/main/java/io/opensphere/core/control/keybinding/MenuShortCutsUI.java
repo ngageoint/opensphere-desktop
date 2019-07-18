@@ -8,8 +8,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 
 /**
- * @author crombiek Creates a table/legend of the current Opensphere shortcut
- *         keys which pertain to "File","Edit","Tools" Menus.
+ * Creates a table/legend of the current Opensphere shortcut keys which pertain
+ * to "File","Edit","Tools" Menus.
  */
 public class MenuShortCutsUI extends HBox
 {
@@ -34,12 +34,13 @@ public class MenuShortCutsUI extends HBox
     {
         TableView<MenuShortCut> theTable = new TableView<>();
         theTable.setSelectionModel(null);
-        theTable.setMaxWidth(width);
-        theTable.setMaxHeight(height);
+        theTable.setMinWidth(width);
+        theTable.setMinHeight(height);
 
-        TableColumn<MenuShortCut, String> topicCol = customColumn("Topic", "topic", width);
+        TableColumn<MenuShortCut, String> topicCol = customColumn("Menu", "topic", width);
+        topicCol.setStyle("-fx-font-weight: bold;");
         TableColumn<MenuShortCut, String> controlCol = customColumn("Control", "control", width);
-        TableColumn<MenuShortCut, String> keybindCol = customColumn("Key", "key", width);
+        TableColumn<MenuShortCut, String> keybindCol = customColumn("ShortCut", "key", width);
         theTable.getColumns().addAll(topicCol, controlCol, keybindCol);
 
         ObservableList<MenuShortCut> data = FXCollections.observableArrayList(new MenuShortCut("File", "", ""));
@@ -73,14 +74,16 @@ public class MenuShortCutsUI extends HBox
         ObservableList<MenuShortCut> final_data = data;
         final_data.add(new MenuShortCut("", "Open", "Ctrl - O "));
         final_data.add(new MenuShortCut("", "Quit", "Ctrl - Q "));
+        final_data.add(new MenuShortCut("", "", ""));
         final_data.add(new MenuShortCut("Edit", "", ""));
         final_data.add(new MenuShortCut("", "Set Logger Levels", "Ctrl - L"));
         final_data.add(new MenuShortCut("", "Settings", "F8"));
+        final_data.add(new MenuShortCut("", "", ""));
         final_data.add(new MenuShortCut("View", "", ""));
         final_data.add(new MenuShortCut("", "Alert Viewer", "Ctrl - M"));
+        final_data.add(new MenuShortCut("", "", ""));
         final_data.add(new MenuShortCut("Tools", "", ""));
         final_data.add(new MenuShortCut("", "Analyze", "Ctrl + Shift - X"));
-        final_data.add(new MenuShortCut("", "ArcLength", "m"));
         final_data.add(new MenuShortCut("", "Icon Manager", "Ctrl + Shift - I"));
         final_data.add(new MenuShortCut("", "Styles", "Ctrl + Shift - S"));
         return data;
