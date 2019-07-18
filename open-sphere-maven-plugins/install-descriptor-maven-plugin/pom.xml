@@ -49,9 +49,6 @@
 										<artifactId>
 											maven-plugin-plugin
 										</artifactId>
-										<artifactId>
-											maven-compiler-plugin
-										</artifactId>
 										<versionRange>
 											[1.8,)
 										</versionRange>
