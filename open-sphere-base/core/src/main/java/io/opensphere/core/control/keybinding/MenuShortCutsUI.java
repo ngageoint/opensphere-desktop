@@ -14,7 +14,8 @@ import javafx.scene.layout.HBox;
 public class MenuShortCutsUI extends HBox
 {
     /**
-     * Creates the region containing the UI. 
+     * Creates the region containing the UI.
+     * 
      * @param width the horizontal size desired.
      * @param height the vertical size desired.
      */
@@ -27,6 +28,7 @@ public class MenuShortCutsUI extends HBox
 
     /**
      * Creates a JavaFX TableView for the "Menu ShortCuts" tab.
+     * 
      * @param width the int to specify the total table width.
      * @param height the int to specify the total table height.
      * @return theTable a JavaFX TableView containing the Menu Shortcuts.
@@ -35,16 +37,16 @@ public class MenuShortCutsUI extends HBox
     public TableView<MenuShortCut> createTableView(int width, int height)
     {
         TableView<MenuShortCut> theTable = new TableView<>();
-        theTable.setSelectionModel(null);
+        theTable.setMouseTransparent(true);
         theTable.setMinWidth(width);
         theTable.setMinHeight(height);
 
-        TableColumn<MenuShortCut, String> topicCol = customColumn("Menu", "topic", width);
+        theTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        TableColumn<MenuShortCut, String> topicCol = customColumn("Menu", "menu", 10);
         topicCol.setStyle("-fx-font-weight: bold;");
-        TableColumn<MenuShortCut, String> controlCol = customColumn("Control", "control", width);
-        TableColumn<MenuShortCut, String> keybindCol = customColumn("ShortCut", "key", width);
+        TableColumn<MenuShortCut, String> controlCol = customColumn("Item", "item", 30);
+        TableColumn<MenuShortCut, String> keybindCol = customColumn("Shortcut", "shortcut", 60);
         theTable.getColumns().addAll(topicCol, controlCol, keybindCol);
-
         ObservableList<MenuShortCut> data = FXCollections.observableArrayList(new MenuShortCut("File", "", ""));
         theTable.setItems(populateMenu(data));
         return theTable;
@@ -56,17 +58,17 @@ public class MenuShortCutsUI extends HBox
      * 
      * @param name the text to be placed inside the column.
      * @param propname the text to reference this element by.
-     * @param width the integer to specicy the width of each column.
+     * @param width the double to specicy the width of each column as a
+     *            percentage of the whole.
      * @return theColumn a column item which can then be added to a JavaFX
      *         TableView.
      */
-    public TableColumn<MenuShortCut, String> customColumn(String name, String propname, int width)
+    public TableColumn<MenuShortCut, String> customColumn(String name, String propname, double percent)
     {
         TableColumn<MenuShortCut, String> theColumn = new TableColumn<MenuShortCut, String>(name);
-        theColumn.setMinWidth(width / 3);
         theColumn.setCellValueFactory(new PropertyValueFactory<>(propname));
+        theColumn.setMaxWidth(1f * Integer.MAX_VALUE * percent);
         theColumn.setSortable(false);
-
         return theColumn;
     }
 
@@ -95,5 +97,4 @@ public class MenuShortCutsUI extends HBox
         final_data.add(new MenuShortCut("", "Styles", "Ctrl + Shift - S"));
         return data;
     }
-
 }

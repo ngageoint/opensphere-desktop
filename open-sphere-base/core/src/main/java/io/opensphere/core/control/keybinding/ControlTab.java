@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -17,11 +18,9 @@ import javafx.scene.text.Font;
 /**
  * Contains all the methods used for generating the panels and custom objects
  * within the "Key Map" sub tab named "Controls"
- *
  */
 public class ControlTab
 {
-
     /**
      * The JavaFX gridpane containing the shortcut key keys and keys in a column
      * arranged fashion. Since this pane is a child of another pane it must be
@@ -75,7 +74,6 @@ public class ControlTab
         thePane.add(myDisplayArea, 0, 1);
 
         return thePane;
-
     }
 
     public GridPane createBlankPane(String header)
@@ -95,11 +93,12 @@ public class ControlTab
         myDisplayArea.getColumnConstraints().addAll(col1Constraints, col2Constraints, col3Constraints);
         myDisplayArea.setVgap(5);
         myDisplayArea.setPadding(new Insets(0, 10, 10, 10));
-        thePane.add(createHeader(header), 0, 0);
+        HBox topheader = createHeader(header);
+        GridPane.setHgrow(topheader, Priority.ALWAYS);
+        thePane.add(topheader, 0, 0);
         thePane.add(myDisplayArea, 0, 1);
 
         return thePane;
-
     }
 
     public GridPane getDisplayArea()
@@ -112,19 +111,26 @@ public class ControlTab
         this.myDisplayArea = myDisplayArea;
     }
 
+    /**
+     * @param theLabel the text to set.
+     * @return mainHeader the HBox containing the sub window title.
+     */
     public HBox createHeader(String theLabel)
     {
         HBox mainHeader = new HBox();
         mainHeader.setStyle("-fx-background-color : #181a1c");
         Label header = new Label(theLabel);
         header.setFont(Font.font(16));
-      //  header.setStyle("-fx-font-weight: bold;");
         mainHeader.getChildren().add(header);
         mainHeader.setAlignment(Pos.CENTER_LEFT);
         HBox.setHgrow(header, Priority.ALWAYS);
         return mainHeader;
     }
 
+    /**
+     * @param b1 the text to be set.
+     * @return comboText styled HBox containing text or a styled button.
+     */
     public HBox createCustomText(String b1)
     {
         HBox comboText = new HBox();
@@ -138,6 +144,10 @@ public class ControlTab
         return comboText;
     }
 
+    /**
+     * @param string the image to load.
+     * @return customView an Image display with a locked size and ratio.
+     */
     public ImageView customImageView(String string)
     {
         ImageView customView = new ImageView(string);
@@ -147,11 +157,14 @@ public class ControlTab
         return customView;
     }
 
+    /**
+     * @param label the text to be set.
+     * @return theLabelBox a VBox containing the text, right justified.
+     */
     public VBox createLeftLabel(String label)
     {
         VBox theLabelBox = new VBox();
         Label text2 = new Label(label);
-        // text2.setFont(new Font("Arial Black", 14));
         theLabelBox.getChildren().add(text2);
         theLabelBox.setAlignment(Pos.CENTER_RIGHT);
         return theLabelBox;
@@ -168,7 +181,6 @@ public class ControlTab
             setStyle("-fx-background-color:#0066cc;-fx-opacity: 1;");
             if (image == false)
             {
-                // setFont(Font.font("Arial Black", FontWeight.MEDIUM, 12));
                 setTextFill(Color.web("white"));
                 setText(key);
             }
@@ -179,5 +191,4 @@ public class ControlTab
             }
         }
     }
-
 }

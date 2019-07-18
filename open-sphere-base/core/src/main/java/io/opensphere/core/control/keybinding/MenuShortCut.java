@@ -12,76 +12,75 @@ public class MenuShortCut
     /**
      * The category of the shortcut.
      */
-    private final SimpleStringProperty myTopic;
+    private final SimpleStringProperty myMenu;
 
     /**
      * The action the shortcut executes.
      */
-    private final SimpleStringProperty myControl;
+    private final SimpleStringProperty myItem;
 
     /**
      * The physical key the shortcut is mapped onto.
      */
-    private final SimpleStringProperty myKey;
+    private final SimpleStringProperty myShortcut;
 
     /**
-     * @param topic the category of the shortcut.
-     * @param control the action the shortcut executes.
-     * @param key the physical key mapped.
+     * @param menu the category of the shortcut.
+     * @param item the action the shortcut executes.
+     * @param shortcut the physical key mapped.
      */
-    public MenuShortCut(String topic, String control, String key)
+    public MenuShortCut(String menu, String item, String shortcut)
     {
-        this.myTopic = new SimpleStringProperty(topic);
-        this.myControl = new SimpleStringProperty(control);
-        this.myKey = new SimpleStringProperty(key);
+        this.myMenu = new SimpleStringProperty(menu);
+        this.myItem = new SimpleStringProperty(item);
+        this.myShortcut = new SimpleStringProperty(shortcut);
     }
 
     /**
-     * @return myTopic gets the category of the shortcut.
+     * @return myMenu gets the category of the shortcut.
      */
-    public String getTopic()
+    public String getMenu()
     {
-        return myTopic.get();
+        return myMenu.get();
     }
 
     /**
-     * @param topic sets the category of the shortcut.
+     * @param menu sets the category of the shortcut.
      */
-    public void setTopicName(String topic)
+    public void setMenuName(String menu)
     {
-        myTopic.set(topic);
+        myMenu.set(menu);
     }
 
     /**
-     * @return myControl gets the action performed.
+     * @return myItem gets the action performed.
      */
-    public String getControl()
+    public String getItem()
     {
-        return myControl.get();
+        return myItem.get();
     }
 
     /**
-     * @param control sets the action performed.
+     * @param Item sets the action performed.
      */
-    public void setControl(String control)
+    public void setItem(String item)
     {
-        myControl.set(control);
+        myItem.set(item);
     }
 
     /**
-     * @return myKey the physical key mapped.
+     * @return Gets the physical key mapped.
      */
-    public String getKey()
+    public String getShortcut()
     {
-        return myKey.get();
+        return myShortcut.get();
     }
 
     /**
-     * @param key sets the physical key mapped.
+     * @param Shortcut sets the physical key mapped.
      */
-    public void setKey(String key)
+    public void setShortcut(String shortcut)
     {
-        myKey.set(key);
+        myShortcut.set(shortcut);
     }
-
 }
