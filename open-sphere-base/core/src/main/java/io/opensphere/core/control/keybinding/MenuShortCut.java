@@ -25,6 +25,8 @@ public class MenuShortCut
     private final SimpleStringProperty myShortcut;
 
     /**
+     * Instantiates a MenuShortCut object and sets its default properties.
+     * 
      * @param menu the category of the shortcut.
      * @param item the action the shortcut executes.
      * @param shortcut the physical key mapped.
@@ -37,7 +39,9 @@ public class MenuShortCut
     }
 
     /**
-     * @return gets the category of the shortcut.
+     * Gets the menu property.
+     * 
+     * @return category of the shortcut.
      */
     public String getMenu()
     {
@@ -45,7 +49,8 @@ public class MenuShortCut
     }
 
     /**
-     * Sets the menu property. 
+     * Sets the menu property.
+     * 
      * @param sets the category of the shortcut.
      */
     public void setMenuName(String menu)
@@ -54,7 +59,9 @@ public class MenuShortCut
     }
 
     /**
-     * @return gets the action performed.
+     * Gets the item property.
+     * 
+     * @return the action performed.
      */
     public String getItem()
     {
@@ -62,7 +69,8 @@ public class MenuShortCut
     }
 
     /**
-     *  Sets the item property. 
+     * Sets the item property.
+     * 
      * @param Item sets the action performed.
      */
     public void setItem(String item)
@@ -71,7 +79,9 @@ public class MenuShortCut
     }
 
     /**
-     * @return Gets the physical key mapped.
+     * Gets the key mapped property.
+     * 
+     * @return the physical key mapped.
      */
     public String getShortcut()
     {
@@ -79,7 +89,8 @@ public class MenuShortCut
     }
 
     /**
-     * Sets the shortcut key property. 
+     * Sets the shortcut key property.
+     * 
      * @param Shortcut sets the physical key mapped.
      */
     public void setShortcut(String shortcut)

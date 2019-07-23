@@ -79,12 +79,12 @@ public class NewKeyMapFrame extends AbstractInternalFrame
         tabBar.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
         tabBar.setStyle("-fx-focus-color: #0066cc");
 
-        Tab Map = new Tab("Globe Shortcuts");
-        Map.setContent(new ControlUI(fxPanel.getWidth(), fxPanel.getHeight()));
-        Tab Menu = new Tab("Menu Shortcuts");
-        Menu.setContent(new MenuShortCutsUI(fxPanel.getWidth(), fxPanel.getHeight()));
+        Tab mapTab = new Tab("Globe Shortcuts");
+        mapTab.setContent(new ControlUI(fxPanel.getWidth(), fxPanel.getHeight()));
+        Tab menuTab = new Tab("Menu Shortcuts");
+        menuTab.setContent(new MenuShortCutsUI(fxPanel.getWidth(), fxPanel.getHeight()));
 
-        tabBar.getTabs().addAll(Map, Menu);
+        tabBar.getTabs().addAll(mapTab, menuTab);
         root.getChildren().addAll(tabBar);
         return scene;
     }
