@@ -36,20 +36,20 @@ public class MenuShortCutsUI extends HBox
     @SuppressWarnings("unchecked")
     private TableView<MenuShortCut> createTableView(int width, int height)
     {
-        TableView<MenuShortCut> theTable = new TableView<>();
-        theTable.setMouseTransparent(true);
-        theTable.setMinWidth(width);
-        theTable.setMinHeight(height);
+        TableView<MenuShortCut> mainTable = new TableView<>();
+        mainTable.setMouseTransparent(true);
+        mainTable.setMinWidth(width);
+        mainTable.setMinHeight(height);
 
-        theTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        mainTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         TableColumn<MenuShortCut, String> topicCol = customColumn("Menu", "menu", 10);
         topicCol.setStyle("-fx-font-weight: bold;");
         TableColumn<MenuShortCut, String> controlCol = customColumn("Item", "item", 30);
         TableColumn<MenuShortCut, String> keybindCol = customColumn("Shortcut", "shortcut", 60);
-        theTable.getColumns().addAll(topicCol, controlCol, keybindCol);
+        mainTable.getColumns().addAll(topicCol, controlCol, keybindCol);
         ObservableList<MenuShortCut> data = FXCollections.observableArrayList(new MenuShortCut("File", "", ""));
-        theTable.setItems(populateMenu(data));
-        return theTable;
+        mainTable.setItems(populateMenu(data));
+        return mainTable;
     }
 
     /**

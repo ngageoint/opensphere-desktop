@@ -29,6 +29,8 @@ public class ControlTab
     private GridPane myDisplayArea;
 
     /**
+     * creates a custom styled button with special text,styling, and sizing.
+     * 
      * @param text the icon to be set.
      * @return a custom styled Button with various FontIconEnums inside.
      */
@@ -52,6 +54,7 @@ public class ControlTab
     }
 
     /**
+     * creates a window to later be populated with the controls menu shortcuts.
      * 
      * @return a blank Grid Pane with opensphere styling.
      */
@@ -81,6 +84,8 @@ public class ControlTab
     }
 
     /**
+     * Gets the sub child gridpane.
+     * 
      * @return the sub-child of the main styledPane.
      */
     public GridPane getDisplayArea()
@@ -89,6 +94,8 @@ public class ControlTab
     }
 
     /**
+     * Sets the gridpane property.
+     * 
      * @param displayArea sets the child of the main styledPane.
      */
     public void setDisplayArea(GridPane displayArea)
@@ -97,6 +104,8 @@ public class ControlTab
     }
 
     /**
+     * creates the top bar of each sub menu and sets the text.
+     * 
      * @param theLabel the text to set.
      * @return HBox containing the sub window title.
      */
@@ -113,6 +122,8 @@ public class ControlTab
     }
 
     /**
+     * creates custom styled text for the shortcut key menu.
+     * 
      * @param buttonText the text to be set.
      * @return styled HBox containing text or a styled button.
      */
@@ -130,6 +141,8 @@ public class ControlTab
     }
 
     /**
+     * creates a styled java ImageView to match other display sizes.
+     * 
      * @param string the image to load.
      * @return an Image display with a locked size and ratio.
      */
@@ -143,6 +156,8 @@ public class ControlTab
     }
 
     /**
+     * creates a box to bound text for the legend of shortcuts.
+     * 
      * @param displayText the text to be set.
      * @return a VBox containing the text, right justified.
      */
