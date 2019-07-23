@@ -31,7 +31,7 @@ import io.opensphere.core.util.swing.GridBagPanel;
 /**
  * The Class KeyMapFrame. This class will show the control and shortcut keys.
  */
-public class KeyMapFrame extends AbstractInternalFrame
+public class OldKeyMapFrame extends AbstractInternalFrame
 {
     /** Serial. */
     private static final long serialVersionUID = 1L;
@@ -78,7 +78,7 @@ public class KeyMapFrame extends AbstractInternalFrame
      *
      * @param toolbox the toolbox
      */
-    public KeyMapFrame(Toolbox toolbox)
+    public OldKeyMapFrame(Toolbox toolbox)
     {
         super();
         myToolbox = toolbox;
