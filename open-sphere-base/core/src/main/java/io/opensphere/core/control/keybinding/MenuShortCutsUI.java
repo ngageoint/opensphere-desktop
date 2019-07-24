@@ -58,7 +58,7 @@ public class MenuShortCutsUI extends HBox
      * 
      * @param name the text to be placed inside the column.
      * @param propname the text to reference this element by.
-     * @param width the double to specicy the width of each column as a
+     * @param percent the double to specify the width of each column as a
      *            percentage of the whole.
      * @return a column item which can then be added to a JavaFX
      *         TableView.

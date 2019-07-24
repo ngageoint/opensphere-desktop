@@ -31,7 +31,17 @@ public class ControlUI extends GridPane
     /**
      * The directory of the "mouse right button clicked" icon.
      */
-    private String mouseRight = "images/keys/MouseRight.png";
+    private static final String mouseRight = "images/keys/MouseRight.png";
+    
+    /**
+     * The directory of the "mouse right button clicked" icon.
+     */
+    private static final String shiftKey = "Shift";
+    
+    /**
+     * The directory of the "mouse right button clicked" icon.
+     */
+    private static final String ctrlKey = "Ctrl";
 
     /**
      * Creates the main pannel for the "Globe Controls" tab.
@@ -65,7 +75,7 @@ public class ControlUI extends GridPane
         GridPane dispArea = controlTab.getDisplayArea();
 
         VBox l1 = controlTab.createLeftLabel("Draw Geometry");
-        HBox r1 = controlTab.createCustomText("Shift");
+        HBox r1 = controlTab.createCustomText(ctrlKey);
         r1.getChildren().addAll(new ImageView(myPlusDir), controlTab.customImageView(mouseLeft));
 
         VBox l2 = controlTab.createLeftLabel("Toggle Arc Length");
@@ -110,7 +120,7 @@ public class ControlUI extends GridPane
         GridPane dispArea = controlTab.getDisplayArea();
 
         VBox l1 = controlTab.createLeftLabel("Save State");
-        HBox r1 = controlTab.createCustomText("Ctrl");
+        HBox r1 = controlTab.createCustomText(ctrlKey);
         r1.getChildren().addAll(new ImageView(myPlusDir), controlTab.createCustomText("S"));
 
         VBox l2 = controlTab.createLeftLabel("Undo");
@@ -118,7 +128,7 @@ public class ControlUI extends GridPane
         r2.getChildren().addAll(new ImageView(myPlusDir), controlTab.createCustomText("Z"));
 
         VBox l3 = controlTab.createLeftLabel("Redo");
-        HBox r3 = controlTab.createCustomText("Ctrl");
+        HBox r3 = controlTab.createCustomText(ctrlKey);
         r3.getChildren().addAll(new ImageView(myPlusDir), controlTab.createCustomText("Y"));
 
         VBox l4 = controlTab.createLeftLabel("Collect Garbage ");
@@ -155,7 +165,7 @@ public class ControlUI extends GridPane
         HBox r1 = controlTab.createCustomText("Mouse Wheel");
 
         VBox l2 = controlTab.createLeftLabel("");
-        HBox r2 = controlTab.createCustomText("Shift");
+        HBox r2 = controlTab.createCustomText(shiftKey);
         r2.getChildren().addAll(new ImageView(myPlusDir), controlTab.createIconButton(AwesomeIconSolid.ARROW_UP),
                 controlTab.createIconButton(AwesomeIconSolid.ARROW_DOWN));
 
@@ -171,7 +181,7 @@ public class ControlUI extends GridPane
                 controlTab.createIconButton(AwesomeIconSolid.ARROWS_ALT_V));
 
         VBox l5 = controlTab.createLeftLabel("Draw Zoom Box");
-        HBox r5 = controlTab.createCustomText("Ctrl");
+        HBox r5 = controlTab.createCustomText(ctrlKey);
         r5.getChildren().addAll(new ImageView(myPlusDir), controlTab.customImageView(mouseLeft));
 
         dispArea.add(l1, 0, 1);
@@ -228,7 +238,7 @@ public class ControlUI extends GridPane
                 controlTab.createIconButton(AwesomeIconSolid.ARROWS_ALT_V));
 
         VBox l7 = controlTab.createLeftLabel("Roll Camera");
-        HBox r7 = controlTab.createCustomText("Shift");
+        HBox r7 = controlTab.createCustomText(shiftKey);
         r7.getChildren().addAll(new ImageView(myPlusDir), controlTab.createIconButton(AwesomeIconSolid.ARROW_LEFT),
                 controlTab.createIconButton(AwesomeIconSolid.ARROW_RIGHT));
 
