@@ -62,13 +62,13 @@ public class ControlTab {
 						+ "    -fx-border-radius: 8 8 8 8;");
 
 		myDisplayArea = new GridPane();
-		ColumnConstraints col1Constraints = new ColumnConstraints();
-		col1Constraints.setPercentWidth(47);
-		ColumnConstraints col2Constraints = new ColumnConstraints();
-		col2Constraints.setPercentWidth(6);
-		ColumnConstraints col3Constraints = new ColumnConstraints();
-		col3Constraints.setPercentWidth(47);
-		myDisplayArea.getColumnConstraints().addAll(col1Constraints, col2Constraints, col3Constraints);
+		ColumnConstraints col1 = new ColumnConstraints();
+		col1.setPercentWidth(47);
+		ColumnConstraints col2 = new ColumnConstraints();
+		col2.setPercentWidth(6);
+		ColumnConstraints col3 = new ColumnConstraints();
+		col3.setPercentWidth(47);
+		myDisplayArea.getColumnConstraints().addAll(col1, col2, col3);
 		myDisplayArea.setVgap(5);
 		myDisplayArea.setPadding(new Insets(0, 10, 10, 10));
 		HBox topheader = createHeader(header);

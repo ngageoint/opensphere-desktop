@@ -50,7 +50,8 @@ public class ControlUI extends GridPane {
 	private static final String ctrlKey = "Ctrl";
 
 	/**
-	 * Creates the main pannel for the "Globe Controls" tab.
+	 * Creates the main pannel for the "Globe Controls" tab. Use of column and row
+	 * constraints to ensure proper parent fitting.
 	 * 
 	 * @param width  the horizontal size desired.
 	 * @param height the vertical size desired.
@@ -74,22 +75,19 @@ public class ControlUI extends GridPane {
 		GridPane mapTools = createMapTools();
 //		setHgrow(mapTools, Priority.ALWAYS);
 
-		ColumnConstraints column1 = new ColumnConstraints();
-		column1.setPercentWidth(50);
-		getColumnConstraints().add(column1);
-		RowConstraints r1 = new RowConstraints();
-		r1.setPercentHeight(50);
-		getRowConstraints().add(r1);
+		ColumnConstraints col1 = new ColumnConstraints();
+		col1.setPercentWidth(50);
+		ColumnConstraints col2 = new ColumnConstraints();
+		col2.setPercentWidth(50);
+		getColumnConstraints().addAll(col1, col2);
 
-		ColumnConstraints column2 = new ColumnConstraints();
-		column2.setPercentWidth(50);
-		getColumnConstraints().add(column2);
-		RowConstraints r2 = new RowConstraints();
-		r2.setPercentHeight(46);
-		getRowConstraints().add(r2);
-		RowConstraints r3 = new RowConstraints();
-		r3.setPercentHeight(4);
-		getRowConstraints().add(r3);
+		RowConstraints row1 = new RowConstraints();
+		row1.setPercentHeight(50);
+		RowConstraints row2 = new RowConstraints();
+		row2.setPercentHeight(46);
+		RowConstraints row3 = new RowConstraints();
+		row3.setPercentHeight(4);
+		getRowConstraints().addAll(row1, row2, row3);
 
 		add(gen, 0, 0);
 		add(generalMap, 1, 0);
@@ -200,12 +198,12 @@ public class ControlUI extends GridPane {
 		r2.getChildren().addAll(new ImageView(myPlusDir), controlTab.createIconButton(AwesomeIconSolid.ARROW_UP),
 				controlTab.createIconButton(AwesomeIconSolid.ARROW_DOWN));
 
-		VBox l3 = controlTab.createLeftLabel("Zoom Fast");
+		VBox l3 = controlTab.createLeftLabel("Zoom Way In / Out");
 		HBox r3 = controlTab.createCustomText("");
 		r3.getChildren().addAll(controlTab.customImageView(mouseMiddle), new ImageView(myPlusDir),
 				controlTab.createIconButton(AwesomeIconSolid.ARROWS_ALT_V));
 
-		VBox l4 = controlTab.createLeftLabel("Zoom Way In / Out");
+		VBox l4 = controlTab.createLeftLabel("Smooth Zoom In / Out");
 		HBox r4 = controlTab.createCustomText("");
 		r4.getChildren().addAll(controlTab.customImageView(mouseLeft), new ImageView(myPlusDir),
 				controlTab.customImageView(mouseRight), new ImageView(myPlusDir),
@@ -262,12 +260,12 @@ public class ControlUI extends GridPane {
 		VBox l5 = controlTab.createLeftLabel("Reset View");
 		HBox r5 = controlTab.createCustomText("R");
 
-		VBox l6 = controlTab.createLeftLabel("Pitch Camera");
+		VBox l6 = controlTab.createLeftLabel("Tilt Globe");
 		HBox r6 = controlTab.createCustomText("");
 		r6.getChildren().addAll(controlTab.customImageView(mouseRight), new ImageView(myPlusDir),
 				controlTab.createIconButton(AwesomeIconSolid.ARROWS_ALT_V));
 
-		VBox l7 = controlTab.createLeftLabel("Roll Camera");
+		VBox l7 = controlTab.createLeftLabel("Roll Globe");
 		HBox r7 = controlTab.createCustomText(shiftKey);
 		r7.getChildren().addAll(new ImageView(myPlusDir), controlTab.createIconButton(AwesomeIconSolid.ARROW_LEFT),
 				controlTab.createIconButton(AwesomeIconSolid.ARROW_RIGHT));
