@@ -30,7 +30,8 @@ public class NewKeyMapFrame extends AbstractInternalFrame
         super();
         final JFXPanel fxPanel = new JFXPanel();
 
-        setSize(748, 610);
+       // setSize(748, 610);
+        setSize(900,700);
         setPreferredSize(getSize());
         setMinimumSize(getSize());
         setTitle(TITLE);
@@ -81,6 +82,7 @@ public class NewKeyMapFrame extends AbstractInternalFrame
 
         Tab mapTab = new Tab("Globe Shortcuts");
         mapTab.setContent(new ControlUI(fxPanel.getWidth(), fxPanel.getHeight()));
+        mapTab.getContent().setManaged(true);
         Tab menuTab = new Tab("Menu Shortcuts");
         menuTab.setContent(new MenuShortCutsUI(fxPanel.getWidth(), fxPanel.getHeight()));
 
