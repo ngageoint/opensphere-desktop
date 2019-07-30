@@ -60,7 +60,6 @@ public class ControlUI extends GridPane
      */
     public ControlUI(int width, int height)
     {
-        // setMinSize(width, height);
         setStyle("-fx-background-color : derive(-fx-base, 18%)");
         setHgap(10);
         setVgap(10);
