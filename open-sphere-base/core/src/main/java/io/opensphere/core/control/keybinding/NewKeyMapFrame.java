@@ -31,7 +31,7 @@ public class NewKeyMapFrame extends AbstractInternalFrame
         final JFXPanel fxPanel = new JFXPanel();
 
         setSize(748, 610);
-        //setSize(900,700);
+        // setSize(900,700);
         setPreferredSize(getSize());
         setMinimumSize(getSize());
         setTitle(TITLE);

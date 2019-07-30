@@ -60,8 +60,7 @@ public class MenuShortCutsUI extends HBox
      * @param propname the text to reference this element by.
      * @param percent the double to specify the width of each column as a
      *            percentage of the whole.
-     * @return a column item which can then be added to a JavaFX
-     *         TableView.
+     * @return a column item which can then be added to a JavaFX TableView.
      */
     private TableColumn<MenuShortCut, String> customColumn(String name, String propname, double percent)
     {
