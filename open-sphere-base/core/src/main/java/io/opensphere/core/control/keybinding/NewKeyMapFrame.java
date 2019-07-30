@@ -18,7 +18,7 @@ public class NewKeyMapFrame extends AbstractInternalFrame
     private static final long serialVersionUID = 1L;
 
     /** The title of the window. */
-    public static final String TITLE = "Key Map";
+    public static final String TITLE = "Controls";
 
     /**
      * The Container panel. Since this JInternalFrame can be 'torn off' and uses

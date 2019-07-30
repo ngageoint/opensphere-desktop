@@ -110,7 +110,7 @@ public class ControlUI extends GridPane {
 		r1.getChildren().addAll(new ImageView(myPlusDir), controlTab.customImageView(mouseLeft));
 
 		VBox l2 = controlTab.createLeftLabel("Toggle Arc Length");
-		HBox r2 = controlTab.createCustomText("m");
+		HBox r2 = controlTab.createCustomText("M");
 
 		VBox l3 = controlTab.createLeftLabel("Live Track Mode");
 		HBox r3 = controlTab.createCustomText("Ctrl [hold]");
@@ -162,7 +162,7 @@ public class ControlUI extends GridPane {
 		r3.getChildren().addAll(new ImageView(myPlusDir), controlTab.createCustomText("Y"));
 
 		VBox l4 = controlTab.createLeftLabel("Collect Garbage ");
-		HBox r4 = controlTab.createCustomText("g");
+		HBox r4 = controlTab.createCustomText("G");
 
 		VBox l5 = controlTab.createLeftLabel("Cancel Query");
 		HBox r5 = controlTab.createCustomText("Esc");
