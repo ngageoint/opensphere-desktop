@@ -6,7 +6,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 
@@ -60,7 +59,6 @@ public class ControlUI extends GridPane
      */
     public ControlUI(int width, int height)
     {
-        // setMinSize(width, height);
         setStyle("-fx-background-color : derive(-fx-base, 18%)");
         setHgap(10);
         setVgap(10);

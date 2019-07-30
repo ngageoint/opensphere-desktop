@@ -1,6 +1,5 @@
 package io.opensphere.core.control.keybinding;
 
-import cern.colt.Arrays;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.api.adapter.AbstractHUDFrameMenuItemPlugin;
 
