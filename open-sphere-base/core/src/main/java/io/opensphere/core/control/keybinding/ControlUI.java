@@ -64,16 +64,9 @@ public class ControlUI extends GridPane {
 		setPadding(new Insets(5));
 
 		GridPane gen = createGeneral();
-//		setHgrow(gen, Priority.ALWAYS);
-//
 		GridPane generalMap = createGeneralMap();
-//		setHgrow(generalMap, Priority.ALWAYS);
-//
 		GridPane mapZoom = createMapZoom();
-//		setHgrow(mapZoom, Priority.ALWAYS);
-//
 		GridPane mapTools = createMapTools();
-//		setHgrow(mapTools, Priority.ALWAYS);
 
 		ColumnConstraints col1 = new ColumnConstraints();
 		col1.setPercentWidth(50);
