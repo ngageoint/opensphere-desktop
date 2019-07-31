@@ -3,8 +3,10 @@ package io.opensphere.core.control.keybinding;
 import io.opensphere.core.util.AwesomeIconSolid;
 import javafx.geometry.Insets;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 
 /**
@@ -32,35 +34,59 @@ public class ControlUI extends GridPane
      * The directory of the "mouse right button clicked" icon.
      */
     private static final String mouseRight = "images/keys/MouseRight.png";
-    
+
+    /**
+     * The directory of the "four way arrow All" icon.
+     */
+    private static final String arrowAll = "images/keys/arrows.png";
+
     /**
      * The directory of the "mouse right button clicked" icon.
      */
     private static final String shiftKey = "Shift";
-    
+
     /**
      * The directory of the "mouse right button clicked" icon.
      */
     private static final String ctrlKey = "Ctrl";
 
     /**
-     * Creates the main pannel for the "Globe Controls" tab.
+     * Creates the main pannel for the "Globe Controls" tab. Use of column and
+     * row constraints to ensure proper parent fitting.
      * 
      * @param width the horizontal size desired.
      * @param height the vertical size desired.
      */
     public ControlUI(int width, int height)
     {
-        setMinSize(width, height);
         setStyle("-fx-background-color : derive(-fx-base, 18%)");
         setHgap(10);
         setVgap(10);
         setPadding(new Insets(5));
 
-        add(createGeneral(), 0, 0);
-        add(createGeneralMap(), 1, 0);
-        add(createMapZoom(), 0, 1);
-        add(createMapTools(), 1, 1);
+        GridPane gen = createGeneral();
+        GridPane generalMap = createGeneralMap();
+        GridPane mapZoom = createMapZoom();
+        GridPane mapTools = createMapTools();
+
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setPercentWidth(50);
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setPercentWidth(50);
+        getColumnConstraints().addAll(col1, col2);
+
+        RowConstraints row1 = new RowConstraints();
+        row1.setPercentHeight(50);
+        RowConstraints row2 = new RowConstraints();
+        row2.setPercentHeight(46);
+        RowConstraints row3 = new RowConstraints();
+        row3.setPercentHeight(4);
+        getRowConstraints().addAll(row1, row2, row3);
+
+        add(gen, 0, 0);
+        add(generalMap, 1, 0);
+        add(mapZoom, 0, 1);
+        add(mapTools, 1, 1);
     }
 
     /**
@@ -79,7 +105,7 @@ public class ControlUI extends GridPane
         r1.getChildren().addAll(new ImageView(myPlusDir), controlTab.customImageView(mouseLeft));
 
         VBox l2 = controlTab.createLeftLabel("Toggle Arc Length");
-        HBox r2 = controlTab.createCustomText("m");
+        HBox r2 = controlTab.createCustomText("M");
 
         VBox l3 = controlTab.createLeftLabel("Live Track Mode");
         HBox r3 = controlTab.createCustomText("Ctrl [hold]");
@@ -132,7 +158,7 @@ public class ControlUI extends GridPane
         r3.getChildren().addAll(new ImageView(myPlusDir), controlTab.createCustomText("Y"));
 
         VBox l4 = controlTab.createLeftLabel("Collect Garbage ");
-        HBox r4 = controlTab.createCustomText("g");
+        HBox r4 = controlTab.createCustomText("G");
 
         VBox l5 = controlTab.createLeftLabel("Cancel Query");
         HBox r5 = controlTab.createCustomText("Esc");
@@ -169,12 +195,12 @@ public class ControlUI extends GridPane
         r2.getChildren().addAll(new ImageView(myPlusDir), controlTab.createIconButton(AwesomeIconSolid.ARROW_UP),
                 controlTab.createIconButton(AwesomeIconSolid.ARROW_DOWN));
 
-        VBox l3 = controlTab.createLeftLabel("Zoom Fast");
+        VBox l3 = controlTab.createLeftLabel("Zoom Way In / Out");
         HBox r3 = controlTab.createCustomText("");
         r3.getChildren().addAll(controlTab.customImageView(mouseMiddle), new ImageView(myPlusDir),
                 controlTab.createIconButton(AwesomeIconSolid.ARROWS_ALT_V));
 
-        VBox l4 = controlTab.createLeftLabel("Zoom Way In / Out");
+        VBox l4 = controlTab.createLeftLabel("Smooth Zoom In / Out");
         HBox r4 = controlTab.createCustomText("");
         r4.getChildren().addAll(controlTab.customImageView(mouseLeft), new ImageView(myPlusDir),
                 controlTab.customImageView(mouseRight), new ImageView(myPlusDir),
@@ -211,19 +237,18 @@ public class ControlUI extends GridPane
         VBox l1 = controlTab.createLeftLabel("Pan View");
         HBox r1 = controlTab.createCustomText("");
         r1.getChildren().addAll(controlTab.customImageView(mouseLeft), new ImageView(myPlusDir),
-                controlTab.createIconButton(AwesomeIconSolid.ARROWS_ALT));
+                controlTab.createStyledButton(arrowAll));
 
         VBox l2 = controlTab.createLeftLabel("");
         HBox r2 = controlTab.createCustomText("");
         r2.getChildren().addAll(controlTab.createIconButton(AwesomeIconSolid.ARROW_LEFT),
-                controlTab.createIconButton(AwesomeIconSolid.ARROW_RIGHT),
-                controlTab.createIconButton(AwesomeIconSolid.ARROW_UP),
+                controlTab.createIconButton(AwesomeIconSolid.ARROW_RIGHT), controlTab.createIconButton(AwesomeIconSolid.ARROW_UP),
                 controlTab.createIconButton(AwesomeIconSolid.ARROW_DOWN));
 
         VBox l3 = controlTab.createLeftLabel("Fine Pan");
         HBox r3 = controlTab.createCustomText("");
         r3.getChildren().addAll(controlTab.createCustomText("Alt"), new ImageView(myPlusDir),
-                controlTab.createIconButton(AwesomeIconSolid.ARROWS_ALT));
+                controlTab.createStyledButton(arrowAll));
 
         VBox l4 = controlTab.createLeftLabel("Context Menu");
         HBox r4 = controlTab.createCustomText("");
@@ -232,12 +257,12 @@ public class ControlUI extends GridPane
         VBox l5 = controlTab.createLeftLabel("Reset View");
         HBox r5 = controlTab.createCustomText("R");
 
-        VBox l6 = controlTab.createLeftLabel("Pitch Camera");
+        VBox l6 = controlTab.createLeftLabel("Tilt Globe");
         HBox r6 = controlTab.createCustomText("");
         r6.getChildren().addAll(controlTab.customImageView(mouseRight), new ImageView(myPlusDir),
                 controlTab.createIconButton(AwesomeIconSolid.ARROWS_ALT_V));
 
-        VBox l7 = controlTab.createLeftLabel("Roll Camera");
+        VBox l7 = controlTab.createLeftLabel("Roll Globe");
         HBox r7 = controlTab.createCustomText(shiftKey);
         r7.getChildren().addAll(new ImageView(myPlusDir), controlTab.createIconButton(AwesomeIconSolid.ARROW_LEFT),
                 controlTab.createIconButton(AwesomeIconSolid.ARROW_RIGHT));

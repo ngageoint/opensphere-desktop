@@ -18,7 +18,7 @@ public class NewKeyMapFrame extends AbstractInternalFrame
     private static final long serialVersionUID = 1L;
 
     /** The title of the window. */
-    public static final String TITLE = "Key Map";
+    public static final String TITLE = "Controls";
 
     /**
      * The Container panel. Since this JInternalFrame can be 'torn off' and uses
@@ -81,6 +81,7 @@ public class NewKeyMapFrame extends AbstractInternalFrame
 
         Tab mapTab = new Tab("Globe Shortcuts");
         mapTab.setContent(new ControlUI(fxPanel.getWidth(), fxPanel.getHeight()));
+        mapTab.getContent().setManaged(true);
         Tab menuTab = new Tab("Menu Shortcuts");
         menuTab.setContent(new MenuShortCutsUI(fxPanel.getWidth(), fxPanel.getHeight()));
 

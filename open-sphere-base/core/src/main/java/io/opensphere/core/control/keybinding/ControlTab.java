@@ -29,6 +29,11 @@ public class ControlTab
     private GridPane myDisplayArea;
 
     /**
+     * The FX styling for blue color and opacity.
+     */
+    private static final String fxTheme = "-fx-background-color:#0066cc;-fx-opacity: 1;";
+
+    /**
      * creates a custom styled button with special text,styling, and sizing.
      * 
      * @param text the icon to be set.
@@ -47,7 +52,7 @@ public class ControlTab
         label.setStyle("-fx-font-size: 16 px;");
 
         customIcon.setGraphic(label);
-        customIcon.setStyle("-fx-background-color:#0066cc;-fx-opacity: 1;");
+        customIcon.setStyle(fxTheme);
         customIcon.setDisable(true);
         customIcon.setMaxSize(22, 22);
         return customIcon;
@@ -66,13 +71,13 @@ public class ControlTab
                         + "    -fx-border-radius: 8 8 8 8;");
 
         myDisplayArea = new GridPane();
-        ColumnConstraints col1Constraints = new ColumnConstraints();
-        col1Constraints.setPercentWidth(47);
-        ColumnConstraints col2Constraints = new ColumnConstraints();
-        col2Constraints.setPercentWidth(6);
-        ColumnConstraints col3Constraints = new ColumnConstraints();
-        col3Constraints.setPercentWidth(47);
-        myDisplayArea.getColumnConstraints().addAll(col1Constraints, col2Constraints, col3Constraints);
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setPercentWidth(47);
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setPercentWidth(6);
+        ColumnConstraints col3 = new ColumnConstraints();
+        col3.setPercentWidth(47);
+        myDisplayArea.getColumnConstraints().addAll(col1, col2, col3);
         myDisplayArea.setVgap(5);
         myDisplayArea.setPadding(new Insets(0, 10, 10, 10));
         HBox topheader = createHeader(header);
@@ -170,14 +175,34 @@ public class ControlTab
     }
 
     /**
+     * creates a custom blue styled button with an image inside.
+     * 
+     * @param image the icon to be set.
+     * @return a Button containing the image with fixed size and matching
+     *         styles.
+     */
+    public Button createStyledButton(String image)
+    {
+        Button styledButton = new Button();
+        styledButton.setStyle(fxTheme);
+        ImageView customView = new ImageView(image);
+        customView.setFitHeight(22);
+        customView.setFitWidth(22);
+        customView.setPreserveRatio(true);
+        styledButton.setAlignment(Pos.CENTER);
+        styledButton.setGraphic(customView);
+        return styledButton;
+    }
+
+    /**
      * A custom button for putting text or images into buttons.
      */
-    private class IconDispButton extends Button
+    public class IconDispButton extends Button
     {
-        private IconDispButton(String key)
+        public IconDispButton(String key)
         {
             setDisable(true);
-            setStyle("-fx-background-color:#0066cc;-fx-opacity: 1;");
+            setStyle(fxTheme);
             setTextFill(Color.web("white"));
             setText(key);
         }
