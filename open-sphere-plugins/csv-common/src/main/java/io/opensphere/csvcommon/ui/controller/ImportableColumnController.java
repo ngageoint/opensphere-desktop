@@ -1,6 +1,9 @@
 package io.opensphere.csvcommon.ui.controller;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import io.opensphere.core.preferences.PreferencesRegistry;
@@ -45,6 +48,22 @@ public class ImportableColumnController
                 String key = ourKeyPrefix + columnName.toLowerCase();
 
                 List<String> columnsToNotImport = CSVColumnPrefsUtil.getCustomKeys(registry, key);
+
+                List<?> currentParams = new ArrayList<String>();
+                currentParams = parameters.getColumnNames();
+                List<String> newParams = new ArrayList<String>();
+
+                Iterator<?> litr = currentParams.iterator();
+                while (litr.hasNext())
+                {
+                    Object element = litr.next();
+                    if (element.equals("Index") || element.equals("Color"))
+                    {
+                        element = element + "_import";
+                    }
+                    newParams.add(element.toString());
+                }
+                parameters.setColumnNames(newParams);
 
                 if (columnsToNotImport != null)
                 {
