@@ -26,9 +26,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import com.jidesoft.swing.JideTabbedPane;
 
 import io.opensphere.controlpanels.layers.event.TabChangeListener;

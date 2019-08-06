@@ -1,7 +1,6 @@
 package io.opensphere.myplaces.editor.controller;
 
 import java.text.DecimalFormat;
-import java.util.Collection;
 
 import org.apache.log4j.Logger;
 

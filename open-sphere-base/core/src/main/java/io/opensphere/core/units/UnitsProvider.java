@@ -3,8 +3,6 @@ package io.opensphere.core.units;
 import java.util.Collection;
 
 import io.opensphere.core.preferences.Preferences;
-import io.opensphere.core.units.angle.Coordinates;
-import io.opensphere.core.units.length.Length;
 
 /**
  * Interface for facilities that provide units.
