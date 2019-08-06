@@ -235,7 +235,6 @@ public class SelectionCommandFactory
         menuOpts.add(createHeader("Features"));
         menuOpts.add(SELECT.createMenuItem(listener));
         menuOpts.add(DESELECT.createMenuItem(listener));
-        menuOpts.add(DESELECT.createMenuItem(listener));
         menuOpts.add(REMOVE_ALL.createMenuItem(listener));
         return menuOpts;
     }
@@ -256,7 +255,6 @@ public class SelectionCommandFactory
         menuOpts.add(new JSeparator());
         menuOpts.add(createHeader("Features"));
         menuOpts.add(SELECT.createMenuItem(listener));
-        menuOpts.add(DESELECT.createMenuItem(listener));
         menuOpts.add(DESELECT.createMenuItem(listener));
         menuOpts.add(REMOVE_ALL.createMenuItem(listener));
         return menuOpts;
