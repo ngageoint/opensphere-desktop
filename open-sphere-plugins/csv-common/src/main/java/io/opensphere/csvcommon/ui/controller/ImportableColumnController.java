@@ -1,10 +1,11 @@
 package io.opensphere.csvcommon.ui.controller;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import io.opensphere.analysis.table.model.MetaColumn;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.csvcommon.config.v2.CSVParseParameters;
@@ -29,9 +30,10 @@ public class ImportableColumnController
      * @param registry The preferences registry to get non importable
      *            configurations.
      */
-    @SuppressWarnings("unchecked")
     public void detectNonImportableColumns(CSVParseParameters parameters, PreferencesRegistry registry)
     {
+        List<String> metaColumns = new ArrayList<String>(Arrays.asList(MetaColumn.COLOR, MetaColumn.HILIGHT, MetaColumn.INDEX,
+                MetaColumn.LOB_VISIBLE, MetaColumn.MGRS_DERIVED, MetaColumn.SELECTED, MetaColumn.VISIBLE));
         if (parameters.getColumnNames() != null)
         {
             Map<String, Integer> upperCasedColumnNames = New.map();
@@ -47,20 +49,16 @@ public class ImportableColumnController
             {
                 String key = ourKeyPrefix + columnName.toLowerCase();
                 List<String> columnsToNotImport = CSVColumnPrefsUtil.getCustomKeys(registry, key);
-
-                List<String> currentParams = new ArrayList<String>();
-                currentParams = (List<String>)parameters.getColumnNames();
+                List<String> currentParams = new ArrayList<String>(parameters.getColumnNames());
                 List<String> newParams = new ArrayList<String>();
-                Iterator<String> litr = currentParams.iterator();
-                while (litr.hasNext())
+                currentParams.forEach(e ->
                 {
-                    Object element = litr.next();
-                    if (element.equals("Index") || element.equals("Color"))
+                    if (metaColumns.contains(e))
                     {
-                        element = element + "_import";
+                        e = e + "_user";
                     }
-                    newParams.add(element.toString());
-                }
+                    newParams.add(e);
+                });
                 parameters.setColumnNames(newParams);
 
                 if (columnsToNotImport != null)
