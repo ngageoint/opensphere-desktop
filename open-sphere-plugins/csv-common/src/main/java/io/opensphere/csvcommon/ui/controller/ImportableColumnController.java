@@ -29,6 +29,7 @@ public class ImportableColumnController
      * @param registry The preferences registry to get non importable
      *            configurations.
      */
+    @SuppressWarnings("unchecked")
     public void detectNonImportableColumns(CSVParseParameters parameters, PreferencesRegistry registry)
     {
         if (parameters.getColumnNames() != null)
@@ -45,14 +46,12 @@ public class ImportableColumnController
             for (String columnName : parameters.getColumnNames())
             {
                 String key = ourKeyPrefix + columnName.toLowerCase();
-
                 List<String> columnsToNotImport = CSVColumnPrefsUtil.getCustomKeys(registry, key);
 
-                List<?> currentParams = new ArrayList<String>();
-                currentParams = parameters.getColumnNames();
+                List<String> currentParams = new ArrayList<String>();
+                currentParams = (List<String>)parameters.getColumnNames();
                 List<String> newParams = new ArrayList<String>();
-
-                Iterator<?> litr = currentParams.iterator();
+                Iterator<String> litr = currentParams.iterator();
                 while (litr.hasNext())
                 {
                     Object element = litr.next();
