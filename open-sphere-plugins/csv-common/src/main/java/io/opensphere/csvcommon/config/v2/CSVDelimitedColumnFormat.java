@@ -92,6 +92,16 @@ public class CSVDelimitedColumnFormat extends CSVColumnFormat
         return myTokenDelimiter;
     }
 
+    /**
+     * Sets the token delimiter.
+     *
+     * @param delimiter the new delimiter
+     */
+    public void setTokenDelimiter(String delimiter)
+    {
+        myTokenDelimiter = delimiter;
+    }
+
     @Override
     public int hashCode()
     {

@@ -10,8 +10,10 @@ import io.opensphere.core.preferences.Preferences;
 import io.opensphere.core.util.JAXBContextHelper;
 import io.opensphere.core.util.SupplierX;
 import io.opensphere.core.util.XMLUtilities;
+import io.opensphere.core.util.swing.EventQueueUtilities;
 import io.opensphere.csv.config.v2.CSVDataSource;
 import io.opensphere.csv.config.v2.CSVDataSources;
+import io.opensphere.csvcommon.config.v2.CSVDelimitedColumnFormat;
 import io.opensphere.csvcommon.config.v2.CSVParseParameters;
 
 /** Manages the configuration file. */
@@ -88,8 +90,10 @@ public class CSVConfigurationManager
      */
     public CSVDataSources getConfig()
     {
-        return myCsvPreferences.getJAXBObject(
+        CSVDataSources config = myCsvPreferences.getJAXBObject(
                 CSVDataSources.class, PREFERENCES_KEY_V2, CONTEXT_SUPPLIER, new CSVDataSources());
+        revertTabPlaceholders(config);
+        return config;
     }
 
     /**
@@ -99,6 +103,43 @@ public class CSVConfigurationManager
      */
     public void saveConfig(CSVDataSources config)
     {
+        insertTabPlaceholders(config);
         myCsvPreferences.putJAXBObject(PREFERENCES_KEY_V2, config, false, CONTEXT_SUPPLIER, this);
+    }
+
+    /**
+     * Inserts the placeholder delimiter "TAB" wherever the token 
+     * delimiter is "\t".
+     *
+     * @param sources collection of data sources to change delimiter
+     */
+    private void insertTabPlaceholders(CSVDataSources sources)
+    {
+        sources.getCSVSourceList().forEach(e ->
+        {
+            CSVDelimitedColumnFormat columnFormat = (CSVDelimitedColumnFormat)e.getParseParameters().getColumnFormat();
+            if (columnFormat.getTokenDelimiter().equals("\t"))
+            {
+                EventQueueUtilities.runOnEDTAndWait(() -> columnFormat.setTokenDelimiter("TAB"));
+            }
+        });
+    }
+
+    /**
+     * Reverts the placeholder delimiter "TAB" to the normal
+     * delimiter "\t".
+     *
+     * @param sources collection of data sources to change delimiter
+     */
+    private void revertTabPlaceholders(CSVDataSources sources)
+    {
+        sources.getCSVSourceList().forEach(e ->
+        {
+            CSVDelimitedColumnFormat columnFormat = (CSVDelimitedColumnFormat)e.getParseParameters().getColumnFormat();
+            if (columnFormat.getTokenDelimiter().equals("TAB"))
+            {
+                EventQueueUtilities.runOnEDTAndWait(() -> columnFormat.setTokenDelimiter("\t"));
+            }
+        });
     }
 }
