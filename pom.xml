@@ -33,6 +33,7 @@
 		<module>open-sphere-laf</module>
 		<module>open-sphere-install</module>
 		<module>open-sphere-maven-plugins</module>
+		<module>open-sphere-build-tools</module>
 	</modules>
 	<profiles>
 		<profile>
@@ -270,7 +271,20 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-pmd-plugin</artifactId>
-					<version>3.10.0</version>
+					<version>3.12.0</version>
+					<configuration>
+						<rulesets>
+							<ruleset>open-sphere/pmd-config.xml</ruleset>
+						</rulesets>
+						<printFailingErrors>true</printFailingErrors>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>io.open-sphere.build.tools</groupId>
+							<artifactId>open-sphere-build-tools</artifactId>
+							<version>1.0</version>
+						</dependency>
+					</dependencies>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -1426,7 +1440,7 @@
 					<analysisCache>true</analysisCache>
 					<analysisCacheLocation>${project.build.directory}/pmd/pmd.cache</analysisCacheLocation>
 					<rulesets>
-						<ruleset>${session.executionRootDirectory}/pmd-config.xml</ruleset>
+						<ruleset>open-sphere/pmd-config.xml</ruleset>
 					</rulesets>
 					<failOnViolation>false</failOnViolation>
 					<targetJdk>10</targetJdk>
