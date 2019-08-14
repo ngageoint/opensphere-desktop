@@ -218,8 +218,8 @@ public class JTagField extends JPanel
     }
 
     /**
-     * Adds the supplied item to the tag field if it is not already present with 
-     * the given color, and if it is a valid choice within the tag set. This method 
+     * Adds the supplied item to the tag field if it is not already present with
+     * the given color, and if it is a valid choice within the tag set. This method
      * has a side-effect of rebuilding the popup menu to reflect the unchosen options.
      *
      * @param text the text to add to the tag field.
