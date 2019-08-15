@@ -10,7 +10,6 @@ import java.util.function.Consumer;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -30,13 +29,13 @@ public class JTag extends JPanel
     public static final Color DEFAULT_COLOR = new Color(210, 219, 248);
 
     /** The text displayed in the component. */
-    private String myText;
+    private final String myText;
 
     /** The component in which the content is rendered. */
-    private JComponent myTextComponent;
+    private final JLabel myTextComponent;
 
     /** The button used to dismiss the tag. */
-    private JButton myCloseButton;
+    private final JButton myCloseButton;
 
     /**
      * The consumer which will receive the text of the tag when the close button
@@ -95,6 +94,22 @@ public class JTag extends JPanel
      */
     public JTag(String text, Consumer<String> closeHandler, Color color)
     {
+        this(text, closeHandler, color, null);
+    }
+
+    /**
+     * Creates a new tag with the supplied text, the supplied listener, the
+     * supplied color, and the supplied text color. By default, the border
+     * color of the tag is derived from the background color.
+     *
+     * @param text the text with which to populate the tag.
+     * @param closeHandler the consumer which will receive the text of the tag
+     *            when the close button is pressed, may be null.
+     * @param color the color with which to shade the tag component.
+     * @param textColor the color the text will be, may be null.
+     */
+    public JTag(String text, Consumer<String> closeHandler, Color color, Color textColor)
+    {
         super(new FlowLayout(FlowLayout.CENTER, 5, 0));
         setBorder(new RoundedBorder(getBorderColor(color)));
         getInsets().set(0, 5, 0, 5);
@@ -104,6 +119,10 @@ public class JTag extends JPanel
         myText = text;
 
         myTextComponent = new JLabel(myText);
+        if (textColor != null)
+        {
+            myTextComponent.setForeground(textColor);
+        }
         myTextComponent.setBorder(BorderFactory.createEmptyBorder(4,0,3,0));
         add(myTextComponent);
 
@@ -120,7 +139,6 @@ public class JTag extends JPanel
         }
 
         add(myCloseButton);
-
     }
 
     /**
@@ -134,7 +152,6 @@ public class JTag extends JPanel
         super.setEnabled(enabled);
 
         myCloseButton.setEnabled(enabled);
-        myTextComponent.setEnabled(enabled);
     }
 
     /**
