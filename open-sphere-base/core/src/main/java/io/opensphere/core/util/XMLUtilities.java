@@ -980,7 +980,8 @@ public final class XMLUtilities
             }
 
             XMLEventReader rawReader = factory.createXMLEventReader(stream);
-            reader = factory.createFilteredReader(rawReader, (EventFilter)event -> !(event.isCharacters() && ((Characters)event).isWhiteSpace()));
+            reader = factory.createFilteredReader(rawReader, (EventFilter)event -> !(event.isCharacters() && ((Characters)event).isWhiteSpace()
+                    && !((Characters)event).getData().equals("\t") && !((Characters)event).getData().equals(" ")));
         }
         catch (XMLStreamException e)
         {
