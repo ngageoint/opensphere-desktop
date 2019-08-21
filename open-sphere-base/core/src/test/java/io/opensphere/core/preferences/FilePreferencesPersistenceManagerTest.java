@@ -1,5 +1,6 @@
 package io.opensphere.core.preferences;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
@@ -41,6 +42,7 @@ public class FilePreferencesPersistenceManagerTest
         manager.save(prefs, cipherFactory, compressed);
         loadedPrefs = manager.load(topic, cipherFactory, compressed);
         Assert.assertTrue(loadedPrefs.getBoolean(booleanKey, false));
+        
         if (!manager.getFile(topic, manager.getExtension(false, compressed)).delete())
         {
             Assert.fail();

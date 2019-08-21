@@ -71,6 +71,9 @@ public final class XMLUtilities
 {
     /** Logger reference. */
     private static final Logger LOGGER = Logger.getLogger(XMLUtilities.class);
+    
+    /** Default Error Text **/
+    private static final String UNMARSHAL_ERROR_TEXT = "Failed to unmarshal object for target class ";
 
     /**
      * Peeks at the input stream to see if the stream can be unmarshalled as the
@@ -511,8 +514,7 @@ public final class XMLUtilities
         {
             throw new JAXBException("Concurrent modification during marshalling [" + jaxbElement + "]: " + e, e);
         }
-        Element element = doc.getDocumentElement();
-        return element;
+        return doc.getDocumentElement();
     }
 
     /**
@@ -875,7 +877,7 @@ public final class XMLUtilities
         }
         catch (RuntimeException e)
         {
-            throw new JAXBException("Failed to unmarshal object for target class " + target + ": " + e, e);
+            throw new JAXBException(UNMARSHAL_ERROR_TEXT + target + ": " + e, e);
         }
     }
 
@@ -893,8 +895,7 @@ public final class XMLUtilities
     public static <T> T readXMLObject(Source stream, Class<T> target) throws JAXBException
     {
         JAXBContext context = JAXBContextHelper.getCachedContext(target);
-        T result = readXMLObject(stream, target, context);
-        return result;
+        return readXMLObject(stream, target, context);
     }
 
     /**
@@ -911,8 +912,7 @@ public final class XMLUtilities
     public static <T> T readXMLObjectNoDTD(Source stream, Class<T> target) throws JAXBException
     {
         JAXBContext context = JAXBContextHelper.getCachedContext(target);
-        T result = readXMLObject(stream, target, context, true);
-        return result;
+        return readXMLObject(stream, target, context, true);
     }
 
     /**
@@ -937,7 +937,7 @@ public final class XMLUtilities
         }
         catch (RuntimeException e)
         {
-            throw new JAXBException("Failed to unmarshal object for target class " + target + ": " + e, e);
+            throw new JAXBException(UNMARSHAL_ERROR_TEXT + target + ": " + e, e);
         }
     }
 
@@ -971,8 +971,8 @@ public final class XMLUtilities
     public static XMLEventReader createWhitespaceDiscardingEventReader(Source stream, boolean skipDTD) throws JAXBException
     {
         XMLInputFactory factory = XMLInputFactory.newInstance();
-        XMLEventReader reader;
-        try
+        XMLEventReader reader; //This is not getting closed
+        try 
         {
             if (skipDTD)
             {
@@ -1024,8 +1024,9 @@ public final class XMLUtilities
     {
         try
         {
-            T result = createUnmarshaller(context).unmarshal(createWhitespaceDiscardingEventReader(stream, skipDTD), target)
-                    .getValue();
+        	XMLEventReader read = createWhitespaceDiscardingEventReader(stream, skipDTD);
+            T result = createUnmarshaller(context).unmarshal(read, target).getValue();
+            closeSource(read);
             return result;
         }
         catch (RuntimeException e)
@@ -1033,7 +1034,7 @@ public final class XMLUtilities
             throw new JAXBException("Failed to unmarshal object for target class " + target + ": " + e, e);
         }
     }
-
+    
     /**
      * Read a JAXB object from the stream. Use a JAXB context created from the
      * provided packages.
@@ -1050,8 +1051,7 @@ public final class XMLUtilities
     public static <T> T readXMLObject(Source stream, Class<T> target, Package... packages) throws JAXBException
     {
         JAXBContext context = JAXBContextHelper.getCachedContext(packages);
-        T result = readXMLObject(stream, target, context);
-        return result;
+        return readXMLObject(stream, target, context);
     }
 
     /**
@@ -1334,6 +1334,18 @@ public final class XMLUtilities
     {
         final SAXSource source = new SAXSource(newXMLReader(), new InputSource(stream));
         return source;
+    }
+    
+    /**
+     * Close the Event Reader Stream.
+     * @param reader The Stream
+     */
+    private static void closeSource(XMLEventReader reader) {
+    	try {
+			reader.close();
+		} catch (XMLStreamException e) {
+			LOGGER.error(e,e);
+		}
     }
 
     /** Disallow instantiation. */
