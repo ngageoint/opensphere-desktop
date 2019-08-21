@@ -62,6 +62,7 @@ public class AngleUnitsProviderTest
         listener.availableUnitsChanged(Coordinates.class, expected);
         Assert.assertEquals(expected, r.val);
         expected.add(DecimalDegrees.class);
+        expected.add(MGRS.class);
         units.removeUnits(DegreesMinutesSeconds.class);
         Assert.assertEquals(expected, r.val);
 
