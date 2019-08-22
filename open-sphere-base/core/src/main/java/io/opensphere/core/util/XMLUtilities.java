@@ -1344,7 +1344,9 @@ public final class XMLUtilities
      */
     private static void closeStream(XMLEventReader reader) {
     	try {
-			if( reader != null) { reader.close(); }
+			if( reader != null) { 
+				reader.close(); 
+			}
 		} catch (XMLStreamException e) {
 			LOGGER.error("Unable to close the xml stream " + e,e);
 		}
