@@ -930,9 +930,11 @@ public final class XMLUtilities
     {
         try
         {
+            XMLEventReader reader = createWhitespaceDiscardingEventReader(stream);
             @SuppressWarnings("unchecked")
             T result = (T)createUnmarshaller(JAXBContextHelper.getCachedContext(classes))
-            .unmarshal(createWhitespaceDiscardingEventReader(stream));
+            .unmarshal(reader);
+            closeStream(reader);
             return result;
         }
         catch (RuntimeException e)
@@ -971,7 +973,7 @@ public final class XMLUtilities
     public static XMLEventReader createWhitespaceDiscardingEventReader(Source stream, boolean skipDTD) throws JAXBException
     {
         XMLInputFactory factory = XMLInputFactory.newInstance();
-        XMLEventReader reader; //This is not getting closed
+        XMLEventReader reader;
         try 
         {
             if (skipDTD)
@@ -1026,12 +1028,12 @@ public final class XMLUtilities
         {
         	XMLEventReader read = createWhitespaceDiscardingEventReader(stream, skipDTD);
             T result = createUnmarshaller(context).unmarshal(read, target).getValue();
-            closeSource(read);
+            closeStream(read);
             return result;
         }
         catch (RuntimeException e)
         {
-            throw new JAXBException("Failed to unmarshal object for target class " + target + ": " + e, e);
+            throw new JAXBException(UNMARSHAL_ERROR_TEXT + target + ": " + e, e);
         }
     }
     
@@ -1337,14 +1339,14 @@ public final class XMLUtilities
     }
     
     /**
-     * Close the Event Reader Stream.
+     * Close the Event Reader Stream. This will close all previous streams that were passed into the reader.
      * @param reader The Stream
      */
-    private static void closeSource(XMLEventReader reader) {
+    private static void closeStream(XMLEventReader reader) {
     	try {
-			reader.close();
+			if( reader != null) { reader.close(); }
 		} catch (XMLStreamException e) {
-			LOGGER.error(e,e);
+			LOGGER.error("Unable to close the xml stream " + e,e);
 		}
     }
 
