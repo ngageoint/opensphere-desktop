@@ -21,7 +21,6 @@ import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.net.Linker;
 import io.opensphere.core.util.net.PreferencesLinkerFactory;
-import io.opensphere.mantle.data.MetaDataInfo;
 import io.opensphere.mantle.data.SpecialKey;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.impl.specialkey.LatitudeKey;
