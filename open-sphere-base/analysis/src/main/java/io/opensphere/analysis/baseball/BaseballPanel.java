@@ -397,7 +397,14 @@ public class BaseballPanel extends GridPane
     private String getValueAsString(String key, Object value, DataElement dataElement)
     {
         String returnValue;
-        if (value == null)
+
+        if (key.equals("TIME"))
+        {
+            // this check is needed since the TIME metadata element isn't always set,
+            // and can alternately be retrieved through the TimeSpan of the element
+            returnValue = dataElement.getTimeSpan().toDisplayString();
+        }
+        else if (value == null)
         {
             returnValue = null;
         }
