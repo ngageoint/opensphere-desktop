@@ -560,7 +560,7 @@ public class BaseballPanel extends GridPane
             myPositionFormat = GeographicPositionFormat.DECDEG;
             myListenerList.forEach(e -> myValueColumn.widthProperty().removeListener(e));
             myListenerList.clear();
-            myActiveDataElement.getMetaData().getKeys().stream().filter(key -> !key.equals(MetaDataInfo.MGRS_DERIVED)).forEach(key ->
+            myActiveDataElement.getMetaData().getKeys().stream().forEach(key ->
             {
                 Object elementValue = myActiveDataElement.getMetaData().getValue(key);
                 String pairValue = getValueAsString(key, elementValue, myActiveDataElement);

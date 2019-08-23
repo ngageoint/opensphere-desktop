@@ -59,6 +59,7 @@ public class MGRSUtilities
                 metaInfo.addUserKey(MetaDataInfo.MGRS_DERIVED);
                 MetaDataProvider newProvider = new MDILinkedMetaDataProvider(metaInfo, provider.getValues());
                 newProvider.setValue(MetaDataInfo.MGRS_DERIVED, mgrsValue);
+                
                 return newProvider;
             }
         }
