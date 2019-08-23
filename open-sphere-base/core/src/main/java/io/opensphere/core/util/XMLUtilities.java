@@ -1339,17 +1339,24 @@ public final class XMLUtilities
     }
     
     /**
-     * Close the Event Reader Stream. This will close all previous streams that were passed into the reader.
+     * Close the Event Reader Stream. This will close all previous streams that
+     * were passed into the reader.
+     * 
      * @param reader The Stream
      */
-    private static void closeStream(XMLEventReader reader) {
-    	try {
-			if( reader != null) { 
-				reader.close(); 
-			}
-		} catch (XMLStreamException e) {
-			LOGGER.error("Unable to close the xml stream " + e,e);
-		}
+    private static void closeStream(XMLEventReader reader)
+    {
+        try
+        {
+            if (reader != null)
+            {
+                reader.close();
+            }
+        }
+        catch (XMLStreamException e)
+        {
+            LOGGER.error("Unable to close the xml stream " + e, e);
+        }
     }
 
     /** Disallow instantiation. */
