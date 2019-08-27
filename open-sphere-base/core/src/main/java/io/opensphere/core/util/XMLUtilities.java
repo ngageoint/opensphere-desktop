@@ -932,8 +932,7 @@ public final class XMLUtilities
         {
             XMLEventReader reader = createWhitespaceDiscardingEventReader(stream);
             @SuppressWarnings("unchecked")
-            T result = (T)createUnmarshaller(JAXBContextHelper.getCachedContext(classes))
-            .unmarshal(reader);
+            T result = (T)createUnmarshaller(JAXBContextHelper.getCachedContext(classes)).unmarshal(reader);
             closeStream(reader);
             return result;
         }
@@ -974,7 +973,7 @@ public final class XMLUtilities
     {
         XMLInputFactory factory = XMLInputFactory.newInstance();
         XMLEventReader reader;
-        try 
+        try
         {
             if (skipDTD)
             {
@@ -1026,7 +1025,7 @@ public final class XMLUtilities
     {
         try
         {
-        	XMLEventReader read = createWhitespaceDiscardingEventReader(stream, skipDTD);
+            XMLEventReader read = createWhitespaceDiscardingEventReader(stream, skipDTD);
             T result = createUnmarshaller(context).unmarshal(read, target).getValue();
             closeStream(read);
             return result;
@@ -1036,7 +1035,7 @@ public final class XMLUtilities
             throw new JAXBException(UNMARSHAL_ERROR_TEXT + target + ": " + e, e);
         }
     }
-    
+
     /**
      * Read a JAXB object from the stream. Use a JAXB context created from the
      * provided packages.
