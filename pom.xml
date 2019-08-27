@@ -1380,7 +1380,7 @@
 					</reportSet>
 				</reportSets>
 				<configuration>
-					<additionalOptions>-Xdoclint:none</additionalOptions>
+					<additionalOptions>-Xdoclint:none -html5</additionalOptions>
 					<excludePackageNames>org.*,net.*,com.bitsys.fade.mist.state.v4</excludePackageNames>
 				</configuration>
 			</plugin>
