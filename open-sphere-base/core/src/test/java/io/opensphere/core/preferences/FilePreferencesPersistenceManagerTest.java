@@ -41,6 +41,7 @@ public class FilePreferencesPersistenceManagerTest
         manager.save(prefs, cipherFactory, compressed);
         loadedPrefs = manager.load(topic, cipherFactory, compressed);
         Assert.assertTrue(loadedPrefs.getBoolean(booleanKey, false));
+        
         if (!manager.getFile(topic, manager.getExtension(false, compressed)).delete())
         {
             Assert.fail();
