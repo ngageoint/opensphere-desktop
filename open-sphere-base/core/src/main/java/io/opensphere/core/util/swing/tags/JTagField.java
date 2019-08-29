@@ -214,10 +214,23 @@ public class JTagField extends JPanel
      */
     public void add(String text)
     {
+        add(text, (Color)null);
+    }
+
+    /**
+     * Adds the supplied item to the tag field if it is not already present with
+     * the given color, and if it is a valid choice within the tag set. This method
+     * has a side-effect of rebuilding the popup menu to reflect the unchosen options.
+     *
+     * @param text the text to add to the tag field.
+     * @param textColor the color of the text in the tag field, may be null.
+     */
+    public void add(String text, Color textColor)
+    {
         if (!myValues.containsKey(text) && myChoices.contains(text))
         {
             myOrderedSelections.add(text);
-            myValues.put(text, new JTag(text, this::remove, myTagColor));
+            myValues.put(text, new JTag(text, this::remove, myTagColor, textColor));
             add(myValues.get(text));
             rebuildPopup();
             revalidate();

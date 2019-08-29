@@ -6,10 +6,10 @@ import io.opensphere.core.util.MathUtil;
 /**
  * An angle represented as degrees/minutes/seconds.
  */
-public final class DegreesMinutesSeconds extends Angle
+public final class DegreesMinutesSeconds extends Coordinates
 {
     /** Long label. */
-    public static final String DMS_LONG_LABEL = "degrees minutes seconds";
+    public static final String DMS_LONG_LABEL = "Degrees Minutes Seconds";
 
     /** Short label. */
     public static final String DMS_SHORT_LABEL = "\u00B0'\"";
@@ -190,7 +190,7 @@ public final class DegreesMinutesSeconds extends Angle
      *
      * @param ang The other angle.
      */
-    public DegreesMinutesSeconds(Angle ang)
+    public DegreesMinutesSeconds(Coordinates ang)
     {
         super(ang.getMagnitude());
     }

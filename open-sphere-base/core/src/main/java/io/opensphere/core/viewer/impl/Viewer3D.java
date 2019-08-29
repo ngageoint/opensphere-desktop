@@ -7,6 +7,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.apache.log4j.Logger;
 
+import io.opensphere.core.Notify;
+import io.opensphere.core.Notify.Method;
 import io.opensphere.core.math.DefaultEllipsoid;
 import io.opensphere.core.math.Ellipsoid;
 import io.opensphere.core.math.Matrix3d;
@@ -912,9 +914,14 @@ public class Viewer3D extends AbstractDynamicViewer
     @Override
     public void startAnimationToPreferredPosition()
     {
-        final ViewerPosition3D pos = getPreferences().getJAXBObject(ViewerPosition3D.class, POSITION_PREF_KEY, null);
+        ViewerPosition3D pos = getPreferences().getJAXBObject(ViewerPosition3D.class, POSITION_PREF_KEY, null);
         if (pos != null)
         {
+            if (isViewerPositionInvalid(pos))
+            {
+                Notify.warn("Saved viewing angle is out of bounds. Resetting to default.", Method.TOAST);
+                pos = new ViewerPosition3D();
+            }
             new ViewerAnimator(this, pos).start();
         }
     }
@@ -947,10 +954,10 @@ public class Viewer3D extends AbstractDynamicViewer
             pos = myMapContext.getProjection().convertToModel(myPosition.getGeoPosition(), Vector3d.ORIGIN);
             changed = Math.abs(pos.getX() - oldPos.getX()) > 400 || Math.abs(pos.getY() - oldPos.getY()) > 400
                     || Math.abs(pos.getZ() - oldPos.getZ()) > 400;
-                    if (myPosition.getGeoPosition().getAlt().getReferenceLevel() != ReferenceLevel.TERRAIN)
-                    {
-                        terrainTolerance *= 10;
-                    }
+            if (myPosition.getGeoPosition().getAlt().getReferenceLevel() != ReferenceLevel.TERRAIN)
+            {
+                 terrainTolerance *= 10;
+            }
         }
         Vector3d backup = myPosition.getDir().multiply(-100);
         while (!myMapContext.getProjection().isOutsideModel(pos.add(pos.multiply(terrainTolerance))))
@@ -1162,6 +1169,33 @@ public class Viewer3D extends AbstractDynamicViewer
             }
         }
         return isValid;
+    }
+
+    /**
+     * Checks if the given viewer position is invalid- inside the model
+     * or outside the maximum distance from the origin.
+     *
+     * @param position the position to validate
+     * @return true if the viewer position is invalid, false if valid
+     */
+    private boolean isViewerPositionInvalid(ViewerPosition3D position)
+    {
+        Vector3d location = new Vector3d(position.getLocation());
+        double terrainTolerance = TERRAIN_SAFETY_TOLERANCE;
+        if (position.getGeoPosition() != null && position.getGeoPosition().getAlt().getReferenceLevel() != ReferenceLevel.TERRAIN)
+        {
+             terrainTolerance *= 10;
+        }
+
+        if (!myMapContext.getProjection().isOutsideModel(location.add(location.multiply(terrainTolerance)))
+                || Math.abs(location.getX()) > ourMaxOriginDistance
+                || Math.abs(location.getY()) > ourMaxOriginDistance
+                || Math.abs(location.getZ()) > ourMaxOriginDistance)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     /** Position and orientation information for the 3D viewer. */

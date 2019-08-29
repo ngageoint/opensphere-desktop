@@ -71,6 +71,9 @@ public final class XMLUtilities
 {
     /** Logger reference. */
     private static final Logger LOGGER = Logger.getLogger(XMLUtilities.class);
+    
+    /** Default Error Text **/
+    private static final String UNMARSHAL_ERROR_TEXT = "Failed to unmarshal object for target class ";
 
     /**
      * Peeks at the input stream to see if the stream can be unmarshalled as the
@@ -511,8 +514,7 @@ public final class XMLUtilities
         {
             throw new JAXBException("Concurrent modification during marshalling [" + jaxbElement + "]: " + e, e);
         }
-        Element element = doc.getDocumentElement();
-        return element;
+        return doc.getDocumentElement();
     }
 
     /**
@@ -875,7 +877,7 @@ public final class XMLUtilities
         }
         catch (RuntimeException e)
         {
-            throw new JAXBException("Failed to unmarshal object for target class " + target + ": " + e, e);
+            throw new JAXBException(UNMARSHAL_ERROR_TEXT + target + ": " + e, e);
         }
     }
 
@@ -893,8 +895,7 @@ public final class XMLUtilities
     public static <T> T readXMLObject(Source stream, Class<T> target) throws JAXBException
     {
         JAXBContext context = JAXBContextHelper.getCachedContext(target);
-        T result = readXMLObject(stream, target, context);
-        return result;
+        return readXMLObject(stream, target, context);
     }
 
     /**
@@ -911,8 +912,7 @@ public final class XMLUtilities
     public static <T> T readXMLObjectNoDTD(Source stream, Class<T> target) throws JAXBException
     {
         JAXBContext context = JAXBContextHelper.getCachedContext(target);
-        T result = readXMLObject(stream, target, context, true);
-        return result;
+        return readXMLObject(stream, target, context, true);
     }
 
     /**
@@ -930,14 +930,15 @@ public final class XMLUtilities
     {
         try
         {
+            XMLEventReader reader = createWhitespaceDiscardingEventReader(stream);
             @SuppressWarnings("unchecked")
-            T result = (T)createUnmarshaller(JAXBContextHelper.getCachedContext(classes))
-            .unmarshal(createWhitespaceDiscardingEventReader(stream));
+            T result = (T)createUnmarshaller(JAXBContextHelper.getCachedContext(classes)).unmarshal(reader);
+            closeStream(reader);
             return result;
         }
         catch (RuntimeException e)
         {
-            throw new JAXBException("Failed to unmarshal object for target class " + target + ": " + e, e);
+            throw new JAXBException(UNMARSHAL_ERROR_TEXT + target + ": " + e, e);
         }
     }
 
@@ -980,7 +981,8 @@ public final class XMLUtilities
             }
 
             XMLEventReader rawReader = factory.createXMLEventReader(stream);
-            reader = factory.createFilteredReader(rawReader, (EventFilter)event -> !(event.isCharacters() && ((Characters)event).isWhiteSpace()));
+            reader = factory.createFilteredReader(rawReader, (EventFilter)event -> !(event.isCharacters() && ((Characters)event).isWhiteSpace()
+                    && !((Characters)event).getData().contains("\t") && !((Characters)event).getData().contains(" ")));
         }
         catch (XMLStreamException e)
         {
@@ -1023,13 +1025,14 @@ public final class XMLUtilities
     {
         try
         {
-            T result = createUnmarshaller(context).unmarshal(createWhitespaceDiscardingEventReader(stream, skipDTD), target)
-                    .getValue();
+            XMLEventReader read = createWhitespaceDiscardingEventReader(stream, skipDTD);
+            T result = createUnmarshaller(context).unmarshal(read, target).getValue();
+            closeStream(read);
             return result;
         }
         catch (RuntimeException e)
         {
-            throw new JAXBException("Failed to unmarshal object for target class " + target + ": " + e, e);
+            throw new JAXBException(UNMARSHAL_ERROR_TEXT + target + ": " + e, e);
         }
     }
 
@@ -1049,8 +1052,7 @@ public final class XMLUtilities
     public static <T> T readXMLObject(Source stream, Class<T> target, Package... packages) throws JAXBException
     {
         JAXBContext context = JAXBContextHelper.getCachedContext(packages);
-        T result = readXMLObject(stream, target, context);
-        return result;
+        return readXMLObject(stream, target, context);
     }
 
     /**
@@ -1333,6 +1335,27 @@ public final class XMLUtilities
     {
         final SAXSource source = new SAXSource(newXMLReader(), new InputSource(stream));
         return source;
+    }
+    
+    /**
+     * Close the Event Reader Stream. This will close all previous streams that
+     * were passed into the reader.
+     * 
+     * @param reader The Stream
+     */
+    private static void closeStream(XMLEventReader reader)
+    {
+        try
+        {
+            if (reader != null)
+            {
+                reader.close();
+            }
+        }
+        catch (XMLStreamException e)
+        {
+            LOGGER.error("Unable to close the xml stream " + e, e);
+        }
     }
 
     /** Disallow instantiation. */

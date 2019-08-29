@@ -104,7 +104,6 @@ public class IconChooserStyleParameterEditorPanel extends AbstractStyleParameter
         {
             IconDialog dialog = new IconDialog(myStyle.getToolbox(),
                     myStyle.getToolbox().getUIRegistry().getMainFrameProvider().get());
-            dialog.setInitialValueSupplier(this::getParameterValue);
             dialog.setAcceptListener(r ->
             {
                 if (r != null)

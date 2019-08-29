@@ -35,8 +35,13 @@
 	</classpathentry>
 	<classpathentry kind="src" output="target/test-classes" path="target/generated-test-sources/test-annotations">
 		<attributes>
+<<<<<<< HEAD
 			<attribute name="optional" value="true"/>
 			<attribute name="test" value="true"/>
+=======
+			<attribute name="test" value="true"/>
+			<attribute name="optional" value="true"/>
+>>>>>>> release_5.2.6
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path=".apt_generated">

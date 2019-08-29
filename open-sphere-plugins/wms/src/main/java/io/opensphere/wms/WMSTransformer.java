@@ -272,63 +272,66 @@ public class WMSTransformer extends DefaultTransformer implements TimeChangeList
     @Override
     public void activeTimeChanged(TimeSpan active)
     {
-        fadeTiles(active);
+        // Intentionally disabling WMS tile fading since it causes tiles to
+        // turn transparent if the active span is less than a day. Code kept in
+        // case improvements can be made upon the fading algorithm.
+//        fadeTiles(active);
     }
 
-    /**
-     * Fades tiles by the percent overlap with the active span.
-     *
-     * @param active the active span
-     */
-    private void fadeTiles(TimeSpan active)
-    {
-        synchronized (myLoadedGeometriesMap)
-        {
-            for (Map.Entry<WMSLayer, List<AbstractTileGeometry<?>>> entry : myLoadedGeometriesMap.entrySet())
-            {
-                WMSLayer layer = entry.getKey();
-                if (!layer.isTimeless())
-                {
-                    List<AbstractTileGeometry<?>> geometries = entry.getValue();
-
-                    Map<TimeConstraint, TileRenderProperties> constraintToPropertyMap = New.map();
-                    for (AbstractTileGeometry<?> geometry : geometries)
-                    {
-                        if (geometry instanceof ConstrainableGeometry
-                                && geometry.getRenderProperties() instanceof TileRenderProperties)
-                        {
-                            TimeConstraint timeConstraint = ((ConstrainableGeometry)geometry).getConstraints()
-                                    .getTimeConstraint();
-                            TileRenderProperties renderProperties = (TileRenderProperties)geometry.getRenderProperties();
-                            if (timeConstraint != null)
-                            {
-                                constraintToPropertyMap.put(timeConstraint, renderProperties);
-                            }
-                        }
-                    }
-
-                    float layerOpacity = layer.getTypeInfo().getMapVisualizationInfo().getTileRenderProperties().getOpacity()
-                            / 255;
-                    for (Map.Entry<TimeConstraint, TileRenderProperties> propertyEntry : constraintToPropertyMap.entrySet())
-                    {
-                        TimeConstraint timeConstraint = propertyEntry.getKey();
-                        TileRenderProperties renderProperties = propertyEntry.getValue();
-
-                        float fadeMultiple = 1;
-                        if (timeConstraint.check(active))
-                        {
-                            TimeSpan tileSpan = timeConstraint.getTimeSpan();
-                            TimeSpan overlap = active.getIntersection(tileSpan);
-                            fadeMultiple = (float)overlap.getDurationMs() / tileSpan.getDurationMs();
-                        }
-
-                        float opacity = fadeMultiple * layerOpacity;
-                        renderProperties.setOpacity(opacity);
-                    }
-                }
-            }
-        }
-    }
+//    /**
+//     * Fades tiles by the percent overlap with the active span.
+//     *
+//     * @param active the active span
+//     */
+//    private void fadeTiles(TimeSpan active)
+//    {
+//        synchronized (myLoadedGeometriesMap)
+//        {
+//            for (Map.Entry<WMSLayer, List<AbstractTileGeometry<?>>> entry : myLoadedGeometriesMap.entrySet())
+//            {
+//                WMSLayer layer = entry.getKey();
+//                if (!layer.isTimeless())
+//                {
+//                    List<AbstractTileGeometry<?>> geometries = entry.getValue();
+//
+//                    Map<TimeConstraint, TileRenderProperties> constraintToPropertyMap = New.map();
+//                    for (AbstractTileGeometry<?> geometry : geometries)
+//                    {
+//                        if (geometry instanceof ConstrainableGeometry
+//                                && geometry.getRenderProperties() instanceof TileRenderProperties)
+//                        {
+//                            TimeConstraint timeConstraint = ((ConstrainableGeometry)geometry).getConstraints()
+//                                    .getTimeConstraint();
+//                            TileRenderProperties renderProperties = (TileRenderProperties)geometry.getRenderProperties();
+//                            if (timeConstraint != null)
+//                            {
+//                                constraintToPropertyMap.put(timeConstraint, renderProperties);
+//                            }
+//                        }
+//                    }
+//
+//                    float layerOpacity = layer.getTypeInfo().getMapVisualizationInfo().getTileRenderProperties().getOpacity()
+//                            / 255;
+//                    for (Map.Entry<TimeConstraint, TileRenderProperties> propertyEntry : constraintToPropertyMap.entrySet())
+//                    {
+//                        TimeConstraint timeConstraint = propertyEntry.getKey();
+//                        TileRenderProperties renderProperties = propertyEntry.getValue();
+//
+//                        float fadeMultiple = 1;
+//                        if (timeConstraint.check(active))
+//                        {
+//                            TimeSpan tileSpan = timeConstraint.getTimeSpan();
+//                            TimeSpan overlap = active.getIntersection(tileSpan);
+//                            fadeMultiple = (float)overlap.getDurationMs() / tileSpan.getDurationMs();
+//                        }
+//
+//                        float opacity = fadeMultiple * layerOpacity;
+//                        renderProperties.setOpacity(opacity);
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     /**
      * Create tile geometries for all layers that have timespans that coincide
