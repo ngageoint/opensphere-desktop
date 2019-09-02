@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 import javax.swing.ImageIcon;
 
 import org.easymock.EasyMock;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import io.opensphere.core.util.swing.QuadStateIconButton;
