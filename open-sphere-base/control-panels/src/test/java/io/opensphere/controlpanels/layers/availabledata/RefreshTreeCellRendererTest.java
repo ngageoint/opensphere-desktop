@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import javax.swing.ImageIcon;
 
 import org.easymock.EasyMock;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import io.opensphere.core.util.swing.QuadStateIconButton;
@@ -42,7 +43,7 @@ public class RefreshTreeCellRendererTest
     @Test
     public void testUpdateNonRefreshableGroup()
     {
-        GroupByNodeUserObject payload = new GroupByNodeUserObject(EasyMock.createMock(DataGroupInfo.class));
+        GroupByNodeUserObject payload = new GroupByNodeUserObject((DataGroupInfo)EasyMock.createMock(DataGroupInfo.class));
         ButtonModelPayload buttonPayload = new ButtonModelPayload(payload, "", "");
         TreeTableTreeNode node = new TreeTableTreeNode(null, buttonPayload);
 
