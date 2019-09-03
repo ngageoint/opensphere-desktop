@@ -276,8 +276,8 @@ public class StreamSubscriberTest
                 {
                     InputType filterInput = execute.getDataInputs().getInput().get(2);
                     assertEquals("layerFilter", filterInput.getIdentifier().getValue());
-                    FilterType filter = XMLUtilities
-                            .readXMLObject((Node)filterInput.getData().getComplexData().getContent().get(0), FilterType.class);
+                    Node node = (Node)filterInput.getData().getComplexData().getContent().get(1);
+                    FilterType filter = XMLUtilities.readXMLObject(node, FilterType.class);
 
                     assertEquals("And", filter.getLogicOps().getName().getLocalPart());
                     assertEquals("And", ((BinaryLogicOpType)filter.getLogicOps().getValue())

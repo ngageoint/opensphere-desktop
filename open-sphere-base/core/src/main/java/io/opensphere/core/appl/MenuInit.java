@@ -21,10 +21,15 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.capture.CaptureMenuInit;
@@ -42,6 +47,8 @@ import io.opensphere.core.projection.AbstractProjection;
 import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.units.UnitsProvider;
 import io.opensphere.core.units.UnitsProvider.UnitsChangeListener;
+import io.opensphere.core.units.angle.Coordinates;
+import io.opensphere.core.units.length.Length;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.SwingUtilities;
 
@@ -241,6 +248,7 @@ public class MenuInit
 
         // Add Units
         final JMenu unitsMenu = new JMenu("Units");
+
         for (UnitsProvider<?> unitsProvider : toolbox.getUnitsRegistry().getUnitsProviders())
         {
             JMenu subMenu = new JMenu(unitsProvider.getSuperType().getSimpleName());
@@ -252,6 +260,7 @@ public class MenuInit
             Quantify.collectMetric("mist3d.menu-bar.edit.units.reset-to-default");
             toolbox.getUnitsRegistry().resetAllPreferredUnits(e.getSource());
         }));
+
         editMenu.add(unitsMenu);
     }
 
@@ -367,21 +376,21 @@ public class MenuInit
         {
             toolbox.getMapManager().getStandardViewer().resetView();
             Quantify.collectMetric("mist3d.menu-bar.edit.units.reset-to-default");
-        },
-        KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK)));
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK)));
 
-        //        // Add toolbar item
-        //        final JCheckBoxMenuItem toolbarItem = new JCheckBoxMenuItem("Toolbar");
-        //        toolbarItem.setSelected(toolbox.getUIRegistry().getToolbarComponentRegistry().getToolbarManager().isVisible());
-        //        toolbarItem.addActionListener(new ActionListener()
-        //        {
-        //            @Override
-        //            public void actionPerformed(ActionEvent arg0)
-        //            {
-        //                toolbox.getUIRegistry().getToolbarComponentRegistry().getToolbarManager().setVisible(toolbarItem.isSelected());
-        //            }
-        //        });
-        //        viewMenu.add(toolbarItem);
+        // // Add toolbar item
+        // final JCheckBoxMenuItem toolbarItem = new
+        // JCheckBoxMenuItem("Toolbar");
+        // toolbarItem.setSelected(toolbox.getUIRegistry().getToolbarComponentRegistry().getToolbarManager().isVisible());
+        // toolbarItem.addActionListener(new ActionListener()
+        // {
+        // @Override
+        // public void actionPerformed(ActionEvent arg0)
+        // {
+        // toolbox.getUIRegistry().getToolbarComponentRegistry().getToolbarManager().setVisible(toolbarItem.isSelected());
+        // }
+        // });
+        // viewMenu.add(toolbarItem);
 
         // Add Projection
         mbr.getMenu(MenuBarRegistry.MAIN_MENU_BAR, MenuBarRegistry.VIEW_MENU, MenuBarRegistry.PROJECTION_MENU);
@@ -402,6 +411,8 @@ public class MenuInit
             unitsItem.addActionListener(e ->
             {
                 Quantify.collectMetric("mist3d.menu-bar.edit.units.set-units-to-" + units.getSimpleName());
+                
+                unitsProvider.setPrevPreferredUnits(unitsProvider.getPreferredUnits());
                 unitsProvider.setPreferredUnits(units);
             });
             subMenu.add(unitsItem);
@@ -426,6 +437,8 @@ public class MenuInit
             }
         };
         listener.preferredUnitsChanged(unitsProvider.getPreferredUnits());
+        listener.prevpreferredUnitsChanged(unitsProvider.getPrevPreferredUnits());
+        
         myUnitsChangeListeners.add(listener);
         unitsProvider.addListener(listener);
     }
@@ -455,8 +468,7 @@ public class MenuInit
         final JCheckBoxMenuItem terrainLock = new JCheckBoxMenuItem("Lock Terrain");
         terrainLock.addActionListener(e ->
         {
-            Quantify.collectEnableDisableMetric("mist3d.menu-bar.tools.lock-terrain",
-                    terrainLock.isSelected());
+            Quantify.collectEnableDisableMetric("mist3d.menu-bar.tools.lock-terrain", terrainLock.isSelected());
             AbstractProjection.setTerrainLocked(terrainLock.isSelected());
         });
         return terrainLock;

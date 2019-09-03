@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -98,7 +99,7 @@ public class ImageGeometryBuilder implements GeometryBuilder
         List<Geometry> geometries = New.list();
 
         if (model instanceof PlatformMetadataAndImage)
-        {
+        {           
             ByteArrayInputStream stream = new ByteArrayInputStream(((PlatformMetadataAndImage)model).getImageBytes().array());
             try
             {

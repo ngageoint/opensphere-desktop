@@ -57,6 +57,9 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
     /** The key for the preferences. */
     private final String myPrefsKey = getClass().getSimpleName() + ".preferredUnits";
 
+    /** The previously preferred units. */
+    private final AtomicReference<Class<? extends T>> myPrevPreferredUnits = new AtomicReference<>();
+
     @Override
     public void addListener(UnitsChangeListener<T> listener)
     {
@@ -116,7 +119,7 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
 
     @Override
     public T fromMagnitudeAndSelectionLabel(Number magnitude, String selectionLabel)
-            throws InvalidUnitsException, UnitsParseException
+        throws InvalidUnitsException, UnitsParseException
     {
         Class<? extends T> type = getUnitsWithSelectionLabel(selectionLabel);
         if (type == null)
@@ -198,6 +201,12 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
     {
         return myPreferredUnits.get();
     }
+    
+    public Class<? extends T> getPrevPreferredUnits()
+    {
+        return myPrevPreferredUnits.get();
+    }
+    
 
     @Override
     public Class<? extends T> getUnitsWithLongLabel(String label)
@@ -333,7 +342,7 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
 
         @SuppressWarnings("rawtypes")
         AtomicReferenceFieldUpdater<AbstractUnitsProvider, Preferences> updater = AtomicReferenceFieldUpdater
-        .newUpdater(AbstractUnitsProvider.class, Preferences.class, "myPreferences");
+                .newUpdater(AbstractUnitsProvider.class, Preferences.class, "myPreferences");
         if (!updater.compareAndSet(this, null, preferences))
         {
             throw new IllegalStateException("Cannot set preferences more than once.");
@@ -399,7 +408,17 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
     {
         myChangeSupport.notifyListeners(listener -> listener.preferredUnitsChanged(preferredType), null);
     }
-
+    
+    /**
+     * Notify listeners of changes.
+     *
+     * @param preferredType The new preferred units.
+     */
+    protected void notifyPrevChanges(final Class<? extends T> preferredType)
+    {
+        myChangeSupport.notifyListeners(listener -> listener.prevpreferredUnitsChanged(preferredType), null);
+    }
+    
     /**
      * Notify listeners of changes.
      *
@@ -429,6 +448,23 @@ public abstract class AbstractUnitsProvider<T> implements UnitsProvider<T>
         if (units != null)
         {
             setPreferredUnits(units);
+        }
+    }
+
+    /**
+     * Set the previous preferred units using the selection label.
+     *
+     * @param selectionLabel The long label.
+     */
+    public void setPrevPreferredUnits(Class<? extends T> units)
+    {
+        if (!Utilities.sameInstance(myPrevPreferredUnits.getAndSet(units), units))
+        {
+            if (myPreferences != null)
+            {
+                myPreferences.putString(myPrefsKey, getSelectionLabel(units), this);
+            }
+            notifyPrevChanges(units);
         }
     }
 }

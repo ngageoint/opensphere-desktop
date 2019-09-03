@@ -42,7 +42,7 @@ public class RefreshTreeCellRendererTest
     @Test
     public void testUpdateNonRefreshableGroup()
     {
-        GroupByNodeUserObject payload = new GroupByNodeUserObject(EasyMock.createMock(DataGroupInfo.class));
+        GroupByNodeUserObject payload = new GroupByNodeUserObject((DataGroupInfo)EasyMock.createMock(DataGroupInfo.class));
         ButtonModelPayload buttonPayload = new ButtonModelPayload(payload, "", "");
         TreeTableTreeNode node = new TreeTableTreeNode(null, buttonPayload);
 
