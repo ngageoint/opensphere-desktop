@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>io.open-sphere.build</groupId>
 		<artifactId>open-sphere-maven-plugins</artifactId>
-		<version>5.2.6.1</version>
+		<version>5.2.6.2</version>
 	</parent>
 
 	<artifactId>install-descriptor-maven-plugin</artifactId>
