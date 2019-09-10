@@ -136,7 +136,7 @@ public class KMLMantleController extends EventListenerService implements KMLMapC
         boolean zoomTo = myBundlePreferences.getBoolean("zoomTo", false);
         if (zoomTo)
         {
-            DataTypeActionUtils.gotoDataType(dataType, myToolbox.getMapManager().getStandardViewer(), myToolbox);
+            DataTypeActionUtils.gotoDataType(dataType, myToolbox.getMapManager().getStandardViewer(), myToolbox, true);
         }
     }
 
