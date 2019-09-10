@@ -50,8 +50,10 @@ public class SpatialFilterUtilities
     private static final Predicate<DataTypeInfo> STREAMING_AND_FILTERABLE = new AndPredicate<>(
             StreamingSupport.IS_STREAMING_ENABLED, DataLayerFilter.DATA_TYPE_FILTERABLE);
 
+    /** The map of geometries to the corresponding type key. */
     private static final Map<PolygonGeometry, Collection<String>> GEOMETRIES_TO_TYPE_KEY_MAP = New.map();
 
+    /** The test to see if a data group is active and contains members. */
     private static final Predicate<DataGroupInfo> DATA_GROUP_FILTER = new Predicate<DataGroupInfo>()
     {
         @Override
@@ -62,6 +64,13 @@ public class SpatialFilterUtilities
         }
     };
 
+    /**
+     * Create a new spatial filter.
+     *
+     * @param toolbox the toolbox
+     * @param geometry the geometry to create the spatial filter for
+     * @param source the source
+     */
     public static void createSpatialFilter(Toolbox toolbox, PolygonGeometry geometry, Object source)
     {
         Collection<? extends DataTypeInfo> dataTypes = getDataTypesFromUser(toolbox, true, null);
@@ -86,6 +95,14 @@ public class SpatialFilterUtilities
         }
     }
 
+    /**
+     * Opens a dialog to ask the user which data types need a spatial filter.
+     *
+     * @param toolbox the toolbox
+     * @param selectAll whether to select all of the types
+     * @param selectedTypeKeys the set of types to select if not all are being selected
+     * @return the data types the user selected
+     */
     public static Collection<? extends DataTypeInfo> getDataTypesFromUser(Toolbox toolbox, boolean selectAll,
             Collection<String> selectedTypeKeys)
     {
