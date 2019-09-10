@@ -44,6 +44,9 @@ import io.opensphere.mantle.data.StreamingSupport;
 import io.opensphere.mantle.data.filter.DataLayerFilter;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
+/**
+ * Utility class for managing spatial filters.
+ */
 public class SpatialFilterUtilities
 {
     /** Predicate for streaming and filterable data types. */
@@ -324,5 +327,12 @@ public class SpatialFilterUtilities
             return new MultiPolygon(new Polygon[] {(Polygon)g}, new GeometryFactory());
         }
         return null;
+    }
+
+    /**
+     * Constructor. Disallow instantiation.
+     */
+    private SpatialFilterUtilities()
+    {
     }
 }
