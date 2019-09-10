@@ -68,6 +68,18 @@ public class SpatialFilterUtilities
     };
 
     /**
+     * Adds a polygonal component to the filter in the registry.
+     *
+     * @param toolbox the toolbox
+     * @param typeKey the type key
+     * @param polygon the spatial filter
+     */
+    public static void addFilterToRegistry(Toolbox toolbox, String typeKey, Polygon polygon)
+    {
+        toolbox.getDataFilterRegistry().addSpatialLoadFilter(typeKey, addPoly(getFilterGeom(toolbox, typeKey), polygon));
+    }
+
+    /**
      * Create a new spatial filter.
      *
      * @param toolbox the toolbox
@@ -164,15 +176,23 @@ public class SpatialFilterUtilities
     }
 
     /**
-     * Adds a polygonal component to the filter in the registry.
+     * Gets the data group filter for spatial filters.
      *
-     * @param toolbox the toolbox
-     * @param typeKey the type key
-     * @param polygon the spatial filter
+     * @return the data group filter
      */
-    public static void addFilterToRegistry(Toolbox toolbox, String typeKey, Polygon polygon)
+    public static Predicate<DataGroupInfo> getFilter()
     {
-        toolbox.getDataFilterRegistry().addSpatialLoadFilter(typeKey, addPoly(getFilterGeom(toolbox, typeKey), polygon));
+        return DATA_GROUP_FILTER;
+    }
+
+    /**
+     * Gets the geometry to type key map.
+     *
+     * @return the geometry to type key map
+     */
+    public static Map<PolygonGeometry, Collection<String>> getGeometryToTypeKeyMap()
+    {
+        return GEOMETRIES_TO_TYPE_KEY_MAP;
     }
 
    /**
@@ -293,16 +313,6 @@ public class SpatialFilterUtilities
     {
         return dataTypes.size() == 1 ? dataTypes.iterator().next().getBasicVisualizationInfo().getTypeColor()
                 : Colors.QUERY_REGION;
-    }
-
-    public static Predicate<DataGroupInfo> getFilter()
-    {
-        return DATA_GROUP_FILTER;
-    }
-
-    public static Map<PolygonGeometry, Collection<String>> getGeometryToTypeKeyMap()
-    {
-        return GEOMETRIES_TO_TYPE_KEY_MAP;
     }
 
     /**
