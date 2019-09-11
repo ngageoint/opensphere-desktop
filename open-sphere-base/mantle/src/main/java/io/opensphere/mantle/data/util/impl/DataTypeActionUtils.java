@@ -30,7 +30,19 @@ public final class DataTypeActionUtils
      */
     public static void gotoDataType(DataTypeInfo dataType, Toolbox toolbox)
     {
-        DataTypeActionUtils.gotoDataType(dataType, toolbox.getMapManager().getStandardViewer(), toolbox);
+        DataTypeActionUtils.gotoDataType(dataType, toolbox, true);
+    }
+
+    /**
+     * Goes to the data type's location if they exist.
+     *
+     * @param dataType the data type
+     * @param toolbox the toolbox through which application state is accessed
+     * @param zoom zooms in on the location if true
+     */
+    public static void gotoDataType(DataTypeInfo dataType, Toolbox toolbox, boolean zoom)
+    {
+        DataTypeActionUtils.gotoDataType(dataType, toolbox.getMapManager().getStandardViewer(), toolbox, zoom);
     }
 
     /**
@@ -39,8 +51,9 @@ public final class DataTypeActionUtils
      * @param dataType the data type
      * @param viewer the viewer
      * @param toolbox the toolbox through which application state is accessed.
+     * @param zoom zooms in on the location if true
      */
-    public static void gotoDataType(DataTypeInfo dataType, DynamicViewer viewer, Toolbox toolbox)
+    public static void gotoDataType(DataTypeInfo dataType, DynamicViewer viewer, Toolbox toolbox, boolean zoom)
     {
         GeographicBoundingBox bbox = dataType.getBoundingBox();
         if (bbox == null)
@@ -53,7 +66,7 @@ public final class DataTypeActionUtils
         }
         if (bbox != null)
         {
-            gotoBoundingBox(bbox, viewer, true);
+            gotoBoundingBox(bbox, viewer, true, zoom);
         }
     }
 
@@ -66,7 +79,7 @@ public final class DataTypeActionUtils
     public static void gotoLocations(Collection<? extends LatLonAlt> locations, DynamicViewer viewer)
     {
         GeographicBoundingBox bbox = GeographicBoundingBox.getMinimumBoundingBoxLLA(locations);
-        gotoBoundingBox(bbox, viewer, true);
+        gotoBoundingBox(bbox, viewer, true, true);
     }
 
     /**
@@ -75,8 +88,9 @@ public final class DataTypeActionUtils
      * @param bbox the bounding box
      * @param viewer the viewer
      * @param flyTo fly to bounding box if true, snap to if false
+     * @param zoom zooms in on the location if true
      */
-    public static void gotoBoundingBox(GeographicBoundingBox bbox, DynamicViewer viewer, boolean flyTo)
+    public static void gotoBoundingBox(GeographicBoundingBox bbox, DynamicViewer viewer, boolean flyTo, boolean zoom)
     {
         boolean isPoint = bbox.getWidth() == 0 && bbox.getHeight() == 0;
         GeographicBoundingBox flyToBbox;
@@ -93,11 +107,11 @@ public final class DataTypeActionUtils
         vertices.add(flyToBbox.getUpperRight());
         if (flyTo)
         {
-            new ViewerAnimator(viewer, vertices, true).start();
+            new ViewerAnimator(viewer, vertices, zoom).start();
         }
         else
         {
-            new ViewerAnimator(viewer, vertices, true).snapToPosition();
+            new ViewerAnimator(viewer, vertices, zoom).snapToPosition();
         }
     }
 

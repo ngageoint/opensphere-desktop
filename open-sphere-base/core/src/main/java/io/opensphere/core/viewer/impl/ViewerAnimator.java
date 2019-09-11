@@ -187,8 +187,27 @@ public class ViewerAnimator
      */
     public ViewerAnimator(DynamicViewer viewer, ViewerPosition destination)
     {
+        this(viewer, destination, true);
+    }
+
+    /**
+     * Construct the animator.
+     *
+     * @param viewer the viewer to animate
+     * @param destination the destination for the viewer
+     * @param zoom when true, zoom the destination to fit the points
+     */
+    public ViewerAnimator(DynamicViewer viewer, ViewerPosition destination, boolean zoom)
+    {
         myViewer = viewer;
-        myDestination = destination;
+        if (zoom)
+        {
+            myDestination = destination;
+        }
+        else
+        {
+            myDestination = viewer.getCenteredView(destination.getLocation());
+        }
     }
 
     /**
