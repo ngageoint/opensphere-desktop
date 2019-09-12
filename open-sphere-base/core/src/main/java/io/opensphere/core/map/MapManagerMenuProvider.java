@@ -2,23 +2,17 @@ package io.opensphere.core.map;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Toolkit;
-import java.awt.datatransfer.StringSelection;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.Supplier;
 
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
 import io.opensphere.core.MapManager;
-import io.opensphere.core.Notify;
 import io.opensphere.core.UnitsRegistry;
 import io.opensphere.core.control.action.ContextActionManager;
 import io.opensphere.core.control.action.ContextMenuProvider;

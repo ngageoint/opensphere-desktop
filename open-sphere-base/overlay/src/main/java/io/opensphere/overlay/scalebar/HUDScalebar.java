@@ -2,7 +2,6 @@ package io.opensphere.overlay.scalebar;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.util.Collection;
 import java.util.concurrent.ScheduledExecutorService;
 
 import io.opensphere.core.MapManager;
