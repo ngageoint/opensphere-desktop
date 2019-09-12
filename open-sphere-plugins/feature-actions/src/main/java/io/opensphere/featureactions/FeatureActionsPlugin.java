@@ -1,10 +1,18 @@
 package io.opensphere.featureactions;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import javax.swing.JMenuItem;
 
 import io.opensphere.core.PluginLoaderData;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.api.adapter.AbstractServicePlugin;
+import io.opensphere.core.control.action.ContextMenuProvider;
+import io.opensphere.core.control.action.context.ContextIdentifiers;
 import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.util.Service;
 import io.opensphere.core.util.collections.New;
@@ -31,6 +39,9 @@ public class FeatureActionsPlugin extends AbstractServicePlugin
     /** The state controller to manage feature actions. */
     private FeatureActionStateController myStateController;
 
+    /** The menu item for removing all feature actions. */
+    private ContextMenuProvider<Void> myClearFeaturesMenuProvider;
+
     @Override
     protected Collection<Service> getServices(PluginLoaderData plugindata, Toolbox toolbox)
     {
@@ -45,6 +56,33 @@ public class FeatureActionsPlugin extends AbstractServicePlugin
         uiRegistry.getContextActionManager().registerContextMenuItemProvider(DataGroupInfo.ACTIVE_DATA_CONTEXT,
                 DataGroupContextKey.class, myEditorMenuProvider);
         toolbox.getModuleStateManager().registerModuleStateController("Feature Action", myStateController);
+
+        myClearFeaturesMenuProvider = new ContextMenuProvider<>()
+        {
+            @Override
+            public List<JMenuItem> getMenuItems(String contextId, Void key)
+            {
+                JMenuItem clearFeatures = new JMenuItem("Clear Feature Actions");
+                clearFeatures.addActionListener(new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        registry.clearAll();
+                    }
+                });
+                return Collections.singletonList(clearFeatures);
+            }
+
+            @Override
+            public int getPriority()
+            {
+                return 9;
+            }
+        };
+
+        toolbox.getUIRegistry().getContextActionManager().registerContextMenuItemProvider(ContextIdentifiers.DELETE_CONTEXT,
+                Void.class, myClearFeaturesMenuProvider);
 
         return New.list(toolbox.getPluginToolboxRegistry().getRegistrationService(pluginToolbox), controller);
     }
