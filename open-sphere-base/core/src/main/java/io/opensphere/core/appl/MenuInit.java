@@ -21,15 +21,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.capture.CaptureMenuInit;
@@ -47,8 +42,6 @@ import io.opensphere.core.projection.AbstractProjection;
 import io.opensphere.core.quantify.Quantify;
 import io.opensphere.core.units.UnitsProvider;
 import io.opensphere.core.units.UnitsProvider.UnitsChangeListener;
-import io.opensphere.core.units.angle.Coordinates;
-import io.opensphere.core.units.length.Length;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.SwingUtilities;
 

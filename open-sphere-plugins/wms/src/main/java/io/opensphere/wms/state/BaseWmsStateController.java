@@ -12,7 +12,6 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.modulestate.AbstractModuleStateController;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.mantle.data.impl.DefaultDataGroupActivator;
-import io.opensphere.mantle.util.MantleToolboxUtils;
 import io.opensphere.wms.state.activate.StateActivator;
 import io.opensphere.wms.state.deactivate.StateDeactivator;
 import io.opensphere.wms.state.model.StateGroup;
