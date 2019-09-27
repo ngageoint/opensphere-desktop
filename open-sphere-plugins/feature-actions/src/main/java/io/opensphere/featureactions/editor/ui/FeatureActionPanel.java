@@ -123,7 +123,6 @@ public class FeatureActionPanel extends GridPane
                 MantleToolboxUtils.getMantleToolbox(myToolbox).getDataTypeInfoFromKey(dataType));
         GridPane.setHgrow(myCurrentEditor, Priority.ALWAYS);
         add(myCurrentEditor, 0, 1);
-        
     }
 
     /**

@@ -16,6 +16,7 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.ContextActionManager;
 import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.control.action.context.ContextIdentifiers;
+import io.opensphere.core.control.ui.ToolbarComponentRegistry;
 import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.event.EventManager;
 import io.opensphere.core.modulestate.ModuleStateManager;
@@ -108,6 +109,9 @@ public class FeatureActionsPluginTest
         EasyMock.expectLastCall().atLeastOnce();
 
         MantleToolbox mantle = support.createMock(MantleToolbox.class);
+
+        ToolbarComponentRegistry toolbarRegistry = EasyMock.createMock(ToolbarComponentRegistry.class);
+        EasyMock.expect(uiRegistry.getToolbarComponentRegistry()).andReturn(toolbarRegistry).atLeastOnce();
 
         PluginToolboxRegistry toolboxRegistry = support.createMock(PluginToolboxRegistry.class);
         EasyMock.expect(toolboxRegistry.getRegistrationService(EasyMock.isA(FeatureActionsToolbox.class)))
