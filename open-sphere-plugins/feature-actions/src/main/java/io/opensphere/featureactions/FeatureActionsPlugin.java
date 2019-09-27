@@ -1,11 +1,15 @@
 package io.opensphere.featureactions;
 
+import java.awt.Dialog.ModalityType;
+import java.awt.Dimension;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 
 import io.opensphere.core.PluginLoaderData;
@@ -13,13 +17,23 @@ import io.opensphere.core.Toolbox;
 import io.opensphere.core.api.adapter.AbstractServicePlugin;
 import io.opensphere.core.control.action.ContextMenuProvider;
 import io.opensphere.core.control.action.context.ContextIdentifiers;
+import io.opensphere.core.control.ui.ToolbarManager.SeparatorLocation;
+import io.opensphere.core.control.ui.ToolbarManager.ToolbarLocation;
 import io.opensphere.core.control.ui.UIRegistry;
+import io.opensphere.core.util.AwesomeIconSolid;
+import io.opensphere.core.util.ColorUtilities;
 import io.opensphere.core.util.Service;
 import io.opensphere.core.util.collections.New;
+import io.opensphere.core.util.fx.JFXDialog;
+import io.opensphere.core.util.image.IconUtil;
+import io.opensphere.core.util.swing.AlertNotificationButton;
+import io.opensphere.core.util.swing.EventQueueUtilities;
+import io.opensphere.core.util.swing.GenericFontIcon;
 import io.opensphere.featureactions.controller.FeatureActionsController;
 import io.opensphere.featureactions.controller.FeatureActionStateController;
 import io.opensphere.featureactions.editor.ui.ActionEditorDisplayer;
 import io.opensphere.featureactions.editor.ui.ActionEditorDisplayerImpl;
+import io.opensphere.featureactions.editor.ui.FeatureActionPanel;
 import io.opensphere.featureactions.editor.ui.FeatureActionsMenuProvider;
 import io.opensphere.featureactions.registry.FeatureActionsRegistry;
 import io.opensphere.featureactions.toolbox.FeatureActionsToolbox;
@@ -41,6 +55,9 @@ public class FeatureActionsPlugin extends AbstractServicePlugin
 
     /** The menu item for removing all feature actions. */
     private ContextMenuProvider<Void> myClearFeaturesMenuProvider;
+
+    /** The button for opening the feature action manager. */
+    private FeatureActionAlertButton myFeatureActionManagerButton;
 
     @Override
     protected Collection<Service> getServices(PluginLoaderData plugindata, Toolbox toolbox)
@@ -84,6 +101,60 @@ public class FeatureActionsPlugin extends AbstractServicePlugin
         toolbox.getUIRegistry().getContextActionManager().registerContextMenuItemProvider(ContextIdentifiers.DELETE_CONTEXT,
                 Void.class, myClearFeaturesMenuProvider);
 
+        myFeatureActionManagerButton = new FeatureActionAlertButton(null);
+        myFeatureActionManagerButton.addActionListener(e -> showFeatureActionManager(toolbox, registry));
+        EventQueueUtilities.invokeLater(() -> toolbox.getUIRegistry().getToolbarComponentRegistry().registerToolbarComponent(
+                ToolbarLocation.SOUTH, "FeatureActionManager", myFeatureActionManagerButton, 202, SeparatorLocation.NONE));
+        myFeatureActionManagerButton.setIcon(new GenericFontIcon(AwesomeIconSolid.MAGIC, IconUtil.DEFAULT_ICON_FOREGROUND));
+
         return New.list(toolbox.getPluginToolboxRegistry().getRegistrationService(pluginToolbox), controller);
+    }
+
+    /**
+     * Construct and show the feature action manager.
+     *
+     * @param toolbox the toolbox
+     * @param registry the feature action registry
+     */
+    private void showFeatureActionManager(Toolbox toolbox, FeatureActionsRegistry registry)
+    {
+        Window owner = toolbox.getUIRegistry().getMainFrameProvider().get();
+        JFXDialog dialog = new JFXDialog(owner, "Feature Actions", false);
+        dialog.setFxNode(new FeatureActionPanel(toolbox, registry, dialog));
+        dialog.setSize(new Dimension(900, 600));
+        dialog.setResizable(true);
+        dialog.setLocationRelativeTo(owner);
+        dialog.setModalityType(ModalityType.MODELESS);
+        dialog.setVisible(true);
+    }
+
+    /**
+     * The custom alert button class for the feature action manager button.
+     */
+    private static class FeatureActionAlertButton extends AlertNotificationButton
+    {
+        /** The serial version UID. */
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * Instantiates a new feature action alert button.
+         *
+         * @param icon the icon
+         */
+        public FeatureActionAlertButton(ImageIcon icon)
+        {
+            super(icon);
+            setAlertColor(ColorUtilities.convertFromHexString("0000CCFF", 0, 1, 2, 3));
+            setToolTipText("Manage Feature Actions");
+            setFocusPainted(false);
+        }
+
+        @Override
+        public void setAlertCount(int count)
+        {
+            setCount(count);
+            setAlertCounterText(Integer.toString(count));
+            repaint();
+        }
     }
 }
