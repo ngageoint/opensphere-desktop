@@ -105,7 +105,7 @@ public class FeatureActionPanel extends GridPane
     private Node createUpperRow()
     {
         HBox box = new HBox(5);
-        box.getChildren().addAll(new Label("Current Layer:"), createLayerSelector(), /*separator,*/ createSaveButton());
+        box.getChildren().addAll(new Label("Current Layer:"), createLayerSelector(), createSaveButton());
         box.setAlignment(Pos.CENTER_LEFT);
         GridPane.setHgrow(box, Priority.ALWAYS);
         return box;

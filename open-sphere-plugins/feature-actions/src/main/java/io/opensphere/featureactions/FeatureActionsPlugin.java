@@ -105,7 +105,7 @@ public class FeatureActionsPlugin extends AbstractServicePlugin
         myFeatureActionManagerButton.addActionListener(e -> showFeatureActionManager(toolbox, registry));
         EventQueueUtilities.invokeLater(() -> toolbox.getUIRegistry().getToolbarComponentRegistry().registerToolbarComponent(
                 ToolbarLocation.SOUTH, "FeatureActionManager", myFeatureActionManagerButton, 202, SeparatorLocation.NONE));
-        myFeatureActionManagerButton.setIcon(new GenericFontIcon(AwesomeIconSolid.MAGIC, IconUtil.DEFAULT_ICON_FOREGROUND));
+        myFeatureActionManagerButton.setIcons();
 
         return New.list(toolbox.getPluginToolboxRegistry().getRegistrationService(pluginToolbox), controller);
     }
@@ -146,7 +146,6 @@ public class FeatureActionsPlugin extends AbstractServicePlugin
             super(icon);
             setAlertColor(ColorUtilities.convertFromHexString("0000CCFF", 0, 1, 2, 3));
             setToolTipText("Manage Feature Actions");
-            setFocusPainted(false);
         }
 
         @Override
@@ -155,6 +154,17 @@ public class FeatureActionsPlugin extends AbstractServicePlugin
             setCount(count);
             setAlertCounterText(Integer.toString(count));
             repaint();
+        }
+
+        /**
+         * Sets up the appropriate colors for the feature action manager button.
+         */
+        public void setIcons()
+        {
+            setIcon(new GenericFontIcon(AwesomeIconSolid.MAGIC, IconUtil.DEFAULT_ICON_FOREGROUND));
+            setRolloverIcon(new GenericFontIcon(AwesomeIconSolid.MAGIC, IconUtil.DEFAULT_ICON_ROLLOVER));
+            setPressedIcon(new GenericFontIcon(AwesomeIconSolid.MAGIC,
+                    ColorUtilities.darken(IconUtil.DEFAULT_ICON_FOREGROUND, 0.5)));
         }
     }
 }
