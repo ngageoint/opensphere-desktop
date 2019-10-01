@@ -118,7 +118,9 @@ public class FeatureActionsPluginTest
                 .andReturn(registrationService);
         EasyMock.expect(toolboxRegistry.getPluginToolbox(MantleToolbox.class)).andReturn(mantle).atLeastOnce();
         DataGroupController dataGroupController = support.createMock(DataGroupController.class);
-        EasyMock.expect(mantle.getDataGroupController()).andReturn(dataGroupController);
+        EasyMock.expect(mantle.getDataGroupController()).andReturn(dataGroupController).atLeastOnce();
+        dataGroupController.addActivationListener(EasyMock.isA(Runnable.class));
+        EasyMock.expectLastCall();
         ModuleStateManager stateManager = support.createNiceMock(ModuleStateManager.class);
 
         Toolbox toolbox = support.createMock(Toolbox.class);
