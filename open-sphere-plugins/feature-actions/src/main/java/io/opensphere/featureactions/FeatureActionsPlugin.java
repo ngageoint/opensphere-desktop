@@ -1,5 +1,6 @@
 package io.opensphere.featureactions;
 
+import java.awt.Color;
 import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.Window;
@@ -37,31 +38,41 @@ import io.opensphere.featureactions.editor.ui.FeatureActionPanel;
 import io.opensphere.featureactions.editor.ui.FeatureActionsMenuProvider;
 import io.opensphere.featureactions.registry.FeatureActionsRegistry;
 import io.opensphere.featureactions.toolbox.FeatureActionsToolbox;
+import io.opensphere.mantle.crust.DataTypeChecker;
 import io.opensphere.mantle.data.DataGroupInfo;
 import io.opensphere.mantle.data.DataGroupInfo.DataGroupContextKey;
 import io.opensphere.mantle.util.MantleToolboxUtils;
 
-/** Feature Actions plugin. */
+/**
+ * Feature Actions plugin.
+ */
 public class FeatureActionsPlugin extends AbstractServicePlugin
 {
+    /** The listener for data group activation changes. */
+    private final transient Runnable myActivationListener = this::handleDataGroupActivationChange;
+
+    /** The menu item for removing all feature actions. */
+    private ContextMenuProvider<Void> myClearFeaturesMenuProvider;
+
     /**
      * Provides a menu item for the user in the layers window to edit a layer's
      * feature actions.
      */
     private FeatureActionsMenuProvider myEditorMenuProvider;
 
+    /** The button for opening the feature action manager. */
+    private FeatureActionAlertButton myFeatureActionManagerButton;
+
     /** The state controller to manage feature actions. */
     private FeatureActionStateController myStateController;
 
-    /** The menu item for removing all feature actions. */
-    private ContextMenuProvider<Void> myClearFeaturesMenuProvider;
-
-    /** The button for opening the feature action manager. */
-    private FeatureActionAlertButton myFeatureActionManagerButton;
+    /** The toolbox. */
+    private Toolbox myToolbox;
 
     @Override
     protected Collection<Service> getServices(PluginLoaderData plugindata, Toolbox toolbox)
     {
+        myToolbox = toolbox;
         FeatureActionsRegistry registry = new FeatureActionsRegistry(toolbox.getPreferencesRegistry());
         FeatureActionsToolbox pluginToolbox = new FeatureActionsToolbox(registry);
         FeatureActionsController controller = new FeatureActionsController(toolbox, registry);
@@ -106,8 +117,28 @@ public class FeatureActionsPlugin extends AbstractServicePlugin
         EventQueueUtilities.invokeLater(() -> toolbox.getUIRegistry().getToolbarComponentRegistry().registerToolbarComponent(
                 ToolbarLocation.SOUTH, "FeatureActionManager", myFeatureActionManagerButton, 202, SeparatorLocation.NONE));
         myFeatureActionManagerButton.setIcons();
+        MantleToolboxUtils.getMantleToolbox(toolbox).getDataGroupController().addActivationListener(myActivationListener);
 
         return New.list(toolbox.getPluginToolboxRegistry().getRegistrationService(pluginToolbox), controller);
+    }
+
+    /**
+     * Checks how many current active layers that use feature actions are enabled to
+     * determine the enabled status of the feature action manager button.
+     * Called whenever a data group is (de)activated.
+     */
+    private void handleDataGroupActivationChange()
+    {
+        long activeLayers = MantleToolboxUtils.getMantleToolbox(myToolbox).getDataGroupController().getActiveMembers(false)
+                .stream().filter(e -> DataTypeChecker.isFeatureType(e)).count();
+        if (myFeatureActionManagerButton.isEnabled() && activeLayers == 0)
+        {
+            myFeatureActionManagerButton.disableButton();
+        }
+        else if (!myFeatureActionManagerButton.isEnabled() && activeLayers != 0)
+        {
+            myFeatureActionManagerButton.enableButton();
+        }
     }
 
     /**
@@ -136,6 +167,9 @@ public class FeatureActionsPlugin extends AbstractServicePlugin
         /** The serial version UID. */
         private static final long serialVersionUID = 1L;
 
+        /** The enabled status of the button. */
+        private boolean myEnabled;
+
         /**
          * Instantiates a new feature action alert button.
          *
@@ -146,6 +180,39 @@ public class FeatureActionsPlugin extends AbstractServicePlugin
             super(icon);
             setAlertColor(ColorUtilities.convertFromHexString("0000CCFF", 0, 1, 2, 3));
             setToolTipText("Manage Feature Actions");
+            myEnabled = true;
+        }
+
+        /**
+         * Disables the button. Updates visuals to reflect the change.
+         */
+        public void disableButton()
+        {
+            setEnabled(false);
+            setToolTipText("No active layers use Feature Actions");
+            setIcon(new GenericFontIcon(AwesomeIconSolid.MAGIC, Color.GRAY));
+            myEnabled = false;
+        }
+
+        /**
+         * Enables the button. Updates visuals to reflect the change.
+         */
+        public void enableButton()
+        {
+            setEnabled(true);
+            setToolTipText("Manage Feature Actions");
+            setIcon(new GenericFontIcon(AwesomeIconSolid.MAGIC, IconUtil.DEFAULT_ICON_FOREGROUND));
+            myEnabled = true;
+        }
+
+        /**
+         * Gets whether the button is enabled or not.
+         *
+         * @return true if the button is enabled, false otherwise
+         */
+        public boolean isEnabled()
+        {
+            return myEnabled;
         }
 
         @Override
