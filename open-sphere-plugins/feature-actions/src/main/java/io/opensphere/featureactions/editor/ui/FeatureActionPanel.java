@@ -122,6 +122,7 @@ public class FeatureActionPanel extends GridPane
         myCurrentEditor = new SimpleFeatureActionEditorUI(myToolbox, myRegistry, null,
                 MantleToolboxUtils.getMantleToolbox(myToolbox).getDataTypeInfoFromKey(dataType));
         GridPane.setHgrow(myCurrentEditor, Priority.ALWAYS);
+        GridPane.setVgrow(myCurrentEditor, Priority.ALWAYS);
         add(myCurrentEditor, 0, 1);
     }
 
