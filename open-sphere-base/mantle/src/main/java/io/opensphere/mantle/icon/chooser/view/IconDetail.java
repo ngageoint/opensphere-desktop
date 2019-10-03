@@ -19,6 +19,7 @@ import io.opensphere.core.util.fx.FxIcons;
 import io.opensphere.core.util.image.IconUtil.IconType;
 import io.opensphere.mantle.icon.IconProvider;
 import io.opensphere.mantle.icon.IconRecord;
+import io.opensphere.mantle.icon.chooser.controller.IconRemover;
 import io.opensphere.mantle.icon.chooser.model.CustomizationModel;
 import io.opensphere.mantle.icon.chooser.model.IconModel;
 import io.opensphere.mantle.icon.chooser.model.TransformModel;
@@ -61,23 +62,26 @@ public class IconDetail extends AnchorPane
     /** The logger used to capture output from instances of this class. */
     private static final Logger LOG = Logger.getLogger(IconDetail.class);
 
-    /** The label in which the name of the icon is displayed. */
-    private final TextField myNameField;
-
-    /** The label in which the source collection of the icon is displayed. */
-    private final ComboBox<String> mySourceField;
-
-    /** The panel on which transformations occur. */
-    private final TransformPanel myTransformPanel;
-
     /** The canvas on which the icon preview is drawn. */
     private final Canvas myCanvas;
+
+    /** The model backing customization operations. */
+    private final CustomizationModel myCustomizationModel;
+
+    /** The node to use when the icon is marked as a favorite. */
+    private final Node myFavoriteIcon;
+
+    /** The button to toggle to set favorite state. */
+    private final Label myFavoriteToggleButton;
+
+    /** Removes the selected icon from the icon manager. */
+    private final IconRemover myIconRemover;
 
     /** The icon chooser model backing the panel. */
     private final IconModel myModel;
 
-    /** the model backing customization operations. */
-    private final CustomizationModel myCustomizationModel;
+    /** The label in which the name of the icon is displayed. */
+    private final TextField myNameField;
 
     /**
      * The procedure called when part of the selected icon record's model
@@ -85,17 +89,20 @@ public class IconDetail extends AnchorPane
      */
     private final Procedure myRefreshProcedure;
 
-    /** The button to toggle to set favorite state. */
-    private final Label myFavoriteToggleButton;
+    /** The remove icon button. */
+    private final Button myRemoveButton;
 
-    /** The node to use when the icon is not marked as a favorite. */
-    private final Node myUnFavoriteIcon;
-
-    /** The node to use when the icon is marked as a favorite. */
-    private final Node myFavoriteIcon;
+    /** The label in which the source collection of the icon is displayed. */
+    private final ComboBox<String> mySourceField;
 
     /** The menu button for creating, displaying, and removing tags. */
     private final MenuButton myTagMenuButton;
+
+    /** The panel on which transformations occur. */
+    private final TransformPanel myTransformPanel;
+
+    /** The node to use when the icon is not marked as a favorite. */
+    private final Node myUnFavoriteIcon;
 
     /**
      * Creates a new detail panel bound to the supplied model.
@@ -110,6 +117,7 @@ public class IconDetail extends AnchorPane
         myModel = model;
         myRefreshProcedure = refreshProcedure;
         myCustomizationModel = model.getCustomizationModel();
+        myIconRemover = new IconRemover(model);
         setMaxWidth(250);
         setMinWidth(250);
 
@@ -140,6 +148,12 @@ public class IconDetail extends AnchorPane
         myUnFavoriteIcon = FxIcons.createClearIcon(AwesomeIconRegular.STAR, Color.GREY, 16);
         myFavoriteIcon = FxIcons.createClearIcon(AwesomeIconSolid.STAR, Color.GOLD, 16);
 
+        myRemoveButton = FXUtilities.newIconButton(IconType.CLOSE, Color.RED);
+        myRemoveButton.setOnAction(e -> myIconRemover.deleteIcons());
+        myRemoveButton.setTooltip(new Tooltip("Remove selected icons."));
+        myRemoveButton.setStyle("-fx-background-color: transparent");
+        myRemoveButton.setPadding(new Insets(5, 5, 5, 3));
+
         myFavoriteToggleButton = new Label();
         myFavoriteToggleButton.setOnMouseClicked(e ->
         {
@@ -147,18 +161,26 @@ public class IconDetail extends AnchorPane
             {
                 myModel.selectedRecordProperty().get().favoriteProperty().set(false);
                 myFavoriteToggleButton.setGraphic(myUnFavoriteIcon);
+                setFavoriteTooltip(true);
             }
             else
             {
                 myModel.selectedRecordProperty().get().favoriteProperty().set(true);
                 myFavoriteToggleButton.setGraphic(myFavoriteIcon);
+                setFavoriteTooltip(false);
             }
             myRefreshProcedure.invoke();
         });
 
-        myFavoriteToggleButton.setPadding(new Insets(5));
-        final HBox buttonBox = new HBox(myFavoriteToggleButton);
+        myFavoriteToggleButton.setPadding(new Insets(5, 3, 5, 5));
+        final HBox buttonBox = new HBox(myFavoriteToggleButton, myRemoveButton);
         buttonBox.setAlignment(Pos.TOP_RIGHT);
+
+        setDeleteButtonState();
+        myModel.selectedRecordProperty().addListener((e) ->
+        {
+            setDeleteButtonState();
+        });
 
         final HBox canvasBox = new HBox(myCanvas);
         final Border border = new Border(new BorderStroke(new Color(0.247058824, 0.247058824, 0.305882353, 1),
@@ -287,6 +309,26 @@ public class IconDetail extends AnchorPane
     }
 
     /**
+     * Enables or disables the remove button depending on if the icon selected
+     * is a user imported icon.
+     */
+    private void setDeleteButtonState()
+    {
+        if (myModel.selectedRecordProperty().get() == null
+                || myModel.selectedRecordProperty().get().imageURLProperty().get() == null
+                || myModel.selectedRecordProperty().get().imageURLProperty().get().toString().startsWith("jar:file:")
+                || myModel.selectedRecordProperty().get().imageURLProperty().get().toString().contains("/target/classes/images/"))
+        {
+            // This is not a user imported icon, it is a system provided icon do
+            // not delete.
+            myRemoveButton.setDisable(true);
+        }
+        else
+        {
+            myRemoveButton.setDisable(false);
+        }
+    }
+    /**
      * Saves the current content of the canvas to a new icon record.
      */
     private void saveCanvas()
@@ -318,6 +360,24 @@ public class IconDetail extends AnchorPane
     }
 
     /**
+     * Sets the tooltip text of the favorite button to either "Add icon to
+     * favorites" or "Remove icon from favorites"
+     *
+     * @param isFavorite true for add, false for remove
+     */
+    private void setFavoriteTooltip(boolean isFavorite)
+    {
+        if (isFavorite)
+        {
+            myFavoriteToggleButton.setTooltip(new Tooltip("Add icon to favorites"));
+        }
+        else
+        {
+            myFavoriteToggleButton.setTooltip(new Tooltip("Remove icon from favorites"));
+        }
+    }
+
+    /**
      * Draws the preview of the supplied icon on the supplied canvas, applying
      * any transforms specified by the user.
      *
@@ -328,10 +388,12 @@ public class IconDetail extends AnchorPane
         if (icon != null && icon.favoriteProperty().get())
         {
             myFavoriteToggleButton.setGraphic(myFavoriteIcon);
+            setFavoriteTooltip(false);
         }
         else
         {
             myFavoriteToggleButton.setGraphic(myUnFavoriteIcon);
+            setFavoriteTooltip(true);
         }
 
         final TransformModel model = myTransformPanel.getModel();
