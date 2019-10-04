@@ -230,13 +230,12 @@ public class TileSetMetadataEnvoyTest
     private Toolbox createToolbox(EasyMockSupport support, int responseCode, IOException exception)
         throws IOException, URISyntaxException
     {
-        URL url = new URL(ourTestServer + "/v1/tilesets/" + ourTestTileSet + "/tiles/layer.json");
+        URL url = new URL(ourTestServer + "/" + ourTestTileSet + "/layer.json");
 
         HttpServer server = support.createMock(HttpServer.class);
         EasyMock.expect(server.sendGet(EasyMockHelper.eq(url), EasyMock.isA(ResponseValues.class)))
                 .andAnswer(() -> sendGetAnswer(responseCode, exception));
 
-        @SuppressWarnings("unchecked")
         ServerProvider<HttpServer> provider = support.createMock(ServerProvider.class);
         EasyMock.expect(provider.getServer(EasyMockHelper.eq(url))).andReturn(server);
 

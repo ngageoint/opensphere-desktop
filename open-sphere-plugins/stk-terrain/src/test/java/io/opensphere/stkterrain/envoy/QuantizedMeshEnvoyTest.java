@@ -350,7 +350,7 @@ public class QuantizedMeshEnvoyTest
     private Toolbox createToolbox(EasyMockSupport support, int responseCode, IOException exception, TileSetMetadata metadata)
         throws IOException, URISyntaxException
     {
-        URL url = new URL(ourTestServer + "/v1/tilesets/" + ourTestTileSet + "/tiles/1/0/1.terrain?v=2.0");
+        URL url = new URL(ourTestServer + "/" + ourTestTileSet + "/1/0/1.terrain?v=2.0");
 
         Toolbox toolbox = support.createMock(Toolbox.class);
 

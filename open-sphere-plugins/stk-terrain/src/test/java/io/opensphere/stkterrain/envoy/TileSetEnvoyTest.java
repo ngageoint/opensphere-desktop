@@ -4,11 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.List;
 
 import org.easymock.EasyMock;
@@ -18,20 +16,11 @@ import org.junit.Test;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.cache.DefaultCacheDeposit;
 import io.opensphere.core.cache.accessor.SerializableAccessor;
-import io.opensphere.core.data.CacheDepositReceiver;
 import io.opensphere.core.data.DataRegistry;
-import io.opensphere.core.data.QueryException;
 import io.opensphere.core.data.util.DataModelCategory;
-import io.opensphere.core.matchers.EasyMockHelper;
-import io.opensphere.core.server.HttpServer;
-import io.opensphere.core.server.ResponseValues;
-import io.opensphere.core.server.ServerProvider;
-import io.opensphere.core.server.ServerProviderRegistry;
 import io.opensphere.core.util.DefaultValidatorSupport;
 import io.opensphere.core.util.ValidationStatus;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.io.CancellableInputStream;
-import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.stkterrain.model.TileSet;
 import io.opensphere.stkterrain.util.Constants;
 
@@ -40,11 +29,6 @@ import io.opensphere.stkterrain.util.Constants;
  */
 public class TileSetEnvoyTest
 {
-    /**
-     * A test error message.
-     */
-    private static final String ourErrorMessage = "Error Message";
-
     /**
      * The test server url.
      */
@@ -82,8 +66,7 @@ public class TileSetEnvoyTest
         EasyMockSupport support = new EasyMockSupport();
 
         DataRegistry dataRegistry = createDataRegistry(support);
-        HttpServer server = createServer(support, 200, null);
-        Toolbox toolbox = createToolbox(support, server, dataRegistry);
+        Toolbox toolbox = createToolbox(support, dataRegistry);
 
         support.replayAll();
 
@@ -92,32 +75,6 @@ public class TileSetEnvoyTest
         envoy.open();
 
         assertEquals(ValidationStatus.VALID, validatorSupport.getValidationStatus());
-
-        support.verifyAll();
-    }
-
-    /**
-     * Tests opening the envoy with an invalid response.
-     *
-     * @throws URISyntaxException Bad URI.
-     * @throws IOException Bad IO.
-     */
-    @Test
-    public void testOpenInvalid() throws IOException, URISyntaxException
-    {
-        EasyMockSupport support = new EasyMockSupport();
-
-        HttpServer server = createServer(support, 503, null);
-        Toolbox toolbox = createToolbox(support, server, null);
-
-        support.replayAll();
-
-        DefaultValidatorSupport validatorSupport = new DefaultValidatorSupport(null);
-        TileSetEnvoy envoy = new TileSetEnvoy(toolbox, validatorSupport, ourTestServer);
-        envoy.open();
-
-        assertEquals(ValidationStatus.ERROR, validatorSupport.getValidationStatus());
-        assertTrue(validatorSupport.getValidationMessage().contains(ourErrorMessage));
 
         support.verifyAll();
     }
@@ -151,42 +108,6 @@ public class TileSetEnvoyTest
     }
 
     /**
-     * Tests querying tile sets and an exception occurred.
-     *
-     * @throws URISyntaxException Bad URI.
-     * @throws IOException Bad IO.
-     * @throws InterruptedException Don't interrupt.
-     */
-    @Test
-    public void testQueryException() throws URISyntaxException, IOException, InterruptedException
-    {
-        EasyMockSupport support = new EasyMockSupport();
-
-        HttpServer server = createServer(support, 200, new IOException());
-        Toolbox toolbox = createToolbox(support, server, null);
-        CacheDepositReceiver receiver = support.createMock(CacheDepositReceiver.class);
-
-        support.replayAll();
-
-        DefaultValidatorSupport validatorSupport = new DefaultValidatorSupport(null);
-        TileSetEnvoy envoy = new TileSetEnvoy(toolbox, validatorSupport, ourTestServer);
-        boolean exceptionThrown = false;
-        try
-        {
-            envoy.query(new DataModelCategory(null, TileSet.class.getName(), null), New.collection(), New.list(), New.list(), -1,
-                    New.collection(), receiver);
-        }
-        catch (QueryException e)
-        {
-            exceptionThrown = true;
-        }
-
-        assertTrue(exceptionThrown);
-
-        support.verifyAll();
-    }
-
-    /**
      * The answer for the mocked addModels call.
      *
      * @return The model ids.
@@ -205,13 +126,10 @@ public class TileSetEnvoyTest
         assertTrue(deposit.getAccessors().iterator().next() instanceof SerializableAccessor);
         List<TileSet> inputs = New.list(deposit.getInput());
 
-        assertEquals(2, inputs.size());
+        assertEquals(1, inputs.size());
 
-        assertEquals("FODAR", inputs.get(0).getName());
-        assertEquals(2, inputs.get(0).getDataSources().size());
-
-        assertEquals("world", inputs.get(1).getName());
-        assertEquals(0, inputs.get(1).getDataSources().size());
+        assertEquals("world", inputs.get(0).getName());
+        assertEquals(1, inputs.get(0).getDataSources().size());
 
         return new long[] { 0, 1 };
     }
@@ -234,52 +152,17 @@ public class TileSetEnvoyTest
     }
 
     /**
-     * Creates an easy mocked {@link HttpServer}.
-     *
-     * @param support Used to create the mock.
-     * @param responseCode The response code to return.
-     * @param exception The exception to throw on get call, or null if none.
-     * @return The mocked {@link HttpServer}.
-     * @throws IOException Bad IO.
-     * @throws URISyntaxException Bad URI.
-     */
-    private HttpServer createServer(EasyMockSupport support, int responseCode, IOException exception)
-        throws IOException, URISyntaxException
-    {
-        HttpServer server = support.createMock(HttpServer.class);
-
-        URL url = new URL(ourTestServer + "/v1/tilesets");
-
-        EasyMock.expect(server.sendGet(EasyMockHelper.eq(url), EasyMock.isA(ResponseValues.class)))
-                .andAnswer(() -> sendGetAnswer(responseCode, exception));
-
-        return server;
-    }
-
-    /**
      * Creates an easy mocked {@link Toolbox}.
      *
      * @param support Used to create the mock.
-     * @param server A mocked {@link HttpServer} to return.
      * @param dataRegistry A mocked {@link DataRegistry} to return.
      * @return The mocked toolbox.
      * @throws MalformedURLException Bad URL.
      */
-    @SuppressWarnings("unchecked")
-    private Toolbox createToolbox(EasyMockSupport support, HttpServer server, DataRegistry dataRegistry)
+    private Toolbox createToolbox(EasyMockSupport support, DataRegistry dataRegistry)
         throws MalformedURLException
     {
-        URL url = new URL(ourTestServer + "/v1/tilesets");
-
-        ServerProvider<HttpServer> provider = support.createMock(ServerProvider.class);
-        EasyMock.expect(provider.getServer(EasyMockHelper.eq(url))).andReturn(server);
-
-        ServerProviderRegistry serverRegistry = support.createMock(ServerProviderRegistry.class);
-        EasyMock.expect(serverRegistry.getProvider(EasyMock.eq(HttpServer.class))).andReturn(provider);
-
         Toolbox toolbox = support.createMock(Toolbox.class);
-
-        EasyMock.expect(toolbox.getServerProviderRegistry()).andReturn(serverRegistry);
 
         if (dataRegistry != null)
         {
@@ -287,43 +170,5 @@ public class TileSetEnvoyTest
         }
 
         return toolbox;
-    }
-
-    /**
-     * The answer for the sendGet mocked call.
-     *
-     * @param responseCode The response code to return.
-     * @param exception The exception to throw or null if no exception should be
-     *            thrown.
-     * @return The input stream of data, or if the responseCode isn't 200 an
-     *         error message.
-     * @throws IOException The test exception to throw.
-     */
-    private CancellableInputStream sendGetAnswer(int responseCode, IOException exception) throws IOException
-    {
-        if (exception != null)
-        {
-            throw exception;
-        }
-
-        CancellableInputStream stream = null;
-
-        String returnString = ourErrorMessage;
-
-        if (responseCode == 200)
-        {
-            returnString = "[{\"name\":\"FODAR\",\"description\":\"a description\",\"dataSources\":"
-                    + "[{\"name\":\"Whitemt\",\"description\":\"\",\"attribution\":\"\",\"_rev\":4}"
-                    + ",{\"name\":\"Wales\",\"description\":\"\",\"attribution\":\"\",\"_rev\":4}]},"
-                    + "{\"name\":\"world\",\"description\":\"\",\"dataSources\":[]}]";
-        }
-
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(returnString.getBytes(StringUtilities.DEFAULT_CHARSET));
-        stream = new CancellableInputStream(inputStream, null);
-
-        ResponseValues responseValues = (ResponseValues)EasyMock.getCurrentArguments()[1];
-        responseValues.setResponseCode(responseCode);
-
-        return stream;
     }
 }

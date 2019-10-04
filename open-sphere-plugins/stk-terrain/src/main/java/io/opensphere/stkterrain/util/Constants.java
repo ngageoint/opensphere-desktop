@@ -49,12 +49,12 @@ public final class Constants
     /**
      * The url to get all the layers from an STK terrain server.
      */
-    public static final String TILE_SETS_URL = "/v1/tilesets";
+    public static final String TILE_SETS_URL = "";
 
     /**
      * The url to the tiles service.
      */
-    public static final String TILES_URL = "/tiles";
+    public static final String TILES_URL = "";
 
     /**
      * The url to append in order to query for a TileSets metadata.
