@@ -91,6 +91,7 @@ public class FeatureActionPanel extends GridPane
     private Node createSaveButton()
     {
         Button saveButton = new Button();
+        saveButton.setText("Save");
         saveButton.setGraphic(FxIcons.createClearIcon(AwesomeIconSolid.SAVE, Color.WHITE, 16));
         saveButton.setTooltip(new Tooltip("Save changes made to feature actions"));
         saveButton.setOnAction(e -> saveChanges());
