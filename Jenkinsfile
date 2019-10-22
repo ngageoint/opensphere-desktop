@@ -4,7 +4,7 @@ node {
 
     env.WORKSPACE = pwd();
     env.LOCAL_REPO = "${env.WORKSPACE}/localRepository/${env.BUILD_NUMBER}";
-    env.JAVA_HOME = tool 'JDK_11uLatest';
+    env.JAVA_HOME = tool name: 'JDK_11uLatest ', type: 'jdk';
     env.PATH="${env.JAVA_HOME}/bin:${env.PATH}";
     env.mvnHome = tool 'Maven 3 (built-in)';
     env.SLOW_MACHINE = true;
