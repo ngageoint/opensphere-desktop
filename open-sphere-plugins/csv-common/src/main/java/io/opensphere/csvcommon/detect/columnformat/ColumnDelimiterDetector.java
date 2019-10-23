@@ -274,12 +274,8 @@ public class ColumnDelimiterDetector implements LineDetector<DelimitedColumnForm
         {
             // The first delimiter is probably the text delimiter and the
             // second the token delimiter.
-            char holdDelimiter = firstDelimiter;
             firstDelimiter = secondDelimiter;
-            secondDelimiter = holdDelimiter;
-            float holdConfidence = firstConfidence;
             firstConfidence = secondConfidence;
-            secondConfidence = holdConfidence;
         }
 
         Character token = null;
@@ -318,13 +314,6 @@ public class ColumnDelimiterDetector implements LineDetector<DelimitedColumnForm
      */
     private boolean determineSwapDelimiters(List<String> rows, char firstDelimiter, char secondDelimiter)
     {
-        /* If the first delimiter is a comma, the delimiters are probably
-         * already in the correct order. */
-        if (firstDelimiter == ',')
-        {
-            return false;
-        }
-
         // If the second delimiter is a comma it is probably really first.
         char testFirst = firstDelimiter;
         char testSecond = secondDelimiter;
@@ -348,7 +337,7 @@ public class ColumnDelimiterDetector implements LineDetector<DelimitedColumnForm
             // delimiter
             pattern.append("[\\").append(testSecond).append("^]\\").append(testFirst);
             // followed by at least one character which is not either delimiter
-            pattern.append("[^\\").append(testFirst).append('\\').append(testSecond).append("]+?\\");
+            pattern.append("[^\\").append(testFirst).append('\\').append(testSecond).append("]*?\\");
             // followed by the first delimiter, followed by the second delimiter
             // or the end of line
             pattern.append(testFirst).append("[$\\").append(testSecond).append(']');
