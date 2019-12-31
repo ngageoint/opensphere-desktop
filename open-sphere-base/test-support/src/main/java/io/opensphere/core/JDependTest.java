@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -67,7 +68,12 @@ public class JDependTest
         List<String> lines;
         final String classesDir = new File(getClass().getProtectionDomain().getCodeSource().getLocation().getPath()).getParent()
                 + File.separator + "classes";
-        final Process process = Runtime.getRuntime().exec("jdeps " + classesDir);
+        File jdepsCommand = Path.of(System.getProperty("java.home"), "bin", "jdeps").toFile();
+        if (!jdepsCommand.isFile() || !jdepsCommand.canExecute())
+        {
+            throw new IOException("Unable to find / execute JDeps Command (tried '" + jdepsCommand.getAbsolutePath() + "')");
+        }
+        final Process process = Runtime.getRuntime().exec(jdepsCommand.getAbsolutePath() + " " + classesDir);
         try (BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream(), DEFAULT_CHARSET)))
         {
             lines = in.lines().collect(Collectors.toList());
