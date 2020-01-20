@@ -3,7 +3,6 @@ package io.opensphere.core.util.fx;
 import javafx.scene.paint.Color;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /** Tests for {@link FXUtilities}. */
@@ -11,7 +10,6 @@ public class FXUtilitiesTest
 {
     /** Test for color methods. */
     @Test
-    @Ignore
     public void testColors()
     {
         Assert.assertEquals(Color.WHITE, FXUtilities.fromAwtColor(java.awt.Color.WHITE));
