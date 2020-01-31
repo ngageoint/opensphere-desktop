@@ -21,7 +21,7 @@ node('desktop') {
 
     stage ('Compile') {
         try {
-            if ("$env.JENKINS_URL".contains("jenkins.devops.geointservices.io")) {
+            if ("$env.JENKINS_URL".contains("jenkins-master.udev.six3")) {
                 if("${env.BRANCH_NAME}".contains('release_')) {
                     env.REMOTE_REPO_ARGS = "-DaltSnapshotDeploymentRepository=nexus-FADE-Snapshots::default::https://nexus.devops.geointservices.io/content/repositories/FADE-Snapshots -DaltReleaseDeploymentRepository=nexus-FADE-COTS::default::https://nexus.devops.geointservices.io/content/repositories/FADE-COTS/ -DaltDeploymentRepository=nexus-FADE-COTS::default::https://nexus.devops.geointservices.io/content/repositories/FADE-COTS/"
                 } else {
