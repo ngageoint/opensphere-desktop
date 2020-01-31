@@ -29,4 +29,4 @@ set VERSION_RUN_PATH="%~dp0%PREFERRED_VERSION%""
 echo Preferred version run path: %VERSION_RUN_PATH%
 
 pushd "%VERSION_RUN_PATH%"
-run.vbs %*
+start /min run.bat
