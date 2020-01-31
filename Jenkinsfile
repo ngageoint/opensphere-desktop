@@ -4,7 +4,7 @@ node('desktop') {
 
     env.WORKSPACE = pwd();
     env.LOCAL_REPO = "${env.WORKSPACE}/localRepository/${env.BUILD_NUMBER}";
-    env.JAVA_HOME = tool 'JDK_10uLatest';
+    env.JAVA_HOME = tool 'JDK_10.0.2-with-jfx-modules';
     env.PATH="${env.JAVA_HOME}/bin:${env.PATH}";
     env.mvnHome = tool 'Maven 3 (built-in)';
     env.SLOW_MACHINE = true;
