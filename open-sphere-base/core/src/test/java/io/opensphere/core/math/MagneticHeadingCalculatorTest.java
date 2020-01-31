@@ -43,7 +43,9 @@ public class MagneticHeadingCalculatorTest
         // For 2018, the following commented out test result is expected:
         // assertEquals(34.39553047902176, magnetic, 0d);
         // For 2019, the following results are expected: 34.46300241643533
-        assertEquals(34.46300241643533, magnetic, 0d);
+        // assertEquals(34.46300241643533, magnetic, 0d);
+        // For 2020, the following results are expected: 34.530717252650824
+        assertEquals(34.530717252650824, magnetic, 0d);
 
         support.verifyAll();
     }
