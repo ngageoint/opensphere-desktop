@@ -57,18 +57,18 @@ public final class AutoUpdateDemoServer
         File linuxUpdateFiles = FileUtils.getFile(System.getProperty("user.dir"),
                 "../../open-sphere-install/open-sphere-install-linux64/target/staging/update_pack");
         File linuxServerDirectory = FileUtils
-                .getFile("src/test/resources/auto-update-demo/auto_deployers/mist/desktop/updates/5.2.1/linux64");
+                .getFile("src/test/resources/auto-update-demo/auto_deployers/mist/desktop/updates/5.2.6.3/linux64");
         FileUtils.copyDirectory(linuxUpdateFiles, linuxServerDirectory);
 
         File windowsUpdateFiles = FileUtils.getFile(System.getProperty("user.dir"),
                 "../../open-sphere-install/open-sphere-install-windows64/target/staging/update_pack");
         File windowsServerDirectory = FileUtils
-                .getFile("src/test/resources/auto-update-demo/auto_deployers/mist/desktop/updates/5.2.1/linux64");
+                .getFile("src/test/resources/auto-update-demo/auto_deployers/mist/desktop/updates/5.2.6.3/windows64");
         FileUtils.copyDirectory(windowsUpdateFiles, windowsServerDirectory);
 
         File latestFile = new File("src/test/resources/auto-update-demo/auto_deployers/mist/desktop/updates/", "mist.latest");
         PrintStream out = new PrintStream(latestFile);
-        out.println("5.2.1");
+        out.println("5.2.6.3");
         out.flush();
         out.close();
     }
