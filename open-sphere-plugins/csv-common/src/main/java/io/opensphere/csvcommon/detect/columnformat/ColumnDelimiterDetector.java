@@ -337,7 +337,7 @@ public class ColumnDelimiterDetector implements LineDetector<DelimitedColumnForm
             // delimiter
             pattern.append("[\\").append(testSecond).append("^]\\").append(testFirst);
             // followed by at least one character which is not either delimiter
-            pattern.append("[^\\").append(testFirst).append('\\').append(testSecond).append("]*?\\");
+            pattern.append("[^\\").append(testFirst).append('\\').append(testSecond).append("]+?\\");
             // followed by the first delimiter, followed by the second delimiter
             // or the end of line
             pattern.append(testFirst).append("[$\\").append(testSecond).append(']');
@@ -441,7 +441,7 @@ public class ColumnDelimiterDetector implements LineDetector<DelimitedColumnForm
             }
             // End of a text delimiter
             else if (currentDelimiter.contains(currentChar) && (nextChar == null || nextChar.charValue() == tokenDelimiter
-                    && (!isTextDelimiter(previousChar) || Character.valueOf('.').compareTo(previousChar) == 0)))
+                            && (previousChar == null || previousChar.charValue() != tokenDelimiter)))
             {
                 if (delimiterWithinDelimiterCount == 0)
                 {
