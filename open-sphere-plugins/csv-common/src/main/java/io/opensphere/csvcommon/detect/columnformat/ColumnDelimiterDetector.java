@@ -202,18 +202,6 @@ public class ColumnDelimiterDetector implements LineDetector<DelimitedColumnForm
     }
 
     /**
-     * Determines if the given character is a potential text delimiter.
-     *
-     * @see #isTextDelimiter(char)
-     * @param ch the character
-     * @return Whether it is a potential text delimiter and is not null
-     */
-    private static boolean isTextDelimiter(Character ch)
-    {
-        return ch != null && isTextDelimiter(ch.charValue());
-    }
-
-    /**
      * Determines if the given character is a potential token delimiter.
      *
      * @param ch the character
