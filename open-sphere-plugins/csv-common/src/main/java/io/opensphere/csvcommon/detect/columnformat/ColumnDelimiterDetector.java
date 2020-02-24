@@ -441,7 +441,7 @@ public class ColumnDelimiterDetector implements LineDetector<DelimitedColumnForm
             }
             // End of a text delimiter
             else if (currentDelimiter.contains(currentChar) && (nextChar == null || nextChar.charValue() == tokenDelimiter
-                            && (previousChar == null || previousChar.charValue() != tokenDelimiter)))
+                    && (previousChar == null || previousChar.charValue() != tokenDelimiter)))
             {
                 if (delimiterWithinDelimiterCount == 0)
                 {
