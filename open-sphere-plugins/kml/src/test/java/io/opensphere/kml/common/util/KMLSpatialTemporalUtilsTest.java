@@ -150,12 +150,11 @@ public class KMLSpatialTemporalUtilsTest
     public void testIsExpireTimeValid()
     {
         long now = System.currentTimeMillis();
-        Assert.assertTrue(KMLSpatialTemporalUtils.isExpireTimeValid(new Date(now + 364L * 86400L * 1000L)));
         Assert.assertFalse(KMLSpatialTemporalUtils.isExpireTimeValid(null));
         Assert.assertFalse(KMLSpatialTemporalUtils.isExpireTimeValid(new Date(0L)));
         Assert.assertFalse(KMLSpatialTemporalUtils.isExpireTimeValid(new Date(now - 1000L)));
         Assert.assertTrue(KMLSpatialTemporalUtils.isExpireTimeValid(new Date(now + 1000L)));
-
+        Assert.assertTrue(KMLSpatialTemporalUtils.isExpireTimeValid(new Date(now + 364L * 86400L * 1000L)));
         Assert.assertFalse(KMLSpatialTemporalUtils.isExpireTimeValid(new Date(now + 366L * 86400L * 1000L)));
     }
 
