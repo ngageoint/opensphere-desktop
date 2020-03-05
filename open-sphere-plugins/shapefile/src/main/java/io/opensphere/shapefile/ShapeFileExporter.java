@@ -92,7 +92,6 @@ public class ShapeFileExporter extends AbstractExporter
 
         int timePrecision = getToolbox().getPreferencesRegistry().getPreferences(ListToolPreferences.class)
                 .getInt(ListToolPreferences.LIST_TOOL_TIME_PRECISION_DIGITS, 0);
-
         SimpleDateFormat dateFormatter = ListToolPreferences.getSimpleDateFormatForPrecision(timePrecision);
         for (DataElement element : dataElements)
         {

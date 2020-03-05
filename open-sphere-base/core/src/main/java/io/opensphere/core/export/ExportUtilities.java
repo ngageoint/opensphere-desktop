@@ -37,51 +37,54 @@ public final class ExportUtilities
     {
         assert EventQueue.isDispatchThread();
 
-        // Get the file from the user
-        exporter.preExport();
-        final File file = getFileFromUser(parentComponent, prefsRegistry, exporter);
-
-        if (file != null)
+        // If pre-export process returns false, don't continue the process
+        if (exporter.preExport())
         {
-            // Do the export
-            new SwingWorker<Void, Void>()
+            // Get the file from the user
+            final File file = getFileFromUser(parentComponent, prefsRegistry, exporter);
+
+            if (file != null)
             {
-                @Override
-                protected Void doInBackground() throws IOException, ExportException
+                // Do the export
+                new SwingWorker<Void, Void>()
                 {
+                    @Override
+                    protected Void doInBackground() throws IOException, ExportException
+                    {
 
-                    exporter.export(file);
-                    return null;
-                }
+                        exporter.export(file);
+                        return null;
+                    }
 
-                @Override
-                protected void done()
-                {
-                    try
+                    @Override
+                    protected void done()
                     {
-                        get();
-                    }
-                    catch (InterruptedException e)
-                    {
-                        LOGGER.error(e);
-                    }
-                    catch (ExecutionException e)
-                    {
-                        LOGGER.error(e, e);
-                        StringBuilder message = new StringBuilder("Error occurred during export");
-                        if (e.getCause() instanceof ExportException || e.getCause() instanceof IOException)
+                        try
                         {
-                            message.append(": ").append(e.getCause().getMessage());
+                            get();
                         }
-                        else
+                        catch (InterruptedException e)
                         {
-                            message.append('.');
+                            LOGGER.error(e);
                         }
-                        JOptionPane.showMessageDialog(parentComponent, message.toString(), "Export Error",
-                                JOptionPane.ERROR_MESSAGE);
+                        catch (ExecutionException e)
+                        {
+                            LOGGER.error(e, e);
+                            StringBuilder message = new StringBuilder("Error occurred during export");
+                            if (e.getCause() instanceof ExportException || e.getCause() instanceof IOException)
+                            {
+                                message.append(": ").append(e.getCause().getMessage());
+                            }
+                            else
+                            {
+                                message.append('.');
+                            }
+                            JOptionPane.showMessageDialog(parentComponent, message.toString(), "Export Error",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
                     }
-                }
-            }.execute();
+                }.execute();
+            }
         }
     }
 

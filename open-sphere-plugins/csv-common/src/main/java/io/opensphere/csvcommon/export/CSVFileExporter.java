@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
@@ -15,8 +16,10 @@ import org.apache.commons.text.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.export.AbstractExporter;
+import io.opensphere.core.preferences.ListToolPreferences;
 import io.opensphere.core.util.MimeType;
 import io.opensphere.core.util.collections.CollectionUtilities;
+import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.collections.StreamUtilities;
 import io.opensphere.core.util.lang.StringUtilities;
 import io.opensphere.core.util.swing.EventQueueUtilities;
@@ -87,12 +90,24 @@ public class CSVFileExporter extends AbstractExporter
             DataTypeInfo dataType = getElements().iterator().next();
             List<DataElement> dataElements = MantleToolboxUtils.getDataElementLookupUtils(getToolbox())
                     .getDataElements(dataType);
+            List<String> keyList = dataElements.iterator().next().getMetaData().getKeys();
+            int timeIndex = dataType.getMetaDataInfo().getKeyIndex(dataType.getMetaDataInfo().getTimeKey());
+            int timePrecision = getToolbox().getPreferencesRegistry().getPreferences(ListToolPreferences.class)
+                    .getInt(ListToolPreferences.LIST_TOOL_TIME_PRECISION_DIGITS, 0);
+            SimpleDateFormat dateFormatter = ListToolPreferences.getSimpleDateFormatForPrecision(timePrecision);
+
             writer.write(StringUtilities.join(",",
-                    StreamUtilities.map(dataElements.iterator().next().getMetaData().getKeys(), FORMAT_CELL)));
+                    StreamUtilities.map(keyList, FORMAT_CELL)));
             writer.newLine();
             for (DataElement element : dataElements)
             {
-                writer.write(StringUtilities.join(",", StreamUtilities.map(element.getMetaData().getValues(), FORMAT_CELL)));
+                List<Object> values = New.list(element.getMetaData().getValues());
+                if (timeIndex != -1)
+                {
+                    values.set(timeIndex, dateFormatter.format(values.get(timeIndex)));
+                }
+
+                writer.write(StringUtilities.join(",", StreamUtilities.map(values, FORMAT_CELL)));
                 writer.newLine();
             }
 
