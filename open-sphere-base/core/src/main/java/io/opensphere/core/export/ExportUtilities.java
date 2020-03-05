@@ -38,6 +38,7 @@ public final class ExportUtilities
         assert EventQueue.isDispatchThread();
 
         // Get the file from the user
+        exporter.preExport();
         final File file = getFileFromUser(parentComponent, prefsRegistry, exporter);
 
         if (file != null)
@@ -48,6 +49,7 @@ public final class ExportUtilities
                 @Override
                 protected Void doInBackground() throws IOException, ExportException
                 {
+
                     exporter.export(file);
                     return null;
                 }
