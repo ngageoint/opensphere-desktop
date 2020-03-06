@@ -74,8 +74,8 @@ public class ShapeFileExporter extends AbstractExporter
 
         List<String> columnNames = New.list(dataType.getMetaDataInfo().getKeyNames());
 
-		// Lat/Lon go in the point record,
-		// so remove them from the list for the meta-data file.
+        // Lat/Lon go in the point record,
+        // so remove them from the list for the meta-data file.
         int lonIndex = columnNames.indexOf(metaData.getLongitudeKey());
         if (lonIndex != -1)
         {
@@ -105,17 +105,17 @@ public class ShapeFileExporter extends AbstractExporter
         {
             shapefile.doFinalWrite();
             shapefile.close();
-		}
-		catch (FileNotFoundException e)
+        }
+        catch (FileNotFoundException e)
         {
-		    hadError = true;
-			JOptionPane.showMessageDialog(getToolbox().getUIRegistry().getMainFrameProvider().get(),
+            hadError = true;
+            JOptionPane.showMessageDialog(getToolbox().getUIRegistry().getMainFrameProvider().get(),
                     "Error encountered while saving shape file", "File Save Error", JOptionPane.ERROR_MESSAGE);
-		}
-		catch (IOException e)
+        }
+        catch (IOException e)
         {
-		    hadError = true;
-			JOptionPane.showMessageDialog(getToolbox().getUIRegistry().getMainFrameProvider().get(),
+            hadError = true;
+            JOptionPane.showMessageDialog(getToolbox().getUIRegistry().getMainFrameProvider().get(),
                     "Error encountered while saving shape file", "File Save Error", JOptionPane.ERROR_MESSAGE);
         }
 
@@ -179,13 +179,13 @@ public class ShapeFileExporter extends AbstractExporter
     }
 
     /**
-	 * Get the metadata header.
-	 *
-	 * @param metaData the meta data for the layer
-	 * @param columnNames the column names of the layer
-	 * @param colIndexToLengthMap the map of column names to the data length
-	 * @return the metadata header
-	 */
+     * Get the metadata header.
+     *
+     * @param metaData the meta data for the layer
+     * @param columnNames the column names of the layer
+     * @param colIndexToLengthMap the map of column names to the data length
+     * @return the metadata header
+     */
     private List<DBFColumnInfo> getMetadataHeader(final MetaDataInfo metaData, List<String> columnNames,
             TObjectIntMap<String> colIndexToLengthMap)
     {
@@ -205,12 +205,12 @@ public class ShapeFileExporter extends AbstractExporter
     }
 
     /**
-	 * Determine maximum length of data for each column.
-	 *
-	 * @param columnNames  the column names of the layer
-	 * @param dataElements the list of data elements
-	 * @return the map of column name to max length
-	 */
+     * Determine maximum length of data for each column.
+     *
+     * @param columnNames the column names of the layer
+     * @param dataElements the list of data elements
+     * @return the map of column name to max length
+     */
     private TObjectIntMap<String> determineMaxCharsForColumn(List<String> columnNames, List<DataElement> dataElements)
     {
         TObjectIntMap<String> colNameToLengthMap = new TObjectIntHashMap<>();
@@ -259,7 +259,8 @@ public class ShapeFileExporter extends AbstractExporter
                         shape = new MultiPointRecord(points);
                     }
                 }
-            } else if (geometry instanceof MapPolylineGeometrySupport)
+            }
+            else if (geometry instanceof MapPolylineGeometrySupport)
             {
                 MapPolylineGeometrySupport lineGeom = (MapPolylineGeometrySupport) geometry;
                 PolyLineRecord lineRecord = new PolyLineRecord(toPoints(lineGeom.getLocations()));
@@ -269,7 +270,8 @@ public class ShapeFileExporter extends AbstractExporter
                             .forEach(child -> lineRecord.addPart(toPoints(child.getLocations())));
                 }
                 shape = lineRecord;
-            } else if (geometry instanceof MapPolygonGeometrySupport)
+            }
+            else if (geometry instanceof MapPolygonGeometrySupport)
             {
                 MapPolygonGeometrySupport polygonGeom = (MapPolygonGeometrySupport) geometry;
                 PolygonRecord polygonRecord = new PolygonRecord(toPoints(polygonGeom.getLocations()));
@@ -327,18 +329,18 @@ public class ShapeFileExporter extends AbstractExporter
         return new Point2D.Double(location.getLonD(), location.getLatD());
     }
 
-	/**
-	 * Enforce the shapefile suffix.
-	 *
-	 * @param file the file to enforce suffix on
-	 * @return the file post-enforcement
-	 */
-	private static File enforceSuffix(final File file)
-	{
-		if (!file.getAbsolutePath().toLowerCase().endsWith(SHAPE_FILE_EXTENSION))
-		{
-			return new File(file.getAbsolutePath() + SHAPE_FILE_EXTENSION);
-		}
-		return file;
-	}
+    /**
+     * Enforce the shapefile suffix.
+     *
+     * @param file the file to enforce suffix on
+     * @return the file post-enforcement
+     */
+    private static File enforceSuffix(final File file)
+    {
+        if (!file.getAbsolutePath().toLowerCase().endsWith(SHAPE_FILE_EXTENSION))
+        {
+            return new File(file.getAbsolutePath() + SHAPE_FILE_EXTENSION);
+        }
+        return file;
+    }
 }
