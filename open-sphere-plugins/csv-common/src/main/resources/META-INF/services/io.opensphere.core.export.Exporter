@@ -1,1 +1,2 @@
 io.opensphere.csvcommon.export.CSVExporter
+io.opensphere.csvcommon.export.CSVFileExporter
