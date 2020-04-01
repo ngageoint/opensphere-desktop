@@ -17,25 +17,23 @@ import io.opensphere.core.event.EventListenerService;
 import io.opensphere.core.geometry.Geometry;
 import io.opensphere.core.math.Vector2i;
 import io.opensphere.core.math.WGS84EarthConstants;
-import io.opensphere.core.model.GeographicBoundingBox;
+import io.opensphere.core.model.Altitude.ReferenceLevel;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
-import io.opensphere.core.model.Altitude.ReferenceLevel;
 import io.opensphere.core.projection.GeographicBody3D;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.fx.JFXDialog;
 import io.opensphere.core.util.jts.JTSUtilities;
 import io.opensphere.core.util.swing.EventQueueUtilities;
-import io.opensphere.core.viewer.impl.Viewer3D;
 import io.opensphere.mantle.controller.DataTypeController;
 import io.opensphere.mantle.data.element.DataElement;
 import io.opensphere.mantle.data.element.event.DataElementDoubleClickedEvent;
-import io.opensphere.mantle.data.geom.MapGeometrySupport;
 import io.opensphere.mantle.data.util.DataElementLookupUtils;
 import io.opensphere.mantle.transformer.MapDataElementTransformer;
 import io.opensphere.mantle.transformer.impl.StyleMapDataElementTransformer;
 import io.opensphere.mantle.transformer.impl.StyleTransformerGeometryProcessor;
 import io.opensphere.mantle.util.MantleToolboxUtils;
+import io.opensphere.overlay.util.MousePositionUtils;
 
 /**
  * The baseball card controller.
@@ -69,63 +67,60 @@ public class BaseballController extends EventListenerService
             DataElementLookupUtils lookupUtils = MantleToolboxUtils.getDataElementLookupUtils(myToolbox);
             List<DataElement> dataElements = New.list();
             GeometryFactory geometryFactory = new GeometryFactory();
-            MapGeometrySupport support = lookupUtils.getMapGeometrySupport(event.getRegistryId());
+            LatLonAlt center = MousePositionUtils.getMousePosition().getLatLonAlt();
+            GeographicPosition innerPosition = new GeographicPosition(center);
+            Vector2i innerVector = myToolbox.getMapManager().convertToPoint(innerPosition);
+            double pathLength = generateDistance(center, innerVector);
 
-            GeographicBoundingBox boundingBox = support.getBoundingBox(myToolbox.getMapManager()
-                    .getProjection(Viewer3D.class).getSnapshot());
-            if (boundingBox != null)
+            if (pathLength == -1)
             {
-                LatLonAlt center = boundingBox.getCenter().getLatLonAlt();
-                GeographicPosition innerPosition = new GeographicPosition(center);
-                Vector2i innerVector = myToolbox.getMapManager().convertToPoint(innerPosition);
-                double pathLength = generateDistance(center, innerVector);
-
-                if (pathLength == -1)
+                EventQueueUtilities.runOnEDT(() ->
                 {
-                    EventQueueUtilities.runOnEDT(() ->
-                    {
-                        Component parent = myToolbox.getUIRegistry().getMainFrameProvider().get();
-                        JOptionPane.showMessageDialog(parent,"Could not open the feature info dialog: "
-                                + "world size too small.", "Information Dialog Error", JOptionPane.PLAIN_MESSAGE);
-                    });
-                    return;
-                }
+                    Component parent = myToolbox.getUIRegistry().getMainFrameProvider().get();
+                    JOptionPane.showMessageDialog(parent,
+                            "Could not open the feature info dialog: " + "world size too small.",
+                            "Information Dialog Error", JOptionPane.PLAIN_MESSAGE);
+                });
+                return;
+            }
 
-                LatLonAlt edge = GeographicBody3D.greatCircleEndPosition(center, 0, WGS84EarthConstants.RADIUS_EQUATORIAL_M, pathLength);
-                Polygon polygon = JTSUtilities.createCircle(center, edge, JTSUtilities.NUM_CIRCLE_SEGMENTS);
-                StyleTransformerGeometryProcessor processor = null;
+            LatLonAlt edge = GeographicBody3D.greatCircleEndPosition(center, 0, WGS84EarthConstants.RADIUS_EQUATORIAL_M,
+                    pathLength);
+            Polygon polygon = JTSUtilities.createCircle(center, edge, JTSUtilities.NUM_CIRCLE_SEGMENTS);
+            StyleTransformerGeometryProcessor processor = null;
 
-                DataTypeController dataTypeController = MantleToolboxUtils.getMantleToolbox(myToolbox).getDataTypeController();
-                List<String> typeKeyList = New.list();
-                dataTypeController.getDataTypeInfo().stream().forEach(e -> typeKeyList.add(e.getTypeKey()));
+            DataTypeController dataTypeController = MantleToolboxUtils.getMantleToolbox(myToolbox)
+                    .getDataTypeController();
+            List<String> typeKeyList = New.list();
+            dataTypeController.getDataTypeInfo().stream().forEach(e -> typeKeyList.add(e.getTypeKey()));
 
-                for (String typeKey : typeKeyList)
+            for (String typeKey : typeKeyList)
+            {
+                MapDataElementTransformer transformer = dataTypeController.getTransformerForType(typeKey);
+                if (transformer instanceof StyleMapDataElementTransformer)
                 {
-                    MapDataElementTransformer transformer = dataTypeController.getTransformerForType(typeKey);
-                    if (transformer instanceof StyleMapDataElementTransformer)
+                    processor = ((StyleMapDataElementTransformer) transformer).getGeometryProcessor();
+                    processor.getGeometrySetLock().lock();
+                    try
                     {
-                        processor = ((StyleMapDataElementTransformer)transformer).getGeometryProcessor();
-                        processor.getGeometrySetLock().lock();
-                        try
+                        for (Geometry geometry : processor.getGeometrySet())
                         {
-                            for (Geometry geometry : processor.getGeometrySet())
+                            if (geometry.jtsIntersectionTests(Geometry.ALL_INTERSECTION_TESTS,
+                                    Collections.singletonList(polygon), geometryFactory))
                             {
-                                if (geometry.jtsIntersectionTests(new Geometry.JTSIntersectionTests(true, true, false),
-                                        Collections.singletonList(polygon), geometryFactory))
-                                {
-                                    dataElements.add(lookupUtils.getDataElement(geometry.getDataModelId()
-                                            & processor.getDataModelIdFromGeometryIdBitMask(), null, null));
-                                }
+                                dataElements.add(lookupUtils.getDataElement(
+                                        geometry.getDataModelId() & processor.getDataModelIdFromGeometryIdBitMask(),
+                                        null, null));
                             }
                         }
-                        finally
-                        {
-                            processor.getGeometrySetLock().unlock();
-                        }
+                    }
+                    finally
+                    {
+                        processor.getGeometrySetLock().unlock();
                     }
                 }
-                EventQueueUtilities.runOnEDT(() -> showDialog(dataElements));
             }
+            EventQueueUtilities.runOnEDT(() -> showDialog(dataElements));
         }
     }
 

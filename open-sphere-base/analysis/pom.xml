@@ -48,5 +48,9 @@
 			<groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>io.open-sphere</groupId>
+			<artifactId>overlay</artifactId>
+		</dependency>
 	</dependencies>
 </project>

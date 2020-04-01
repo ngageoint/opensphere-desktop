@@ -78,6 +78,9 @@ final class CursorPositionTransformer extends AbstractOverlayTransformer
     /** The cursor position panel. */
     private final CursorPositionPanel myCursorPositionPanel;
 
+    /** Manager for the cursor position popup. */
+    private final CursorPositionPopupManager myCursorPositionPopupManager;
+
     /**
      * Constructor.
      *
@@ -102,7 +105,7 @@ final class CursorPositionTransformer extends AbstractOverlayTransformer
                 toolbox.getUnitsRegistry());
         toolbox.getControlRegistry().getControlContext(ControlRegistry.GLOBE_CONTROL_CONTEXT)
                 .addListener(myCursorPositionPopupManager.getListener(), new DefaultKeyPressedBinding(KeyEvent.VK_PERIOD));
-        
+
         toolbox.getControlRegistry().getControlContext(ControlRegistry.GLOBE_CONTROL_CONTEXT)
         .addListener(myCursorPositionPopupManager.getAltListener(), new DefaultKeyPressedBinding(KeyEvent.VK_C));
 
@@ -259,8 +262,6 @@ final class CursorPositionTransformer extends AbstractOverlayTransformer
         }
     }
 
-    /** Manager for the cursor position popup. */
-    private final CursorPositionPopupManager myCursorPositionPopupManager;
 
     /**
      * Creates the window.
