@@ -13,7 +13,7 @@ import io.opensphere.core.model.GeographicPosition;
 public class MousePositionUtils
 {
     /** The current position of the mouse on the globe. */
-    private static GeographicPosition currentPosition;
+    private static volatile GeographicPosition currentPosition;
 
     /**
      * Set the mouse position.
