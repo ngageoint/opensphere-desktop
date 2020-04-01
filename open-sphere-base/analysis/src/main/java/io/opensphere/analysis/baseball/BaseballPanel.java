@@ -532,11 +532,11 @@ public class BaseballPanel extends GridPane
         {
             String latitudeKey = myActiveDataElement.getDataTypeInfo().getMetaDataInfo().getLatitudeKey();
             Object latitudeValue = myActiveDataElement.getMetaData().getValue(latitudeKey);
-            String latitude = getValueAsString(latitudeKey, latitudeValue, myActiveDataElement);
+            String latitude = latitudeKey == null ? "" : getValueAsString(latitudeKey, latitudeValue, myActiveDataElement);
 
             String longitudeKey = myActiveDataElement.getDataTypeInfo().getMetaDataInfo().getLongitudeKey();
             Object longitudeValue = myActiveDataElement.getMetaData().getValue(longitudeKey);
-            String longitude = getValueAsString(longitudeKey, longitudeValue, myActiveDataElement);
+            String longitude = longitudeKey == null ? "" : getValueAsString(longitudeKey, longitudeValue, myActiveDataElement);
 
             myCoordinates.setText(latitude + " " + longitude);
         }

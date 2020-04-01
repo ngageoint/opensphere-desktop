@@ -23,10 +23,8 @@ import io.opensphere.core.geometry.renderproperties.LabelRenderProperties;
 import io.opensphere.core.geometry.renderproperties.ZOrderRenderProperties;
 import io.opensphere.core.hud.framework.TransformerHelper;
 import io.opensphere.core.hud.framework.Window.ToolLocation;
-import io.opensphere.core.math.Vector2i;
 import io.opensphere.core.mgrs.MGRSConverter;
 import io.opensphere.core.mgrs.UTM;
-import io.opensphere.core.model.Altitude;
 import io.opensphere.core.model.Altitude.ReferenceLevel;
 import io.opensphere.core.model.GeographicPosition;
 import io.opensphere.core.model.LatLonAlt;
@@ -39,6 +37,7 @@ import io.opensphere.core.projection.Projection;
 import io.opensphere.core.terrain.util.AbsoluteElevationProvider;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.core.util.swing.EventQueueUtilities;
+import io.opensphere.overlay.util.MousePositionUtils;
 
 /**
  * Transformer for the cursor position overlay.
@@ -78,6 +77,9 @@ final class CursorPositionTransformer extends AbstractOverlayTransformer
     /** The cursor position panel. */
     private final CursorPositionPanel myCursorPositionPanel;
 
+    /** Manager for the cursor position popup. */
+    private final CursorPositionPopupManager myCursorPositionPopupManager;
+
     /**
      * Constructor.
      *
@@ -102,7 +104,7 @@ final class CursorPositionTransformer extends AbstractOverlayTransformer
                 toolbox.getUnitsRegistry());
         toolbox.getControlRegistry().getControlContext(ControlRegistry.GLOBE_CONTROL_CONTEXT)
                 .addListener(myCursorPositionPopupManager.getListener(), new DefaultKeyPressedBinding(KeyEvent.VK_PERIOD));
-        
+
         toolbox.getControlRegistry().getControlContext(ControlRegistry.GLOBE_CONTROL_CONTEXT)
         .addListener(myCursorPositionPopupManager.getAltListener(), new DefaultKeyPressedBinding(KeyEvent.VK_C));
 
@@ -229,7 +231,7 @@ final class CursorPositionTransformer extends AbstractOverlayTransformer
         GeographicPosition position = null;
         if (point != null)
         {
-            position = myToolbox.getMapManager().convertToPosition(new Vector2i(point), Altitude.ReferenceLevel.ELLIPSOID);
+            position = MousePositionUtils.getMousePosition();
         }
         if (position == null)
         {
@@ -259,8 +261,6 @@ final class CursorPositionTransformer extends AbstractOverlayTransformer
         }
     }
 
-    /** Manager for the cursor position popup. */
-    private final CursorPositionPopupManager myCursorPositionPopupManager;
 
     /**
      * Creates the window.
