@@ -67,8 +67,8 @@ public class BaseballController extends EventListenerService
             DataElementLookupUtils lookupUtils = MantleToolboxUtils.getDataElementLookupUtils(myToolbox);
             List<DataElement> dataElements = New.list();
             GeometryFactory geometryFactory = new GeometryFactory();
-            LatLonAlt center = MousePositionUtils.getMousePosition().getLatLonAlt();
-            GeographicPosition innerPosition = new GeographicPosition(center);
+            GeographicPosition innerPosition = MousePositionUtils.getMousePosition();
+            LatLonAlt center = innerPosition.getLatLonAlt();
             Vector2i innerVector = myToolbox.getMapManager().convertToPoint(innerPosition);
             double pathLength = generateDistance(center, innerVector);
 
