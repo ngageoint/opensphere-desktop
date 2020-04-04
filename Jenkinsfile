@@ -9,7 +9,6 @@ node('desktop') {
     env.mvnHome = tool name: 'Maven354', type: 'maven';
     env.SLOW_MACHINE = true;
     env.REMOTE_REPO_ARGS = "-DaltSnapshotDeploymentRepository=nexus-FADE-Snapshots::default::https://nexus.devops.geointservices.io/content/repositories/FADE-Snapshots -DaltReleaseDeploymentRepository=nexus-FADE-COTS::default::https://nexus.devops.geointservices.io/content/repositories/FADE-COTS/";
-    env.MAVEN_OPTS = "-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
 
     stage ('Checkout') {
         try {
@@ -33,7 +32,7 @@ node('desktop') {
             }
 /*			configFileProvider(
 				[configFile(fileId: '3d2775d8-f723-465f-829a-969d0ae5f40b', variable: 'MAVEN_SETTINGS')]) {*/
-	            sh "${env.mvnHome}/bin/mvn --no-snapshot-updates -Dmaven.repo.local=${env.LOCAL_REPO} clean install deploy -Pautomated ${env.REMOTE_REPO_ARGS} -q"
+	            sh "${env.mvnHome}/bin/mvn --no-snapshot-updates -Dmaven.repo.local=${env.LOCAL_REPO} clean install deploy -Pautomated ${env.REMOTE_REPO_ARGS} -e"
 	        /*}*/
         } catch (error) {
             notifyFailed();
@@ -48,8 +47,8 @@ node('desktop') {
 	if(!"${env.BRANCH_NAME}".startsWith('feature')) {
 	    stage ('Site') {
 	        try {
-	            sh "${env.mvnHome}/bin/mvn -T4.0C --no-snapshot-updates -Dmaven.repo.local=${env.LOCAL_REPO} -q site"
-	            sh "${env.mvnHome}/bin/mvn -T4.0C --no-snapshot-updates -Dmaven.repo.local=${env.LOCAL_REPO} -q site:stage"
+	            sh "${env.mvnHome}/bin/mvn -T4.0C --no-snapshot-updates -Dmaven.repo.local=${env.LOCAL_REPO} -e site"
+	            sh "${env.mvnHome}/bin/mvn -T4.0C --no-snapshot-updates -Dmaven.repo.local=${env.LOCAL_REPO} -e site:stage"
 	        } catch (error) {
 	            notifyFailed();
 	            throw error;
