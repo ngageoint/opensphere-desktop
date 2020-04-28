@@ -6,7 +6,7 @@ node('desktop') {
     env.LOCAL_REPO = "${env.WORKSPACE}/localRepository/${env.BUILD_NUMBER}";
     env.JAVA_HOME = tool name: 'JDK_11uLatest', type: 'jdk';
     env.PATH="${env.JAVA_HOME}/bin:${env.PATH}";
-    env.mvnHome = tool name: 'Maven354', type: 'maven';
+    env.mvnHome = tool name: 'Maven363', type: 'maven';
     env.SLOW_MACHINE = true;
     env.REMOTE_REPO_ARGS = "-DaltSnapshotDeploymentRepository=nexus-FADE-Snapshots::default::https://nexus.devops.geointservices.io/content/repositories/FADE-Snapshots -DaltReleaseDeploymentRepository=nexus-FADE-COTS::default::https://nexus.devops.geointservices.io/content/repositories/FADE-COTS/";
 
