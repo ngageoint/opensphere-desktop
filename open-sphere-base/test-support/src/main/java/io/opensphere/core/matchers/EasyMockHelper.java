@@ -22,7 +22,8 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.easymock.Capture;
 import org.easymock.EasyMock;
 import org.easymock.IAnswer;
@@ -39,7 +40,7 @@ public final class EasyMockHelper
     /**
      * The <code>Log</code> instance used for logging.
      */
-    private static final Logger LOG = Logger.getLogger(EasyMockHelper.class);
+    private static final Logger LOG = LogManager.getLogger(EasyMockHelper.class);
 
     /**
      * Report a new {@link CaptureArgumentMatcher} to EasyMock.
