@@ -108,6 +108,7 @@
 		<jackson.core.version>2.9.7</jackson.core.version>
 		<jackson.base.version>1.9.13</jackson.base.version>
 		<javafx.version>11.0.2</javafx.version>
+		<javafx.classifier>linux</javafx.classifier>
 	</properties>
 	<build>
 		<pluginManagement>
@@ -535,36 +536,43 @@
 			    <groupId>org.openjfx</groupId>
 			    <artifactId>javafx-media</artifactId>
 			    <version>${javafx.version}</version>
+			    <classifier>${javafx.classifier}</classifier>
 			</dependency>
 			<dependency>
 			    <groupId>org.openjfx</groupId>
 			    <artifactId>javafx-web</artifactId>
 			    <version>${javafx.version}</version>
+			    <classifier>${javafx.classifier}</classifier>
 			</dependency>
 			<dependency>
 			    <groupId>org.openjfx</groupId>
 			    <artifactId>javafx-fxml</artifactId>
 			    <version>${javafx.version}</version>
+			    <classifier>${javafx.classifier}</classifier>
 			</dependency>
 			<dependency>
 			    <groupId>org.openjfx</groupId>
 			    <artifactId>javafx-base</artifactId>
 			    <version>${javafx.version}</version>
+			    <classifier>${javafx.classifier}</classifier>
 			</dependency>
 			<dependency>
 			    <groupId>org.openjfx</groupId>
 			    <artifactId>javafx-graphics</artifactId>
 			    <version>${javafx.version}</version>
+			    <classifier>${javafx.classifier}</classifier>
 			</dependency>
 			<dependency>
 			    <groupId>org.openjfx</groupId>
 			    <artifactId>javafx-controls</artifactId>
 			    <version>${javafx.version}</version>
+			    <classifier>${javafx.classifier}</classifier>
 			</dependency>
 			<dependency>
 			    <groupId>org.openjfx</groupId>
 			    <artifactId>javafx-swing</artifactId>
 			    <version>${javafx.version}</version>
+			    <classifier>${javafx.classifier}</classifier>
 			</dependency>
 
 			<dependency>
