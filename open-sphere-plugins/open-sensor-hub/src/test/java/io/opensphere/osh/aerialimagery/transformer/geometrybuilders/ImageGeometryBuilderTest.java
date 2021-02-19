@@ -409,9 +409,11 @@ public class ImageGeometryBuilderTest
                 image = ImageUtil.BROKEN_IMAGE;
             }
             ByteArrayOutputStream output = new ByteArrayOutputStream();
-            ImageIO.write(image, "jpg", output);
+            boolean foundWriter = ImageIO.write(image, "png", output);
+            assert foundWriter;
 
             testDatas.add(new PlatformMetadataAndImage(metadata, ByteBuffer.wrap(output.toByteArray())));
+            
         }
 
         return testDatas;

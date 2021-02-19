@@ -98,7 +98,7 @@ public class ImageGeometryBuilder implements GeometryBuilder
         List<Geometry> geometries = New.list();
 
         if (model instanceof PlatformMetadataAndImage)
-        {
+        {           
             ByteArrayInputStream stream = new ByteArrayInputStream(((PlatformMetadataAndImage)model).getImageBytes().array());
             try
             {

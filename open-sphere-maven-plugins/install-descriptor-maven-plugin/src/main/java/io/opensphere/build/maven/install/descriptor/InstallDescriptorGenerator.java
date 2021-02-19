@@ -15,10 +15,6 @@ import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugins.annotations.Component;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectHelper;
 import org.apache.maven.shared.model.fileset.util.FileSetManager;
@@ -31,72 +27,82 @@ import io.opensphere.core.appl.versions.FileDescriptor;
 import io.opensphere.core.appl.versions.InstallDescriptor;
 
 /**
- *
+ * @goal generate-install-descriptor
+ * @phase package
+ * @threadSafe true
  */
-@Mojo(name = "generate-install-descriptor", defaultPhase = LifecyclePhase.PACKAGE, threadSafe = true)
 public class InstallDescriptorGenerator extends AbstractMojo
 {
     /**
      * The Maven Session Object
+     * @parameter property="session" default-value="${session}"
+     * @required true
+     * @readonly true
      */
-    @Parameter(property = "session", required = true, readonly = true, defaultValue = "${session}")
     private MavenSession mySession;
 
     /**
      * The Maven Project Object
+     * @parameter property="project" default-value="${project}"
+     * @required true
+     * @readonly true
      */
-    @Parameter(property = "project", required = true, readonly = true, defaultValue = "${project}")
     private MavenProject myProject;
 
     /**
      * Maven ProjectHelper.
+     * @component
      */
-    @Component
     private MavenProjectHelper myProjectHelper;
 
     /**
      * The version number of the build (optional, extracted from the maven
      * project if not specified).
+     * @required false
+     * @parameter alias="version"
      */
-    @Parameter(required = false, alias = "version")
     private String myVersion;
 
     /**
      * The build number to include in the generated install descriptor.
+     * @required true
+     * @parameter alias="buildnumber"
      */
-    @Parameter(required = true, alias = "buildnumber")
     private String buildnumber;
 
     /**
      * The environment for which the build was generated, will be included in
      * the generated install descriptor.
+     * @required true
+     * @parameter alias="environment"
      */
-    @Parameter(required = true, alias = "environment")
     private String environment;
 
     /**
      * The target operating system for which the build was generated, will be
      * included in the generated install descriptor.
+     * @required true
+     * @parameter alias="targetos"
      */
-    @Parameter(required = true, alias = "targetos")
     private String targetos;
 
     /**
      * The name of the file to be created by the install descriptor generator.
+     * @required true
+     * @parameter alias="destination"
      */
-    @Parameter(required = true, alias = "destination")
     private String destination;
 
     /**
      * The group of directed file sets to include in the install descriptor.
+     * @parameter
      */
-    @Parameter
     private DirectedFileSet[] filesets;
 
     /**
      * The set of files to include in the install descriptor.
+     * @parameter
      */
-    @Parameter
     private DirectedFileSet fileset;
 
     /**

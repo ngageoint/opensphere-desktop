@@ -65,8 +65,11 @@ public class EncryptedByteArrayTest
                             if ("Cipher".equals(algService.getType())
                                     && algService.getAlgorithm().equals(keyGeneratorService.getAlgorithm()))
                             {
-                                String[] modes = algService.getAttribute("SupportedModes").split("\\|");
-                                String[] paddings = algService.getAttribute("SupportedPaddings").split("\\|");
+                                String[] modes = algService.getAttribute("SupportedModes") == null ?
+                                        new String[0] : algService.getAttribute("SupportedModes").split("\\|");
+
+                                String[] paddings = algService.getAttribute("SupportedPaddings") == null ?
+                                        new String[0] : algService.getAttribute("SupportedPaddings").split("\\|");
 
                                 for (String mode : modes)
                                 {

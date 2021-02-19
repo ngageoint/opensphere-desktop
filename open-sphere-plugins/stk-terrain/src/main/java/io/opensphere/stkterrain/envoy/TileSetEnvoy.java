@@ -1,14 +1,9 @@
 package io.opensphere.stkterrain.envoy;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Collection;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.api.adapter.AbstractEnvoy;
@@ -27,16 +22,11 @@ import io.opensphere.core.data.QueryException;
 import io.opensphere.core.data.util.DataModelCategory;
 import io.opensphere.core.data.util.OrderSpecifier;
 import io.opensphere.core.data.util.Satisfaction;
-import io.opensphere.core.server.HttpServer;
-import io.opensphere.core.server.ResponseValues;
 import io.opensphere.core.util.DefaultValidatorSupport;
 import io.opensphere.core.util.ValidationStatus;
 import io.opensphere.core.util.collections.New;
-import io.opensphere.core.util.io.CancellableInputStream;
-import io.opensphere.core.util.io.StreamReader;
-import io.opensphere.core.util.lang.StringUtilities;
-import io.opensphere.server.util.JsonUtils;
 import io.opensphere.stkterrain.model.TileSet;
+import io.opensphere.stkterrain.model.TileSetDataSource;
 import io.opensphere.stkterrain.util.Constants;
 
 /**
@@ -135,32 +125,22 @@ public class TileSetEnvoy extends AbstractEnvoy implements DataRegistryDataProvi
     {
         try
         {
-            URL url = new URL(myServerUrl + Constants.TILE_SETS_URL);
-            HttpServer server = getToolbox().getServerProviderRegistry().getProvider(HttpServer.class).getServer(url);
-            ResponseValues responseValues = new ResponseValues();
-            CancellableInputStream stream = server.sendGet(url, responseValues);
-            if (responseValues.getResponseCode() == HttpURLConnection.HTTP_OK)
-            {
-                ObjectMapper mapper = JsonUtils.createMapper();
-                TileSet[] tileSets = mapper.readValue(stream, TileSet[].class);
+            TileSet[] tileSets = new TileSet[1];
+            tileSets[0] = new TileSet();
+            tileSets[0].getDataSources().add(new TileSetDataSource());
+            tileSets[0].setName("world");
+            tileSets[0].getDataSources().get(0).setName("world");
 
-                Collection<PropertyAccessor<TileSet, ?>> accessors = New.collection();
-                accessors.add(SerializableAccessor.getHomogeneousAccessor(Constants.TILESET_PROPERTY_DESCRIPTOR));
+            Collection<PropertyAccessor<TileSet, ?>> accessors = New.collection();
+            accessors.add(SerializableAccessor.getHomogeneousAccessor(Constants.TILESET_PROPERTY_DESCRIPTOR));
 
-                CacheDeposit<TileSet> deposit = new DefaultCacheDeposit<TileSet>(
-                        new DataModelCategory(myServerUrl, TileSet.class.getName(), TileSet.class.getName()), accessors,
-                        New.list(tileSets), true, DefaultCacheDeposit.SESSION_END, false);
-                queryReceiver.receive(deposit);
-            }
-            else
-            {
-                StreamReader errorMessageReader = new StreamReader(stream);
-                throw new QueryException(url.toString() + " returned code " + responseValues.getResponseCode() + " "
-                        + responseValues.getResponseMessage() + " message "
-                        + errorMessageReader.readStreamIntoString(StringUtilities.DEFAULT_CHARSET));
-            }
+            CacheDeposit<TileSet> deposit = new DefaultCacheDeposit<TileSet>(
+                    new DataModelCategory(myServerUrl, TileSet.class.getName(), TileSet.class.getName()), accessors,
+                    New.list(tileSets), true, DefaultCacheDeposit.SESSION_END, false);
+            queryReceiver.receive(deposit);
+
         }
-        catch (IOException | URISyntaxException | CacheException e)
+        catch (CacheException e)
         {
             throw new QueryException(e.getMessage(), e);
         }

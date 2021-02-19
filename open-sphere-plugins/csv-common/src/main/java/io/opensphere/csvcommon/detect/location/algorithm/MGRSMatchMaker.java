@@ -3,7 +3,6 @@ package io.opensphere.csvcommon.detect.location.algorithm;
 import org.apache.log4j.Logger;
 
 import io.opensphere.core.model.LatLonAlt.CoordFormat;
-import io.opensphere.csvcommon.detect.location.algorithm.LocationMatchMaker;
 import io.opensphere.csvcommon.detect.location.model.LocationResults;
 import io.opensphere.csvcommon.detect.location.model.PotentialLocationColumn;
 import io.opensphere.importer.config.ColumnType;
@@ -56,6 +55,11 @@ public class MGRSMatchMaker extends LocationMatchMaker
             if (strTok.length == 3)
             {
                 str = strTok[0] + strTok[1] + strTok[2];
+                // If the string's length is still less than 2, it isn't valid
+                if (str.length() < 2)
+                {
+                    return;
+                }
             }
             else
             {
