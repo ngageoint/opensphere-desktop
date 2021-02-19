@@ -1,8 +1,11 @@
 package io.opensphere.csvcommon.ui.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import io.opensphere.analysis.table.model.MetaColumn;
 import io.opensphere.core.preferences.PreferencesRegistry;
 import io.opensphere.core.util.collections.New;
 import io.opensphere.csvcommon.config.v2.CSVParseParameters;
@@ -29,6 +32,8 @@ public class ImportableColumnController
      */
     public void detectNonImportableColumns(CSVParseParameters parameters, PreferencesRegistry registry)
     {
+        List<String> metaColumns = new ArrayList<String>(Arrays.asList(MetaColumn.COLOR, MetaColumn.HILIGHT, MetaColumn.INDEX,
+                MetaColumn.LOB_VISIBLE, MetaColumn.MGRS_DERIVED, MetaColumn.SELECTED, MetaColumn.VISIBLE));
         if (parameters.getColumnNames() != null)
         {
             Map<String, Integer> upperCasedColumnNames = New.map();
@@ -43,8 +48,18 @@ public class ImportableColumnController
             for (String columnName : parameters.getColumnNames())
             {
                 String key = ourKeyPrefix + columnName.toLowerCase();
-
                 List<String> columnsToNotImport = CSVColumnPrefsUtil.getCustomKeys(registry, key);
+                List<String> currentParams = new ArrayList<String>(parameters.getColumnNames());
+                List<String> newParams = new ArrayList<String>();
+                currentParams.forEach(e ->
+                {
+                    if (metaColumns.contains(e))
+                    {
+                        e = e + "_user";
+                    }
+                    newParams.add(e);
+                });
+                parameters.setColumnNames(newParams);
 
                 if (columnsToNotImport != null)
                 {

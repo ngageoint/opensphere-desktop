@@ -4,7 +4,7 @@ import io.opensphere.core.model.LatLonAlt;
 
 /** For formatting angles (i.e., lat/lon) in degrees and decimal minutes. */
 @SuppressWarnings("serial")
-public class DegDecimalMin extends Angle
+public class DegDecimalMin extends Coordinates
 {
     /** The precision for angular minutes. */
     private static final int MINUTES_PRECISION = 3;
@@ -22,7 +22,7 @@ public class DegDecimalMin extends Angle
     @Override
     public String getLongLabel()
     {
-        return "degrees decimal minutes";
+        return "Degrees Decimal Minutes";
     }
 
     @Override

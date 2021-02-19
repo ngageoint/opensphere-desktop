@@ -38,11 +38,6 @@ public class AnnotationsHelper
     private final UnitsChangeListener<Length> myUnitsChangeListener = new UnitsChangeListener<Length>()
     {
         @Override
-        public void availableUnitsChanged(Class<Length> superType, Collection<Class<? extends Length>> newTypes)
-        {
-        }
-
-        @Override
         public void preferredUnitsChanged(Class<? extends Length> type)
         {
             myPreferredUnits = type;

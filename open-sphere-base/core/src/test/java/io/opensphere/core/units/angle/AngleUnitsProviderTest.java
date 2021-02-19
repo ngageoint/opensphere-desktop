@@ -36,17 +36,17 @@ public class AngleUnitsProviderTest
     @Test
     public void testAddAndRemoveAngleType() throws InvalidUnitsException
     {
-        Ref<Collection<Class<? extends Angle>>> r = new Ref<>();
-        UnitsChangeListener<Angle> listener = new UnitsChangeListener<Angle>()
+        Ref<Collection<Class<? extends Coordinates>>> r = new Ref<>();
+        UnitsChangeListener<Coordinates> listener = new UnitsChangeListener<Coordinates>()
         {
             @Override
-            public void availableUnitsChanged(Class<Angle> superType, Collection<Class<? extends Angle>> newTypes)
+            public void availableUnitsChanged(Class<Coordinates> superType, Collection<Class<? extends Coordinates>> newTypes)
             {
                 r.val = new LinkedList<>(newTypes);
             }
 
             @Override
-            public void preferredUnitsChanged(Class<? extends Angle> type)
+            public void preferredUnitsChanged(Class<? extends Coordinates> type)
             {
             }
         };
@@ -57,16 +57,17 @@ public class AngleUnitsProviderTest
         units.addUnits(DecimalDegrees.class);
         Assert.assertEquals(null, r.val);
 
-        Collection<Class<? extends Angle>> expected = new LinkedList<>();
+        Collection<Class<? extends Coordinates>> expected = new LinkedList<>();
         expected.add(DegDecimalMin.class);
-        listener.availableUnitsChanged(Angle.class, expected);
+        listener.availableUnitsChanged(Coordinates.class, expected);
         Assert.assertEquals(expected, r.val);
         expected.add(DecimalDegrees.class);
+        expected.add(MGRS.class);
         units.removeUnits(DegreesMinutesSeconds.class);
         Assert.assertEquals(expected, r.val);
 
         expected.add(DegreesMinutesSeconds.class);
-        listener.availableUnitsChanged(Angle.class, expected);
+        listener.availableUnitsChanged(Coordinates.class, expected);
         Assert.assertEquals(expected, r.val);
         units.addUnits(DegreesMinutesSeconds.class);
         Assert.assertEquals(expected, r.val);
@@ -97,7 +98,7 @@ public class AngleUnitsProviderTest
     }
 
     /**
-     * Test for {@link AngleUnitsProvider#convert(Class, Angle)}.
+     * Test for {@link AngleUnitsProvider#convert(Class, Coordinates)}.
      */
     @Test
     public void testConvert()
@@ -152,7 +153,7 @@ public class AngleUnitsProviderTest
         AngleUnitsProvider units = new AngleUnitsProvider();
         units.setPreferredUnits(DecimalDegrees.class);
         @SuppressWarnings("unchecked")
-        UnitsProvider.UnitsChangeListener<Angle> listener = EasyMock.createStrictMock(UnitsProvider.UnitsChangeListener.class);
+        UnitsProvider.UnitsChangeListener<Coordinates> listener = EasyMock.createStrictMock(UnitsProvider.UnitsChangeListener.class);
         EasyMock.replay(listener);
         units.addListener(listener);
         // Listener should not be called.
@@ -166,7 +167,7 @@ public class AngleUnitsProviderTest
     }
 
     /**
-     * Test for {@link AngleUnitsProvider#toShortLabelString(Angle)} and
+     * Test for {@link AngleUnitsProvider#toShortLabelString(Coordinates)} and
      * {@link AngleUnitsProvider#fromShortLabelString(String)}.
      */
     @Test
@@ -175,12 +176,12 @@ public class AngleUnitsProviderTest
         AngleUnitsProvider units = new AngleUnitsProvider();
         DecimalDegrees input = new DecimalDegrees(34.545124);
         String str = units.toShortLabelString(input);
-        Angle output = units.fromShortLabelString(str);
+        Coordinates output = units.fromShortLabelString(str);
         Assert.assertEquals(input, output);
     }
 
     /** Adapter for Angle class. */
-    private abstract static class AngleAdapter extends Angle
+    private abstract static class AngleAdapter extends Coordinates
     {
         /** Serial version UID. */
         private static final long serialVersionUID = 1L;
@@ -266,7 +267,7 @@ public class AngleUnitsProviderTest
          *
          * @param angle The angle.
          */
-        public InvalidAngle2(Angle angle)
+        public InvalidAngle2(Coordinates angle)
         {
             super(angle.getMagnitude());
         }

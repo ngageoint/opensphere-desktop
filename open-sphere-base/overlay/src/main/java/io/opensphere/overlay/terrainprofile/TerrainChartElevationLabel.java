@@ -29,11 +29,6 @@ public class TerrainChartElevationLabel extends Renderable
     private final UnitsChangeListener<Length> myListener = new UnitsChangeListener<Length>()
     {
         @Override
-        public void availableUnitsChanged(Class<Length> superType, Collection<Class<? extends Length>> newTypes)
-        {
-        }
-
-        @Override
         public void preferredUnitsChanged(Class<? extends Length> type)
         {
             myUnits = type;

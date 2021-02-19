@@ -171,12 +171,6 @@ public class CompletedTrackManager
     private final UnitsChangeListener<Length> myDistanceUnitChangeListener = new UnitsChangeListener<Length>()
     {
         @Override
-        public void availableUnitsChanged(Class<Length> superType, Collection<Class<? extends Length>> newTypes)
-        {
-            /* intentionally blank */
-        }
-
-        @Override
         public void preferredUnitsChanged(final Class<? extends Length> distanceUnits)
         {
             Collection<Geometry> adds = New.collection();
