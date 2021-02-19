@@ -156,7 +156,7 @@ public class FilterManagerStateController extends AbstractModuleStateController
                         DataTypeInfo filterDti = null;
                         if (filter instanceof CustomBinaryLogicOpType && !StringUtils.isBlank(filter.getFilterId()))
                         {
-                            filterDti = getDataTypeForFilter(id, filter.getUrlKey());
+                            filterDti = getDataTypeForFilter(filter.getUrlKey());
                             if (filterDti == null)
                             {
                                 continue;
@@ -171,7 +171,7 @@ public class FilterManagerStateController extends AbstractModuleStateController
                         {
                             if (filterDti == null)
                             {
-                                filterDti = getDataTypeForFilter(id, filter.getUrlKey());
+                                filterDti = getDataTypeForFilter(filter.getUrlKey());
                                 if (filterDti == null)
                                 {
                                     continue;
@@ -221,7 +221,7 @@ public class FilterManagerStateController extends AbstractModuleStateController
                 Collection<String> layerIds = StateUtilities.getLayerIds(filter, state);
                 for (String layerId : layerIds)
                 {
-                    DataTypeInfo dataType = getDataTypeForFilter(id, layerId);
+                    DataTypeInfo dataType = getDataTypeForFilter(layerId);
                     if (dataType != null)
                     {
                         Filter dataFilter = toFilter(filter, id, dataType);
@@ -741,11 +741,10 @@ public class FilterManagerStateController extends AbstractModuleStateController
     /**
      * Find the data type for a filter.
      *
-     * @param stateId The state id.
      * @param layerId The layer id.
      * @return The data type.
      */
-    protected DataTypeInfo getDataTypeForFilter(String stateId, String layerId)
+    protected DataTypeInfo getDataTypeForFilter(String layerId)
     {
         /* Get the data type that corresponds to this filter so that some of the
          * filter parameters can be set from it. */
@@ -754,8 +753,7 @@ public class FilterManagerStateController extends AbstractModuleStateController
         {
             for (DataTypeInfo dti : dgi.getMembers(false))
             {
-                if (dti.getTypeKey().startsWith(layerId)
-                        && (!dti.getTypeKey().startsWith("http") || dti.getTypeKey().endsWith(stateId)))
+                if (dti.getTypeKey().startsWith(layerId))
                 {
                     filterDti = dti;
                     break;

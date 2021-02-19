@@ -10,25 +10,25 @@ import io.opensphere.core.util.JAXBWrapper;
 import io.opensphere.core.util.Utilities;
 
 /**
- * Wrapper for an {@link Angle} that can be marshalled and unmarshalled using
+ * Wrapper for an {@link Coordinates} that can be marshalled and unmarshalled using
  * JAXB.
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class JAXBAngle implements JAXBWrapper<Angle>
+public class JAXBAngle implements JAXBWrapper<Coordinates>
 {
     /** The magnitude. */
     private double myMagnitude;
 
     /** The units. */
-    private Class<? extends Angle> myUnits;
+    private Class<? extends Coordinates> myUnits;
 
     /**
      * Constructor.
      *
      * @param angle The wrapped angle.
      */
-    public JAXBAngle(Angle angle)
+    public JAXBAngle(Coordinates angle)
     {
         myUnits = angle.getClass();
         myMagnitude = angle.getMagnitude();
@@ -59,9 +59,9 @@ public class JAXBAngle implements JAXBWrapper<Angle>
     }
 
     @Override
-    public Angle getWrappedObject()
+    public Coordinates getWrappedObject()
     {
-        return Angle.create(myUnits, myMagnitude);
+        return Coordinates.create(myUnits, myMagnitude);
     }
 
     @Override

@@ -68,6 +68,22 @@ public class BaseballPanel extends GridPane
     /** The image tag suffix. */
     private static final String IMAGE_SUFFIX = "\"/>";
 
+    /** The border for the currently selected coordinate label. */
+    private static final Border MAIN_COORDINATE_BORDER = new Border(new BorderStroke(FXUtilities.fromAwtColor(Colors.OPENSPHERE_LIGHT),
+            BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(3)));
+
+    /** The border for non-active, mouse-hovered coordinate labels. */
+    private static final Border SECONDARY_COORDINATE_BORDER = new Border(new BorderStroke(FXUtilities.fromAwtColor(Colors.OPENSPHERE_LIGHT),
+            BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(1.5)));
+
+    /**
+     * The border for non-active, non-mouse-hovered coordinate labels. Matches
+     * the background color of the dialog. Used to prevent constant minor
+     * resizing of label space when hovering over them.
+     */
+    private static final Border INVISIBLE_COORDINATE_BORDER = new Border(new BorderStroke(FXUtilities.fromAwtColor(Colors.LF_SECONDARY3),
+            BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(1.5)));
+
     /** The currently displayed data element. */
     private DataElement myActiveDataElement;
 
@@ -96,23 +112,6 @@ public class BaseballPanel extends GridPane
 
     /** The list of listeners for displaying images at the correct size. */
     private final List<ImageListener> myListenerList = New.list();
-
-    /** The border for the currently selected coordinate label. */
-    private final Border myMainCoordinateBorder = new Border(new BorderStroke(FXUtilities.fromAwtColor(Colors.OPENSPHERE_LIGHT),
-            BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(3)));
-
-    /** The border for non-active, mouse-hovered coordinate labels. */
-    private final Border mySecondaryCoordinateBorder = new Border(
-            new BorderStroke(FXUtilities.fromAwtColor(Colors.OPENSPHERE_LIGHT), BorderStrokeStyle.SOLID, new CornerRadii(5),
-                    new BorderWidths(1.5)));
-
-    /**
-     * The border for non-active, non-mouse-hovered coordinate labels. Matches
-     * the background color of the dialog. Used to prevent constant minor
-     * resizing of label space when hovering over them.
-     */
-    private final Border myInvisibleCoordinateBorder = new Border(new BorderStroke(FXUtilities.fromAwtColor(Colors.LF_SECONDARY3),
-            BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(1.5)));
 
     /**
      * The Label that displays which layer the currently selected feature is
@@ -322,19 +321,19 @@ public class BaseballPanel extends GridPane
 
         Label ddLabel = new Label("DD");
         mySelectedCoordinateLabel = ddLabel;
-        ddLabel.setBorder(myMainCoordinateBorder);
+        ddLabel.setBorder(MAIN_COORDINATE_BORDER);
         setupCoordinateLabelFunctions(ddLabel, GeographicPositionFormat.DECDEG);
 
         Label dmsLabel = new Label("DMS");
-        dmsLabel.setBorder(myInvisibleCoordinateBorder);
+        dmsLabel.setBorder(INVISIBLE_COORDINATE_BORDER);
         setupCoordinateLabelFunctions(dmsLabel, GeographicPositionFormat.DMSDEG);
 
         Label ddmLabel = new Label("DDM");
-        ddmLabel.setBorder(myInvisibleCoordinateBorder);
+        ddmLabel.setBorder(INVISIBLE_COORDINATE_BORDER);
         setupCoordinateLabelFunctions(ddmLabel, GeographicPositionFormat.DEG_DMIN);
 
         Label mgrsLabel = new Label("MGRS");
-        mgrsLabel.setBorder(myInvisibleCoordinateBorder);
+        mgrsLabel.setBorder(INVISIBLE_COORDINATE_BORDER);
         setupCoordinateLabelFunctions(mgrsLabel, GeographicPositionFormat.MGRS);
 
         buttonBox.setAlignment(Pos.CENTER_RIGHT);
@@ -397,7 +396,14 @@ public class BaseballPanel extends GridPane
     private String getValueAsString(String key, Object value, DataElement dataElement)
     {
         String returnValue;
-        if (value == null)
+
+        if (key.equals("TIME"))
+        {
+            // this check is needed since the TIME metadata element isn't always set,
+            // and can alternately be retrieved through the TimeSpan of the element
+            returnValue = dataElement.getTimeSpan().toDisplayString();
+        }
+        else if (value == null)
         {
             returnValue = null;
         }
@@ -471,8 +477,8 @@ public class BaseballPanel extends GridPane
      */
     private void setCoordinateSelectionBorders(Label label)
     {
-        mySelectedCoordinateLabel.setBorder(myInvisibleCoordinateBorder);
-        label.setBorder(myMainCoordinateBorder);
+        mySelectedCoordinateLabel.setBorder(INVISIBLE_COORDINATE_BORDER);
+        label.setBorder(MAIN_COORDINATE_BORDER);
         mySelectedCoordinateLabel = label;
     }
 
@@ -495,7 +501,7 @@ public class BaseballPanel extends GridPane
         {
             if (!label.equals(mySelectedCoordinateLabel))
             {
-                label.setBorder(mySecondaryCoordinateBorder);
+                label.setBorder(SECONDARY_COORDINATE_BORDER);
             }
         });
 
@@ -503,7 +509,7 @@ public class BaseballPanel extends GridPane
         {
             if (!label.equals(mySelectedCoordinateLabel))
             {
-                label.setBorder(myInvisibleCoordinateBorder);
+                label.setBorder(INVISIBLE_COORDINATE_BORDER);
             }
         });
     }

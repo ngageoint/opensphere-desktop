@@ -34,6 +34,9 @@ public final class InstallDescriptorGenerator
     /** The name of the native library pack directory. */
     private static final String NATIVE_LIBRARY_PACK = "native_library_pack";
 
+    /** The name of the launcher pack. */
+    private static final String LAUNCHER_PACK = "launcher_pack";
+
     /** The name of the update pack directory. */
     private static final String UPDATE_PACK = "update_pack";
 
@@ -96,24 +99,40 @@ public final class InstallDescriptorGenerator
         Collection<File> nativeLibraryFiles = FileUtils
                 .listFiles(new File(ourStagingDirectoryPath + File.separatorChar + NATIVE_LIBRARY_PACK), null, true);
 
+        // Include updating of the root launchers
+        Collection<File> launcherFiles = new ArrayList<>();
+        for (String launcher : List.of("launch.bat", "launch.sh"))
+        {
+            File file = new File(ourStagingDirectoryPath + File.separatorChar + RESOURCE_PACK + File.separatorChar + launcher);
+            if (file.exists())
+            {
+                launcherFiles.add(file);
+            }
+        }
+
         List<FileDescriptor> fileDescriptors = createFileDescriptors(applicationFiles, APPLICATION_PACK);
         fileDescriptors.addAll(createFileDescriptors(resourceFiles, RESOURCE_PACK));
         fileDescriptors.addAll(createFileDescriptors(nativeLibraryFiles, NATIVE_LIBRARY_PACK));
+        fileDescriptors.addAll(createFileDescriptors(launcherFiles, LAUNCHER_PACK));
 
-        createJsonFile(createInstallDescriptor(ourVersion, ourEnvironment, ourTargetOperatingSystem, fileDescriptors));
+        InstallDescriptor installDescriptor = createInstallDescriptor(ourVersion, ourEnvironment, ourTargetOperatingSystem,
+                fileDescriptors);
+        createJsonFile(installDescriptor, "installdescriptor.json");
+        createJsonFile(installDescriptor, "install_descriptor.json");
     }
 
     /**
      * Creates a json file from the install descriptor and places the file.
      *
      * @param installDescriptor the install descriptor
+     * @param fileName the file name
      */
-    private static void createJsonFile(InstallDescriptor installDescriptor)
+    private static void createJsonFile(InstallDescriptor installDescriptor, String fileName)
     {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
 
-        File jsonFile = Paths.get(ourStagingDirectoryPath, UPDATE_PACK, "installdescriptor.json").toFile();
+        File jsonFile = Paths.get(ourStagingDirectoryPath, UPDATE_PACK, fileName).toFile();
         boolean fileExists = jsonFile.exists();
 
         try
@@ -215,6 +234,9 @@ public final class InstallDescriptorGenerator
                 {
                     targetPath = "lib" + File.separator + "linux" + File.separator + "x86_64";
                 }
+                break;
+            case LAUNCHER_PACK:
+                targetPath = "..";
                 break;
             default:
                 targetPath = ".";

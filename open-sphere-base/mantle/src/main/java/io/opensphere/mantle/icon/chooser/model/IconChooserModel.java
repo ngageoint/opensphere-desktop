@@ -88,7 +88,7 @@ public class IconChooserModel
             @Override
             public void iconsRemoved(List<IconRecord> removed, Object source)
             {
-                myIconRecords.removeAll(removed);
+                FXUtilities.runOnFXThread(() -> myIconRecords.removeAll(removed));
             }
 
             @Override

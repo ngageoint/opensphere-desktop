@@ -93,7 +93,7 @@ public class BaseballUtils
     }
 
     /**
-     * Formats the TimeSpan into a baseball card-friendly Stringm using the given precision.
+     * Formats the TimeSpan into a baseball card-friendly String using the given precision.
      *
      * @param value the TimeSpan
      * @param precision the precision
