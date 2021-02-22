@@ -1,1 +1,2 @@
 io.opensphere.kml.export.KMLFileExporter
+io.opensphere.kml.export.KMLFileLayerExporter

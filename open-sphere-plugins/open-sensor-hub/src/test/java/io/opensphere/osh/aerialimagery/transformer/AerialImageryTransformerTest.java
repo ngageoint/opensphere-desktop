@@ -423,7 +423,7 @@ public class AerialImageryTransformerTest
         OSHImageQuerier querier = support.createMock(OSHImageQuerier.class);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ImageIO.write(ImageUtil.LOADING_IMAGE, "jpg", out);
+        ImageIO.write(ImageUtil.LOADING_IMAGE, "png", out);
         EasyMock.expect(querier.queryImage(EasyMock.cmpEq(ourTypeKey), EasyMock.isA(TimeSpan.class)))
                 .andAnswer(this::queryImageAnswer).times(times);
 
@@ -612,7 +612,7 @@ public class AerialImageryTransformerTest
     {
         assertEquals(TimeSpan.get(myQueryTime, Milliseconds.ONE), EasyMock.getCurrentArguments()[1]);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ImageIO.write(ImageUtil.LOADING_IMAGE, "jpg", out);
+        ImageIO.write(ImageUtil.LOADING_IMAGE, "png", out);
 
         return out.toByteArray();
     }

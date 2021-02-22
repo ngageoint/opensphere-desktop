@@ -15,6 +15,8 @@ import io.opensphere.core.PluginToolboxRegistry;
 import io.opensphere.core.Toolbox;
 import io.opensphere.core.control.action.ContextActionManager;
 import io.opensphere.core.control.action.ContextMenuProvider;
+import io.opensphere.core.control.action.context.ContextIdentifiers;
+import io.opensphere.core.control.ui.ToolbarComponentRegistry;
 import io.opensphere.core.control.ui.UIRegistry;
 import io.opensphere.core.event.EventManager;
 import io.opensphere.core.modulestate.ModuleStateManager;
@@ -101,22 +103,30 @@ public class FeatureActionsPluginTest
             return null;
         });
         UIRegistry uiRegistry = support.createMock(UIRegistry.class);
-        EasyMock.expect(uiRegistry.getContextActionManager()).andReturn(contextManager);
+        EasyMock.expect(uiRegistry.getContextActionManager()).andReturn(contextManager).atLeastOnce();
+        contextManager.registerContextMenuItemProvider(EasyMock.eq(ContextIdentifiers.DELETE_CONTEXT),
+                EasyMock.eq(Void.class), EasyMock.isA(ContextMenuProvider.class));
+        EasyMock.expectLastCall().atLeastOnce();
 
         MantleToolbox mantle = support.createMock(MantleToolbox.class);
+
+        ToolbarComponentRegistry toolbarRegistry = EasyMock.createMock(ToolbarComponentRegistry.class);
+        EasyMock.expect(uiRegistry.getToolbarComponentRegistry()).andReturn(toolbarRegistry).atLeastOnce();
 
         PluginToolboxRegistry toolboxRegistry = support.createMock(PluginToolboxRegistry.class);
         EasyMock.expect(toolboxRegistry.getRegistrationService(EasyMock.isA(FeatureActionsToolbox.class)))
                 .andReturn(registrationService);
         EasyMock.expect(toolboxRegistry.getPluginToolbox(MantleToolbox.class)).andReturn(mantle).atLeastOnce();
         DataGroupController dataGroupController = support.createMock(DataGroupController.class);
-        EasyMock.expect(mantle.getDataGroupController()).andReturn(dataGroupController);
+        EasyMock.expect(mantle.getDataGroupController()).andReturn(dataGroupController).atLeastOnce();
+        dataGroupController.addActivationListener(EasyMock.isA(Runnable.class));
+        EasyMock.expectLastCall();
         ModuleStateManager stateManager = support.createNiceMock(ModuleStateManager.class);
 
         Toolbox toolbox = support.createMock(Toolbox.class);
         EasyMock.expect(toolbox.getPreferencesRegistry()).andReturn(prefsRegistry).atLeastOnce();
         EasyMock.expect(toolbox.getEventManager()).andReturn(eventManager);
-        EasyMock.expect(toolbox.getUIRegistry()).andReturn(uiRegistry);
+        EasyMock.expect(toolbox.getUIRegistry()).andReturn(uiRegistry).atLeastOnce();
         EasyMock.expect(toolbox.getPluginToolboxRegistry()).andReturn(toolboxRegistry).atLeastOnce();
         EasyMock.expect(toolbox.getModuleStateManager()).andReturn(stateManager);
 

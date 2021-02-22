@@ -25,6 +25,7 @@ import io.opensphere.core.util.lang.NamedThreadFactory;
 import io.opensphere.core.viewer.ViewChangeSupport;
 import io.opensphere.core.viewer.Viewer;
 import io.opensphere.overlay.arc.ArcTransformer;
+import io.opensphere.overlay.util.MousePositionUtils;
 
 /** Helper for handling event listeners. */
 @SuppressWarnings("PMD.GodClass")
@@ -456,36 +457,19 @@ public class OverlayListenerHelper
                 final MouseEvent mouseEvent = (MouseEvent)event;
                 if (mouseEvent.getID() == MouseEvent.MOUSE_EXITED && myCursorPositionTransformer != null)
                 {
-                    myCursorChangeExecutor.execute(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            myCursorPositionTransformer.clear();
-                        }
-                    });
+                    myCursorChangeExecutor.execute(() -> myCursorPositionTransformer.clear());
                 }
                 else if (mouseEvent.getID() == MouseEvent.MOUSE_MOVED)
                 {
-                    myExecutor.execute(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            myArcLengthTransformer.getArcGenerator().handleMouseMoved(mouseEvent);
-                        }
-                    });
+                    myExecutor.execute(() -> myArcLengthTransformer.getArcGenerator().handleMouseMoved(mouseEvent));
+
                     if (myCursorPositionTransformer != null)
                     {
-                        myCursorChangeExecutor.execute(new Runnable()
-                        {
-                            @Override
-                            public void run()
-                            {
-                                myCursorPositionTransformer.setPositionLabel(mouseEvent.getPoint());
-                            }
-                        });
+                        myCursorChangeExecutor.execute(() ->
+                            myCursorPositionTransformer.setPositionLabel(mouseEvent.getPoint()));
                     }
+
+                    myExecutor.execute(() -> MousePositionUtils.setMousePosition(mouseEvent.getPoint(), myToolbox));
                 }
             }
         }

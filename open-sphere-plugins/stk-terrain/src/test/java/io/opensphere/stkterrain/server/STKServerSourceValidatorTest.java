@@ -149,13 +149,12 @@ public class STKServerSourceValidatorTest
     private ServerProviderRegistry createServerProviderRegistry(EasyMockSupport support, int responseCode, boolean isTimeout)
         throws IOException, URISyntaxException
     {
-        URL expectedUrl = new URL(ourTestServer + "/v1/tilesets");
+        URL expectedUrl = new URL(ourTestServer + "/world/layer.json");
 
         HttpServer server = support.createMock(HttpServer.class);
         EasyMock.expect(server.sendGet(EasyMockHelper.eq(expectedUrl), EasyMock.isA(ResponseValues.class)))
                 .andAnswer(() -> sendGetAnswer(responseCode, isTimeout));
 
-        @SuppressWarnings("unchecked")
         ServerProvider<HttpServer> provider = support.createMock(ServerProvider.class);
         EasyMock.expect(provider.getServer(EasyMockHelper.eq(expectedUrl))).andReturn(server);
 

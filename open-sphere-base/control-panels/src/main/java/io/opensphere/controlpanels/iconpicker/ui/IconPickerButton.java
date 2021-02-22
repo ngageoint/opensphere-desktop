@@ -1,5 +1,7 @@
 package io.opensphere.controlpanels.iconpicker.ui;
 
+import java.net.MalformedURLException;
+
 import io.opensphere.controlpanels.iconpicker.controller.IconChooserDisplayer;
 import io.opensphere.controlpanels.iconpicker.controller.IconPickerController;
 import io.opensphere.controlpanels.iconpicker.model.IconPickerModel;
@@ -35,6 +37,7 @@ public class IconPickerButton extends Button
      * @param toolbox The system toolbox.
      * @param iconIdProperty The property to set with an icon id, when the user
      *            selects one.
+     * @throws MalformedURLException
      */
     public IconPickerButton(Toolbox toolbox, LongProperty iconIdProperty)
     {
@@ -49,9 +52,11 @@ public class IconPickerButton extends Button
      *            selects one.
      * @param displayer The class that knows how to show the Icon picking
      *            dialog.
+     * @throws MalformedURLException
      */
     protected IconPickerButton(Toolbox toolbox, LongProperty iconIdProperty, IconChooserDisplayer displayer)
     {
+
         myModel = new IconPickerModel(iconIdProperty);
         myController = new IconPickerController(toolbox, displayer, myModel);
 

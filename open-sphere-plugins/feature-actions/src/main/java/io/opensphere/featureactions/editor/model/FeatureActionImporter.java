@@ -36,11 +36,9 @@ import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.core.util.io.StreamReader;
 import io.opensphere.core.util.lang.Pair;
 import io.opensphere.core.util.lang.StringUtilities;
-import io.opensphere.core.util.lang.ThreadUtilities;
 import io.opensphere.featureactions.model.FeatureAction;
 import io.opensphere.featureactions.model.FeatureActions;
 import io.opensphere.featureactions.model.FeatureActionsFactory;
-import javafx.application.Platform;
 
 /** Provides a import from file menu for feature actions. */
 public class FeatureActionImporter implements FileOrURLImporter

@@ -28,7 +28,7 @@ public class GeographicQuantizedMeshReaderTestFunctional
     @Test
     public void testGetElevationM() throws IOException
     {
-        byte[] bytes = Files.readAllBytes(Paths.get(TestUtils.convertDataPath("/data/sample_data/quantized_mesh/western.mesh")));
+        byte[] bytes = Files.readAllBytes(Paths.get(TestUtils.convertDataPath("c:\\0.terrain")));
         QuantizedMesh mesh = new QuantizedMesh(ByteBuffer.wrap(bytes));
         GeographicQuantizedMeshReader geoMesh = new GeographicQuantizedMeshReader(
                 new GeographicBoundingBox(LatLonAlt.createFromDegrees(-90, -180), LatLonAlt.createFromDegrees(90, 0)));

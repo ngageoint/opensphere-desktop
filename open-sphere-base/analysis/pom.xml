@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>io.open-sphere</groupId>
 		<artifactId>open-sphere-base</artifactId>
-		<version>5.2.6.2</version>
+		<version>5.2.7</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
@@ -47,6 +47,10 @@
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.open-sphere</groupId>
+			<artifactId>overlay</artifactId>
 		</dependency>
 	</dependencies>
 </project>

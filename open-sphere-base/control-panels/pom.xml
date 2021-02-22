@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>io.open-sphere</groupId>
 		<artifactId>open-sphere-base</artifactId>
-		<version>5.2.6.2</version>
+		<version>5.2.7</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
@@ -39,12 +39,6 @@
 		<dependency>
 			<groupId>io.open-sphere</groupId>
 			<artifactId>mantle</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>xerces</groupId>
-					<artifactId>xercesImpl</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 	</dependencies>
 </project>

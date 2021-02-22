@@ -61,6 +61,13 @@ public class StyleOptions extends Observable implements Serializable
     private boolean myHasSizeBeenSet;
 
     /**
+     * The previous color of the bulls eye when icons are active.
+     */
+    @XmlJavaTypeAdapter(ColorAdapter.class)
+    @XmlAttribute(name = "holdColor")
+    private Color myHoldColor = myColor;
+
+    /**
      * The id of the icon to display in this style.
      */
     @XmlAttribute(name = "iconId")
@@ -91,6 +98,7 @@ public class StyleOptions extends Observable implements Serializable
     public void copyFrom(StyleOptions other)
     {
         setColor(other.getColor());
+        setHoldColor(other.getHoldColor());
         setIconId(other.getIconId());
         setSize(other.getSize());
         setStyle(other.getStyle());
@@ -108,8 +116,8 @@ public class StyleOptions extends Observable implements Serializable
             return false;
         }
         StyleOptions other = (StyleOptions)obj;
-        return Objects.equals(myColor, other.myColor) && myIconId == other.myIconId && mySize == other.mySize
-                && myStyle == other.myStyle;
+        return Objects.equals(myColor, other.myColor) && Objects.equals(myHoldColor, other.getHoldColor()) &&
+                myIconId == other.myIconId && mySize == other.mySize && myStyle == other.myStyle;
     }
 
     /**
@@ -120,6 +128,16 @@ public class StyleOptions extends Observable implements Serializable
     public Color getColor()
     {
         return myColor;
+    }
+
+    /**
+     * Gets the hold color of the bulls eye.
+     *
+     * @return the held color
+     */
+    public Color getHoldColor()
+    {
+        return myHoldColor;
     }
 
     /**
@@ -192,6 +210,18 @@ public class StyleOptions extends Observable implements Serializable
     public void setColor(Color color)
     {
         myColor = color;
+        setChanged();
+        notifyObservers(COLOR_PROP);
+    }
+
+    /**
+     * Sets the hold color of the bulls eye.
+     *
+     * @param holdColor the hold color to set
+     */
+    public void setHoldColor(Color holdColor)
+    {
+        myHoldColor = holdColor;
         setChanged();
         notifyObservers(COLOR_PROP);
     }

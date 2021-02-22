@@ -4,9 +4,9 @@ node('desktop') {
 
     env.WORKSPACE = pwd();
     env.LOCAL_REPO = "${env.WORKSPACE}/localRepository/${env.BUILD_NUMBER}";
-    env.JAVA_HOME = tool 'JDK_10.0.2-with-jfx-modules';
+    env.JAVA_HOME = tool name: 'JDK_11uLatest', type: 'jdk';
     env.PATH="${env.JAVA_HOME}/bin:${env.PATH}";
-    env.mvnHome = tool name: 'Maven354', type: 'maven';
+    env.mvnHome = tool name: 'Maven362', type: 'maven';
     env.SLOW_MACHINE = true;
     env.REMOTE_REPO_ARGS = "-DaltSnapshotDeploymentRepository=nexus-FADE-Snapshots::default::https://nexus.devops.geointservices.io/content/repositories/FADE-Snapshots -DaltReleaseDeploymentRepository=nexus-FADE-COTS::default::https://nexus.devops.geointservices.io/content/repositories/FADE-COTS/";
 
@@ -32,7 +32,7 @@ node('desktop') {
             }
 /*			configFileProvider(
 				[configFile(fileId: '3d2775d8-f723-465f-829a-969d0ae5f40b', variable: 'MAVEN_SETTINGS')]) {*/
-	            sh "${env.mvnHome}/bin/mvn --no-snapshot-updates -Dmaven.repo.local=${env.LOCAL_REPO} clean install deploy -Pautomated ${env.REMOTE_REPO_ARGS}"
+	            sh "${env.mvnHome}/bin/mvn --no-snapshot-updates -Dmaven.repo.local=${env.LOCAL_REPO} clean install deploy -Pautomated -q ${env.REMOTE_REPO_ARGS}"
 	        /*}*/
         } catch (error) {
             notifyFailed();
@@ -47,8 +47,8 @@ node('desktop') {
 	if(!"${env.BRANCH_NAME}".startsWith('feature')) {
 	    stage ('Site') {
 	        try {
-	            sh "${env.mvnHome}/bin/mvn -T4.0C --no-snapshot-updates -Dmaven.repo.local=${env.LOCAL_REPO} site"
-	            sh "${env.mvnHome}/bin/mvn -T4.0C --no-snapshot-updates -Dmaven.repo.local=${env.LOCAL_REPO} site:stage"
+	            sh "${env.mvnHome}/bin/mvn -T4.0C --no-snapshot-updates -q -Dmaven.repo.local=${env.LOCAL_REPO} site"
+	            sh "${env.mvnHome}/bin/mvn -T4.0C --no-snapshot-updates -q -Dmaven.repo.local=${env.LOCAL_REPO} site:stage"
 	        } catch (error) {
 	            notifyFailed();
 	            throw error;

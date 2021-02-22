@@ -7,9 +7,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-
+import javafx.scene.paint.Color;
 import io.opensphere.controlpanels.styles.model.StyleOptions;
 import io.opensphere.controlpanels.styles.model.Styles;
+import io.opensphere.core.util.fx.FXUtilities;
 import io.opensphere.featureactions.editor.controller.FilterActionAdapter;
 import io.opensphere.featureactions.editor.controller.SimpleFeatureActionController;
 import io.opensphere.featureactions.editor.model.CriteriaOptions;
@@ -164,6 +165,12 @@ public class SimpleFeatureActionRowBinder
                 }
             };
             styleAction.getStyleOptions().addObserver(myUseIconObserver);
+            if (myView.getUseIconCheckBox().isSelected())
+            {
+                myView.getColorPicker().valueProperty().unbindBidirectional(myModel.colorProperty());
+                myView.getColorPicker().setDisable(true);
+                myView.getColorPicker().setValue(FXUtilities.fromAwtColor(styleAction.getStyleOptions().getHoldColor()));
+            }
         }
         myUseIconListener = (obs, o, n) ->
         {
@@ -171,6 +178,19 @@ public class SimpleFeatureActionRowBinder
             if (action != null)
             {
                 action.getStyleOptions().setStyle(n.booleanValue() ? Styles.ICON : Styles.POINT);
+                if (n.booleanValue())
+                {
+                    myView.getColorPicker().valueProperty().unbindBidirectional(myModel.colorProperty());
+                    action.getStyleOptions().setHoldColor(FXUtilities.toAwtColor(myModel.getColor()));
+                    myModel.setColor(Color.WHITE);
+                    myView.getColorPicker().setDisable(true);
+                }
+                else
+                {
+                    myView.getColorPicker().valueProperty().bindBidirectional(myModel.colorProperty());
+                    myView.getColorPicker().setValue(FXUtilities.fromAwtColor(action.getStyleOptions().getHoldColor()));
+                    myView.getColorPicker().setDisable(false);
+                }
             }
         };
         myView.getUseIconCheckBox().selectedProperty().addListener(myUseIconListener);

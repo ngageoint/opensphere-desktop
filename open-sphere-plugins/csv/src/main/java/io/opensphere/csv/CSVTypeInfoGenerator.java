@@ -346,6 +346,7 @@ public final class CSVTypeInfoGenerator
         {
         	geomType = MapVisualizationType.UNKNOWN;
         }
+        
         return geomType;
     }
 

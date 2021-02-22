@@ -53,6 +53,22 @@ public class FeatureActionsRegistry
     }
 
     /**
+     * Deletes all existing feature actions.
+     */
+    public synchronized void clearAll()
+    {
+        myPrefs.keys().forEach(key ->
+        {
+            FeatureActions featureActions = myPrefs.getJAXBObject(FeatureActions.class, key, null);
+            if (featureActions != null)
+            {
+                featureActions.getActions().clear();
+                myPrefs.putJAXBObject(key, featureActions, false, this);
+            }
+        });
+    }
+
+    /**
      * Removes all feature actions for the layer key and group.
      *
      * @param layerKey the layer key (e.g. data type key)
