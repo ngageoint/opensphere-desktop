@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.bitsys.common.http.proxy.ProxyHostConfig.ProxyType;
+import com.sun.deploy.net.proxy.AutoProxyScript;
 
 /**
  * This class runs web proxy scripts.
@@ -70,30 +71,18 @@ public class ProxyScriptRunner
             deployJarLoaded.set(true);
             try
             {
-                // Attempt to retrieve the system scripts first in case
-                // deploy.jar is already in the
-                // classpath.
                 retrieveSystemScripts();
             }
-            catch (final ClassNotFoundException e3)
+            catch (final ClassNotFoundException e)
             {
-                if (addDeployJar())
-                {
-                    try
-                    {
-                        retrieveSystemScripts();
-                    }
-                    catch (final ClassNotFoundException e)
-                    {
-                        throw new IllegalStateException("Ensure that JAVA_HOME/lib/deploy.jar is in your classpath", e);
-                    }
-                }
+                throw new IllegalStateException("Ensure that deploy.jar is in your MIST/version/ or MIST/version/plugins/ folder", e);
             }
         }
     }
 
     /**
      * Attempts to add <code>deploy.jar</code> to the system class loader.
+     * On Java 9+ the system class loader is no longer a <code>URLClassLoader</code>, so this no longer functions.
      *
      * @return <code>true</code> if the jar was successfully loaded.
      */
@@ -145,9 +134,7 @@ public class ProxyScriptRunner
      */
     protected synchronized static void retrieveSystemScripts() throws ClassNotFoundException
     {
-        final ClassLoader cl = ClassLoader.getSystemClassLoader();
-        final Class<?> clazz = cl.loadClass("com.sun.deploy.net.proxy.AutoProxyScript");
-        final Field[] fields = clazz.getFields();
+        final Field[] fields = AutoProxyScript.class.getFields();
         String preMyIp = null;
         String postMyIp = null;
         for (final Field field : fields)
@@ -231,6 +218,15 @@ public class ProxyScriptRunner
             loadSystemScripts();
         }
         scriptEngine.eval(reader);
+    }
+    
+    /**
+     * Get the system scripts. This is used for testing.
+     * @return The list of loaded scripts.
+     */
+    public synchronized static Collection<String> getSystemScripts()
+    {
+    	return systemScripts;
     }
 
     /**
