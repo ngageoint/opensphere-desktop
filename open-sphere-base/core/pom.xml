@@ -50,6 +50,14 @@
 
 	<dependencies>
 		<dependency>
+			<!-- deploy.jar from old jdk versions; has been removed from java 9+ -->
+			<!-- stand this up somewhere or remove this & add to classpath -->
+			<groupId>com.user</groupId>
+			<artifactId>deploy</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
