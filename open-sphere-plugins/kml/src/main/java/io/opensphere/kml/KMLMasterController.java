@@ -79,7 +79,8 @@ class KMLMasterController extends EventListenerService
     {
         super(toolbox.getEventManager());
 
-        myDataRegistry = toolbox.getDataRegistry();
+//         myDataRegistry = toolbox.getDataRegistry();
+        myDataRegistry = null;
         myKMLToolbox = toolbox.getPluginToolboxRegistry().getPluginToolbox(KMLToolbox.class);
 
         myDataSourceController = new KMLDataSourceControllerImpl(toolbox, pluginPreferences);
