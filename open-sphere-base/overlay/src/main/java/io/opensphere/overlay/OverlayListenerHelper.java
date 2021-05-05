@@ -469,7 +469,7 @@ public class OverlayListenerHelper
                             myCursorPositionTransformer.setPositionLabel(mouseEvent.getPoint()));
                     }
 
-                    myExecutor.execute(() -> MousePositionUtils.setMousePosition(mouseEvent.getPoint(), myToolbox));
+                    myCursorChangeExecutor.execute(() -> MousePositionUtils.setMousePosition(mouseEvent.getPoint(), myToolbox));
                 }
             }
         }
